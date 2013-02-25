@@ -1,4 +1,4 @@
-package org.impressivecode.depress.metrics.judy;
+package org.impressivecode.depress.metric.pitest;
 
 /*
  ImpressiveCode Depress Framework
