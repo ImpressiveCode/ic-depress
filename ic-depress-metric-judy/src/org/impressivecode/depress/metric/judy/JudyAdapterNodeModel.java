@@ -20,16 +20,14 @@ package org.impressivecode.depress.metric.judy;
 import static org.impressivecode.depress.metric.judy.JudyAdapteTableFactory.createDataColumnSpec;
 import static org.impressivecode.depress.metric.judy.JudyAdapteTableFactory.createTableRow;
 import static org.impressivecode.depress.metric.judy.JudyAdapteTableFactory.createTableSpec;
+import static org.impressivecode.depress.metric.judy.JudyEntriesParser.unmarshalResults;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
-import org.impressivecode.depress.metric.judy.JudyXmlResult.Classes;
+import org.impressivecode.depress.metric.judy.JudyXmlResult.Classes.Class;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
@@ -54,7 +52,7 @@ public class JudyAdapterNodeModel extends NodeModel {
 
 	private static final String CONFIG_NAME = "depress.metric.judy.confname";
 
-	private static final NodeLogger logger = NodeLogger.getLogger(JudyAdapterNodeModel.class);
+	private static final NodeLogger LOGGER = NodeLogger.getLogger(JudyAdapterNodeModel.class);
 
 	private final SettingsModelString fileSettings = createFileChooserSettings();
 
@@ -66,13 +64,12 @@ public class JudyAdapterNodeModel extends NodeModel {
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
 			throws Exception {
 
-		logger.info("Preparing to read judy logs.");
-
+		LOGGER.info("Preparing to read judy logs.");
 		BufferedDataContainer container = createDataContainer(exec);
-
-		JudyXmlResult result = unmarshalResults();
-
-		BufferedDataTable out = transform(container, result);
+		LOGGER.info("Reading file: " + fileSettings.getStringValue());
+		List<Class> result = unmarshalResults(fileSettings.getStringValue());
+		BufferedDataTable out = transform(container, result, exec);
+		LOGGER.info("Reading judy logs finished.");
 
 		return new BufferedDataTable[] { out };
 	}
@@ -114,9 +111,17 @@ public class JudyAdapterNodeModel extends NodeModel {
 		// NOOP
 	}
 
-	private BufferedDataTable transform(final BufferedDataContainer container, final JudyXmlResult result) {
-		Classes classes = result.getClasses();
-		for (JudyXmlResult.Classes.Class clazz : classes.getClazz()) {
+	private BufferedDataTable transform(final BufferedDataContainer container, final List<Class> classes,
+			final ExecutionContext exec) throws CanceledExecutionException {
+		int size = classes.size();
+		for (int i = 0; i < size; i++) {
+			progress(exec, size, i);
+
+			Class clazz = classes.get(i);
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("Transforming judy log, class: " + clazz.getName() + ", score: " + clazz.getScore());
+			}
+
 			BigDecimal score = clazz.getScore();
 			String className = clazz.getName();
 			addRowToTable(container, className, score);
@@ -126,17 +131,15 @@ public class JudyAdapterNodeModel extends NodeModel {
 		return out;
 	}
 
+	private void progress(final ExecutionContext exec, final int size, final int i) throws CanceledExecutionException {
+		exec.checkCanceled();
+		exec.setProgress(i / size);
+	}
+
 	private BufferedDataContainer createDataContainer(final ExecutionContext exec) {
 		DataTableSpec outputSpec = createDataColumnSpec();
 		BufferedDataContainer container = exec.createDataContainer(outputSpec);
 		return container;
-	}
-
-	private JudyXmlResult unmarshalResults() throws JAXBException {
-		JAXBContext jaxbContext = JAXBContext.newInstance(JudyXmlResult.class);
-		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-		JudyXmlResult result = (JudyXmlResult) unmarshaller.unmarshal(new File(fileSettings.getStringValue()));
-		return result;
 	}
 
 	private void addRowToTable(final BufferedDataContainer container, final String className, final BigDecimal score) {
