@@ -33,7 +33,7 @@ import org.knime.core.data.def.DoubleCell;
  * 
  */
 public class JudyAdapteTableFactory {
-	private static final String MUTANTS_SCORE = "mutants_score";
+	private static final String MUTANTS_SCORE = "MutantsScore";
 
 	private JudyAdapteTableFactory() {
 

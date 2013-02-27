@@ -4,7 +4,6 @@
 <plugin>
    <extension point="org.knime.workbench.repository.nodes">
       <node
-            category-path="depress"
             factory-class="org.impressivecode.depress.metric.judy.JudyAdapterNodeFactory"
             id="org.impressivecode.depress.metric.judy">
       </node>
