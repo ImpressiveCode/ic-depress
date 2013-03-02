@@ -32,10 +32,10 @@ import org.knime.core.data.def.DoubleCell;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JudyAdapteTableFactory {
-    private static final String MUTANTS_SCORE = "MutantsScore";
+public class JudyAdapterTableFactory {
+    private static final String MUTANTS_SCORE = "MutationScoreIndicator";
 
-    private JudyAdapteTableFactory() {
+    private JudyAdapterTableFactory() {
 
     }
 

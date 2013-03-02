@@ -17,9 +17,9 @@
  */
 package org.impressivecode.depress.metric.judy;
 
-import static org.impressivecode.depress.metric.judy.JudyAdapteTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.metric.judy.JudyAdapteTableFactory.createTableRow;
-import static org.impressivecode.depress.metric.judy.JudyAdapteTableFactory.createTableSpec;
+import static org.impressivecode.depress.metric.judy.JudyAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.metric.judy.JudyAdapterTableFactory.createTableRow;
+import static org.impressivecode.depress.metric.judy.JudyAdapterTableFactory.createTableSpec;
 import static org.impressivecode.depress.metric.judy.JudyEntriesParser.unmarshalResults;
 
 import java.io.File;
