@@ -3,20 +3,15 @@ package org.impressivecode.depress.scm.git;
 import java.io.File;
 import java.io.IOException;
 
-import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
-import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.RowKey;
-import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.DoubleCell;
 import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
-import org.knime.core.node.defaultnodesettings.SettingsModelIntegerBounded;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
@@ -24,6 +19,8 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.SettingsModelOptionalString;
+import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 
 /**
@@ -41,19 +38,25 @@ public class GitNodeModel extends NodeModel {
     /** the settings key which is used to retrieve and 
         store the settings (from the dialog or from a settings file)    
        (package visibility to be usable from the dialog). */
-	static final String CFGKEY_COUNT = "Count";
-
-    /** initial default count value. */
-    static final int DEFAULT_COUNT = 100;
-
+	static final String GIT_FILENAME = "gitFileName";
+	static final String GIT_FILENAME_DEFAULT = "";
+    static final String GIT_REGEXP = "gitRegExp";
+    static final String GIT_REGEXP_DEFAULT = "";
+    static final String GIT_PACKAGENAME = "gitPackageName";
+    static final String GIT_PACKAGENAME_DEFAULT = "org";
+    
+    static final Boolean GIT_PACKAGENAME_ACTIVE_STATE = false;
+    
     // example value: the models count variable filled from the dialog 
     // and used in the models execution method. The default components of the
     // dialog work with "SettingsModels".
-    private final SettingsModelIntegerBounded m_count =
-        new SettingsModelIntegerBounded(GitNodeModel.CFGKEY_COUNT,
-                    GitNodeModel.DEFAULT_COUNT,
-                    Integer.MIN_VALUE, Integer.MAX_VALUE);
-    
+    private final SettingsModelString gitFileName =  new SettingsModelString(GitNodeModel.GIT_FILENAME,
+                    														 GitNodeModel.GIT_FILENAME_DEFAULT);
+    private final SettingsModelString gitRegExp = new SettingsModelString(GitNodeModel.GIT_REGEXP,
+    																	 GitNodeModel.GIT_REGEXP_DEFAULT);
+    private final SettingsModelOptionalString gitPackageName = new SettingsModelOptionalString(GitNodeModel.GIT_PACKAGENAME,
+    																		  GitNodeModel.GIT_PACKAGENAME_DEFAULT,
+    																		  GitNodeModel.GIT_PACKAGENAME_ACTIVE_STATE);
 
     /**
      * Constructor for the node model.
@@ -91,7 +94,7 @@ public class GitNodeModel extends NodeModel {
         // will buffer to disc if necessary.
         BufferedDataContainer container = exec.createDataContainer(outputSpec);
         // let's add m_count rows to it
-        for (int i = 0; i < m_count.getIntValue(); i++) {
+        /*for (int i = 0; i < m_count.getIntValue(); i++) {
             RowKey key = new RowKey("Row " + i);
             // the cells of the current row, the types of the cells must match
             // the column spec (see above)
@@ -106,7 +109,7 @@ public class GitNodeModel extends NodeModel {
             exec.checkCanceled();
             exec.setProgress(i / (double)m_count.getIntValue(), 
                 "Adding row " + i);
-        }
+        }*/
         // once we are done, we close the container and return its table
         container.close();
         BufferedDataTable out = container.getTable();
@@ -147,7 +150,7 @@ public class GitNodeModel extends NodeModel {
 
         // TODO save user settings to the config object.
         
-        m_count.saveSettingsTo(settings);
+        /*m_count.saveSettingsTo(settings);*/
 
     }
 
@@ -162,7 +165,7 @@ public class GitNodeModel extends NodeModel {
         // It can be safely assumed that the settings are valided by the 
         // method below.
         
-        m_count.loadSettingsFrom(settings);
+        /*m_count.loadSettingsFrom(settings);*/
 
     }
 
@@ -178,7 +181,7 @@ public class GitNodeModel extends NodeModel {
         // SettingsModel).
         // Do not actually set any values of any member variables.
 
-        m_count.validateSettings(settings);
+        /*m_count.validateSettings(settings);*/
 
     }
     
