@@ -15,28 +15,18 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.judy;
-
-import static org.impressivecode.depress.metric.judy.JudyAdapterNodeModel.createFileChooserSettings;
+package org.impressivecode.depress.metric.po;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
-import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JudyAdapterNodeDialog extends DefaultNodeSettingsPane {
+public class PeopleOrganizationMetricsNodeDialog extends DefaultNodeSettingsPane {
 
-    private static final String FILE_EXTENSION = ".xml";
-    private static final String HISTORY_ID = "depress.metric.judy.historyid";
-
-    protected JudyAdapterNodeDialog() {
-        addDialogComponent(getFileChooserComponent());
-    }
-
-    private DialogComponentFileChooser getFileChooserComponent() {
-        return new DialogComponentFileChooser(createFileChooserSettings(), HISTORY_ID, FILE_EXTENSION);
+    protected PeopleOrganizationMetricsNodeDialog() {
+        super();
     }
 }

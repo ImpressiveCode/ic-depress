@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.judy;
+package org.impressivecode.depress.metric.po;
 
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
@@ -26,11 +26,11 @@ import org.knime.core.node.NodeView;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JudyAdapterNodeFactory extends NodeFactory<JudyAdapterNodeModel> {
+public class PeopleOrganizationMetricsNodeFactory extends NodeFactory<PeopleOrganizationMetricsNodeModel> {
 
     @Override
-    public JudyAdapterNodeModel createNodeModel() {
-        return new JudyAdapterNodeModel();
+    public PeopleOrganizationMetricsNodeModel createNodeModel() {
+        return new PeopleOrganizationMetricsNodeModel();
     }
 
     @Override
@@ -39,7 +39,8 @@ public class JudyAdapterNodeFactory extends NodeFactory<JudyAdapterNodeModel> {
     }
 
     @Override
-    public NodeView<JudyAdapterNodeModel> createNodeView(final int viewIndex, final JudyAdapterNodeModel nodeModel) {
+    public NodeView<PeopleOrganizationMetricsNodeModel> createNodeView(final int viewIndex,
+            final PeopleOrganizationMetricsNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 
@@ -50,6 +51,7 @@ public class JudyAdapterNodeFactory extends NodeFactory<JudyAdapterNodeModel> {
 
     @Override
     public NodeDialogPane createNodeDialogPane() {
-        return new JudyAdapterNodeDialog();
+        return new PeopleOrganizationMetricsNodeDialog();
     }
+
 }

@@ -11,10 +11,10 @@ import org.junit.Test;
 
 public class JudyEntriesParserTest {
 
-	@Test
-	public void shouldUnmarshalResults() throws JAXBException {
-		List<Class> results = JudyEntriesParser.unmarshalResults(getClass().getResource("judy.xml").getPath());
-		assertEquals(results.size(), 2);
-	}
+    @Test
+    public void shouldUnmarshalResults() throws JAXBException {
+        List<Class> results = JudyEntriesParser.unmarshalResults(getClass().getResource("judy.xml").getPath());
+        assertEquals(results.size(), 2);
+    }
 
 }

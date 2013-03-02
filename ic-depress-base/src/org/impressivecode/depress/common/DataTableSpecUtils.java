@@ -15,41 +15,30 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.judy;
+package org.impressivecode.depress.common;
 
-import org.knime.core.node.NodeDialogPane;
-import org.knime.core.node.NodeFactory;
-import org.knime.core.node.NodeView;
+import java.util.Iterator;
+
+import org.knime.core.data.DataColumnSpec;
+import org.knime.core.data.DataTableSpec;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JudyAdapterNodeFactory extends NodeFactory<JudyAdapterNodeModel> {
+public class DataTableSpecUtils {
+    public static boolean containsColumnSubset(final DataTableSpec dataTableSpec,
+            final DataTableSpec subsetDataTableSpec) {
+        Iterator<DataColumnSpec> iterator = subsetDataTableSpec.iterator();
+        while (iterator.hasNext()) {
+            DataColumnSpec spec = iterator.next();
+            boolean hasColumn = spec.equalStructure(dataTableSpec.getColumnSpec(spec.getName()));
+            if (!hasColumn) {
+                return false;
+            }
+        }
 
-    @Override
-    public JudyAdapterNodeModel createNodeModel() {
-        return new JudyAdapterNodeModel();
-    }
-
-    @Override
-    public int getNrNodeViews() {
-        return 0;
-    }
-
-    @Override
-    public NodeView<JudyAdapterNodeModel> createNodeView(final int viewIndex, final JudyAdapterNodeModel nodeModel) {
-        throw new IllegalStateException("View not supported");
-    }
-
-    @Override
-    public boolean hasDialog() {
         return true;
-    }
-
-    @Override
-    public NodeDialogPane createNodeDialogPane() {
-        return new JudyAdapterNodeDialog();
     }
 }

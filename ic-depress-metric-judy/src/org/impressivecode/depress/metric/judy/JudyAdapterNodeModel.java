@@ -48,105 +48,105 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  */
 public class JudyAdapterNodeModel extends NodeModel {
 
-	private static final String DEFAULT_VALUE = "";
+    private static final String DEFAULT_VALUE = "";
 
-	private static final String CONFIG_NAME = "depress.metric.judy.confname";
+    private static final String CONFIG_NAME = "depress.metric.judy.confname";
 
-	private static final NodeLogger LOGGER = NodeLogger.getLogger(JudyAdapterNodeModel.class);
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(JudyAdapterNodeModel.class);
 
-	private final SettingsModelString fileSettings = createFileChooserSettings();
+    private final SettingsModelString fileSettings = createFileChooserSettings();
 
-	protected JudyAdapterNodeModel() {
-		super(0, 1);
-	}
+    protected JudyAdapterNodeModel() {
+        super(0, 1);
+    }
 
-	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
-			throws Exception {
+    @Override
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
+            throws Exception {
 
-		LOGGER.info("Preparing to read judy logs.");
-		BufferedDataContainer container = createDataContainer(exec);
-		LOGGER.info("Reading file: " + fileSettings.getStringValue());
-		List<Class> result = unmarshalResults(fileSettings.getStringValue());
-		BufferedDataTable out = transform(container, result, exec);
-		LOGGER.info("Reading judy logs finished.");
+        LOGGER.info("Preparing to read judy logs.");
+        BufferedDataContainer container = createDataContainer(exec);
+        LOGGER.info("Reading file: " + fileSettings.getStringValue());
+        List<Class> result = unmarshalResults(fileSettings.getStringValue());
+        BufferedDataTable out = transform(container, result, exec);
+        LOGGER.info("Reading judy logs finished.");
 
-		return new BufferedDataTable[] { out };
-	}
+        return new BufferedDataTable[] { out };
+    }
 
-	@Override
-	protected void reset() {
-	}
+    @Override
+    protected void reset() {
+    }
 
-	@Override
-	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
-		// TODO mmajchrz add validate from apache common or guava
-		return createTableSpec();
-	}
+    @Override
+    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
+        // TODO mmajchrz add validate from apache common or guava
+        return createTableSpec();
+    }
 
-	@Override
-	protected void saveSettingsTo(final NodeSettingsWO settings) {
-		fileSettings.saveSettingsTo(settings);
-	}
+    @Override
+    protected void saveSettingsTo(final NodeSettingsWO settings) {
+        fileSettings.saveSettingsTo(settings);
+    }
 
-	@Override
-	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-		fileSettings.loadSettingsFrom(settings);
-	}
+    @Override
+    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+        fileSettings.loadSettingsFrom(settings);
+    }
 
-	@Override
-	protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-		fileSettings.validateSettings(settings);
-	}
+    @Override
+    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+        fileSettings.validateSettings(settings);
+    }
 
-	@Override
-	protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-	CanceledExecutionException {
-		// NOOP
-	}
+    @Override
+    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+            CanceledExecutionException {
+        // NOOP
+    }
 
-	@Override
-	protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-	CanceledExecutionException {
-		// NOOP
-	}
+    @Override
+    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+            CanceledExecutionException {
+        // NOOP
+    }
 
-	private BufferedDataTable transform(final BufferedDataContainer container, final List<Class> classes,
-			final ExecutionContext exec) throws CanceledExecutionException {
-		int size = classes.size();
-		for (int i = 0; i < size; i++) {
-			progress(exec, size, i);
+    private BufferedDataTable transform(final BufferedDataContainer container, final List<Class> classes,
+            final ExecutionContext exec) throws CanceledExecutionException {
+        int size = classes.size();
+        for (int i = 0; i < size; i++) {
+            progress(exec, size, i);
 
-			Class clazz = classes.get(i);
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Transforming judy log, class: " + clazz.getName() + ", score: " + clazz.getScore());
-			}
+            Class clazz = classes.get(i);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Transforming judy log, class: " + clazz.getName() + ", score: " + clazz.getScore());
+            }
 
-			BigDecimal score = clazz.getScore();
-			String className = clazz.getName();
-			addRowToTable(container, className, score);
-		}
-		container.close();
-		BufferedDataTable out = container.getTable();
-		return out;
-	}
+            BigDecimal score = clazz.getScore();
+            String className = clazz.getName();
+            addRowToTable(container, className, score);
+        }
+        container.close();
+        BufferedDataTable out = container.getTable();
+        return out;
+    }
 
-	private void progress(final ExecutionContext exec, final int size, final int i) throws CanceledExecutionException {
-		exec.checkCanceled();
-		exec.setProgress(i / size);
-	}
+    private void progress(final ExecutionContext exec, final int size, final int i) throws CanceledExecutionException {
+        exec.checkCanceled();
+        exec.setProgress(i / size);
+    }
 
-	private BufferedDataContainer createDataContainer(final ExecutionContext exec) {
-		DataTableSpec outputSpec = createDataColumnSpec();
-		BufferedDataContainer container = exec.createDataContainer(outputSpec);
-		return container;
-	}
+    private BufferedDataContainer createDataContainer(final ExecutionContext exec) {
+        DataTableSpec outputSpec = createDataColumnSpec();
+        BufferedDataContainer container = exec.createDataContainer(outputSpec);
+        return container;
+    }
 
-	private void addRowToTable(final BufferedDataContainer container, final String className, final BigDecimal score) {
-		container.addRowToTable(createTableRow(className, score));
-	}
+    private void addRowToTable(final BufferedDataContainer container, final String className, final BigDecimal score) {
+        container.addRowToTable(createTableRow(className, score));
+    }
 
-	static SettingsModelString createFileChooserSettings() {
-		return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
-	}
+    static SettingsModelString createFileChooserSettings() {
+        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
+    }
 }
