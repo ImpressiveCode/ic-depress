@@ -34,7 +34,7 @@
 	</fullDescription>
 
 	<ports>
-		<outPort index="0" name="Mutants Score Indicator Table">Datatable just read from the Judy
+		<outPort index="0" name="Mutants Score Indicator Table">Datatable just read from the judy
 			entries file</outPort>
 	</ports>
 </knimeNode>
