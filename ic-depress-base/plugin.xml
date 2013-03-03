@@ -2,13 +2,15 @@
 <?eclipse version="3.0"?>
 
 <plugin>
-   <extension point="org.knime.workbench.repository.categories">
+   <extension
+         point="org.knime.workbench.repository.categories">
       <category
-            icon="icons/missing.gif"
+            description="DePress Plugins"
+            icon="resources/icons/depress.png"
             level-id="depress"
-            name="Depress"
+            name="DePress"
             path="/">
       </category>
    </extension>
-   
+    
 </plugin>

@@ -18,7 +18,7 @@
 				test set, as the test set should kill all the mutants.
 				<br />
 				<br />
-				Running Judy - refer to  
+				Running Judy - refer to
 				<a href="http://mutationtest.com/judy/documentation/">http://mutationtest.com/judy/documentation/</a>
 				<br />
 				Judy - Java mutation tester home page
@@ -27,11 +27,14 @@
 
 			</p>
 		</intro>
-
+		<option name="Judy file location">Enter a valid file. When you press ENTER, the file
+			is analyzed and the settings pre-set. You can also choose a
+			previously read file from the drop-down list, or select a file from
+			the "Browse..." dialog. </option>
 	</fullDescription>
 
 	<ports>
-		<outPort index="0" name="Mutants Score">Datatable just read from the judy
+		<outPort index="0" name="Mutants Score Indicator Table">Datatable just read from the Judy
 			entries file</outPort>
 	</ports>
 </knimeNode>

@@ -6,7 +6,8 @@ Bundle-Version: 0.1.0
 Bundle-Vendor: ImpressiveCode
 Require-Bundle: org.knime.base;bundle-version="2.7.1",
  org.knime.workbench.core;bundle-version="2.7.0",
- org.knime.workbench.repository;bundle-version="2.7.1"
+ org.knime.workbench.repository;bundle-version="2.7.1",
+ org.junit
 Export-Package: com.google.common.annotations,
  com.google.common.base,
  com.google.common.base.internal,
@@ -22,7 +23,8 @@ Export-Package: com.google.common.annotations,
  com.google.common.util.concurrent,
  org.impressivecode.depress.common,
  org.impressivecode.depress.scm
-Bundle-ClassPath: lib/guava-14.0-rc3.jar,
- bin/
 Eclipse-BuddyPolicy: registered
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ClassPath: bin/,
+ lib/guava-14.0-rc3.jar
 

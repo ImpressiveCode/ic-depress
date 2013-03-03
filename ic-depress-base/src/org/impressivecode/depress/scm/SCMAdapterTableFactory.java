@@ -39,6 +39,7 @@ public class SCMAdapterTableFactory {
         allColSpecs[1] = new DataColumnSpecCreator(MARKER, SetCell.getCollectionType(StringCell.TYPE)).createSpec();
         allColSpecs[2] = new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE).createSpec();
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
+        //TODO add missing columns and improve tests
         return outputSpec;
     }
 }

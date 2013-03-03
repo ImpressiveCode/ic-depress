@@ -21,20 +21,26 @@ import static org.impressivecode.depress.metric.po.PeopleOrganizationMetricTable
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import org.impressivecode.depress.common.DataTableSpecUtils;
 import org.impressivecode.depress.scm.SCMAdapterTableFactory;
+import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.container.CloseableRowIterator;
+import org.knime.core.data.def.StringCell;
+import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
+import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * 
@@ -43,6 +49,7 @@ import com.google.common.collect.Lists;
  */
 public class PeopleOrganizationMetricsNodeModel extends NodeModel {
 
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(PeopleOrganizationMetricsNodeModel.class);
     private DataTableSpec historyDataSpec;
     private DataTableSpec developersDataSpec;
 
@@ -53,20 +60,21 @@ public class PeopleOrganizationMetricsNodeModel extends NodeModel {
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
-        BufferedDataTable developers = inData[0];
-        BufferedDataTable history = inData[1];
-        Lists.charactersOf("test");
-        //
-        // Map<String, POData> targetData = new HashMap<String, POData>();
-        // Multimaps.prepareBaseDate(target, targetData);
-        // analyzeChangeHistory(history, exec, targetData);
-        // analyzeInvolvementHistory(developers, targetData);
-        return null;
+
+        LOGGER.info("Preparing to build PO metric.");
+        BufferedDataContainer container = createDataContainer(exec);
+        Map<String, POData> poData = computeMetric(inData[0], inData[1], exec);
+        LOGGER.info("Transforming to build PO data.");
+        BufferedDataTable out = transform(container, poData, exec);
+        LOGGER.info("Building PO Metric finished.");
+
+        return new BufferedDataTable[] { out };
     }
 
     @Override
     protected void reset() {
-        // NOOP
+        this.developersDataSpec = null;
+        this.historyDataSpec = null;
     }
 
     @Override
@@ -95,6 +103,43 @@ public class PeopleOrganizationMetricsNodeModel extends NodeModel {
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
     CanceledExecutionException {
         // NOOP
+    }
+
+    private Map<String, POData> computeMetric(final BufferedDataTable devTable, final BufferedDataTable changeHistory,
+            final ExecutionContext exec) throws CanceledExecutionException {
+        Map<String, POData> poDataMetric = Maps.newHashMap();
+        CloseableRowIterator iterator = changeHistory.iterator();
+        while (iterator.hasNext()) {
+            progress(exec);
+            DataRow row = iterator.next();
+            int classColIndex = historyDataSpec.findColumnIndex(SCMAdapterTableFactory.CLASS_COLNAME);
+            int authorColIndex = historyDataSpec.findColumnIndex(SCMAdapterTableFactory.AUTHOR_COLNAME);
+            StringCell classCell = (StringCell) row.getCell(classColIndex);
+            StringCell authorCell = (StringCell) row.getCell(authorColIndex);
+            POData poData = poDataMetric.get(classCell.getStringValue());
+            if (poData != null) {
+                poData.getInvolvedDevelopers().add(authorCell.getStringValue());
+                poData.setEF(1 + poData.getEF());
+            }
+        }
+        return poDataMetric;
+    }
+
+    private BufferedDataTable transform(final BufferedDataContainer container, final Map<String, POData> poData,
+            final ExecutionContext exec) throws CanceledExecutionException {
+
+        BufferedDataTable out = container.getTable();
+        return out;
+    }
+
+    private BufferedDataContainer createDataContainer(final ExecutionContext exec) {
+        DataTableSpec outputSpec = createDataColumnSpec();
+        BufferedDataContainer container = exec.createDataContainer(outputSpec);
+        return container;
+    }
+
+    private void progress(final ExecutionContext exec) throws CanceledExecutionException {
+        exec.checkCanceled();
     }
 
     @Override

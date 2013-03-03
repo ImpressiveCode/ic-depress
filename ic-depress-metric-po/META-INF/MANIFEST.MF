@@ -8,4 +8,5 @@ Require-Bundle: org.knime.base;bundle-version="2.7.1",
  org.knime.workbench;bundle-version="2.7.0",
  org.impressivecode.depress.base;bundle-version="0.1.0"
 Eclipse-RegisterBuddy: org.impressivecode.depress.base
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
  
