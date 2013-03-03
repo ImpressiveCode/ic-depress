@@ -1,4 +1,4 @@
-package org.impressivecode.depress.scm.common;
+package org.impressivecode.depress.metric.findbug;
 
 /*
  ImpressiveCode Depress Framework
