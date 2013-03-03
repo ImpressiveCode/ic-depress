@@ -17,7 +17,6 @@
  */
 package org.impressivecode.depress.metric.judy;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -26,30 +25,31 @@ import java.math.BigDecimal;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.def.DoubleCell;
+
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JudyAdapteTableFactoryPluginTest {
+public class JudyAdapterTableFactoryPluginTest {
 
-	@Test
-	public void shouldCreateTableSpec() {
-		assertEquals(JudyAdapteTableFactory.createDataColumnSpec().getNumColumns(), 1);
-		assertTrue(JudyAdapteTableFactory.createDataColumnSpec().containsName("MutantsScore"));
-		assertEquals(JudyAdapteTableFactory.createDataColumnSpec().getColumnSpec(0).getType(),DoubleCell.TYPE);
-	}
+    @Test
+    public void shouldCreateTableSpec() {
+        assertEquals(JudyAdapterTableFactory.createDataColumnSpec().getNumColumns(), 1);
+        assertTrue(JudyAdapterTableFactory.createDataColumnSpec().containsName("MutationScoreIndicator"));
+        assertEquals(JudyAdapterTableFactory.createDataColumnSpec().getColumnSpec(0).getType(), DoubleCell.TYPE);
+    }
 
-	@Test
-	public void shouldCreateDataColumnSpec() {
-		assertEquals(JudyAdapteTableFactory.createTableSpec().length, 1);
-	}
+    @Test
+    public void shouldCreateDataColumnSpec() {
+        assertEquals(JudyAdapterTableFactory.createTableSpec().length, 1);
+    }
 
-	@Test
-	public void shouldCreateTableRow() {
-		DataRow row = JudyAdapteTableFactory.createTableRow("Key", BigDecimal.ONE);
-		assertEquals(row.getKey().getString(), "Key");
-		assertEquals(((DoubleCell)row.getCell(0)).getDoubleValue(), 1.0, 0.0);
-	}
+    @Test
+    public void shouldCreateTableRow() {
+        DataRow row = JudyAdapterTableFactory.createTableRow("Key", BigDecimal.ONE);
+        assertEquals(row.getKey().getString(), "Key");
+        assertEquals(((DoubleCell) row.getCell(0)).getDoubleValue(), 1.0, 0.0);
+    }
 
 }

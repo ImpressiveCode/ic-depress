@@ -32,32 +32,32 @@ import org.knime.core.data.def.DoubleCell;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JudyAdapteTableFactory {
-	private static final String MUTANTS_SCORE = "MutantsScore";
+public class JudyAdapterTableFactory {
+    private static final String MUTANTS_SCORE = "MutationScoreIndicator";
 
-	private JudyAdapteTableFactory() {
+    private JudyAdapterTableFactory() {
 
-	}
+    }
 
-	static DataTableSpec[] createTableSpec() {
-		return new DataTableSpec[] { createDataColumnSpec() };
-	}
+    static DataTableSpec[] createTableSpec() {
+        return new DataTableSpec[] { createDataColumnSpec() };
+    }
 
-	static DataTableSpec createDataColumnSpec() {
-		DataColumnSpec[] allColSpecs = new DataColumnSpec[1];
-		allColSpecs[0] = new DataColumnSpecCreator(MUTANTS_SCORE, DoubleCell.TYPE).createSpec();
-		DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
-		return outputSpec;
-	}
+    static DataTableSpec createDataColumnSpec() {
+        DataColumnSpec[] allColSpecs = new DataColumnSpec[1];
+        allColSpecs[0] = new DataColumnSpecCreator(MUTANTS_SCORE, DoubleCell.TYPE).createSpec();
+        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
+        return outputSpec;
+    }
 
-	static DataRow createTableRow(final String className, final BigDecimal score) {
-		DataCell[] cells = new DataCell[1];
-		cells[0] = getScoreCell(score);
-		DataRow row = new DefaultRow(className, cells);
-		return row;
-	}
+    static DataRow createTableRow(final String className, final BigDecimal score) {
+        DataCell[] cells = new DataCell[1];
+        cells[0] = getScoreCell(score);
+        DataRow row = new DefaultRow(className, cells);
+        return row;
+    }
 
-	private static DataCell getScoreCell(final BigDecimal score) {
-		return new DoubleCell(score != null ? score.doubleValue() : 0);
-	}
+    private static DataCell getScoreCell(final BigDecimal score) {
+        return new DoubleCell(score != null ? score.doubleValue() : 0);
+    }
 }
