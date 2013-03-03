@@ -11,12 +11,12 @@ import org.impressivecode.depress.metric.judy.JudyXmlResult.Classes.Class;
 
 class JudyEntriesParser {
 
-	static List<Class> unmarshalResults(final String path) throws JAXBException {
-		JAXBContext jaxbContext = JAXBContext.newInstance(JudyXmlResult.class);
-		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+    static List<Class> unmarshalResults(final String path) throws JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(JudyXmlResult.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-		JudyXmlResult result = (JudyXmlResult) unmarshaller.unmarshal(new File(path));
-		return result.getClasses().getClazz();
-	}
+        JudyXmlResult result = (JudyXmlResult) unmarshaller.unmarshal(new File(path));
+        return result.getClasses().getClazz();
+    }
 
 }

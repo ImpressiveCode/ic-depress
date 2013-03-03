@@ -15,28 +15,30 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.judy;
+package org.impressivecode.depress.common;
 
-import static org.junit.Assert.assertEquals;
+import java.util.Iterator;
 
-import java.util.List;
-
-import javax.xml.bind.JAXBException;
-
-import org.impressivecode.depress.metric.judy.JudyXmlResult.Classes.Class;
-import org.junit.Test;
+import org.knime.core.data.DataColumnSpec;
+import org.knime.core.data.DataTableSpec;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JudyEntriesParserTest {
+public class DataTableSpecUtils {
+    public static boolean containsColumnSubset(final DataTableSpec dataTableSpec,
+            final DataTableSpec subsetDataTableSpec) {
+        Iterator<DataColumnSpec> iterator = subsetDataTableSpec.iterator();
+        while (iterator.hasNext()) {
+            DataColumnSpec spec = iterator.next();
+            boolean hasColumn = spec.equalStructure(dataTableSpec.getColumnSpec(spec.getName()));
+            if (!hasColumn) {
+                return false;
+            }
+        }
 
-    @Test
-    public void shouldUnmarshalResults() throws JAXBException {
-        List<Class> results = JudyEntriesParser.unmarshalResults(getClass().getResource("judy.xml").getPath());
-        assertEquals(results.size(), 2);
+        return true;
     }
-
 }
