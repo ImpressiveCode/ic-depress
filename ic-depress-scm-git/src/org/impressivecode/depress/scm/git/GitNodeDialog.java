@@ -18,7 +18,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * complex dialog please derive directly from 
  * {@link org.knime.core.node.NodeDialogPane}.
  * 
- * @author Tomasz Kuzemko
+ * @author Tomasz Kuzemko and Sławomir Kapłoński - Wroclaw University of Technology
  */
 public class GitNodeDialog extends DefaultNodeSettingsPane {
 

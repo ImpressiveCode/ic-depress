@@ -3,12 +3,7 @@ package org.impressivecode.depress.scm.git;
 import java.io.File;
 import java.io.IOException;
 
-import org.knime.core.data.DataColumnSpec;
-import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.def.DoubleCell;
-import org.knime.core.data.def.IntCell;
-import org.knime.core.data.def.StringCell;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -35,14 +30,11 @@ public class GitNodeModel extends NodeModel {
     private static final NodeLogger logger = NodeLogger
             .getLogger(GitNodeModel.class);
         
-    /** the settings key which is used to retrieve and 
-        store the settings (from the dialog or from a settings file)    
-       (package visibility to be usable from the dialog). */
-	static final String GIT_FILENAME = "gitFileName";
+	static final String GIT_FILENAME = "depress.scm.git.filename";
 	static final String GIT_FILENAME_DEFAULT = "";
-    static final String GIT_REGEXP = "gitRegExp";
+    static final String GIT_REGEXP = "depress.scm.git.regexp";
     static final String GIT_REGEXP_DEFAULT = "";
-    static final String GIT_PACKAGENAME = "gitPackageName";
+    static final String GIT_PACKAGENAME = "depress.scm.git.package";
     static final String GIT_PACKAGENAME_DEFAULT = "org";
     
     static final Boolean GIT_PACKAGENAME_ACTIVE_STATE = false;
@@ -63,8 +55,8 @@ public class GitNodeModel extends NodeModel {
      */
     protected GitNodeModel() {
     
-        // TODO one incoming port and one outgoing port is assumed
-        super(1, 1);
+        // TODO none incoming ports and one outgoing port is assumed
+        super(0, 1);
     }
 
     /**
@@ -74,42 +66,13 @@ public class GitNodeModel extends NodeModel {
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
             final ExecutionContext exec) throws Exception {
 
-        // TODO do something here
-        logger.info("Node Model Stub... this is not yet implemented !");
-
-        
-        // the data table spec of the single output table, 
-        // the table will have three columns:
-        DataColumnSpec[] allColSpecs = new DataColumnSpec[3];
-        allColSpecs[0] = 
-            new DataColumnSpecCreator("Column 0", StringCell.TYPE).createSpec();
-        allColSpecs[1] = 
-            new DataColumnSpecCreator("Column 1", DoubleCell.TYPE).createSpec();
-        allColSpecs[2] = 
-            new DataColumnSpecCreator("Column 2", IntCell.TYPE).createSpec();
-        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
-        // the execution context will provide us with storage capacity, in this
-        // case a data container to which we will add rows sequentially
-        // Note, this container can also handle arbitrary big data tables, it
-        // will buffer to disc if necessary.
+        logger.info("Reading logs from file "+gitFileName);
+        DataTableSpec outputSpec = GitTableFactory.createTable();
         BufferedDataContainer container = exec.createDataContainer(outputSpec);
-        // let's add m_count rows to it
-        /*for (int i = 0; i < m_count.getIntValue(); i++) {
-            RowKey key = new RowKey("Row " + i);
-            // the cells of the current row, the types of the cells must match
-            // the column spec (see above)
-            DataCell[] cells = new DataCell[3];
-            cells[0] = new StringCell("String_" + i); 
-            cells[1] = new DoubleCell(0.5 * i); 
-            cells[2] = new IntCell(i);
-            DataRow row = new DefaultRow(key, cells);
-            container.addRowToTable(row);
-            
-            // check if the execution monitor was canceled
-            exec.checkCanceled();
-            exec.setProgress(i / (double)m_count.getIntValue(), 
-                "Adding row " + i);
-        }*/
+        
+        logger.info("Creating Output table with data from git file...");
+        //trzeba przygotować tabelę wyjściową
+        
         // once we are done, we close the container and return its table
         container.close();
         BufferedDataTable out = container.getTable();
@@ -148,10 +111,9 @@ public class GitNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
 
-        // TODO save user settings to the config object.
-        
-        /*m_count.saveSettingsTo(settings);*/
-
+    	gitFileName.saveSettingsTo(settings);
+    	gitRegExp.saveSettingsTo(settings);
+    	gitPackageName.saveSettingsTo(settings);
     }
 
     /**
@@ -161,12 +123,9 @@ public class GitNodeModel extends NodeModel {
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
             throws InvalidSettingsException {
             
-        // TODO load (valid) settings from the config object.
-        // It can be safely assumed that the settings are valided by the 
-        // method below.
-        
-        /*m_count.loadSettingsFrom(settings);*/
-
+        gitFileName.loadSettingsFrom(settings);
+        gitRegExp.loadSettingsFrom(settings);
+        gitPackageName.loadSettingsFrom(settings);
     }
 
     /**
@@ -176,12 +135,9 @@ public class GitNodeModel extends NodeModel {
     protected void validateSettings(final NodeSettingsRO settings)
             throws InvalidSettingsException {
             
-        // TODO check if the settings could be applied to our model
-        // e.g. if the count is in a certain range (which is ensured by the
-        // SettingsModel).
-        // Do not actually set any values of any member variables.
-
-        /*m_count.validateSettings(settings);*/
+        gitFileName.validateSettings(settings);
+        gitRegExp.validateSettings(settings);
+        gitPackageName.validateSettings(settings);
 
     }
     
