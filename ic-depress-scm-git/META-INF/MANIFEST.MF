@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Git-Node extension for KNIME Workbench
+Bundle-Name: ic-depress-scm-git
 Bundle-SymbolicName: org.impressivecode.depress.scm.git; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.1.0
 Bundle-ClassPath: git.jar
 Bundle-Activator: org.impressivecode.depress.scm.git.GitNodePlugin
 Bundle-Vendor: Tomasz Kuzemko
