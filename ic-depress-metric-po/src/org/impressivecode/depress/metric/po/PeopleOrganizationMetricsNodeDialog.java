@@ -15,28 +15,18 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.judy;
+package org.impressivecode.depress.metric.po;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.List;
-
-import javax.xml.bind.JAXBException;
-
-import org.impressivecode.depress.metric.judy.JudyXmlResult.Classes.Class;
-import org.junit.Test;
+import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JudyEntriesParserTest {
+public class PeopleOrganizationMetricsNodeDialog extends DefaultNodeSettingsPane {
 
-    @Test
-    public void shouldUnmarshalResults() throws JAXBException {
-        List<Class> results = JudyEntriesParser.unmarshalResults(getClass().getResource("judy.xml").getPath());
-        assertEquals(results.size(), 2);
+    protected PeopleOrganizationMetricsNodeDialog() {
+        super();
     }
-
 }
