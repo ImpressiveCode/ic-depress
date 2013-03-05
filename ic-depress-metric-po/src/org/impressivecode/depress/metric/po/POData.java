@@ -17,9 +17,9 @@
  */
 package org.impressivecode.depress.metric.po;
 
-import java.util.List;
+import java.util.Set;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 /**
  * 
@@ -28,7 +28,6 @@ import com.google.common.collect.Lists;
  */
 public class POData {
     private String className;
-    private Integer NOE = 0;
     private Integer NOEE = 0;
     private Integer EF = 0;
     private Double DMO = 1.0;
@@ -42,7 +41,7 @@ public class POData {
     private Integer NOE4 = 0;
     private Integer NOE5 = 0;
 
-    private List<String> involvedDevelopers = Lists.newArrayList();
+    private Set<TeamMemberData> involvedDevelopers = Sets.newHashSet();
 
     public String getClassName() {
         return className;
@@ -52,20 +51,16 @@ public class POData {
         this.className = className;
     }
 
-    public List<String> getInvolvedDevelopers() {
+    public Set<TeamMemberData> getInvolvedDevelopers() {
         return involvedDevelopers;
     }
 
-    public void setInvolvedDevelopers(final List<String> involvedDevelopers) {
+    public void setInvolvedDevelopers(final Set<TeamMemberData> involvedDevelopers) {
         this.involvedDevelopers = involvedDevelopers;
     }
 
     public Integer getNOE() {
-        return NOE;
-    }
-
-    public void setNOE(final Integer nOE) {
-        NOE = nOE;
+        return involvedDevelopers.size();
     }
 
     public Integer getNOEE() {

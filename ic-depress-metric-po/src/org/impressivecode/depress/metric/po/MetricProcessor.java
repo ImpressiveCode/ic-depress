@@ -17,7 +17,6 @@
  */
 package org.impressivecode.depress.metric.po;
 
-import java.util.Map;
 
 /**
  * 
@@ -26,9 +25,11 @@ import java.util.Map;
  */
 public class MetricProcessor {
 
-    static void updateOrganization(final POData value, final Map<String, TeamMemberData> devMap) {
-        for (String dev : value.getInvolvedDevelopers()) {
-            doWithAuthor(value, devMap.get(dev));
+    static void updateOrganization(final POData value) {
+        for (TeamMemberData teamMemberData : value.getInvolvedDevelopers()) {
+            doWithExpirience(value, teamMemberData);
+            doWithExEngineers(value, teamMemberData);
+            doWithDepthOfMasterOwnership(value, teamMemberData);
         }
     }
 
@@ -40,14 +41,6 @@ public class MetricProcessor {
         } else {
             return newData;
         }
-    }
-
-    private static void doWithAuthor(final POData value, final TeamMemberData teamMemberData) {
-
-        doWithExpirience(value, teamMemberData);
-        doWithExEngineers(value, teamMemberData);
-        doWithDepthOfMasterOwnership(value, teamMemberData);
-
     }
 
     private static void doWithDepthOfMasterOwnership(final POData value, final TeamMemberData teamMemberData) {

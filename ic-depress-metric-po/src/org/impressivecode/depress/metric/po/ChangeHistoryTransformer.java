@@ -17,6 +17,8 @@
  */
 package org.impressivecode.depress.metric.po;
 
+import java.util.Map;
+
 import org.impressivecode.depress.scm.SCMAdapterTableFactory;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
@@ -31,16 +33,18 @@ import com.google.common.base.Preconditions;
  */
 class ChangeHistoryTransformer {
     private final DataTableSpec changeHistory;
+    private final Map<String, TeamMemberData> members;
 
-    public ChangeHistoryTransformer(final DataTableSpec changeHistory) {
+    public ChangeHistoryTransformer(final DataTableSpec changeHistory, final Map<String, TeamMemberData> members) {
         Preconditions.checkNotNull(changeHistory, "table specifikation can not be null.");
         this.changeHistory = changeHistory;
+        this.members = members;
     }
 
     public POData transform(final DataRow row) {
         POData data = new POData();
         data.setClassName(extractClassName(row));
-        data.getInvolvedDevelopers().add(extractAuthorName(row));
+        data.getInvolvedDevelopers().add(extractAuthor(row));
         return data;
     }
 
@@ -49,8 +53,9 @@ class ChangeHistoryTransformer {
                 .getStringValue();
     }
 
-    private String extractAuthorName(final DataRow row) {
-        return ((StringCell) row.getCell(changeHistory.findColumnIndex(SCMAdapterTableFactory.AUTHOR_COLNAME)))
+    private TeamMemberData extractAuthor(final DataRow row) {
+        String name = ((StringCell) row.getCell(changeHistory.findColumnIndex(SCMAdapterTableFactory.AUTHOR_COLNAME)))
                 .getStringValue();
+        return members.get(name);
     }
 }

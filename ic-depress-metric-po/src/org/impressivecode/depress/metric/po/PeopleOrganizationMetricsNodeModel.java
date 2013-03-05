@@ -77,23 +77,19 @@ public class PeopleOrganizationMetricsNodeModel extends NodeModel {
         this.historyDataSpec = null;
     }
 
-
     private Map<String, POData> computeMetric(final BufferedDataTable devTable, final BufferedDataTable changeHistory,
             final ExecutionContext exec) throws CanceledExecutionException {
         Map<String, POData> poDataMetric = Maps.newHashMap();
-        processChangeHistory(changeHistory, exec, poDataMetric);
-        processOrganizationData(devTable, exec, poDataMetric);
+        processChangeHistory(changeHistory, devTable, exec, poDataMetric);
+        processOrganizationData(exec, poDataMetric);
         return poDataMetric;
     }
 
-    private void processOrganizationData(final BufferedDataTable devTable, final ExecutionContext exec,
-            final Map<String, POData> poDataMetric) {
-        Map<String, TeamMemberData> devMap = createDevData(devTable);
+    private void processOrganizationData(final ExecutionContext exec, final Map<String, POData> poDataMetric) {
         for (Map.Entry<String, POData> entry : poDataMetric.entrySet()) {
-            updateOrganization(entry.getValue(), devMap);
+            updateOrganization(entry.getValue());
         }
     }
-
 
     private Map<String, TeamMemberData> createDevData(final BufferedDataTable devTable) {
         Map<String, TeamMemberData> devMap = Maps.newHashMap();
@@ -106,10 +102,11 @@ public class PeopleOrganizationMetricsNodeModel extends NodeModel {
         return devMap;
     }
 
-    private void processChangeHistory(final BufferedDataTable changeHistory, final ExecutionContext exec,
-            final Map<String, POData> poDataMetric) throws CanceledExecutionException {
+    private void processChangeHistory(final BufferedDataTable changeHistory, final BufferedDataTable devTable,
+            final ExecutionContext exec, final Map<String, POData> poDataMetric) throws CanceledExecutionException {
         CloseableRowIterator iterator = changeHistory.iterator();
-        ChangeHistoryTransformer transformer = new ChangeHistoryTransformer(historyDataSpec);
+        Map<String, TeamMemberData> devMap = createDevData(devTable);
+        ChangeHistoryTransformer transformer = new ChangeHistoryTransformer(historyDataSpec, devMap);
         while (iterator.hasNext()) {
             progress(exec);
             POData curr = transformer.transform(iterator.next());
