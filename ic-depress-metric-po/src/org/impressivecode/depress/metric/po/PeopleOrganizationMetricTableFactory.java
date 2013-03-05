@@ -48,10 +48,10 @@ public class PeopleOrganizationMetricTableFactory {
     private static final String NUMBER_OF_ENGINEERS_SENIOR = "NOE3";
     private static final String NUMBER_OF_ENGINEERS_ARCHITECT = "NOE4";
 
-    private static final String EX_ENGINEER = "ExEngineer";
-    private static final String EXPIERIENCE = "ExpirienceLevel";
-    private static final String DEVELOPER = "DeveloperName";
-    private static final String EXTERNAL_ENGINEER = "External";
+    public static final String EX_ENGINEER = "ExEngineer";
+    public static final String EXPIERIENCE = "ExpirienceLevel";
+    public static final String DEVELOPER = "DeveloperName";
+    public static final String EXTERNAL_ENGINEER = "External";
 
     private PeopleOrganizationMetricTableFactory() {
 

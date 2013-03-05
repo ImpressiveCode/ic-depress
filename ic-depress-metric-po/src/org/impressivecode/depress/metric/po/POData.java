@@ -17,8 +17,9 @@
  */
 package org.impressivecode.depress.metric.po;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 /**
  * 
@@ -26,6 +27,7 @@ import java.util.List;
  * 
  */
 public class POData {
+    private String className;
     private Integer NOE = 0;
     private Integer NOEE = 0;
     private Integer EF = 0;
@@ -40,7 +42,15 @@ public class POData {
     private Integer NOE4 = 0;
     private Integer NOE5 = 0;
 
-    private List<String> involvedDevelopers = new ArrayList<String>();
+    private List<String> involvedDevelopers = Lists.newArrayList();
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(final String className) {
+        this.className = className;
+    }
 
     public List<String> getInvolvedDevelopers() {
         return involvedDevelopers;
