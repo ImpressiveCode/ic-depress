@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbench version="2.0">
+<workbenchAdvisor/>
+<window height="768" maximized="true" width="1024" x="49" y="24">
+<fastViewData fastViewLocation="1024"/>
+<perspectiveBar/>
+<coolbarLayout>
+<coolItem id="main" itemType="typeToolBarContribution" x="104" y="30"/>
+<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="48" y="30"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.annotationNavigation" itemType="typeToolBarContribution" x="84" y="30"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.navigation" itemType="typeToolBarContribution" x="40" y="30"/>
+<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="48" y="30"/>
+<coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.knime.workbench.editor.WorkflowEditor" itemType="typeToolBarContribution" x="807" y="30"/>
+</coolbarLayout>
+<page focus="true" label="&lt;Unknown Label&gt; - KNIME">
+<editors>
+<editorArea activeWorkbook="DefaultEditorWorkbook">
+<info part="DefaultEditorWorkbook">
+<folder appearance="1" expanded="2">
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+</editorArea>
+<editor activePart="true" focus="true" id="org.knime.workbench.editor.WorkflowEditor" name="workflow.knime" partName="2: KNIME_svn_project" path="/home/marcin/Marcin/Projects/PWR/SVNPlugin/Code/ic-depress-scm-svn/src/org/impressivecode/depress/scm/svn/runtime-ConfigurationSvnPlugin/KNIME_svn_project/workflow.knime" title="2: KNIME_svn_project" tooltip="2: KNIME_svn_project" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/KNIME_svn_project/workflow.knime"/>
+</editor>
+</editors>
+<views>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
+</view>
+<view id="org.knime.workbench.helpview" partName="Node Description">
+<viewState/>
+</view>
+<view id="org.knime.workbench.repository.view.RepositoryView" partName="Node Repository">
+<viewState/>
+</view>
+<view id="org.knime.workbench.explorer.view" partName="KNIME Explorer">
+<viewState>
+<content DisplayedMountIDs="EXAMPLES:LOCAL"/>
+</viewState>
+</view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
+<view id="org.knime.workbench.ui.favorites" partName="Favorite Nodes">
+<viewState/>
+</view>
+</views>
+<perspectives activePart="org.knime.workbench.editor.WorkflowEditor" activePerspective="org.knime.workbench.ui.ModellerPerspective">
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="org.knime.workbench.ui.perspective.ModellerPerspectiveFactory" id="org.knime.workbench.ui.ModellerPerspective" label="KNIME"/>
+<alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.search.searchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.annotationNavigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.externaltools.ExternalToolsSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.knime.workbench.ui.global"/>
+<show_view_action id="com.knime.enterprise.client.repositoryview.views.RemoteRepositoryView"/>
+<show_view_action id="org.eclipse.ui.views.ContentOutline"/>
+<show_view_action id="org.knime.workbench.explorer.view"/>
+<show_view_action id="org.eclipse.ui.console.ConsoleView"/>
+<show_view_action id="org.knime.workbench.helpview"/>
+<show_view_action id="org.eclipse.pde.runtime.LogView"/>
+<show_view_action id="org.knime.workbench.ui.navigator.KnimeResourceNavigator"/>
+<show_view_action id="org.knime.workbench.repository.view.RepositoryView"/>
+<show_view_action id="org.knime.workbench.ui.favorites"/>
+<new_wizard_action id="org.knime.workbench.explorer.view.actions.NewWorkflowWizard"/>
+<new_wizard_action id="org.knime.workbench.explorer.view.actions.NewWorkflowGroupWizard"/>
+<new_wizard_action id="org.knime.workbench.ui.wizards.project.NewProjectWizard"/>
+<new_wizard_action id="org.knime.workbench.ui.newworkflowgroup"/>
+<perspective_action id="org.eclipse.jdt.ui.JavaPerspective"/>
+<perspective_action id="org.eclipse.pde.ui.PDEPerspective"/>
+<perspective_action id="org.knime.workbench.ui.ModellerPerspective"/>
+<hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
+<hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="org.knime.workbench.explorer.view"/>
+<view id="org.knime.workbench.repository.view.RepositoryView"/>
+<view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<view id="org.knime.workbench.helpview"/>
+<view id="org.knime.workbench.ui.favorites"/>
+<fastViewBars/>
+<viewLayoutRec closeable="false" id="org.knime.workbench.repository.view.RepositoryView"/>
+<layout>
+<mainWindow>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@748b0942">
+<folder activePageID="org.knime.workbench.explorer.view" appearance="2" expanded="2">
+<page content="org.knime.workbench.explorer.view" label="KNIME Explorer"/>
+<page content="org.knime.workbench.ui.navigator.KnimeResourceNavigator" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="stickyFolderRight" ratio="0.7495049" ratioLeft="757" ratioRight="253" relationship="2" relative="org.eclipse.ui.internal.ViewStack@748b0942">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.3" ratioLeft="303" ratioRight="707" relationship="2" relative="org.eclipse.ui.internal.ViewStack@748b0942"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@6a50b40b" ratio="0.6989568" ratioLeft="469" ratioRight="202" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@237d1a68" ratio="0.29985857" ratioLeft="212" ratioRight="495" relationship="2" relative="org.eclipse.ui.internal.ViewStack@6a50b40b">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@585c74b4" ratio="0.698727" ratioLeft="494" ratioRight="213" relationship="2" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.knime.workbench.helpview" appearance="2" expanded="2">
+<page content="org.knime.workbench.helpview" label="Node Description"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info part="com.knime.enterprise.client.repositoryview.views.RemoteRepositoryView" ratio="0.5479744" ratioLeft="257" ratioRight="212" relationship="4" relative="org.eclipse.ui.internal.ViewStack@585c74b4"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1df202be" ratio="0.29955292" ratioLeft="201" ratioRight="470" relationship="4" relative="org.eclipse.ui.internal.ViewStack@748b0942">
+<folder activePageID="org.knime.workbench.ui.favorites" appearance="2" expanded="2">
+<page content="org.knime.workbench.ui.favorites" label="Favorite Nodes"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@540d07d4" ratio="0.2" ratioLeft="94" ratioRight="376" relationship="4" relative="org.eclipse.ui.internal.ViewStack@1df202be">
+<folder activePageID="org.knime.workbench.repository.view.RepositoryView" appearance="2" expanded="2">
+<page content="org.knime.workbench.repository.view.RepositoryView" label="Node Repository"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
+</perspectives>
+<workingSets/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.knime.workbench.editor.WorkflowEditor" path="/KNIME_svn_project/workflow.knime"/>
+</editors>
+<item active="true" historyLabel="2: KNIME_svn_project" index="0"/>
+</navigationHistory>
+</page>
+<workbenchWindowAdvisor/>
+<actionBarAdvisor/>
+<trimLayout>
+<trimArea IMemento.internal.id="128">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
+</trimArea>
+<trimArea IMemento.internal.id="1024">
+<trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
+</trimArea>
+</trimLayout>
+</window>
+<mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.knime.workbench.editor.WorkflowEditor" name="workflow.knime" tooltip="KNIME_svn_project/workflow.knime">
+<persistable path="/KNIME_svn_project/workflow.knime"/>
+</file>
+</mruList>
+</workbench>
