@@ -24,7 +24,7 @@
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.knime.workbench.editor.WorkflowEditor" name="workflow.knime" partName="2: KNIME_svn_project" path="/home/marcin/Marcin/Projects/PWR/SVNPlugin/Code/ic-depress-scm-svn/src/org/impressivecode/depress/scm/svn/runtime-ConfigurationSvnPlugin/KNIME_svn_project/workflow.knime" title="2: KNIME_svn_project" tooltip="2: KNIME_svn_project" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="org.knime.workbench.editor.WorkflowEditor" name="workflow.knime" partName="0: KNIME_svn_project" path="/home/marcin/Marcin/Projects/PWR/SVNPlugin/Code/ic-depress-scm-svn/src/org/impressivecode/depress/scm/svn/runtime-ConfigurationSvnPlugin/KNIME_svn_project/workflow.knime" title="0: KNIME_svn_project" tooltip="0: KNIME_svn_project" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/KNIME_svn_project/workflow.knime"/>
 </editor>
 </editors>

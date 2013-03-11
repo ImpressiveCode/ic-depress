@@ -33,3 +33,38 @@
 2013-03-09 10:17:02,918 INFO  main NodeLogger : # application=org.eclipse.ui.ide.workbench
 2013-03-09 10:17:02,918 INFO  main NodeLogger : #############################################################
 2013-03-09 10:17:02,936 WARN  main BrowserInitializer : No compatible web browser found. Node descriptions and online help will not work.Please see http://tech.knime.org/faq#q6 for details
+2013-03-09 15:53:30,809 INFO  main NodeLogger : #############################################################
+2013-03-09 15:53:30,818 INFO  main NodeLogger : #                                                           #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # Welcome to KNIME v2.7.2.0036617 (Build February 26, 2013)      #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # the Konstanz Information Miner                            #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # Based on Eclipse, www.eclipse.org                         #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # Uses: Java, GEF, Log4J                                    #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : #                                                           #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : #############################################################
+2013-03-09 15:53:30,818 INFO  main NodeLogger : #                                                           #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # Copyright, 2003 - 2012                                    #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # University of Konstanz, Germany.                          #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # Chair for Bioinformatics and Information Mining           #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # Prof. Dr. Michael R. Berthold                             #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # and KNIME GmbH, Konstanz, Germany                         #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # website: http://www.knime.org                             #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # email: contact@knime.org                                  #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : #                                                           #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : #############################################################
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # For more details see the KNIME log file:                  #
+2013-03-09 15:53:30,818 INFO  main NodeLogger : # /home/marcin/Marcin/Projects/PWR/SVNPlugin/Code/ic-depress-scm-svn/src/org/impressivecode/depress/scm/svn/KNIME/.metadata/knime/knime.log
+2013-03-09 15:53:30,818 INFO  main NodeLogger : #-----------------------------------------------------------#
+2013-03-09 15:53:30,822 INFO  main NodeLogger : # logging date=Sat Mar 09 15:53:30 CET 2013
+2013-03-09 15:53:30,822 INFO  main NodeLogger : # java.version=1.7.0_07
+2013-03-09 15:53:30,823 INFO  main NodeLogger : # java.vm.version=23.3-b01
+2013-03-09 15:53:30,823 INFO  main NodeLogger : # java.vendor=Oracle Corporation
+2013-03-09 15:53:30,823 INFO  main NodeLogger : # os.name=Linux
+2013-03-09 15:53:30,823 INFO  main NodeLogger : # os.arch=amd64
+2013-03-09 15:53:30,823 INFO  main NodeLogger : # number of CPUs=4
+2013-03-09 15:53:30,823 INFO  main NodeLogger : # assertions=off
+2013-03-09 15:53:30,823 INFO  main NodeLogger : # host=hell
+2013-03-09 15:53:30,846 INFO  main NodeLogger : # username=marcin
+2013-03-09 15:53:30,846 INFO  main NodeLogger : # max mem=341MB
+2013-03-09 15:53:30,847 INFO  main NodeLogger : # application=org.eclipse.ui.ide.workbench
+2013-03-09 15:53:30,847 INFO  main NodeLogger : #############################################################
+2013-03-09 15:53:30,920 WARN  main BrowserInitializer : No compatible web browser found. Node descriptions and online help will not work.Please see http://tech.knime.org/faq#q6 for details

@@ -176,8 +176,8 @@ org.eclipse.update.scheduler.source,3.2.300.v20100512,file:/home/marcin/Marcin/S
 org.eclipse.update.ui.source,3.2.300.v20100512,file:/home/marcin/Marcin/Software/eclipse_knime_2.7.2/plugins/org.eclipse.update.ui.source_3.2.300.v20100512.jar,-1,false
 org.fife.rsyntaxtextarea.source,2.0.4.0036015,file:/home/marcin/Marcin/Software/eclipse_knime_2.7.2/plugins/org.fife.rsyntaxtextarea.source_2.0.4.0036015.jar,-1,false
 org.hamcrest.core.source,1.1.0.v20090501071000,file:/home/marcin/Marcin/Software/eclipse_knime_2.7.2/plugins/org.hamcrest.core.source_1.1.0.v20090501071000.jar,-1,false
-org.junit.source,4.8.2.v4_8_2_v20110321-1705,file:/home/marcin/Marcin/Software/eclipse_knime_2.7.2/plugins/org.junit.source_4.8.2.v4_8_2_v20110321-1705.jar,-1,false
 org.junit.source,3.8.2.v3_8_2_v20100427-1100,file:/home/marcin/Marcin/Software/eclipse_knime_2.7.2/plugins/org.junit.source_3.8.2.v3_8_2_v20100427-1100.jar,-1,false
+org.junit.source,4.8.2.v4_8_2_v20110321-1705,file:/home/marcin/Marcin/Software/eclipse_knime_2.7.2/plugins/org.junit.source_4.8.2.v4_8_2_v20110321-1705.jar,-1,false
 org.knime.base.source,2.7.2.0036614,file:/home/marcin/Marcin/Software/eclipse_knime_2.7.2/plugins/org.knime.base.source_2.7.2.0036614.jar,-1,false
 org.knime.core.data.uritype.source,2.7.0.0036089,file:/home/marcin/Marcin/Software/eclipse_knime_2.7.2/plugins/org.knime.core.data.uritype.source_2.7.0.0036089.jar,-1,false
 org.knime.core.pmml.source,2.7.0.0035991,file:/home/marcin/Marcin/Software/eclipse_knime_2.7.2/plugins/org.knime.core.pmml.source_2.7.0.0035991.jar,-1,false
