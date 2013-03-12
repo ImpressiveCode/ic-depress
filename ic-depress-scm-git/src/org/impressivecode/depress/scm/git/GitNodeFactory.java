@@ -8,7 +8,7 @@ import org.knime.core.node.NodeView;
  * <code>NodeFactory</code> for the "Git" Node.
  * 
  *
- * @author Tomasz Kuzemko and Sławek Kapłoński
+ * @author Tomasz Kuzemko and Sławomir Kapłoński - Wroclaw University of Technology
  */
 public class GitNodeFactory 
         extends NodeFactory<GitNodeModel> {
