@@ -17,6 +17,8 @@
  */
 package org.impressivecode.depress.metric.po;
 
+import static org.impressivecode.depress.metric.po.MetricProcessor.processHistory;
+import static org.impressivecode.depress.metric.po.MetricProcessor.updateOrganization;
 import static org.impressivecode.depress.metric.po.PeopleOrganizationMetricTableFactory.createDataColumnSpec;
 
 import java.io.File;
@@ -25,10 +27,8 @@ import java.util.Map;
 
 import org.impressivecode.depress.common.DataTableSpecUtils;
 import org.impressivecode.depress.scm.SCMAdapterTableFactory;
-import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.container.CloseableRowIterator;
-import org.knime.core.data.def.StringCell;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -77,52 +77,43 @@ public class PeopleOrganizationMetricsNodeModel extends NodeModel {
         this.historyDataSpec = null;
     }
 
-    @Override
-    protected void saveSettingsTo(final NodeSettingsWO settings) {
-        // NOOP
-    }
-
-    @Override
-    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        // NOOP
-    }
-
-    @Override
-    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        // NOOP
-    }
-
-    @Override
-    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
-        // NOOP
-
-    }
-
-    @Override
-    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
-        // NOOP
-    }
-
     private Map<String, POData> computeMetric(final BufferedDataTable devTable, final BufferedDataTable changeHistory,
             final ExecutionContext exec) throws CanceledExecutionException {
         Map<String, POData> poDataMetric = Maps.newHashMap();
+        processChangeHistory(changeHistory, devTable, exec, poDataMetric);
+        processOrganizationData(exec, poDataMetric);
+        return poDataMetric;
+    }
+
+    private void processOrganizationData(final ExecutionContext exec, final Map<String, POData> poDataMetric) {
+        for (Map.Entry<String, POData> entry : poDataMetric.entrySet()) {
+            updateOrganization(entry.getValue());
+        }
+    }
+
+    private Map<String, TeamMemberData> createDevData(final BufferedDataTable devTable) {
+        Map<String, TeamMemberData> devMap = Maps.newHashMap();
+        CloseableRowIterator iterator = devTable.iterator();
+        TeamMemberTransformer transformer = new TeamMemberTransformer(developersDataSpec);
+        while (iterator.hasNext()) {
+            TeamMemberData value = transformer.transform(iterator.next());
+            devMap.put(value.getName(), value);
+        }
+        return devMap;
+    }
+
+    private void processChangeHistory(final BufferedDataTable changeHistory, final BufferedDataTable devTable,
+            final ExecutionContext exec, final Map<String, POData> poDataMetric) throws CanceledExecutionException {
         CloseableRowIterator iterator = changeHistory.iterator();
+        Map<String, TeamMemberData> devMap = createDevData(devTable);
+        ChangeHistoryTransformer transformer = new ChangeHistoryTransformer(historyDataSpec, devMap);
         while (iterator.hasNext()) {
             progress(exec);
-            DataRow row = iterator.next();
-            int classColIndex = historyDataSpec.findColumnIndex(SCMAdapterTableFactory.CLASS_COLNAME);
-            int authorColIndex = historyDataSpec.findColumnIndex(SCMAdapterTableFactory.AUTHOR_COLNAME);
-            StringCell classCell = (StringCell) row.getCell(classColIndex);
-            StringCell authorCell = (StringCell) row.getCell(authorColIndex);
-            POData poData = poDataMetric.get(classCell.getStringValue());
-            if (poData != null) {
-                poData.getInvolvedDevelopers().add(authorCell.getStringValue());
-                poData.setEF(1 + poData.getEF());
-            }
+            POData curr = transformer.transform(iterator.next());
+            POData existing = poDataMetric.get(curr.getClassName());
+            POData processed = processHistory(existing, curr);
+            poDataMetric.put(processed.getClassName(), processed);
         }
-        return poDataMetric;
     }
 
     private BufferedDataTable transform(final BufferedDataContainer container, final Map<String, POData> poData,
@@ -169,6 +160,34 @@ public class PeopleOrganizationMetricsNodeModel extends NodeModel {
             this.developersDataSpec = dataTableSpec;
         }
     }
+
+    @Override
+    protected void saveSettingsTo(final NodeSettingsWO settings) {
+        // NOOP
+    }
+
+    @Override
+    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+        // NOOP
+    }
+
+    @Override
+    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+        // NOOP
+    }
+
+    @Override
+    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+    CanceledExecutionException {
+        // NOOP
+    }
+
+    @Override
+    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+    CanceledExecutionException {
+        // NOOP
+    }
+
     //
     // private void analyzeChangeHistory(final BufferedDataTable history, final
     // ExecutionContext exec, final Map<String, POData> targetData)
