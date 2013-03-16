@@ -1,0 +1,11 @@
+package org.knime.svnplugin;
+
+import javax.management.RuntimeErrorException;
+
+public class SVNPluginNodeLogic {
+
+	public void Init() {
+		throw new RuntimeException(null);
+	}
+
+}

@@ -1,0 +1,33 @@
+package org.knime.svnplugin.test.functional;
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.knime.svnplugin.SVNPluginNodeLogic;
+
+
+public class SVNPluginNodeLogicTest {
+
+	SVNPluginNodeLogic logic = null;
+	
+	@Before
+	public void setUp() throws Exception {
+		logic = new SVNPluginNodeLogic();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		logic = null;
+	}
+
+	@Test
+	public void testInit() {
+		try {
+			logic.Init();
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+}

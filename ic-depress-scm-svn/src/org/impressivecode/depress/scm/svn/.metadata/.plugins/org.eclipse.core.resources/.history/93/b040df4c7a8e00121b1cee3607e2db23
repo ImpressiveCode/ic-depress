@@ -1,0 +1,39 @@
+package org.knime.svn.test;
+
+import static org.junit.Assert.fail;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+public class TemplateTest {
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		// Code executed before the first test method 
+	}
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		// Code executed after the last test method 
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		// Code executed before each test 
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		// Code executed after each test 
+	}
+
+	@Test
+	public void test() {
+		// Simple test method
+		fail("Not yet implemented");
+	}
+
+}

@@ -1,0 +1,17 @@
+1363466114725	Move elements
+1363466118375	Delete element
+1363466146331	Rename package 'org.knime.svnplugin.test'
+1363466155878	Rename package 'org.knime.svnplugin.test.functional'
+1363466163803	Rename package 'org.knime.svnplugin.test.structural'
+1363466245953	Delete elements
+1363467424751	Rename field 'path'
+1363467493828	Rename field 'm_xmlLogPath'
+1363467618910	Rename field 'pathChooser'
+1363467672294	Rename field 'DEFAULT_XML_PATH'
+1363468248684	Rename field 'CFG_XML_LOG_PATH'
+1363469162654	Delete element
+1363471026458	Delete element
+1363471809030	Delete element
+1363471864644	Delete element
+1363472138722	Delete element
+1363475594957	Rename field 'XML_PATH_MODEL'

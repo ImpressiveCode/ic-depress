@@ -1,0 +1,15 @@
+package org.knime.svnplugin.test.structural;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+import org.knime.svnplugin.test.functional.FunctionalTest;
+import org.knime.svnplugin.test.functional.SVNPluginNodeLogicTest;
+
+
+@RunWith(Suite.class)
+@SuiteClasses({ BlackBoxTests.class, FunctionalTest.class,
+		SVNPluginNodeLogicTest.class, SVNPluginTest.class })
+public class StructuralTests {
+
+}

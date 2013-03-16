@@ -1,0 +1,10 @@
+package org.knime.svn;
+
+
+public class SVNPluginNodeLogic {
+
+	public void Init() {
+		throw new RuntimeException();
+	}
+
+}

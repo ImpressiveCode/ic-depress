@@ -1,0 +1,58 @@
+package org.knime.svn;
+
+import org.knime.core.node.NodeDialogPane;
+import org.knime.core.node.NodeFactory;
+import org.knime.core.node.NodeView;
+
+/**
+ * <code>NodeFactory</code> for the "MyNode01" Node.
+ * KNIME
+ *
+ * @author KNIME
+ */
+public class SVNPluginNodeFactory 
+        extends NodeFactory<SVNPluginNodeModel> {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SVNPluginNodeModel createNodeModel() {
+        return new SVNPluginNodeModel();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getNrNodeViews() {
+        return 1;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NodeView<SVNPluginNodeModel> createNodeView(final int viewIndex,
+            final SVNPluginNodeModel nodeModel) {
+        return new SVNPluginNodeView(nodeModel);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasDialog() {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NodeDialogPane createNodeDialogPane() {
+        return new SVNPluginNodeDialog();
+    }
+
+}
+

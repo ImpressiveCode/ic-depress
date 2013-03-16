@@ -1,0 +1,19 @@
+package org.knime.mynode;
+
+import org.knime.core.node.NodeLogger;
+
+public class MyNode01Logger {
+	
+	private static final NodeLogger logger = NodeLogger
+			.getLogger(MyNode01Logger.class);
+	
+	static
+	{
+		
+	}
+
+	public static NodeLogger instance() {
+		return logger;
+	}
+
+}

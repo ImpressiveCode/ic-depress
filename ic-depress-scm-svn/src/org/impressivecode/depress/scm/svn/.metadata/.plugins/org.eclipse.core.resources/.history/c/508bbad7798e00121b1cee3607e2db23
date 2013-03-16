@@ -1,0 +1,11 @@
+package org.knime.svn.test.structural;
+
+import org.knime.svn.SVNPluginLogger;
+
+public class SVNPluginLoggerTest {
+
+	//@Test(expected = NoClassDefFoundError.class)
+	public void testInstance() {
+		SVNPluginLogger.instance();
+	}
+}

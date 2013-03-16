@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config date="1363469109800" transient="false" version="3.0">
+<site enabled="true" policy="USER-EXCLUDE" updateable="true" url="platform:/base/">
+<feature id="org.eclipse.equinox.p2.core.feature" url="features/org.eclipse.equinox.p2.core.feature_1.0.1.v20110906-1605-8290FZ9FVKHVRKtmx3fpNuo02129/" version="1.0.1.v20110906-1605-8290FZ9FVKHVRKtmx3fpNuo02129">
+</feature>
+<feature id="org.knime.features.testingapplication" plugin-identifier="org.knime.testing" url="features/org.knime.features.testingapplication_2.7.2.0036598/" version="2.7.2.0036598">
+</feature>
+<feature id="org.knime.features.base" plugin-identifier="org.knime.product" url="features/org.knime.features.base_2.7.2.0036617/" version="2.7.2.0036617">
+</feature>
+<feature id="org.knime.binary.jre" url="features/org.knime.binary.jre_2.7.0.0000066/" version="2.7.0.0000066">
+</feature>
+<feature id="org.eclipse.platform" url="features/org.eclipse.platform_3.7.2.v20120207-1839-9gF7UHPDFxGjd-PqDr2jX_4yKaumkoHTz04_q-q/" version="3.7.2.v20120207-1839-9gF7UHPDFxGjd-PqDr2jX_4yKaumkoHTz04_q-q">
+</feature>
+<feature id="org.eclipse.rcp" url="features/org.eclipse.rcp_3.7.2.v20120120-1424-9DB5FmnFq5JCf1UA38R-kz0S0272/" version="3.7.2.v20120120-1424-9DB5FmnFq5JCf1UA38R-kz0S0272">
+</feature>
+<feature id="org.eclipse.draw2d" url="features/org.eclipse.draw2d_3.7.2.v20110927-2020-4617w3122212803131/" version="3.7.2.v20110927-2020-4617w3122212803131">
+</feature>
+<feature id="org.knime.features.sdk" plugin-identifier="org.knime.workbench.extension" url="features/org.knime.features.sdk_2.7.0.0036617/" version="2.7.0.0036617">
+</feature>
+<feature id="org.eclipse.jdt" url="features/org.eclipse.jdt_3.7.2.v20120120-1414-7z8gFcuFMP7BW5XTz0jLTnz0l9B1/" version="3.7.2.v20120120-1414-7z8gFcuFMP7BW5XTz0jLTnz0l9B1">
+</feature>
+<feature id="org.eclipse.help" plugin-identifier="org.eclipse.help.base" url="features/org.eclipse.help_1.3.0.v20110530-0844-7i7uFFmFFl8nvqbDpEqTvx/" version="1.3.0.v20110530-0844-7i7uFFmFFl8nvqbDpEqTvx">
+</feature>
+<feature id="com.knime.features.enterprise.server.ws.client" plugin-identifier="com.knime.enterprise.server.ws.client" url="features/com.knime.features.enterprise.server.ws.client_3.6.1.0036288/" version="3.6.1.0036288">
+</feature>
+<feature id="org.knime.binary.jre.win32.win32.x86_64" url="features/org.knime.binary.jre.win32.win32.x86_64_1.7.0.7/" version="1.7.0.7">
+</feature>
+<feature id="org.knime.features.wizard" plugin-identifier="org.knime.workbench.extension" url="features/org.knime.features.wizard_2.7.0.0035930/" version="2.7.0.0035930">
+</feature>
+<feature id="org.eclipse.equinox.p2.rcp.feature" url="features/org.eclipse.equinox.p2.rcp.feature_1.0.1.v20110906-1605-782EqBqNKGVkiV-PUsgz-uny4gqO/" version="1.0.1.v20110906-1605-782EqBqNKGVkiV-PUsgz-uny4gqO">
+</feature>
+<feature id="org.eclipse.equinox.p2.user.ui" url="features/org.eclipse.equinox.p2.user.ui_2.1.2.R37x_v20110815-1155-6-Bk8pYWZz0qUTX5I15GZWwbXkrl/" version="2.1.2.R37x_v20110815-1155-6-Bk8pYWZz0qUTX5I15GZWwbXkrl">
+</feature>
+<feature id="org.eclipse.pde" url="features/org.eclipse.pde_3.7.2.v20120120-1420-7b7rFUOFEx2Xnqafnpz0E--0/" version="3.7.2.v20120120-1420-7b7rFUOFEx2Xnqafnpz0E--0">
+</feature>
+<feature id="org.eclipse.equinox.p2.extras.feature" url="features/org.eclipse.equinox.p2.extras.feature_1.0.1.v20110906-1605-7A4FD4DiVOMap8cHSc6vPuny4gqO/" version="1.0.1.v20110906-1605-7A4FD4DiVOMap8cHSc6vPuny4gqO">
+</feature>
+<feature id="org.knime.product.desktop" url="features/org.knime.product.desktop_2.7.2.0036617/" version="2.7.2.0036617">
+</feature>
+<feature id="com.knime.features.enterprise.client.exampleserver" plugin-identifier="com.knime.enterprise.client.repositoryview" url="features/com.knime.features.enterprise.client.exampleserver_2.7.2.0036606/" version="2.7.2.0036606">
+</feature>
+<feature id="org.eclipse.gef" url="features/org.eclipse.gef_3.7.2.v20110927-2020-777D381B4Bz0755B465D34242/" version="3.7.2.v20110927-2020-777D381B4Bz0755B465D34242">
+</feature>
+</site>
+</config>

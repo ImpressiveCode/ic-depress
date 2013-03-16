@@ -1,0 +1,5 @@
+package org.knime.svnplugin.test;
+
+public class SVNPluginTestRunner {
+
+}

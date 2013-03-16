@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.knime.core.node.NodeDialogPane"/>
-<fullyQualifiedTypeName name="org.knime.core.node.defaultnodesettings.DialogComponentNumber"/>
-<fullyQualifiedTypeName name="org.knime.core.node.defaultnodesettings.DialogComponentString"/>
-<fullyQualifiedTypeName name="org.knime.core.node.defaultnodesettings.SettingsModelString"/>
-<fullyQualifiedTypeName name="org.eclipse.equinox.log.Logger"/>
-</qualifiedTypeNameHistroy>

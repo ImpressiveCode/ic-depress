@@ -1,0 +1,37 @@
+1363056630754	Delete element
+1363057983102	Rename field 'CFGKEY_PATH'
+1363060622217	Rename method 'createOutputColumnSpec'
+1363347056935	Rename package 'org.knime.mynode'
+1363347084500	Rename type 'MyNode01Logger'
+1363347108088	Rename type 'MyNode01Settings'
+1363347117604	Rename type 'MyNode01NodeView'
+1363347127744	Rename type 'MyNode01NodePlugin'
+1363347136745	Rename type 'MyNode01NodeModel'
+1363347144342	Rename type 'SVNPLuginNodeModel'
+1363347153390	Rename type 'MyNode01NodeLogic'
+1363347169879	Rename type 'MyNode01NodeFactory'
+1363347178537	Rename type 'MyNode01NodeDialog'
+1363347191017	Rename resource 'MyNode01NodeFactory.xml'
+1363349759537	Delete element
+1363402134733	Move file
+1363406773688	Delete element
+1363406792158	Rename type 'SVNPluginNodeLogicTest2'
+1363406909549	Delete element
+1363406912045	Delete element
+1363407185529	Move compilation unit
+1363407269238	Move compilation unit
+1363407273045	Move compilation unit
+1363407277241	Delete element
+1363407287272	Move compilation unit
+1363407290111	Move compilation unit
+1363407577557	Move compilation unit
+1363408722431	Rename type 'CompleteTest'
+1363409046025	Delete element
+1363411028269	Rename local variable 'class1'
+1363411123008	Rename local variable 'class1'
+1363411130761	Rename local variable 'class1'
+1363411567140	Move compilation unit
+1363411736260	Rename type 'FunctionalTest'
+1363411747711	Rename type 'StructuralTests'
+1363466087721	Copy package
+1363466137953	Copy packages

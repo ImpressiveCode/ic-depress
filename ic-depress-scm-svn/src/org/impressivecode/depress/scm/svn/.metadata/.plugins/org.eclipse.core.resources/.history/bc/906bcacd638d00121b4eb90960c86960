@@ -1,0 +1,5 @@
+package org.knime.mynode;
+
+public class MyNode01NodeLogic {
+
+}

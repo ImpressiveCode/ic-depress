@@ -1,0 +1,22 @@
+package org.knime.svnplugin.test;
+
+import org.junit.runner.Computer;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.notification.Failure;
+
+public class SVNPluginTestRunner {
+
+	public static void main(String[] args) {
+
+		System.out.println(SVNPluginTestRunner.class.getName() + " Start");
+
+		Computer computer = new Computer();
+
+		for (Failure failure : new JUnitCore().run(computer,
+				SVNPluginTests.class).getFailures()) {
+			System.out.println(failure.toString());
+		}
+
+		System.out.println(SVNPluginTestRunner.class.getName() + " End");
+	}
+}

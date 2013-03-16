@@ -1,0 +1,14 @@
+package org.knime.svnplugin.test;
+
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+import org.knime.svnplugin.test.functional.FunctionalTest;
+import org.knime.svnplugin.test.structural.StructuralTests;
+
+@RunWith(Suite.class)
+@SuiteClasses({ FunctionalTest.class, StructuralTests.class})
+public class CompleteTest {
+
+}

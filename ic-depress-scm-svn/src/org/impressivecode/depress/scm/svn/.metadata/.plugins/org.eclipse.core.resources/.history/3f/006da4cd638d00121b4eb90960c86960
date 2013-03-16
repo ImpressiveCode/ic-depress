@@ -1,0 +1,14 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+import org.knime.mynode.MyNode01NodeLogic;
+
+
+public class SimpleTest {
+
+	@Test
+	public void test() {
+		 new MyNode01NodeLogic();
+	}
+
+}

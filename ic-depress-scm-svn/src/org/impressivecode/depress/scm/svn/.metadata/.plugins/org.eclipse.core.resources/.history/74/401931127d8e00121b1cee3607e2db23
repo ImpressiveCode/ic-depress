@@ -1,0 +1,10 @@
+package org.knime.svn;
+
+public class SVNPluginLocale {
+
+	public static String nIssueMarker() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

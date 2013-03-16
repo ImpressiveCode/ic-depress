@@ -1,0 +1,12 @@
+package org.knime.svnplugin.test.structural;
+
+import org.junit.Test;
+import org.knime.svnplugin.SVNPluginLogger;
+
+public class SVNPluginLoggerTest {
+
+	@Test(expected = Exception.class)
+	public void testInstance() {
+		SVNPluginLogger.instance();
+	}
+}

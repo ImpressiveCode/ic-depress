@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="plugin_export" name="plugin_export">
+	<target name="plugin_export">
+		<pde.exportPlugins destination="out" exportSource="false" plugins="org.knime.svn" useJARFormat="true"  />
+	</target>
+</project>

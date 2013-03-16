@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         id="category"
+         name="category"
+         point="org.knime.workbench.repository.categories">
+      <category
+            icon="icons/missing.gif"
+            level-id="SVNPlugin.category2"
+            name="SVNPlugin.category2"
+            path="SVNPlugin.category2">
+      </category>
+   </extension>
+   
+   <extension
+         point="org.knime.workbench.repository.nodes">
+      <node
+            category-path="SVNPlugin.category"
+            factory-class="org.knime.svn.SVNPluginNodeFactory"
+            id="org.knime.svn.SVNPluginNodeFactory"/>
+   </extension>
+   
+</plugin>

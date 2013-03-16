@@ -1,0 +1,5 @@
+<project name="SVNPlugin">
+	<target name="plugin_export">
+		<pde.exportPlugins destination="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\out" exportSource="false" exportType="directory" plugins="org.knime.svn" useJARFormat="true" />
+	</target>
+</project>

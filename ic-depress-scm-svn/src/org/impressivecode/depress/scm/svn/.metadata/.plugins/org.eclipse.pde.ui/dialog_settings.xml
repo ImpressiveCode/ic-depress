@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="quick_assist_proposal_size">
+	</section>
+	<section name="PluginExportWizard">
+		<item value="true" key="exportUpdate"/>
+		<item value="true" key="saveAsAnt"/>
+		<item value="" key="alias"/>
+		<item value="Generate source bundles" key="exportSourceFormat"/>
+		<item value="false" key="qualifier"/>
+		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\out" key="zipFileName0"/>
+		<item value="" key="password"/>
+		<item value="" key="keypass"/>
+		<item value="false" key="exportSource"/>
+		<item value="" key="keystore"/>
+		<item value="true" key="useWorkspaceCompiledClasses"/>
+		<item value="2" key="exportType"/>
+		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\export_plugin.xml" key="antFileName0"/>
+		<item value="false" key="signJAR"/>
+		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\export_plugin.xml" key="antFileName1"/>
+		<item value="D:\Git\Plugins" key="destination2"/>
+		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\out" key="destination1"/>
+		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\out" key="destination0"/>
+		<item value="201303120201" key="qualifierName"/>
+		<item value="true" key="allowBinaryCycles"/>
+	</section>
+	<section name="pde_compiler_errorwarnings_block">
+		<item value="false" key="3"/>
+		<item value="false" key="2"/>
+		<item value="false" key="1"/>
+		<item value="true" key="0"/>
+		<item value="false" key="4"/>
+	</section>
+	<section name="FeatureExportWizard">
+	</section>
+	<section name="pde-form-editor">
+		<item value="bundle-context" key="org.eclipse.pde.ui.manifestEditor"/>
+	</section>
+</section>

@@ -1,0 +1,40 @@
+package org.knime.svnplugin.test;
+
+import org.junit.runner.Computer;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+import org.knime.svnplugin.test.functional.SVNPluginNodeLogicTest;
+
+public class SVNPluginTestRunner {
+
+	public static void main(String[] args) {
+
+		start(SVNPluginTestRunner.class);
+
+		runTestClass(SVNPluginNodeLogicTest.class);
+
+		end(SVNPluginTestRunner.class);
+	}
+
+	private static void end(Class<?> inClass) {
+		System.out.println(inClass.getName() + " End");
+	}
+
+	private static void start(Class<?> inClass) {
+		System.out.println(inClass.getName() + " Start");
+	}
+
+	private static void runTestClass(Class<?> inTestClass) {
+
+		start(inTestClass);
+
+		Result result = JUnitCore.runClasses(inTestClass);
+
+		for (Failure failure : result.getFailures()) {
+			System.out.println(failure.toString());
+		}
+
+		System.out.println(SVNPluginTestRunner.class.getName() + " End");
+	}
+}
