@@ -28,7 +28,8 @@ import org.osgi.framework.BundleContext;
  * file in the project root directory accordingly.
  *
  * @author Tomasz Kuzemko
- */
+ * @author Sławomir Kapłoński
+  */
 public class GitNodePlugin extends Plugin {
     // The shared instance.
     private static GitNodePlugin plugin;

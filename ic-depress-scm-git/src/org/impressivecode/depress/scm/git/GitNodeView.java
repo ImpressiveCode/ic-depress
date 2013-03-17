@@ -24,6 +24,7 @@ import org.knime.core.node.NodeView;
  * 
  *
  * @author Tomasz Kuzemko
+ * @author Sławomir Kapłoński
  */
 public class GitNodeView extends NodeView<GitNodeModel> {
 

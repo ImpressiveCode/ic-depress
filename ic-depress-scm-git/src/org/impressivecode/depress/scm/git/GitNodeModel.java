@@ -40,6 +40,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * 
  *
  * @author Tomasz Kuzemko
+ * @author Sławomir Kapłoński
  */
 public class GitNodeModel extends NodeModel {
     
