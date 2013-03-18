@@ -17,45 +17,42 @@
  */
 package org.impressivecode.depress.metric.po;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class POData {
-    private Integer NOE = 0;
-    private Integer NOEE = 0;
-    private Integer EF = 0;
-    private Double DMO = 1.0;
-    private Double PO = 1.0;
-    private Double OCO = 1.0;
-    private Double OOW = 1.0;
-    private Integer OIF = 1;
+public class PeopleOrganizationMetric {
+
+    private String className;
+    private Integer NOE;
+    private Integer NOEE;
+    private Integer EF;
+    private Integer DMO;
+    private Double PO;
+    private Double OCO;
+    private Double OOW;
+    private Integer OIF;
     private Integer NOE1 = 0;
     private Integer NOE2 = 0;
     private Integer NOE3 = 0;
     private Integer NOE4 = 0;
     private Integer NOE5 = 0;
 
-    private List<String> involvedDevelopers = new ArrayList<String>();
-
-    public List<String> getInvolvedDevelopers() {
-        return involvedDevelopers;
+    public String getClassName() {
+        return className;
     }
 
-    public void setInvolvedDevelopers(final List<String> involvedDevelopers) {
-        this.involvedDevelopers = involvedDevelopers;
-    }
-
-    public Integer getNOE() {
-        return NOE;
+    public void setClassName(final String className) {
+        this.className = className;
     }
 
     public void setNOE(final Integer nOE) {
         NOE = nOE;
+    }
+
+    public Integer getNOE() {
+        return NOE;
     }
 
     public Integer getNOEE() {
@@ -66,6 +63,9 @@ public class POData {
         NOEE = nOEE;
     }
 
+    /**
+     * Edit Frequency (EF)
+     */
     public Integer getEF() {
         return EF;
     }
@@ -74,11 +74,11 @@ public class POData {
         EF = eF;
     }
 
-    public Double getDMO() {
+    public Integer getDMO() {
         return DMO;
     }
 
-    public void setDMO(final Double dMO) {
+    public void setDMO(final Integer dMO) {
         DMO = dMO;
     }
 
@@ -152,5 +152,12 @@ public class POData {
 
     public void setNOE5(final Integer nOE5) {
         NOE5 = nOE5;
+    }
+
+    @Override
+    public String toString() {
+        return String
+                .format("PeopleOrganizationMetric [className=%s, NOE=%s, NOEE=%s, EF=%s, DMO=%s, PO=%s, OCO=%s, OOW=%s, OIF=%s, NOE1=%s, NOE2=%s, NOE3=%s, NOE4=%s, NOE5=%s]",
+                        className, NOE, NOEE, EF, DMO, PO, OCO, OOW, OIF, NOE1, NOE2, NOE3, NOE4, NOE5);
     }
 }
