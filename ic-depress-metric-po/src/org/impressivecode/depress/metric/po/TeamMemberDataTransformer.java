@@ -17,34 +17,65 @@
  */
 package org.impressivecode.depress.metric.po;
 
+import java.util.Map;
+
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.container.CloseableRowIterator;
 import org.knime.core.data.def.BooleanCell;
 import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
+import org.knime.core.node.BufferedDataTable;
+import org.knime.core.node.CanceledExecutionException;
+import org.knime.core.node.ExecutionContext;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Maps;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-class TeamMemberTransformer {
+class TeamMemberDataTransformer {
     private final DataTableSpec developersDataSpec;
 
-    public TeamMemberTransformer(final DataTableSpec developersDataSpec) {
+    public TeamMemberDataTransformer(final DataTableSpec developersDataSpec) {
         Preconditions.checkNotNull(developersDataSpec, "table specifikation can not be null.");
         this.developersDataSpec = developersDataSpec;
     }
 
-    public TeamMemberData transform(final DataRow row) {
+    public Map<String, TeamMemberData> transformEngineerData(final BufferedDataTable devTable, final ExecutionContext exec) throws CanceledExecutionException {
+        Map<String, TeamMemberData> devMap = Maps.newHashMap();
+        CloseableRowIterator iterator = devTable.iterator();
+        while (iterator.hasNext()) {
+            progress(exec);
+            TeamMemberData value = transform(iterator.next());
+            assertIfEngineerIsUnique(devMap, value);
+            devMap.put(value.getName(), value);
+        }
+        return devMap;
+    }
+
+    private void assertIfEngineerIsUnique(final Map<String, TeamMemberData> devMap, final TeamMemberData value) {
+        if (devMap.containsKey(value.getName())) {
+            throw new IllegalArgumentException("Engineers have to be unique. Engineer data:[" + value.getName() + "]");
+        }
+    }
+
+    private TeamMemberData transform(final DataRow row) {
         TeamMemberData dev = new TeamMemberData();
         dev.setExLevel(extractExLevel(row));
         dev.setExEngineer(extractExEngineer(row));
         dev.setExternal(extractExternal(row));
         dev.setName(extractName(row));
+        dev.setOrganizationPath(extractOrganizationPath(row));
         return dev;
+    }
+
+    private String extractOrganizationPath(final DataRow row) {
+        return ((StringCell) row.getCell(developersDataSpec
+                .findColumnIndex(PeopleOrganizationMetricTableFactory.ORGANIZATION_STRUCTURE))).getStringValue();
     }
 
     private String extractName(final DataRow row) {
@@ -65,5 +96,9 @@ class TeamMemberTransformer {
     private boolean extractExternal(final DataRow row) {
         return ((BooleanCell) row.getCell(developersDataSpec
                 .findColumnIndex(PeopleOrganizationMetricTableFactory.EXTERNAL_ENGINEER))).getBooleanValue();
+    }
+
+    private void progress(final ExecutionContext exec) throws CanceledExecutionException {
+        exec.checkCanceled();
     }
 }
