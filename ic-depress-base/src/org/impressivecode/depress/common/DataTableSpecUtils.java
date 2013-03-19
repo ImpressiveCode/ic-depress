@@ -18,9 +18,16 @@
 package org.impressivecode.depress.common;
 
 import java.util.Iterator;
+import java.util.Set;
 
+import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.DataType;
+import org.knime.core.data.def.DoubleCell;
+import org.knime.core.data.def.IntCell;
+
+import com.google.common.collect.Sets;
 
 /**
  * 
@@ -28,17 +35,26 @@ import org.knime.core.data.DataTableSpec;
  * 
  */
 public class DataTableSpecUtils {
-    public static boolean containsColumnSubset(final DataTableSpec dataTableSpec,
+    public static Set<String> findMissingColumnSubset(final DataTableSpec dataTableSpec,
             final DataTableSpec subsetDataTableSpec) {
+        Set<String> missing = Sets.newHashSet();
         Iterator<DataColumnSpec> iterator = subsetDataTableSpec.iterator();
         while (iterator.hasNext()) {
             DataColumnSpec spec = iterator.next();
             boolean hasColumn = spec.equalStructure(dataTableSpec.getColumnSpec(spec.getName()));
             if (!hasColumn) {
-                return false;
+                missing.add(spec.getName()+":"+spec.getType());
             }
         }
 
-        return true;
+        return missing;
+    }
+
+    public static DataCell integerOrMissingCell(final Integer value) {
+        return value == null ? DataType.getMissingCell() : new IntCell(value);
+    }
+
+    public static DataCell doubleOrMissingCell(final Double value) {
+        return value == null ? DataType.getMissingCell() : new DoubleCell(value);
     }
 }

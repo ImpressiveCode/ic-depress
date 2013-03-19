@@ -17,10 +17,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.metric.po;
 
+import org.impressivecode.depress.scm.SCMAdapterTableFactory;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.def.BooleanCell;
 import org.knime.core.data.def.DoubleCell;
 import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
@@ -40,15 +40,15 @@ public class PeopleOrganizationMetricTableFactory {
     private static final String EDIT_FREQUENCY = "EF";
     private static final String NUMBER_OF_EX_EGINEERS = "NOEE";
     private static final String NUMBER_OF_ENGINEERS = "NOE";
-    private static final String NUMBER_OF_ENGINEERS_JUNIOR = "NOE1";
-    private static final String NUMBER_OF_ENGINEERS_ENGINEER = "NOE2";
-    private static final String NUMBER_OF_ENGINEERS_SENIOR = "NOE3";
-    private static final String NUMBER_OF_ENGINEERS_ARCHITECT = "NOE4";
+    private static final String NUMBER_OF_INTERNSHIP = "NOE1";
+    private static final String NUMBER_OF_ENGINEERS_JUNIOR = "NOE2";
+    private static final String NUMBER_OF_ENGINEERS_ENGINEER = "NOE3";
+    private static final String NUMBER_OF_ENGINEERS_SENIOR = "NOE4";
+    private static final String NUMBER_OF_ENGINEERS_ARCHITECT = "NOE5";
 
     public static final String EX_ENGINEER = "ExEngineer";
     public static final String EXPIERIENCE = "ExpirienceLevel";
-    public static final String DEVELOPER = "DeveloperName";
-    public static final String EXTERNAL_ENGINEER = "External";
+    public static final String DEVELOPER = "Name";
     public static final String ORGANIZATION_STRUCTURE = "Organization";
 
     private PeopleOrganizationMetricTableFactory() {
@@ -69,6 +69,7 @@ public class PeopleOrganizationMetricTableFactory {
                 new DataColumnSpecCreator(LEVEL_OF_ORGAN_CODE_OWNERSHIP, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(OVERALL_ORGANIZATION_OWNERSHIP, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(ORGANISATION_INTERSECTION_FACTOR, IntCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(NUMBER_OF_INTERNSHIP, IntCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(NUMBER_OF_ENGINEERS_JUNIOR, IntCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(NUMBER_OF_ENGINEERS_ENGINEER, IntCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(NUMBER_OF_ENGINEERS_SENIOR, IntCell.TYPE).createSpec(),
@@ -82,9 +83,17 @@ public class PeopleOrganizationMetricTableFactory {
         DataColumnSpec[] allColSpecs = { 
                 new DataColumnSpecCreator(DEVELOPER, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(EXPIERIENCE, IntCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(EX_ENGINEER, BooleanCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(EXTERNAL_ENGINEER, BooleanCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(EX_ENGINEER, IntCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(ORGANIZATION_STRUCTURE, StringCell.TYPE).createSpec()};
+        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
+        return outputSpec;
+    }
+
+    public static DataTableSpec createHistoryColumnSpec() {
+        DataColumnSpec[] allColSpecs = {
+                new DataColumnSpecCreator(SCMAdapterTableFactory.CLASS_COLNAME, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(SCMAdapterTableFactory.AUTHOR_COLNAME, StringCell.TYPE).createSpec(),
+        };
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
         return outputSpec;
     }
