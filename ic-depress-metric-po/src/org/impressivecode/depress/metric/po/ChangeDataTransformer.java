@@ -29,6 +29,7 @@ import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 /**
@@ -69,7 +70,7 @@ class ChangeDataTransformer {
     public ChangeData transform(final DataRow row) {
         ChangeData data = new ChangeData();
         data.setClassName(extractClassName(row));
-        data.getInvolvedEngineers().add(extractAuthor(row));
+        data.setInvolvedEngineers(Lists.newArrayList(extractAuthor(row)));
         return data;
     }
 

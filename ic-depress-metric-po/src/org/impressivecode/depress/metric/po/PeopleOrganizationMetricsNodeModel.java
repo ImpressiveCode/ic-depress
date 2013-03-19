@@ -17,15 +17,17 @@
  */
 package org.impressivecode.depress.metric.po;
 
+import static org.impressivecode.depress.common.DataTableSpecUtils.findMissingColumnSubset;
 import static org.impressivecode.depress.metric.po.PeopleOrganizationMetricTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.metric.po.PeopleOrganizationMetricTableFactory.createDevDataColumnSpec;
+import static org.impressivecode.depress.metric.po.PeopleOrganizationMetricTableFactory.createHistoryColumnSpec;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import org.impressivecode.depress.common.DataTableSpecUtils;
-import org.impressivecode.depress.scm.SCMAdapterTableFactory;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -36,6 +38,8 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+
+import com.google.common.collect.Iterables;
 
 /**
  * 
@@ -94,7 +98,8 @@ public class PeopleOrganizationMetricsNodeModel extends NodeModel {
 
     private BufferedDataTable transform(final List<PeopleOrganizationMetric> poData, final ExecutionContext exec)
             throws CanceledExecutionException {
-        PeopleOrganizationMetricTransformer transformer = new PeopleOrganizationMetricTransformer(createDataColumnSpec());
+        PeopleOrganizationMetricTransformer transformer = new PeopleOrganizationMetricTransformer(
+                createDataColumnSpec());
         return transformer.transform(poData, exec);
     }
 
@@ -110,17 +115,20 @@ public class PeopleOrganizationMetricsNodeModel extends NodeModel {
     }
 
     private void configureChangeHistoryDataSpec(final DataTableSpec dataTableSpec) throws InvalidSettingsException {
-        if (SCMAdapterTableFactory.createDataColumnSpec().equals(dataTableSpec)) {
-            throw new InvalidSettingsException("History data table does not contain required column");
+        Set<String> missing = findMissingColumnSubset(dataTableSpec, createHistoryColumnSpec());
+        if (!missing.isEmpty()) {
+            throw new InvalidSettingsException("History data table does not contain required columns. Missing: "
+                    + Iterables.toString(missing));
         } else {
             this.historyDataSpec = dataTableSpec;
         }
     }
 
     private void configureDevDataSpec(final DataTableSpec dataTableSpec) throws InvalidSettingsException {
-        if (!DataTableSpecUtils.containsColumnSubset(dataTableSpec,
-                PeopleOrganizationMetricTableFactory.createDevDataColumnSpec())) {
-            throw new InvalidSettingsException("Developers data table does not contain required column");
+        Set<String> missing = findMissingColumnSubset(dataTableSpec, createDevDataColumnSpec());
+        if (!missing.isEmpty()) {
+            throw new InvalidSettingsException("Developers data table does not contain required column.  Missing: "
+                    + Iterables.toString(missing));
         } else {
             this.developersDataSpec = dataTableSpec;
         }
