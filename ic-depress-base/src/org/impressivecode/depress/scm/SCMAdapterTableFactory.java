@@ -29,7 +29,7 @@ import org.knime.core.data.def.StringCell;
  * 
  */
 public class SCMAdapterTableFactory {
-    private static final String MARKER = "Marker";
+    public static final String MARKER = "Marker";
     public static final String AUTHOR_COLNAME = "Author";
     public static final String CLASS_COLNAME = "Class";
 

@@ -22,7 +22,6 @@ import java.util.Map;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.container.CloseableRowIterator;
-import org.knime.core.data.def.BooleanCell;
 import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 import org.knime.core.node.BufferedDataTable;
@@ -45,7 +44,8 @@ class TeamMemberDataTransformer {
         this.developersDataSpec = developersDataSpec;
     }
 
-    public Map<String, TeamMemberData> transformEngineerData(final BufferedDataTable devTable, final ExecutionContext exec) throws CanceledExecutionException {
+    public Map<String, TeamMemberData> transformEngineerData(final BufferedDataTable devTable,
+            final ExecutionContext exec) throws CanceledExecutionException {
         Map<String, TeamMemberData> devMap = Maps.newHashMap();
         CloseableRowIterator iterator = devTable.iterator();
         while (iterator.hasNext()) {
@@ -67,7 +67,6 @@ class TeamMemberDataTransformer {
         TeamMemberData dev = new TeamMemberData();
         dev.setExLevel(extractExLevel(row));
         dev.setExEngineer(extractExEngineer(row));
-        dev.setExternal(extractExternal(row));
         dev.setName(extractName(row));
         dev.setOrganizationPath(extractOrganizationPath(row));
         return dev;
@@ -89,13 +88,9 @@ class TeamMemberDataTransformer {
     }
 
     private boolean extractExEngineer(final DataRow row) {
-        return ((BooleanCell) row.getCell(developersDataSpec
-                .findColumnIndex(PeopleOrganizationMetricTableFactory.EX_ENGINEER))).getBooleanValue();
-    }
-
-    private boolean extractExternal(final DataRow row) {
-        return ((BooleanCell) row.getCell(developersDataSpec
-                .findColumnIndex(PeopleOrganizationMetricTableFactory.EXTERNAL_ENGINEER))).getBooleanValue();
+        int value = ((IntCell) row.getCell(developersDataSpec
+                .findColumnIndex(PeopleOrganizationMetricTableFactory.EX_ENGINEER))).getIntValue();
+        return value == 1 ? true : false;
     }
 
     private void progress(final ExecutionContext exec) throws CanceledExecutionException {

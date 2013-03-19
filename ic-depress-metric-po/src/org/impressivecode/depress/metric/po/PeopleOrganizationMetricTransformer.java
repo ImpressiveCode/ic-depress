@@ -17,6 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.metric.po;
 
+import static org.impressivecode.depress.common.DataTableSpecUtils.doubleOrMissingCell;
+import static org.impressivecode.depress.common.DataTableSpecUtils.integerOrMissingCell;
+
 import java.util.List;
 
 import org.knime.core.data.DataCell;
@@ -78,10 +81,20 @@ public class PeopleOrganizationMetricTransformer {
 
     private static DataCell[] getPOCells(final PeopleOrganizationMetric value) {
         DataCell[] cells = { 
-                new IntCell(value.getNOE()), new IntCell(value.getNOEE()), new IntCell(value.getEF()),
-                new IntCell(value.getDMO()), new DoubleCell(value.getPO()), new DoubleCell(value.getOCO()),
-                new DoubleCell(value.getOOW()), new IntCell(value.getOIF()), new IntCell(value.getNOE1()),
-                new IntCell(value.getNOE2()), new IntCell(value.getNOE3()), new IntCell(value.getNOE4()) };
+                new IntCell(value.getNOE()), 
+                new IntCell(value.getNOEE()), 
+                new IntCell(value.getEF()),
+                integerOrMissingCell(value.getDMO()), 
+                doubleOrMissingCell((value.getPO())), 
+                new DoubleCell(value.getOCO()),
+                doubleOrMissingCell(value.getOOW()), 
+                new IntCell(value.getOIF()), 
+                new IntCell(value.getNOE1()),
+                new IntCell(value.getNOE2()), 
+                new IntCell(value.getNOE3()), 
+                new IntCell(value.getNOE4()), 
+                new IntCell(value.getNOE5()) 
+        };
         return cells;
     }
 
