@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./default.png" type="Source">
-    <name>Git</name>
+    <name>Git SCM</name>
     
     <shortDescription>
         Git SCM, ImpressiveCode Depress
     </shortDescription>
     
     <fullDescription>
-        <intro>Insert long description here...</intro>
+        <intro>
+        	This node can be used to load git log from file (offline version) or directly from git repository (online version)<br />
+        	<p>
+        		Node analyze informations about every class in every commit from given git's log file or git repository and return table with the following data: <br />
+        		- name of class<br />
+        		- marker<br />
+        		- author of change<br />
+        		- action - it can be one of: <br />
+        				M - modification<br />
+        				A - added new<br />
+        				D - deleted<br />
+        		- complete messege from commit<br />
+        		- original path of class<br />
+        		- date of change<br />
+        		- Uniq ID of record<br />
+        	</p>
+        
+        </intro>
         
         
-        <option name="short name of first option (like in the dialog)">description of first option</option>
-        <option name="short name of second option (like in the dialog)">description of second option</option>
-        <!-- possibly more options that can also be grouped by tabs -->
-        <!--
-        <tab name="Standard Options">
-            <option name="short name of first option (like in the dialog)">description of first option</option>
-            <option name="short name of second option (like in the dialog)">description of second option</option>
-        </tab>
-        <tab name="Advanced Options">
-            <option name="short name of first advanced option (like in the dialog)">description of first advanced option</option>
-        </tab>
-        -->
+        <option name="selected file">File with Git log to analyze in offline version of plugin</option>
+        <option name="Issue marker">Marker for extraction name of class</option>
+        <option name="Package">Name of package</option>
     </fullDescription>
     
     <ports>
-        <outPort index="0" name="Out-Port name">Datatable just read from the GIT scm</outPort>
-        <!-- possibly more output ports here-->
+        <outPort index="0" name="Out-Port name">Table with data read from Git log file or Git repository</outPort>
     </ports>    
-    <views>
-        <view index="0" name="name of first view">Description of first view...</view>
-        <!--view index="1" name="name of second view">Description of second view...</view-->
-    </views>
 </knimeNode>
