@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./po.png" type="Manipulator">
+    <name>People and Organization Metric</name>
+
+    <shortDescription>
+        People and Organization Metric, ImpressiveCode DePress Plugin Framework.
+    </shortDescription>
+
+    <fullDescription>
+        <intro>
+            <p>
+            People and Organization Metric quantifies the complexity of a software development in organization. It
+            consists of following measures:
+            <ul>
+                <li>
+                    Number of Engineers (NOE) - absolute number of unique engineers who have touched a binary and are
+                    still employed by the company.
+                </li>
+                <li>
+                    Number of Ex-Engineers (NOEE) - total number of unique engineers who have touched a binary and have
+                    left the company as of the release date of the software system.
+                </li>
+                <li>
+                    Edit Frequency (EF) - total number times the source code, that makes up the binary, was edited.
+                </li>
+                <li>
+                    Depth of Master Ownership (DMO) - determines the level of ownership of the binary depending on the
+                    number of edits done.
+                    The organization level of the person whose reporting engineers perform more
+                    than 75% of the commited changes is deemed as the DMO.
+                </li>
+                <li>
+                    Percentage of Org contributing to development (PO) - the ratio of the number of people reporting at
+                    the DMO level owner relative to the Master owner org size.
+                </li>
+                <li>
+                    Level of Organizational Code Ownership (OCO) - the percent of edits from the organization that
+                    contains the binary owner or if there is no owner then the organization that made the majority of
+                    the edits to that binary.
+                </li>
+                <li>
+                    Overall Organization Ownership (OOW) - the ratio of the percentage of people at the DMO level
+                    making
+                    edits to a binary relative to total engineers editing the binary.
+                </li>
+                <li>
+                    Organization Intersection Factor (OIF) - measure of the number of different organizations that
+                    contribute greater than 10% of edits, as measured at the level of the overall organization
+                    owners.
+                </li>
+                <li>
+                    Number of Engineers with Skill X (NOE1 .. NOE2) - total number of edits done by engineers with given
+                    skill level(1..5).
+                    For example levels could be assign as follows: 1 - trainee, 2 - junior engineer, 3
+                    - engineer, 4 - senior engineer, 5 - software achitect or software specialist.
+                    (This is an additional
+                    PO Metric measure.)
+                </li>
+            </ul>
+            Detail information could be found in original paper:
+            <br />
+            <a href="http://research.microsoft.com/apps/pubs/default.aspx?id=70535">
+                Nachiappan Nagappan , Brendan Murphy , Victor Basili, The influence of organizational structure on
+                software quality: an empirical case study, Proceedings of the 30th international conference on
+                Software engineering, May 10-18, 2008, Leipzig, Germany
+            </a>
+            </p>
+             <p>
+             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/ic-depress-metric-po/examples">here</a> or inside plugin jar. 
+             <br/> 
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
+        </intro>
+    </fullDescription>
+
+    <ports>
+        <inPort index="0" name="Engineers data">
+            Engineers data has to consist of following collumns: Name (string),
+            ExpirienceLevel (Int, 1..5), ExEngineer (Int, 0 - false, otherwise true), Organization (string, organization
+            hierarchy could be build by using ';' e.h. A;AB;ABC).
+        </inPort>
+        <inPort index="1" name="Change history data">Change history data could be retrived from any Source Repository (e.g. GUT or SVN
+            Adapter plugin). It should consist at least from Class (string) and Author (string) collumns.</inPort>
+        <outPort index="0" name="Metric results">Computed People and Organization Metric.</outPort>
+    </ports>
+</knimeNode>
