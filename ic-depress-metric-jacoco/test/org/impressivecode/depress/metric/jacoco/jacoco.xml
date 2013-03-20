@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <report name="Commons Math">
+        <sessioninfo id="kalafior-70b3617e" start="1336771153556" dump="1336771181054" />
+        <package name="org/apache/commons/math/optimization/direct">
+            <class name="org/apache/commons/math/optimization/direct/DirectSearchOptimizer">
+                <method name="&lt;init&gt;" desc="()V" line="124">
+                    <counter type="INSTRUCTION" missed="0" covered="14" />
+                    <counter type="LINE" missed="0" covered="5" />
+                    <counter type="COMPLEXITY" missed="0" covered="1" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="setStartConfiguration" desc="([D)V" line="150">
+                    <counter type="INSTRUCTION" missed="17" covered="44" />
+                    <counter type="BRANCH" missed="1" covered="5" />
+                    <counter type="LINE" missed="1" covered="8" />
+                    <counter type="COMPLEXITY" missed="1" covered="3" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="setStartConfiguration" desc="([[D)V" line="178">
+                    <counter type="INSTRUCTION" missed="38" covered="91" />
+                    <counter type="BRANCH" missed="5" covered="13" />
+                    <counter type="LINE" missed="3" covered="20" />
+                    <counter type="COMPLEXITY" missed="5" covered="5" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="setMaxIterations" desc="(I)V" line="225">
+                    <counter type="INSTRUCTION" missed="0" covered="4" />
+                    <counter type="LINE" missed="0" covered="2" />
+                    <counter type="COMPLEXITY" missed="0" covered="1" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="getMaxIterations" desc="()I" line="230">
+                    <counter type="INSTRUCTION" missed="3" covered="0" />
+                    <counter type="LINE" missed="1" covered="0" />
+                    <counter type="COMPLEXITY" missed="1" covered="0" />
+                    <counter type="METHOD" missed="1" covered="0" />
+                </method>
+                <method name="setMaxEvaluations" desc="(I)V" line="235">
+                    <counter type="INSTRUCTION" missed="0" covered="4" />
+                    <counter type="LINE" missed="0" covered="2" />
+                    <counter type="COMPLEXITY" missed="0" covered="1" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="getMaxEvaluations" desc="()I" line="240">
+                    <counter type="INSTRUCTION" missed="3" covered="0" />
+                    <counter type="LINE" missed="1" covered="0" />
+                    <counter type="COMPLEXITY" missed="1" covered="0" />
+                    <counter type="METHOD" missed="1" covered="0" />
+                </method>
+                <method name="getIterations" desc="()I" line="245">
+                    <counter type="INSTRUCTION" missed="0" covered="3" />
+                    <counter type="LINE" missed="0" covered="1" />
+                    <counter type="COMPLEXITY" missed="0" covered="1" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="getEvaluations" desc="()I" line="250">
+                    <counter type="INSTRUCTION" missed="0" covered="3" />
+                    <counter type="LINE" missed="0" covered="1" />
+                    <counter type="COMPLEXITY" missed="0" covered="1" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="setConvergenceChecker" desc="(Lorg/apache/commons/math/optimization/RealConvergenceChecker;)V"
+                    line="255">
+                    <counter type="INSTRUCTION" missed="0" covered="4" />
+                    <counter type="LINE" missed="0" covered="2" />
+                    <counter type="COMPLEXITY" missed="0" covered="1" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="getConvergenceChecker" desc="()Lorg/apache/commons/math/optimization/RealConvergenceChecker;"
+                    line="260">
+                    <counter type="INSTRUCTION" missed="0" covered="3" />
+                    <counter type="LINE" missed="0" covered="1" />
+                    <counter type="COMPLEXITY" missed="0" covered="1" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="optimize"
+                    desc="(Lorg/apache/commons/math/analysis/MultivariateRealFunction;Lorg/apache/commons/math/optimization/GoalType;[D)Lorg/apache/commons/math/optimization/RealPointValuePair;"
+                    line="270">
+                    <counter type="INSTRUCTION" missed="0" covered="88" />
+                    <counter type="BRANCH" missed="0" covered="8" />
+                    <counter type="LINE" missed="0" covered="19" />
+                    <counter type="COMPLEXITY" missed="0" covered="5" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="incrementIterationsCounter" desc="()V" line="324">
+                    <counter type="INSTRUCTION" missed="0" covered="20" />
+                    <counter type="BRANCH" missed="0" covered="2" />
+                    <counter type="LINE" missed="0" covered="3" />
+                    <counter type="COMPLEXITY" missed="0" covered="2" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="evaluate" desc="([D)D" line="350">
+                    <counter type="INSTRUCTION" missed="0" covered="25" />
+                    <counter type="BRANCH" missed="0" covered="2" />
+                    <counter type="LINE" missed="0" covered="3" />
+                    <counter type="COMPLEXITY" missed="0" covered="2" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="buildSimplex" desc="([D)V" line="365">
+                    <counter type="INSTRUCTION" missed="17" covered="67" />
+                    <counter type="BRANCH" missed="1" covered="5" />
+                    <counter type="LINE" missed="1" covered="11" />
+                    <counter type="COMPLEXITY" missed="1" covered="3" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="evaluateSimplex" desc="(Ljava/util/Comparator;)V" line="396">
+                    <counter type="INSTRUCTION" missed="0" covered="38" />
+                    <counter type="BRANCH" missed="0" covered="4" />
+                    <counter type="LINE" missed="0" covered="7" />
+                    <counter type="COMPLEXITY" missed="0" covered="3" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="replaceWorstPoint" desc="(Lorg/apache/commons/math/optimization/RealPointValuePair;Ljava/util/Comparator;)V"
+                    line="415">
+                    <counter type="INSTRUCTION" missed="0" covered="39" />
+                    <counter type="BRANCH" missed="0" covered="4" />
+                    <counter type="LINE" missed="0" covered="8" />
+                    <counter type="COMPLEXITY" missed="0" covered="3" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <counter type="INSTRUCTION" missed="78" covered="447" />
+                <counter type="BRANCH" missed="7" covered="43" />
+                <counter type="LINE" missed="7" covered="93" />
+                <counter type="COMPLEXITY" missed="9" covered="33" />
+                <counter type="METHOD" missed="2" covered="15" />
+                <counter type="CLASS" missed="0" covered="1" />
+            </class>
+            <class name="org/apache/commons/math/optimization/direct/DirectSearchOptimizer$1">
+                <method name="&lt;init&gt;"
+                    desc="(Lorg/apache/commons/math/optimization/direct/DirectSearchOptimizer;Lorg/apache/commons/math/optimization/GoalType;)V"
+                    line="280">
+                    <counter type="INSTRUCTION" missed="0" covered="9" />
+                    <counter type="LINE" missed="0" covered="1" />
+                    <counter type="COMPLEXITY" missed="0" covered="1" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="compare"
+                    desc="(Lorg/apache/commons/math/optimization/RealPointValuePair;Lorg/apache/commons/math/optimization/RealPointValuePair;)I"
+                    line="283">
+                    <counter type="INSTRUCTION" missed="0" covered="18" />
+                    <counter type="BRANCH" missed="0" covered="2" />
+                    <counter type="LINE" missed="0" covered="3" />
+                    <counter type="COMPLEXITY" missed="0" covered="2" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <counter type="INSTRUCTION" missed="0" covered="27" />
+                <counter type="BRANCH" missed="0" covered="2" />
+                <counter type="LINE" missed="0" covered="4" />
+                <counter type="COMPLEXITY" missed="0" covered="3" />
+                <counter type="METHOD" missed="0" covered="2" />
+                <counter type="CLASS" missed="0" covered="1" />
+            </class>
+            <class name="org/apache/commons/math/optimization/direct/NelderMead">
+                <method name="&lt;init&gt;" desc="()V" line="51">
+                    <counter type="INSTRUCTION" missed="0" covered="15" />
+                    <counter type="LINE" missed="0" covered="6" />
+                    <counter type="COMPLEXITY" missed="0" covered="1" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="&lt;init&gt;" desc="(DDDD)V" line="65">
+                    <counter type="INSTRUCTION" missed="0" covered="15" />
+                    <counter type="LINE" missed="0" covered="6" />
+                    <counter type="COMPLEXITY" missed="0" covered="1" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="iterateSimplex" desc="(Ljava/util/Comparator;)V" line="77">
+                    <counter type="INSTRUCTION" missed="1" covered="342" />
+                    <counter type="BRANCH" missed="1" covered="31" />
+                    <counter type="LINE" missed="1" covered="52" />
+                    <counter type="COMPLEXITY" missed="1" covered="16" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <counter type="INSTRUCTION" missed="1" covered="372" />
+                <counter type="BRANCH" missed="1" covered="31" />
+                <counter type="LINE" missed="1" covered="64" />
+                <counter type="COMPLEXITY" missed="1" covered="18" />
+                <counter type="METHOD" missed="0" covered="3" />
+                <counter type="CLASS" missed="0" covered="1" />
+            </class>
+            <class name="org/apache/commons/math/optimization/direct/MultiDirectional">
+                <method name="&lt;init&gt;" desc="()V" line="45">
+                    <counter type="INSTRUCTION" missed="0" covered="9" />
+                    <counter type="LINE" missed="0" covered="4" />
+                    <counter type="COMPLEXITY" missed="0" covered="1" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="&lt;init&gt;" desc="(DD)V" line="54">
+                    <counter type="INSTRUCTION" missed="0" covered="9" />
+                    <counter type="LINE" missed="0" covered="4" />
+                    <counter type="COMPLEXITY" missed="0" covered="1" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="iterateSimplex" desc="(Ljava/util/Comparator;)V" line="64">
+                    <counter type="INSTRUCTION" missed="0" covered="86" />
+                    <counter type="BRANCH" missed="0" covered="10" />
+                    <counter type="LINE" missed="0" covered="21" />
+                    <counter type="COMPLEXITY" missed="0" covered="6" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <method name="evaluateNewSimplex"
+                    desc="([Lorg/apache/commons/math/optimization/RealPointValuePair;DLjava/util/Comparator;)Lorg/apache/commons/math/optimization/RealPointValuePair;"
+                    line="124">
+                    <counter type="INSTRUCTION" missed="0" covered="77" />
+                    <counter type="BRANCH" missed="0" covered="4" />
+                    <counter type="LINE" missed="0" covered="12" />
+                    <counter type="COMPLEXITY" missed="0" covered="3" />
+                    <counter type="METHOD" missed="0" covered="1" />
+                </method>
+                <counter type="INSTRUCTION" missed="0" covered="181" />
+                <counter type="BRANCH" missed="0" covered="14" />
+                <counter type="LINE" missed="0" covered="41" />
+                <counter type="COMPLEXITY" missed="0" covered="11" />
+                <counter type="METHOD" missed="0" covered="4" />
+                <counter type="CLASS" missed="0" covered="1" />
+            </class>
+            <sourcefile name="DirectSearchOptimizer.java">
+                <line nr="124" mi="0" ci="2" mb="0" cb="0" />
+                <line nr="125" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="126" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="127" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="128" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="150" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="151" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="152" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="153" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="154" mi="0" ci="9" mb="0" cb="2" />
+                <line nr="155" mi="0" ci="6" mb="1" cb="1" />
+                <line nr="156" mi="17" ci="0" mb="0" cb="0" />
+                <line nr="159" mi="0" ci="8" mb="0" cb="0" />
+                <line nr="162" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="178" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="179" mi="0" ci="2" mb="1" cb="1" />
+                <line nr="180" mi="5" ci="0" mb="0" cb="0" />
+                <line nr="183" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="184" mi="0" ci="4" mb="0" cb="0" />
+                <line nr="187" mi="0" ci="9" mb="0" cb="2" />
+                <line nr="189" mi="0" ci="4" mb="0" cb="0" />
+                <line nr="192" mi="0" ci="4" mb="1" cb="1" />
+                <line nr="193" mi="16" ci="0" mb="0" cb="0" />
+                <line nr="196" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="197" mi="0" ci="4" mb="0" cb="0" />
+                <line nr="198" mi="0" ci="2" mb="0" cb="0" />
+                <line nr="199" mi="2" ci="5" mb="1" cb="1" />
+                <line nr="200" mi="0" ci="8" mb="1" cb="1" />
+                <line nr="201" mi="0" ci="2" mb="0" cb="0" />
+                <line nr="202" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="205" mi="0" ci="2" mb="1" cb="1" />
+                <line nr="206" mi="15" ci="0" mb="0" cb="0" />
+                <line nr="212" mi="0" ci="2" mb="0" cb="2" />
+                <line nr="213" mi="0" ci="7" mb="0" cb="0" />
+                <line nr="214" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="215" mi="0" ci="10" mb="0" cb="0" />
+                <line nr="221" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="225" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="226" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="230" mi="3" ci="0" mb="0" cb="0" />
+                <line nr="235" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="236" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="240" mi="3" ci="0" mb="0" cb="0" />
+                <line nr="245" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="250" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="255" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="256" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="260" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="270" mi="0" ci="3" mb="0" cb="2" />
+                <line nr="273" mi="0" ci="4" mb="0" cb="0" />
+                <line nr="274" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="275" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="278" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="279" mi="0" ci="6" mb="0" cb="0" />
+                <line nr="280" mi="0" ci="9" mb="0" cb="0" />
+                <line nr="283" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="284" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="285" mi="0" ci="12" mb="0" cb="2" />
+                <line nr="291" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="292" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="293" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="294" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="296" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="299" mi="0" ci="3" mb="0" cb="2" />
+                <line nr="300" mi="0" ci="2" mb="0" cb="0" />
+                <line nr="301" mi="0" ci="9" mb="0" cb="2" />
+                <line nr="302" mi="0" ci="15" mb="0" cb="0" />
+                <line nr="304" mi="0" ci="2" mb="0" cb="2" />
+                <line nr="306" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="311" mi="0" ci="9" mb="0" cb="0" />
+                <line nr="312" mi="0" ci="4" mb="0" cb="0" />
+                <line nr="324" mi="0" ci="10" mb="0" cb="2" />
+                <line nr="325" mi="0" ci="9" mb="0" cb="0" />
+                <line nr="327" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="350" mi="0" ci="10" mb="0" cb="2" />
+                <line nr="351" mi="0" ci="10" mb="0" cb="0" />
+                <line nr="354" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="365" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="366" mi="0" ci="5" mb="1" cb="1" />
+                <line nr="367" mi="17" ci="0" mb="0" cb="0" />
+                <line nr="372" mi="0" ci="6" mb="0" cb="0" />
+                <line nr="373" mi="0" ci="9" mb="0" cb="0" />
+                <line nr="376" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="377" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="378" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="379" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="380" mi="0" ci="10" mb="0" cb="0" />
+                <line nr="382" mi="0" ci="11" mb="0" cb="0" />
+                <line nr="385" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="396" mi="0" ci="9" mb="0" cb="2" />
+                <line nr="397" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="398" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="399" mi="0" ci="4" mb="0" cb="2" />
+                <line nr="400" mi="0" ci="12" mb="0" cb="0" />
+                <line nr="405" mi="0" ci="4" mb="0" cb="0" />
+                <line nr="407" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="415" mi="0" ci="6" mb="0" cb="0" />
+                <line nr="416" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="417" mi="0" ci="8" mb="0" cb="2" />
+                <line nr="418" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="419" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="420" mi="0" ci="2" mb="0" cb="0" />
+                <line nr="423" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="424" mi="0" ci="1" mb="0" cb="0" />
+                <counter type="INSTRUCTION" missed="78" covered="474" />
+                <counter type="BRANCH" missed="7" covered="45" />
+                <counter type="LINE" missed="7" covered="97" />
+                <counter type="COMPLEXITY" missed="9" covered="36" />
+                <counter type="METHOD" missed="2" covered="17" />
+                <counter type="CLASS" missed="0" covered="2" />
+            </sourcefile>
+            <sourcefile name="MultiDirectional.java">
+                <line nr="45" mi="0" ci="2" mb="0" cb="0" />
+                <line nr="46" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="47" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="48" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="54" mi="0" ci="2" mb="0" cb="0" />
+                <line nr="55" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="56" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="57" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="64" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="67" mi="0" ci="2" mb="0" cb="0" />
+                <line nr="70" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="71" mi="0" ci="4" mb="0" cb="0" />
+                <line nr="74" mi="0" ci="6" mb="0" cb="0" />
+                <line nr="75" mi="0" ci="5" mb="0" cb="2" />
+                <line nr="78" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="79" mi="0" ci="7" mb="0" cb="0" />
+                <line nr="80" mi="0" ci="5" mb="0" cb="2" />
+                <line nr="82" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="85" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="90" mi="0" ci="7" mb="0" cb="0" />
+                <line nr="91" mi="0" ci="5" mb="0" cb="2" />
+                <line nr="93" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="97" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="98" mi="0" ci="2" mb="0" cb="0" />
+                <line nr="99" mi="0" ci="9" mb="0" cb="2" />
+                <line nr="100" mi="0" ci="13" mb="0" cb="0" />
+                <line nr="102" mi="0" ci="2" mb="0" cb="2" />
+                <line nr="103" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="106" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="124" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="125" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="128" mi="0" ci="6" mb="0" cb="0" />
+                <line nr="129" mi="0" ci="7" mb="0" cb="0" />
+                <line nr="130" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="131" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="132" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="133" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="134" mi="0" ci="16" mb="0" cb="0" />
+                <line nr="136" mi="0" ci="10" mb="0" cb="0" />
+                <line nr="140" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="141" mi="0" ci="5" mb="0" cb="0" />
+                <counter type="INSTRUCTION" missed="0" covered="181" />
+                <counter type="BRANCH" missed="0" covered="14" />
+                <counter type="LINE" missed="0" covered="41" />
+                <counter type="COMPLEXITY" missed="0" covered="11" />
+                <counter type="METHOD" missed="0" covered="4" />
+                <counter type="CLASS" missed="0" covered="1" />
+            </sourcefile>
+            <sourcefile name="NelderMead.java">
+                <line nr="51" mi="0" ci="2" mb="0" cb="0" />
+                <line nr="52" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="53" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="54" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="55" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="56" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="65" mi="0" ci="2" mb="0" cb="0" />
+                <line nr="66" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="67" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="68" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="69" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="70" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="77" mi="0" ci="2" mb="0" cb="0" />
+                <line nr="80" mi="0" ci="6" mb="0" cb="0" />
+                <line nr="83" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="84" mi="0" ci="7" mb="0" cb="0" />
+                <line nr="85" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="86" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="90" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="91" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="92" mi="0" ci="6" mb="0" cb="0" />
+                <line nr="93" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="94" mi="0" ci="9" mb="0" cb="0" />
+                <line nr="97" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="98" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="99" mi="0" ci="7" mb="0" cb="0" />
+                <line nr="103" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="104" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="105" mi="0" ci="17" mb="0" cb="0" />
+                <line nr="107" mi="0" ci="9" mb="0" cb="0" />
+                <line nr="109" mi="0" ci="10" mb="0" cb="4" />
+                <line nr="113" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="115" mi="0" ci="5" mb="0" cb="2" />
+                <line nr="118" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="119" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="120" mi="0" ci="17" mb="0" cb="0" />
+                <line nr="122" mi="0" ci="9" mb="0" cb="0" />
+                <line nr="124" mi="0" ci="5" mb="0" cb="2" />
+                <line nr="126" mi="0" ci="5" mb="0" cb="0" />
+                <line nr="129" mi="0" ci="4" mb="0" cb="0" />
+                <line nr="132" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="134" mi="0" ci="5" mb="0" cb="2" />
+                <line nr="137" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="138" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="139" mi="0" ci="17" mb="0" cb="0" />
+                <line nr="141" mi="0" ci="9" mb="0" cb="0" />
+                <line nr="143" mi="0" ci="5" mb="1" cb="1" />
+                <line nr="145" mi="0" ci="4" mb="0" cb="0" />
+                <line nr="146" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="149" mi="1" ci="0" mb="0" cb="0" />
+                <line nr="152" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="153" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="154" mi="0" ci="17" mb="0" cb="0" />
+                <line nr="156" mi="0" ci="9" mb="0" cb="0" />
+                <line nr="158" mi="0" ci="5" mb="0" cb="2" />
+                <line nr="160" mi="0" ci="4" mb="0" cb="0" />
+                <line nr="161" mi="0" ci="1" mb="0" cb="0" />
+                <line nr="167" mi="0" ci="6" mb="0" cb="0" />
+                <line nr="168" mi="0" ci="9" mb="0" cb="2" />
+                <line nr="169" mi="0" ci="6" mb="0" cb="0" />
+                <line nr="170" mi="0" ci="7" mb="0" cb="2" />
+                <line nr="171" mi="0" ci="17" mb="0" cb="0" />
+                <line nr="173" mi="0" ci="10" mb="0" cb="0" />
+                <line nr="175" mi="0" ci="3" mb="0" cb="0" />
+                <line nr="179" mi="0" ci="1" mb="0" cb="0" />
+                <counter type="INSTRUCTION" missed="1" covered="372" />
+                <counter type="BRANCH" missed="1" covered="31" />
+                <counter type="LINE" missed="1" covered="64" />
+                <counter type="COMPLEXITY" missed="1" covered="18" />
+                <counter type="METHOD" missed="0" covered="3" />
+                <counter type="CLASS" missed="0" covered="1" />
+            </sourcefile>
+            <counter type="INSTRUCTION" missed="79" covered="1027" />
+            <counter type="BRANCH" missed="8" covered="90" />
+            <counter type="LINE" missed="8" covered="202" />
+            <counter type="COMPLEXITY" missed="10" covered="65" />
+            <counter type="METHOD" missed="2" covered="24" />
+            <counter type="CLASS" missed="0" covered="4" />
+        </package>
+    </report>
