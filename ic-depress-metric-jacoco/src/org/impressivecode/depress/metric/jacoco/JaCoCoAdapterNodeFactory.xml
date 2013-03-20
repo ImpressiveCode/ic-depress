@@ -4,7 +4,7 @@
     <name>JaCoCo Adapter</name>
 
     <shortDescription>
-        Adapter providing access to the Java Code Coverage (JaCoCo) results. ImpressiveCode Depress Plugin Framework.
+        Java Code Coverage (JaCoCo) Adapter. ImpressiveCode DePress Plugin Framework.
     </shortDescription>
 
     <fullDescription>
