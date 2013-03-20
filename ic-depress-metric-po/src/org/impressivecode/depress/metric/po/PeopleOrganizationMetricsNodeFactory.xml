@@ -4,11 +4,12 @@
     <name>People and Organization Metric</name>
 
     <shortDescription>
-        People and Organization Metric
+        People and Organization Metric, ImpressiveCode DePress Plugin Framework.
     </shortDescription>
 
     <fullDescription>
         <intro>
+            <p>
             People and Organization Metric quantifies the complexity of a software development in organization. It
             consists of following measures:
             <ul>
@@ -64,13 +65,19 @@
                 software quality: an empirical case study, Proceedings of the 30th international conference on
                 Software engineering, May 10-18, 2008, Leipzig, Germany
             </a>
+            </p>
+             <p>
+             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/ic-depress-metric-po/examples">here</a> or inside plugin jar. 
+             <br/> 
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
         </intro>
     </fullDescription>
 
     <ports>
         <inPort index="0" name="Engineers data">
-            Engineers data has to consists of following collumns: Name (string),
-            ExpirienceLevel (Int, 1..5), ExEngineer (Int, 0 - false, otherwise true), Organization (string, organisation
+            Engineers data has to consist of following collumns: Name (string),
+            ExpirienceLevel (Int, 1..5), ExEngineer (Int, 0 - false, otherwise true), Organization (string, organization
             hierarchy could be build by using ';' e.h. A;AB;ABC).
         </inPort>
         <inPort index="1" name="Change history data">Change history data could be retrived from any Source Repository (e.g. GUT or SVN

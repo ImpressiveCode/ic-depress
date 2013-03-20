@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./jacoco.png" type="Source">
+    <name>JaCoCo Adapter</name>
+
+    <shortDescription>
+        Java Code Coverage (JaCoCo) Adapter. ImpressiveCode DePress Plugin Framework.
+    </shortDescription>
+
+    <fullDescription>
+        <intro>
+            <p>
+            This node can be used to read data from  JaCoCo coverage report(XML format). Only <u>sourcefile</u> are retrieved. 
+            </p>
+            <p>
+            For further information about report generation please refer to JaCoCo documentation.<br/> 
+            JaCoCo home page:
+            <a href="http://www.eclemma.org/jacoco/">http://www.eclemma.org/jacoco/</a>
+            </p>
+            <p>
+             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/ic-depress-metric-jacoco/examples">here</a> or inside plugin jar. 
+             <br/> 
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
+        </intro>
+        <option name="Jacoco file location">Enter a valid file. When you press ENTER, the file is analyzed and the settings pre-set.
+            You
+            can also choose a previously read file from the drop-down list, or select a file from the "Browse..."
+            dialog.
+        </option>
+    </fullDescription>
+
+    <ports>
+        <outPort index="0" name="Coverage Table">Datatable just read from the jacoco file.</outPort>
+    </ports>
+</knimeNode>
