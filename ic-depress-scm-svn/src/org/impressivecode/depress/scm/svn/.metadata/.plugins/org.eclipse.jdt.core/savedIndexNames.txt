@@ -1,4 +1,0 @@
-INDEX VERSION 1.126+D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\.metadata\.plugins\org.eclipse.jdt.core
-872928621.index
-929573278.index
-3539993703.index

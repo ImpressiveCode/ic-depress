@@ -1,0 +1,10 @@
+package org.impressivecode.depress.scm.svn;
+
+public class SVNLogLoader {
+
+	public void loadXML(String inPath, String inIsueMarker, String inPackage) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

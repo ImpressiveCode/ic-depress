@@ -1,0 +1,40 @@
+package org.impressivecode.depress.scm.svn.test.structural;
+
+import org.impressivecode.depress.scm.svn.SVNLogLoader;
+import org.impressivecode.depress.scm.svn.test.TestSettings;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class SVNLogLoaderTest {
+
+	SVNLogLoader loader;
+
+	@Before
+	public void setUp() throws Exception {
+		loader = new SVNLogLoader();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		loader = null;
+	}
+
+	@Test
+	public void testLoadXmlPath() {
+		loader.loadXmlL(null, "", "");
+	}
+
+	@Test
+	public void testLoadXmlIssue() {
+		loader.loadXmlL(TestSettings.xmlTestPath,
+				null, "");
+	}
+
+	@Test
+	public void testLoadXmlPackage() {
+		loader.loadXmlL(TestSettings.xmlTestPath,
+				"", null);
+	}
+
+}

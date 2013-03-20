@@ -1,0 +1,15 @@
+package org.impressivecode.depress.scm.svn;
+
+public class SVNLogLoader {
+
+	public interface IReadProgress {
+
+	}
+
+	public void loadXmlL(String inPath, String inIsueMarker, String inPackage,
+			IReadProgress inProgress) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

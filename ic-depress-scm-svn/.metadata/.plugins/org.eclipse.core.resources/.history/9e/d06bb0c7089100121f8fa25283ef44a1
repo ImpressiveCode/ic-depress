@@ -1,0 +1,3 @@
+#Properties file for org.impressivecode.depress.scm.svn
+Bundle-Vendor = KNIME
+Bundle-Name = SVN-Node extension for KNIME Workbench
