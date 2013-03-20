@@ -2,25 +2,35 @@
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./jacoco.png" type="Source">
     <name>JaCoCo Adapter</name>
-    
+
     <shortDescription>
-        
+        Adapter providing access to the Java Code Coverage (JaCoCo) results. ImpressiveCode Depress Plugin Framework.
     </shortDescription>
-    
+
     <fullDescription>
-        <intro>Insert long description here...</intro>
-        
-        
-        <option name="short name of first option (like in the dialog)">description of first option</option>
-        <option name="short name of second option (like in the dialog)">description of second option</option>
+        <intro>
+            <p>
+            This node can be used to read data from  JaCoCo coverage report(XML format). Only <u>sourcefile</u> are retrieved. 
+            </p>
+            <p>
+            For further information about report generation please refer to JaCoCo documentation.<br/> 
+            JaCoCo home page:
+            <a href="http://www.eclemma.org/jacoco/">http://www.eclemma.org/jacoco/</a>
+            </p>
+            <p>
+             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/ic-depress-metric-jacoco/examples">here</a> or inside plugin jar. 
+             <br/> 
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
+        </intro>
+        <option name="Jacoco file location">Enter a valid file. When you press ENTER, the file is analyzed and the settings pre-set.
+            You
+            can also choose a previously read file from the drop-down list, or select a file from the "Browse..."
+            dialog.
+        </option>
     </fullDescription>
-    
+
     <ports>
-        <outPort index="0" name="Out-Port name">Description of first output port...</outPort>
-        <!-- possibly more output ports here-->
-    </ports>    
-    <views>
-        <view index="0" name="name of first view">Description of first view...</view>
-        <!--view index="1" name="name of second view">Description of second view...</view-->
-    </views>
+        <outPort index="0" name="Coverage Table">Datatable just read from the jacoco file.</outPort>
+    </ports>
 </knimeNode>
