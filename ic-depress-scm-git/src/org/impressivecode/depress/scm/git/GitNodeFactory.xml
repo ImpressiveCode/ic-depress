@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
-<knimeNode icon="./default.png" type="Source">
+<knimeNode icon="./git.png" type="Source">
     <name>Git SCM</name>
     
     <shortDescription>
@@ -24,7 +24,7 @@
         		- date of change<br />
         		- Uniq ID of record<br />
         	</p>
-        
+        	Git logo icon made by <a href="http://henrik.nyh.se/octopress/2007/06/alternative-git-logo-and-favicon/">Henrik Nyh</a>
         </intro>
         
         
