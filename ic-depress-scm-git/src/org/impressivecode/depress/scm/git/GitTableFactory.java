@@ -15,37 +15,46 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.impressivecode.depress.scm.git;
 
+/*
+ *
+ * @author Tomasz Kuzemko
+ * @author Sławomir Kapłoński
+ *
+ */
+
+import org.impressivecode.depress.scm.SCMAdapterTableFactory;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.def.StringCell;
 
-public class GitTableFactory {
+public class GitTableFactory extends SCMAdapterTableFactory {
     
-    private final static int COLUMNS = 8;
-    private final static String CLASSNAME = "class";
-    private final static String MARKER = "marker";
-    private final static String AUTHOR = "author";
-    private final static String ACTION = "action";
-    private final static String MESSAGE = "message";
-    private final static String PATHNAME = "path";
-    private final static String DATE = "date";
-    private final static String UID = "UID";
+    private final static int COLUMNS = 5;
+    private final static String ACTION_COLNAME  = "Action";
+    private final static String MESSAGE_COLNAME = "Message";
+    private final static String PATH_COLNAME    = "Path";
+    private final static String DATE_COLNAME    = "Date";
+    private final static String UID_COLNAME     = "UID";
     
-    static DataTableSpec createTable(){
-        DataColumnSpec[] allColSpecs = new DataColumnSpec[COLUMNS];
-        allColSpecs[0] = new DataColumnSpecCreator(CLASSNAME, StringCell.TYPE).createSpec();
-        allColSpecs[1] = new DataColumnSpecCreator(MARKER, StringCell.TYPE).createSpec();
-        allColSpecs[2] = new DataColumnSpecCreator(AUTHOR, StringCell.TYPE).createSpec();
-        allColSpecs[3] = new DataColumnSpecCreator(ACTION, StringCell.TYPE).createSpec();
-        allColSpecs[4] = new DataColumnSpecCreator(MESSAGE, StringCell.TYPE).createSpec();
-        allColSpecs[5] = new DataColumnSpecCreator(PATHNAME, StringCell.TYPE).createSpec();
-        allColSpecs[6] = new DataColumnSpecCreator(DATE, StringCell.TYPE).createSpec();
-        allColSpecs[7] = new DataColumnSpecCreator(UID, StringCell.TYPE).createSpec();
+    public static DataTableSpec createDataColumnSpec() {
+        DataTableSpec baseSpec = SCMAdapterTableFactory.createDataColumnSpec();
+        DataColumnSpec[] allColSpecs = new DataColumnSpec[COLUMNS + baseSpec.getNumColumns()];
+
+        int i = 0;
+        for (; i < baseSpec.getNumColumns(); i++) {
+            allColSpecs[i] = baseSpec.getColumnSpec(i);
+        }
+
+        allColSpecs[i++] = new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec();
+        allColSpecs[i++] = new DataColumnSpecCreator(MESSAGE_COLNAME, StringCell.TYPE).createSpec();
+        allColSpecs[i++] = new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec();
+        allColSpecs[i++] = new DataColumnSpecCreator(DATE_COLNAME, StringCell.TYPE).createSpec();
+        allColSpecs[i++] = new DataColumnSpecCreator(UID_COLNAME, StringCell.TYPE).createSpec();
         
         return new DataTableSpec(allColSpecs);
     }
-    
 }

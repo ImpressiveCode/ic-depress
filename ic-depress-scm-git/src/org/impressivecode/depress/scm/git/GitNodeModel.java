@@ -85,7 +85,7 @@ public class GitNodeModel extends NodeModel {
             final ExecutionContext exec) throws Exception {
 
         logger.info("Reading logs from file "+gitFileName);
-        DataTableSpec outputSpec = GitTableFactory.createTable();
+        DataTableSpec outputSpec = GitTableFactory.createDataColumnSpec();
         BufferedDataContainer container = exec.createDataContainer(outputSpec);
         
         logger.info("Creating Output table with data from git file...");
