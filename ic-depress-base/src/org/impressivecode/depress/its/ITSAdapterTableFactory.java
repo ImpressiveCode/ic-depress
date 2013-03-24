@@ -1,0 +1,104 @@
+/*
+ImpressiveCode Depress Framework
+Copyright (C) 2013  ImpressiveCode contributors
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package org.impressivecode.depress.its;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.impressivecode.depress.common.DataTableSpecUtils.dateTimeCell;
+import static org.impressivecode.depress.common.DataTableSpecUtils.dateTimeOrMissingCell;
+import static org.impressivecode.depress.common.DataTableSpecUtils.stringListOrMissingCell;
+import static org.impressivecode.depress.common.DataTableSpecUtils.stringOrMissingCell;
+
+import org.knime.core.data.DataCell;
+import org.knime.core.data.DataColumnSpec;
+import org.knime.core.data.DataColumnSpecCreator;
+import org.knime.core.data.DataRow;
+import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.collection.ListCell;
+import org.knime.core.data.date.DateAndTimeCell;
+import org.knime.core.data.def.DefaultRow;
+import org.knime.core.data.def.StringCell;
+
+/**
+ * 
+ * @author Marek Majchrzak, ImpressiveCode
+ * 
+ */
+public class ITSAdapterTableFactory {
+
+    public static final String CREATION_DATE = "Created";
+    public static final String RESOLVED_DATE = "Resolved";
+    public static final String UPDATED_DATE = "Updated";
+    public static final String RESOLUTION = "Resolution";
+    public static final String STATUS = "Status";
+    public static final String TYPE = "Type";
+    public static final String VERSION = "Version";
+    public static final String FIX_VERSION = "FixVersion";
+    public static final String PRIORITY = "Priority";
+    public static final String SUMMARY = "Summary";
+    public static final String LINK = "Link";
+    public static final String DESCRIPTION = "Description";
+    public static final String COMMENTS = "Comments";
+
+    private ITSAdapterTableFactory() {
+
+    }
+
+    public static DataTableSpec createDataColumnSpec() {
+        DataColumnSpec[] allColSpecs = { 
+                new DataColumnSpecCreator(CREATION_DATE, DateAndTimeCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(RESOLVED_DATE, DateAndTimeCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(UPDATED_DATE, DateAndTimeCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(STATUS, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(TYPE, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(RESOLUTION, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(VERSION, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
+                new DataColumnSpecCreator(FIX_VERSION, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
+                new DataColumnSpecCreator(PRIORITY, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(SUMMARY, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(LINK, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(DESCRIPTION, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(COMMENTS, ListCell.getCollectionType(StringCell.TYPE)).createSpec() };
+        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
+        return outputSpec;
+    }
+
+    public static DataRow createTableRow(final ITSDataType itsData) {
+        assertData(itsData);
+        DataCell[] cells = { 
+                dateTimeCell(itsData.getCreated()), 
+                dateTimeOrMissingCell(itsData.getResolved()),
+                dateTimeOrMissingCell(itsData.getUpdated()), 
+                stringOrMissingCell(itsData.getStatus()),
+                stringOrMissingCell(itsData.getType()), 
+                stringOrMissingCell(itsData.getResolution()),
+                stringListOrMissingCell(itsData.getVersion()), 
+                stringListOrMissingCell(itsData.getFixVersion()),
+                stringOrMissingCell(itsData.getPriority()), 
+                stringOrMissingCell(itsData.getSummary()),
+                stringOrMissingCell(itsData.getLink()), 
+                stringOrMissingCell(itsData.getDescription()),
+                stringListOrMissingCell(itsData.getComments()) };
+        DataRow row = new DefaultRow(itsData.getIssueId(), cells);
+        return row;
+    }
+
+    private static void assertData(final ITSDataType itsData) {
+        checkNotNull(itsData, "Issue Tracking System data has to be set.");
+        checkNotNull(itsData.getIssueId(), "BugId has to be set.");
+    }
+}

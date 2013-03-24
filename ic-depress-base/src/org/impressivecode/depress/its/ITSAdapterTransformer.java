@@ -15,52 +15,48 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.jacoco;
+package org.impressivecode.depress.its;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.common.DataTableSpecUtils.doubleOrMissingCell;
+import static org.impressivecode.depress.its.ITSAdapterTableFactory.createTableRow;
 
 import java.util.List;
 
-import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.def.DefaultRow;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeLogger.LEVEL;
-
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JaCoCoAdapterTransformer {
+public class ITSAdapterTransformer {
 
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(JaCoCoAdapterTransformer.class);
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(ITSAdapterTransformer.class);
 
     private final DataTableSpec tableSpec;
 
-    public JaCoCoAdapterTransformer(final DataTableSpec tableSpec) {
+    public ITSAdapterTransformer(final DataTableSpec tableSpec) {
         checkNotNull(tableSpec, "table specifikation can not be null.");
         this.tableSpec = tableSpec;
     }
 
-    public BufferedDataTable transform(final List<JaCoCoEntry> jacocodata, final ExecutionContext exec)
-            throws CanceledExecutionException {
+    public BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
         BufferedDataContainer container = createDataContainer(exec);
-        for (JaCoCoEntry entry : jacocodata) {
+        for (ITSDataType entry : entries) {
             progress(exec);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Transforming metric, class: " + entry.getClassName());
+                LOGGER.debug("Transforming issue entry, issueId: " + entry.getIssueId());
             }
 
             if (LOGGER.isEnabledFor(LEVEL.ALL)) {
-                LOGGER.debug("Transforming metric:" + entry.toString());
+                LOGGER.debug("Transforming issue entry:" + entry.toString());
             }
             DataRow row = createTableRow(entry);
             container.addRowToTable(row);
@@ -68,23 +64,6 @@ public class JaCoCoAdapterTransformer {
         container.close();
         BufferedDataTable out = container.getTable();
         return out;
-    }
-
-    private DataRow createTableRow(final JaCoCoEntry entry) {
-        DataCell[] cells = getJaCoCoCells(entry);
-        DataRow row = new DefaultRow(entry.getClassName(), cells);
-        return row;
-    }
-
-    private DataCell[] getJaCoCoCells(final JaCoCoEntry value) {
-        DataCell[] cells = { 
-                doubleOrMissingCell(value.getLineCoverageCounter()),
-                doubleOrMissingCell(value.getInstructionCoverageCounter()),
-                doubleOrMissingCell(value.getBranchCoverageCounter()),
-                doubleOrMissingCell(value.getComplexityCoverageCounter()),
-                doubleOrMissingCell(value.getMethodCoverageCounter()),
-                doubleOrMissingCell(value.getClassCoverageCounter())};
-        return cells;
     }
 
     private BufferedDataContainer createDataContainer(final ExecutionContext exec) {
