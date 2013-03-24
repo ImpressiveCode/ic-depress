@@ -9,7 +9,8 @@ Bundle-Vendor: Tomasz Kuzemko & Sławomir Kapłoński
 Require-Bundle: org.eclipse.core.runtime,
  org.knime.workbench.core,
  org.knime.workbench.repository,
- org.knime.base
+ org.knime.base,
+ org.junit;bundle-version="4.8.2"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.impressivecode.depress.scm.git
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
