@@ -22,9 +22,13 @@ Export-Package: com.google.common.annotations,
  com.google.common.reflect,
  com.google.common.util.concurrent,
  org.impressivecode.depress.common,
+ org.impressivecode.depress.its,
  org.impressivecode.depress.scm
 Eclipse-BuddyPolicy: registered
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: bin/,
- lib/guava-14.0-rc3.jar
+ lib/guava-14.0-rc3.jar,
+ lib/fest-assert-1.4.jar,
+ lib/fest-util-1.1.6.jar,
+ lib/mockito-all-1.9.5.jar
 
