@@ -15,14 +15,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jira;
+package org.impressivecode.depress.its;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.createTableRow;
 
 import java.util.List;
 
-import org.impressivecode.depress.its.ITSDataType;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
@@ -36,13 +35,13 @@ import org.knime.core.node.NodeLogger.LEVEL;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JiraAdapterTransformer {
+public class ITSAdapterTransformer {
 
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraAdapterTransformer.class);
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(ITSAdapterTransformer.class);
 
     private final DataTableSpec tableSpec;
 
-    public JiraAdapterTransformer(final DataTableSpec tableSpec) {
+    public ITSAdapterTransformer(final DataTableSpec tableSpec) {
         checkNotNull(tableSpec, "table specifikation can not be null.");
         this.tableSpec = tableSpec;
     }
@@ -53,11 +52,11 @@ public class JiraAdapterTransformer {
             progress(exec);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Transforming jira entry, bugId: " + entry.getIssueId());
+                LOGGER.debug("Transforming issue entry, issueId: " + entry.getIssueId());
             }
 
             if (LOGGER.isEnabledFor(LEVEL.ALL)) {
-                LOGGER.debug("Transforming jira entry:" + entry.toString());
+                LOGGER.debug("Transforming issue entry:" + entry.toString());
             }
             DataRow row = createTableRow(entry);
             container.addRowToTable(row);

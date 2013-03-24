@@ -76,7 +76,7 @@ public class JaCoCoAdapterTransformer {
         return row;
     }
 
-    private static DataCell[] getJaCoCoCells(final JaCoCoEntry value) {
+    private DataCell[] getJaCoCoCells(final JaCoCoEntry value) {
         DataCell[] cells = { 
                 doubleOrMissingCell(value.getLineCoverageCounter()),
                 doubleOrMissingCell(value.getInstructionCoverageCounter()),

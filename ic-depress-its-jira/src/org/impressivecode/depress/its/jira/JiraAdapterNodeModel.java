@@ -28,6 +28,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -75,7 +76,7 @@ public class JiraAdapterNodeModel extends NodeModel {
     }
 
     private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
-        JiraAdapterTransformer transformer = new JiraAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
+        ITSAdapterTransformer transformer = new ITSAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
         return transformer.transform(entries, exec);
     }
 

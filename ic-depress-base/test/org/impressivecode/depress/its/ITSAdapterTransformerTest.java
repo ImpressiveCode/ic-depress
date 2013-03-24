@@ -15,8 +15,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jira;
+package org.impressivecode.depress.its;
 
+import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -25,11 +26,6 @@ import static org.mockito.Mockito.when;
 import java.util.Date;
 import java.util.List;
 
-import org.impressivecode.depress.its.ITSAdapterTableFactory;
-import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.ITSPriority;
-import org.impressivecode.depress.its.ITSStatus;
-import org.impressivecode.depress.its.ITSType;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
@@ -44,15 +40,16 @@ import com.google.common.collect.Lists;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JiraAdapterTransformerTest {
+public class ITSAdapterTransformerTest {
 
     @Test
     public void shouldTransform() throws CanceledExecutionException {
-        JiraAdapterTransformer transformer = new JiraAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
+
+        ITSAdapterTransformer transformer = new ITSAdapterTransformer(createDataColumnSpec());
         List<ITSDataType> entries = Lists.newArrayList(create("Bug1"), create("Bug2"));
 
-        ExecutionContext exec = mock(ExecutionContext.class);
         BufferedDataContainer container = mock(BufferedDataContainer.class);
+        ExecutionContext exec = mock(ExecutionContext.class);
         when(exec.createDataContainer(Mockito.any(DataTableSpec.class))).thenReturn(container);
 
         //when

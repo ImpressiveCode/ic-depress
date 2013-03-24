@@ -1,12 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?eclipse version="3.0"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
 <plugin>
-   <extension point="org.knime.workbench.repository.nodes">
+   <extension
+         point="org.knime.workbench.repository.nodes">
       <node
             category-path="depress"
+            expert-flag="false"
             factory-class="org.impressivecode.depress.its.jira.JiraAdapterNodeFactory"
             id="org.impressivecode.depress.its.jira">
       </node>
-</extension>
+   </extension>
+
 </plugin>

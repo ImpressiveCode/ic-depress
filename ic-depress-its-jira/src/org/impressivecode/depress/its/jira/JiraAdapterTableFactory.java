@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.its.jira;
 
-import org.impressivecode.depress.its.ITSAdapterTableFactory;
+import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
+
 import org.knime.core.data.DataTableSpec;
 
 /**
@@ -31,7 +32,7 @@ public class JiraAdapterTableFactory {
 
     }
 
-    static DataTableSpec[] createTableSpec() {
-        return new DataTableSpec[] { ITSAdapterTableFactory.createDataColumnSpec() };
+    public static DataTableSpec[] createTableSpec() {
+        return new DataTableSpec[] { createDataColumnSpec() };
     }
 }
