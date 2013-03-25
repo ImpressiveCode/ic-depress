@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package org.impressivecode.depress.scm.git;
 
+import java.security.InvalidParameterException;
+
 /*
  * Represents parsed commit information about a file
  *
@@ -27,28 +29,69 @@ package org.impressivecode.depress.scm.git;
  */
 
 public class GitCommitFile {
-	public final String path;
-	GitCommitFileOperation operation;
-	GitCommit commit;
+    final String path;
+    GitCommitFileOperation operation;
+    GitCommit commit;
 
+    public GitCommitFile(String path) {
+        this.path = path;
+    }
 
-	public GitCommitFile(String path) {
-		this.path = path;
-	}
+    public GitCommitFile(String path, char operationCode) {
+        this.path = path;
+        setOperation(operationCode);
+    }
 
-	public GitCommit getParent() {
-		return commit;
-	}
+    public GitCommitFile(String path, char operationCode, GitCommit commit) {
+        this.path = path;
+        setOperation(operationCode);
+        setCommit(commit);
+    }
 
-	public void setParent(GitCommit parent) {
-		this.commit = parent;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public GitCommitFileOperation getOperation() {
-		return operation;
-	}
+    public GitCommit getCommit() {
+        return commit;
+    }
 
-	public void setOperation(GitCommitFileOperation operation) {
-		this.operation = operation;
-	}
+    public void setCommit(GitCommit commit) {
+        this.commit = commit;
+    }
+
+    public GitCommitFileOperation getOperation() {
+        return operation;
+    }
+
+    public void setOperation(GitCommitFileOperation operation) {
+        this.operation = operation;
+    }
+
+    public void setOperation(char operationCode) {
+        switch (operationCode) {
+        case 'M':
+            this.operation = GitCommitFileOperation.Modified;
+            break;
+        case 'A':
+            this.operation = GitCommitFileOperation.Added;
+            break;
+        case 'C':
+            this.operation = GitCommitFileOperation.Copied;
+            break;
+        case 'D':
+            this.operation = GitCommitFileOperation.Deleted;
+            break;
+        case 'R':
+            this.operation = GitCommitFileOperation.Renamed;
+            break;
+        case 'T':
+            this.operation = GitCommitFileOperation.TypeChanged;
+            break;
+        default:
+            throw new InvalidParameterException(String.format(
+                    "Invalid operation code '{1}'",
+                    String.valueOf(operationCode)));
+        }
+    }
 }
