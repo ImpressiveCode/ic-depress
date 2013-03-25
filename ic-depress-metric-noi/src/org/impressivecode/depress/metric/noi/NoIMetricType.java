@@ -15,28 +15,40 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jira;
+package org.impressivecode.depress.metric.noi;
 
-import static org.impressivecode.depress.its.jira.JiraAdapterNodeModel.createFileChooserSettings;
+import java.util.Collections;
+import java.util.List;
 
-import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
-import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
+import com.google.common.collect.Iterables;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JiraAdapterNodeDialog extends DefaultNodeSettingsPane {
+public class NoIMetricType {
+    private String className;
+    private List<String> issues = Collections.emptyList();
 
-    private static final String FILE_EXTENSION = ".xml";
-    private static final String HISTORY_ID = "depress.its.jira.historyid";
-
-    protected JiraAdapterNodeDialog() {
-        addDialogComponent(getFileChooserComponent());
+    public String getClassName() {
+        return className;
     }
 
-    private DialogComponentFileChooser getFileChooserComponent() {
-        return new DialogComponentFileChooser(createFileChooserSettings(), HISTORY_ID, FILE_EXTENSION);
+    public void setClassName(final String className) {
+        this.className = className;
+    }
+
+    public List<String> getIssues() {
+        return issues;
+    }
+
+    public void setIssues(final List<String> issues) {
+        this.issues = issues;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("NoIDataType [className=%s, issues=%s]", className, Iterables.toString(issues));
     }
 }

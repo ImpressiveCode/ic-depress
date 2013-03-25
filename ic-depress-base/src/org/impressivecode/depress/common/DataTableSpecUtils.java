@@ -67,7 +67,11 @@ public class DataTableSpecUtils {
     }
 
     public static DataCell integerOrMissingCell(final Integer value) {
-        return value == null ? DataType.getMissingCell() : new IntCell(value);
+        return value == null ? DataType.getMissingCell() : integerCell(value);
+    }
+
+    public static DataCell integerCell(final Integer value) {
+        return new IntCell(value);
     }
 
     public static DataCell doubleOrMissingCell(final Double value) {

@@ -15,28 +15,18 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jira;
-
-import static org.impressivecode.depress.its.jira.JiraAdapterNodeModel.createFileChooserSettings;
+package org.impressivecode.depress.metric.noi;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
-import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class JiraAdapterNodeDialog extends DefaultNodeSettingsPane {
+public class NumberOfIssuesMetricNodeDialog extends DefaultNodeSettingsPane {
 
-    private static final String FILE_EXTENSION = ".xml";
-    private static final String HISTORY_ID = "depress.its.jira.historyid";
-
-    protected JiraAdapterNodeDialog() {
-        addDialogComponent(getFileChooserComponent());
-    }
-
-    private DialogComponentFileChooser getFileChooserComponent() {
-        return new DialogComponentFileChooser(createFileChooserSettings(), HISTORY_ID, FILE_EXTENSION);
+    protected NumberOfIssuesMetricNodeDialog() {
+        super();
     }
 }
