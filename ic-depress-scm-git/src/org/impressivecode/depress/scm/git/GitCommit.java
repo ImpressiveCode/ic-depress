@@ -35,44 +35,48 @@ import java.util.regex.Pattern;
  */
 
 public class GitCommit {
-	public final String id;
-	public static final Pattern idRegex = Pattern.compile("^[a-f0-9]{40}$");
-	static final DateFormat commitDateFormat = DateFormat.getDateInstance();
-	Date date;
-	String author;
-	StringBuilder messageBuilder;
-	public List<GitCommitFile> files;
+    final String id;
+    public static final Pattern idRegex = Pattern.compile("^[a-f0-9]{40}$");
+    static final DateFormat commitDateFormat = DateFormat.getDateInstance();
+    Date date;
+    String author;
+    StringBuilder messageBuilder;
+    public List<GitCommitFile> files;
 
-	public GitCommit(String id) {
-		if (!idRegex.matcher(id).matches()) {
-			throw new InvalidParameterException("Commit id is invalid");
-		}
-		this.id = id;
-		this.messageBuilder = new StringBuilder();
-		this.files = new ArrayList<GitCommitFile>();
-	}
+    public GitCommit(String id) {
+        if (!idRegex.matcher(id).matches()) {
+            throw new InvalidParameterException("Commit id is invalid");
+        }
+        this.id = id;
+        this.messageBuilder = new StringBuilder();
+        this.files = new ArrayList<GitCommitFile>();
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setDate(String date) throws ParseException {
-		this.date = commitDateFormat.parse(date);
-	}
+    public Date getDate() {
+        return date;
+    }
 
-	public String getMessage() {
-		return messageBuilder.toString();
-	}
+    public void setDate(String date) throws ParseException {
+        this.date = commitDateFormat.parse(date);
+    }
 
-	public void addToMessage(String text) {
-		messageBuilder.append(text);
-	}
+    public String getMessage() {
+        return messageBuilder.toString();
+    }
 
-	public void setAuthor(String author) {
-		this.author = author;
-	}
+    public void addToMessage(String text) {
+        messageBuilder.append(text);
+    }
 
-	public String getAuthor() {
-		return author;
-	}
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
 }
