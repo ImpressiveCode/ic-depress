@@ -99,7 +99,7 @@ public class NumberOfIssuesMetricNodeModel extends NodeModel {
 
     private BufferedDataTable transform(final List<NoIMetricType> data, final ExecutionContext exec)
             throws CanceledExecutionException {
-        OutputTransformer<NoIMetricType> transformer = new NumberOfIssuesMetricTransformer(createDataColumnSpec());
+        OutputTransformer<NoIMetricType> transformer = new NumberOfIssuesMetricOutputTransformer(createDataColumnSpec());
         return transformer.transform(data, exec);
     }
 

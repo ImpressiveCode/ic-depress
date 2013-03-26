@@ -36,12 +36,12 @@ import org.knime.core.node.NodeLogger.LEVEL;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class NumberOfIssuesMetricTransformer implements OutputTransformer<NoIMetricType> {
+public class NumberOfIssuesMetricOutputTransformer implements OutputTransformer<NoIMetricType> {
 
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(NumberOfIssuesMetricTransformer.class);
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(NumberOfIssuesMetricOutputTransformer.class);
     private final DataTableSpec tableSpec;
 
-    public NumberOfIssuesMetricTransformer(final DataTableSpec tableSpec) {
+    public NumberOfIssuesMetricOutputTransformer(final DataTableSpec tableSpec) {
         this.tableSpec = checkNotNull(tableSpec,"table specifikation can not be null.") ;
     }
 

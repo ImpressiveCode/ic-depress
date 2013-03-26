@@ -4,7 +4,7 @@ Bundle-Name: ic-depress-metric-noi
 Bundle-SymbolicName: org.impressivecode.depress.metric.noi;singleton:=true
 Bundle-Version: 0.1.0
 Bundle-Vendor: ImpressiveCode
-Require-Bundle: org.knime.base;bundle-version="2.7.1",
+Require-Bundle: org.knime.base;bundle-version="2.7.2",
  org.knime.workbench;bundle-version="2.7.0",
  org.impressivecode.depress.base;bundle-version="0.1.0",
  org.junit
@@ -12,6 +12,6 @@ Eclipse-RegisterBuddy: org.impressivecode.depress.base
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: lib/fest-assert-1.4.jar,
  lib/fest-util-1.1.6.jar,
- lib/mockito-all-1.9.5.jar,
  .
- 
+Import-Package: org.fest.assertions,
+ org.mockito
