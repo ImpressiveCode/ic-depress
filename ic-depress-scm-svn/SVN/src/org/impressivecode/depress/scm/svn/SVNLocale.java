@@ -26,6 +26,22 @@ package org.impressivecode.depress.scm.svn;
  * */
 public class SVNLocale {
 
+	public static String eLoadSettings() {
+		return "Error durning load setting";
+	}
+
+	public static String eValidateSettings() {
+		return "Error durninig validate setting";
+	}
+
+	public static String iSettingsLoaded() {
+		return "Settings loaded";
+	}
+
+	public static String iSettingsSaved() {
+		return "Settings saved";
+	}
+
 	public static String nIssueMarker() {
 		return "Issue Marker";
 	}
@@ -34,20 +50,16 @@ public class SVNLocale {
 		return "Package";
 	}
 
-	public static String eValidateSettings() {
-		return "Error durninig validate setting";
+	public static Object iEndLoading() {
+		return "Start loading";
 	}
 
-	public static String eLoadSettings() {
-		return "Error durning load setting";
+	public static Object iStartLoading() {
+		return "End loading";
 	}
 
-	public static String iSettingsSaved() {
-		return "Settings saved";
-	}
-
-	public static String iSettingsLoaded() {
-		return "Settings loaded";
+	public static String iCurrentProgress(int inProgres) {
+		return String.format("Current progress %d", inProgres);
 	}
 
 }

@@ -1,0 +1,51 @@
+package org.impressivecode.depress.scm.svn;
+
+import org.knime.core.data.DataColumnDomainCreator;
+import org.knime.core.data.DataColumnSpec;
+import org.knime.core.data.DataColumnSpecCreator;
+import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.def.StringCell;
+
+public class SVNLogRowSpec {
+
+	public static DataTableSpec[] create() {
+		
+		new DataTableSpec[] {
+				new DataTableSpec(createOutputColumnClassSpec()),
+				new DataTableSpec(createOutputColumnAuthorSpec()) };
+		
+		
+		return null;
+	}
+	
+	private DataColumnSpec createOutputColumnClassSpec() {
+
+		DataColumnSpecCreator colSpecCreator = new DataColumnSpecCreator(
+				"Class", StringCell.TYPE);
+
+		DataColumnDomainCreator domainCreator = new DataColumnDomainCreator(
+				new StringCell(""), new StringCell(""));
+
+		colSpecCreator.setDomain(domainCreator.createDomain());
+
+		DataColumnSpec newColumnSpec = colSpecCreator.createSpec();
+
+		return newColumnSpec;
+	}
+
+	private DataColumnSpec createOutputColumnAuthorSpec() {
+
+		DataColumnSpecCreator colSpecCreator = new DataColumnSpecCreator(
+				"Author", StringCell.TYPE);
+
+		DataColumnDomainCreator domainCreator = new DataColumnDomainCreator(
+				new StringCell(""), new StringCell(""));
+
+		colSpecCreator.setDomain(domainCreator.createDomain());
+
+		DataColumnSpec newColumnSpec = colSpecCreator.createSpec();
+
+		return newColumnSpec;
+	}
+
+}

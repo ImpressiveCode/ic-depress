@@ -41,13 +41,14 @@ public class SVNSettings {
 
 	public static final String CFG_ISSUE_REGEX = "issueMarker";
 
-	public static void validateSettings(final NodeSettingsRO settings) {
+	public static void loadSettingsFrom(final NodeSettingsRO settings) {
+
 		try {
-			SVN_PATH_MODEL.validateSettings(settings);
-			ISSUE_MARKER_MODEL.validateSettings(settings);
-			PACKAGE_MODEL.validateSettings(settings);
+			SVN_PATH_MODEL.loadSettingsFrom(settings);
+			ISSUE_MARKER_MODEL.loadSettingsFrom(settings);
+			PACKAGE_MODEL.loadSettingsFrom(settings);
 		} catch (InvalidSettingsException e) {
-			Logger.instance().error(SVNLocale.eValidateSettings(), e);
+			Logger.instance(). error(SVNLocale.eLoadSettings(), e);
 		}
 	}
 
@@ -57,14 +58,13 @@ public class SVNSettings {
 		PACKAGE_MODEL.saveSettingsTo(settings);
 	}
 
-	public static void loadSettingsFrom(final NodeSettingsRO settings) {
-
+	public static void validateSettings(final NodeSettingsRO settings) {
 		try {
-			SVN_PATH_MODEL.loadSettingsFrom(settings);
-			ISSUE_MARKER_MODEL.loadSettingsFrom(settings);
-			PACKAGE_MODEL.loadSettingsFrom(settings);
+			SVN_PATH_MODEL.validateSettings(settings);
+			ISSUE_MARKER_MODEL.validateSettings(settings);
+			PACKAGE_MODEL.validateSettings(settings);
 		} catch (InvalidSettingsException e) {
-			Logger.instance(). error(SVNLocale.eLoadSettings(), e);
+			Logger.instance().error(SVNLocale.eValidateSettings(), e);
 		}
 	}
 }

@@ -34,16 +34,16 @@ public class SVNNodeFactory
      * {@inheritDoc}
      */
     @Override
-    public SVNNodeModel createNodeModel() {
-        return new SVNNodeModel();
+    public NodeDialogPane createNodeDialogPane() {
+        return new SVNNodeDialog();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getNrNodeViews() {
-        return 1;
+    public SVNNodeModel createNodeModel() {
+        return new SVNNodeModel();
     }
 
     /**
@@ -59,16 +59,16 @@ public class SVNNodeFactory
      * {@inheritDoc}
      */
     @Override
-    public boolean hasDialog() {
-        return true;
+    public int getNrNodeViews() {
+        return 1;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public NodeDialogPane createNodeDialogPane() {
-        return new SVNNodeDialog();
+    public boolean hasDialog() {
+        return true;
     }
 
 }

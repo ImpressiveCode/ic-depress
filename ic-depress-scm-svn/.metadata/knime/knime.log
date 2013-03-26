@@ -4816,3 +4816,43 @@ java.net.SocketTimeoutException: connect timed out
 2013-03-20 02:37:30,119 INFO  main KNIMECorePlugin : Setting console view log level to WARN
 2013-03-20 02:37:30,213 DEBUG main KnimeEncryption : Replacing current encryption key supplier "null" with this new one "org.knime.workbench.core.EclipseEncryptionKeySupplier@6b40a8e3".
 2013-03-20 02:37:30,213 DEBUG main KnimeEncryption : Replacing current encryption key supplier "org.knime.workbench.core.EclipseEncryptionKeySupplier@6b40a8e3" with this new one "org.knime.workbench.ui.masterkey.MasterKeyPreferencePage$1@d91fa81".
+2013-03-25 23:54:41,882 INFO  main NodeLogger : #############################################################
+2013-03-25 23:54:41,913 INFO  main NodeLogger : #                                                           #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # Welcome to KNIME v2.7.2.0036617 (Build February 26, 2013)      #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # the Konstanz Information Miner                            #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # Based on Eclipse, www.eclipse.org                         #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # Uses: Java, GEF, Log4J                                    #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : #                                                           #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : #############################################################
+2013-03-25 23:54:41,913 INFO  main NodeLogger : #                                                           #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # Copyright, 2003 - 2012                                    #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # University of Konstanz, Germany.                          #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # Chair for Bioinformatics and Information Mining           #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # Prof. Dr. Michael R. Berthold                             #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # and KNIME GmbH, Konstanz, Germany                         #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # website: http://www.knime.org                             #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # email: contact@knime.org                                  #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : #                                                           #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : #############################################################
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # For more details see the KNIME log file:                  #
+2013-03-25 23:54:41,913 INFO  main NodeLogger : # D:\Git\0\ic-depress\ic-depress-scm-svn\.metadata\knime\knime.log
+2013-03-25 23:54:41,913 INFO  main NodeLogger : #-----------------------------------------------------------#
+2013-03-25 23:54:41,944 INFO  main NodeLogger : # logging date=Mon Mar 25 23:54:41 CET 2013
+2013-03-25 23:54:41,944 INFO  main NodeLogger : # java.version=1.7.0_07
+2013-03-25 23:54:41,944 INFO  main NodeLogger : # java.vm.version=23.3-b01
+2013-03-25 23:54:41,944 INFO  main NodeLogger : # java.vendor=Oracle Corporation
+2013-03-25 23:54:41,944 INFO  main NodeLogger : # os.name=Windows 7
+2013-03-25 23:54:41,944 INFO  main NodeLogger : # os.arch=amd64
+2013-03-25 23:54:41,944 INFO  main NodeLogger : # number of CPUs=4
+2013-03-25 23:54:41,944 INFO  main NodeLogger : # assertions=off
+2013-03-25 23:54:41,944 INFO  main NodeLogger : # host=Marcin-Laptop
+2013-03-25 23:54:42,100 INFO  main NodeLogger : # username=Marcin
+2013-03-25 23:54:42,100 INFO  main NodeLogger : # max mem=910MB
+2013-03-25 23:54:42,100 INFO  main NodeLogger : # application=org.knime.product.KNIME_APPLICATION
+2013-03-25 23:54:42,100 INFO  main NodeLogger : #############################################################
+2013-03-25 23:54:45,517 DEBUG main KNIMECorePlugin : Setting KNIME max thread count to 8
+2013-03-25 23:54:45,517 DEBUG main KNIMECorePlugin : Setting KNIME temp dir to "C:\Users\Marcin\AppData\Local\Temp"
+2013-03-25 23:54:45,517 INFO  main NodeLogger : Changing logging level to DEBUG
+2013-03-25 23:54:45,673 INFO  main KNIMECorePlugin : Setting console view log level to WARN
+2013-03-25 23:54:46,234 DEBUG main KnimeEncryption : Replacing current encryption key supplier "null" with this new one "org.knime.workbench.core.EclipseEncryptionKeySupplier@372572b".
+2013-03-25 23:54:46,250 DEBUG main KnimeEncryption : Replacing current encryption key supplier "org.knime.workbench.core.EclipseEncryptionKeySupplier@372572b" with this new one "org.knime.workbench.ui.masterkey.MasterKeyPreferencePage$1@6ef95b3a".

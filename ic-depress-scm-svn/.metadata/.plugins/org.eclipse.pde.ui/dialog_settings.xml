@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item value="false" key="OrganizeManifests.General.cleanup"/>
+	<item value="false" key="OrganizeManifests.ExportedPackages.addMissing"/>
+	<item value="false" key="OrganizeManifests.AddDependencies"/>
+	<item value="false" key="OrganizeManifests.calculateUses"/>
+	<item value="false" key="OrganizeManifests.ExportedPackages.makeInternal"/>
+	<item value="false" key="OrganizeManifests.RequireImport.modifyDep"/>
+	<item value="false" key="OrganizeManifests.Translation.nls"/>
+	<item value="false" key="OrganizeManifests.RequireImport.findRemoveUnused"/>
+	<item value="false" key="OrganizeManifests.ExportedPackages.removeUnresolved"/>
+	<item value="false" key="OrganizeManifests.Translation.unusedKeys"/>
+	<item value="false" key="OrganizeManifests.RequireImport.resolve:markOptional"/>
+	<item value="false" key="OrganizeManifests.General.cleanup.removeUselessFiles"/>
+	<item value="*.internal*" key="OrganizeManifests.ExportedPackages.packageFilter"/>
+	<section name="org.eclipse.ltk.ui.refactoring.settings">
+	</section>
 	<section name="quick_assist_proposal_size">
+	</section>
+	<section name="RefactoringWizard.Organize Manifests">
+		<item value="434" key="height"/>
+		<item value="600" key="width"/>
 	</section>
 	<section name="PluginExportWizard">
 		<item value="true" key="exportUpdate"/>
@@ -9,20 +28,21 @@
 		<item value="Generate source bundles" key="exportSourceFormat"/>
 		<item value="false" key="qualifier"/>
 		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\out" key="zipFileName0"/>
+		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\out" key="zipFileName1"/>
 		<item value="" key="password"/>
 		<item value="" key="keypass"/>
 		<item value="false" key="exportSource"/>
 		<item value="" key="keystore"/>
 		<item value="true" key="useWorkspaceCompiledClasses"/>
 		<item value="2" key="exportType"/>
-		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\export_plugin.xml" key="antFileName0"/>
 		<item value="false" key="signJAR"/>
-		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\export_plugin.xml" key="antFileName1"/>
+		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\export_plugin.xml" key="antFileName0"/>
 		<item value="D:\Git\Plugins" key="destination2"/>
+		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\export_plugin.xml" key="antFileName1"/>
 		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\out" key="destination1"/>
 		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn\src\org\impressivecode\depress\scm\svn\SVNPlugin\out" key="destination0"/>
-		<item value="201303120201" key="qualifierName"/>
 		<item value="true" key="allowBinaryCycles"/>
+		<item value="201303120201" key="qualifierName"/>
 	</section>
 	<section name="pde_compiler_errorwarnings_block">
 		<item value="false" key="3"/>

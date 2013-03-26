@@ -3,6 +3,7 @@ package org.impressivecode.depress.scm.svn;
 import java.io.File;
 import java.io.IOException;
 
+import org.impressivecode.depress.scm.svn.SVNLogLoader.IReadProgressListener;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnDomainCreator;
 import org.knime.core.data.DataColumnSpec;
@@ -54,117 +55,54 @@ public class SVNNodeModel extends NodeModel {
 	 * {@inheritDoc}
 	 */
 	@Override
+	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
+			throws InvalidSettingsException {
+		return SVNLogRowSpec.createTableSpec();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
 			final ExecutionContext exec) throws Exception {
 
-		DataColumnSpec[] allColSpecs = new DataColumnSpec[2];
+		Logger.instance().warn(SVNLocale.iStartLoading());
 
-		allColSpecs[0] = createOutputColumnClassSpec();
-		allColSpecs[1] = createOutputColumnAuthorSpec();
+		DataColumnSpec[] allColSpecs = SVNLogRowSpec.createColumnSpec();
 
 		DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
 
-		BufferedDataContainer container = exec.createDataContainer(outputSpec);
+		final BufferedDataContainer container = exec
+				.createDataContainer(outputSpec);
 
-		for (int i = 0; i < 10; i++) {
+		SVNLogLoader loader = new SVNLogLoader();
 
-			RowKey key = new RowKey("Row " + i);
+		loader.loadXmlL(SVNSettings.SVN_PATH_MODEL.getStringValue(),
+				SVNSettings.ISSUE_MARKER_MODEL.getStringValue(),
+				SVNSettings.PACKAGE_MODEL.getStringValue(),
+				new IReadProgressListener() {
 
-			DataCell[] cells = new DataCell[3];
+					int rowId = 0;
 
-			cells[0] = new StringCell("Class " + i);
-			cells[1] = new StringCell("Author " + i);
+					@Override
+					public void onReadProgress(int inProgres, SVNLogRow inRow)
+							throws CanceledExecutionException {
 
-			DataRow row = new DefaultRow(key, cells);
-			container.addRowToTable(row);
+						container.addRowToTable(SVNLogRowSpec.createRow(
+								++rowId, inRow));
 
-			exec.checkCanceled();
-			exec.setProgress(i / (double) 10, "Adding row " + i);
-		}
+						exec.checkCanceled();
+						exec.setProgress(inProgres,
+								SVNLocale.iCurrentProgress(inProgres));
+					}
+				});
+
+		Logger.instance().warn(SVNLocale.iEndLoading());
 
 		container.close();
 
-		BufferedDataTable out = container.getTable();
-
-		return new BufferedDataTable[] { out };
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void reset() {
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
-			throws InvalidSettingsException {
-
-		return new DataTableSpec[] {
-				new DataTableSpec(createOutputColumnClassSpec()),
-				new DataTableSpec(createOutputColumnAuthorSpec()) };
-	}
-
-	private DataColumnSpec createOutputColumnClassSpec() {
-
-		DataColumnSpecCreator colSpecCreator = new DataColumnSpecCreator(
-				"Class", StringCell.TYPE);
-
-		DataColumnDomainCreator domainCreator = new DataColumnDomainCreator(
-				new StringCell(""), new StringCell(""));
-
-		colSpecCreator.setDomain(domainCreator.createDomain());
-
-		DataColumnSpec newColumnSpec = colSpecCreator.createSpec();
-
-		return newColumnSpec;
-	}
-
-	private DataColumnSpec createOutputColumnAuthorSpec() {
-
-		DataColumnSpecCreator colSpecCreator = new DataColumnSpecCreator(
-				"Author", StringCell.TYPE);
-
-		DataColumnDomainCreator domainCreator = new DataColumnDomainCreator(
-				new StringCell(""), new StringCell(""));
-
-		colSpecCreator.setDomain(domainCreator.createDomain());
-
-		DataColumnSpec newColumnSpec = colSpecCreator.createSpec();
-
-		return newColumnSpec;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void saveSettingsTo(final NodeSettingsWO settings) {
-		SVNSettings.saveSettingsTo(settings);
-		Logger.instance().warn(SVNLocale.iSettingsSaved());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		SVNSettings.loadSettingsFrom(settings);
-		Logger.instance().warn(SVNLocale.iSettingsLoaded());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void validateSettings(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		SVNSettings.validateSettings(settings);
+		return new BufferedDataTable[] { container.getTable() };
 	}
 
 	/**
@@ -188,6 +126,24 @@ public class SVNNodeModel extends NodeModel {
 	 * {@inheritDoc}
 	 */
 	@Override
+	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
+			throws InvalidSettingsException {
+		SVNSettings.loadSettingsFrom(settings);
+		Logger.instance().warn(SVNLocale.iSettingsLoaded());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void reset() {
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	protected void saveInternals(final File internDir,
 			final ExecutionMonitor exec) throws IOException,
 			CanceledExecutionException {
@@ -199,6 +155,24 @@ public class SVNNodeModel extends NodeModel {
 		// of). Save here only the other internals that need to be preserved
 		// (e.g. data used by the views).
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void saveSettingsTo(final NodeSettingsWO settings) {
+		SVNSettings.saveSettingsTo(settings);
+		Logger.instance().warn(SVNLocale.iSettingsSaved());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void validateSettings(final NodeSettingsRO settings)
+			throws InvalidSettingsException {
+		SVNSettings.validateSettings(settings);
 	}
 
 }

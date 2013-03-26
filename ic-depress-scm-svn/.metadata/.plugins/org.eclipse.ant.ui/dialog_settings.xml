@@ -12,8 +12,8 @@
 	<item value="133" key="ant.properties.block.property.columnWidth2"/>
 	<item value="0" key="ant.properties.block.property.sortColumn"/>
 	<item value="1024" key="org.eclipse.ant.ui.ant_tasks_page_context.sortDirection"/>
-	<item value="0" key="org.eclipse.ant.ui.ant_types_page_context.sortColumn"/>
 	<item value="1024" key="org.eclipse.ant.ui.ant_types_page_context.sortDirection"/>
+	<item value="0" key="org.eclipse.ant.ui.ant_types_page_context.sortColumn"/>
 	<item value="149" key="org.eclipse.ant.ui.ant_types_page_context.columnWidth0"/>
 	<item value="95" key="org.eclipse.ant.ui.ant_tasks_page_context.columnWidth2"/>
 	<item value="95" key="org.eclipse.ant.ui.ant_tasks_page_context.columnWidth3"/>

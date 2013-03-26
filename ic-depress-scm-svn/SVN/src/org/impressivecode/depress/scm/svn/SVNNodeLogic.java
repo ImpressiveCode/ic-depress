@@ -24,10 +24,7 @@ public class SVNNodeLogic implements SVNLogLoader.IReadProgressListener {
 	}
 
 	@Override
-	public void onReadProgress(int inProgres, SVNLogRow inRow)
-			throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-
+	public void onReadProgress(int inProgres, SVNLogRow inRow) {
 	}
 
 }

@@ -11,7 +11,6 @@
 <fullyQualifiedTypeName name="org.knime.core.data.DataColumnDomainCreator"/>
 <fullyQualifiedTypeName name="com.sun.org.apache.xalan.internal.xsltc.compiler.util.StringType"/>
 <fullyQualifiedTypeName name="org.knime.core.data.container.CellFactory"/>
-<fullyQualifiedTypeName name="org.knime.core.data.def.StringCell"/>
 <fullyQualifiedTypeName name="org.knime.mynode.MyNode01Settings"/>
 <fullyQualifiedTypeName name="org.knime.svnplugin.SVNPluginNodeLogic"/>
 <fullyQualifiedTypeName name="org.knime.svnplugin.SVNPluginLogger"/>
@@ -42,5 +41,19 @@
 <fullyQualifiedTypeName name="org.knime.svn.SVNPluginLogger"/>
 <fullyQualifiedTypeName name="org.knime.core.node.NodeLogger.LEVEL"/>
 <fullyQualifiedTypeName name="org.impressivecode.depress.scm.svn.SVNLocale"/>
+<fullyQualifiedTypeName name="org.impressivecode.depress.scm.svn.SVNLocale2"/>
+<fullyQualifiedTypeName name="org.impressivecode.depress.scm.svn.test.functional.SVNLogLoaderTest"/>
+<fullyQualifiedTypeName name="org.impressivecode.depress.scm.svn.SVNLogLoader"/>
+<fullyQualifiedTypeName name="org.impressivecode.depress.scm.svn.test.TestSettings"/>
+<fullyQualifiedTypeName name="org.impressivecode.depress.scm.svn.SVNLogLoader.IReadProgress"/>
+<fullyQualifiedTypeName name="java.lang.IndexOutOfBoundsException"/>
+<fullyQualifiedTypeName name="org.impressivecode.depress.scm.svn.test.structural.SVNNodeLogicTest"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="org.knime.core.data.DataCell"/>
+<fullyQualifiedTypeName name="org.knime.base.node.preproc.addemptyrows.AddEmptyRowsNodeDialog"/>
+<fullyQualifiedTypeName name="org.knime.core.data.def.StringCell"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="org.impressivecode.depress.scm.svn.SVNLogRow"/>
 <fullyQualifiedTypeName name="org.impressivecode.depress.scm.svn.SVNNodeLogic"/>
+<fullyQualifiedTypeName name="org.impressivecode.depress.scm.svn.test.structural.SVNLogLoaderTest"/>
 </qualifiedTypeNameHistroy>

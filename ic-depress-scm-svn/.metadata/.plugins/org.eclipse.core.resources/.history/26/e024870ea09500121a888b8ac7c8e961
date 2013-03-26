@@ -1,0 +1,16 @@
+package org.impressivecode.depress.scm.svn;
+
+import org.knime.core.data.DataTableSpec;
+
+public class SVNLogRowSpec {
+
+public static DataTableSpec[] createSpec() {
+		
+		new DataTableSpec[] {
+				new DataTableSpec(createOutputColumnClassSpec()),
+				new DataTableSpec(createOutputColumnAuthorSpec()) };
+		
+		
+		return null;
+	}
+}

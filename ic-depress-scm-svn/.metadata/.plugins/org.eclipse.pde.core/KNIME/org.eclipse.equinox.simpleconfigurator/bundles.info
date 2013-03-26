@@ -217,8 +217,8 @@ org.eclipse.update.ui,3.2.300.v20100512,file:/D:/App/Knime_2.7.2/plugins/org.ecl
 org.fife.rsyntaxtextarea,2.0.4.0036015,file:/D:/App/Knime_2.7.2/plugins/org.fife.rsyntaxtextarea_2.0.4.0036015/,4,false
 org.hamcrest.core,1.1.0.v20090501071000,file:/D:/App/Knime_2.7.2/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar,4,false
 org.impressivecode.depress.scm.svn,1.0.0,file:/D:/Git/0/ic-depress/ic-depress-scm-svn/SVN/,4,false
-org.junit,3.8.2.v3_8_2_v20100427-1100,file:/D:/App/Knime_2.7.2/plugins/org.junit_3.8.2.v3_8_2_v20100427-1100/,4,false
 org.junit,4.8.2.v4_8_2_v20110321-1705,file:/D:/App/Knime_2.7.2/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/,4,false
+org.junit,3.8.2.v3_8_2_v20100427-1100,file:/D:/App/Knime_2.7.2/plugins/org.junit_3.8.2.v3_8_2_v20100427-1100/,4,false
 org.junit4,4.8.1.v20100525,file:/D:/App/Knime_2.7.2/plugins/org.junit4_4.8.1.v20100525/,4,false
 org.knime.base,2.7.2.0036614,file:/D:/App/Knime_2.7.2/plugins/org.knime.base_2.7.2.0036614/,4,false
 org.knime.core,2.7.2.0036617,file:/D:/App/Knime_2.7.2/plugins/org.knime.core_2.7.2.0036617/,4,false
