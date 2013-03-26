@@ -4,15 +4,16 @@
     <name>SVNPlugin</name>
     
     <shortDescription>
-        KNIME
+        This plug-in reads metrics related to selected project stored in SVN repository.
     </shortDescription>
     
     <fullDescription>
         <intro>Insert long description here...</intro>
         
         
-        <option name="short name of first option (like in the dialog)">description of first option</option>
-        <option name="short name of second option (like in the dialog)">description of second option</option>
+        <option name="Selected file">Select XML file to load</option>
+        <option name="Issue marker">marker type that you're looking at</option>
+		<option name="Package">package name</option>
         <!-- possibly more options that can also be grouped by tabs -->
         <!--
         <tab name="Standard Options">
