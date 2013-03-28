@@ -26,9 +26,12 @@ package org.impressivecode.depress.scm.git;
  */
 
 import org.impressivecode.depress.scm.SCMAdapterTableFactory;
+import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
+import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.StringCell;
 
 public class GitTableFactory extends SCMAdapterTableFactory {
@@ -48,7 +51,11 @@ public class GitTableFactory extends SCMAdapterTableFactory {
         for (; i < baseSpec.getNumColumns(); i++) {
             allColSpecs[i] = baseSpec.getColumnSpec(i);
         }
-
+        
+        //TODO: poprawić te markery, ale najpierw muszę wiedzieć co tam się ma znajdować:
+        //narazie zmieniamy typ kolumny "MARKER" na StringCell:
+        allColSpecs[1] = new DataColumnSpecCreator("Marker", StringCell.TYPE).createSpec();
+        
         allColSpecs[i++] = new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec();
         allColSpecs[i++] = new DataColumnSpecCreator(MESSAGE_COLNAME, StringCell.TYPE).createSpec();
         allColSpecs[i++] = new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec();
@@ -56,5 +63,25 @@ public class GitTableFactory extends SCMAdapterTableFactory {
         allColSpecs[i++] = new DataColumnSpecCreator(UID_COLNAME, StringCell.TYPE).createSpec();
         
         return new DataTableSpec(allColSpecs);
+    }
+    
+    static DataRow createTableRow(final String className, final String marker, final String author, final String operation, 
+            final String message, final String path, final String commitDate, final String uid) {
+        
+        DataCell[] cells = new DataCell[8];
+        cells[0] = prepareStringCell(className);
+        cells[1] = prepareStringCell(marker);
+        cells[2] = prepareStringCell(author);
+        cells[3] = prepareStringCell(operation);
+        cells[4] = prepareStringCell(message);
+        cells[5] = prepareStringCell(path);
+        cells[6] = prepareStringCell(commitDate);
+        cells[7] = prepareStringCell(uid);
+        DataRow row = new DefaultRow(uid, cells);
+        return row;
+    }
+    
+    private static StringCell prepareStringCell(String value){
+        return new StringCell(value);
     }
 }

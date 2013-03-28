@@ -17,8 +17,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.git;
 
+import static org.impressivecode.depress.scm.git.GitTableFactory.createTableRow;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
@@ -57,6 +62,8 @@ public class GitNodeModel extends NodeModel {
     
     static final Boolean GIT_PACKAGENAME_ACTIVE_STATE = false;
     
+    public GitLogParser parser;
+    
     // example value: the models count variable filled from the dialog 
     // and used in the models execution method. The default components of the
     // dialog work with "SettingsModels".
@@ -73,7 +80,6 @@ public class GitNodeModel extends NodeModel {
      */
     protected GitNodeModel() {
     
-        // TODO none incoming ports and one outgoing port is assumed
         super(0, 1);
     }
 
@@ -90,10 +96,12 @@ public class GitNodeModel extends NodeModel {
         
         logger.info("Creating Output table with data from git file...");
         //trzeba przygotować tabelę wyjściową
+        this.parser = new GitLogParser(this.gitFileName.getStringValue());
+        List<GitCommit> commits = this.parser.parse();
         
-        // once we are done, we close the container and return its table
-        container.close();
-        BufferedDataTable out = container.getTable();
+        BufferedDataTable out = transform(container, commits, exec);
+        logger.info("Reading git logs finished.");
+
         return new BufferedDataTable[]{out};
     }
 
@@ -111,15 +119,14 @@ public class GitNodeModel extends NodeModel {
      * {@inheritDoc}
      */
     @Override
-    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
-            throws InvalidSettingsException {
+    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         
         // TODO: check if user settings are available, fit to the incoming
         // table structure, and the incoming types are feasible for the node
         // to execute. If the node can execute in its current state return
         // the spec of its output data table(s) (if you can, otherwise an array
         // with null elements), or throw an exception with a useful user message
-
+        
         return new DataTableSpec[]{null};
     }
 
@@ -173,7 +180,7 @@ public class GitNodeModel extends NodeModel {
         // and user settings set through loadSettingsFrom - is all taken care 
         // of). Load here only the other internals that need to be restored
         // (e.g. data used by the views).
-
+        
     }
     
     /**
@@ -192,6 +199,54 @@ public class GitNodeModel extends NodeModel {
         // (e.g. data used by the views).
 
     }
+    
+    private BufferedDataTable transform(final BufferedDataContainer container, final List<GitCommit> commits,
+            final ExecutionContext exec) throws CanceledExecutionException {
+        int size = commits.size();
+        for (int i = 0; i < size; i++) {
+            progress(exec, size, i);
 
+            GitCommit commit = commits.get(i);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Transforming commit: " + commit.getId());
+            }
+
+            String marker = "marker"; //TODO: tu ma być dodawany prawidłowy marker, ale nie wiem jeszcze co to ma być :)
+            String author = commit.getAuthor();
+            String operation = commit.files.get(0).getOperation().toString();
+            String message = commit.getMessage();
+            String path = commit.files.get(0).getPath();
+            String className = this.getClassNameFromPath(path);
+            String commitDate = this.parseDate(commit.getDate());
+            String uid = commit.getId();
+            addRowToTable(container, className, marker, author, operation, message, path, commitDate, uid);
+        }
+        container.close();
+        BufferedDataTable out = container.getTable();
+        return out;
+    }
+    
+    private void progress(final ExecutionContext exec, final int size, final int i) throws CanceledExecutionException {
+        exec.checkCanceled();
+        exec.setProgress(i / size);
+    }
+
+    private void addRowToTable(final BufferedDataContainer container, 
+            final String className, final String marker, final String author, final String operation, 
+            final String message, final String path, final String commitDate, final String uid) {
+        container.addRowToTable(createTableRow(className, marker, author, operation, message, path, commitDate, uid));
+    }
+    
+    private String parseDate(Date date){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(date);
+    }
+    
+    //TODO: ta metoda powinna raczej być przeniesiona do GitCommitFile, ale to jeszcze do omówienia z Tomkiem:
+    private String getClassNameFromPath(String path){
+        String[] folders = path.split("/");
+        return folders[folders.length-1];
+    }
+    
 }
 
