@@ -87,7 +87,7 @@ public class GitLogParserTest {
             }
         }
 
-        assertEquals(DateFormat.getDateInstance().parse("2013-03-18 20:49:14 +0100"), commit.getDate());
+        assertEquals(DateFormat.getDateTimeInstance().parse("2013-03-18 20:49:14 +0100"), commit.getDate());
         assertEquals("Marek Majchrzak", commit.getAuthor());
         assertEquals("#9 base version of PO Metric introduced", commit.getMessage());
 
