@@ -1,0 +1,17 @@
+1. Opis KNIME:
+	- jak działa?
+	- co to jest?
+	- co zawiera?
+2. Wstęp do metryk:
+	- co to są metryki?
+	- jakie mamy rodzaje metryk?
+	- charakterystyka metryk
+3. GUI do plugina
+4. Krótki opis API svn'a, w tym:
+	- jakie są w nim komendy i możliwości generowania pliku xml?
+5. Opis infrastruktury projektu:
+	- w czym pracujemy?
+	- lista narzędzi, których używamy
+6. Testy:
+	- jakie będziemy stosowali testy?
+	- jakie frameworki zostanę wykorzystane w celu testowania?
