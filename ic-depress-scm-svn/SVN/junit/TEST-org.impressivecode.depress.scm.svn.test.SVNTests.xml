@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="2" hostname="Marcin-Laptop" name="org.impressivecode.depress.scm.svn.test.SVNTests" tests="7" time="0.078" timestamp="2013-03-20T02:40:41">
+  <properties>
+    <property name="env.VBOX_INSTALL_PATH" value="D:\App\Virtual Box\" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="org.osgi.framework.executionenvironment" value="OSGi/Minimum-1.0,OSGi/Minimum-1.1,OSGi/Minimum-1.2,JRE-1.1,J2SE-1.2,J2SE-1.3,J2SE-1.4,J2SE-1.5,JavaSE-1.6,JavaSE-1.7" />
+    <property name="osgi.framework" value="file:/d:/App/Knime_2.7.2/plugins/org.eclipse.osgi_3.7.2.v20120110-1415.jar" />
+    <property name="java.home" value="D:\App\Knime_2.7.2\jre" />
+    <property name="eclipse.application" value="org.knime.product.KNIME_APPLICATION" />
+    <property name="env.PCBRAND" value="Pavilion" />
+    <property name="org.eclipse.debug.ui.breakpoints.toggleFactoriesUsed" value="false" />
+    <property name="sun.java2d.d3d" value="false" />
+    <property name="java.endorsed.dirs" value="D:\App\Knime_2.7.2\jre\lib\endorsed" />
+    <property name="osgi.bundlestore" value="D:\App\Knime_2.7.2\configuration\org.eclipse.osgi\bundles" />
+    <property name="env.USERNAME" value="Marcin" />
+    <property name="debuglevel" value="source,lines,vars" />
+    <property name="ECLIPSE_HOME" value="../../../../../App/Knime_2.7.2" />
+    <property name="sun.os.patch.level" value="Service Pack 1" />
+    <property name="java.vendor.url" value="http://java.oracle.com/" />
+    <property name="env.COMPUTERNAME" value="MARCIN-LAPTOP" />
+    <property name="env.ProgramFiles(x86)" value="C:\Program Files (x86)" />
+    <property name="java.version" value="1.7.0_07" />
+    <property name="eclipse.pdebuild.home" value="/D:/App/Knime_2.7.2/plugins/org.eclipse.pde.build_3.7.0.v20111116-2009/./" />
+    <property name="osgi.os" value="win32" />
+    <property name="org.eclipse.equinox.simpleconfigurator.configUrl" value="file:org.eclipse.equinox.simpleconfigurator/bundles.info" />
+    <property name="org.osgi.framework.uuid" value="b05b4ab8-fe90-0012-114d-c91567958a7a" />
+    <property name="osgi.splashPath" value="platform:/base/plugins/org.knime.product" />
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+    <property name="env.USERPROFILE" value="C:\Users\Marcin" />
+    <property name="ant.project.invoked-targets" value="SVNTests (1)" />
+    <property name="env.SystemRoot" value="C:\Windows" />
+    <property name="user.name" value="Marcin" />
+    <property name="org.osgi.framework.version" value="1.6.0" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="org.osgi.framework.system.packages" value="javax.accessibility,javax.activation,javax.activity,javax.annotation,javax.annotation.processing,javax.crypto,javax.crypto.interfaces,javax.crypto.spec,javax.imageio,javax.imageio.event,javax.imageio.metadata,javax.imageio.plugins.bmp,javax.imageio.plugins.jpeg,javax.imageio.spi,javax.imageio.stream,javax.jws,javax.jws.soap,javax.lang.model,javax.lang.model.element,javax.lang.model.type,javax.lang.model.util,javax.management,javax.management.event,javax.management.loading,javax.management.modelmbean,javax.management.monitor,javax.management.namespace,javax.management.openmbean,javax.management.relation,javax.management.remote,javax.management.remote.rmi,javax.management.timer,javax.naming,javax.naming.directory,javax.naming.event,javax.naming.ldap,javax.naming.spi,javax.net,javax.net.ssl,javax.print,javax.print.attribute,javax.print.attribute.standard,javax.print.event,javax.rmi,javax.rmi.CORBA,javax.rmi.ssl,javax.script,javax.security.auth,javax.security.auth.callback,javax.security.auth.kerberos,javax.security.auth.login,javax.security.auth.spi,javax.security.auth.x500,javax.security.cert,javax.security.sasl,javax.sound.midi,javax.sound.midi.spi,javax.sound.sampled,javax.sound.sampled.spi,javax.sql,javax.sql.rowset,javax.sql.rowset.serial,javax.sql.rowset.spi,javax.swing,javax.swing.border,javax.swing.colorchooser,javax.swing.event,javax.swing.filechooser,javax.swing.plaf,javax.swing.plaf.basic,javax.swing.plaf.metal,javax.swing.plaf.multi,javax.swing.plaf.nimbus,javax.swing.plaf.synth,javax.swing.table,javax.swing.text,javax.swing.text.html,javax.swing.text.html.parser,javax.swing.text.rtf,javax.swing.tree,javax.swing.undo,javax.tools,javax.transaction,javax.transaction.xa,javax.xml,javax.xml.bind,javax.xml.bind.annotation,javax.xml.bind.annotation.adapters,javax.xml.bind.attachment,javax.xml.bind.helpers,javax.xml.bind.util,javax.xml.crypto,javax.xml.crypto.dom,javax.xml.crypto.dsig,javax.xml.crypto.dsig.dom,javax.xml.crypto.dsig.keyinfo,javax.xml.crypto.dsig.spec,javax.xml.datatype,javax.xml.namespace,javax.xml.parsers,javax.xml.soap,javax.xml.stream,javax.xml.stream.events,javax.xml.stream.util,javax.xml.transform,javax.xml.transform.dom,javax.xml.transform.sax,javax.xml.transform.stax,javax.xml.transform.stream,javax.xml.validation,javax.xml.ws,javax.xml.ws.handler,javax.xml.ws.handler.soap,javax.xml.ws.http,javax.xml.ws.soap,javax.xml.ws.spi,javax.xml.ws.spi.http,javax.xml.ws.wsaddressing,javax.xml.xpath,org.ietf.jgss,org.omg.CORBA,org.omg.CORBA_2_3,org.omg.CORBA_2_3.portable,org.omg.CORBA.DynAnyPackage,org.omg.CORBA.ORBPackage,org.omg.CORBA.portable,org.omg.CORBA.TypeCodePackage,org.omg.CosNaming,org.omg.CosNaming.NamingContextExtPackage,org.omg.CosNaming.NamingContextPackage,org.omg.Dynamic,org.omg.DynamicAny,org.omg.DynamicAny.DynAnyFactoryPackage,org.omg.DynamicAny.DynAnyPackage,org.omg.IOP,org.omg.IOP.CodecFactoryPackage,org.omg.IOP.CodecPackage,org.omg.Messaging,org.omg.PortableInterceptor,org.omg.PortableInterceptor.ORBInitInfoPackage,org.omg.PortableServer,org.omg.PortableServer.CurrentPackage,org.omg.PortableServer.POAManagerPackage,org.omg.PortableServer.POAPackage,org.omg.PortableServer.portable,org.omg.PortableServer.ServantLocatorPackage,org.omg.SendingContext,org.omg.stub.java.rmi,org.w3c.dom,org.w3c.dom.bootstrap,org.w3c.dom.css,org.w3c.dom.events,org.w3c.dom.html,org.w3c.dom.ls,org.w3c.dom.ranges,org.w3c.dom.stylesheets,org.w3c.dom.traversal,org.w3c.dom.views,org.w3c.dom.xpath,org.xml.sax,org.xml.sax.ext,org.xml.sax.helpers" />
+    <property name="sun.jnu.encoding" value="Cp1250" />
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="env.LOCALAPPDATA" value="C:\Users\Marcin\AppData\Local" />
+    <property name="osgi.instance.area.default" value="file:/D:/App/Knime_2.7.2/workspace/" />
+    <property name="eclipse.launcher.name" value="Knime" />
+    <property name="eclipse.product" value="org.knime.product.KNIME_PRODUCT" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="org.osgi.supports.framework.fragment" value="true" />
+    <property name="user.timezone" value="" />
+    <property name="org.osgi.framework.system.capabilities" value="osgi.ee; osgi.ee=&quot;OSGi/Minimum&quot;; version:List&lt;Version&gt;=&quot;1.0, 1.1, 1.2&quot;,osgi.ee; osgi.ee=&quot;JavaSE&quot;; version:List&lt;Version&gt;=&quot;1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7&quot;" />
+    <property name="osgi.nl" value="pl_PL" />
+    <property name="user.script" value="" />
+    <property name="path.separator" value=";" />
+    <property name="env.PROCESSOR_IDENTIFIER" value="Intel64 Family 6 Model 42 Stepping 7, GenuineIntel" />
+    <property name="file.encoding" value="Cp1250" />
+    <property name="osgi.arch" value="x86_64" />
+    <property name="env.XNAGSShared" value="C:\Program Files (x86)\Common Files\Microsoft Shared\XNA\" />
+    <property name="ant.project.default-target" value="build" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner org.impressivecode.depress.scm.svn.test.SVNTests filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,D:\Git\0\ic-depress\ic-depress-scm-svn\SVN\junit\TEST-org.impressivecode.depress.scm.svn.test.SVNTests.xml crashfile=D:\Git\0\ic-depress\ic-depress-scm-svn\SVN\junitvmwatcher7064588988364674194.properties propsfile=D:\Git\0\ic-depress\ic-depress-scm-svn\SVN\junit8669829328768393798.properties" />
+    <property name="env.NUMBER_OF_PROCESSORS" value="4" />
+    <property name="env.APPDATA" value="C:\Users\Marcin\AppData\Roaming" />
+    <property name="env.XNAGSv4" value="C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\" />
+    <property name="ant.file" value="D:\Git\0\ic-depress\ic-depress-scm-svn\SVN\build.xml" />
+    <property name="env.Platform" value="MCD" />
+    <property name="org.osgi.supports.framework.requirebundle" value="true" />
+    <property name="env.QTJAVA" value="C:\Program Files (x86)\Java\jre7\lib\ext\QTJava.zip" />
+    <property name="osgi.bundles.defaultStartLevel" value="4" />
+    <property name="osgi.bundles" value="reference:file:org.eclipse.equinox.simpleconfigurator_1.0.200.v20110815-1438.jar@1:start" />
+    <property name="java.io.tmpdir" value="C:\Users\Marcin\AppData\Local\Temp\" />
+    <property name="org.osgi.framework.os.name" value="Windows7" />
+    <property name="equinox.use.ds" value="true" />
+    <property name="user.language" value="pl" />
+    <property name="env.SystemDrive" value="C:" />
+    <property name="line.separator" value="&#xd;&#xa;" />
+    <property name="target" value="1.7" />
+    <property name="env.SSH_AGENT_PID" value="1312" />
+    <property name="org.osgi.framework.processor" value="x86-64" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="osgi.manifest.cache" value="D:\App\Knime_2.7.2\configuration\org.eclipse.osgi\manifests" />
+    <property name="source" value="1.7" />
+    <property name="osgi.splashLocation" value="d:\App\Knime_2.7.2\plugins\org.knime.product_2.7.2.0036617\splash.bmp" />
+    <property name="sun.desktop" value="windows" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="ant.file.type.SVN" value="file" />
+    <property name="env.PATHEXT" value=".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC" />
+    <property name="env.MOZ_PLUGIN_PATH" value="C:\PROGRAM FILES (X86)\FOXIT SOFTWARE\FOXIT READER\plugins\" />
+    <property name="eclipse.vm" value="D:\App\Knime_2.7.2\jre\bin\server\jvm.dll" />
+    <property name="env.LOGONSERVER" value="\\MARCIN-LAPTOP" />
+    <property name="eclipse.pdebuild.templates" value="/D:/App/Knime_2.7.2/plugins/org.eclipse.pde.build_3.7.0.v20111116-2009/templates/" />
+    <property name="osgi.configuration.area" value="file:/D:/App/Knime_2.7.2/configuration/" />
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob" />
+    <property name="env.PUBLIC" value="C:\Users\Public" />
+    <property name="ant.version" value="Apache Ant(TM) version 1.8.2 compiled on December 20 2010" />
+    <property name="env.USERDOMAIN" value="Marcin-Laptop" />
+    <property name="osgi.ws" value="win32" />
+    <property name="env.PROCESSOR_LEVEL" value="6" />
+    <property name="org.osgi.supports.framework.extension" value="true" />
+    <property name="eclipse.p2.data.area" value="@config.dir/../p2/" />
+    <property name="osgi.framework.extensions" value="" />
+    <property name="org.eclipse.jdt.debug.ui.debuggerActive" value="false" />
+    <property name="env.windir" value="C:\Windows" />
+    <property name="env.CommonProgramFiles(x86)" value="C:\Program Files (x86)\Common Files" />
+    <property name="org.osgi.framework.language" value="pl" />
+    <property name="env.CLASSPATH" value=".;C:\Program Files (x86)\Java\jre7\lib\ext\QTJava.zip" />
+    <property name="os.name" value="Windows 7" />
+    <property name="eclipse.home.location" value="file:/D:/App/Knime_2.7.2/" />
+    <property name="java.specification.vendor" value="Oracle Corporation" />
+    <property name="eclipse.vmargs" value="-XX:MaxPermSize=256m&#xa;-server&#xa;-Dsun.java2d.d3d=false&#xa;-Dosgi.classloader.lock=classname&#xa;-XX:+UnlockDiagnosticVMOptions&#xa;-XX:+UnsyncloadClass&#xa;-Dknime.enable.fastload=true&#xa;-Xmx1024m&#xa;-Djava.class.path=D:\App\Knime_2.7.2\\plugins/org.eclipse.equinox.launcher_1.2.0.v20110502.jar&#xa;" />
+    <property name="env.TMP" value="C:\Users\Marcin\AppData\Local\Temp" />
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+    <property name="env.ProgramData" value="C:\ProgramData" />
+    <property name="env.OS" value="Windows_NT" />
+    <property name="sun.awt.enableExtraMouseButtons" value="true" />
+    <property name="java.library.path" value="D:\App\Knime_2.7.2\jre\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;D:/App/Knime_2.7.2/jre/bin/server;D:/App/Knime_2.7.2/jre/bin;D:/App/Knime_2.7.2/jre/lib/amd64;C:\Program Files (x86)\PC Connectivity Solution\;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\AMD APP\bin\x86_64;C:\Program Files (x86)\AMD APP\bin\x86;C:\Program Files (x86)\HP SimplePass 2011\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;D:\DEV\MinGW\msys\1.0\bin;D:\DEV\MinGW\bin;C:\Program Files (x86)\Microsoft SQL Server\90\Tools\binn\;C:\Program Files (x86)\Clarius Consulting\Orientation Aware Control 2008\;D:\App\TortoiseSVN\bin;C:\Program Files\Java\jdk1.7.0_04\bin;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\VSShell\Common7\IDE\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;D:\App\doxygen\bin;C:\Program Files\Microsoft Windows Performance Toolkit\;C:\Program Files (x86)\QuickTime\QTSystem\;D:\App\MATLAB\R2009a\bin;D:\App\MATLAB\R2009a\bin\win64;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;D:\App\TortoiseGit\bin;C:\Program Files\TortoiseHg\;D:\App\Knime_2.7.2;;." />
+    <property name="eclipse.pdebuild.scripts" value="/D:/App/Knime_2.7.2/plugins/org.eclipse.pde.build_3.7.0.v20111116-2009/scripts/" />
+    <property name="ant.java.version" value="1.7" />
+    <property name="eclipse.commands" value="-os&#xa;win32&#xa;-ws&#xa;win32&#xa;-arch&#xa;x86_64&#xa;-showsplash&#xa;-launcher&#xa;D:\App\Knime_2.7.2\knime.exe&#xa;-name&#xa;Knime&#xa;--launcher.library&#xa;D:\App\Knime_2.7.2\\plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.1.100.v20110502\eclipse_1406.dll&#xa;-startup&#xa;D:\App\Knime_2.7.2\\plugins/org.eclipse.equinox.launcher_1.2.0.v20110502.jar&#xa;--launcher.overrideVmargs&#xa;-vm&#xa;D:\App\Knime_2.7.2\jre\bin\server\jvm.dll&#xa;" />
+    <property name="basedir" value="D:\Git\0\ic-depress\ic-depress-scm-svn\SVN" />
+    <property name="env.AMDAPPSDKROOT" value="C:\Program Files (x86)\AMD APP\" />
+    <property name="java.class.version" value="51.0" />
+    <property name="osgi.syspath" value="d:\App\Knime_2.7.2\plugins" />
+    <property name="ant.home" value="D:\App\Knime_2.7.2\plugins\org.apache.ant_1.8.2.v20120109-1030" />
+    <property name="env.Path" value="D:/App/Knime_2.7.2/jre/bin/server;D:/App/Knime_2.7.2/jre/bin;D:/App/Knime_2.7.2/jre/lib/amd64;C:\Program Files (x86)\PC Connectivity Solution\;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\AMD APP\bin\x86_64;C:\Program Files (x86)\AMD APP\bin\x86;C:\Program Files (x86)\HP SimplePass 2011\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;D:\DEV\MinGW\msys\1.0\bin;D:\DEV\MinGW\bin;C:\Program Files (x86)\Microsoft SQL Server\90\Tools\binn\;C:\Program Files (x86)\Clarius Consulting\Orientation Aware Control 2008\;D:\App\TortoiseSVN\bin;C:\Program Files\Java\jdk1.7.0_04\bin;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\VSShell\Common7\IDE\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;D:\App\doxygen\bin;C:\Program Files\Microsoft Windows Performance Toolkit\;C:\Program Files (x86)\QuickTime\QTSystem\;D:\App\MATLAB\R2009a\bin;D:\App\MATLAB\R2009a\bin\win64;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;D:\App\TortoiseGit\bin;C:\Program Files\TortoiseHg\;D:\App\Knime_2.7.2;" />
+    <property name="org.eclipse.equinox.launcher.splash.location" value="d:\App\Knime_2.7.2\plugins\org.knime.product_2.7.2.0036617\splash.bmp" />
+    <property name="env.HOMEDRIVE" value="C:" />
+    <property name="osgi.instance.area" value="file:/D:/Git/0/ic-depress/ic-depress-scm-svn/" />
+    <property name="osgi.install.area" value="file:/D:/App/Knime_2.7.2/" />
+    <property name="sun.boot.library.path" value="D:\App\Knime_2.7.2\jre\bin" />
+    <property name="env.PROCESSOR_REVISION" value="2a07" />
+    <property name="org.eclipse.jdt.debug.ui.supportsForceReturn" value="false" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment" />
+    <property name="user.variant" value="" />
+    <property name="ant.file.SVN" value="D:\Git\0\ic-depress\ic-depress-scm-svn\SVN\build.xml" />
+    <property name="ant.project.name" value="SVN" />
+    <property name="osgi.classloader.lock" value="classname" />
+    <property name="java.vm.specification.version" value="1.7" />
+    <property name="eclipse.running" value="true" />
+    <property name="org.eclipse.jdt.debug.ui.instanceof.IJavaStackFrame" value="false" />
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
+    <property name="sun.cpu.isalist" value="amd64" />
+    <property name="org.eclipse.update.reconcile" value="false" />
+    <property name="java.ext.dirs" value="D:\App\Knime_2.7.2\jre\lib\ext;C:\Windows\Sun\Java\lib\ext" />
+    <property name="osgi.framework.version" value="3.7.2.v20120110-1415" />
+    <property name="os.version" value="6.1" />
+    <property name="eclipse.launcher" value="D:\App\Knime_2.7.2\knime.exe" />
+    <property name="user.home" value="C:\Users\Marcin" />
+    <property name="java.vm.vendor" value="Oracle Corporation" />
+    <property name="env.CommonProgramW6432" value="C:\Program Files\Common Files" />
+    <property name="env.JAVA_HOME" value="C:\Program Files\Java\jdk1.7.0_04" />
+    <property name="env.ProgramW6432" value="C:\Program Files" />
+    <property name="junit.output.dir" value="junit" />
+    <property name="env.SVN_SSH" value="D:\App\TortoiseGit\bin\TortoisePlink.exe" />
+    <property name="knime.enable.fastload" value="true" />
+    <property name="user.dir" value="D:\App\Knime_2.7.2" />
+    <property name="osgi.framework.shape" value="jar" />
+    <property name="org.osgi.framework.os.version" value="6.1.0" />
+    <property name="env.FP_NO_HOST_CHECK" value="NO" />
+    <property name="eclipse.home" value="D:\App\Knime_2.7.2" />
+    <property name="env.OnlineServices" value="Online Services" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="env.ALLUSERSPROFILE" value="C:\ProgramData" />
+    <property name="eclipse.startTime" value="1363743445861" />
+    <property name="env.PROCESSOR_ARCHITECTURE" value="AMD64" />
+    <property name="java.vm.version" value="23.3-b01" />
+    <property name="env.HOMEPATH" value="\Users\Marcin" />
+    <property name="java.class.path" value="D:\App\Knime_2.7.2\plugins\org.eclipse.core.runtime_3.7.0.v20110110.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.osgi_3.7.2.v20120110-1415.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.equinox.common_3.6.0.v20110523.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.core.jobs_3.5.101.v20120113-1953.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.core.runtime.compatibility.registry_3.5.0.v20110505\runtime_registry_compatibility.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.equinox.registry_3.5.101.R37x_v20110810-1611.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.equinox.preferences_3.4.2.v20120111-2020.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.core.contenttype_3.4.100.v20110423-0524.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.equinox.app_1.3.100.v20110321.jar;D:\App\Knime_2.7.2\plugins\org.knime.workbench.core_2.7.0.0035863.jar;D:\App\Knime_2.7.2\plugins\org.knime.core_2.7.2.0036617\knime-core.jar;D:\App\Knime_2.7.2\plugins\org.knime.core_2.7.2.0036617\lib\saxon-he-9.2.0.5.jar;D:\App\Knime_2.7.2\plugins\org.knime.core_2.7.2.0036617\lib\stax-1.2.0.jar;D:\App\Knime_2.7.2\plugins\org.knime.core_2.7.2.0036617\lib\schemas.jar;D:\App\Knime_2.7.2\plugins\org.knime.core.util_4.3.1.0036598.jar;D:\App\Knime_2.7.2\plugins\org.knime.core.pmml_2.7.0.0035991\knime-pmml.jar;D:\App\Knime_2.7.2\plugins\org.knime.core.pmml_2.7.0.0035991\lib\schemas.jar;D:\App\Knime_2.7.2\plugins\org.apache.xmlbeans_2.5.0.0035503\lib\xbean.jar;D:\App\Knime_2.7.2\plugins\org.apache.xmlbeans_2.5.0.0035503\lib\xbean_xpath.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.platform_3.7.2.v201202080800\platform.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.ui_3.7.0.v20110928-1505.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.swt_3.7.2.v3740f.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.swt.win32.win32.x86_64_3.7.2.v3740f.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.jface_3.7.0.v20110928-1505.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.core.commands_3.6.0.I20110111-0800.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.ui.workbench_3.7.1.v20120104-1859.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.gef_3.7.2.v20111106-2020.jar;D:\App\Knime_2.7.2\plugins\org.eclipse.draw2d_3.7.2.v20111017-2020.jar;D:\App\Knime_2.7.2\plugins\org.knime.workbench.repository_2.7.1.0036288\knime-workbench-repository.jar;D:\App\Knime_2.7.2\plugins\org.knime.workbench.repository_2.7.1.0036288\lib\schemas.jar;D:\App\Knime_2.7.2\plugins\org.knime.base_2.7.2.0036614\knime-base.jar;D:\App\Knime_2.7.2\plugins\org.knime.base_2.7.2.0036614\lib\Jama-1.0.2.jar;D:\App\Knime_2.7.2\plugins\org.apache.commons.io_1.4.0.v20081110-1000.jar;D:\Git\0\ic-depress\ic-depress-scm-svn\SVN\bin;D:\App\Knime_2.7.2\plugins\org.junit_4.8.2.v4_8_2_v20110321-1705\junit.jar;D:\App\Knime_2.7.2\plugins\org.hamcrest.core_1.1.0.v20090501071000.jar;D:\Git\0\ic-depress\ic-depress-scm-svn\SVN;C:\Program Files (x86)\Java\jre7\lib\ext\QTJava.zip;D:\App\Knime_2.7.2\plugins\org.apache.ant_1.8.2.v20120109-1030\lib\ant-launcher.jar;D:\App\Knime_2.7.2\plugins\org.apache.ant_1.8.2.v20120109-1030\lib\ant.jar;D:\App\Knime_2.7.2\plugins\org.apache.ant_1.8.2.v20120109-1030\lib\ant-junit.jar;D:\App\Knime_2.7.2\plugins\org.apache.ant_1.8.2.v20120109-1030\lib\ant-junit4.jar" />
+    <property name="env.=::" value="::\" />
+    <property name="env.VS100COMNTOOLS" value="C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\Tools\" />
+    <property name="ant.library.dir" value="D:\App\Knime_2.7.2\plugins\org.apache.ant_1.8.2.v20120109-1030\lib" />
+    <property name="os.arch" value="amd64" />
+    <property name="eclipse.p2.profile" value="KNIMEProfile" />
+    <property name="env.SESSIONNAME" value="Console" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="org.osgi.framework.vendor" value="Eclipse" />
+    <property name="env.CommonProgramFiles" value="C:\Program Files\Common Files" />
+    <property name="osgi.tracefile" value="D:\Git\0\ic-depress\ic-depress-scm-svn\.metadata\trace.log" />
+    <property name="ant.core.lib" value="D:\App\Knime_2.7.2\plugins\org.apache.ant_1.8.2.v20120109-1030\lib\ant.jar" />
+    <property name="env.ProgramFiles" value="C:\Program Files" />
+    <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+    <property name="file.separator" value="\" />
+    <property name="java.runtime.version" value="1.7.0_07-b11" />
+    <property name="sun.boot.class.path" value="D:\App\Knime_2.7.2\jre\lib\resources.jar;D:\App\Knime_2.7.2\jre\lib\rt.jar;D:\App\Knime_2.7.2\jre\lib\sunrsasign.jar;D:\App\Knime_2.7.2\jre\lib\jsse.jar;D:\App\Knime_2.7.2\jre\lib\jce.jar;D:\App\Knime_2.7.2\jre\lib\charsets.jar;D:\App\Knime_2.7.2\jre\lib\jfr.jar;D:\App\Knime_2.7.2\jre\classes" />
+    <property name="env.SSH_AUTH_SOCK" value="/tmp/ssh-QmuGVa7992/agent.7992" />
+    <property name="env.ComSpec" value="C:\Windows\system32\cmd.exe" />
+    <property name="env.TEMP" value="C:\Users\Marcin\AppData\Local\Temp" />
+    <property name="env.VS110COMNTOOLS" value="C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\" />
+    <property name="user.country" value="PL" />
+    <property name="org.eclipse.jdt.debug.ui.supportsInstanceRetrieval" value="false" />
+    <property name="osgi.logfile" value="D:\Git\0\ic-depress\ic-depress-scm-svn\.metadata\.log" />
+    <property name="java.vendor" value="Oracle Corporation" />
+    <property name="env.PSModulePath" value="C:\Windows\system32\WindowsPowerShell\v1.0\Modules\" />
+    <property name="env.GIT_SSH" value="D:\App\TortoiseGit\bin\TortoisePlink.exe" />
+    <property name="java.specification.version" value="1.7" />
+    <property name="sun.arch.data.model" value="64" />
+  </properties>
+  <testcase classname="org.impressivecode.depress.scm.svn.test.structural.SVNNodeLogicTest" name="testNotifyRange" time="0.0" />
+  <testcase classname="org.impressivecode.depress.scm.svn.test.structural.SVNNodeLogicTest" name="testNotifyIntMax" time="0.015">
+    <failure message="Expected exception: java.lang.IndexOutOfBoundsException" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Expected exception: java.lang.IndexOutOfBoundsException
+</failure>
+  </testcase>
+  <testcase classname="org.impressivecode.depress.scm.svn.test.structural.SVNNodeLogicTest" name="testNotifyIntMin" time="0.0">
+    <failure message="Expected exception: java.lang.IndexOutOfBoundsException" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Expected exception: java.lang.IndexOutOfBoundsException
+</failure>
+  </testcase>
+  <testcase classname="org.impressivecode.depress.scm.svn.test.structural.SVNLogLoaderTest" name="testLoadXmlPath" time="0.0" />
+  <testcase classname="org.impressivecode.depress.scm.svn.test.structural.SVNLogLoaderTest" name="testLoadXmlIssue" time="0.0" />
+  <testcase classname="org.impressivecode.depress.scm.svn.test.structural.SVNLogLoaderTest" name="testLoadXmlPackage" time="0.0" />
+  <testcase classname="org.impressivecode.depress.scm.svn.test.functional.SVNLogLoaderTest" name="testloadXML" time="0.0" />
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

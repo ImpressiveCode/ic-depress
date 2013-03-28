@@ -1,0 +1,20 @@
+package org.impressivecode.depress.scm.svn;
+
+public class SVNLogLoader {
+
+	public interface IReadProgress {
+
+		void notify(int i);
+
+	}
+
+	public void loadXmlL(String inPath, String inIsueMarker, String inPackage,
+			IReadProgress inProgress) {
+
+		for (int i = 0; i < 100; ++i) {
+			inProgress.notify(i);
+		}
+
+	}
+
+}

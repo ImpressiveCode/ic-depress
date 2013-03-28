@@ -1,0 +1,29 @@
+package org.impressivecode.depress.scm.svn.test.functional;
+
+import static org.junit.Assert.*;
+
+import org.impressivecode.depress.scm.svn.SVNLogLoader;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class SVNLogLoaderTest {
+
+	SVNLogLoader loader;
+	
+	@Before
+	public void setUp() throws Exception {
+	loader = new SVNLogLoader();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		loader= null;
+	}
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<favoritenodes>
+<personals/>
+<frequents>
+<favorite frequency="3" nodeid="org.knime.svn.SVNNodeFactory"/>
+<favorite frequency="1" nodeid="org.knime.base.node.util.extracttabledimension.ExtractTableDimensionNodeFactory"/>
+<favorite frequency="1" nodeid="org.knime.base.node.util.cache.CacheNodeFactory"/>
+<favorite frequency="1" nodeid="org.knime.base.node.viz.statistics.Statistics2NodeFactory"/>
+</frequents>
+<lastused>
+<favorite nodeid="org.knime.base.node.viz.statistics.Statistics2NodeFactory"/>
+<favorite nodeid="org.knime.base.node.util.extracttabledimension.ExtractTableDimensionNodeFactory"/>
+<favorite nodeid="org.knime.base.node.util.cache.CacheNodeFactory"/>
+<favorite nodeid="org.knime.svn.SVNNodeFactory"/>
+</lastused>
+</favoritenodes>
