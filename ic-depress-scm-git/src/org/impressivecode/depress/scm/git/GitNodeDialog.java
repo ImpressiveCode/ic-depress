@@ -56,7 +56,7 @@ public class GitNodeDialog extends DefaultNodeSettingsPane {
           
         addDialogComponent(new DialogComponentString(
         		  				new SettingsModelString(GitNodeModel.GIT_REGEXP, GitNodeModel.GIT_REGEXP_DEFAULT),
-        		  				"Issue maker: "));
+        		  				"Issue marker: "));
           
         addDialogComponent(new DialogComponentOptionalString(
 	  							new SettingsModelOptionalString(GitNodeModel.GIT_PACKAGENAME, 
