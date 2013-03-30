@@ -1,5 +1,0 @@
-<project name="SVNPlugin">
-	<target name="plugin_export">
-		<pde.exportPlugins destination="out" exportSource="false" exportType="directory" plugins="org.knime.svn" useJARFormat="true" />
-	</target>
-</project>

@@ -448,7 +448,7 @@
 	<bundle bundleID="252" localization="plugin" name="W3C Sac" provider="Eclipse BIRT Project">
 		<library name="lib/flute.jar"/>
 	</bundle>
-	<bundle bundleID="253" class="org.knime.svnplugin.SVNPluginNodePlugin" name="SVNPlugin-Node extension for KNIME Workbench" provider="KNIME">
-		<library name="svnplugin.jar"/>
+	<bundle bundleID="253" class="org.impressivecode.depress.scm.svn.SVNNodePlugin" name="SVN-Node extension for KNIME Workbench" provider="KNIME">
+		<library name="svn.jar"/>
 	</bundle>
 </map>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.junit.launchconfig">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/SVNPlugin01/test/org/knime/svnplugin/test/functional/FunctionalTestSuit.java"/>
+<listEntry value="/plugin/src/test/java/org/impressivecode/depress/scm/svn/test/functional/FunctionalTestSuit.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
@@ -9,7 +9,7 @@
 <stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value=""/>
 <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.knime.svnplugin.test.functional.FunctionalTestSuit"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SVNPlugin01"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.impressivecode.depress.scm.svn.test.functional.FunctionalTestSuit"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="plugin"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value=""/>
 </launchConfiguration>

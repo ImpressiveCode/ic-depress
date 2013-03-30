@@ -1,9 +1,0 @@
-package org.knime.svn;
-
-public class SVNPluginLocale {
-
-	public static String nIssueMarker() {
-		return "Issue MArker";
-	}
-
-}

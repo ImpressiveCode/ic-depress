@@ -1,4 +1,0 @@
-source.mynode01.jar = src/
-bin.includes = plugin.xml,\
-               META-INF/,\
-               mynode01.jar

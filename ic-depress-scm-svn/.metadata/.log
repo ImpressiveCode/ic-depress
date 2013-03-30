@@ -1,142 +1,335 @@
+!SESSION 2013-03-30 07:17:51.349 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.7.0_07
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:31:04.391
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:18:45.887
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:31:04.391
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:18:45.903
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:31:04.391
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:18:45.903
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:31:04.391
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:18:45.903
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:35:42.524
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:30:38.115
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:35:42.524
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:30:38.115
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:35:42.524
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:30:38.115
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:35:42.524
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:30:38.115
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:42:09.511
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:35:01.670
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:42:09.511
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:35:01.670
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:42:09.511
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:35:01.670
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:42:09.511
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:35:01.670
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:42:18.965
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:37:46.316
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:42:18.965
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:37:46.316
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:42:18.965
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:37:46.316
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:42:18.965
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:37:46.316
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:44:23.796
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:40:46.372
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:44:23.796
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:40:46.372
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:44:23.796
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:40:46.372
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-20 03:44:23.796
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:40:46.372
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 0 2013-03-20 04:07:33.378
-!MESSAGE Unhandled event loop exception
-!STACK 0
-java.lang.NullPointerException
-	at org.eclipse.ui.internal.WorkbenchWindow.hardClose(WorkbenchWindow.java:1715)
-	at org.eclipse.ui.internal.WorkbenchWindow.busyClose(WorkbenchWindow.java:730)
-	at org.eclipse.ui.internal.WorkbenchWindow.access$0(WorkbenchWindow.java:715)
-	at org.eclipse.ui.internal.WorkbenchWindow$6.run(WorkbenchWindow.java:867)
-	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:70)
-	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:865)
-	at org.eclipse.jface.window.Window.handleShellCloseEvent(Window.java:741)
-	at org.eclipse.jface.window.Window$3.shellClosed(Window.java:687)
-	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:98)
-	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
-	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1053)
-	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1077)
-	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1062)
-	at org.eclipse.swt.widgets.Decorations.closeWidget(Decorations.java:308)
-	at org.eclipse.swt.widgets.Decorations.WM_CLOSE(Decorations.java:1677)
-	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4530)
-	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:341)
-	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1610)
-	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2061)
-	at org.eclipse.swt.widgets.Display.windowProc(Display.java:4972)
-	at org.eclipse.swt.internal.win32.OS.DefWindowProcW(Native Method)
-	at org.eclipse.swt.internal.win32.OS.DefWindowProc(OS.java:2526)
-	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:498)
-	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4623)
-	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:341)
-	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1610)
-	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2061)
-	at org.eclipse.swt.widgets.Display.windowProc(Display.java:4972)
-	at org.eclipse.swt.internal.win32.OS.DefWindowProcW(Native Method)
-	at org.eclipse.swt.internal.win32.OS.DefWindowProc(OS.java:2526)
-	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:498)
-	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4623)
-	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:341)
-	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1610)
-	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2061)
-	at org.eclipse.swt.widgets.Display.windowProc(Display.java:4972)
-	at org.eclipse.swt.internal.win32.OS.DispatchMessageW(Native Method)
-	at org.eclipse.swt.internal.win32.OS.DispatchMessage(OS.java:2531)
-	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
-	at org.eclipse.ui.internal.WorkbenchWindow.canHandleShellCloseEvent(WorkbenchWindow.java:852)
-	at org.eclipse.jface.window.Window$3.shellClosed(Window.java:686)
-	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:98)
-	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
-	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1053)
-	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1077)
-	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1062)
-	at org.eclipse.swt.widgets.Decorations.closeWidget(Decorations.java:308)
-	at org.eclipse.swt.widgets.Decorations.WM_CLOSE(Decorations.java:1677)
-	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4530)
-	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:341)
-	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1610)
-	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2061)
-	at org.eclipse.swt.widgets.Display.windowProc(Display.java:4972)
-	at org.eclipse.swt.internal.win32.OS.DefWindowProcW(Native Method)
-	at org.eclipse.swt.internal.win32.OS.DefWindowProc(OS.java:2526)
-	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:498)
-	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4623)
-	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:341)
-	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1610)
-	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2061)
-	at org.eclipse.swt.widgets.Display.windowProc(Display.java:4972)
-	at org.eclipse.swt.internal.win32.OS.DefWindowProcW(Native Method)
-	at org.eclipse.swt.internal.win32.OS.DefWindowProc(OS.java:2526)
-	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:498)
-	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4623)
-	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:341)
-	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1610)
-	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2061)
-	at org.eclipse.swt.widgets.Display.windowProc(Display.java:4972)
-	at org.eclipse.swt.internal.win32.OS.DispatchMessageW(Native Method)
-	at org.eclipse.swt.internal.win32.OS.DispatchMessage(OS.java:2531)
-	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
-	at org.eclipse.ui.internal.Workbench.runEventLoop(Workbench.java:2701)
-	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:2665)
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:48:09.285
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:48:09.285
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:48:09.285
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:48:09.285
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:48:18.848
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:48:18.848
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:48:18.848
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:48:18.848
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:51:45.669
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:51:45.685
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:51:45.685
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 07:51:45.685
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:04:18.228
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:04:18.228
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:04:18.228
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:04:18.228
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:06:48.722
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:06:48.722
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:06:48.722
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:06:48.722
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:09:42.884
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:09:42.899
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:09:42.899
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:09:42.899
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:53:17.929
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:53:17.945
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:53:17.945
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:53:17.945
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:53:18.881
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:53:18.881
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:53:18.881
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:53:18.881
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:53:29.910
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:53:29.910
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:53:29.910
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:53:29.910
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:55:31.608
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:55:31.608
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:55:31.608
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 08:55:31.608
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:15.151
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:18.880
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:19.379
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:19.785
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:20.003
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:20.190
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:20.424
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:22.749
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:22.951
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:23.154
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:23.341
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:23.669
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.pde.core 4 4 2013-03-30 09:03:23.841
+!MESSAGE Cannot nest 'plugin/src/main/java' inside 'plugin/src/'. To enable the nesting exclude 'main/' from 'plugin/src/'
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 11:28:06.527
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 11:28:06.558
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 11:28:06.558
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 11:28:06.558
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 11:31:22.458
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 11:31:22.458
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 11:31:22.458
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 11:31:22.458
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 11:36:56.944
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 11:36:56.944
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 11:36:56.944
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-03-30 11:36:56.944
+!MESSAGE Reference item find.ext not found for action null
+!SESSION 2013-03-30 15:30:24.246 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.7.0_07
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.core.resources 4 567 2013-03-30 15:30:28.130
+!MESSAGE Workspace restored, but some problems occurred.
+!SUBENTRY 1 org.eclipse.core.resources 4 567 2013-03-30 15:30:28.130
+!MESSAGE Could not read metadata for 'knime_project'.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: The project description file (.project) for 'knime_project' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:851)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:874)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:854)
+	at org.eclipse.core.internal.resources.SaveManager.restore(SaveManager.java:703)
+	at org.eclipse.core.internal.resources.SaveManager.startup(SaveManager.java:1528)
+	at org.eclipse.core.internal.resources.Workspace.startup(Workspace.java:2503)
+	at org.eclipse.core.internal.resources.Workspace.open(Workspace.java:2251)
+	at org.eclipse.core.resources.ResourcesPlugin.start(ResourcesPlugin.java:439)
+	at org.eclipse.osgi.framework.internal.core.BundleContextImpl$1.run(BundleContextImpl.java:711)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.eclipse.osgi.framework.internal.core.BundleContextImpl.startActivator(BundleContextImpl.java:702)
+	at org.eclipse.osgi.framework.internal.core.BundleContextImpl.start(BundleContextImpl.java:683)
+	at org.eclipse.osgi.framework.internal.core.BundleHost.startWorker(BundleHost.java:381)
+	at org.eclipse.osgi.framework.internal.core.AbstractBundle.start(AbstractBundle.java:299)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:440)
+	at org.eclipse.osgi.internal.loader.BundleLoader.setLazyTrigger(BundleLoader.java:268)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.baseadaptor.loader.ClasspathManager.findLocalClass(ClasspathManager.java:463)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.findLocalClass(DefaultClassLoader.java:216)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:400)
+	at org.eclipse.osgi.internal.loader.SingleSourcePackage.loadClass(SingleSourcePackage.java:35)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:473)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:429)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:417)
+	at org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader.loadClass(DefaultClassLoader.java:107)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.getDeclaredConstructors0(Native Method)
+	at java.lang.Class.privateGetDeclaredConstructors(Class.java:2404)
+	at java.lang.Class.getConstructor0(Class.java:2714)
+	at java.lang.Class.newInstance0(Class.java:343)
+	at java.lang.Class.newInstance(Class.java:325)
+	at org.eclipse.core.internal.registry.osgi.RegistryStrategyOSGI.createExecutableExtension(RegistryStrategyOSGI.java:184)
+	at org.eclipse.core.internal.registry.ExtensionRegistry.createExecutableExtension(ExtensionRegistry.java:905)
+	at org.eclipse.core.internal.registry.ConfigurationElement.createExecutableExtension(ConfigurationElement.java:243)
+	at org.eclipse.core.internal.registry.ConfigurationElementHandle.createExecutableExtension(ConfigurationElementHandle.java:55)
+	at org.eclipse.ui.internal.handlers.HandlerProxy.loadHandler(HandlerProxy.java:350)
+	at org.eclipse.ui.internal.handlers.HandlerProxy.isEnabled(HandlerProxy.java:319)
+	at org.eclipse.core.commands.Command.isEnabled(Command.java:833)
+	at org.eclipse.core.commands.Command.setHandler(Command.java:996)
+	at org.eclipse.ui.internal.handlers.HandlerAuthority.updateCommand(HandlerAuthority.java:459)
+	at org.eclipse.ui.internal.handlers.HandlerAuthority.activateHandler(HandlerAuthority.java:249)
+	at org.eclipse.ui.internal.handlers.HandlerService.activateHandler(HandlerService.java:120)
+	at org.eclipse.ui.internal.handlers.HandlerService.activateHandler(HandlerService.java:112)
+	at org.eclipse.ui.internal.handlers.HandlerService.activateHandler(HandlerService.java:107)
+	at org.eclipse.ui.internal.handlers.HandlerPersistence.readDefaultHandlersFromRegistry(HandlerPersistence.java:258)
+	at org.eclipse.ui.internal.handlers.HandlerPersistence.reRead(HandlerPersistence.java:213)
+	at org.eclipse.ui.internal.handlers.HandlerPersistence.read(HandlerPersistence.java:167)
+	at org.eclipse.ui.internal.handlers.HandlerService.readRegistry(HandlerService.java:186)
+	at org.eclipse.ui.internal.handlers.HandlerServiceFactory.create(HandlerServiceFactory.java:61)
+	at org.eclipse.ui.internal.services.WorkbenchServiceRegistry.getService(WorkbenchServiceRegistry.java:103)
+	at org.eclipse.ui.internal.services.ServiceLocator.getService(ServiceLocator.java:174)
+	at org.eclipse.ui.internal.Workbench$49.runWithException(Workbench.java:1892)
+	at org.eclipse.ui.internal.StartupThreading$StartupRunnable.run(StartupThreading.java:31)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:135)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4140)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3757)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:2609)
 	at org.eclipse.ui.internal.Workbench.access$4(Workbench.java:2499)
 	at org.eclipse.ui.internal.Workbench$7.run(Workbench.java:679)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
@@ -155,57 +348,17 @@ java.lang.NullPointerException
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:622)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:577)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1410)
-!SESSION 2013-03-25 23:54:33.318 -----------------------------------------------
-eclipse.buildId=unknown
-java.version=1.7.0_07
-java.vendor=Oracle Corporation
-BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
-Command-line arguments:  -os win32 -ws win32 -arch x86_64
+!SUBENTRY 2 org.eclipse.core.resources 4 567 2013-03-30 15:30:28.130
+!MESSAGE The project description file (.project) for 'knime_project' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
 
-!ENTRY org.eclipse.ui 4 4 2013-03-25 23:54:50.493
+!ENTRY org.eclipse.ui 4 4 2013-03-30 15:30:30.969
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-25 23:54:50.493
+!ENTRY org.eclipse.ui 4 4 2013-03-30 15:30:30.969
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-25 23:54:50.509
+!ENTRY org.eclipse.ui 4 4 2013-03-30 15:30:30.969
 !MESSAGE Reference item find.ext not found for action null
 
-!ENTRY org.eclipse.ui 4 4 2013-03-25 23:54:50.509
-!MESSAGE Reference item find.ext not found for action null
-
-!ENTRY org.eclipse.ui 4 4 2013-03-25 23:55:57.855
-!MESSAGE Reference item find.ext not found for action null
-
-!ENTRY org.eclipse.ui 4 4 2013-03-25 23:55:57.855
-!MESSAGE Reference item find.ext not found for action null
-
-!ENTRY org.eclipse.ui 4 4 2013-03-25 23:55:57.855
-!MESSAGE Reference item find.ext not found for action null
-
-!ENTRY org.eclipse.ui 4 4 2013-03-25 23:55:57.855
-!MESSAGE Reference item find.ext not found for action null
-
-!ENTRY org.eclipse.ui 4 4 2013-03-25 23:56:47.053
-!MESSAGE Reference item find.ext not found for action null
-
-!ENTRY org.eclipse.ui 4 4 2013-03-25 23:56:47.053
-!MESSAGE Reference item find.ext not found for action null
-
-!ENTRY org.eclipse.ui 4 4 2013-03-25 23:56:47.053
-!MESSAGE Reference item find.ext not found for action null
-
-!ENTRY org.eclipse.ui 4 4 2013-03-25 23:56:47.053
-!MESSAGE Reference item find.ext not found for action null
-
-!ENTRY org.eclipse.ui 4 4 2013-03-26 00:03:48.954
-!MESSAGE Reference item find.ext not found for action null
-
-!ENTRY org.eclipse.ui 4 4 2013-03-26 00:03:48.954
-!MESSAGE Reference item find.ext not found for action null
-
-!ENTRY org.eclipse.ui 4 4 2013-03-26 00:03:48.954
-!MESSAGE Reference item find.ext not found for action null
-
-!ENTRY org.eclipse.ui 4 4 2013-03-26 00:03:48.954
+!ENTRY org.eclipse.ui 4 4 2013-03-30 15:30:30.969
 !MESSAGE Reference item find.ext not found for action null

@@ -1,5 +1,0 @@
-source.svn.jar = src/
-bin.includes = plugin.xml,\
-               META-INF/,\
-               svn.jar,\
-               OSGI-INF/l10n/bundle.properties

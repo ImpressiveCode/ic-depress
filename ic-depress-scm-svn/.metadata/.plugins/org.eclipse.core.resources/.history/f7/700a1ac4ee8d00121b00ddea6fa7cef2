@@ -1,8 +1,0 @@
-package org.knime.svnplugin;
-
-public class SVNPluginNodeLogic {
-
-	public void Init()
-	{}
-	
-}

@@ -13,9 +13,9 @@
 		<item value="221" key="sashWidth3"/>
 		<item value="550" key="height"/>
 		<item value="500" key="width"/>
-		<item value="24" key="y"/>
 		<item value="221" key="sashWidth1"/>
-		<item value="468" key="x"/>
+		<item value="0" key="y"/>
 		<item value="557" key="sashWidth2"/>
+		<item value="0" key="x"/>
 	</section>
 </section>
