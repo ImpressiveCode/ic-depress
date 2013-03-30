@@ -2,3 +2,10 @@
 bin/
 gen/
 target/
+ic-depress-scm-svn/.metadata/.plugins/org.eclipse.pde.core/org.impressivecode.depress.scm.svn/org.eclipse.update/history/*
+ic-depress-scm-svn/.metadata/.plugins/org.eclipse.core.resources/.history/*
+/ic-depress-scm-svn/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes
+/ic-depress-scm-svn/.metadata/.plugins/org.eclipse.core.resources/.projects/plugin/.indexes/e7
+/ic-depress-scm-svn/.metadata/.plugins/org.eclipse.core.resources/.history
+/ic-depress-scm-svn/.metadata/.plugins/org.eclipse.ltk.core.refactoring
+/ic-depress-scm-svn/.metadata/.plugins/org.eclipse.ltk.ui.refactoring
