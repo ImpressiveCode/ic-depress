@@ -1,0 +1,1 @@
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=org.impressivecode.depress.scm.svn -DartifactId=plugin

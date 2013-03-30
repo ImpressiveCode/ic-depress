@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="plugin_export" name="build">
+	<target name="plugin_export">
+		<pde.exportPlugins destination="D:\Git\0\ic-depress\ic-depress-scm-svn2\plugin\target" exportSource="false" exportType="directory" plugins="org.impressivecode.depress.scm.svn" useJARFormat="true"/>
+	</target>
+</project>

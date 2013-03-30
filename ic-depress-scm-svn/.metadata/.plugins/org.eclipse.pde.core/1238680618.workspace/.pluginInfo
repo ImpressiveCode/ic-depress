@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<bundle bundleID="253" class="org.impressivecode.depress.scm.svn.SVNNodePlugin" localization="OSGI-INF/l10n/bundle" name="SVN-Node extension for KNIME Workbench" project="plugin" provider="KNIME">
+		<library name="svn.jar"/>
+	</bundle>
+</map>
