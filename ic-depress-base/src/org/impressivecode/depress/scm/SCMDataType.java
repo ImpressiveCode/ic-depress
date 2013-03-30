@@ -15,42 +15,35 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.noi;
+package org.impressivecode.depress.scm;
 
 import java.util.Collections;
-import java.util.List;
-
-import org.impressivecode.depress.its.ITSDataType;
-
-import com.google.common.collect.Iterables;
+import java.util.Set;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class NoIMetricType {
-    private String className;
-    private List<ITSDataType> issues = Collections.emptyList();
+public class SCMDataType {
+
+    private String resourceName;
+    private Set<String> markers = Collections.emptySet();
+
+    public void setResourceName(final String resource) {
+        this.resourceName = resource;
+    }
+
+    public void setMarkers(final Set<String> markers) {
+        this.markers = markers;
+    }
 
     public String getResourceName() {
-        return className;
+        return resourceName;
     }
 
-    public void setResourceName(final String className) {
-        this.className = className;
+    public Set<String> getMarkers() {
+        return markers;
     }
 
-    public List<ITSDataType> getIssues() {
-        return issues;
-    }
-
-    public void setIssues(final List<ITSDataType> issues) {
-        this.issues = issues;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("NoIDataType [className=%s, issues=%s]", className, Iterables.toString(issues));
-    }
 }

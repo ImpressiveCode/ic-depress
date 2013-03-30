@@ -31,11 +31,11 @@ import org.knime.core.data.def.StringCell;
 public class SCMAdapterTableFactory {
     public static final String MARKER = "Marker";
     public static final String AUTHOR_COLNAME = "Author";
-    public static final String CLASS_COLNAME = "Class";
+    public static final String RESOURCE_NAME = "Class";
 
     public static DataTableSpec createDataColumnSpec() {
         DataColumnSpec[] allColSpecs = new DataColumnSpec[3];
-        allColSpecs[0] = new DataColumnSpecCreator(CLASS_COLNAME, StringCell.TYPE).createSpec();
+        allColSpecs[0] = new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec();
         allColSpecs[1] = new DataColumnSpecCreator(MARKER, SetCell.getCollectionType(StringCell.TYPE)).createSpec();
         allColSpecs[2] = new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE).createSpec();
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);

@@ -56,7 +56,7 @@ public class NumberOfIssuesMetricOutputTransformer implements OutputTransformer<
             progress(exec);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Transforming metric, class: " + metric.getClassName());
+                LOGGER.debug("Transforming metric, class: " + metric.getResourceName());
             }
 
             if (LOGGER.isEnabledFor(LEVEL.ALL)) {

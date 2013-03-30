@@ -19,6 +19,7 @@ package org.impressivecode.depress.metric.noi;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import org.impressivecode.depress.its.ITSDataType;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
@@ -44,8 +45,8 @@ public class NumberOfIssuesMetricTableFactoryTest {
     public void shouldCreateTableRow() {
         //given
         NoIMetricType noi = new NoIMetricType();
-        noi.setClassName("ClassA");
-        noi.setIssues(Lists.newArrayList("i1", "i2", "i2"));
+        noi.setResourceName("ClassA");
+        noi.setIssues(Lists.newArrayList(its("i1"), its("i2"), its("i2")));
         //when
         DataRow row = NumberOfIssuesMetricTableFactory.createTableRow(noi);
         //then
@@ -57,4 +58,9 @@ public class NumberOfIssuesMetricTableFactoryTest {
         assertThat(((IntCell)row.getCell(2)).getIntValue()).isEqualTo(2);
     }
 
+    private ITSDataType its(final String id) {
+        ITSDataType its = new ITSDataType();
+        its.setIssueId(id);
+        return its;
+    }
 }

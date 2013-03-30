@@ -17,10 +17,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.metric.noi;
 
+import static com.google.common.collect.Sets.newHashSet;
 import static org.impressivecode.depress.common.DataTableSpecUtils.integerCell;
 import static org.impressivecode.depress.common.DataTableSpecUtils.stringListOrMissingCell;
 
-import org.impressivecode.depress.scm.SCMAdapterTableFactory;
+import java.util.List;
+
+import org.impressivecode.depress.its.ITSDataType;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
@@ -31,7 +34,8 @@ import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 
-import com.google.common.collect.Sets;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 /**
  * 
@@ -56,26 +60,27 @@ public final class NumberOfIssuesMetricTableFactory {
         DataColumnSpec[] allColSpecs = {
                 new DataColumnSpecCreator(ISSUES, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
                 new DataColumnSpecCreator(NUMBER_OF_ISSUES, IntCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(NUMBER_OF_UNIQUE_ISSUES, IntCell.TYPE).createSpec()};
-        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
-        return outputSpec;
-    }
-
-    public static DataTableSpec createHistoryColumnSpec() {
-        DataTableSpec spec = SCMAdapterTableFactory.createDataColumnSpec();
-        DataColumnSpec[] allColSpecs = { 
-                spec.getColumnSpec(SCMAdapterTableFactory.CLASS_COLNAME),
-                spec.getColumnSpec(SCMAdapterTableFactory.MARKER) };
+                new DataColumnSpecCreator(NUMBER_OF_UNIQUE_ISSUES, IntCell.TYPE).createSpec() };
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
         return outputSpec;
     }
 
     public static DataRow createTableRow(final NoIMetricType noi) {
+        List<String> ids = transform(noi.getIssues());
         DataCell[] cells = { 
-                stringListOrMissingCell(noi.getIssues()), 
-                integerCell(noi.getIssues().size()),
-                integerCell(Sets.newHashSet(noi.getIssues()).size()) };
-        DataRow row = new DefaultRow(noi.getClassName(), cells);
+                stringListOrMissingCell(ids), 
+                integerCell(ids.size()),
+                integerCell(newHashSet(ids).size()) };
+        DataRow row = new DefaultRow(noi.getResourceName(), cells);
         return row;
+    }
+
+    private static List<String> transform(final List<ITSDataType> issues) {
+        return Lists.transform(issues, new Function<ITSDataType, String>() {
+            @Override
+            public String apply(final ITSDataType its) {
+                return its.getIssueId();
+            }
+        });
     }
 }

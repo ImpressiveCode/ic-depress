@@ -17,17 +17,17 @@
  */
 package org.impressivecode.depress.metric.noi;
 
-import static org.impressivecode.depress.common.DataTableSpecUtils.findMissingColumnSubset;
+import static com.google.common.base.Preconditions.checkState;
 import static org.impressivecode.depress.metric.noi.NumberOfIssuesMetricTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.metric.noi.NumberOfIssuesMetricTableFactory.createHistoryColumnSpec;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
+import org.impressivecode.depress.common.InputTransformer;
 import org.impressivecode.depress.common.OutputTransformer;
+import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.scm.SCMDataType;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -39,8 +39,6 @@ import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 
-import com.google.common.collect.Iterables;
-
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
@@ -50,8 +48,8 @@ public class NumberOfIssuesMetricNodeModel extends NodeModel {
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(NumberOfIssuesMetricNodeModel.class);
 
-    private DataTableSpec historyDataSpec;
-    private DataTableSpec developersDataSpec;
+    private InputTransformer<ITSDataType> issueTransfomer;
+    private InputTransformer<SCMDataType> historyTransfomer;
 
     protected NumberOfIssuesMetricNodeModel() {
         super(2, 1);
@@ -62,39 +60,29 @@ public class NumberOfIssuesMetricNodeModel extends NodeModel {
             throws Exception {
 
         LOGGER.info("Preparing to build NoI metric.");
-
+        List<NoIMetricType> metricData = computeMetric(inData, exec);
         LOGGER.info("Transforming to build NoI data.");
-        BufferedDataTable out = null;
+        BufferedDataTable out = transform(metricData, exec);
         LOGGER.info("Building PO Metric finished.");
         return new BufferedDataTable[] { out };
     }
 
     @Override
     protected void reset() {
-        this.developersDataSpec = null;
-        this.historyDataSpec = null;
+        this.issueTransfomer = null;
+        this.historyTransfomer = null;
     }
 
-    private List<NumberOfIssuesMetric> computeMetric(final BufferedDataTable devTable,
-            final BufferedDataTable changeHistory, final ExecutionContext exec) throws CanceledExecutionException {
-        Map<String, NoIMetricType> changeData = buildChangeData(changeHistory, exec);
-        Map<String, TeamMemberData> engineersData = buildEngineerData(devTable, exec);
-        return buildMetric(changeData, engineersData, exec);
-    }
-
-    private List<NumberOfIssuesMetric> buildMetric(final Map<String, NoIMetricType> changeData,
-            final Map<String, TeamMemberData> engineersData, final ExecutionContext exec) {
-        return new PeopleOrganizationMetricProcessor(changeData, engineersData).buildMetric();
-    }
-
-    private Map<String, NoIMetricType> buildChangeData(final BufferedDataTable changeHistory,
-            final ExecutionContext exec) throws CanceledExecutionException {
-        return new NumberOfIssuesDataTransformer(historyDataSpec).transformChangeData(changeHistory, exec);
-    }
-
-    private Map<String, TeamMemberData> buildEngineerData(final BufferedDataTable devTable, final ExecutionContext exec)
+    private List<NoIMetricType> computeMetric(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws CanceledExecutionException {
-        return new TeamMemberDataTransformer(developersDataSpec).transformEngineerData(devTable, exec);
+        checkState(this.issueTransfomer != null, "IssueTransformer has to be configured first");
+        checkState(this.historyTransfomer != null, "HistoryTransformer has to be configured first");
+
+        List<SCMDataType> history = historyTransfomer.transform(inData[0]);
+        List<ITSDataType> issues = issueTransfomer.transform(inData[1]);
+
+        NumberOfIssuesMetricMetricProcessor metricProcessor = new NumberOfIssuesMetricMetricProcessor(issues, history);
+        return metricProcessor.computeMetric();
     }
 
     private BufferedDataTable transform(final List<NoIMetricType> data, final ExecutionContext exec)
@@ -108,30 +96,10 @@ public class NumberOfIssuesMetricNodeModel extends NodeModel {
         if (inSpecs.length != 2) {
             throw new InvalidSettingsException("Wrong number of input suorces");
         }
-        configureDevDataSpec(inSpecs[0]);
-        configureChangeHistoryDataSpec(inSpecs[1]);
+        this.historyTransfomer = new HistoryInputTransformer(inSpecs[0]);
+        this.issueTransfomer = new IssueInputTransformer(inSpecs[1]);
 
         return new DataTableSpec[] { createDataColumnSpec() };
-    }
-
-    private void configureChangeHistoryDataSpec(final DataTableSpec dataTableSpec) throws InvalidSettingsException {
-        Set<String> missing = findMissingColumnSubset(dataTableSpec, createHistoryColumnSpec());
-        if (!missing.isEmpty()) {
-            throw new InvalidSettingsException("History data table does not contain required columns. Missing: "
-                    + Iterables.toString(missing));
-        } else {
-            this.historyDataSpec = dataTableSpec;
-        }
-    }
-
-    private void configureDevDataSpec(final DataTableSpec dataTableSpec) throws InvalidSettingsException {
-        Set<String> missing = findMissingColumnSubset(dataTableSpec, createDevDataColumnSpec());
-        if (!missing.isEmpty()) {
-            throw new InvalidSettingsException("Developers data table does not contain required column.  Missing: "
-                    + Iterables.toString(missing));
-        } else {
-            this.developersDataSpec = dataTableSpec;
-        }
     }
 
     @Override

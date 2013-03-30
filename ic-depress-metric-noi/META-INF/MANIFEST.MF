@@ -14,4 +14,5 @@ Bundle-ClassPath: lib/fest-assert-1.4.jar,
  lib/fest-util-1.1.6.jar,
  .
 Import-Package: org.fest.assertions,
- org.mockito
+ org.mockito,
+ org.mockito.stubbing

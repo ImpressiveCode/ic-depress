@@ -18,18 +18,16 @@
 package org.impressivecode.depress.common;
 
 import static com.google.common.collect.Lists.transform;
+import static com.google.common.collect.Sets.newHashSet;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
 
 import org.knime.core.data.DataCell;
-import org.knime.core.data.DataColumnSpec;
-import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.DataType;
 import org.knime.core.data.collection.CollectionCellFactory;
 import org.knime.core.data.date.DateAndTimeCell;
@@ -38,28 +36,14 @@ import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 
 import com.google.common.base.Function;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Iterables;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class DataTableSpecUtils {
-    public static Set<String> findMissingColumnSubset(final DataTableSpec dataTableSpec,
-            final DataTableSpec subsetDataTableSpec) {
-        Set<String> missing = Sets.newHashSet();
-        Iterator<DataColumnSpec> iterator = subsetDataTableSpec.iterator();
-        while (iterator.hasNext()) {
-            DataColumnSpec spec = iterator.next();
-            boolean hasColumn = spec.equalStructure(dataTableSpec.getColumnSpec(spec.getName()));
-            if (!hasColumn) {
-                missing.add(spec.getName() + ":" + spec.getType());
-            }
-        }
-
-        return missing;
-    }
+public class Cells {
 
     public static DataCell integerOrMissingCell(final Integer value) {
         return value == null ? DataType.getMissingCell() : integerCell(value);
@@ -105,6 +89,16 @@ public class DataTableSpecUtils {
             }
         });
         return CollectionCellFactory.createListCell(coll);
+    }
+
+    public static DataCell stringSetCell(final Set<String> cellSet) {
+        Set<DataCell> coll = newHashSet(Iterables.transform(cellSet, new Function<String, DataCell>() {
+            @Override
+            public DataCell apply(final String value) {
+                return stringCell(value);
+            }
+        }));
+        return CollectionCellFactory.createSetCell(coll);
     }
 
     public static DataCell dateTimeOrMissingCell(final Date value) {

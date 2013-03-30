@@ -1,3 +1,20 @@
+/*
+ImpressiveCode Depress Framework
+Copyright (C) 2013  ImpressiveCode contributors
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.impressivecode.depress.metric.noi;
 
 import static org.mockito.Mockito.mock;
@@ -9,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.impressivecode.depress.common.OutputTransformer;
+import org.impressivecode.depress.its.ITSDataType;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
@@ -18,15 +36,19 @@ import org.knime.core.node.ExecutionContext;
 import org.mockito.Mockito;
 
 import com.google.common.collect.Lists;
-
+/**
+ * 
+ * @author Marek Majchrzak, ImpressiveCode
+ * 
+ */
 public class NumberOfIssuesMetricOutputTransformerTest {
 
     @Test
     public void shouldTransform() throws CanceledExecutionException {
         //given
         OutputTransformer<NoIMetricType> transformer = new NumberOfIssuesMetricOutputTransformer(NumberOfIssuesMetricTableFactory.createDataColumnSpec());
-        List<NoIMetricType> entries = Lists.newArrayList(noi("ClassA", Lists.newArrayList("i1", "i2")),
-                noi("ClassA", Lists.newArrayList("i1", "i1")));
+        List<NoIMetricType> entries = Lists.newArrayList(noi("ClassA", Lists.newArrayList(its("i1"), its("i2"))),
+                noi("ClassA", Lists.newArrayList(its("i1"), its("i1"))));
         ExecutionContext exec = mock(ExecutionContext.class);
         BufferedDataContainer container = mock(BufferedDataContainer.class);
         when(exec.createDataContainer(Mockito.any(DataTableSpec.class))).thenReturn(container);
@@ -38,9 +60,15 @@ public class NumberOfIssuesMetricOutputTransformerTest {
         verify(container, times(2)).addRowToTable(Mockito.any(DataRow.class));
     }
 
-    private NoIMetricType noi(final String className, final ArrayList<String> items) {
+    private ITSDataType its(final String id) {
+        ITSDataType its = new ITSDataType();
+        its.setIssueId(id);
+        return its;
+    }
+
+    private NoIMetricType noi(final String className, final ArrayList<ITSDataType> items) {
         NoIMetricType noi = new NoIMetricType();
-        noi.setClassName(className);
+        noi.setResourceName(className);
         noi.setIssues(items);
         return noi;
     }
