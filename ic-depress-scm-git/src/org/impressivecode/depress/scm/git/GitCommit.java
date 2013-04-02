@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 public class GitCommit {
     final String id;
     public static final Pattern idRegex = Pattern.compile("^[a-f0-9]{40}$");
-    static final DateFormat commitDateFormat = DateFormat.getDateInstance();
+    static final DateFormat commitDateFormat = DateFormat.getDateTimeInstance();
     Date date;
     String author;
     StringBuilder messageBuilder;
