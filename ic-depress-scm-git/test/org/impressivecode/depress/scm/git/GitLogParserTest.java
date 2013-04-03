@@ -19,15 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.scm.git;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import org.impressivecode.depress.scm.git.GitLogParser;
 import org.junit.Test;
 
 /*
@@ -49,9 +47,10 @@ public class GitLogParserTest {
     @Test
     public void shouldParse() throws Exception {
         GitLogParser parser = new GitLogParser(logFilePath);
+        parser.setMarkersRegex("#");
         List<GitCommit> commits = parser.parse();
         assertEquals(50, commits.size());
-
+        
         GitCommit commit = null;
 
         // Find commit which we'll use for some more testing:
@@ -79,7 +78,9 @@ public class GitLogParserTest {
         :000000 100644 0000000000000000000000000000000000000000 475ab374c18ec0446574f29c61dc7ef711704164 A  ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java
          */
 
-
+        Set<String> markers = new HashSet<String>();
+        markers.add("9");
+        
         for (GitCommit c : commits) {
             if (c.getId().equals("45a2beca9d97777733e1a472e54c003551b7d9b1")) {
                 commit = c;
@@ -104,5 +105,7 @@ public class GitLogParserTest {
 
         assertEquals("ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java", commit.files.get(14).getPath());
         assertEquals(GitCommitFileOperation.Added, commit.files.get(14).getOperation());
+        
+        assertEquals(markers, commit.getMarkers());       
     }
 }

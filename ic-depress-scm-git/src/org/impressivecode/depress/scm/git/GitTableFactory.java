@@ -31,8 +31,13 @@ import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.collection.CollectionCellFactory;
+import org.knime.core.data.collection.SetCell;
 import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.StringCell;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class GitTableFactory extends SCMAdapterTableFactory {
     
@@ -52,10 +57,6 @@ public class GitTableFactory extends SCMAdapterTableFactory {
             allColSpecs[i] = baseSpec.getColumnSpec(i);
         }
         
-        //TODO: poprawić te markery, ale najpierw muszę wiedzieć co tam się ma znajdować:
-        //narazie zmieniamy typ kolumny "MARKER" na StringCell:
-        allColSpecs[1] = new DataColumnSpecCreator("Marker", StringCell.TYPE).createSpec();
-        
         allColSpecs[i++] = new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec();
         allColSpecs[i++] = new DataColumnSpecCreator(MESSAGE_COLNAME, StringCell.TYPE).createSpec();
         allColSpecs[i++] = new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec();
@@ -65,12 +66,12 @@ public class GitTableFactory extends SCMAdapterTableFactory {
         return new DataTableSpec(allColSpecs);
     }
     
-    static DataRow createTableRow(final String className, final String marker, final String author, final String operation, 
+    static DataRow createTableRow(final String className, final Set<String> markers, final String author, final String operation, 
             final String message, final String path, final String commitDate, final String uid) {
         
         DataCell[] cells = new DataCell[8];
         cells[0] = prepareStringCell(className);
-        cells[1] = prepareStringCell(marker);
+        cells[1] = prepareSetCell(markers);
         cells[2] = prepareStringCell(author);
         cells[3] = prepareStringCell(operation);
         cells[4] = prepareStringCell(message);
@@ -83,5 +84,13 @@ public class GitTableFactory extends SCMAdapterTableFactory {
     
     private static StringCell prepareStringCell(String value){
         return new StringCell(value);
+    }
+    
+    private static SetCell prepareSetCell(Set<String> values){
+        Set<StringCell> cellValues = new HashSet<StringCell>();
+        for (String value : values){
+            cellValues.add(new StringCell(value));
+        }
+        return CollectionCellFactory.createSetCell(cellValues);
     }
 }

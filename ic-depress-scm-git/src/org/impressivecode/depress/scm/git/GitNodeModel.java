@@ -22,6 +22,7 @@ import static org.impressivecode.depress.scm.git.GitTableFactory.createTableRow;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Set;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -97,6 +98,7 @@ public class GitNodeModel extends NodeModel {
         logger.info("Creating Output table with data from git file...");
         //trzeba przygotować tabelę wyjściową
         this.parser = new GitLogParser(this.gitFileName.getStringValue());
+        this.parser.setMarkersRegex(this.gitRegExp.getStringValue());
         List<GitCommit> commits = this.parser.parse();
         
         BufferedDataTable out = transform(container, commits, exec);
@@ -211,7 +213,7 @@ public class GitNodeModel extends NodeModel {
                 logger.debug("Transforming commit: " + commit.getId());
             }
 
-            String marker = "marker"; //TODO: tu ma być dodawany prawidłowy marker, ale nie wiem jeszcze co to ma być :)
+            Set<String> marker = commit.getMarkers(); //TODO: tu ma być dodawany prawidłowy marker, ale nie wiem jeszcze co to ma być :)
             String author = commit.getAuthor();
             String operation = commit.files.get(0).getOperation().toString();
             String message = commit.getMessage();
@@ -219,6 +221,7 @@ public class GitNodeModel extends NodeModel {
             String className = this.getClassNameFromPath(path);
             String commitDate = this.parseDate(commit.getDate());
             String uid = commit.getId();
+            System.out.println("Przed dodawaniem wiersza do tabeli...");
             addRowToTable(container, className, marker, author, operation, message, path, commitDate, uid);
         }
         container.close();
@@ -232,7 +235,7 @@ public class GitNodeModel extends NodeModel {
     }
 
     private void addRowToTable(final BufferedDataContainer container, 
-            final String className, final String marker, final String author, final String operation, 
+            final String className, final Set<String> marker, final String author, final String operation, 
             final String message, final String path, final String commitDate, final String uid) {
         container.addRowToTable(createTableRow(className, marker, author, operation, message, path, commitDate, uid));
     }

@@ -1,14 +1,17 @@
 package org.impressivecode.depress.scm.git;
 
 import static junit.framework.Assert.assertNotNull;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 import org.knime.core.data.DataRow;
-import org.knime.core.data.def.StringCell;
 import org.knime.core.data.DataTableSpec;
-import org.impressivecode.depress.scm.git.GitTableFactory;
+import org.knime.core.data.collection.CollectionCellFactory;
+import org.knime.core.data.collection.SetCell;
+import org.knime.core.data.def.StringCell;
 
 public class GitTableFactoryTest {
 
@@ -22,14 +25,20 @@ public class GitTableFactoryTest {
     
     @Test
     public void shouldCreateTableRow() {
-        DataRow row = GitTableFactory.createTableRow("test.java", "marker", "Author", 
-                "Added", "Test commit", "org/scm/git/test.java", "2013-03-28 23:05:00", "dfsdf2334");
+        HashSet<String> markers = new HashSet<String>();
+        markers.add("1");
+        
+        Set<StringCell> markersCell = new HashSet<StringCell>();
+        markersCell.add(new StringCell("1"));
+        
+        DataRow row = GitTableFactory.createTableRow("test.java", markers, "Author", 
+                "Added", "#1 Test commit", "org/scm/git/test.java", "2013-03-28 23:05:00", "dfsdf2334");
         assertEquals(row.getKey().getString(),"dfsdf2334");
         assertEquals((StringCell)row.getCell(0), new StringCell("test.java"));
-        assertEquals((StringCell)row.getCell(1), new StringCell("marker"));
+        assertEquals((SetCell)row.getCell(1), CollectionCellFactory.createSetCell(markersCell));
         assertEquals((StringCell)row.getCell(2), new StringCell("Author"));
         assertEquals((StringCell)row.getCell(3), new StringCell("Added"));
-        assertEquals((StringCell)row.getCell(4), new StringCell("Test commit"));
+        assertEquals((StringCell)row.getCell(4), new StringCell("#1 Test commit"));
         assertEquals((StringCell)row.getCell(5), new StringCell("org/scm/git/test.java"));
         assertEquals((StringCell)row.getCell(6), new StringCell("2013-03-28 23:05:00"));
         assertEquals((StringCell)row.getCell(7), new StringCell("dfsdf2334"));

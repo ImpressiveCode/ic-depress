@@ -52,6 +52,7 @@ public class GitLogParser {
     Boolean readerClosed = true;
     List<GitCommit> commits;
     GitCommit currentCommit;
+    Pattern markersRegex = Pattern.compile("");
 
     /**
      * Constructor for GitLogParser.
@@ -96,6 +97,12 @@ public class GitLogParser {
         return commits;
     }
 
+    public void setMarkersRegex(String regex){
+        if (!regex.isEmpty()){
+            markersRegex = Pattern.compile(regex);
+        }
+    }
+    
     @Override
     protected void finalize() throws IOException {
         close();
@@ -107,6 +114,7 @@ public class GitLogParser {
         parseAuthor();
         parseMessage();
         parseFiles();
+        parseMarkers();
 
         commits.add(currentCommit);
         currentCommit = null;
@@ -171,6 +179,21 @@ public class GitLogParser {
             }
             else {
                 throw new ParseException("Not a valid file commit", lineCounter);
+            }
+        }
+    }
+    
+    protected void parseMarkers() {
+        //if markers regex is empty than we don't search markers:
+        if (!markersRegex.pattern().isEmpty()){
+            Matcher markersMatcher = markersRegex.matcher(currentCommit.getMessage());
+            String currentCommitMarker;
+            if (markersMatcher.find()){
+                currentCommitMarker = currentCommit.getMessage().substring(markersMatcher.end()).split(" ", 2)[0];
+                System.out.println(currentCommitMarker);
+                if (!currentCommitMarker.isEmpty()){
+                    currentCommit.addMarker(currentCommitMarker);
+                }
             }
         }
     }
