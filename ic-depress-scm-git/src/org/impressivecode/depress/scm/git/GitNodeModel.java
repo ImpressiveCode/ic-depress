@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Set;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -204,25 +206,33 @@ public class GitNodeModel extends NodeModel {
     
     private BufferedDataTable transform(final BufferedDataContainer container, final List<GitCommit> commits,
             final ExecutionContext exec) throws CanceledExecutionException {
+        
         int size = commits.size();
-        for (int i = 0; i < size; i++) {
-            progress(exec, size, i);
+        
+        try {
+            for (int i = 0; i < size; i++) {
+                progress(exec, size, i);
 
-            GitCommit commit = commits.get(i);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Transforming commit: " + commit.getId());
+                GitCommit commit = commits.get(i);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Transforming commit: " + commit.getId());
+                }
+            
+                for (GitCommitFile file : commit.files){
+                    Set<String> marker = commit.getMarkers(); 
+                    String author = commit.getAuthor();
+                    String operation = file.getOperation().toString();
+                    String message = commit.getMessage();
+                    String path = file.getPath();
+                    String className = this.getClassNameFromPath(path);
+                    String commitDate = this.parseDate(commit.getDate());
+                    String uid = this.calculateMd5(commit.getId(), file.getPath());
+                    
+                    addRowToTable(container, className, marker, author, operation, message, path, commitDate, uid);
+                }
             }
-
-            Set<String> marker = commit.getMarkers(); //TODO: tu ma być dodawany prawidłowy marker, ale nie wiem jeszcze co to ma być :)
-            String author = commit.getAuthor();
-            String operation = commit.files.get(0).getOperation().toString();
-            String message = commit.getMessage();
-            String path = commit.files.get(0).getPath();
-            String className = this.getClassNameFromPath(path);
-            String commitDate = this.parseDate(commit.getDate());
-            String uid = commit.getId();
-            System.out.println("Przed dodawaniem wiersza do tabeli...");
-            addRowToTable(container, className, marker, author, operation, message, path, commitDate, uid);
+        } catch (NoSuchAlgorithmException e) {
+            logger.error(e.getMessage());
         }
         container.close();
         BufferedDataTable out = container.getTable();
@@ -249,6 +259,18 @@ public class GitNodeModel extends NodeModel {
     private String getClassNameFromPath(String path){
         String[] folders = path.split("/");
         return folders[folders.length-1];
+    }
+    
+    private String calculateMd5(String value1, String value2) throws NoSuchAlgorithmException{
+        String input = value1 + value2;
+        MessageDigest mDigest = MessageDigest.getInstance("MD5");
+        byte[] result = mDigest.digest(input.getBytes());
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < result.length; i++) {
+            sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
+        }
+         
+        return sb.toString();
     }
     
 }
