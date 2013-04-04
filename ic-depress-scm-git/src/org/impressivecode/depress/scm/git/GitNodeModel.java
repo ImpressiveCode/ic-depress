@@ -257,8 +257,26 @@ public class GitNodeModel extends NodeModel {
     
     //TODO: ta metoda powinna raczej być przeniesiona do GitCommitFile, ale to jeszcze do omówienia z Tomkiem:
     private String getClassNameFromPath(String path){
-        String[] folders = path.split("/");
-        return folders[folders.length-1];
+        String class_name; 
+        String[] package_path_to_class;
+        
+        if (this.gitPackageName.isActive()){
+            package_path_to_class = path.split(this.gitPackageName.getStringValue());
+            String file_extension = path.substring(path.lastIndexOf("."));
+            if (package_path_to_class.length >= 2 && file_extension.equals(".java")) { 
+                class_name = this.gitPackageName.getStringValue()+package_path_to_class[1];
+                class_name = class_name.replaceAll("/", "."); 
+                class_name = class_name.substring(0, class_name.lastIndexOf("."));
+            } else {
+                //if there is no gitPackageName value in path to file 
+                //or file is not ends with .java 
+                //than this is probably not class file but some other file and than class name is empty:
+                class_name = "";
+            }
+        } else {
+            class_name = path;
+        }
+        return class_name;
     }
     
     private String calculateMd5(String value1, String value2) throws NoSuchAlgorithmException{

@@ -31,10 +31,10 @@ public class GitTableFactoryTest {
         Set<StringCell> markersCell = new HashSet<StringCell>();
         markersCell.add(new StringCell("1"));
         
-        DataRow row = GitTableFactory.createTableRow("test.java", markers, "Author", 
+        DataRow row = GitTableFactory.createTableRow("org.scm.git.test", markers, "Author", 
                 "Added", "#1 Test commit", "org/scm/git/test.java", "2013-03-28 23:05:00", "dfsdf2334");
         assertEquals(row.getKey().getString(),"dfsdf2334");
-        assertEquals((StringCell)row.getCell(0), new StringCell("test.java"));
+        assertEquals((StringCell)row.getCell(0), new StringCell("org.scm.git.test"));
         assertEquals((SetCell)row.getCell(1), CollectionCellFactory.createSetCell(markersCell));
         assertEquals((StringCell)row.getCell(2), new StringCell("Author"));
         assertEquals((StringCell)row.getCell(3), new StringCell("Added"));
