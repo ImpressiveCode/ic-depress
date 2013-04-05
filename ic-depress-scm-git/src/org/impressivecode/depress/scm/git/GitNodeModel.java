@@ -219,16 +219,18 @@ public class GitNodeModel extends NodeModel {
                 }
             
                 for (GitCommitFile file : commit.files){
-                    Set<String> marker = commit.getMarkers(); 
-                    String author = commit.getAuthor();
-                    String operation = file.getOperation().toString();
-                    String message = commit.getMessage();
-                    String path = file.getPath();
-                    String className = this.getClassNameFromPath(path);
-                    String commitDate = this.parseDate(commit.getDate());
-                    String uid = this.calculateMd5(commit.getId(), file.getPath());
+                    if (this.isClassFile(file.getPath())){
+                        Set<String> marker = commit.getMarkers(); 
+                        String author = commit.getAuthor();
+                        String operation = file.getOperation().toString();
+                        String message = commit.getMessage();
+                        String path = file.getPath();
+                        String className = this.getClassNameFromPath(path);
+                        String commitDate = this.parseDate(commit.getDate());
+                        String uid = this.calculateMd5(commit.getId(), file.getPath());
                     
-                    addRowToTable(container, className, marker, author, operation, message, path, commitDate, uid);
+                        addRowToTable(container, className, marker, author, operation, message, path, commitDate, uid);
+                    }
                 }
             }
         } catch (NoSuchAlgorithmException e) {
@@ -259,17 +261,14 @@ public class GitNodeModel extends NodeModel {
     private String getClassNameFromPath(String path){
         String class_name; 
         String[] package_path_to_class;
-        
         if (this.gitPackageName.isActive()){
             package_path_to_class = path.split(this.gitPackageName.getStringValue());
-            String file_extension = path.substring(path.lastIndexOf("."));
-            if (package_path_to_class.length >= 2 && file_extension.equals(".java")) { 
+            if (package_path_to_class.length >= 2) { 
                 class_name = this.gitPackageName.getStringValue()+package_path_to_class[1];
                 class_name = class_name.replaceAll("/", "."); 
                 class_name = class_name.substring(0, class_name.lastIndexOf("."));
             } else {
                 //if there is no gitPackageName value in path to file 
-                //or file is not ends with .java 
                 //than this is probably not class file but some other file and than class name is empty:
                 class_name = "";
             }
@@ -289,6 +288,11 @@ public class GitNodeModel extends NodeModel {
         }
          
         return sb.toString();
+    }
+    
+    private boolean isClassFile(String path){
+        String file_extension = path.substring(path.lastIndexOf("."));
+        return file_extension.equals(".java");
     }
     
 }
