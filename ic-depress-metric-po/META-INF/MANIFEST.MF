@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ic-depress-metric-po
+Bundle-SymbolicName: org.impressivecode.depress.metric.po;singleton:=true
+Bundle-Version: 0.1.0
+Bundle-Vendor: ImpressiveCode
+Require-Bundle: org.knime.base;bundle-version="2.7.1",
+ org.knime.workbench;bundle-version="2.7.0",
+ org.impressivecode.depress.base;bundle-version="0.1.0"
+Eclipse-RegisterBuddy: org.impressivecode.depress.base
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+ 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./judy.png" type="Source">
+	<name>Judy Adapter</name>
+
+	<shortDescription>
+		Judy Metric Adapter, ImpressiveCode Depress
+	</shortDescription>
+
+	<fullDescription>
+		<intro>
+			This node can be used to read data from Judy entries file.
+
+			<p>
+				Mutation testing is a fault-based technique that measures the
+				efectiveness of test suites for fault localization, based on seeded
+				faults. Mutation testing may be used to judge the efectiveness of a
+				test set, as the test set should kill all the mutants.
+				<br />
+				<br />
+				Running Judy - refer to
+				<a href="http://mutationtest.com/judy/documentation/">http://mutationtest.com/judy/documentation/</a>
+				<br />
+				Judy - Java mutation tester home page
+				<a href="http://mutationtest.com">www.mutationtest.com</a>
+				<br />
+
+			</p>
+		</intro>
+		<option name="Judy file location">Enter a valid file. When you press ENTER, the file
+			is analyzed and the settings pre-set. You can also choose a
+			previously read file from the drop-down list, or select a file from
+			the "Browse..." dialog. </option>
+	</fullDescription>
+
+	<ports>
+		<outPort index="0" name="Mutants Score Indicator Table">Datatable just read from the judy
+			entries file</outPort>
+	</ports>
+</knimeNode>
