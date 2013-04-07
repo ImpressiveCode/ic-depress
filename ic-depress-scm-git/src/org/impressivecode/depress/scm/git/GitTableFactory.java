@@ -46,7 +46,7 @@ public class GitTableFactory extends SCMAdapterTableFactory {
     private final static String MESSAGE_COLNAME = "Message";
     private final static String PATH_COLNAME    = "Path";
     private final static String DATE_COLNAME    = "Date";
-    private final static String UID_COLNAME     = "Commit UID";
+    private final static String UID_COLNAME     = "Commit ID";
     
     public static DataTableSpec createDataColumnSpec() {
         DataTableSpec baseSpec = SCMAdapterTableFactory.createDataColumnSpec();
