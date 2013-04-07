@@ -32,7 +32,7 @@ public class GitTableFactoryTest {
         markersCell.add(new StringCell("1"));
         
         DataRow row = GitTableFactory.createTableRow("org.scm.git.test", markers, "Author", 
-                "Added", "#1 Test commit", "org/scm/git/test.java", "2013-03-28 23:05:00", "dfsdf2334");
+                "Added", "#1 Test commit", "org/scm/git/test.java", "2013-03-28 23:05:00", "dfsdf2334", "342424232");
         assertEquals(row.getKey().getString(),"dfsdf2334");
         assertEquals((StringCell)row.getCell(0), new StringCell("org.scm.git.test"));
         assertEquals((SetCell)row.getCell(1), CollectionCellFactory.createSetCell(markersCell));
@@ -41,7 +41,8 @@ public class GitTableFactoryTest {
         assertEquals((StringCell)row.getCell(4), new StringCell("#1 Test commit"));
         assertEquals((StringCell)row.getCell(5), new StringCell("org/scm/git/test.java"));
         assertEquals((StringCell)row.getCell(6), new StringCell("2013-03-28 23:05:00"));
-        assertEquals((StringCell)row.getCell(7), new StringCell("dfsdf2334"));
+        assertEquals((StringCell)row.getCell(7), new StringCell("342424232"));
+        assertEquals((String)row.getKey().getString(), "dfsdf2334");
     }
 
 }

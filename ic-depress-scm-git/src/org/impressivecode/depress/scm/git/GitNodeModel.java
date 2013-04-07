@@ -228,8 +228,9 @@ public class GitNodeModel extends NodeModel {
                         String className = this.getClassNameFromPath(path);
                         String commitDate = this.parseDate(commit.getDate());
                         String uid = this.calculateMd5(commit.getId(), file.getPath());
+                        String commit_id = commit.getId();
                     
-                        addRowToTable(container, className, marker, author, operation, message, path, commitDate, uid);
+                        addRowToTable(container, className, marker, author, operation, message, path, commitDate, uid, commit_id);
                     }
                 }
             }
@@ -248,8 +249,8 @@ public class GitNodeModel extends NodeModel {
 
     private void addRowToTable(final BufferedDataContainer container, 
             final String className, final Set<String> marker, final String author, final String operation, 
-            final String message, final String path, final String commitDate, final String uid) {
-        container.addRowToTable(createTableRow(className, marker, author, operation, message, path, commitDate, uid));
+            final String message, final String path, final String commitDate, final String uid, final String commitID) {
+        container.addRowToTable(createTableRow(className, marker, author, operation, message, path, commitDate, uid, commitID));
     }
     
     private String parseDate(Date date){

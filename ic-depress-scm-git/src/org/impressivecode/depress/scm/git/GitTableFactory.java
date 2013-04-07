@@ -46,7 +46,7 @@ public class GitTableFactory extends SCMAdapterTableFactory {
     private final static String MESSAGE_COLNAME = "Message";
     private final static String PATH_COLNAME    = "Path";
     private final static String DATE_COLNAME    = "Date";
-    private final static String UID_COLNAME     = "UID";
+    private final static String UID_COLNAME     = "Commit UID";
     
     public static DataTableSpec createDataColumnSpec() {
         DataTableSpec baseSpec = SCMAdapterTableFactory.createDataColumnSpec();
@@ -67,7 +67,7 @@ public class GitTableFactory extends SCMAdapterTableFactory {
     }
     
     static DataRow createTableRow(final String className, final Set<String> markers, final String author, final String operation, 
-            final String message, final String path, final String commitDate, final String uid) {
+            final String message, final String path, final String commitDate, final String uid, final String commitID) {
         
         DataCell[] cells = new DataCell[8];
         cells[0] = prepareStringCell(className);
@@ -77,7 +77,7 @@ public class GitTableFactory extends SCMAdapterTableFactory {
         cells[4] = prepareStringCell(message);
         cells[5] = prepareStringCell(path);
         cells[6] = prepareStringCell(commitDate);
-        cells[7] = prepareStringCell(uid);
+        cells[7] = prepareStringCell(commitID);
         DataRow row = new DefaultRow(uid, cells);
         return row;
     }
