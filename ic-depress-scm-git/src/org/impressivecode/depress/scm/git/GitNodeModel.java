@@ -22,11 +22,14 @@ import static org.impressivecode.depress.scm.git.GitTableFactory.createTableRow;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
@@ -100,7 +103,6 @@ public class GitNodeModel extends NodeModel {
         logger.info("Creating Output table with data from git file...");
         //trzeba przygotować tabelę wyjściową
         this.parser = new GitLogParser(this.gitFileName.getStringValue());
-        this.parser.setMarkersRegex(this.gitRegExp.getStringValue());
         List<GitCommit> commits = this.parser.parse();
         
         BufferedDataTable out = transform(container, commits, exec);
@@ -220,7 +222,7 @@ public class GitNodeModel extends NodeModel {
             
                 for (GitCommitFile file : commit.files){
                     if (this.isClassFile(file.getPath())){
-                        Set<String> marker = commit.getMarkers(); 
+                        Set<String> marker = this.getMarkers(commit.getMessage());
                         String author = commit.getAuthor();
                         String operation = file.getOperation().toString();
                         String message = commit.getMessage();
@@ -294,6 +296,23 @@ public class GitNodeModel extends NodeModel {
     private boolean isClassFile(String path){
         String file_extension = path.substring(path.lastIndexOf("."));
         return file_extension.equals(".java");
+    }
+    
+    private Set<String> getMarkers(String message) {
+        Pattern markersRegex = Pattern.compile(this.gitRegExp.getStringValue());
+        Set<String> markers = new HashSet<String>();
+        //if markers regex is empty than we don't search markers:
+        if (!markersRegex.pattern().isEmpty()){
+            Matcher markersMatcher = markersRegex.matcher(message);
+            String currentCommitMarker;
+            if (markersMatcher.find()){
+                currentCommitMarker = message.substring(markersMatcher.end()).split(" ", 2)[0];
+                if (!currentCommitMarker.isEmpty()){
+                    markers.add(currentCommitMarker);
+                }
+            }
+        }
+        return markers;
     }
     
 }

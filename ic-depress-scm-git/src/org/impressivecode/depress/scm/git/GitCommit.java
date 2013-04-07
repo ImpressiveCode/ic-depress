@@ -22,10 +22,8 @@ import java.security.InvalidParameterException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 /*
@@ -44,7 +42,6 @@ public class GitCommit {
     String author;
     StringBuilder messageBuilder;
     public List<GitCommitFile> files;
-    public Set<String> markers;
 
     public GitCommit(String id) {
         if (!idRegex.matcher(id).matches()) {
@@ -53,7 +50,7 @@ public class GitCommit {
         this.id = id;
         this.messageBuilder = new StringBuilder();
         this.files = new ArrayList<GitCommitFile>();
-        this.markers = new HashSet<String>();
+        
     }
 
     public String getId() {
@@ -82,15 +79,5 @@ public class GitCommit {
 
     public String getAuthor() {
         return author;
-    }
-    
-    public Set<String> getMarkers() {
-        return markers;
-    }
-    
-    public void addMarker(String marker){
-        if (!this.markers.contains(marker)) {
-            this.markers.add(marker);
-        }
     }
 }

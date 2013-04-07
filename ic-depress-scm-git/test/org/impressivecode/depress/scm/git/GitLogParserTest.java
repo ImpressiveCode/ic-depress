@@ -47,7 +47,6 @@ public class GitLogParserTest {
     @Test
     public void shouldParse() throws Exception {
         GitLogParser parser = new GitLogParser(logFilePath);
-        parser.setMarkersRegex("#");
         List<GitCommit> commits = parser.parse();
         assertEquals(50, commits.size());
         
@@ -106,6 +105,5 @@ public class GitLogParserTest {
         assertEquals("ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java", commit.files.get(14).getPath());
         assertEquals(GitCommitFileOperation.Added, commit.files.get(14).getOperation());
         
-        assertEquals(markers, commit.getMarkers());       
     }
 }
