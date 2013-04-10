@@ -914,3 +914,63 @@
 2013-03-30 15:30:28,473 INFO  main KNIMECorePlugin : Setting console view log level to WARN
 2013-03-30 15:30:28,551 DEBUG main KnimeEncryption : Replacing current encryption key supplier "null" with this new one "org.knime.workbench.core.EclipseEncryptionKeySupplier@b045dbc".
 2013-03-30 15:30:28,567 DEBUG main KnimeEncryption : Replacing current encryption key supplier "org.knime.workbench.core.EclipseEncryptionKeySupplier@b045dbc" with this new one "org.knime.workbench.ui.masterkey.MasterKeyPreferencePage$1@7f42f891".
+2013-04-10 23:03:43,832 INFO  main NodeLogger : #############################################################
+2013-04-10 23:03:43,832 INFO  main NodeLogger : #                                                           #
+2013-04-10 23:03:43,832 INFO  main NodeLogger : # Welcome to KNIME v2.7.2.0036617 (Build February 26, 2013)      #
+2013-04-10 23:03:43,832 INFO  main NodeLogger : # the Konstanz Information Miner                            #
+2013-04-10 23:03:43,832 INFO  main NodeLogger : # Based on Eclipse, www.eclipse.org                         #
+2013-04-10 23:03:43,832 INFO  main NodeLogger : # Uses: Java, GEF, Log4J                                    #
+2013-04-10 23:03:43,833 INFO  main NodeLogger : #                                                           #
+2013-04-10 23:03:43,833 INFO  main NodeLogger : #############################################################
+2013-04-10 23:03:43,833 INFO  main NodeLogger : #                                                           #
+2013-04-10 23:03:43,833 INFO  main NodeLogger : # Copyright, 2003 - 2012                                    #
+2013-04-10 23:03:43,833 INFO  main NodeLogger : # University of Konstanz, Germany.                          #
+2013-04-10 23:03:43,833 INFO  main NodeLogger : # Chair for Bioinformatics and Information Mining           #
+2013-04-10 23:03:43,833 INFO  main NodeLogger : # Prof. Dr. Michael R. Berthold                             #
+2013-04-10 23:03:43,833 INFO  main NodeLogger : # and KNIME GmbH, Konstanz, Germany                         #
+2013-04-10 23:03:43,833 INFO  main NodeLogger : # website: http://www.knime.org                             #
+2013-04-10 23:03:43,833 INFO  main NodeLogger : # email: contact@knime.org                                  #
+2013-04-10 23:03:43,833 INFO  main NodeLogger : #                                                           #
+2013-04-10 23:03:43,833 INFO  main NodeLogger : #############################################################
+2013-04-10 23:03:43,833 INFO  main NodeLogger : # For more details see the KNIME log file:                  #
+2013-04-10 23:03:43,833 INFO  main NodeLogger : # /home/marcin/Marcin/Projects/PWR/SVNPlugin/Code/ic-depress-scm-svn/.metadata/knime/knime.log
+2013-04-10 23:03:43,833 INFO  main NodeLogger : #-----------------------------------------------------------#
+2013-04-10 23:03:43,834 INFO  main NodeLogger : # logging date=Wed Apr 10 23:03:43 CEST 2013
+2013-04-10 23:03:43,834 INFO  main NodeLogger : # java.version=1.7.0_07
+2013-04-10 23:03:43,834 INFO  main NodeLogger : # java.vm.version=23.3-b01
+2013-04-10 23:03:43,834 INFO  main NodeLogger : # java.vendor=Oracle Corporation
+2013-04-10 23:03:43,834 INFO  main NodeLogger : # os.name=Linux
+2013-04-10 23:03:43,834 INFO  main NodeLogger : # os.arch=amd64
+2013-04-10 23:03:43,834 INFO  main NodeLogger : # number of CPUs=4
+2013-04-10 23:03:43,834 INFO  main NodeLogger : # assertions=off
+2013-04-10 23:03:43,834 INFO  main NodeLogger : # host=hell
+2013-04-10 23:03:43,836 INFO  main NodeLogger : # username=marcin
+2013-04-10 23:03:43,836 INFO  main NodeLogger : # max mem=341MB
+2013-04-10 23:03:43,837 INFO  main NodeLogger : # application=org.eclipse.ui.ide.workbench
+2013-04-10 23:03:43,837 INFO  main NodeLogger : #############################################################
+2013-04-10 23:03:43,839 DEBUG main KNIMECorePlugin : Setting KNIME max thread count to 8
+2013-04-10 23:03:43,839 DEBUG main KNIMECorePlugin : Setting KNIME temp dir to "/tmp"
+2013-04-10 23:03:43,839 INFO  main NodeLogger : Changing logging level to DEBUG
+2013-04-10 23:03:43,862 INFO  main KNIMECorePlugin : Setting console view log level to WARN
+2013-04-10 23:03:43,930 DEBUG main KnimeEncryption : Replacing current encryption key supplier "null" with this new one "org.knime.workbench.core.EclipseEncryptionKeySupplier@775c4f20".
+2013-04-10 23:03:43,948 DEBUG main KnimeEncryption : Replacing current encryption key supplier "org.knime.workbench.core.EclipseEncryptionKeySupplier@775c4f20" with this new one "org.knime.workbench.ui.masterkey.MasterKeyPreferencePage$1@2f650e17".
+2013-04-10 23:03:43,978 DEBUG main WorkflowEditor : Creating WorkflowEditor...
+2013-04-10 23:03:43,997 DEBUG main WorkflowEditor : creating editor actions...
+2013-04-10 23:03:44,078 DEBUG main WorkflowEditor : Initializing editor UI...
+2013-04-10 23:03:44,079 DEBUG main WorkflowEditor : Opening workflow Editor on workflow.knime
+2013-04-10 23:03:44,079 DEBUG main WorkflowEditor : Setting input into editor...
+2013-04-10 23:03:44,079 DEBUG main WorkflowEditor : Resource File's project: file:/home/marcin/Marcin/Projects/PWR/SVNPlugin/Code/ic-depress-scm-svn/knime_project
+2013-04-10 23:03:44,243 DEBUG ModalContext NodeContainer : Workflow Manager  has new state: EXECUTED
+2013-04-10 23:03:44,245 DEBUG ModalContext WorkflowManager : Created subworkflow 
+2013-04-10 23:03:44,247 ERROR ModalContext VMFileLocker : CODING PROBLEM	Files should not be locked. Only directories. (/home/marcin/Marcin/Projects/PWR/SVNPlugin/Code/ic-depress-scm-svn/knime_project is not a dir.)
+2013-04-10 23:03:44,248 INFO  ModalContext LoadWorkflowRunnable : Unable to load workflow "knime_project"
+Location does not exist.
+2013-04-10 23:03:44,249 DEBUG ModalContext LoadWorkflowRunnable : Unable to load workflow "knime_project"
+Location does not exist.
+org.knime.core.util.LockFailedException: Unable to lock workflow from "/home/marcin/Marcin/Projects/PWR/SVNPlugin/Code/ic-depress-scm-svn/knime_project". Location does not exist.
+	at org.knime.core.node.workflow.WorkflowManager.load(WorkflowManager.java:6329)
+	at org.knime.core.node.workflow.WorkflowManager.loadProject(WorkflowManager.java:6122)
+	at org.knime.workbench.editor2.LoadWorkflowRunnable.run(LoadWorkflowRunnable.java:159)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:121)
+2013-04-10 23:03:44,272 DEBUG main WorkflowEditor : Disposing editor...
+2013-04-10 23:21:22,532 DEBUG main BrowserInitializer : Using WebKit as browser

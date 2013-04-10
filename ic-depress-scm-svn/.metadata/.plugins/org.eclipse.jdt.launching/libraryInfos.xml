@@ -19,6 +19,25 @@
 <entry path="D:\App\Knime_2.7.2\jre\lib\endorsed"/>
 </endorsedDirs>
 </libraryInfo>
+<libraryInfo home="/home/marcin/Marcin/Software/eclipse_knime_2.7.2" version="1.7.0_07">
+<bootpath>
+<entry path="/home/marcin/Marcin/Software/eclipse_knime_2.7.2/jre/lib/resources.jar"/>
+<entry path="/home/marcin/Marcin/Software/eclipse_knime_2.7.2/jre/lib/rt.jar"/>
+<entry path="/home/marcin/Marcin/Software/eclipse_knime_2.7.2/jre/lib/sunrsasign.jar"/>
+<entry path="/home/marcin/Marcin/Software/eclipse_knime_2.7.2/jre/lib/jsse.jar"/>
+<entry path="/home/marcin/Marcin/Software/eclipse_knime_2.7.2/jre/lib/jce.jar"/>
+<entry path="/home/marcin/Marcin/Software/eclipse_knime_2.7.2/jre/lib/charsets.jar"/>
+<entry path="/home/marcin/Marcin/Software/eclipse_knime_2.7.2/jre/lib/jfr.jar"/>
+<entry path="/home/marcin/Marcin/Software/eclipse_knime_2.7.2/jre/classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="/home/marcin/Marcin/Software/eclipse_knime_2.7.2/jre/lib/ext"/>
+<entry path="/usr/java/packages/lib/ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="/home/marcin/Marcin/Software/eclipse_knime_2.7.2/jre/lib/endorsed"/>
+</endorsedDirs>
+</libraryInfo>
 <libraryInfo home="D:\App\Knime_2.7.2" version="1.7.0_07">
 <bootpath>
 <entry path="D:\App\Knime_2.7.2\jre\lib\resources.jar"/>
