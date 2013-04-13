@@ -2,7 +2,7 @@ language: java
 env:
   global:
     - REPO="adudek/ic-depress"
-    - CI_HOME=`pwd`/$REPO/ic-depress/ic-depress-data-anonymisation
+    - CI_HOME=`pwd`/$REPO
 
 script: build.sh
 
