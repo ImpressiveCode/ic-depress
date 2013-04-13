@@ -1,4 +1,6 @@
 language: java
+install: ant deps
+
 env:
   global:
     - REPO="adudek/ic-depress"
