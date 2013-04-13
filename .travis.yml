@@ -1,12 +1,16 @@
 language: java
 #install: ant deps
 
-script: build.sh
-
 env:
   global:
     - REPO="adudek/ic-depress"
     - CI_HOME=`pwd`/$REPO/ic-depress-data-anonymisation
+
+before_install:
+  - echo $CI_HOME
+  - chmod +x ${$CI_HOME}/script.sh
+
+script: build.sh
 
 language: java
 jdk:
@@ -17,3 +21,6 @@ jdk:
 branches:
   only:
     - dev
+
+notifications:
+#  email: false
