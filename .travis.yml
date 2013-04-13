@@ -12,7 +12,7 @@ before_install:
   - ls -lavh ./
   - chmod +x build.sh
 
-script: build.sh
+script: $CI_HOME/build.sh
 
 language: java
 jdk:
@@ -25,4 +25,4 @@ branches:
     - dev
 
 notifications:
-#  email: false
+  email: true
