@@ -9,6 +9,7 @@ env:
 before_install:
   - echo $CI_HOME
   - cd $CI_HOME
+  - ls -lavh ./
   - chmod +x script.sh
 
 script: build.sh
