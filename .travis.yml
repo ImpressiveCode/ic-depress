@@ -1,0 +1,28 @@
+language: java
+#install: ant deps
+
+env:
+  global:
+    - REPO="adudek/ic-depress"
+    - CI_HOME=`pwd`/$REPO/ic-depress-data-anonymisation
+
+before_install:
+  - echo $CI_HOME
+  - cd $CI_HOME
+  - ls -lavh ./
+  - chmod +x build.sh
+
+script: $CI_HOME/build.sh
+
+language: java
+jdk:
+  - oraclejdk7
+  - openjdk7
+  - openjdk6
+
+branches:
+  only:
+    - dev
+
+notifications:
+  email: true
