@@ -3,28 +3,5 @@
 	<section name="quick_assist_proposal_size">
 	</section>
 	<section name="PluginExportWizard">
-		<item value="true" key="exportUpdate"/>
-		<item value="false" key="saveAsAnt"/>
-		<item value="" key="alias"/>
-		<item value="Generate source bundles" key="exportSourceFormat"/>
-		<item value="false" key="qualifier"/>
-		<item value="" key="password"/>
-		<item value="" key="keypass"/>
-		<item value="false" key="exportSource"/>
-		<item value="" key="keystore"/>
-		<item value="false" key="useWorkspaceCompiledClasses"/>
-		<item value="1" key="exportType"/>
-		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn2\plugin\target" key="destination3"/>
-		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn2\plugin\ant\build.xml" key="antFileName0"/>
-		<item value="false" key="signJAR"/>
-		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn2\plugin\target\plugins" key="destination2"/>
-		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn2\plugin\ant\build.xml" key="antFileName1"/>
-		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn2\plugin\build.xml" key="antFileName2"/>
-		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn2\plugin\target\" key="destination1"/>
-		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn2\export_plugin.xml" key="antFileName3"/>
-		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn2\plugin\target\" key="destination0"/>
-		<item value="D:\Git\0\ic-depress\ic-depress-scm-svn2\plugin\export_plugin.xml" key="antFileName4"/>
-		<item value="201303300749" key="qualifierName"/>
-		<item value="true" key="allowBinaryCycles"/>
 	</section>
 </section>

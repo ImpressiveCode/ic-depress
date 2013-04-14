@@ -15,11 +15,9 @@
 		<item value="false" key="wholeword"/>
 		<item value="" key="selection"/>
 		<list key="findhistory">
-			<item value="plugin_export"/>
 			<item value=""/>
 		</list>
 		<list key="replacehistory">
-			<item value=""/>
 		</list>
 	</section>
 </section>

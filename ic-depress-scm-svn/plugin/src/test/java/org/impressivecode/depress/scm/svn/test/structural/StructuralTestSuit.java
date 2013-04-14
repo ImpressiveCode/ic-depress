@@ -22,7 +22,7 @@ import org.junit.runners.Suite.SuiteClasses;
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 @RunWith(Suite.class)
-@SuiteClasses({ SVNNodeLogicTest.class, SVNLogLoaderTest.class })
+@SuiteClasses({ SVNLogLoaderTest.class })
 public class StructuralTestSuit {
 
 }

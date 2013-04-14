@@ -4,15 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.impressivecode.depress.scm.svn.SVNLogLoader.IReadProgressListener;
-import org.knime.core.data.DataCell;
-import org.knime.core.data.DataColumnDomainCreator;
-import org.knime.core.data.DataColumnSpec;
-import org.knime.core.data.DataColumnSpecCreator;
-import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.RowKey;
-import org.knime.core.data.def.DefaultRow;
-import org.knime.core.data.def.StringCell;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -42,13 +34,44 @@ import org.knime.core.node.NodeSettingsWO;
  */
 public class SVNNodeModel extends NodeModel {
 
+	class ModelRowReader implements IReadProgressListener {
+
+		private int rowId = 0;
+		private BufferedDataContainer container;
+		private ExecutionContext exec;
+
+		public ModelRowReader(final BufferedDataContainer inContainer,
+				ExecutionContext inExec) {
+			container = inContainer;
+			exec = inExec;
+		}
+
+		@Override
+		public void onReadProgress(int inProgres, SVNLogRow inRow)
+				throws CanceledExecutionException {
+
+			container.addRowToTable(SVNLogRowSpec.createRow(++rowId, inRow));
+			exec.checkCanceled();
+			exec.setProgress(inProgres, SVNLocale.iCurrentProgress(inProgres));
+		}
+
+		public void close() {
+			container.close();
+		}
+
+		public BufferedDataTable[] toDataTable() {
+			return new BufferedDataTable[] { container.getTable() };
+		}
+	}
+
+	private BufferedDataContainer dataContainer;
+	private ModelRowReader reader;
+
 	/**
 	 * Constructor for the node model.
 	 */
 	protected SVNNodeModel() {
-
-		// TODO one incoming port and one outgoing port is assumed
-		super(1, 1);
+		super(0, 1);
 	}
 
 	/**
@@ -57,7 +80,8 @@ public class SVNNodeModel extends NodeModel {
 	@Override
 	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
 			throws InvalidSettingsException {
-		return SVNLogRowSpec.createTableSpec();
+		return new DataTableSpec[] { new DataTableSpec(
+				SVNLogRowSpec.createColumnSpec()) };
 	}
 
 	/**
@@ -69,40 +93,21 @@ public class SVNNodeModel extends NodeModel {
 
 		Logger.instance().warn(SVNLocale.iStartLoading());
 
-		DataColumnSpec[] allColSpecs = SVNLogRowSpec.createColumnSpec();
+		dataContainer = exec.createDataContainer(new DataTableSpec(
+				SVNLogRowSpec.createColumnSpec()));
 
-		DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
+		reader = new ModelRowReader(dataContainer, exec);
 
-		final BufferedDataContainer container = exec
-				.createDataContainer(outputSpec);
-
-		SVNLogLoader loader = new SVNLogLoader();
-
-		loader.loadXmlL(SVNSettings.SVN_PATH_MODEL.getStringValue(),
+		new SVNLogLoader().loadXmlL(
+				SVNSettings.SVN_PATH_MODEL.getStringValue(),
 				SVNSettings.ISSUE_MARKER_MODEL.getStringValue(),
-				SVNSettings.PACKAGE_MODEL.getStringValue(),
-				new IReadProgressListener() {
-
-					int rowId = 0;
-
-					@Override
-					public void onReadProgress(int inProgres, SVNLogRow inRow)
-							throws CanceledExecutionException {
-
-						container.addRowToTable(SVNLogRowSpec.createRow(
-								++rowId, inRow));
-
-						exec.checkCanceled();
-						exec.setProgress(inProgres,
-								SVNLocale.iCurrentProgress(inProgres));
-					}
-				});
+				SVNSettings.PACKAGE_MODEL.getStringValue(), reader);
 
 		Logger.instance().warn(SVNLocale.iEndLoading());
 
-		container.close();
+		reader.close();
 
-		return new BufferedDataTable[] { container.getTable() };
+		return reader.toDataTable();
 	}
 
 	/**

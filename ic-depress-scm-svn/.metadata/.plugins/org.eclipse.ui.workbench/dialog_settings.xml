@@ -1,31 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="NewWizardAction">
-		<item value="org.knime.workbench.explorer.view.actions.NewWorkflowWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<item value="org.knime.workbench.extension.wizards.NewKNIMEPluginWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
 		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
-			<item value="org.eclipse.ui.Basic"/>
 			<item value="org.knime.workbench.ui.wizards.category"/>
 		</list>
 	</section>
 	<section name="ShowViewDialog">
 		<item value="311" key="DIALOG_WIDTH"/>
-		<item value="org.eclipse.ant.ui.views.AntView" key="ShowViewDialog.STORE_SELECTED_VIEW_ID"/>
+		<item value="org.eclipse.jdt.ui.PackageExplorer" key="ShowViewDialog.STORE_SELECTED_VIEW_ID"/>
 		<item value="77" key="DIALOG_Y_ORIGIN"/>
-		<item value="357" key="DIALOG_X_ORIGIN"/>
 		<item value="438" key="DIALOG_HEIGHT"/>
+		<item value="357" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<list key="ShowViewDialog.STORE_EXPANDED_CATEGORIES_ID">
-			<item value="org.eclipse.ant.ui.views"/>
 			<item value="org.eclipse.jdt.ui.java"/>
-		</list>
-	</section>
-	<section name="ImportExportAction">
-		<item value="org.eclipse.ant.ui.export" key="ImportExportPage.STORE_SELECTED_EXPORT_WIZARD_ID"/>
-		<list key="ImportExportPage.STORE_EXPANDED_EXPORT_CATEGORIES">
-			<item value="org.eclipse.ui.Basic"/>
-			<item value="org.eclipse.equinox.p2.category"/>
-			<item value="org.eclipse.jdt.ui.Java"/>
-			<item value="org.eclipse.pde.ui.PluginDevelopment"/>
 		</list>
 	</section>
 </section>

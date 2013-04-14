@@ -1,25 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.0"?>
-<plugin>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?eclipse version="3.0"?><plugin>
 
-   <!-- This is an example for providing an own category 
-      <extension
+   <extension point="org.knime.workbench.repository.nodes">
+      <node category-path="/depress.category" factory-class="org.impressivecode.depress.scm.svn.SVNNodeFactory" id="org.impressivecode.depress.scm.svn.SVNNodeFactory"/>
+</extension>
+   <extension
          point="org.knime.workbench.repository.categories">
       <category
-            description="Category containing my nodes"
-            icon="icons/default.png"
-            level-id="myNodes"
-            name="My nodes"
-            path="/"/>
-   </extension>
-   -->
-   
-   <extension
-         point="org.knime.workbench.repository.nodes">
-      <node
-            category-path="/"
-            factory-class="org.impressivecode.depress.scm.svn.SVNNodeFactory"
-            id="org.knime.svn.SVNNodeFactory"/>
+            level-id="depress.category"
+            name="Depress"
+            path="/">
+      </category>
    </extension>
    
 </plugin>

@@ -70,7 +70,7 @@ public class SVNLogRowSpec {
 		return result;
 	}
 
-	private static DataColumnSpec stringColumnSpec(String inName) {
+	public static DataColumnSpec stringColumnSpec(String inName) {
 
 		DataColumnSpecCreator colSpecCreator = new DataColumnSpecCreator(
 				inName, StringCell.TYPE);

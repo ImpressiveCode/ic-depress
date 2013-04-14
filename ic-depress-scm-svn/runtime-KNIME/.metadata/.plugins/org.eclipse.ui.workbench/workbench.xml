@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="16" version="2.0">
+<workbench progressCount="29" version="2.0">
 <workbenchAdvisor/>
-<window height="738" width="1024" x="25" y="0">
+<window height="738" maximized="true" width="1024" x="100" y="0">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar/>
 <coolbarLayout>
@@ -11,17 +11,22 @@
 <coolItem id="org.eclipse.ui.edit.text.actionSet.navigation" itemType="typeToolBarContribution" x="38" y="22"/>
 <coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="53" y="22"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
-<coolItem id="org.knime.workbench.editor.WorkflowEditor" itemType="typePlaceholder" x="588" y="22"/>
+<coolItem id="org.knime.workbench.editor.WorkflowEditor" itemType="typeToolBarContribution" x="588" y="22"/>
 </coolbarLayout>
 <page focus="true" label="&lt;Unknown Label&gt; - KNIME">
 <editors>
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
 </folder>
 </info>
 </editorArea>
+<editor activePart="true" focus="true" id="org.knime.workbench.editor.WorkflowEditor" name="workflow.knime" partName="0: KNIME_SVN_FLOW" title="0: KNIME_SVN_FLOW" tooltip="0: KNIME_SVN_FLOW" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" uri="file:/D:/Git/5/ic-depress/ic-depress-scm-svn/runtime-KNIME/KNIME_SVN_FLOW/workflow.knime"/>
+</editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.console.ConsoleView" partName="Console">
@@ -45,7 +50,7 @@
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.knime.workbench.explorer.view" activePerspective="org.knime.workbench.ui.ModellerPerspective">
+<perspectives activePart="org.knime.workbench.editor.WorkflowEditor" activePerspective="org.knime.workbench.ui.ModellerPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.knime.workbench.ui.perspective.ModellerPerspectiveFactory" id="org.knime.workbench.ui.ModellerPerspective" label="KNIME"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -83,7 +88,7 @@
 <viewLayoutRec closeable="false" id="org.knime.workbench.repository.view.RepositoryView"/>
 <layout>
 <mainWindow>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@6b410b58">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@6ea3ffa8">
 <folder activePageID="org.knime.workbench.explorer.view" appearance="2" expanded="2">
 <page content="org.knime.workbench.explorer.view" label="KNIME Explorer"/>
 <page content="org.knime.workbench.ui.navigator.KnimeResourceNavigator" label="LabelNotFound"/>
@@ -92,16 +97,15 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@5b8d7dd2" ratio="0.75" ratioLeft="750" ratioRight="250" relationship="2" relative="org.eclipse.ui.internal.ViewStack@6b410b58">
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="750" ratioRight="250" relationship="2" relative="org.eclipse.ui.internal.ViewStack@6ea3ffa8">
 <folder appearance="2" expanded="2">
 <page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.3" ratioLeft="300" ratioRight="700" relationship="2" relative="org.eclipse.ui.internal.ViewStack@6b410b58"/>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@ab46dee" ratio="0.69871795" ratioLeft="436" ratioRight="188" relationship="4" relative="org.eclipse.ui.editorss">
+<info part="org.eclipse.ui.editorss" ratio="0.3" ratioLeft="300" ratioRight="700" relationship="2" relative="org.eclipse.ui.internal.ViewStack@6ea3ffa8"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@d7a5906" ratio="0.69871795" ratioLeft="436" ratioRight="188" relationship="4" relative="org.eclipse.ui.editorss">
 <folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
@@ -109,7 +113,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@3e794165" ratio="0.3" ratioLeft="210" ratioRight="490" relationship="2" relative="org.eclipse.ui.internal.ViewStack@ab46dee">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@154d6a3f" ratio="0.3" ratioLeft="210" ratioRight="490" relationship="2" relative="org.eclipse.ui.internal.ViewStack@d7a5906">
 <folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
@@ -117,7 +121,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@4b9d29bf" ratio="0.7" ratioLeft="490" ratioRight="210" relationship="2" relative="org.eclipse.ui.editorss">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@5b6a9fd3" ratio="0.7" ratioLeft="490" ratioRight="210" relationship="2" relative="org.eclipse.ui.editorss">
 <folder activePageID="org.knime.workbench.helpview" appearance="2" expanded="2">
 <page content="org.knime.workbench.helpview" label="Node Description"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
@@ -125,8 +129,8 @@
 </presentation>
 </folder>
 </info>
-<info part="com.knime.enterprise.client.repositoryview.views.RemoteRepositoryView" ratio="0.54816514" ratioLeft="239" ratioRight="197" relationship="4" relative="org.eclipse.ui.internal.ViewStack@4b9d29bf"/>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@3b1fe161" ratio="0.2996795" ratioLeft="187" ratioRight="437" relationship="4" relative="org.eclipse.ui.internal.ViewStack@6b410b58">
+<info part="com.knime.enterprise.client.repositoryview.views.RemoteRepositoryView" ratio="0.54816514" ratioLeft="239" ratioRight="197" relationship="4" relative="org.eclipse.ui.internal.ViewStack@5b6a9fd3"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@35230488" ratio="0.2996795" ratioLeft="187" ratioRight="437" relationship="4" relative="org.eclipse.ui.internal.ViewStack@6ea3ffa8">
 <folder activePageID="org.knime.workbench.ui.favorites" appearance="2" expanded="2">
 <page content="org.knime.workbench.ui.favorites" label="Favorite Nodes"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
@@ -134,7 +138,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@7b4ff56a" ratio="0.19908467" ratioLeft="87" ratioRight="350" relationship="4" relative="org.eclipse.ui.internal.ViewStack@3b1fe161">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@50e5a757" ratio="0.19908467" ratioLeft="87" ratioRight="350" relationship="4" relative="org.eclipse.ui.internal.ViewStack@35230488">
 <folder activePageID="org.knime.workbench.repository.view.RepositoryView" appearance="2" expanded="2">
 <page content="org.knime.workbench.repository.view.RepositoryView" label="Node Repository"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
@@ -147,7 +151,12 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.knime.workbench.editor.WorkflowEditor" uri="file:/D:/Git/5/ic-depress/ic-depress-scm-svn/runtime-KNIME/KNIME_SVN_FLOW/workflow.knime"/>
+</editors>
+<item active="true" historyLabel="0: KNIME_SVN_FLOW" index="0"/>
+</navigationHistory>
 </page>
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
@@ -162,8 +171,11 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.knime.workbench.editor.WorkflowEditor" name="workflow.knime" tooltip="KNIME_project/workflow.knime">
-<persistable path="/KNIME_project/workflow.knime"/>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.knime.workbench.editor.WorkflowEditor" name="workflow.knime" tooltip="D:\Git\5\ic-depress\ic-depress-scm-svn\runtime-KNIME\KNIME_SVN_FLOW\workflow.knime">
+<persistable uri="file:/D:/Git/5/ic-depress/ic-depress-scm-svn/runtime-KNIME/KNIME_SVN_FLOW/workflow.knime"/>
+</file>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.knime.workbench.editor.WorkflowEditor" name="workflow.knime" tooltip="D:\Git\5\ic-depress\ic-depress-scm-svn\runtime-KNIME\KNIME_project\workflow.knime">
+<persistable uri="file:/D:/Git/5/ic-depress/ic-depress-scm-svn/runtime-KNIME/KNIME_project/workflow.knime"/>
 </file>
 </mruList>
 </workbench>

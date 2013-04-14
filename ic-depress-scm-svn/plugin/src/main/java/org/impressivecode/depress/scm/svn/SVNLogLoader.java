@@ -1,5 +1,6 @@
 package org.impressivecode.depress.scm.svn;
 
+import org.knime.core.data.def.StringCell;
 import org.knime.core.node.CanceledExecutionException;
 
 /*
@@ -31,18 +32,36 @@ public class SVNLogLoader {
 
 	public void loadXmlL(String inPath, String inIsueMarker, String inPackage,
 			IReadProgressListener inProgress) {
+
+		Logger.instance().warn("Start loading..");
+
+		Logger.instance().warn("Path : " + inPath);
+		Logger.instance().warn("IsueMarker : " + inIsueMarker);
+		Logger.instance().warn("Package : " + inPackage);
+
 		try {
 			for (int i = 0; i < 100; ++i) {
 
-				inProgress.onReadProgress(i, new SVNLogRow());
+				SVNLogRow r = new SVNLogRow();
+
+				r.setClassName(new StringCell(" ClassName  " + i));
+				r.setAuthor(new StringCell(" Author  " + i));
+				r.setAction(new StringCell(" Action  " + i));
+				r.setDate(new StringCell(" Date  " + i));
+				r.setMarker(new StringCell(" Maker  " + i));
+				r.setMessage(new StringCell(" Message  " + i));
+				r.setPath(new StringCell(" Path  " + i));
+				r.setUid(new StringCell(" Uid  " + i));
+
+				inProgress.onReadProgress(i, r);
 
 			}
 		} catch (CanceledExecutionException e) {
 			e.printStackTrace();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		Logger.instance().warn("End loading..");
 	}
 
 }
