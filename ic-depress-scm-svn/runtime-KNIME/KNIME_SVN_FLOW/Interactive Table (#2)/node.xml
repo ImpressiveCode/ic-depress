@@ -2,20 +2,11 @@
 <config xmlns="http://www.knime.org/2008/09/XMLConfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.knime.org/2008/09/XMLConfig http://www.knime.org/XMLConfig_2008_09.xsd" key="settings.xml">
 <entry key="name" type="xstring" value="Interactive Table"/>
 <config key="model"/>
-<entry key="hasContent" type="xboolean" value="true"/>
+<entry key="hasContent" type="xboolean" value="false"/>
 <entry key="isInactive" type="xboolean" value="false"/>
 <config key="ports"/>
-<config key="internalTables">
-<entry key="location" type="xstring" value="internalTables"/>
-<config key="content">
-<config key="table_0">
-<entry key="index" type="xint" value="0"/>
-<entry key="table_dir_location" type="xstring" value="table_0"/>
-</config>
-</config>
-</config>
 <config key="filestores">
 <entry key="file_store_location" type="xstring" isnull="true" value=""/>
-<entry key="file_store_id" type="xstring" value="9b048ec9-d311-423e-a233-ec681ce04c0d"/>
+<entry key="file_store_id" type="xstring" isnull="true" value=""/>
 </config>
 </config>

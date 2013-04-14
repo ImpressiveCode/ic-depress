@@ -34,6 +34,14 @@ public class SVNLocale {
 		return "Error durninig validate setting";
 	}
 
+	public static String iCurrentProgress(int inProgres) {
+		return String.format("Current progress %d", inProgres);
+	}
+
+	public static Object iEndLoading() {
+		return "Start loading";
+	}
+
 	public static String iSettingsLoaded() {
 		return "Settings loaded";
 	}
@@ -42,24 +50,16 @@ public class SVNLocale {
 		return "Settings saved";
 	}
 
+	public static Object iStartLoading() {
+		return "End loading";
+	}
+
 	public static String nIssueMarker() {
 		return "Issue Marker";
 	}
 
 	public static String nPackage() {
 		return "Package";
-	}
-
-	public static Object iEndLoading() {
-		return "Start loading";
-	}
-
-	public static Object iStartLoading() {
-		return "End loading";
-	}
-
-	public static String iCurrentProgress(int inProgres) {
-		return String.format("Current progress %d", inProgres);
 	}
 
 }

@@ -6,7 +6,7 @@
 <entry key="SettingsModelID" type="xstring" value="SMID_string"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
-<entry key="svnPath" type="xstring" value="D:\Git\Knime\SVNLog\Log.xml"/>
+<entry key="svnPath" type="xstring" value="D:\Git\Knime\SVNLog\Log433.xml"/>
 <config key="issueMarker_Internals">
 <entry key="SettingsModelID" type="xstring" value="SMID_string"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
@@ -16,7 +16,7 @@
 <entry key="SettingsModelID" type="xstring" value="SMID_string"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
-<entry key="package" type="xstring" value="*"/>
+<entry key="package" type="xstring" value="org.*"/>
 </config>
 <entry key="hasContent" type="xboolean" value="true"/>
 <entry key="isInactive" type="xboolean" value="false"/>
@@ -31,6 +31,6 @@
 </config>
 <config key="filestores">
 <entry key="file_store_location" type="xstring" isnull="true" value=""/>
-<entry key="file_store_id" type="xstring" value="cd7e1570-2517-4169-917a-6dd9fdc7b269"/>
+<entry key="file_store_id" type="xstring" value="7dde517e-9193-4c53-b795-1d75eb8f492f"/>
 </config>
 </config>

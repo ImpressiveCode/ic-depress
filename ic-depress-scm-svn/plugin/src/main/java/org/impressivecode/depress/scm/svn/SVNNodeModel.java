@@ -46,6 +46,10 @@ public class SVNNodeModel extends NodeModel {
 			exec = inExec;
 		}
 
+		public void close() {
+			container.close();
+		}
+
 		@Override
 		public void onReadProgress(int inProgres, SVNLogRow inRow)
 				throws CanceledExecutionException {
@@ -53,10 +57,6 @@ public class SVNNodeModel extends NodeModel {
 			container.addRowToTable(SVNLogRowSpec.createRow(++rowId, inRow));
 			exec.checkCanceled();
 			exec.setProgress(inProgres, SVNLocale.iCurrentProgress(inProgres));
-		}
-
-		public void close() {
-			container.close();
 		}
 
 		public BufferedDataTable[] toDataTable() {
@@ -98,7 +98,7 @@ public class SVNNodeModel extends NodeModel {
 
 		reader = new ModelRowReader(dataContainer, exec);
 
-		new SVNLogLoader().loadXmlL(
+		new SVNLogLoader().loadXml(
 				SVNSettings.SVN_PATH_MODEL.getStringValue(),
 				SVNSettings.ISSUE_MARKER_MODEL.getStringValue(),
 				SVNSettings.PACKAGE_MODEL.getStringValue(), reader);

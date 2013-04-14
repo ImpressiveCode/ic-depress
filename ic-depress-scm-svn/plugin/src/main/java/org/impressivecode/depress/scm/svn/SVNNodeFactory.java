@@ -36,17 +36,12 @@ public class SVNNodeFactory extends NodeFactory<SVNNodeModel> {
 		return new SVNNodeDialog();
 	}
 
-	@Override
-	public NodeFactory.NodeType getType() {
-		return NodeType.Source;
-	};
-
 	/**
      */
 	@Override
 	public SVNNodeModel createNodeModel() {
 		return new SVNNodeModel();
-	}
+	};
 
 	/**
 	 * {@inheritDoc}
@@ -63,6 +58,11 @@ public class SVNNodeFactory extends NodeFactory<SVNNodeModel> {
 	@Override
 	public int getNrNodeViews() {
 		return 1;
+	}
+
+	@Override
+	public NodeFactory.NodeType getType() {
+		return NodeType.Source;
 	}
 
 	/**

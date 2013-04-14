@@ -8,9 +8,9 @@
 <favorite frequency="1" nodeid="org.knime.base.node.viz.condbox.ConditionalBoxPlotNodeFactory"/>
 </frequents>
 <lastused>
-<favorite nodeid="org.knime.base.node.viz.table.TableNodeFactory"/>
-<favorite nodeid="org.impressivecode.depress.scm.svn.SVNNodeFactory"/>
-<favorite nodeid="org.knime.base.node.viz.condbox.ConditionalBoxPlotNodeFactory"/>
 <favorite nodeid="org.knime.base.node.io.filereader.FileReaderNodeFactory"/>
+<favorite nodeid="org.knime.base.node.viz.condbox.ConditionalBoxPlotNodeFactory"/>
+<favorite nodeid="org.impressivecode.depress.scm.svn.SVNNodeFactory"/>
+<favorite nodeid="org.knime.base.node.viz.table.TableNodeFactory"/>
 </lastused>
 </favoritenodes>

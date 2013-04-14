@@ -347,3 +347,45 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY org.eclipse.ui 4 4 2013-04-14 10:32:39.619
 !MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-04-14 10:48:17.561
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-04-14 10:48:17.561
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-04-14 10:48:17.562
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-04-14 10:48:17.562
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-04-14 10:50:49.769
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-04-14 10:50:49.769
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-04-14 10:50:49.769
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-04-14 10:50:49.769
+!MESSAGE Reference item find.ext not found for action null
+!SESSION 2013-04-14 11:30:44.567 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.7.0_07
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pl_PL
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.ui 4 4 2013-04-14 11:30:49.728
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-04-14 11:30:49.731
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-04-14 11:30:49.731
+!MESSAGE Reference item find.ext not found for action null
+
+!ENTRY org.eclipse.ui 4 4 2013-04-14 11:30:49.732
+!MESSAGE Reference item find.ext not found for action null

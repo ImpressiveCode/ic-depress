@@ -8,12 +8,11 @@
     </shortDescription>
     
     <fullDescription>
-        <intro>Insert long description here...</intro>
-        
+        <intro> SVN log metrics plugin </intro>
         
         <option name="Selected file">Select XML file to load</option>
         <option name="Issue marker">marker type that you're looking at</option>
-		<option name="Package">package name</option>
+		<option name="Package">Package name</option>
         <!-- possibly more options that can also be grouped by tabs -->
         <!--
         <tab name="Standard Options">
@@ -27,13 +26,7 @@
     </fullDescription>
     
     <ports>
-        <inPort index="0" name="In-Port name">Description of first input port...</inPort>
-        <!-- possibly more input ports here-->
-        <outPort index="0" name="Out-Port name">Description of first output port...</outPort>
+        <outPort index="0" name="SVN log Metrics">Description of first output port...</outPort>
         <!-- possibly more output ports here-->
     </ports>    
-    <views>
-        <view index="0" name="name of first view">Description of first view...</view>
-        <!--view index="1" name="name of second view">Description of second view...</view-->
-    </views>
 </knimeNode>

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="java.lang.Override"/>
+<fullyQualifiedTypeName name="org.impressivecode.depress.scm.svn.SVNNodeModel.RowReader"/>
+<fullyQualifiedTypeName name="org.impressivecode.depress.scm.svn.Logger"/>
+<fullyQualifiedTypeName name="org.knime.core.data.DataColumnSpec"/>
+<fullyQualifiedTypeName name="org.knime.core.node.BufferedDataContainer"/>
+<fullyQualifiedTypeName name="org.knime.core.data.DataTableSpec"/>
 </qualifiedTypeNameHistroy>

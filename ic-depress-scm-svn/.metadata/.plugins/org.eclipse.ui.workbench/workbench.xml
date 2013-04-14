@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="18" version="2.0">
+<workbench progressCount="31" version="2.0">
 <workbenchAdvisor/>
 <window height="738" maximized="true" width="1024" x="25" y="0">
 <fastViewData fastViewLocation="1024"/>
@@ -11,13 +11,14 @@
 <coolItem id="org.eclipse.ui.edit.text.actionSet.navigation" itemType="typeToolBarContribution" x="38" y="22"/>
 <coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="129" y="22"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.pde.ui.manifestEditor" itemType="typeToolBarContribution" x="38" y="22"/>
+<coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.pde.ui.manifestEditor" itemType="typePlaceholder" x="38" y="22"/>
 <coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.knime.workbench.editor.WorkflowEditor" itemType="typePlaceholder" x="588" y="22"/>
 <coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="107" y="22"/>
 </coolbarLayout>
-<page focus="true" label="&lt;Unknown Label&gt; - Debug">
+<page aggregateWorkingSetId="Aggregate for window 1365927725150" focus="true" label="&lt;Unknown Label&gt; - Debug">
 <editors>
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
@@ -36,7 +37,6 @@
 <part id="10"/>
 <part id="11"/>
 <part id="12"/>
-<part id="13"/>
 </presentation>
 </folder>
 </info>
@@ -59,11 +59,7 @@
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNLogLoader.java" partName="SVNLogLoader.java" path="D:/Git/5/ic-depress/ic-depress-scm-svn/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogLoader.java" title="SVNLogLoader.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogLoader.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogLoader.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNLogRowSpec.java" partName="SVNLogRowSpec.java" path="D:/Git/5/ic-depress/ic-depress-scm-svn/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRowSpec.java" title="SVNLogRowSpec.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRowSpec.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRowSpec.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2658" selectionTopPixel="1127"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1369" selectionTopPixel="529"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNNodeDialog.java" partName="SVNNodeDialog.java" path="D:/Git/5/ic-depress/ic-depress-scm-svn/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeDialog.java" title="SVNNodeDialog.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeDialog.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeDialog.java"/>
@@ -71,7 +67,7 @@
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNNodeModel.java" partName="SVNNodeModel.java" path="D:/Git/5/ic-depress/ic-depress-scm-svn/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeModel.java" title="SVNNodeModel.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeModel.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeModel.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="54" selectionOffset="2927" selectionTopPixel="975"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2625" selectionTopPixel="1024"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNNodePlugin.java" partName="SVNNodePlugin.java" path="D:/Git/5/ic-depress/ic-depress-scm-svn/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodePlugin.java" title="SVNNodePlugin.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodePlugin.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodePlugin.java"/>
@@ -85,16 +81,17 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNSettings.java"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2113" selectionTopPixel="617"/>
 </editor>
-<editor id="org.eclipse.pde.ui.manifestEditor" name="plugin.xml" partName="org.impressivecode.depress.scm.svn" path="D:/Git/5/ic-depress/ic-depress-scm-svn/plugin/plugin.xml" title="org.impressivecode.depress.scm.svn" tooltip="plugin/plugin.xml" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/plugin/plugin.xml"/>
-</editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNNodeFactory.java" partName="SVNNodeFactory.java" path="D:/Git/5/ic-depress/ic-depress-scm-svn/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeFactory.java" title="SVNNodeFactory.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeFactory.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeFactory.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1283" selectionTopPixel="722"/>
+<editorState selectionHorizontalPixel="0" selectionLength="186" selectionOffset="1298" selectionTopPixel="30"/>
 </editor>
-<editor id="org.eclipse.jdt.ui.ClassFileEditor" name="DefaultRow.class" partName="DefaultRow.class" title="DefaultRow.class" tooltip="org.knime.core.data.def.DefaultRow" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" org.eclipse.jdt.ui.ClassFileIdentifier="=plugin/D:\/App\/Knime_2.7.2\/plugins\/org.knime.core_2.7.2.0036617\/knime-core.jar&lt;org.knime.core.data.def(DefaultRow.class"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNLogRowSpec.java" partName="SVNLogRowSpec.java" path="D:/Git/5/ic-depress/ic-depress-scm-svn/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRowSpec.java" title="SVNLogRowSpec.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRowSpec.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRowSpec.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="54" selectionOffset="137" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.ui.DefaultTextEditor" name="SVNNodeFactory.xml" partName="SVNNodeFactory.xml" path="D:/Git/5/ic-depress/ic-depress-scm-svn/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeFactory.xml" title="SVNNodeFactory.xml" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeFactory.xml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeFactory.xml"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="429" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
@@ -107,7 +104,13 @@
 <view IMemento.internal.id="" org.eclipse.search.lastActivation="0"/>
 </viewState>
 </view>
+<view id="org.eclipse.jdt.callhierarchy.view" partName="Call Hierarchy">
+<viewState search_scope_type="1"/>
+</view>
 <view id="org.eclipse.debug.ui.DebugView" partName="Debug">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
 <viewState/>
 </view>
 <view id="org.eclipse.jdt.ui.PackageExplorer" partName="Package Explorer">
@@ -139,12 +142,6 @@
 </customFilters>
 </viewState>
 </view>
-<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
-<viewState/>
-</view>
-<view id="org.knime.workbench.repository.view.RepositoryView" partName="Node Repository">
-<viewState/>
-</view>
 <view id="org.knime.workbench.explorer.view" partName="KNIME Explorer">
 <viewState>
 <content DisplayedMountIDs="EXAMPLES:LOCAL"/>
@@ -156,12 +153,23 @@
 <view id="org.eclipse.debug.ui.VariableView" partName="Variables">
 <viewState/>
 </view>
-<view id="org.eclipse.ui.views.TaskList" partName="Tasks"/>
+<view id="org.eclipse.ui.views.TaskList" partName="Tasks">
+<viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.completionField" categoryGroup="none" markerContentGenerator="org.eclipse.ui.ide.tasksGenerator" partName="Tasks">
+<columnWidths org.eclipse.ui.ide.completionField="40" org.eclipse.ui.ide.descriptionField="300" org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.priorityField="30" org.eclipse.ui.ide.resourceField="90"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.completionField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.priorityField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.descriptionField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.locationField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
+</viewState>
+</view>
 <view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.debug.ui.DebugView" activePerspective="org.eclipse.debug.ui.DebugPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.debug.ui.DebugPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.knime.workbench.ui.perspective.ModellerPerspectiveFactory" id="org.knime.workbench.ui.ModellerPerspective" label="KNIME"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -195,67 +203,47 @@
 <view id="org.eclipse.jdt.junit.ResultView"/>
 <view id="org.eclipse.search.ui.views.SearchView"/>
 <view id="org.eclipse.ui.views.ContentOutline"/>
-<fastViewBars>
-<fastViewBar fastViewLocation="16384" id="org.eclipse.ui.internal.ViewStack@4a20cace" orientation="512" selectedTabId="org.knime.workbench.repository.view.RepositoryView" style="0">
-<fastViews>
-<view id="org.knime.workbench.repository.view.RepositoryView" ratio="0.3"/>
+<fastViewBars>&#x0A;<fastViewBar fastViewLocation="16384" id="org.eclipse.ui.internal.ViewStack@4a20cace" orientation="512" selectedTabId="org.knime.workbench.repository.view.RepositoryView" style="0">&#x0A;<fastViews>&#x0A;<view id="org.knime.workbench.repository.view.RepositoryView" ratio="0.3"/>
 </fastViews>
 </fastViewBar>
 </fastViewBars>
 <viewLayoutRec closeable="false" id="org.knime.workbench.repository.view.RepositoryView"/>
-<layout>
-<mainWindow>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@6e0212ce">
-<folder activePageID="org.eclipse.jdt.ui.PackageExplorer" appearance="2" expanded="2">
-<page content="org.knime.workbench.explorer.view" label="KNIME Explorer"/>
+<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.ui.internal.ViewStack@6e0212ce">&#x0A;<folder activePageID="org.eclipse.jdt.ui.PackageExplorer" appearance="2" expanded="2">&#x0A;<page content="org.knime.workbench.explorer.view" label="KNIME Explorer"/>
 <page content="org.eclipse.jdt.ui.PackageExplorer" label="Package Explorer"/>
 <page content="org.knime.workbench.ui.navigator.KnimeResourceNavigator" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 <part id="1"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@df419b9" ratio="0.75" ratioLeft="750" ratioRight="250" relationship="2" relative="org.eclipse.ui.internal.ViewStack@6e0212ce">
-<folder appearance="2" expanded="2">
-<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@df419b9" ratio="0.75" ratioLeft="750" ratioRight="250" relationship="2" relative="org.eclipse.ui.internal.ViewStack@6e0212ce">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.28313252" ratioLeft="376" ratioRight="952" relationship="2" relative="org.eclipse.ui.internal.ViewStack@6e0212ce"/>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@2ee2c067" ratio="0.69871795" ratioLeft="436" ratioRight="188" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@2ee2c067" ratio="0.69871795" ratioLeft="436" ratioRight="188" relationship="4" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.jdt.junit.ResultView" label="JUnit"/>
 <page content="org.eclipse.search.ui.views.SearchView" label="Search"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 <part id="1"/>
 <part id="2"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@4f5347b4" ratio="0.7" ratioLeft="490" ratioRight="210" relationship="2" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@4f5347b4" ratio="0.7" ratioLeft="490" ratioRight="210" relationship="2" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.knime.workbench.helpview" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
 <info part="com.knime.enterprise.client.repositoryview.views.RemoteRepositoryView" ratio="0.54816514" ratioLeft="239" ratioRight="197" relationship="4" relative="org.eclipse.ui.internal.ViewStack@4f5347b4"/>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@6488a31b" ratio="0.2996795" ratioLeft="187" ratioRight="437" relationship="4" relative="org.eclipse.ui.internal.ViewStack@6e0212ce">
-<folder appearance="2" expanded="2">
-<page content="org.knime.workbench.ui.favorites" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@6488a31b" ratio="0.2996795" ratioLeft="187" ratioRight="437" relationship="4" relative="org.eclipse.ui.internal.ViewStack@6e0212ce">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.knime.workbench.ui.favorites" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@4a20cace" ratio="0.19908467" ratioLeft="87" ratioRight="350" relationship="4" relative="org.eclipse.ui.internal.ViewStack@6488a31b">
-<folder appearance="2" expanded="0">
-<page content="org.knime.workbench.repository.view.RepositoryView" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@4a20cace" ratio="0.19908467" ratioLeft="87" ratioRight="350" relationship="4" relative="org.eclipse.ui.internal.ViewStack@6488a31b">&#x0A;<folder appearance="2" expanded="0">&#x0A;<page content="org.knime.workbench.repository.view.RepositoryView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
@@ -295,20 +283,18 @@
 <view id="org.eclipse.ui.views.TaskList"/>
 <view id="org.eclipse.debug.ui.DebugView"/>
 <view id="org.eclipse.debug.ui.VariableView"/>
-<view id="org.eclipse.debug.ui.BreakpointView"/>
+<view id="org.eclipse.jdt.callhierarchy.view"/>
 <view id="org.eclipse.ui.views.ContentOutline"/>
+<view id="org.eclipse.debug.ui.BreakpointView"/>
+<view id="org.eclipse.jdt.ui.PackageExplorer"/>
 <fastViewBars/>
 <layout>
 <mainWindow>
 <info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">
-<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
+<folder appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
-<page content="org.eclipse.jdt.ui.PackageExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="stickyFolderRight" ratio="0.7498122" ratioLeft="998" ratioRight="333" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
@@ -322,6 +308,9 @@
 <folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
+<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
+<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
+<page content="org.eclipse.jdt.callhierarchy.view" label="Call Hierarchy"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.debug.ui.DisplayView" label="LabelNotFound"/>
@@ -329,29 +318,37 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
+<part id="2"/>
+<part id="3"/>
+<part id="4"/>
 </presentation>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.45" ratioLeft="216" ratioRight="264" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
-<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.7498122" ratioLeft="998" ratioRight="333" relationship="2" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
-<page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@3f1482e1" ratio="0.45" ratioLeft="216" ratioRight="264" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder activePageID="org.eclipse.jdt.ui.PackageExplorer" appearance="2" expanded="2">
+<page content="org.eclipse.jdt.ui.PackageExplorer" label="Package Explorer"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.49962434" ratioLeft="665" ratioRight="666" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">
-<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.86715865" ratioLeft="1175" ratioRight="180" relationship="2" relative="org.eclipse.ui.internal.ViewStack@3f1482e1">
+<folder activePageID="org.eclipse.debug.ui.BreakpointView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.debug.ui.BreakpointView" label="Breakpoints"/>
-<page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
-<page content="org.eclipse.debug.ui.RegisterView" label="LabelNotFound"/>
+<page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
 </presentation>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.2497561" ratioLeft="256" ratioRight="769" relationship="2" relative="org.eclipse.ui.internal.ViewStack@3f1482e1"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.49962434" ratioLeft="665" ratioRight="666" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
+<page content="org.eclipse.debug.ui.RegisterView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </mainWindow>
@@ -361,136 +358,168 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.knime.workbench.editor.WorkflowEditor" uri="file:/D:/Git/5/ic-depress/ic-depress-scm-svn/runtime-KNIME/KNIME_project/workflow.knime"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.knime.workbench.editor.WorkflowEditor" path="/KNIME_project/workflow.knime"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/org/impressivecode/depress/scm/svn/SVNNodeModel.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/test/java/org/impressivecode/depress/scm/svn/test/SVNTestRunner.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.pde.ui.manifestEditor" path="/plugin/plugin.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodePlugin.java"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=plugin/D:\/App\/Knime_2.7.2\/plugins\/org.eclipse.osgi_3.7.2.v20120110-1415.jar&lt;org.eclipse.osgi.framework.internal.core(AbstractBundle.class"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeFactory.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.pde.ui.manifestEditor" path="/plugin/plugin.xml"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeLogic.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/Logger.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLocale.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRow.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogLoader.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRowSpec.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeDialog.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeModel.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodePlugin.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeView.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNSettings.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogLoader.java"/>
+<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=plugin/D:\/App\/Knime_2.7.2\/plugins\/org.knime.core_2.7.2.0036617\/knime-core.jar&lt;org.knime.core.node(NodeModel.class"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeFactory.java"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=plugin/D:\/App\/Knime_2.7.2\/plugins\/org.knime.core_2.7.2.0036617\/knime-core.jar&lt;org.knime.core.data.def(DefaultRow.class"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.pde.ui.manifestEditor" path="/plugin/plugin.xml"/>
+<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=plugin/D:\/App\/Knime_2.7.2\/plugins\/org.knime.core_2.7.2.0036617\/knime-core.jar&lt;org.knime.core.data(DataTableSpec.class"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeFactory.xml"/>
 </editors>
-<item historyLabel="2: KNIME_project" index="0"/>
-<item historyLabel="3: KNIME_project" index="1"/>
-<item historyLabel="SVNNodeModel.java" index="2">
+<item historyLabel="SVNLogRowSpec.java" index="0">
+<position/>
+</item>
+<item historyLabel="SVNLogRowSpec.java" index="0">
+<position/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position info="not_deleted" x="2393" y="0"/>
+</item>
+<item historyLabel="NodeModel.class" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="3: KNIME_project" index="1"/>
-<item historyLabel="SVNTestRunner.java" index="3">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position info="not_deleted" x="2389" y="0"/>
 </item>
-<item historyLabel="plugin.xml" index="4">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="SVNLogRowSpec.java" index="0">
+<position/>
 </item>
-<item historyLabel="SVNNodePlugin.java" index="5">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position info="not_deleted" x="2389" y="0"/>
 </item>
-<item historyLabel="AbstractBundle.class" index="6">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position info="not_deleted" x="2499" y="7"/>
 </item>
-<item historyLabel="SVNNodePlugin.java" index="5">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
 </item>
-<item historyLabel="SVNNodeFactory.java" index="7">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
 </item>
-<item historyLabel="org.impressivecode.depress.scm.svn" index="4"/>
-<item historyLabel="org.impressivecode.depress.scm.svn" index="8"/>
-<item historyLabel="SVNNodeLogic.java" index="9">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="SVNLogRowSpec.java" index="0">
+<position/>
 </item>
-<item historyLabel="Logger.java" index="10">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="SVNLogLoader.java" index="2">
+<position info="not_deleted" x="1369" y="0"/>
 </item>
-<item historyLabel="SVNLocale.java" index="11">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
 </item>
-<item historyLabel="SVNLogRow.java" index="12">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SVNLocale.java" index="11">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SVNLogLoader.java" index="13">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SVNLogRow.java" index="12">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SVNLogRowSpec.java" index="14">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SVNNodeDialog.java" index="15">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SVNNodeLogic.java" index="9">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SVNNodeModel.java" index="16">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SVNNodePlugin.java" index="17">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SVNNodeView.java" index="18">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SVNSettings.java" index="19">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="SVNSettings.java" index="19">
-<position info="not_deleted" x="2113" y="0"/>
-</item>
-<item historyLabel="org.impressivecode.depress.scm.svn" index="8"/>
-<item historyLabel="SVNNodeFactory.java" index="20">
+<item historyLabel="SVNNodeFactory.java" index="4">
 <position info="not_deleted" x="1283" y="0"/>
 </item>
-<item historyLabel="SVNNodeModel.java" index="16">
-<position info="not_deleted" x="1906" y="0"/>
+<item historyLabel="SVNLogRowSpec.java" index="0">
+<position/>
 </item>
-<item historyLabel="DefaultRow.class" index="21">
+<item historyLabel="SVNNodeFactory.java" index="4">
+<position info="not_deleted" x="1283" y="0"/>
+</item>
+<item historyLabel="org.impressivecode.depress.scm.svn" index="5"/>
+<item historyLabel="SVNNodeFactory.java" index="4">
+<position info="not_deleted" x="1283" y="0"/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
+</item>
+<item historyLabel="SVNLogRowSpec.java" index="0">
+<position info="not_deleted" x="1215" y="13"/>
+</item>
+<item historyLabel="SVNLogLoader.java" index="2">
+<position info="not_deleted" x="1369" y="0"/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
+</item>
+<item historyLabel="SVNLogRowSpec.java" index="0">
+<position info="not_deleted" x="1566" y="16"/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
+</item>
+<item historyLabel="SVNLogRowSpec.java" index="0">
+<position info="not_deleted" x="2258" y="19"/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position info="not_deleted" x="2696" y="0"/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
+</item>
+<item historyLabel="SVNLogRowSpec.java" index="0">
+<position/>
+</item>
+<item historyLabel="SVNLogLoader.java" index="2">
+<position info="not_deleted" x="1369" y="0"/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position info="not_deleted" x="3053" y="0"/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position info="not_deleted" x="3012" y="0"/>
+</item>
+<item historyLabel="DataTableSpec.class" index="6">
+<position/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position info="not_deleted" x="3022" y="0"/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position info="not_deleted" x="2587" y="0"/>
+</item>
+<item historyLabel="DataTableSpec.class" index="6">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="SVNLogRowSpec.java" index="14">
-<position info="not_deleted" x="2937" y="68"/>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position info="not_deleted" x="2625" y="0"/>
 </item>
-<item historyLabel="SVNNodeModel.java" index="16">
-<position info="not_deleted" x="2927" y="54"/>
+<item historyLabel="SVNLogRowSpec.java" index="0">
+<position info="not_deleted" x="1566" y="16"/>
 </item>
-<item historyLabel="DefaultRow.class" index="21">
+<item historyLabel="SVNLogRowSpec.java" index="0">
+<position info="not_deleted" x="1787" y="0"/>
+</item>
+<item historyLabel="SVNNodeModel.java" index="1">
+<position info="not_deleted" x="2625" y="0"/>
+</item>
+<item historyLabel="SVNLogRowSpec.java" index="0">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="SVNLogRowSpec.java" index="14">
-<position info="not_deleted" x="2937" y="68"/>
+<item historyLabel="SVNNodeFactory.xml" index="7">
+<position info="not_deleted" x="429" y="0"/>
 </item>
-<item historyLabel="SVNLogRowSpec.java" index="14">
-<position info="not_deleted" x="2841" y="0"/>
-</item>
-<item active="true" historyLabel="SVNLogRowSpec.java" index="14">
-<position info="not_deleted" x="2620" y="0"/>
+<item active="true" historyLabel="SVNLogRowSpec.java" index="0">
+<position info="not_deleted" x="0" y="0"/>
 </item>
 </navigationHistory>
 </page>
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
-<trimArea IMemento.internal.id="16384">
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@4a20cace"/>
-</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 </trimArea>
@@ -501,6 +530,24 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="SVNNodeFactory.xml" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeFactory.xml">
+<persistable path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeFactory.xml"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNLogRowSpec.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRowSpec.java">
+<persistable path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRowSpec.java"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="DataTableSpec.class" tooltip="org.knime.core.data.DataTableSpec">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=plugin/D:\/App\/Knime_2.7.2\/plugins\/org.knime.core_2.7.2.0036617\/knime-core.jar&lt;org.knime.core.data(DataTableSpec.class"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="WorkflowManager.class" tooltip="org.knime.core.node.workflow.WorkflowManager">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=plugin/D:\/App\/Knime_2.7.2\/plugins\/org.knime.core_2.7.2.0036617\/knime-core.jar&lt;org.knime.core.node.workflow(WorkflowManager.class"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="Display.class" tooltip="org.eclipse.swt.widgets.Display">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=plugin/D:\/App\/Knime_2.7.2\/plugins\/org.eclipse.swt.win32.win32.x86_64_3.7.2.v3740f.jar&lt;org.eclipse.swt.widgets(Display.class"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="NodeModel.class" tooltip="org.knime.core.node.NodeModel">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=plugin/D:\/App\/Knime_2.7.2\/plugins\/org.knime.core_2.7.2.0036617\/knime-core.jar&lt;org.knime.core.node(NodeModel.class"/>
+</file>
 <file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="DefaultRow.class" tooltip="org.knime.core.data.def.DefaultRow">
 <persistable org.eclipse.jdt.ui.ClassFileIdentifier="=plugin/D:\/App\/Knime_2.7.2\/plugins\/org.knime.core_2.7.2.0036617\/knime-core.jar&lt;org.knime.core.data.def(DefaultRow.class"/>
 </file>
@@ -521,30 +568,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNNodeView.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeView.java">
 <persistable path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeView.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNNodePlugin.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodePlugin.java">
-<persistable path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodePlugin.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNNodeModel.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeModel.java">
-<persistable path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeModel.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNNodeDialog.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeDialog.java">
-<persistable path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNNodeDialog.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNLogRowSpec.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRowSpec.java">
-<persistable path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRowSpec.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNLogLoader.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogLoader.java">
-<persistable path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogLoader.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNLogRow.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRow.java">
-<persistable path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLogRow.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SVNLocale.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLocale.java">
-<persistable path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/SVNLocale.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Logger.java" tooltip="plugin/src/main/java/org/impressivecode/depress/scm/svn/Logger.java">
-<persistable path="/plugin/src/main/java/org/impressivecode/depress/scm/svn/Logger.java"/>
 </file>
 </mruList>
 </workbench>

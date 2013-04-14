@@ -7,7 +7,6 @@ import org.knime.core.data.DataColumnDomainCreator;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
-import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.RowKey;
 import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.StringCell;
@@ -58,35 +57,7 @@ public class SVNLogRowSpec {
 		return result;
 	}
 
-	public static DataTableSpec[] createTableSpec() {
-
-		DataTableSpec[] result = new DataTableSpec[columns.size()];
-
-		int index = -1;
-		for (String item : columns) {
-			result[++index] = stringTableSpec(item);
-		}
-
-		return result;
-	}
-
-	public static DataColumnSpec stringColumnSpec(String inName) {
-
-		DataColumnSpecCreator colSpecCreator = new DataColumnSpecCreator(
-				inName, StringCell.TYPE);
-
-		DataColumnDomainCreator domainCreator = new DataColumnDomainCreator(
-				new StringCell(""), new StringCell(""));
-
-		colSpecCreator.setDomain(domainCreator.createDomain());
-
-		return colSpecCreator.createSpec();
-	}
-
-	private static DataTableSpec stringTableSpec(String inName) {
-		return new DataTableSpec(stringColumnSpec(inName));
-	}
-
+	
 	public static DataRow createRow(int rowId, SVNLogRow inRow) {
 
 		DataCell[] cells = new DataCell[columns.size()];
@@ -101,5 +72,18 @@ public class SVNLogRowSpec {
 		cells[7] = inRow.getUid();
 
 		return new DefaultRow(new RowKey(Integer.toString(rowId)), cells);
+	}
+
+	public static DataColumnSpec stringColumnSpec(String inName) {
+
+		DataColumnSpecCreator colSpecCreator = new DataColumnSpecCreator(
+				inName, StringCell.TYPE);
+
+		DataColumnDomainCreator domainCreator = new DataColumnDomainCreator(
+				new StringCell(""), new StringCell(""));
+
+		colSpecCreator.setDomain(domainCreator.createDomain());
+
+		return colSpecCreator.createSpec();
 	}
 }

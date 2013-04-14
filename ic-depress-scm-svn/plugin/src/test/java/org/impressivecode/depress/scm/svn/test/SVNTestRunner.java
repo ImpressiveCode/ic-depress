@@ -24,6 +24,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 public class SVNTestRunner {
 
+	private static void end(Class<?> inClass) {
+		System.out.println(inClass.getName() + " End");
+	}
+
 	public static void main(String[] args) {
 
 		start(SVNTestRunner.class);
@@ -31,14 +35,6 @@ public class SVNTestRunner {
 		runTestClass(SVNLogLoaderTest.class);
 
 		end(SVNTestRunner.class);
-	}
-
-	private static void end(Class<?> inClass) {
-		System.out.println(inClass.getName() + " End");
-	}
-
-	private static void start(Class<?> inClass) {
-		System.out.println(inClass.getName() + " Start");
 	}
 
 	private static void runTestClass(Class<?> inTestClass) {
@@ -52,5 +48,9 @@ public class SVNTestRunner {
 		}
 
 		end(inTestClass);
+	}
+
+	private static void start(Class<?> inClass) {
+		System.out.println(inClass.getName() + " Start");
 	}
 }

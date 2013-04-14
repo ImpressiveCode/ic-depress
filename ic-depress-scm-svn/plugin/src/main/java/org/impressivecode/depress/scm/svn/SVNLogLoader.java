@@ -30,7 +30,7 @@ public class SVNLogLoader {
 
 	}
 
-	public void loadXmlL(String inPath, String inIsueMarker, String inPackage,
+	public void loadXml(String inPath, String inIsueMarker, String inPackage,
 			IReadProgressListener inProgress) {
 
 		Logger.instance().warn("Start loading..");

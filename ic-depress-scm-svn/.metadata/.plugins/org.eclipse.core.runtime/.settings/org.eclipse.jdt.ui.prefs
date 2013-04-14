@@ -1,4 +1,4 @@
-content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"/>
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="org.impressivecode.depress.scm.svn.SVNNodeModel$RowReader"><rhs name\="org.impressivecode.depress.scm.svn.SVNNodeModel$RowReader"/></lhs><lhs name\="org.knime.core.node.port.PortObjectSpec"><rhs name\="org.knime.core.data.DataTableSpec"/></lhs><lhs name\="java.lang.Iterable"><rhs name\="org.knime.core.data.DataTableSpec"/></lhs></history>
 content_assist_number_of_computers=13
 content_assist_proposals_background=255,255,255
 content_assist_proposals_foreground=0,0,0

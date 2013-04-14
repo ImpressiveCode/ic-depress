@@ -26,18 +26,18 @@ public class SVNLogLoaderTest {
 	}
 
 	@Test
-	public void testLoadXmlPath() {
-		loader.loadXmlL(null, "", "", logic);
-	}
-
-	@Test
 	public void testLoadXmlIssue() {
-		loader.loadXmlL(TestSettings.xmlTestSvnLogPath, null, "", logic);
+		loader.loadXml(TestSettings.xmlTestSvnLogPath, null, "", logic);
 	}
 
 	@Test
 	public void testLoadXmlPackage() {
-		loader.loadXmlL(TestSettings.xmlTestSvnLogPath, "", null, logic);
+		loader.loadXml(TestSettings.xmlTestSvnLogPath, "", null, logic);
+	}
+
+	@Test
+	public void testLoadXmlPath() {
+		loader.loadXml(null, "", "", logic);
 	}
 
 }
