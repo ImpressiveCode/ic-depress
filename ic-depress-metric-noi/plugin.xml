@@ -6,8 +6,8 @@
       <node
             category-path="depress"
             expert-flag="false"
-            factory-class="org.impressivecode.depress.metric.noi.NumberOfIssuesMetricNodeFactory"
-            id="org.impressivecode.depress.metric.po">
+            factory-class="org.impressivecode.depress.metric.im.IssuesMetricNodeFactory"
+            id="org.impressivecode.depress.metric.im">
       </node>
 </extension>
 </plugin>
