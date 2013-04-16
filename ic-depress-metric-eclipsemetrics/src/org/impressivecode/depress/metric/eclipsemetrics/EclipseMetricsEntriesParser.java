@@ -45,65 +45,71 @@ import com.google.common.base.Preconditions;
  */
 public class EclipseMetricsEntriesParser {
     private static final NodeLogger LOGGER = NodeLogger.getLogger(EclipseMetricsEntriesParser.class);
-    
+
     public List<EclipseMetricsEntry> parseEntries(final String path) throws ParserConfigurationException, SAXException,
-    IOException {
+            IOException {
         Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(path);
-        
-        NodeList metricsList = getValuesNodes(doc);
-        Map<String,EclipseMetricsEntry> eclipsemetricsEntries = new LinkedHashMap<String,EclipseMetricsEntry>();
-        
-        for (int i = 0; i < metricsList.getLength(); i++) {
-            Node item = metricsList.item(i);
 
-            if (!isPerType(item)) {
+        NodeList metricsList = getAllMetricsNodes(doc);
+        Map<String, EclipseMetricsEntry> eclipsemetricsEntriesMap = new LinkedHashMap<String, EclipseMetricsEntry>();
+
+        for (int i = 0; i < metricsList.getLength(); i++) {
+            Node metricNode = metricsList.item(i);
+
+            if (!isNodePerType(metricNode)) {
                 continue;
             }
-            
-            String metricId = ((Element) item.getParentNode()).getAttribute("id");
-            Map<String,Double> classesAndValues = parseMetricNode(item);
-            for (Map.Entry<String,Double> data : classesAndValues.entrySet()) {
-                String className = data.getKey();
-                Double metricValue = data.getValue();
-                if (eclipsemetricsEntries.containsKey(className)) {
-                    EclipseMetricsEntry entry = eclipsemetricsEntries.get(className);
-                    entry.setValue(metricId, metricValue);
-                } else {
-                    EclipseMetricsEntry entry = new EclipseMetricsEntry();
-                    entry.setClassName(className);
-                    entry.setValue(metricId, metricValue);
-                    eclipsemetricsEntries.put(className, entry);
-                }
+            updateEclipseMetricsEntriesMap(eclipsemetricsEntriesMap, metricNode);
+        }
+        return new ArrayList<EclipseMetricsEntry>(eclipsemetricsEntriesMap.values());
+    }
+
+    private void updateEclipseMetricsEntriesMap(Map<String, EclipseMetricsEntry> eclipsemetricsEntriesMap, Node metricNode) {
+        String metricId = parseMetricId(metricNode);
+        Map<String, Double> metricClassesAndValuesMap = parseMetricNode(metricNode);
+        for (Map.Entry<String, Double> data : metricClassesAndValuesMap.entrySet()) {
+            String className = data.getKey();
+            Double metricValue = data.getValue();
+            if (eclipsemetricsEntriesMap.containsKey(className)) {
+                EclipseMetricsEntry entry = eclipsemetricsEntriesMap.get(className);
+                entry.setValue(metricId, metricValue);
+            } else {
+                EclipseMetricsEntry entry = new EclipseMetricsEntry();
+                entry.setClassName(className);
+                entry.setValue(metricId, metricValue);
+                eclipsemetricsEntriesMap.put(className, entry);
             }
         }
-        return new ArrayList<EclipseMetricsEntry>(eclipsemetricsEntries.values());
     }
-    
-    private boolean isPerType(final Node item) {
+
+    private boolean isNodePerType(final Node item) {
         return ((Element) item).getAttribute("per").equals("type");
     }
-    
-    private NodeList getValuesNodes(final Document doc) {
+
+    private NodeList getAllMetricsNodes(final Document doc) {
         return doc.getElementsByTagName("Values");
     }
-    
-    private Map<String,Double> parseMetricNode(Node node) {
-        Map<String,Double> values = new LinkedHashMap<String,Double>();
-        NodeList nodeList = node.getChildNodes();
-        for (int i=0; i<nodeList.getLength(); i++) {
-            Node childItem = nodeList.item(i);
+
+    private String parseMetricId(Node item) {
+        return ((Element) item.getParentNode()).getAttribute("id");
+    }
+
+    private Map<String, Double> parseMetricNode(Node metricNode) {
+        Map<String, Double> values = new LinkedHashMap<String, Double>();
+        NodeList childNodeList = metricNode.getChildNodes();
+        for (int i = 0; i < childNodeList.getLength(); i++) {
+            Node childItem = childNodeList.item(i);
             if (childItem.getNodeName().equals("Value")) {
                 Element elem = (Element) childItem;
                 String name = elem.getAttribute("name");
-                String source = elem.getAttribute("source").replace(".java","");
+                String source = elem.getAttribute("source").replace(".java", "");
                 String packageName = elem.getAttribute("package");
-                //TODO decide how represent internal static classes
-                String className = "(default package)".equals(packageName) ? name : packageName+"."+source;
+                String className = "(default package)".equals(packageName) ? name : packageName + "." + source;
                 if (!name.equals(source)) {
-                    className += "$"+name;
+                    className += "$" + name;
                 }
                 try {
                     Double value = Double.parseDouble(elem.getAttribute("value").replace(",", "."));
