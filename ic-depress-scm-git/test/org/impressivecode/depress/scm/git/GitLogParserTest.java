@@ -18,14 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package org.impressivecode.depress.scm.git;
 
-import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.*;
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /*
@@ -38,19 +36,14 @@ import org.junit.Test;
 public class GitLogParserTest {
 
     static String logFilePath = "test/org/impressivecode/depress/scm/git/git-test-log.txt";
+    GitLogParser parser;
+    List<GitCommit> commits;
+    GitCommit specificCommit;
 
-    @Test(expected = FileNotFoundException.class)
-    public void shouldThrowFileNotFound() throws Exception {
-        new GitLogParser("fake_path");
-    }
-
-    @Test
+    @Before
     public void shouldParse() throws Exception {
-        GitLogParser parser = new GitLogParser(logFilePath);
-        List<GitCommit> commits = parser.parse();
-        assertEquals(50, commits.size());
-        
-        GitCommit commit = null;
+        parser = new GitLogParser(logFilePath);
+        commits = parser.parse();
 
         // Find commit which we'll use for some more testing:
         /*
@@ -77,33 +70,65 @@ public class GitLogParserTest {
         :000000 100644 0000000000000000000000000000000000000000 475ab374c18ec0446574f29c61dc7ef711704164 A  ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java
          */
 
-        Set<String> markers = new HashSet<String>();
-        markers.add("9");
-        
         for (GitCommit c : commits) {
             if (c.getId().equals("45a2beca9d97777733e1a472e54c003551b7d9b1")) {
-                commit = c;
+                specificCommit = c;
                 break;
             }
         }
 
-        assertEquals(DateFormat.getDateTimeInstance().parse("2013-03-18 20:49:14 +0100"), commit.getDate());
-        assertEquals("Marek Majchrzak", commit.getAuthor());
-        assertEquals("#9 base version of PO Metric introduced", commit.getMessage());
+        assertNotNull(specificCommit);
+        assertEquals(GitCommit.class, specificCommit.getClass());
+    }
 
-        assertEquals(15, commit.files.size());
+    @After
+    public void closeParser() throws Exception {
+        parser.close();
+    }
 
-        assertEquals("ic-depress-metric-po/META-INF/MANIFEST.MF", commit.files.get(0).getPath());
-        assertEquals(GitCommitFileOperation.Modified, commit.files.get(0).getOperation());
+    @Test(expected = FileNotFoundException.class)
+    public void shouldThrowFileNotFound() throws Exception {
+        new GitLogParser("fake_path");
+    }
 
-        assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java", commit.files.get(1).getPath());
-        assertEquals(GitCommitFileOperation.Added, commit.files.get(1).getOperation());
+    @Test
+    public void shouldCountCommits() throws Exception {
+        assertEquals(50, commits.size());
+    }
 
-        assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java", commit.files.get(3).getPath());
-        assertEquals(GitCommitFileOperation.Deleted, commit.files.get(3).getOperation());
+    @Test
+    public void shouldSpecificCommitDateMatch() throws Exception {
+        assertEquals(DateFormat.getDateTimeInstance().parse("2013-03-18 20:49:14 +0100"), specificCommit.getDate());
+    }
 
-        assertEquals("ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java", commit.files.get(14).getPath());
-        assertEquals(GitCommitFileOperation.Added, commit.files.get(14).getOperation());
-        
+    @Test
+    public void shouldSpecificCommitAuthorMatch() throws Exception {
+        assertEquals("Marek Majchrzak", specificCommit.getAuthor());
+    }
+
+    @Test
+    public void shouldSpecificCommitMessageMatch() throws Exception {
+        assertEquals("#9 base version of PO Metric introduced", specificCommit.getMessage());
+    }
+
+    @Test
+    public void shouldSpecificCommitFilesSizeMatch() throws Exception {
+        assertEquals(15, specificCommit.files.size());
+    }
+
+    @Test
+    public void shouldSpecificCommitFilesMatch() throws Exception {
+        assertEquals("ic-depress-metric-po/META-INF/MANIFEST.MF", specificCommit.files.get(0).getPath());
+        assertEquals(GitCommitFileOperation.Modified, specificCommit.files.get(0).getOperation());
+
+        assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java", specificCommit.files.get(1).getPath());
+        assertEquals(GitCommitFileOperation.Added, specificCommit.files.get(1).getOperation());
+
+        assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java", specificCommit.files.get(3).getPath());
+        assertEquals(GitCommitFileOperation.Deleted, specificCommit.files.get(3).getOperation());
+
+        assertEquals("ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java", specificCommit.files.get(14).getPath());
+        assertEquals(GitCommitFileOperation.Added, specificCommit.files.get(14).getOperation());
+
     }
 }
