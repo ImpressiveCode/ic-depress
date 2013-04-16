@@ -26,6 +26,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.junit.Test;
 import org.xml.sax.SAXException;
+
 /**
  * 
  * @author Mateusz Kutyba, Wroclaw University of Technology
