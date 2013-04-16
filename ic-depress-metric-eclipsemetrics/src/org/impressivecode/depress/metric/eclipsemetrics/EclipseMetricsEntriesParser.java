@@ -98,9 +98,13 @@ public class EclipseMetricsEntriesParser {
             if (childItem.getNodeName().equals("Value")) {
                 Element elem = (Element) childItem;
                 String name = elem.getAttribute("name");
+                String source = elem.getAttribute("source").replace(".java","");
                 String packageName = elem.getAttribute("package");
                 //TODO decide how represent internal static classes
-                String className = "(default package)".equals(packageName) ? name : packageName+"."+name;
+                String className = "(default package)".equals(packageName) ? name : packageName+"."+source;
+                if (!name.equals(source)) {
+                    className += "$"+name;
+                }
                 try {
                     Double value = Double.parseDouble(elem.getAttribute("value").replace(",", "."));
                     values.put(className, value);
