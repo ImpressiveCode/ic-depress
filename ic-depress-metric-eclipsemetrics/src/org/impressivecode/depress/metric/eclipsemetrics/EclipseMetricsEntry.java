@@ -127,12 +127,12 @@ public class EclipseMetricsEntry {
     @Override
     public String toString() {
         return String
-                .format("EclipseMetricsEntry [className=%s, numberOfOverriddenMethods=%s, numberOfAttributes=%s, " +
-                		"numberOfChildren=%s, numberOfMethods=%s, depthOfInheritanceTree=%s, lackOfCohesionOfMethods=%s, " +
-                		"numberOfStaticMethods=%s, specializationIndex=%s, weightedMethodsPerClass=%s, numberOfStaticAttributes=%s]",
-                        className, numberOfOverriddenMethods, numberOfAttributes, numberOfChildren,
-                        numberOfMethods, depthOfInheritanceTree, lackOfCohesionOfMethods, numberOfStaticMethods,
-                        specializationIndex, weightedMethodsPerClass, numberOfStaticAttributes);
+                .format("EclipseMetricsEntry [className=%s, numberOfOverriddenMethods=%s, numberOfAttributes=%s, "
+                        + "numberOfChildren=%s, numberOfMethods=%s, depthOfInheritanceTree=%s, lackOfCohesionOfMethods=%s, "
+                        + "numberOfStaticMethods=%s, specializationIndex=%s, weightedMethodsPerClass=%s, numberOfStaticAttributes=%s]",
+                        className, numberOfOverriddenMethods, numberOfAttributes, numberOfChildren, numberOfMethods,
+                        depthOfInheritanceTree, lackOfCohesionOfMethods, numberOfStaticMethods, specializationIndex,
+                        weightedMethodsPerClass, numberOfStaticAttributes);
     }
 
     public void setValue(String metricId, Double value) {

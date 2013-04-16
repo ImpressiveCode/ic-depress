@@ -26,8 +26,7 @@ import org.knime.core.node.NodeView;
 /**
  * @author Mateusz Kutyba, Wroclaw University of Technology
  */
-public class EclipseMetricsNodeFactory 
-        extends NodeFactory<EclipseMetricsNodeModel> {
+public class EclipseMetricsNodeFactory extends NodeFactory<EclipseMetricsNodeModel> {
 
     @Override
     public EclipseMetricsNodeModel createNodeModel() {
@@ -55,4 +54,3 @@ public class EclipseMetricsNodeFactory
     }
 
 }
-

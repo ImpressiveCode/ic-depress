@@ -74,8 +74,8 @@ public class EclipseMetricsNodeModel extends NodeModel {
         return transformer.transform(entries, exec);
     }
 
-    private List<EclipseMetricsEntry> parseEntries(final String eclipsemetricsFilePath) throws ParserConfigurationException,
-    SAXException, IOException {
+    private List<EclipseMetricsEntry> parseEntries(final String eclipsemetricsFilePath)
+            throws ParserConfigurationException, SAXException, IOException {
         EclipseMetricsEntriesParser parser = new EclipseMetricsEntriesParser();
         return parser.parseEntries(eclipsemetricsFilePath);
     }
@@ -107,13 +107,13 @@ public class EclipseMetricsNodeModel extends NodeModel {
 
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 

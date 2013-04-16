@@ -77,17 +77,15 @@ public class EclipseMetricsTransformer {
     }
 
     private DataCell[] getEclipseMetricsCells(final EclipseMetricsEntry value) {
-        DataCell[] cells = { 
-                doubleOrMissingCell(value.getNumberOfOverriddenMethods()),
-                doubleOrMissingCell(value.getNumberOfAttributes()),
-                doubleOrMissingCell(value.getNumberOfChildren()),
+        DataCell[] cells = { doubleOrMissingCell(value.getNumberOfOverriddenMethods()),
+                doubleOrMissingCell(value.getNumberOfAttributes()), doubleOrMissingCell(value.getNumberOfChildren()),
                 doubleOrMissingCell(value.getNumberOfMethods()),
                 doubleOrMissingCell(value.getDepthOfInheritanceTree()),
                 doubleOrMissingCell(value.getLackOfCohesionOfMethods()),
                 doubleOrMissingCell(value.getNumberOfStaticMethods()),
                 doubleOrMissingCell(value.getSpecializationIndex()),
                 doubleOrMissingCell(value.getWeightedMethodsPerClass()),
-                doubleOrMissingCell(value.getNumberOfStaticAttributes())};
+                doubleOrMissingCell(value.getNumberOfStaticAttributes()) };
         return cells;
     }
 

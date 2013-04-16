@@ -32,6 +32,6 @@
     </fullDescription>
     
     <ports>
-        <outPort index="0" name="Coverage Table">Datatable just read from the Eclipse Metrics file.</outPort>
+        <outPort index="0" name="Metrics Table">Datatable just read from the Eclipse Metrics file.</outPort>
     </ports>
 </knimeNode>

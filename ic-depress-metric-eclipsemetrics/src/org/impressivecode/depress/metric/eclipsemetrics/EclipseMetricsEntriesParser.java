@@ -67,7 +67,8 @@ public class EclipseMetricsEntriesParser {
         return new ArrayList<EclipseMetricsEntry>(eclipsemetricsEntriesMap.values());
     }
 
-    private void updateEclipseMetricsEntriesMap(Map<String, EclipseMetricsEntry> eclipsemetricsEntriesMap, Node metricNode) {
+    private void updateEclipseMetricsEntriesMap(Map<String, EclipseMetricsEntry> eclipsemetricsEntriesMap,
+            Node metricNode) {
         String metricId = parseMetricId(metricNode);
         Map<String, Double> metricClassesAndValuesMap = parseMetricNode(metricNode);
         for (Map.Entry<String, Double> data : metricClassesAndValuesMap.entrySet()) {
