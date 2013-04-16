@@ -34,20 +34,22 @@ import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.collection.CollectionCellFactory;
 import org.knime.core.data.collection.SetCell;
 import org.knime.core.data.def.DefaultRow;
+import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class GitTableFactory extends SCMAdapterTableFactory {
-    
-    private final static int COLUMNS = 5;
+
+    private final static int COLUMNS = 6;
     private final static String ACTION_COLNAME  = "Action";
     private final static String MESSAGE_COLNAME = "Message";
     private final static String PATH_COLNAME    = "Path";
     private final static String DATE_COLNAME    = "Date";
     private final static String UID_COLNAME     = "Commit ID";
-    
+    private final static String CHURN_COLNAME   = "Churn";
+
     public static DataTableSpec createDataColumnSpec() {
         DataTableSpec baseSpec = SCMAdapterTableFactory.createDataColumnSpec();
         DataColumnSpec[] allColSpecs = new DataColumnSpec[COLUMNS + baseSpec.getNumColumns()];
@@ -56,20 +58,21 @@ public class GitTableFactory extends SCMAdapterTableFactory {
         for (; i < baseSpec.getNumColumns(); i++) {
             allColSpecs[i] = baseSpec.getColumnSpec(i);
         }
-        
+
         allColSpecs[i++] = new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec();
         allColSpecs[i++] = new DataColumnSpecCreator(MESSAGE_COLNAME, StringCell.TYPE).createSpec();
         allColSpecs[i++] = new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec();
         allColSpecs[i++] = new DataColumnSpecCreator(DATE_COLNAME, StringCell.TYPE).createSpec();
         allColSpecs[i++] = new DataColumnSpecCreator(UID_COLNAME, StringCell.TYPE).createSpec();
-        
+        allColSpecs[i++] = new DataColumnSpecCreator(CHURN_COLNAME, IntCell.TYPE).createSpec();
+
         return new DataTableSpec(allColSpecs);
     }
-    
-    static DataRow createTableRow(final String className, final Set<String> markers, final String author, final String operation, 
-            final String message, final String path, final String commitDate, final String uid, final String commitID) {
-        
-        DataCell[] cells = new DataCell[8];
+
+    static DataRow createTableRow(final String className, final Set<String> markers, final String author, final String operation,
+            final String message, final String path, final String commitDate, final String uid, final String commitID, final int churn) {
+
+        DataCell[] cells = new DataCell[9];
         cells[0] = prepareStringCell(className);
         cells[1] = prepareSetCell(markers);
         cells[2] = prepareStringCell(author);
@@ -78,14 +81,19 @@ public class GitTableFactory extends SCMAdapterTableFactory {
         cells[5] = prepareStringCell(path);
         cells[6] = prepareStringCell(commitDate);
         cells[7] = prepareStringCell(commitID);
+        cells[8] = prepareIntCell(churn);
         DataRow row = new DefaultRow(uid, cells);
         return row;
     }
-    
+
     private static StringCell prepareStringCell(String value){
         return new StringCell(value);
     }
-    
+
+    private static IntCell prepareIntCell(int value) {
+        return new IntCell(value);
+    }
+
     private static SetCell prepareSetCell(Set<String> values){
         Set<StringCell> cellValues = new HashSet<StringCell>();
         for (String value : values){
