@@ -11,7 +11,6 @@ import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.collection.CollectionCellFactory;
 import org.knime.core.data.collection.SetCell;
-import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 
 public class GitTableFactoryTest {
@@ -20,31 +19,30 @@ public class GitTableFactoryTest {
     public void shouldCreateDataColumnSpec() {
         DataTableSpec colSpec = GitTableFactory.createDataColumnSpec();
         assertNotNull(colSpec);
-        assertEquals(9, colSpec.getNumColumns());
+        assertEquals(8, colSpec.getNumColumns());
     }
-
-
+    
+    
     @Test
     public void shouldCreateTableRow() {
         HashSet<String> markers = new HashSet<String>();
         markers.add("1");
-
+        
         Set<StringCell> markersCell = new HashSet<StringCell>();
         markersCell.add(new StringCell("1"));
-
-        DataRow row = GitTableFactory.createTableRow("org.scm.git.test", markers, "Author",
-                "Added", "#1 Test commit", "org/scm/git/test.java", "2013-03-28 23:05:00", "dfsdf2334", "342424232", -435);
+        
+        DataRow row = GitTableFactory.createTableRow("org.scm.git.test", markers, "Author", 
+                "Added", "#1 Test commit", "org/scm/git/test.java", "2013-03-28 23:05:00", "dfsdf2334", "342424232");
         assertEquals(row.getKey().getString(),"dfsdf2334");
-        assertEquals(row.getCell(0), new StringCell("org.scm.git.test"));
-        assertEquals(row.getCell(1), CollectionCellFactory.createSetCell(markersCell));
-        assertEquals(row.getCell(2), new StringCell("Author"));
-        assertEquals(row.getCell(3), new StringCell("Added"));
-        assertEquals(row.getCell(4), new StringCell("#1 Test commit"));
-        assertEquals(row.getCell(5), new StringCell("org/scm/git/test.java"));
-        assertEquals(row.getCell(6), new StringCell("2013-03-28 23:05:00"));
-        assertEquals(row.getCell(7), new StringCell("342424232"));
-        assertEquals(row.getCell(8), new IntCell(-435));
-        assertEquals(row.getKey().getString(), "dfsdf2334");
+        assertEquals((StringCell)row.getCell(0), new StringCell("org.scm.git.test"));
+        assertEquals((SetCell)row.getCell(1), CollectionCellFactory.createSetCell(markersCell));
+        assertEquals((StringCell)row.getCell(2), new StringCell("Author"));
+        assertEquals((StringCell)row.getCell(3), new StringCell("Added"));
+        assertEquals((StringCell)row.getCell(4), new StringCell("#1 Test commit"));
+        assertEquals((StringCell)row.getCell(5), new StringCell("org/scm/git/test.java"));
+        assertEquals((StringCell)row.getCell(6), new StringCell("2013-03-28 23:05:00"));
+        assertEquals((StringCell)row.getCell(7), new StringCell("342424232"));
+        assertEquals((String)row.getKey().getString(), "dfsdf2334");
     }
 
 }
