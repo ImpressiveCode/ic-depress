@@ -28,49 +28,33 @@ import org.knime.core.node.NodeView;
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
  */
-public class GitNodeFactory 
-        extends NodeFactory<GitNodeModel> {
+public class GitNodeFactory
+extends NodeFactory<GitNodeModel> {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public GitNodeModel createNodeModel() {
         return new GitNodeModel();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getNrNodeViews() {
         return 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public NodeView<GitNodeModel> createNodeView(final int viewIndex,
             final GitNodeModel nodeModel) {
-        return new GitNodeView(nodeModel);
+        throw new IllegalStateException("View not supported");
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean hasDialog() {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public NodeDialogPane createNodeDialogPane() {
         return new GitNodeDialog();
     }
-
 }
 
