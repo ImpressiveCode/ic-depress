@@ -1,3 +1,170 @@
+5aacbd6f76918010fdcad28ccebeb2836e0eff26
+2013-04-16 23:15:13 +0200
+Tomasz Kuzemko
+Refactored GitLogParserTest - split into more tests
+
+5aacbd6f76918010fdcad28ccebeb2836e0eff26
+:100644 100644 6db9beaf7761976a8f502a75bd796f3b44ec60e3 dbf16fddedf60134c8729eb0df2f6f691127de2b M	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitLogParserTest.java
+58	33	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitLogParserTest.java
+
+1b6abca22e42c26f4c333238e7001caf60f4512a
+2013-04-07 12:52:56 +0200
+Sławek Kapłoński
+#12 Method to get markers from git commit is now in GitNodeModel class not in GitCommit class
+
+1b6abca22e42c26f4c333238e7001caf60f4512a
+:100644 100644 dd39f0293509bb232482b4163d35cee0f7d4c856 145b830a21602e18c9e12e2eb1e8097bc1be947f M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommit.java
+:100644 100644 0dac4634c89d8db33a402a88e6fc632537bdfa15 f76e4c1f7a2b519284f722be33d27b137bd73b01 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitLogParser.java
+:100644 100644 bbe2c8fabd1c34dabfaaeaefcdd86658e75ccd69 c4499fcdcceb684e15069c11719fd05e5d5c866b M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+:100644 100644 1c85efe6fcd025e28ca3a17ee2cab082662a7325 6db9beaf7761976a8f502a75bd796f3b44ec60e3 M	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitLogParserTest.java
+1	14	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommit.java
+3	22	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitLogParser.java
+21	2	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+0	2	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitLogParserTest.java
+
+aae82583cd1eadccfb9c4a975b66f81bf952c72b
+2013-04-07 12:37:59 +0200
+Sławek Kapłoński
+#12 Name of output column UID was changed to 'Commit ID' and now there is stored there commit ID (not row ID)
+
+aae82583cd1eadccfb9c4a975b66f81bf952c72b
+:100644 100644 0dd26df87bb599b0bb2dece6e8376f901e3b5162 8e79de8d44c540fd007b3901eaeeb3ef56737991 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
+1	1	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
+
+d6a9a0d76030342c6194b686c9dec576d7da2d7d
+2013-04-07 12:37:31 +0200
+Sławek Kapłoński
+#12 Name of output column UID was changed to 'Commit ID' and now there is stored there commit ID (not row ID)
+
+d6a9a0d76030342c6194b686c9dec576d7da2d7d
+:100644 100644 ddf0942455c5b2c787fb535aa46ece5c2f5ad0fe bbe2c8fabd1c34dabfaaeaefcdd86658e75ccd69 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+:100644 100644 14251a50f1be222ca60dd28e032c1052f9da0811 0dd26df87bb599b0bb2dece6e8376f901e3b5162 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
+:100644 100644 fa24c4b99779c69ea8eb713b792f64a62696c100 6da945b4806f79c6d9b5881c4c426cac615c5ef1 M	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitTableFactoryTest.java
+4	3	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+3	3	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
+3	2	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitTableFactoryTest.java
+
+7c9df61f7ebbc7dec6a6248e07f1ecfd0b4830c2
+2013-04-05 21:56:58 +0200
+Sławek Kapłoński
+#12 Now on output are only files with java class. All other files are not included in node output
+
+7c9df61f7ebbc7dec6a6248e07f1ecfd0b4830c2
+:100644 100644 14594f4c7f29e83e7daee29ba3482321e873b399 ddf0942455c5b2c787fb535aa46ece5c2f5ad0fe M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+17	13	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+
+b6ada3f7694a2079f99fc00826eebb794283dbba
+2013-04-05 21:55:17 +0200
+Sławek Kapłoński
+#12 Fixed error with no view in Git-scm Node
+
+b6ada3f7694a2079f99fc00826eebb794283dbba
+:100644 100644 931c9f7d0885474d7f84ef4684f232138648dc80 ff4cda32a1a538b46d6f7652486c6d844137ea3a M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.java
+1	1	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.java
+
+e1535cbd01794e1cd1d081e4d1b080558db70906
+2013-04-05 00:27:43 +0200
+Sławek Kapłoński
+#12 Class name is now taken from path to file and package name given in Node settings
+
+e1535cbd01794e1cd1d081e4d1b080558db70906
+:100644 100644 0aad45197ec9fea5aefd2a580ff19262ab111ccc 14594f4c7f29e83e7daee29ba3482321e873b399 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+:100644 100644 2e5456f1e92b0ea1cf161145d6d5e9a5e4399964 fa24c4b99779c69ea8eb713b792f64a62696c100 M	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitTableFactoryTest.java
+20	2	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+2	2	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitTableFactoryTest.java
+
+dbc7cfd7c6ff2d8b2980c3f8579da6a80a8d626d
+2013-04-04 23:42:36 +0200
+Sławek Kapłoński
+#12 Fixed error that only one file from evfery commit was inputed to output array. Now all files are correctly outputed by Node.
+
+dbc7cfd7c6ff2d8b2980c3f8579da6a80a8d626d
+:100644 100644 94e803ffef88170f0e918645f6a8ace0c95bfda1 0aad45197ec9fea5aefd2a580ff19262ab111ccc M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+38	16	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+
+b7aee63dd7ca8603bcc34c80486eae86cbb06b94
+2013-04-04 00:41:01 +0200
+Sławek Kapłoński
+#12 Generating set of markers for each commit from commit's log now working
+
+b7aee63dd7ca8603bcc34c80486eae86cbb06b94
+:100644 100644 81c83ae5c640fb133602aeda9b24266109e6655e dd39f0293509bb232482b4163d35cee0f7d4c856 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommit.java
+:100644 100644 29472a6f75f6388981de92c19a92c14236a75d64 0dac4634c89d8db33a402a88e6fc632537bdfa15 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitLogParser.java
+:100644 100644 247e0f3c3973bd977a4855eaba13253eb19f4cc9 94e803ffef88170f0e918645f6a8ace0c95bfda1 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+:100644 100644 87e717a00a3a17c16717bb917ad239bf42dc5077 14251a50f1be222ca60dd28e032c1052f9da0811 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
+:100644 100644 6c8122587c4a363613c4d696690a8f6a88b8e6cc 1c85efe6fcd025e28ca3a17ee2cab082662a7325 M	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitLogParserTest.java
+:100644 100644 ee5d46641209c1bd87324462184145f451296135 2e5456f1e92b0ea1cf161145d6d5e9a5e4399964 M	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitTableFactoryTest.java
+14	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommit.java
+23	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitLogParser.java
+5	2	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+15	6	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
+9	6	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitLogParserTest.java
+16	7	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitTableFactoryTest.java
+
+919c99bdc4883aa6b06f25b41a3669416478125b
+2013-03-29 09:25:36 +0100
+Sławek Kapłoński
+#12 fixed label on plugin's settings window
+
+919c99bdc4883aa6b06f25b41a3669416478125b
+:100644 100644 deaa44f3ade205152ed9116ecb819a47618c537c c8fd29fa5fb57923342649c87d6b388af902b60a M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeDialog.java
+1	1	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeDialog.java
+
+e8649880ee9c0a52fc21d1bdcc2f159f6fce3283
+2013-03-29 00:07:42 +0100
+Tomasz Kuzemko
+#32 Fixed parsing of DateTime
+
+e8649880ee9c0a52fc21d1bdcc2f159f6fce3283
+:100644 100644 617772a63f6ea64a1420e5b6227a2be3b5f3eedc 81c83ae5c640fb133602aeda9b24266109e6655e M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommit.java
+:100644 100644 bc69eab5f0c79943afdc6f2891dd461d5721f2d9 6c8122587c4a363613c4d696690a8f6a88b8e6cc M	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitLogParserTest.java
+1	1	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommit.java
+1	1	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitLogParserTest.java
+
+f76c800a5acee607d60e1f59c27d64ee0a471d9f
+2013-03-28 23:26:03 +0100
+Sławek Kapłoński
+#12 Offline version of git plugin almost works. Only markers column should be fixed because now it is not generated correct
+
+f76c800a5acee607d60e1f59c27d64ee0a471d9f
+:100644 100644 78f43c9f53c1b975e4c115281b4e14933cacf1f3 247e0f3c3973bd977a4855eaba13253eb19f4cc9 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+:100644 100644 332b97abdd5346c1da0739de2cdec99b76c957c9 87e717a00a3a17c16717bb917ad239bf42dc5077 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
+:100644 100644 dbb1f85acd56841ca41ccbf55830a6a5988b9641 ee5d46641209c1bd87324462184145f451296135 M	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitTableFactoryTest.java
+63	8	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+28	1	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
+19	0	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitTableFactoryTest.java
+
+2964e5ac5338a97fabfc17f3d39f421ddf3a14d2
+2013-03-25 23:49:12 +0100
+Tomasz Kuzemko
+Added GitLogParser class with unit tests and test input file
+
+2964e5ac5338a97fabfc17f3d39f421ddf3a14d2
+:000000 100644 0000000000000000000000000000000000000000 29472a6f75f6388981de92c19a92c14236a75d64 A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitLogParser.java
+:000000 100644 0000000000000000000000000000000000000000 bc69eab5f0c79943afdc6f2891dd461d5721f2d9 A	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitLogParserTest.java
+:000000 100644 0000000000000000000000000000000000000000 b0c054fc86592fbf3e378e604f3d488b97bd355b A	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/git-test-log.txt
+177	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitLogParser.java
+108	0	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitLogParserTest.java
+724	0	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/git-test-log.txt
+
+a9186077626b6b89d4bfb5c81a47070df705f2cd
+2013-03-25 23:46:20 +0100
+Tomasz Kuzemko
+Fixed indentation, added 2 new constructors, getPath(), getCommit() and setOperation(char operationCode)
+
+a9186077626b6b89d4bfb5c81a47070df705f2cd
+:100644 100644 5d1f86f72f7393e4a0a8f04ae3f266c3c14e371c 292e5dc8e117d3e3d6ecabda1a96f2e683a7a0a8 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommitFile.java
+61	18	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommitFile.java
+
+eab18f78b4a5510e3ced395010ed6b0803bf84b6
+2013-03-25 23:44:08 +0100
+Tomasz Kuzemko
+Fixed indentation, changed id visibility to private and added getId()
+
+eab18f78b4a5510e3ced395010ed6b0803bf84b6
+:100644 100644 d1e4bfb6772fdefc89bea84f37f49dacb4e306b3 617772a63f6ea64a1420e5b6227a2be3b5f3eedc M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommit.java
+37	33	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommit.java
+
 965885f3c9f03b62a41e79d8f95d3e0b2620215f
 2013-03-24 23:46:28 +0100
 Tomasz Kuzemko
@@ -9,6 +176,11 @@ GitTableFactory now extends SCMAdapterTableFactory. Also added tests.
 :100644 100644 c3fd6b5a2ec0e045bd5f087be71587fdeb239c83 78f43c9f53c1b975e4c115281b4e14933cacf1f3 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
 :100644 100644 439cab3b49b75e5f09689c7ba2eba21feaa2f008 332b97abdd5346c1da0739de2cdec99b76c957c9 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
 :000000 100644 0000000000000000000000000000000000000000 dbb1f85acd56841ca41ccbf55830a6a5988b9641 A	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitTableFactoryTest.java
+5	4	ic-depress-scm-git/.classpath
+1	0	ic-depress-scm-git/META-INF/MANIFEST.MF
+1	1	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+30	21	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
+19	0	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitTableFactoryTest.java
 
 87697b97fd92f7d492f97d5bd3dbc12839f3e11f
 2013-03-24 22:37:59 +0100
@@ -19,6 +191,9 @@ Added classes GitCommit, GitCommitFile and enum GitCommitFileOperation
 :000000 100644 0000000000000000000000000000000000000000 d1e4bfb6772fdefc89bea84f37f49dacb4e306b3 A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommit.java
 :000000 100644 0000000000000000000000000000000000000000 5d1f86f72f7393e4a0a8f04ae3f266c3c14e371c A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommitFile.java
 :000000 100644 0000000000000000000000000000000000000000 3b0d7e75f35fd32e36d4f3a830c6893e630ea91b A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommitFileOperation.java
+78	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommit.java
+54	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommitFile.java
+36	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommitFileOperation.java
 
 94bf0858a67a67379bdc4f35a6b39db401638b55
 2013-03-24 21:16:53 +0100
@@ -27,6 +202,7 @@ LICENSE added 327
 
 94bf0858a67a67379bdc4f35a6b39db401638b55
 :000000 100644 0000000000000000000000000000000000000000 20d40b6bceca3a6c0237d7455ebf1820aeff3680 A	ic-depress-its-jira/LICENSE.txt
+674	0	ic-depress-its-jira/LICENSE.txt
 
 7cd9a5169dc2acca345ecbc800a5b2e2966eb8dd
 2013-03-24 21:15:47 +0100
@@ -58,6 +234,30 @@ Marek Majchrzak
 :100644 100644 5360d1931475530620513e28415b232ba537c698 344f66f5a8d7493d795506e21b765939665fc316 M	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterTransformer.java
 :100644 100644 859be181d8952e14a636765d88bab2c35759ef0c 86c97e3664a5c03e257ed12c57f5e5d5926bce13 M	ic-depress-metric-judy/META-INF/MANIFEST.MF
 :100644 100644 de702169b484411699495c93331ab7a5247d6c13 0c9368300f0963e2ac2bf7513f9cbe2c289a2bbb M	ic-depress-metric-po/META-INF/MANIFEST.MF
+-	-	dev-snapshots/plugins/org.impressivecode.depress.base_0.1.0.201302252210.jar
+-	-	dev-snapshots/plugins/org.impressivecode.depress.its.jira_0.1.0.201302252210.jar
+-	-	dev-snapshots/plugins/org.impressivecode.depress.metric.jacoco_0.1.0.201302252210.jar
+-	-	dev-snapshots/plugins/org.impressivecode.depress.metric.judy_0.1.0.201302252210.jar
+-	-	dev-snapshots/plugins/org.impressivecode.depress.metric.po_0.1.0.201302252210.jar
+0	1	ic-depress-base/.classpath
+5	5	ic-depress-base/META-INF/MANIFEST.MF
+2	2	ic-depress-base/build.properties
+76	0	ic-depress-base/src/org/impressivecode/depress/its/ITSAdapterTransformer.java
+73	0	ic-depress-base/test/org/impressivecode/depress/its/ITSAdapterTransformerTest.java
+2	2	ic-depress-its-jira/.classpath
+1	1	ic-depress-its-jira/.project
+0	674	ic-depress-its-jira/LICENSE.txt
+1	1	ic-depress-its-jira/META-INF/MANIFEST.MF
+1	4	ic-depress-its-jira/build.properties
+7	5	ic-depress-its-jira/plugin.xml
+2	1	ic-depress-its-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeModel.java
+4	3	ic-depress-its-jira/src/org/impressivecode/depress/its/jira/JiraAdapterTableFactory.java
+0	77	ic-depress-its-jira/src/org/impressivecode/depress/its/jira/JiraAdapterTransformer.java
+0	76	ic-depress-its-jira/test/org/impressivecode/depress/its/jira/JiraAdapterTransformerTest.java
+1	1	ic-depress-metric-jacoco/META-INF/MANIFEST.MF
+1	1	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterTransformer.java
+1	1	ic-depress-metric-judy/META-INF/MANIFEST.MF
+1	1	ic-depress-metric-po/META-INF/MANIFEST.MF
 
 1154062ecba7239dc6371dca77604210d7d84071
 2013-03-24 20:40:43 +0100
@@ -66,6 +266,7 @@ Added junit to requirements
 
 1154062ecba7239dc6371dca77604210d7d84071
 :100644 100644 9059480f436a45e577f4bb8effbf6094007ac4a1 375fff00bc44af7aa162b097e0f38b5c837eeeb3 M	ic-depress-scm-git/META-INF/MANIFEST.MF
+2	1	ic-depress-scm-git/META-INF/MANIFEST.MF
 
 c7e3aa6e9b9616a33dc1c5d8cde471f3f8a00754
 2013-03-24 19:52:36 +0100
@@ -95,6 +296,28 @@ c7e3aa6e9b9616a33dc1c5d8cde471f3f8a00754
 :000000 100644 0000000000000000000000000000000000000000 3d0ab25e42663cfb181673b85b71084bddfe4b95 A	ic-depress-its-jira/test/org/impressivecode/depress/its/jira/JiraAdapterTransformerTest.java
 :000000 100644 0000000000000000000000000000000000000000 c34edd6b9aa04eb25b8ca038cc5a6bca0512aa10 A	ic-depress-its-jira/test/org/impressivecode/depress/its/jira/JiraEntriesParserTest.java
 :000000 100644 0000000000000000000000000000000000000000 a0c76b2ddd8b098b10836e3479c5111a5144428f A	ic-depress-its-jira/test/org/impressivecode/depress/its/jira/jira.xml
+11	0	ic-depress-its-jira/.classpath
+28	0	ic-depress-its-jira/.project
+674	0	ic-depress-its-jira/LICENSE.txt
+18	0	ic-depress-its-jira/META-INF/MANIFEST.MF
+8	0	ic-depress-its-jira/build.properties
+-	-	ic-depress-its-jira/examples/JiraAdapter.zip
+1352	0	ic-depress-its-jira/examples/jira.xml
+-	-	ic-depress-its-jira/lib/fest-assert-1.4.jar
+-	-	ic-depress-its-jira/lib/fest-util-1.1.6.jar
+-	-	ic-depress-its-jira/lib/mockito-all-1.9.5.jar
+12	0	ic-depress-its-jira/plugin.xml
+42	0	ic-depress-its-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeDialog.java
+55	0	ic-depress-its-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeFactory.java
+32	0	ic-depress-its-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeFactory.xml
+127	0	ic-depress-its-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeModel.java
+37	0	ic-depress-its-jira/src/org/impressivecode/depress/its/jira/JiraAdapterTableFactory.java
+77	0	ic-depress-its-jira/src/org/impressivecode/depress/its/jira/JiraAdapterTransformer.java
+251	0	ic-depress-its-jira/src/org/impressivecode/depress/its/jira/JiraEntriesParser.java
+-	-	ic-depress-its-jira/src/org/impressivecode/depress/its/jira/jira.png
+76	0	ic-depress-its-jira/test/org/impressivecode/depress/its/jira/JiraAdapterTransformerTest.java
+83	0	ic-depress-its-jira/test/org/impressivecode/depress/its/jira/JiraEntriesParserTest.java
+191	0	ic-depress-its-jira/test/org/impressivecode/depress/its/jira/jira.xml
 
 b720056a3ac5c4376ec848ca23bc102cb1b2adb8
 2013-03-24 19:52:12 +0100
@@ -124,6 +347,28 @@ b720056a3ac5c4376ec848ca23bc102cb1b2adb8
 :100644 000000 3d0ab25e42663cfb181673b85b71084bddfe4b95 0000000000000000000000000000000000000000 D	ic-depress-metric-jira/test/org/impressivecode/depress/its/jira/JiraAdapterTransformerTest.java
 :100644 000000 c34edd6b9aa04eb25b8ca038cc5a6bca0512aa10 0000000000000000000000000000000000000000 D	ic-depress-metric-jira/test/org/impressivecode/depress/its/jira/JiraEntriesParserTest.java
 :100644 000000 a0c76b2ddd8b098b10836e3479c5111a5144428f 0000000000000000000000000000000000000000 D	ic-depress-metric-jira/test/org/impressivecode/depress/its/jira/jira.xml
+1	1	ic-depress-metric-jacoco/META-INF/MANIFEST.MF
+0	11	ic-depress-metric-jira/.classpath
+0	28	ic-depress-metric-jira/.project
+0	674	ic-depress-metric-jira/LICENSE.txt
+0	18	ic-depress-metric-jira/META-INF/MANIFEST.MF
+0	8	ic-depress-metric-jira/build.properties
+0	1352	ic-depress-metric-jira/examples/jira.xml
+-	-	ic-depress-metric-jira/lib/fest-assert-1.4.jar
+-	-	ic-depress-metric-jira/lib/fest-util-1.1.6.jar
+-	-	ic-depress-metric-jira/lib/mockito-all-1.9.5.jar
+0	12	ic-depress-metric-jira/plugin.xml
+0	42	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeDialog.java
+0	55	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeFactory.java
+0	32	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeFactory.xml
+0	127	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeModel.java
+0	37	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraAdapterTableFactory.java
+0	77	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraAdapterTransformer.java
+0	251	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraEntriesParser.java
+-	-	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/jira.png
+0	76	ic-depress-metric-jira/test/org/impressivecode/depress/its/jira/JiraAdapterTransformerTest.java
+0	83	ic-depress-metric-jira/test/org/impressivecode/depress/its/jira/JiraEntriesParserTest.java
+0	191	ic-depress-metric-jira/test/org/impressivecode/depress/its/jira/jira.xml
 
 d3c846764dc14788b7fa14cff5992bf4482f7f14
 2013-03-24 19:42:01 +0100
@@ -169,6 +414,44 @@ d3c846764dc14788b7fa14cff5992bf4482f7f14
 :000000 100644 0000000000000000000000000000000000000000 a0c76b2ddd8b098b10836e3479c5111a5144428f A	ic-depress-metric-jira/test/org/impressivecode/depress/its/jira/jira.xml
 :100644 100644 838e7a46dcbcfe3e44cf219a4906b100b69e216a c968f0ee379afdfd1b6f4046e5866e47dc21b840 M	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
 :100644 100644 dc0c26ebe3527d15482b65be83234fe3a7f7b892 6dd1c697ee6ff3adf26882a9b55ae66834a42a1d M	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyEntriesParser.java
+3	0	ic-depress-base/.classpath
+5	1	ic-depress-base/META-INF/MANIFEST.MF
+1	2	ic-depress-base/build.properties
+-	-	ic-depress-base/lib/fest-assert-1.4.jar
+-	-	ic-depress-base/lib/fest-util-1.1.6.jar
+-	-	ic-depress-base/lib/mockito-all-1.9.5.jar
+83	1	ic-depress-base/src/org/impressivecode/depress/common/DataTableSpecUtils.java
+104	0	ic-depress-base/src/org/impressivecode/depress/its/ITSAdapterTableFactory.java
+167	0	ic-depress-base/src/org/impressivecode/depress/its/ITSDataType.java
+26	0	ic-depress-base/src/org/impressivecode/depress/its/ITSPriority.java
+26	0	ic-depress-base/src/org/impressivecode/depress/its/ITSResolution.java
+27	0	ic-depress-base/src/org/impressivecode/depress/its/ITSStatus.java
+26	0	ic-depress-base/src/org/impressivecode/depress/its/ITSType.java
+308	0	ic-depress-base/test/org/impressivecode/depress/its/ITSAdapterTableFactoryTest.java
+3	2	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoEntriesParser.java
+11	0	ic-depress-metric-jira/.classpath
+28	0	ic-depress-metric-jira/.project
+674	0	ic-depress-metric-jira/LICENSE.txt
+18	0	ic-depress-metric-jira/META-INF/MANIFEST.MF
+8	0	ic-depress-metric-jira/build.properties
+1352	0	ic-depress-metric-jira/examples/jira.xml
+-	-	ic-depress-metric-jira/lib/fest-assert-1.4.jar
+-	-	ic-depress-metric-jira/lib/fest-util-1.1.6.jar
+-	-	ic-depress-metric-jira/lib/mockito-all-1.9.5.jar
+12	0	ic-depress-metric-jira/plugin.xml
+42	0	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeDialog.java
+55	0	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeFactory.java
+32	0	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeFactory.xml
+127	0	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraAdapterNodeModel.java
+37	0	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraAdapterTableFactory.java
+77	0	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraAdapterTransformer.java
+251	0	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/JiraEntriesParser.java
+-	-	ic-depress-metric-jira/src/org/impressivecode/depress/its/jira/jira.png
+76	0	ic-depress-metric-jira/test/org/impressivecode/depress/its/jira/JiraAdapterTransformerTest.java
+83	0	ic-depress-metric-jira/test/org/impressivecode/depress/its/jira/JiraEntriesParserTest.java
+191	0	ic-depress-metric-jira/test/org/impressivecode/depress/its/jira/jira.xml
+1	1	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
+26	0	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyEntriesParser.java
 
 c30dcfd113fdbf72e14e82920bc28bde689d42c6
 2013-03-20 22:52:17 +0100
@@ -178,6 +461,8 @@ examples path fixed
 c30dcfd113fdbf72e14e82920bc28bde689d42c6
 :100644 100644 161e8fe823eca2a32dc2366c9c95efc515b2bffd 6a41acc9ea952226aaf6a120eaa65ff26c6e723f M	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterNodeFactory.xml
 :100644 100644 39c0302b06ed6ef39ca48b3ed9bc212fd36410c6 7afdaea0d176c3acb2feaae108ac72fccffd88bf M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeFactory.xml
+1	1	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterNodeFactory.xml
+1	1	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeFactory.xml
 
 3a399db086540309dbc33ff5be6fc4fb0c62e0f2
 2013-03-20 22:41:29 +0100
@@ -191,6 +476,12 @@ jacoco,po,judy help imprvoved
 :100644 000000 09ef3d5badb75016b34f076818b402f73db8ff09 0000000000000000000000000000000000000000 D	ic-depress-metric-po/example/PeopleAndOrganizationMetric.zip
 :000000 100644 0000000000000000000000000000000000000000 09ef3d5badb75016b34f076818b402f73db8ff09 A	ic-depress-metric-po/examples/PeopleAndOrganizationMetric.zip
 :100644 100644 f5c62399493c90c9b95e95d0f06a3895c33d3d89 39c0302b06ed6ef39ca48b3ed9bc212fd36410c6 M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeFactory.xml
+1	1	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterNodeFactory.xml
+6	1	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
+2	2	ic-depress-metric-po/build.properties
+-	-	ic-depress-metric-po/example/PeopleAndOrganizationMetric.zip
+-	-	ic-depress-metric-po/examples/PeopleAndOrganizationMetric.zip
+10	3	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeFactory.xml
 
 0294b5af1bf2cb2181004de6e5839493d7c0ca8f
 2013-03-20 22:35:00 +0100
@@ -202,6 +493,10 @@ Marek Majchrzak
 :000000 100644 0000000000000000000000000000000000000000 97b42033cd4766f44f02e1b2c7fa682bf1a7e395 A	ic-depress-metric-jacoco/examples/JaCoCoAdapter.zip
 :000000 100644 0000000000000000000000000000000000000000 285724f4adb3ddea386c3f6f6482cd223941cb26 A	ic-depress-metric-jacoco/examples/jacoco.xml
 :100644 100644 680770ddd3ce271faf199bf81d4589b4f8750fe5 8221a0253223e04c511bff2a89474a8ca50e4f86 M	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterNodeFactory.xml
+4	0	ic-depress-metric-jacoco/build.properties
+-	-	ic-depress-metric-jacoco/examples/JaCoCoAdapter.zip
+1	0	ic-depress-metric-jacoco/examples/jacoco.xml
+26	16	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterNodeFactory.xml
 
 8b6ba1135b2a2b70cb22ea15660c6f99f7da2b75
 2013-03-20 21:53:38 +0100
@@ -230,6 +525,27 @@ Marek Majchrzak
 :000000 100644 0000000000000000000000000000000000000000 4f5b13f511c4788311f47382e0cac8aa3475f9e1 A	ic-depress-metric-jacoco/test/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterTransformerTest.java
 :000000 100644 0000000000000000000000000000000000000000 40781b805d1cfc38d8c8173eeb8ab2129ddaa1a5 A	ic-depress-metric-jacoco/test/org/impressivecode/depress/metric/jacoco/JaCoCoEntriesParserTest.java
 :000000 100644 0000000000000000000000000000000000000000 4b865f726c379351f7e5b64be23f3f1f72c6dcf2 A	ic-depress-metric-jacoco/test/org/impressivecode/depress/metric/jacoco/jacoco.xml
+11	0	ic-depress-metric-jacoco/.classpath
+28	0	ic-depress-metric-jacoco/.project
+674	0	ic-depress-metric-jacoco/LICENSE.txt
+18	0	ic-depress-metric-jacoco/META-INF/MANIFEST.MF
+4	0	ic-depress-metric-jacoco/build.properties
+-	-	ic-depress-metric-jacoco/lib/fest-assert-1.4.jar
+-	-	ic-depress-metric-jacoco/lib/fest-util-1.1.6.jar
+-	-	ic-depress-metric-jacoco/lib/mockito-all-1.9.5.jar
+12	0	ic-depress-metric-jacoco/plugin.xml
+42	0	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterNodeDialog.java
+55	0	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterNodeFactory.java
+26	0	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterNodeFactory.xml
+126	0	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterNodeModel.java
+58	0	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterTableFactory.java
+97	0	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterTransformer.java
+150	0	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoEntriesParser.java
+98	0	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoEntry.java
+-	-	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/jacoco.png
+108	0	ic-depress-metric-jacoco/test/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterTransformerTest.java
+54	0	ic-depress-metric-jacoco/test/org/impressivecode/depress/metric/jacoco/JaCoCoEntriesParserTest.java
+457	0	ic-depress-metric-jacoco/test/org/impressivecode/depress/metric/jacoco/jacoco.xml
 
 7850b088bd093e91d62d79017a50491005b741aa
 2013-03-20 00:26:20 +0100
@@ -239,6 +555,8 @@ Sławek Kapłoński
 7850b088bd093e91d62d79017a50491005b741aa
 :100644 100644 f869267b668327aab172f72a01e7e358cd8567d0 2b9ec4c22ed27bc14d533edfd0480805d91e5ef6 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.xml
 :000000 100644 0000000000000000000000000000000000000000 48fb14df2d259a199c71f3292fbe80d9bad23019 A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/git.png
+2	2	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.xml
+-	-	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/git.png
 
 5c0fe5126a07c19406427a71a497878cb9eac0a5
 2013-03-19 23:50:57 +0100
@@ -247,6 +565,7 @@ Sławek Kapłoński
 
 5c0fe5126a07c19406427a71a497878cb9eac0a5
 :100644 100644 859cca4dafa6e4a52e58ce30f833649793c0c54b f869267b668327aab172f72a01e7e358cd8567d0 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.xml
+23	20	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.xml
 
 6149c977d150572470d282d098e2f3f780ee8d73
 2013-03-19 22:11:46 +0100
@@ -255,6 +574,8 @@ Rename license.txt to LICENSE.txt
 6149c977d150572470d282d098e2f3f780ee8d73
 :000000 100644 0000000000000000000000000000000000000000 94a9ed024d3859793618152ea559a168bbcbb5e2 A	LICENSE.txt
 :100644 000000 20d40b6bceca3a6c0237d7455ebf1820aeff3680 0000000000000000000000000000000000000000 D	license.txt
+674	0	LICENSE.txt
+0	674	license.txt
 
 102d22f2709dfc9aaee34a1e176bfe1304a4f2f1
 2013-03-19 22:08:42 +0100
@@ -273,6 +594,17 @@ Marek Majchrzak
 :100644 100644 f8baf5e027757355753b374cf5589ff7a63a91c7 961d56c578c6a8c6984f7b5c5c3a47e2d856d660 M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
 :100644 100644 2adb448dbfdcfcb91270023e36c0bf52820289af 8df88dded41d8e4e58c77baca3b6d294fb5d3b5e M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberData.java
 :100644 100644 5d847f3c3f8ecf48e7a70eb74e62a800b72f55c1 2ac2ac9f95a89b5d5427cb2900940137d1b90de6 M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberDataTransformer.java
+19	3	ic-depress-base/src/org/impressivecode/depress/common/DataTableSpecUtils.java
+1	1	ic-depress-base/src/org/impressivecode/depress/scm/SCMAdapterTableFactory.java
+4	1	ic-depress-metric-po/build.properties
+-	-	ic-depress-metric-po/example/PeopleAndOrganizationMetric.zip
+2	1	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeDataTransformer.java
+18	9	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricTableFactory.java
+17	4	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricTransformer.java
+71	19	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeFactory.xml
+16	8	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
+2	11	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberData.java
+5	10	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberDataTransformer.java
 
 fd9eed0924057e9d306555b478645b24c8a001c1
 2013-03-18 20:59:30 +0100
@@ -281,6 +613,7 @@ judy logo changed
 
 fd9eed0924057e9d306555b478645b24c8a001c1
 :100644 100644 5fe0fc2f8362ad2d632cbce68c33e38cb6c5d64b f66b9dd7f150401f3545a8957957c9819f6341d4 M	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/judy.png
+-	-	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/judy.png
 
 45a2beca9d97777733e1a472e54c003551b7d9b1
 2013-03-18 20:49:14 +0100
@@ -303,6 +636,21 @@ Marek Majchrzak
 :000000 100644 0000000000000000000000000000000000000000 5d847f3c3f8ecf48e7a70eb74e62a800b72f55c1 A	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberDataTransformer.java
 :100644 000000 2c2006ff2af9394b887035c05ea0935fbf935e13 0000000000000000000000000000000000000000 D	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberTransformer.java
 :000000 100644 0000000000000000000000000000000000000000 475ab374c18ec0446574f29c61dc7ef711704164 A	ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java
+2	1	ic-depress-metric-po/META-INF/MANIFEST.MF
+54	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java
+89	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeDataTransformer.java
+0	61	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java
+0	75	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/MetricProcessor.java
+0	161	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/POData.java
+163	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetric.java
+254	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessor.java
+21	44	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricTableFactory.java
+95	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricTransformer.java
+21	183	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
+15	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberData.java
+104	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberDataTransformer.java
+0	69	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberTransformer.java
+303	0	ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java
 
 777d085008ee849a13885afbcf1c12cc1c8a70f5
 2013-03-18 00:56:51 +0100
@@ -315,6 +663,11 @@ Tomasz Kuzemko
 :100644 100644 5d22deb9cc7283efb43e9305349eda59654f655a c3fd6b5a2ec0e045bd5f087be71587fdeb239c83 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
 :100644 100644 deaab03b097b8759dea49b1fe00f014ced093788 09df7286128b10c68eb736e6fc011a7fb1c3fe90 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodePlugin.java
 :100644 100644 663e32f401eac7f443b0fce3b9778fe924eebc16 c2c334c58141b656a4e45b933fa601bc5fd1fb07 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeView.java
+2	1	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeDialog.java
+2	1	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.java
+1	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+2	1	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodePlugin.java
+1	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeView.java
 
 968a800d55cd3a3b5d0acc9266c2efa77e5aa47f
 2013-03-18 00:52:19 +0100
@@ -328,6 +681,12 @@ Tomasz Kuzemko
 :100644 100644 b4bea15377736314baad8b95c3cc051d44af6d5f deaab03b097b8759dea49b1fe00f014ced093788 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodePlugin.java
 :100644 100644 dbab54274f2fc88d8b15b45caa9d5bcd43cf1fac 663e32f401eac7f443b0fce3b9778fe924eebc16 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeView.java
 :100644 100644 0f8178df69c5bcd86a701560c3b802cfd4098e33 7cf3525895ab77b37d8a9049761b4e17f272dfa5 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/PluginApp.java
+17	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeDialog.java
+17	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.java
+17	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+16	3	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodePlugin.java
+17	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeView.java
+13	14	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/PluginApp.java
 
 7142dfd7751b0dd4b1f57a6c0c6688d47e8b4729
 2013-03-18 00:35:07 +0100
@@ -336,6 +695,7 @@ Tomasz Kuzemko
 
 7142dfd7751b0dd4b1f57a6c0c6688d47e8b4729
 :100644 000000 3807b034d7b0169d1c54e2e47ba4664e2d1bbcb2 0000000000000000000000000000000000000000 D	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/package.html
+0	25	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/package.html
 
 383d48a82f6cd02c675eb7e99cfaa336e5dd4fc3
 2013-03-18 00:33:15 +0100
@@ -344,6 +704,7 @@ Tomasz Kuzemko
 
 383d48a82f6cd02c675eb7e99cfaa336e5dd4fc3
 :100644 100644 ffa8addcc98154f8c84012394c50476e84c9f3bc 9059480f436a45e577f4bb8effbf6094007ac4a1 M	ic-depress-scm-git/META-INF/MANIFEST.MF
+2	1	ic-depress-scm-git/META-INF/MANIFEST.MF
 
 de96ba94db35e68b88d8dd5ddd913c87ad8f1072
 2013-03-18 00:32:03 +0100
@@ -352,6 +713,7 @@ Tomasz Kuzemko
 
 de96ba94db35e68b88d8dd5ddd913c87ad8f1072
 :100644 100644 085ee4c54f089f347f5e502085c016bd522c2240 6b79df2015bf9fcf88917b77bc77091d999ea47f M	ic-depress-scm-git/plugin.xml
+2	15	ic-depress-scm-git/plugin.xml
 
 e2c89e5fe3726a6b9446a90495ce92ebc816337d
 2013-03-17 20:57:58 +0100
@@ -360,6 +722,7 @@ Added project milestone report
 
 e2c89e5fe3726a6b9446a90495ce92ebc816337d
 :000000 100644 0000000000000000000000000000000000000000 b50b77828618083bad1eda5320b96de3646f8f64 A	ic-depress-scm-git/doc/milestone-report.pdf
+-	-	ic-depress-scm-git/doc/milestone-report.pdf
 
 aa987c2d809340e77f473a5920f4d6f6e43500ff
 2013-03-05 23:34:57 +0100
@@ -371,6 +734,10 @@ aa987c2d809340e77f473a5920f4d6f6e43500ff
 :100644 100644 d2571f4b5963e8e9f4b949781f7f4b2617ce8c49 58e2da9c48139ee475fb661b6703b1a1778cc3b4 M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/MetricProcessor.java
 :100644 100644 7c5840c2bdcd77a0e5bb020e31f7905344327d6d 0b1ccc9f2c03868b4d67e4ff0ce01250e901f61a M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/POData.java
 :100644 100644 06b8c53529b2ed6e95bd05de4d543d7612d79eca 15a74d4f5436da9e2f1d9ff6376fb3affcdd9413 M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
+9	4	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java
+5	12	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/MetricProcessor.java
+6	11	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/POData.java
+8	11	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
 
 c2ce7b172902ecf45e8e5ba21893feb993d9cd6f
 2013-03-05 23:33:28 +0100
@@ -385,6 +752,13 @@ c2ce7b172902ecf45e8e5ba21893feb993d9cd6f
 :100644 100644 42863676bf0239a954cf0aa7c578eb4f0c0b17a6 06b8c53529b2ed6e95bd05de4d543d7612d79eca M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
 :000000 100644 0000000000000000000000000000000000000000 184c24e24f52d10af9dd2bb6583869bfb0d920e8 A	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberData.java
 :000000 100644 0000000000000000000000000000000000000000 2c2006ff2af9394b887035c05ea0935fbf935e13 A	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberTransformer.java
+56	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java
+82	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/MetricProcessor.java
+12	2	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/POData.java
+4	4	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricTableFactory.java
+58	36	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
+62	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberData.java
+69	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberTransformer.java
 
 893f71a008c813fe0daaa50fba184fed66e0230b
 2013-03-04 22:31:08 +0100
@@ -395,6 +769,9 @@ Sławek Kapłoński
 :100644 100644 04b0dbc45ff97b6107e799c482d26f5e3ef718b2 ebe5fda72fb37114706527fc40ac917592989ef9 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeDialog.java
 :100644 100644 47fe5a10ca11d335ebaeceec50b22411c447ae3d 72b547c425ea32d3e6f87739ed9591f264290b53 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.java
 :100644 100644 84099f19c9f1e10dc7861d96b68c68897dc3c64a f3becca99d8328ddf6c40858bf9adde277c16aa6 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+1	1	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeDialog.java
+1	1	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.java
+20	64	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
 
 907348573f0b3f74a644e962128cc2c855610239
 2013-03-04 22:29:44 +0100
@@ -403,6 +780,7 @@ Sławek Kapłoński
 
 907348573f0b3f74a644e962128cc2c855610239
 :000000 100644 0000000000000000000000000000000000000000 439cab3b49b75e5f09689c7ba2eba21feaa2f008 A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
+51	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
 
 b1f41ed6f2a284779eb6ccd1ad849207a4b67c42
 2013-03-04 22:27:04 +0100
@@ -412,6 +790,8 @@ Sławek Kapłoński
 b1f41ed6f2a284779eb6ccd1ad849207a4b67c42
 :100644 100644 858e6bda3fbfa25d5d4c3ad5cb16f68c5048ba03 ffa8addcc98154f8c84012394c50476e84c9f3bc M	ic-depress-scm-git/META-INF/MANIFEST.MF
 :100644 100644 44416b9dcc954ca0601491b1ccd9646911d28c94 859cca4dafa6e4a52e58ce30f833649793c0c54b M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.xml
+2	2	ic-depress-scm-git/META-INF/MANIFEST.MF
+2	4	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.xml
 
 b4f3088d8894ac224535a31ccf4d1600d3fc0c57
 2013-03-03 23:47:23 +0100
@@ -440,6 +820,27 @@ b4f3088d8894ac224535a31ccf4d1600d3fc0c57
 :100644 000000 1a5cd390d0e65fb331609bc706367744a5a1f027 0000000000000000000000000000000000000000 D	ic-depress-scm-common/src/org/impressivecode/depress/scm/common/PluginApp.java
 :000000 100644 0000000000000000000000000000000000000000 20d40b6bceca3a6c0237d7455ebf1820aeff3680 A	ic-depress-scm-git/LICENSE.txt
 :000000 100644 0000000000000000000000000000000000000000 20d40b6bceca3a6c0237d7455ebf1820aeff3680 A	ic-depress-scm-svn/LICENSE.txt
+674	0	ic-depress-data-anonymisation/LICENSE.txt
+674	0	ic-depress-data-source/LICENSE.txt
+6	0	ic-depress-metric-checkstyle/.classpath
+17	0	ic-depress-metric-checkstyle/.project
+674	0	ic-depress-metric-checkstyle/LICENSE.txt
+24	0	ic-depress-metric-checkstyle/src/org/impressivecode/depress/metric/checkstyle/PluginApp.java
+674	0	ic-depress-metric-eclipsemetrics/LICENSE.txt
+6	0	ic-depress-metric-findbug/.classpath
+17	0	ic-depress-metric-findbug/.project
+674	0	ic-depress-metric-findbug/LICENSE.txt
+24	0	ic-depress-metric-findbug/src/org/impressivecode/depress/metric/findbug/PluginApp.java
+674	0	ic-depress-metric-pitest/LICENSE.txt
+6	0	ic-depress-metric-pmd/.classpath
+17	0	ic-depress-metric-pmd/.project
+674	0	ic-depress-metric-pmd/LICENSE.txt
+24	0	ic-depress-metric-pmd/src/org/impressivecode/depress/metric/pmd/PluginApp.java
+0	6	ic-depress-scm-common/.classpath
+0	17	ic-depress-scm-common/.project
+0	24	ic-depress-scm-common/src/org/impressivecode/depress/scm/common/PluginApp.java
+674	0	ic-depress-scm-git/LICENSE.txt
+674	0	ic-depress-scm-svn/LICENSE.txt
 
 e34c6a9ae18f6228025e1007e04e0f0363b79c92
 2013-03-03 22:49:22 +0100
@@ -465,6 +866,24 @@ e34c6a9ae18f6228025e1007e04e0f0363b79c92
 :100644 100644 19b9ed5c0574097863895d38bcb5cc20984d1879 01a727092f909fd0a7ee8b7e7fee4abea1572a5a M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeFactory.xml
 :100644 100644 9d3b88769ca2e69bda1dca9303da366715eed34c 42863676bf0239a954cf0aa7c578eb4f0c0b17a6 M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
 :100644 100644 b3418aed8c0555cb74c57b6b786cf29b583218f6 38e260e1528de8551a54aa82b1f8a2434e3157b2 M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/po.png
+674	0	ic-depress-base/LICENSE.txt
+5	3	ic-depress-base/META-INF/MANIFEST.MF
+5	4	ic-depress-base/build.properties
+6	4	ic-depress-base/plugin.xml
+-	-	ic-depress-base/resources/icons/depress.png
+1	0	ic-depress-base/src/org/impressivecode/depress/scm/SCMAdapterTableFactory.java
+39	0	ic-depress-base/test/org/impressivecode/depress/scm/SCMAdapterTableFactoryTest.java
+674	0	ic-depress-metric-judy/LICENSE.txt
+1	0	ic-depress-metric-judy/META-INF/MANIFEST.MF
+6	3	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
+-	-	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/judy.png
+674	0	ic-depress-metric-po/LICENSE.txt
+1	0	ic-depress-metric-po/META-INF/MANIFEST.MF
+1	3	ic-depress-metric-po/build.properties
+1	0	ic-depress-metric-po/plugin.xml
+3	3	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeFactory.xml
+56	11	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
+-	-	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/po.png
 
 fe5cdba6e29b07d222d1a0ea12de9fca61dc9495
 2013-03-03 19:49:37 +0100
@@ -480,6 +899,14 @@ fe5cdba6e29b07d222d1a0ea12de9fca61dc9495
 :000000 100644 0000000000000000000000000000000000000000 9504b608d31a3e5e1de2b47c6ff09022daf91054 A	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapterTableFactoryPluginTest.java
 :100644 100644 3ef8ccd026f39a7abfab28d49c6f17eeee7af784 4a9da23dbe7998195614fa2962a3836ce9d7e180 M	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyEntriesParserTest.java
 :100644 100644 817462e282bca9a7e050c494ed182e716ab4a9d4 3fdd6af27f407784a0a87d9c84becdfcc7f095b9 M	ic-depress-metric-po/build.properties
+0	63	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapteTableFactory.java
+3	3	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeModel.java
+63	0	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterTableFactory.java
+0	55	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapteTableFactoryPluginTest.java
+0	55	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapteTableFactoryTest.java
+55	0	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapterTableFactoryPluginTest.java
+22	0	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyEntriesParserTest.java
+3	1	ic-depress-metric-po/build.properties
 
 ef1d2453bf8587aec197ebd60f8d5260f3b02692
 2013-03-02 22:05:28 +0100
@@ -488,6 +915,7 @@ removed old test
 
 ef1d2453bf8587aec197ebd60f8d5260f3b02692
 :100644 000000 d3fe47b13f89b6d8eb1365cc232c7397fe0b3f8f 0000000000000000000000000000000000000000 D	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapteTableFactoryTest.java
+0	55	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapteTableFactoryTest.java
 
 7a2538487a069f741db7be72c4c7bb6e1016bdc3
 2013-03-02 21:57:35 +0100
@@ -495,6 +923,7 @@ Marek Majchrzak
 #4 added Judy Plugin help
 7a2538487a069f741db7be72c4c7bb6e1016bdc3
 :100644 100644 8abeb11a005dfe4776c33e8d16fe294ff6423a05 6cc1eefe013e03466ade0eaf562d4374a57e4fb5 M	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
+33	22	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
 
 c95b165d6ff6e3472483d23e4f5835efb4e51d99
 2013-03-02 21:36:48 +0100
@@ -533,6 +962,37 @@ c95b165d6ff6e3472483d23e4f5835efb4e51d99
 :000000 100644 0000000000000000000000000000000000000000 19b9ed5c0574097863895d38bcb5cc20984d1879 A	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeFactory.xml
 :000000 100644 0000000000000000000000000000000000000000 9d3b88769ca2e69bda1dca9303da366715eed34c A	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
 :000000 100644 0000000000000000000000000000000000000000 b3418aed8c0555cb74c57b6b786cf29b583218f6 A	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/po.png
+1	1	dev-buildtools/eclipse/formatter.xml
+10	0	ic-depress-base/.classpath
+28	0	ic-depress-base/.project
+28	0	ic-depress-base/META-INF/MANIFEST.MF
+8	0	ic-depress-base/build.properties
+-	-	ic-depress-base/lib/guava-14.0-rc3.jar
+14	0	ic-depress-base/plugin.xml
+44	0	ic-depress-base/src/org/impressivecode/depress/common/DataTableSpecUtils.java
+44	0	ic-depress-base/src/org/impressivecode/depress/scm/SCMAdapterTableFactory.java
+2	1	ic-depress-metric-judy/META-INF/MANIFEST.MF
+1	8	ic-depress-metric-judy/plugin.xml
+21	21	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapteTableFactory.java
+8	8	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeDialog.java
+24	24	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.java
+101	101	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeModel.java
+6	6	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyEntriesParser.java
+1277	1367	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyXmlResult.java
+19	19	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapteTableFactoryPluginTest.java
+5	5	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyEntriesParserTest.java
+9	0	ic-depress-metric-po/.classpath
+28	0	ic-depress-metric-po/.project
+11	0	ic-depress-metric-po/META-INF/MANIFEST.MF
+5	0	ic-depress-metric-po/build.properties
+12	0	ic-depress-metric-po/plugin.xml
+156	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/POData.java
+114	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricTableFactory.java
+32	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeDialog.java
+57	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeFactory.java
+28	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeFactory.xml
+253	0	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
+-	-	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/po.png
 
 791f5f97d1c7b3f5d4d5358af14d1c12f59d9b2c
 2013-03-02 10:32:02 +0100
@@ -543,6 +1003,9 @@ Sławek Kapłoński
 :100644 100644 0776e6e0da8b5e2adf156eea99e2e50640567b42 04b0dbc45ff97b6107e799c482d26f5e3ef718b2 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeDialog.java
 :100644 100644 0ccfaadc27973eb697985990a16ed3600bc38182 47fe5a10ca11d335ebaeceec50b22411c447ae3d M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.java
 :100644 100644 b93e24b5b2ce8b2b0e61206e265ec16bd88c5cfe 84099f19c9f1e10dc7861d96b68c68897dc3c64a M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+23	10	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeDialog.java
+1	1	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.java
+23	20	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
 
 9e0bfaf4b2449b2e81f712566f475526d30060cd
 2013-03-01 00:51:58 +0100
@@ -563,6 +1026,19 @@ Importing generated plugin template files
 :000000 100644 0000000000000000000000000000000000000000 dbab54274f2fc88d8b15b45caa9d5bcd43cf1fac A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeView.java
 :000000 100644 0000000000000000000000000000000000000000 b3418aed8c0555cb74c57b6b786cf29b583218f6 A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/default.png
 :000000 100644 0000000000000000000000000000000000000000 3807b034d7b0169d1c54e2e47ba4664e2d1bbcb2 A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/package.html
+4	3	ic-depress-scm-git/.classpath
+11	0	ic-depress-scm-git/.project
+15	0	ic-depress-scm-git/META-INF/MANIFEST.MF
+4	0	ic-depress-scm-git/build.properties
+25	0	ic-depress-scm-git/plugin.xml
+37	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeDialog.java
+58	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.java
+38	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.xml
+220	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
+65	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodePlugin.java
+61	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeView.java
+-	-	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/default.png
+25	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/package.html
 
 32f4602abf6e143b4c99f1fdcebc8890b0fcfa17
 2013-02-28 18:35:42 +0100
@@ -571,6 +1047,7 @@ Marek Majchrzak
 
 32f4602abf6e143b4c99f1fdcebc8890b0fcfa17
 :100644 100644 94bfc5de32734f065fb81ec740590db74d7a5626 aa9cd4bbce3d4936a4f8d8196d24fed5e2875c4b M	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
+2	2	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
 
 45e7552855f2e09675705472954a46f1573a7f68
 2013-02-27 23:49:44 +0100
@@ -579,6 +1056,7 @@ Marek Majchrzak
 
 45e7552855f2e09675705472954a46f1573a7f68
 :100644 100644 8abeb11a005dfe4776c33e8d16fe294ff6423a05 94bfc5de32734f065fb81ec740590db74d7a5626 M	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
+33	22	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
 
 677baf983275b6506f8d5404959c873d822bec9c
 2013-02-27 23:20:10 +0100
@@ -592,6 +1070,12 @@ Marek Majchrzak
 :000000 100644 0000000000000000000000000000000000000000 c0ee1ab4324f84b577fb47ab62dff5445e6d9179 A	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapteTableFactoryPluginTest.java
 :000000 100644 0000000000000000000000000000000000000000 d7aab991bb4294732f843a55c4945fe3fd11aa7c A	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyEntriesParserTest.java
 :000000 100644 0000000000000000000000000000000000000000 1e3119f6f7ea054eab377251f9147956ddd03922 A	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/judy.xml
+0	1	ic-depress-metric-judy/plugin.xml
+25	22	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeModel.java
+22	0	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyEntriesParser.java
+55	0	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapteTableFactoryPluginTest.java
+20	0	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyEntriesParserTest.java
+2217	0	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/judy.xml
 
 b70ca05b7f982cf43d3f86e8a169a5c35ce46eed
 2013-02-26 23:27:48 +0100
@@ -603,6 +1087,10 @@ b70ca05b7f982cf43d3f86e8a169a5c35ce46eed
 :100644 100644 cb6aa761b5b46b5277051e4c95f57eb58ec76a03 fab016eb04da21cd81b8041ce004bbb6969a32e0 M	ic-depress-metric-judy/META-INF/MANIFEST.MF
 :100644 100644 ba5c77df3f435381bc800e0356595d2af4f18589 2aa7554c0f79b526f2d21e78bc922e61438e268c M	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapteTableFactory.java
 :000000 100644 0000000000000000000000000000000000000000 d3fe47b13f89b6d8eb1365cc232c7397fe0b3f8f A	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapteTableFactoryTest.java
+1	0	ic-depress-metric-judy/.classpath
+3	1	ic-depress-metric-judy/META-INF/MANIFEST.MF
+1	1	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapteTableFactory.java
+55	0	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapteTableFactoryTest.java
 
 1a99dc5cc5a039dfefff720b3370a94b2b447138
 2013-02-25 23:12:54 +0100
@@ -611,6 +1099,7 @@ updated gitignore
 
 1a99dc5cc5a039dfefff720b3370a94b2b447138
 :100644 100644 771e20286a78ed78721a34d102ac473e9b2f6f45 0d28d71729724763a32c373e19c0226fb868199b M	.gitignore
+1	0	.gitignore
 
 fd8866f9a38e94af5b2e4eab91e1e23c2656ed41
 2013-02-25 23:12:24 +0100
@@ -646,6 +1135,34 @@ fd8866f9a38e94af5b2e4eab91e1e23c2656ed41
 :100644 000000 fb5011632c0ab8d6649a148c6fb5845a1b34c747 0000000000000000000000000000000000000000 D	ic-depress-metrics-pitest/.classpath
 :100644 000000 87d6fb7030ea8c87572caa2688ec75b8c117f248 0000000000000000000000000000000000000000 D	ic-depress-metrics-pitest/.project
 :100644 000000 8fe7ad0a32bfa904af7b96f5f323b43066ee6ab1 0000000000000000000000000000000000000000 D	ic-depress-metrics-pitest/src/org/impressivecode/depress/metrics/pitest/PluginApp.java
+291	0	dev-buildtools/eclipse/formatter.xml
+6	0	ic-depress-metric-eclipsemetrics/.classpath
+17	0	ic-depress-metric-eclipsemetrics/.project
+24	0	ic-depress-metric-eclipsemetrics/src/org/impressivecode/depress/metrics/eclipsemetrics/PluginApp.java
+7	0	ic-depress-metric-judy/.classpath
+28	0	ic-depress-metric-judy/.project
+11	0	ic-depress-metric-judy/META-INF/MANIFEST.MF
+4	0	ic-depress-metric-judy/build.properties
+20	0	ic-depress-metric-judy/plugin.xml
+63	0	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapteTableFactory.java
+42	0	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeDialog.java
+55	0	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.java
+26	0	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
+149	0	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeModel.java
+1550	0	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyXmlResult.java
+-	-	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/judy.png
+6	0	ic-depress-metric-pitest/.classpath
+17	0	ic-depress-metric-pitest/.project
+24	0	ic-depress-metric-pitest/src/org/impressivecode/depress/metric/pitest/PluginApp.java
+0	6	ic-depress-metrics-eclipsemetrics/.classpath
+0	17	ic-depress-metrics-eclipsemetrics/.project
+0	24	ic-depress-metrics-eclipsemetrics/src/org/impressivecode/depress/metrics/eclipsemetrics/PluginApp.java
+0	6	ic-depress-metrics-judy/.classpath
+0	17	ic-depress-metrics-judy/.project
+0	24	ic-depress-metrics-judy/src/org/impressivecode/depress/metrics/judy/PluginApp.java
+0	6	ic-depress-metrics-pitest/.classpath
+0	17	ic-depress-metrics-pitest/.project
+0	24	ic-depress-metrics-pitest/src/org/impressivecode/depress/metrics/pitest/PluginApp.java
 
 29bc91a1f9b407154c2fb484117f26c141a8de4f
 2013-02-25 20:42:19 +0100
@@ -653,6 +1170,7 @@ Marek Majchrzak
 #1 added copyright
 29bc91a1f9b407154c2fb484117f26c141a8de4f
 :100644 100644 d23a54cdfd877b2e88a9c02a09a82d326efd4391 53645683f753c3f5c8cb605ae86df7e43888816d M	README.md
+1	0	README.md
 
 dc008eaf7ea2e9e0b9eda19d673453beb4fa1167
 2013-02-24 22:34:30 +0100
@@ -660,6 +1178,7 @@ Marek Majchrzak
 #1 added license link
 dc008eaf7ea2e9e0b9eda19d673453beb4fa1167
 :100644 100644 d8bdf98773e328acae2a0bd2650633fa27896c28 d23a54cdfd877b2e88a9c02a09a82d326efd4391 M	README.md
+4	0	README.md
 
 a2556418b7387afc12b9cc79e6a03fd9fc8d661a
 2013-02-24 22:19:05 +0100
@@ -667,6 +1186,7 @@ Marek Majchrzak
 Update README.md
 a2556418b7387afc12b9cc79e6a03fd9fc8d661a
 :100644 100644 3de2f6acb28cde6f552475f589c736bd992f3f23 d8bdf98773e328acae2a0bd2650633fa27896c28 M	README.md
+2	2	README.md
 
 a6e818bf4968ba178b982a3e73be7d36fd4f8201
 2013-02-24 22:12:38 +0100
@@ -698,6 +1218,30 @@ a6e818bf4968ba178b982a3e73be7d36fd4f8201
 :000000 100644 0000000000000000000000000000000000000000 fb5011632c0ab8d6649a148c6fb5845a1b34c747 A	ic-depress-scm-svn/.classpath
 :000000 100644 0000000000000000000000000000000000000000 cc1427e19ba6f8ed76ac51521828a1b0e7745df6 A	ic-depress-scm-svn/.project
 :000000 100644 0000000000000000000000000000000000000000 da8571f2e4786041eb7b4d700afb33a6da3d4e8a A	ic-depress-scm-svn/src/org/impressivecode/depress/scm/svn/PluginApp.java
+6	0	ic-depress-data-anonymisation/.classpath
+17	0	ic-depress-data-anonymisation/.project
+24	0	ic-depress-data-anonymisation/src/org/impressivecode/depress/data/anonymization/PluginApp.java
+6	0	ic-depress-data-source/.classpath
+17	0	ic-depress-data-source/.project
+24	0	ic-depress-data-source/src/org/impressivecode/depress/data/source/PluginApp.java
+6	0	ic-depress-metrics-eclipsemetrics/.classpath
+17	0	ic-depress-metrics-eclipsemetrics/.project
+24	0	ic-depress-metrics-eclipsemetrics/src/org/impressivecode/depress/metrics/eclipsemetrics/PluginApp.java
+6	0	ic-depress-metrics-judy/.classpath
+17	0	ic-depress-metrics-judy/.project
+24	0	ic-depress-metrics-judy/src/org/impressivecode/depress/metrics/judy/PluginApp.java
+6	0	ic-depress-metrics-pitest/.classpath
+17	0	ic-depress-metrics-pitest/.project
+24	0	ic-depress-metrics-pitest/src/org/impressivecode/depress/metrics/pitest/PluginApp.java
+6	0	ic-depress-scm-common/.classpath
+17	0	ic-depress-scm-common/.project
+24	0	ic-depress-scm-common/src/org/impressivecode/depress/scm/common/PluginApp.java
+6	0	ic-depress-scm-git/.classpath
+17	0	ic-depress-scm-git/.project
+24	0	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/PluginApp.java
+6	0	ic-depress-scm-svn/.classpath
+17	0	ic-depress-scm-svn/.project
+24	0	ic-depress-scm-svn/src/org/impressivecode/depress/scm/svn/PluginApp.java
 
 41fb9e52da886ad4532d82aa373ae86bf1a689e7
 2013-02-24 22:11:44 +0100
@@ -706,6 +1250,7 @@ Marek Majchrzak
 
 41fb9e52da886ad4532d82aa373ae86bf1a689e7
 :000000 100644 0000000000000000000000000000000000000000 771e20286a78ed78721a34d102ac473e9b2f6f45 A	.gitignore
+4	0	.gitignore
 
 2068cf23224b019c92d351c840262a7475423aa3
 2013-02-24 21:36:58 +0100
@@ -714,6 +1259,7 @@ Marek Majchrzak
 
 2068cf23224b019c92d351c840262a7475423aa3
 :000000 100644 0000000000000000000000000000000000000000 20d40b6bceca3a6c0237d7455ebf1820aeff3680 A	license.txt
+674	0	license.txt
 
 77c03521a43005abf1f5ae1d93e2769d533383cd
 2012-10-22 03:54:43 -0700
@@ -722,3 +1268,4 @@ Initial commit
 
 77c03521a43005abf1f5ae1d93e2769d533383cd
 :000000 100644 0000000000000000000000000000000000000000 3de2f6acb28cde6f552475f589c736bd992f3f23 A	README.md
+2	0	README.md

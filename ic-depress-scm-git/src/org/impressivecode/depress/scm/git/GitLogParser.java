@@ -35,7 +35,7 @@ import org.impressivecode.depress.scm.git.GitCommit;
  *
  * Expects to receive git log generated using the following command:
  *
- * git log --pretty=format:"%H%n%ci%n%an%n%B%n%H" --raw --no-merges --abbrev=40
+ * git log --pretty=format:"%H%n%ci%n%an%n%B%n%H" --raw --no-merges --abbrev=40 --numstat
  *
  *
  * @author Tomasz Kuzemko
@@ -44,6 +44,7 @@ import org.impressivecode.depress.scm.git.GitCommit;
 
 public class GitLogParser {
     static Pattern fileCommitRegex = Pattern.compile("^:\\d{6} \\d{6} [a-f0-9]{40} [a-f0-9]{40} (A|C|D|M|R|T)\t(.*)$");
+    static Pattern fileChurnRegex = Pattern.compile("^(\\d+|-)\\t+(\\d+|-)\\t+(.*)$");
     Boolean alreadyParsed = false;
     String lastLine;
     String currentLine;
@@ -52,13 +53,12 @@ public class GitLogParser {
     Boolean readerClosed = true;
     List<GitCommit> commits;
     GitCommit currentCommit;
-    
 
     /**
      * Constructor for GitLogParser.
      * @param filePath
      *          Path to file with output of the following command:
-     *          git log --pretty=format:"%H%n%ci%n%an%n%B%n%H" --raw --no-merges --abbrev=40
+     *          git log --pretty=format:"%H%n%ci%n%an%n%B%n%H" --raw --no-merges --abbrev=40 --numstat
      * @throws IOException
      */
     public GitLogParser(String filePath) throws IOException {
@@ -96,7 +96,7 @@ public class GitLogParser {
         alreadyParsed = true;
         return commits;
     }
-    
+
     @Override
     protected void finalize() throws IOException {
         close();
@@ -108,7 +108,7 @@ public class GitLogParser {
         parseAuthor();
         parseMessage();
         parseFiles();
-        //parseMarkers();
+        parseChurn();
 
         commits.add(currentCommit);
         currentCommit = null;
@@ -160,10 +160,10 @@ public class GitLogParser {
 
     // Parse commit affected files in the following format:
     // :100644 100644 858e6bda3fbfa25d5d4c3ad5cb16f68c5048ba03 ffa8addcc98154f8c84012394c50476e84c9f3bc M ic-depress-scm-git/META-INF/MANIFEST.MF
-    protected void parseFiles() throws IOException, ParseException {
+    protected void parseFiles() throws IOException {
         String line;
 
-        while ((line = nextLine()) != null && !line.isEmpty()) {
+        while ((line = nextLine()) != null) {
             Matcher matcher = fileCommitRegex.matcher(line);
             if (matcher.matches()) {
                 String operationCode = matcher.group(1);
@@ -172,10 +172,52 @@ public class GitLogParser {
                 currentCommit.files.add(new GitCommitFile(path, operationCode.charAt(0), currentCommit));
             }
             else {
-                throw new ParseException("Not a valid file commit", lineCounter);
+                resetLine();
+                break;
             }
         }
     }
-    
-    
+
+    // Parse churn from text files in the following format:
+    // 21  183 ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
+    //
+    // Non-text files are presented like this:
+    // -      -       ic-depress-scm-git/src/org/impressivecode/depress/scm/git/default.png
+
+    protected void parseChurn() throws IOException {
+        String line;
+
+        while ((line = nextLine()) != null && !line.isEmpty()) {
+            Matcher matcher = fileChurnRegex.matcher((line));
+            if (matcher.matches()) {
+                String linesAdded   = matcher.group(1);
+                String linesRemoved = matcher.group(2);
+                String path         = matcher.group(3);
+
+                // Check if not a text file
+                if (linesAdded.equals("-") || linesRemoved.equals("-")) {
+                    continue;
+                }
+
+                int churn = Integer.parseInt(linesAdded) - Integer.parseInt(linesRemoved);
+
+                // Need to find the appropriate file to update it with churn data
+                GitCommitFile file = null;
+                for (GitCommitFile f : currentCommit.files) {
+                    if (f.getPath().equals(path)) {
+                        file = f;
+                        break;
+                    }
+                }
+                if (file == null) {
+                    throw new IllegalArgumentException(String.format("Failed to find file in commit with path {0}", path));
+                }
+
+                file.setChurn(churn);
+            } else {
+                resetLine();
+                break;
+            }
+        }
+    }
 }

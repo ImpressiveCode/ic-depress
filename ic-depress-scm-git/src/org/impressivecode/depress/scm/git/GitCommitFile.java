@@ -32,6 +32,8 @@ public class GitCommitFile {
     final String path;
     GitCommitFileOperation operation;
     GitCommit commit;
+    int churn;
+    boolean isTextFile = false;
 
     public GitCommitFile(String path) {
         this.path = path;
@@ -93,5 +95,21 @@ public class GitCommitFile {
                     "Invalid operation code '{1}'",
                     String.valueOf(operationCode)));
         }
+    }
+
+    public void setChurn(int churn) {
+        this.churn = churn;
+        this.isTextFile = true;
+    }
+
+    public boolean isTextFile() {
+        return this.isTextFile;
+    }
+
+    public int getChurn() {
+        if (!isTextFile) {
+            throw new UnsupportedOperationException("Can only retrieve churn from a text file");
+        }
+        return this.churn;
     }
 }
