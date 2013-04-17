@@ -31,16 +31,14 @@
                     <li>marker</li>
                     <li>author of change</li>
                     <li>action - it can be one of:</li>
-                    <li>
-                        <ul>
-                            <li>M - modification</li>
-                            <li>A - added</li>
-                            <li>C - copied</li>
-                            <li>D - deleted</li>
-                            <li>R - renamed</li>
-                            <li>T - file type changed (i.e. regular file to symlink)</li>
-                        </ul>
-                    </li>
+                    <ul>
+                        <li>M - modification</li>
+                        <li>A - added</li>
+                        <li>C - copied</li>
+                        <li>D - deleted</li>
+                        <li>R - renamed</li>
+                        <li>T - file type changed (i.e. regular file to symlink)</li>
+                    </ul>
                     <li>complete message from commit</li>
                     <li>original path of class</li>
                     <li>date of change</li>
