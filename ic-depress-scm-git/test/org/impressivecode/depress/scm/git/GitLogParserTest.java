@@ -68,22 +68,6 @@ public class GitLogParserTest {
         :000000 100644 0000000000000000000000000000000000000000 5d847f3c3f8ecf48e7a70eb74e62a800b72f55c1 A  ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberDataTransformer.java
         :100644 000000 2c2006ff2af9394b887035c05ea0935fbf935e13 0000000000000000000000000000000000000000 D  ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberTransformer.java
         :000000 100644 0000000000000000000000000000000000000000 475ab374c18ec0446574f29c61dc7ef711704164 A  ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java
-        2   1   ic-depress-metric-po/META-INF/MANIFEST.MF
-        54  0   ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java
-        89  0   ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeDataTransformer.java
-        0   61  ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java
-        0   75  ic-depress-metric-po/src/org/impressivecode/depress/metric/po/MetricProcessor.java
-        0   161 ic-depress-metric-po/src/org/impressivecode/depress/metric/po/POData.java
-        163 0   ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetric.java
-        254 0   ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessor.java
-        21  44  ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricTableFactory.java
-        95  0   ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricTransformer.java
-        21  183 ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
-        15  0   ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberData.java
-        104 0   ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberDataTransformer.java
-        0   69  ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberTransformer.java
-        303 0   ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java
-
          */
 
         for (GitCommit c : commits) {
@@ -109,7 +93,7 @@ public class GitLogParserTest {
 
     @Test
     public void shouldCountCommits() throws Exception {
-        assertEquals(65, commits.size());
+        assertEquals(50, commits.size());
     }
 
     @Test
@@ -136,18 +120,15 @@ public class GitLogParserTest {
     public void shouldSpecificCommitFilesMatch() throws Exception {
         assertEquals("ic-depress-metric-po/META-INF/MANIFEST.MF", specificCommit.files.get(0).getPath());
         assertEquals(GitCommitFileOperation.Modified, specificCommit.files.get(0).getOperation());
-        assertEquals(1, specificCommit.files.get(0).churn);
 
         assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java", specificCommit.files.get(1).getPath());
         assertEquals(GitCommitFileOperation.Added, specificCommit.files.get(1).getOperation());
-        assertEquals(54, specificCommit.files.get(1).churn);
 
         assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java", specificCommit.files.get(3).getPath());
         assertEquals(GitCommitFileOperation.Deleted, specificCommit.files.get(3).getOperation());
-        assertEquals(-61, specificCommit.files.get(3).churn);
 
         assertEquals("ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java", specificCommit.files.get(14).getPath());
         assertEquals(GitCommitFileOperation.Added, specificCommit.files.get(14).getOperation());
-        assertEquals(303, specificCommit.files.get(14).churn);
+
     }
 }
