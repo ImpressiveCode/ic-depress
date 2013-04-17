@@ -11,6 +11,11 @@
         <intro>
         	This node can be used to load git log from file (offline version) or directly from git repository (online version)<br />
         	<p>
+        		To use offline version of plugin You should made command:<br />
+        		<i>git log --pretty=format:"%H%n%ci%n%an%n%B%n%H" --raw --no-merges --abbrev=40</i><br />
+        		in folder with Your local git repository. Result of this command should be save in file on Your disk and this file should be added to this plugin in "Selected file" field
+        	</p>
+        	<p>
         		Node analyze informations about every class in every commit from given git's log file or git repository and return table with the following data: <br />
         		- name of class<br />
         		- marker<br />
