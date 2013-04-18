@@ -4,7 +4,7 @@ install: ant
 env:
   global:
     - KNIME_VER=2.7.3
-    - ARCH=`uname -m`
+    - ARCH=`arch`
     - REPO="adudek/ic-depress"
     - CI_HOME=`pwd`/$REPO/ic-depress-data-anonymisation
     - ECLIPSE_HOME=$CI_HOME/eclipse
