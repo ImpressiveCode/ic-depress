@@ -17,110 +17,84 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.git;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.impressivecode.depress.scm.git.GitCommit;
-
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.io.LineProcessor;
 
 /**
  * <code>GitLogParser</code> converts git's log output into appropriate
  * structure.
- *
+ * 
  * Expects to receive git log generated using the following command:
- *
- * git log --pretty=format:"%H%n%ci%n%an%n%B%n%H" --raw --no-merges --abbrev=40
- *
- *
+ * 
+ * git log --pretty=format:"@BEGIN{%H%n%ci%n%an%n%B%n%H}@END" --raw --no-merges --abbrev=40 > log.txt
+ * 
+ * 
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
+ * @author Marek Majchrzak, ImpressiveCode
  */
 
 public class GitLogParser {
-    static Pattern fileCommitRegex = Pattern.compile("^:\\d{6} \\d{6} [a-f0-9]{40} [a-f0-9]{40} (A|C|D|M|R|T)\t(.*)$");
-    Boolean alreadyParsed = false;
-    String lastLine;
-    String currentLine;
-    int lineCounter;
-    BufferedReader reader;
-    Boolean readerClosed = true;
-    List<GitCommit> commits;
-    GitCommit currentCommit;
-    
+    private static Pattern fileCommitRegex = Pattern
+            .compile("^:\\d{6} \\d{6} [a-f0-9]{40} [a-f0-9]{40} (A|C|D|M|R|T)\t(.*)$");
 
-    /**
-     * Constructor for GitLogParser.
-     * @param filePath
-     *          Path to file with output of the following command:
-     *          git log --pretty=format:"%H%n%ci%n%an%n%B%n%H" --raw --no-merges --abbrev=40
-     * @throws IOException
-     */
-    public GitLogParser(String filePath) throws IOException {
-        reader = new BufferedReader(new FileReader(filePath));
-        readerClosed = false;
-        commits = new ArrayList<GitCommit>();
-    }
+    private String lastLine;
+    private String currentLine;
+    private GitCommit currentCommit;
 
-    /**
-     * Call to release resources held by object.
-     * @throws IOException
-     */
-    public void close() throws IOException {
-        if (!readerClosed) {
-            reader.close();
-            readerClosed = true;
-        }
-    }
+    public List<GitCommit> parseEntries(final String path) throws IOException, ParseException {
+        Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
 
-    /**
-     * Will invoke the actual work of parsing given text file
-     * into list of GitCommit objects.
-     * 
-     * @return List of parsed git commits
-     * @throws IOException
-     * @throws ParseException
-     */
-    public List<GitCommit> parse() throws IOException, ParseException {
-        if (alreadyParsed) {
-            return commits;
-        }
         while (skipEmptyLines()) {
             readNextCommit();
         }
-        alreadyParsed = true;
         return commits;
     }
-    
-    @Override
-    protected void finalize() throws IOException {
-        close();
+
+    private class GitLineProcessor implements LineProcessor<List<GitCommit>> {
+        final ImmutableList.Builder<GitCommit> builder = ImmutableList.builder();
+
+        @Override
+        public List<GitCommit> getResult() {
+            return builder.build();
+        }
+
+        @Override
+        public boolean processLine(final String line) throws IOException {
+
+
+            return true;
+        }
+
     }
 
-    protected void readNextCommit() throws IOException, ParseException {
+    private void readNextCommit() throws IOException, ParseException {
         parseNewCommit();
         parseDate();
         parseAuthor();
         parseMessage();
         parseFiles();
-        //parseMarkers();
+        // parseMarkers();
 
         commits.add(currentCommit);
         currentCommit = null;
     }
 
-    protected String nextLine() throws IOException {
+    private String nextLine() throws IOException {
         if (lastLine != null) {
             currentLine = lastLine;
             lastLine = null;
         } else {
-            currentLine = reader.readLine();
-            lineCounter++;
+            currentLine = supplier.getInput().lineCounter++;
         }
         return currentLine;
     }
@@ -131,7 +105,8 @@ public class GitLogParser {
 
     protected Boolean skipEmptyLines() throws IOException {
         String line;
-        while ((line = nextLine()) != null && line.isEmpty()) {}
+        while ((line = nextLine()) != null && line.isEmpty()) {
+        }
         if (line == null) {
             return false;
         }
@@ -159,7 +134,9 @@ public class GitLogParser {
     }
 
     // Parse commit affected files in the following format:
-    // :100644 100644 858e6bda3fbfa25d5d4c3ad5cb16f68c5048ba03 ffa8addcc98154f8c84012394c50476e84c9f3bc M ic-depress-scm-git/META-INF/MANIFEST.MF
+    // :100644 100644 858e6bda3fbfa25d5d4c3ad5cb16f68c5048ba03
+    // ffa8addcc98154f8c84012394c50476e84c9f3bc M
+    // ic-depress-scm-git/META-INF/MANIFEST.MF
     protected void parseFiles() throws IOException, ParseException {
         String line;
 
@@ -167,15 +144,13 @@ public class GitLogParser {
             Matcher matcher = fileCommitRegex.matcher(line);
             if (matcher.matches()) {
                 String operationCode = matcher.group(1);
-                String path          = matcher.group(2);
+                String path = matcher.group(2);
 
                 currentCommit.files.add(new GitCommitFile(path, operationCode.charAt(0), currentCommit));
-            }
-            else {
+            } else {
                 throw new ParseException("Not a valid file commit", lineCounter);
             }
         }
     }
-    
-    
+
 }

@@ -91,7 +91,7 @@ public class PeopleOrganizationMetricTableFactory {
 
     public static DataTableSpec createHistoryColumnSpec() {
         DataColumnSpec[] allColSpecs = {
-                new DataColumnSpecCreator(SCMAdapterTableFactory.CLASS_COLNAME, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(SCMAdapterTableFactory.RESOURCE_NAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(SCMAdapterTableFactory.AUTHOR_COLNAME, StringCell.TYPE).createSpec(),
         };
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);

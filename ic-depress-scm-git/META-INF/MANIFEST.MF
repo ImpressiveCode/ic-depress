@@ -2,10 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ic-depress-scm-git
 Bundle-SymbolicName: org.impressivecode.depress.scm.git; singleton:=true
-Bundle-Version: 0.1.0
+Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: git.jar
-Bundle-Activator: org.impressivecode.depress.scm.git.GitNodePlugin
-Bundle-Vendor: Tomasz Kuzemko & Sławomir Kapłoński
+Bundle-Vendor: ImpressiveCode
 Require-Bundle: org.eclipse.core.runtime,
  org.knime.workbench.core,
  org.knime.workbench.repository,
@@ -14,5 +13,18 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Export-Package: org.impressivecode.depress.scm.git
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Import-Package: org.impressivecode.depress.scm
+Import-Package: com.google.common.annotations,
+ com.google.common.base,
+ com.google.common.base.internal,
+ com.google.common.cache,
+ com.google.common.collect,
+ com.google.common.eventbus,
+ com.google.common.hash,
+ com.google.common.io,
+ com.google.common.math,
+ com.google.common.net,
+ com.google.common.primitives,
+ com.google.common.reflect,
+ com.google.common.util.concurrent,
+ org.impressivecode.depress.scm
 
