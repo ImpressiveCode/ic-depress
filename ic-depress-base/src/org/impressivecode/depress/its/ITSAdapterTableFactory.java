@@ -18,11 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.its;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.common.DataTableSpecUtils.dateTimeCell;
-import static org.impressivecode.depress.common.DataTableSpecUtils.dateTimeOrMissingCell;
-import static org.impressivecode.depress.common.DataTableSpecUtils.stringCell;
-import static org.impressivecode.depress.common.DataTableSpecUtils.stringListOrMissingCell;
-import static org.impressivecode.depress.common.DataTableSpecUtils.stringOrMissingCell;
+import static org.impressivecode.depress.common.Cells.dateTimeCell;
+import static org.impressivecode.depress.common.Cells.dateTimeOrMissingCell;
+import static org.impressivecode.depress.common.Cells.stringCell;
+import static org.impressivecode.depress.common.Cells.stringListOrMissingCell;
+import static org.impressivecode.depress.common.Cells.stringOrMissingCell;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;

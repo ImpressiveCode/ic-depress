@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.metric.eclipsemetrics;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.common.DataTableSpecUtils.doubleOrMissingCell;
+import static org.impressivecode.depress.common.Cells.doubleOrMissingCell;
 
 import java.util.List;
 

@@ -18,8 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.metric.im;
 
 import static com.google.common.collect.Sets.newHashSet;
-import static org.impressivecode.depress.common.DataTableSpecUtils.integerCell;
-import static org.impressivecode.depress.common.DataTableSpecUtils.stringListOrMissingCell;
+import static org.impressivecode.depress.common.Cells.integerCell;
+import static org.impressivecode.depress.common.Cells.stringListOrMissingCell;
 
 import java.util.List;
 

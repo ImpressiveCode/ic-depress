@@ -20,12 +20,14 @@ package org.impressivecode.depress.common;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Sets.newHashSet;
 
+import java.util.Calendar;
 import java.util.Set;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.collection.SetCell;
+import org.knime.core.data.date.DateAndTimeCell;
 import org.knime.core.data.def.StringCell;
 
 import com.google.common.base.Function;
@@ -46,12 +48,20 @@ public final class TableCellReader {
         this.row = checkNotNull(row, "Row have to be set");
     }
 
+    public static TableCellReader reader(final DataTableSpec spec, final DataRow row){
+        return new TableCellReader(spec, row);
+    }
+
     public String key(){
         return row.getKey().getString();
     }
 
     public String string(final String colName) {
         return ((StringCell) row.getCell(spec.findColumnIndex(colName))).getStringValue();
+    }
+
+    public Calendar date(final String colName) {
+        return ((DateAndTimeCell) row.getCell(spec.findColumnIndex(colName))).getUTCCalendarClone();
     }
 
     public Set<String> stringSet(final String colName) {

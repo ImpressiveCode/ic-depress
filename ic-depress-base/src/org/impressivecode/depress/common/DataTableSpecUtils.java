@@ -17,27 +17,12 @@
  */
 package org.impressivecode.depress.common;
 
-import static com.google.common.collect.Lists.transform;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
-import java.util.TimeZone;
 
-import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.DataType;
-import org.knime.core.data.collection.CollectionCellFactory;
-import org.knime.core.data.date.DateAndTimeCell;
-import org.knime.core.data.def.DoubleCell;
-import org.knime.core.data.def.IntCell;
-import org.knime.core.data.def.StringCell;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Sets;
 
 /**
@@ -60,65 +45,4 @@ public class DataTableSpecUtils {
 
         return missing;
     }
-
-    public static DataCell integerOrMissingCell(final Integer value) {
-        return value == null ? DataType.getMissingCell() : integerCell(value);
-    }
-
-    public static DataCell integerCell(final Integer value) {
-        return new IntCell(value);
-    }
-
-    public static DataCell doubleOrMissingCell(final Double value) {
-        return value == null ? DataType.getMissingCell() : new DoubleCell(value);
-    }
-
-    public static DataCell stringOrMissingCell(final String value) {
-        return value == null ? DataType.getMissingCell() : stringCell(value);
-    }
-
-    public static DataCell stringOrMissingCell(final Enum<?> enumValue) {
-        return stringOrMissingCell(enumValue == null ? null : enumValue.name());
-    }
-
-    public static DataCell stringCell(final String value) {
-        return new StringCell(value);
-    }
-
-    public static DataCell stringCell(final Enum<?> enumValue) {
-        return stringCell(enumValue.name());
-    }
-
-    public static DataCell stringListOrMissingCell(final List<String> stringList) {
-        if (stringList == null || stringList.isEmpty()) {
-            return DataType.getMissingCell();
-        } else {
-            return stringListCell(stringList);
-        }
-    }
-
-    public static DataCell stringListCell(final List<String> stringList) {
-        List<DataCell> coll = transform(stringList, new Function<String, DataCell>() {
-            @Override
-            public DataCell apply(final String value) {
-                return stringCell(value);
-            }
-        });
-        return CollectionCellFactory.createListCell(coll);
-    }
-
-    public static DataCell dateTimeOrMissingCell(final Date value) {
-        return value == null ? DataType.getMissingCell() : dateTimeCell(value);
-    }
-
-    public static DataCell dateTimeCell(final Date date) {
-        Calendar calendar = GregorianCalendar.getInstance();
-        //FIXME: check if time zone assumption is correct
-        calendar.setTimeZone(TimeZone.getTimeZone("GMT+0"));
-        calendar.setTime(date);
-        return new DateAndTimeCell(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
-                calendar.get(Calendar.SECOND), calendar.get(Calendar.MILLISECOND));
-    }
-
 }

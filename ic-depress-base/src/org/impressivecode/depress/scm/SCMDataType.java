@@ -18,6 +18,7 @@
 package org.impressivecode.depress.scm;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -29,6 +30,60 @@ public class SCMDataType {
 
     private String resourceName;
     private Set<String> markers = Collections.emptySet();
+    private String author;
+    private String operation;
+    private String message;
+    private String path;
+    private Date commitDate;
+    private String commitID;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(final String author) {
+        this.author = author;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public void setOperation(final String operation) {
+        this.operation = operation;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(final String message) {
+        this.message = message;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(final String path) {
+        this.path = path;
+    }
+
+    public Date getCommitDate() {
+        return commitDate;
+    }
+
+    public void setCommitDate(final Date commitDate) {
+        this.commitDate = commitDate;
+    }
+
+    public String getCommitID() {
+        return commitID;
+    }
+
+    public void setCommitID(final String commitID) {
+        this.commitID = commitID;
+    }
 
     public void setResourceName(final String resource) {
         this.resourceName = resource;
