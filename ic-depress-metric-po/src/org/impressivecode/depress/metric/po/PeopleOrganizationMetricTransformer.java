@@ -17,8 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.metric.po;
 
-import static org.impressivecode.depress.common.DataTableSpecUtils.doubleOrMissingCell;
-import static org.impressivecode.depress.common.DataTableSpecUtils.integerOrMissingCell;
+import static org.impressivecode.depress.common.Cells.doubleOrMissingCell;
+import static org.impressivecode.depress.common.Cells.integerOrMissingCell;
 
 import java.util.List;
 

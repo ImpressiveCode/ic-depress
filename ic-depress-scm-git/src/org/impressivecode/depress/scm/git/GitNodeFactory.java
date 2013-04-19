@@ -24,12 +24,11 @@ import org.knime.core.node.NodeView;
 /**
  * <code>NodeFactory</code> for the "Git" Node.
  * 
- *
+ * 
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
  */
-public class GitNodeFactory
-extends NodeFactory<GitNodeModel> {
+public class GitNodeFactory extends NodeFactory<GitNodeModel> {
 
     @Override
     public GitNodeModel createNodeModel() {
@@ -42,8 +41,7 @@ extends NodeFactory<GitNodeModel> {
     }
 
     @Override
-    public NodeView<GitNodeModel> createNodeView(final int viewIndex,
-            final GitNodeModel nodeModel) {
+    public NodeView<GitNodeModel> createNodeView(final int viewIndex, final GitNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 
@@ -57,4 +55,3 @@ extends NodeFactory<GitNodeModel> {
         return new GitNodeDialog();
     }
 }
-

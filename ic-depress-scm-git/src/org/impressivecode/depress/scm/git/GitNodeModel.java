@@ -17,20 +17,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.git;
 
-import static org.impressivecode.depress.scm.git.GitTableFactory.createTableRow;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.impressivecode.depress.scm.SCMAdapterTableFactory;
+import org.impressivecode.depress.scm.SCMDataType;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
@@ -45,19 +44,16 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelOptionalString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
-
 /**
- * This is the model implementation of Git.
  * 
- *
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
+ * @author Marek Majchrzak, ImpressiveCode
  */
 public class GitNodeModel extends NodeModel {
 
     // the logger instance
-    private static final NodeLogger logger = NodeLogger
-            .getLogger(GitNodeModel.class);
+    private static final NodeLogger logger = NodeLogger.getLogger(GitNodeModel.class);
 
     static final String GIT_FILENAME = "depress.scm.git.filename";
     static final String GIT_FILENAME_DEFAULT = "";
@@ -68,44 +64,38 @@ public class GitNodeModel extends NodeModel {
 
     static final Boolean GIT_PACKAGENAME_ACTIVE_STATE = false;
 
-    public GitLogParser parser;
-
     // example value: the models count variable filled from the dialog
     // and used in the models execution method. The default components of the
     // dialog work with "SettingsModels".
-    private final SettingsModelString gitFileName =  new SettingsModelString(GitNodeModel.GIT_FILENAME,
+    private final SettingsModelString gitFileName = new SettingsModelString(GitNodeModel.GIT_FILENAME,
             GitNodeModel.GIT_FILENAME_DEFAULT);
     private final SettingsModelString gitRegExp = new SettingsModelString(GitNodeModel.GIT_REGEXP,
             GitNodeModel.GIT_REGEXP_DEFAULT);
-    private final SettingsModelOptionalString gitPackageName = new SettingsModelOptionalString(GitNodeModel.GIT_PACKAGENAME,
-            GitNodeModel.GIT_PACKAGENAME_DEFAULT,
+    private final SettingsModelOptionalString gitPackageName = new SettingsModelOptionalString(
+            GitNodeModel.GIT_PACKAGENAME, GitNodeModel.GIT_PACKAGENAME_DEFAULT,
             GitNodeModel.GIT_PACKAGENAME_ACTIVE_STATE);
 
-    /**
-     * Constructor for the node model.
-     */
     protected GitNodeModel() {
-
         super(0, 1);
     }
 
     @Override
-    protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
-            final ExecutionContext exec) throws Exception {
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
+            throws Exception {
 
-        logger.info("Reading logs from file "+gitFileName);
-        DataTableSpec outputSpec = GitTableFactory.createDataColumnSpec();
+        logger.info("Reading logs from file " + this.gitFileName.getStringValue());
+        DataTableSpec outputSpec = SCMAdapterTableFactory.createDataColumnSpec();
         BufferedDataContainer container = exec.createDataContainer(outputSpec);
 
         logger.info("Creating Output table with data from git file...");
 
-        this.parser = new GitLogParser(this.gitFileName.getStringValue());
-        List<GitCommit> commits = this.parser.parse();
+        GitLogParser parser = new GitLogParser();
+        List<GitCommit> commits = parser.parse(this.gitFileName.getStringValue());
 
         BufferedDataTable out = transform(container, commits, exec);
         logger.info("Reading git logs finished.");
 
-        return new BufferedDataTable[]{out};
+        return new BufferedDataTable[] { out };
     }
 
     @Override
@@ -115,7 +105,7 @@ public class GitNodeModel extends NodeModel {
 
     @Override
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
-        return new DataTableSpec[]{null};
+        return new DataTableSpec[] { null };
     }
 
     @Override
@@ -127,8 +117,7 @@ public class GitNodeModel extends NodeModel {
     }
 
     @Override
-    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
-            throws InvalidSettingsException {
+    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
 
         gitFileName.loadSettingsFrom(settings);
         gitRegExp.loadSettingsFrom(settings);
@@ -136,8 +125,7 @@ public class GitNodeModel extends NodeModel {
     }
 
     @Override
-    protected void validateSettings(final NodeSettingsRO settings)
-            throws InvalidSettingsException {
+    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
 
         gitFileName.validateSettings(settings);
         gitRegExp.validateSettings(settings);
@@ -146,15 +134,13 @@ public class GitNodeModel extends NodeModel {
     }
 
     @Override
-    protected void loadInternals(final File internDir,
-            final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
+    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+    CanceledExecutionException {
     }
 
     @Override
-    protected void saveInternals(final File internDir,
-            final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
+    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+    CanceledExecutionException {
     }
 
     private BufferedDataTable transform(final BufferedDataContainer container, final List<GitCommit> commits,
@@ -171,19 +157,19 @@ public class GitNodeModel extends NodeModel {
                     logger.debug("Transforming commit: " + commit.getId());
                 }
 
-                for (GitCommitFile file : commit.files){
-                    if (this.isClassFile(file.getPath())){
+                for (GitCommitFile file : commit.files) {
+                    if (this.isClassFile(file.getPath())) {
                         Set<String> marker = this.getMarkers(commit.getMessage());
                         String author = commit.getAuthor();
                         String operation = file.getOperation().toString();
                         String message = commit.getMessage();
                         String path = file.getPath();
                         String className = this.getClassNameFromPath(path);
-                        String commitDate = this.parseDate(commit.getDate());
                         String uid = this.calculateMd5(commit.getId(), file.getPath());
                         String commit_id = commit.getId();
 
-                        addRowToTable(container, className, marker, author, operation, message, path, commitDate, uid, commit_id);
+                        addRowToTable(container, className, marker, author, operation, message, path, commit.getDate(), uid,
+                                commit_id);
                     }
                 }
             }
@@ -200,29 +186,41 @@ public class GitNodeModel extends NodeModel {
         exec.setProgress(i / size);
     }
 
-    private void addRowToTable(final BufferedDataContainer container,
-            final String className, final Set<String> marker, final String author, final String operation,
-            final String message, final String path, final String commitDate, final String uid, final String commitID) {
-        container.addRowToTable(createTableRow(className, marker, author, operation, message, path, commitDate, uid, commitID));
+    private void addRowToTable(final BufferedDataContainer container, final String className, final Set<String> marker,
+            final String author, final String operation, final String message, final String path,
+            final Date commitDate, final String uid, final String commitID) {
+        SCMDataType scm = scm(className, marker, author, operation, message, path, commitDate, uid,
+                commitID);
+        container.addRowToTable(SCMAdapterTableFactory.createTableRow(uid, scm));
     }
 
-    private String parseDate(Date date){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return formatter.format(date);
+    private SCMDataType scm(final String className, final Set<String> marker, final String author, final String operation, final String message,
+            final String path, final Date commitDate, final String uid, final String commitID) {
+        SCMDataType scm = new SCMDataType();
+        scm.setAuthor(author);
+        scm.setCommitDate(commitDate);
+        scm.setCommitID(commitID);
+        scm.setMarkers(marker);
+        scm.setMessage(message);
+        scm.setOperation(operation);
+        scm.setPath(path);
+        scm.setResourceName(className);
+        return scm;
     }
 
-    private String getClassNameFromPath(String path){
+    private String getClassNameFromPath(final String path) {
         String class_name;
         String[] package_path_to_class;
-        if (this.gitPackageName.isActive()){
+        if (this.gitPackageName.isActive()) {
             package_path_to_class = path.split(this.gitPackageName.getStringValue());
             if (package_path_to_class.length >= 2) {
-                class_name = this.gitPackageName.getStringValue()+package_path_to_class[1];
+                class_name = this.gitPackageName.getStringValue() + package_path_to_class[1];
                 class_name = class_name.replaceAll("/", ".");
                 class_name = class_name.substring(0, class_name.lastIndexOf("."));
             } else {
-                //if there is no gitPackageName value in path to file
-                //than this is probably not class file but some other file and than class name is empty:
+                // if there is no gitPackageName value in path to file
+                // than this is probably not class file but some other file and
+                // than class name is empty:
                 class_name = "";
             }
         } else {
@@ -231,7 +229,7 @@ public class GitNodeModel extends NodeModel {
         return class_name;
     }
 
-    private String calculateMd5(String value1, String value2) throws NoSuchAlgorithmException{
+    private String calculateMd5(final String value1, final String value2) throws NoSuchAlgorithmException {
         String input = value1 + value2;
         MessageDigest mDigest = MessageDigest.getInstance("MD5");
         byte[] result = mDigest.digest(input.getBytes());
@@ -243,21 +241,21 @@ public class GitNodeModel extends NodeModel {
         return sb.toString();
     }
 
-    private boolean isClassFile(String path){
+    private boolean isClassFile(final String path) {
         String file_extension = path.substring(path.lastIndexOf("."));
         return file_extension.equals(".java");
     }
 
-    private Set<String> getMarkers(String message) {
+    private Set<String> getMarkers(final String message) {
         Pattern markersRegex = Pattern.compile(this.gitRegExp.getStringValue());
         Set<String> markers = new HashSet<String>();
-        //if markers regex is empty than we don't search markers:
-        if (!markersRegex.pattern().isEmpty()){
+        // if markers regex is empty than we don't search markers:
+        if (!markersRegex.pattern().isEmpty()) {
             Matcher markersMatcher = markersRegex.matcher(message);
             String currentCommitMarker;
-            if (markersMatcher.find()){
+            if (markersMatcher.find()) {
                 currentCommitMarker = message.substring(markersMatcher.end()).split(" ", 2)[0];
-                if (!currentCommitMarker.isEmpty()){
+                if (!currentCommitMarker.isEmpty()) {
                     markers.add(currentCommitMarker);
                 }
             }
@@ -265,4 +263,3 @@ public class GitNodeModel extends NodeModel {
         return markers;
     }
 }
-

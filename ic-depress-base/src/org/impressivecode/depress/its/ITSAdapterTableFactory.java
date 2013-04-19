@@ -18,10 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.its;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.common.DataTableSpecUtils.dateTimeCell;
-import static org.impressivecode.depress.common.DataTableSpecUtils.dateTimeOrMissingCell;
-import static org.impressivecode.depress.common.DataTableSpecUtils.stringListOrMissingCell;
-import static org.impressivecode.depress.common.DataTableSpecUtils.stringOrMissingCell;
+import static org.impressivecode.depress.common.Cells.dateTimeCell;
+import static org.impressivecode.depress.common.Cells.dateTimeOrMissingCell;
+import static org.impressivecode.depress.common.Cells.stringCell;
+import static org.impressivecode.depress.common.Cells.stringListOrMissingCell;
+import static org.impressivecode.depress.common.Cells.stringOrMissingCell;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
@@ -40,6 +41,7 @@ import org.knime.core.data.def.StringCell;
  */
 public class ITSAdapterTableFactory {
 
+    public static final String ISSUE_ID = "ID";
     public static final String CREATION_DATE = "Created";
     public static final String RESOLVED_DATE = "Resolved";
     public static final String UPDATED_DATE = "Updated";
@@ -60,6 +62,7 @@ public class ITSAdapterTableFactory {
 
     public static DataTableSpec createDataColumnSpec() {
         DataColumnSpec[] allColSpecs = { 
+                new DataColumnSpecCreator(ISSUE_ID, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(CREATION_DATE, DateAndTimeCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(RESOLVED_DATE, DateAndTimeCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(UPDATED_DATE, DateAndTimeCell.TYPE).createSpec(),
@@ -80,6 +83,7 @@ public class ITSAdapterTableFactory {
     public static DataRow createTableRow(final ITSDataType itsData) {
         assertData(itsData);
         DataCell[] cells = { 
+                stringCell(itsData.getIssueId()),
                 dateTimeCell(itsData.getCreated()), 
                 dateTimeOrMissingCell(itsData.getResolved()),
                 dateTimeOrMissingCell(itsData.getUpdated()), 

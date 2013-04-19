@@ -1,10 +1,9 @@
 package org.impressivecode.depress.its;
 
+import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.fest.assertions.Assertions.assertThat;
-import static org.impressivecode.depress.common.DataTableSpecUtils.extractListStringCellValue;
-import static org.impressivecode.depress.common.DataTableSpecUtils.extractStringCellValue;
-import static org.impressivecode.depress.common.DataTableSpecUtils.isMissing;
+import static org.impressivecode.depress.its.ITSAdapterTableFactory.ISSUE_ID;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.RESOLVED_DATE;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.SUMMARY;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.UPDATED_DATE;
@@ -16,12 +15,17 @@ import static org.mockito.Mockito.when;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
+import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.date.DateAndTimeCell;
+import org.knime.core.data.def.StringCell;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
 public class ITSAdapterTableFactoryTest {
@@ -29,7 +33,7 @@ public class ITSAdapterTableFactoryTest {
     @Test
     public void shouldCreateITSTableSpec() {
         DataTableSpec spec = createDataColumnSpec();
-        assertThat(spec.getNumColumns()).isEqualTo(13);
+        assertThat(spec.getNumColumns()).isEqualTo(14);
     }
 
     @Test
@@ -41,6 +45,17 @@ public class ITSAdapterTableFactoryTest {
 
         // then
         assertThat(row.getKey().getString()).isEqualTo("BUG-11");
+    }
+
+    @Test
+    public void shouldTransformIssueId() {
+        // given
+        ITSDataType its = mockITSDataType();
+        // when
+        DataRow row = ITSAdapterTableFactory.createTableRow(its);
+
+        // then
+        assertThat(extractStringCellValue(row, ISSUE_ID)).isEqualTo("BUG-11");
     }
 
     @Test
@@ -292,6 +307,24 @@ public class ITSAdapterTableFactoryTest {
 
     private Calendar extractDateCellCalendarValue(final DataRow row, final String colName) {
         return ((DateAndTimeCell) row.getCell(createDataColumnSpec().findColumnIndex(colName))).getUTCCalendarClone();
+    }
+
+    public static boolean isMissing(final DataRow row, final String colName) {
+        return row.getCell(createDataColumnSpec().findColumnIndex(colName)).isMissing();
+    }
+
+    public static String extractStringCellValue(final DataRow row, final String colName) {
+        return ((StringCell) row.getCell(createDataColumnSpec().findColumnIndex(colName))).getStringValue();
+    }
+
+    public static List<String> extractListStringCellValue(final DataRow row, final String colName) {
+        ListCell listValue = ((ListCell) row.getCell(createDataColumnSpec().findColumnIndex(colName)));
+        return newArrayList(transform(listValue, new Function<DataCell, String>() {
+            @Override
+            public String apply(final DataCell cell) {
+                return ((StringCell) cell).getStringValue();
+            }
+        }));
     }
 
     private ITSDataType mockITSDataType() {

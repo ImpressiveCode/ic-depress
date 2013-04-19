@@ -30,20 +30,20 @@
                     <li>name of class</li>
                     <li>marker</li>
                     <li>author of change</li>
-                    <li>action - it can be one of:</li>
-                    <ul>
-                        <li>M - modification</li>
+                    <li>action</li>
+                    <li>complete message from commit</li>
+                    <li>original path of class</li>
+                    <li>date of change</li>
+                    <li>Unique ID of record</li>
+                </ul>
+                Action could consists of following values:
+                 <ul>   <li>M - modification</li>
                         <li>A - added</li>
                         <li>C - copied</li>
                         <li>D - deleted</li>
                         <li>R - renamed</li>
                         <li>T - file type changed (i.e. regular file to symlink)</li>
                     </ul>
-                    <li>complete message from commit</li>
-                    <li>original path of class</li>
-                    <li>date of change</li>
-                    <li>Unique ID of record</li>
-                </ul>
             </p>
             Git logo icon made by <a href="http://henrik.nyh.se/octopress/2007/06/alternative-git-logo-and-favicon/">Henrik Nyh</a>
         </intro>
