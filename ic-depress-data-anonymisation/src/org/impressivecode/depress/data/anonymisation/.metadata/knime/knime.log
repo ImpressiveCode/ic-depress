@@ -1,0 +1,36 @@
+2013-04-17 17:21:06,941 INFO  main NodeLogger : #############################################################
+2013-04-17 17:21:06,942 INFO  main NodeLogger : #                                                           #
+2013-04-17 17:21:06,942 INFO  main NodeLogger : # Welcome to KNIME v2.7.3.0037004 (Build March 28, 2013)         #
+2013-04-17 17:21:06,942 INFO  main NodeLogger : # the Konstanz Information Miner                            #
+2013-04-17 17:21:06,942 INFO  main NodeLogger : # Based on Eclipse, www.eclipse.org                         #
+2013-04-17 17:21:06,942 INFO  main NodeLogger : # Uses: Java, GEF, Log4J                                    #
+2013-04-17 17:21:06,942 INFO  main NodeLogger : #                                                           #
+2013-04-17 17:21:06,942 INFO  main NodeLogger : #############################################################
+2013-04-17 17:21:06,942 INFO  main NodeLogger : #                                                           #
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # Copyright, 2003 - 2012                                    #
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # University of Konstanz, Germany.                          #
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # Chair for Bioinformatics and Information Mining           #
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # Prof. Dr. Michael R. Berthold                             #
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # and KNIME GmbH, Konstanz, Germany                         #
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # website: http://www.knime.org                             #
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # email: contact@knime.org                                  #
+2013-04-17 17:21:06,943 INFO  main NodeLogger : #                                                           #
+2013-04-17 17:21:06,943 INFO  main NodeLogger : #############################################################
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # For more details see the KNIME log file:                  #
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # D:\Dropbox\Uczelnia\Modele i metryki jakoœci w in¿ynierii oprogramowania\Projekt\ic-depress\ic-depress-data-anonymisation\src\org\impressivecode\depress\data\anonymisation\.metadata\knime\knime.log
+2013-04-17 17:21:06,943 INFO  main NodeLogger : #-----------------------------------------------------------#
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # logging date=Wed Apr 17 17:21:06 CEST 2013
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # java.version=1.7.0_07
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # java.vm.version=23.3-b01
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # java.vendor=Oracle Corporation
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # os.name=Windows 7
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # os.arch=amd64
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # number of CPUs=6
+2013-04-17 17:21:06,943 INFO  main NodeLogger : # assertions=off
+2013-04-17 17:21:06,944 INFO  main NodeLogger : # host=PC
+2013-04-17 17:21:06,946 INFO  main NodeLogger : # username=Afghani
+2013-04-17 17:21:06,947 INFO  main NodeLogger : # max mem=341MB
+2013-04-17 17:21:06,947 INFO  main NodeLogger : # application=org.eclipse.ui.ide.workbench
+2013-04-17 17:21:06,947 INFO  main NodeLogger : #############################################################
+2013-04-17 17:21:06,955 INFO  main KnimeEnterpriseFileSystemPlugin : Started KNIME Enterprise Remote File System plug-in
+2013-04-17 17:21:09,189 DEBUG main UpdateManager : Updating registered ServerSpaces every 2000 msec.
