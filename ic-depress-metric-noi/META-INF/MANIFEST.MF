@@ -10,9 +10,7 @@ Require-Bundle: org.knime.base;bundle-version="2.7.2",
  org.junit
 Eclipse-RegisterBuddy: org.impressivecode.depress.base
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Bundle-ClassPath: lib/fest-assert-1.4.jar,
- lib/fest-util-1.1.6.jar,
- .
+Bundle-ClassPath: .
 Import-Package: org.fest.assertions,
  org.mockito,
  org.mockito.stubbing

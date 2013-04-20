@@ -39,8 +39,7 @@ public class IssuesMetricNodeFactory extends NodeFactory<IssuesMetricNodeModel> 
     }
 
     @Override
-    public NodeView<IssuesMetricNodeModel> createNodeView(final int viewIndex,
-            final IssuesMetricNodeModel nodeModel) {
+    public NodeView<IssuesMetricNodeModel> createNodeView(final int viewIndex, final IssuesMetricNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 
@@ -53,5 +52,4 @@ public class IssuesMetricNodeFactory extends NodeFactory<IssuesMetricNodeModel> 
     public NodeDialogPane createNodeDialogPane() {
         return new IssuesMetricNodeDialog();
     }
-
 }
