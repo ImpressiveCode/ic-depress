@@ -15,7 +15,9 @@ before_install:
   - ln -s `pwd`/eclipse_knime_$KNIME_VER $ECLIPSE_HOME
   - cd $CI_HOME
 
-script: ant
+script:
+  - ant
+  - ant test-knime
 
 language: java
 jdk:
