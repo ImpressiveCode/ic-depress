@@ -16,21 +16,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.impressivecode.depress.scm.git;
+package org.impressivecode.depress.scm;
 
-/*
+/**
  * Allowed operations on GitCommitFile
- *
+ * 
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
- *
+ * 
  */
 
-public enum GitCommitFileOperation {
-	Modified,
-	Added,
-	Copied,
-	Deleted,
-	Renamed,
-	TypeChanged
+public enum SCMOperation {
+    MODIFIED, ADDED, COPIED, DELETED, RENAMED, OTHER
 }

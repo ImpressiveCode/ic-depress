@@ -1,5 +1,5 @@
 965885f3c9f03b62a41e79d8f95d3e0b2620215f
-2013-03-24 23:46:28 +0100
+1364165188
 Tomasz Kuzemko
 GitTableFactory now extends SCMAdapterTableFactory. Also added tests.
 
@@ -11,7 +11,7 @@ GitTableFactory now extends SCMAdapterTableFactory. Also added tests.
 :000000 100644 0000000000000000000000000000000000000000 dbb1f85acd56841ca41ccbf55830a6a5988b9641 A	ic-depress-scm-git/test/org/impressivecode/depress/scm/git/GitTableFactoryTest.java
 
 87697b97fd92f7d492f97d5bd3dbc12839f3e11f
-2013-03-24 22:37:59 +0100
+1364161079
 Tomasz Kuzemko
 Added classes GitCommit, GitCommitFile and enum GitCommitFileOperation
 
@@ -20,8 +20,16 @@ Added classes GitCommit, GitCommitFile and enum GitCommitFileOperation
 :000000 100644 0000000000000000000000000000000000000000 5d1f86f72f7393e4a0a8f04ae3f266c3c14e371c A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommitFile.java
 :000000 100644 0000000000000000000000000000000000000000 3b0d7e75f35fd32e36d4f3a830c6893e630ea91b A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitCommitFileOperation.java
 
+58d0f9549014e63d21e037873adb68ee77396f82
+1364156504
+Marek Majchrzak
+#27 example added
+
+58d0f9549014e63d21e037873adb68ee77396f82
+:100644 100644 c312ba8d13e90f7526d9bd0519e2a2f4aadfd284 ba7c79b1d52b6ba716946352a54c7c802f56d47d M	ic-depress-its-jira/build.properties
+
 94bf0858a67a67379bdc4f35a6b39db401638b55
-2013-03-24 21:16:53 +0100
+1364156213
 Marek Majchrzak
 LICENSE added 327
 
@@ -29,7 +37,7 @@ LICENSE added 327
 :000000 100644 0000000000000000000000000000000000000000 20d40b6bceca3a6c0237d7455ebf1820aeff3680 A	ic-depress-its-jira/LICENSE.txt
 
 7cd9a5169dc2acca345ecbc800a5b2e2966eb8dd
-2013-03-24 21:15:47 +0100
+1364156147
 Marek Majchrzak
 #27 snapshot generated, classpath loading issues fixed
 
@@ -60,7 +68,7 @@ Marek Majchrzak
 :100644 100644 de702169b484411699495c93331ab7a5247d6c13 0c9368300f0963e2ac2bf7513f9cbe2c289a2bbb M	ic-depress-metric-po/META-INF/MANIFEST.MF
 
 1154062ecba7239dc6371dca77604210d7d84071
-2013-03-24 20:40:43 +0100
+1364154043
 Tomasz Kuzemko
 Added junit to requirements
 
@@ -68,7 +76,7 @@ Added junit to requirements
 :100644 100644 9059480f436a45e577f4bb8effbf6094007ac4a1 375fff00bc44af7aa162b097e0f38b5c837eeeb3 M	ic-depress-scm-git/META-INF/MANIFEST.MF
 
 c7e3aa6e9b9616a33dc1c5d8cde471f3f8a00754
-2013-03-24 19:52:36 +0100
+1364151156
 Marek Majchrzak
 Jira #27 refactored
 
@@ -97,7 +105,7 @@ c7e3aa6e9b9616a33dc1c5d8cde471f3f8a00754
 :000000 100644 0000000000000000000000000000000000000000 a0c76b2ddd8b098b10836e3479c5111a5144428f A	ic-depress-its-jira/test/org/impressivecode/depress/its/jira/jira.xml
 
 b720056a3ac5c4376ec848ca23bc102cb1b2adb8
-2013-03-24 19:52:12 +0100
+1364151132
 Marek Majchrzak
 Jira #27 refactored
 
@@ -126,7 +134,7 @@ b720056a3ac5c4376ec848ca23bc102cb1b2adb8
 :100644 000000 a0c76b2ddd8b098b10836e3479c5111a5144428f 0000000000000000000000000000000000000000 D	ic-depress-metric-jira/test/org/impressivecode/depress/its/jira/jira.xml
 
 d3c846764dc14788b7fa14cff5992bf4482f7f14
-2013-03-24 19:42:01 +0100
+1364150521
 Marek Majchrzak
 JIRA Adapter plugin introduced
 
@@ -171,7 +179,7 @@ d3c846764dc14788b7fa14cff5992bf4482f7f14
 :100644 100644 dc0c26ebe3527d15482b65be83234fe3a7f7b892 6dd1c697ee6ff3adf26882a9b55ae66834a42a1d M	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyEntriesParser.java
 
 c30dcfd113fdbf72e14e82920bc28bde689d42c6
-2013-03-20 22:52:17 +0100
+1363816337
 Marek Majchrzak
 examples path fixed
 
@@ -180,7 +188,7 @@ c30dcfd113fdbf72e14e82920bc28bde689d42c6
 :100644 100644 39c0302b06ed6ef39ca48b3ed9bc212fd36410c6 7afdaea0d176c3acb2feaae108ac72fccffd88bf M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeFactory.xml
 
 3a399db086540309dbc33ff5be6fc4fb0c62e0f2
-2013-03-20 22:41:29 +0100
+1363815689
 Marek Majchrzak
 jacoco,po,judy help imprvoved
 
@@ -193,7 +201,7 @@ jacoco,po,judy help imprvoved
 :100644 100644 f5c62399493c90c9b95e95d0f06a3895c33d3d89 39c0302b06ed6ef39ca48b3ed9bc212fd36410c6 M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeFactory.xml
 
 0294b5af1bf2cb2181004de6e5839493d7c0ca8f
-2013-03-20 22:35:00 +0100
+1363815300
 Marek Majchrzak
 #24 help added
 
@@ -204,9 +212,9 @@ Marek Majchrzak
 :100644 100644 680770ddd3ce271faf199bf81d4589b4f8750fe5 8221a0253223e04c511bff2a89474a8ca50e4f86 M	ic-depress-metric-jacoco/src/org/impressivecode/depress/metric/jacoco/JaCoCoAdapterNodeFactory.xml
 
 8b6ba1135b2a2b70cb22ea15660c6f99f7da2b75
-2013-03-20 21:53:38 +0100
+1363812818
 Marek Majchrzak
-#24 JaCoCo Adapter introduced
+#24 JaCoCo Adapter introduced, 
 
 8b6ba1135b2a2b70cb22ea15660c6f99f7da2b75
 :000000 100644 0000000000000000000000000000000000000000 a1eef5728fa57c68fb9845813000a576b1981354 A	ic-depress-metric-jacoco/.classpath
@@ -232,7 +240,7 @@ Marek Majchrzak
 :000000 100644 0000000000000000000000000000000000000000 4b865f726c379351f7e5b64be23f3f1f72c6dcf2 A	ic-depress-metric-jacoco/test/org/impressivecode/depress/metric/jacoco/jacoco.xml
 
 7850b088bd093e91d62d79017a50491005b741aa
-2013-03-20 00:26:20 +0100
+1363735580
 Sławek Kapłoński
 #21 Default icon of node is repleaced by Git logo icon
 
@@ -241,7 +249,7 @@ Sławek Kapłoński
 :000000 100644 0000000000000000000000000000000000000000 48fb14df2d259a199c71f3292fbe80d9bad23019 A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/git.png
 
 5c0fe5126a07c19406427a71a497878cb9eac0a5
-2013-03-19 23:50:57 +0100
+1363733457
 Sławek Kapłoński
 #18 Added plugin description in xml file
 
@@ -249,7 +257,7 @@ Sławek Kapłoński
 :100644 100644 859cca4dafa6e4a52e58ce30f833649793c0c54b f869267b668327aab172f72a01e7e358cd8567d0 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.xml
 
 6149c977d150572470d282d098e2f3f780ee8d73
-2013-03-19 22:11:46 +0100
+1363727506
 Marek Majchrzak
 Rename license.txt to LICENSE.txt
 6149c977d150572470d282d098e2f3f780ee8d73
@@ -257,7 +265,7 @@ Rename license.txt to LICENSE.txt
 :100644 000000 20d40b6bceca3a6c0237d7455ebf1820aeff3680 0000000000000000000000000000000000000000 D	license.txt
 
 102d22f2709dfc9aaee34a1e176bfe1304a4f2f1
-2013-03-19 22:08:42 +0100
+1363727322
 Marek Majchrzak
 #9 bug fixes, added help
 
@@ -275,7 +283,7 @@ Marek Majchrzak
 :100644 100644 5d847f3c3f8ecf48e7a70eb74e62a800b72f55c1 2ac2ac9f95a89b5d5427cb2900940137d1b90de6 M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberDataTransformer.java
 
 fd9eed0924057e9d306555b478645b24c8a001c1
-2013-03-18 20:59:30 +0100
+1363636770
 Marek Majchrzak
 judy logo changed
 
@@ -283,9 +291,9 @@ fd9eed0924057e9d306555b478645b24c8a001c1
 :100644 100644 5fe0fc2f8362ad2d632cbce68c33e38cb6c5d64b f66b9dd7f150401f3545a8957957c9819f6341d4 M	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/judy.png
 
 45a2beca9d97777733e1a472e54c003551b7d9b1
-2013-03-18 20:49:14 +0100
+1363636154
 Marek Majchrzak
-#9 base version of PO Metric introduced
+#9 base version of PO Metric introduced, #18 this is just matcher test
 
 45a2beca9d97777733e1a472e54c003551b7d9b1
 :100644 100644 a76f08c2f2f5852d4054a5fc392c10a00c6115cd de702169b484411699495c93331ab7a5247d6c13 M	ic-depress-metric-po/META-INF/MANIFEST.MF
@@ -305,7 +313,7 @@ Marek Majchrzak
 :000000 100644 0000000000000000000000000000000000000000 475ab374c18ec0446574f29c61dc7ef711704164 A	ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java
 
 777d085008ee849a13885afbcf1c12cc1c8a70f5
-2013-03-18 00:56:51 +0100
+1363564611
 Tomasz Kuzemko
 #16 fixed @author tags
 
@@ -317,7 +325,7 @@ Tomasz Kuzemko
 :100644 100644 663e32f401eac7f443b0fce3b9778fe924eebc16 c2c334c58141b656a4e45b933fa601bc5fd1fb07 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeView.java
 
 968a800d55cd3a3b5d0acc9266c2efa77e5aa47f
-2013-03-18 00:52:19 +0100
+1363564339
 Tomasz Kuzemko
 #15 copyright info fixed
 
@@ -330,7 +338,7 @@ Tomasz Kuzemko
 :100644 100644 0f8178df69c5bcd86a701560c3b802cfd4098e33 7cf3525895ab77b37d8a9049761b4e17f272dfa5 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/PluginApp.java
 
 7142dfd7751b0dd4b1f57a6c0c6688d47e8b4729
-2013-03-18 00:35:07 +0100
+1363563307
 Tomasz Kuzemko
 #20 removed package.html
 
@@ -338,7 +346,7 @@ Tomasz Kuzemko
 :100644 000000 3807b034d7b0169d1c54e2e47ba4664e2d1bbcb2 0000000000000000000000000000000000000000 D	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/package.html
 
 383d48a82f6cd02c675eb7e99cfaa336e5dd4fc3
-2013-03-18 00:33:15 +0100
+1363563195
 Tomasz Kuzemko
 #17 added bundle execution environment
 
@@ -346,7 +354,7 @@ Tomasz Kuzemko
 :100644 100644 ffa8addcc98154f8c84012394c50476e84c9f3bc 9059480f436a45e577f4bb8effbf6094007ac4a1 M	ic-depress-scm-git/META-INF/MANIFEST.MF
 
 de96ba94db35e68b88d8dd5ddd913c87ad8f1072
-2013-03-18 00:32:03 +0100
+1363563123
 Tomasz Kuzemko
 #14 fixed category definition
 
@@ -354,7 +362,7 @@ de96ba94db35e68b88d8dd5ddd913c87ad8f1072
 :100644 100644 085ee4c54f089f347f5e502085c016bd522c2240 6b79df2015bf9fcf88917b77bc77091d999ea47f M	ic-depress-scm-git/plugin.xml
 
 e2c89e5fe3726a6b9446a90495ce92ebc816337d
-2013-03-17 20:57:58 +0100
+1363550278
 Tomasz Kuzemko
 Added project milestone report
 
@@ -362,7 +370,7 @@ e2c89e5fe3726a6b9446a90495ce92ebc816337d
 :000000 100644 0000000000000000000000000000000000000000 b50b77828618083bad1eda5320b96de3646f8f64 A	ic-depress-scm-git/doc/milestone-report.pdf
 
 aa987c2d809340e77f473a5920f4d6f6e43500ff
-2013-03-05 23:34:57 +0100
+1362522897
 Marek Majchrzak
 PO Metric update #9
 
@@ -373,7 +381,7 @@ aa987c2d809340e77f473a5920f4d6f6e43500ff
 :100644 100644 06b8c53529b2ed6e95bd05de4d543d7612d79eca 15a74d4f5436da9e2f1d9ff6376fb3affcdd9413 M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/PeopleOrganizationMetricsNodeModel.java
 
 c2ce7b172902ecf45e8e5ba21893feb993d9cd6f
-2013-03-05 23:33:28 +0100
+1362522808
 Marek Majchrzak
 PO Metric update #9
 
@@ -387,7 +395,7 @@ c2ce7b172902ecf45e8e5ba21893feb993d9cd6f
 :000000 100644 0000000000000000000000000000000000000000 2c2006ff2af9394b887035c05ea0935fbf935e13 A	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/TeamMemberTransformer.java
 
 893f71a008c813fe0daaa50fba184fed66e0230b
-2013-03-04 22:31:08 +0100
+1362432668
 Sławek Kapłoński
 #12 Added methods for load, save and validating config values
 
@@ -397,7 +405,7 @@ Sławek Kapłoński
 :100644 100644 84099f19c9f1e10dc7861d96b68c68897dc3c64a f3becca99d8328ddf6c40858bf9adde277c16aa6 M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
 
 907348573f0b3f74a644e962128cc2c855610239
-2013-03-04 22:29:44 +0100
+1362432584
 Sławek Kapłoński
 #12 Added class GitTableFactory with Input tables creating method. Methods which will generate output table is not created yet
 
@@ -405,7 +413,7 @@ Sławek Kapłoński
 :000000 100644 0000000000000000000000000000000000000000 439cab3b49b75e5f09689c7ba2eba21feaa2f008 A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitTableFactory.java
 
 b1f41ed6f2a284779eb6ccd1ad849207a4b67c42
-2013-03-04 22:27:04 +0100
+1362432424
 Sławek Kapłoński
 #12 Fixed some informations about plugin in xml file
 
@@ -414,7 +422,7 @@ b1f41ed6f2a284779eb6ccd1ad849207a4b67c42
 :100644 100644 44416b9dcc954ca0601491b1ccd9646911d28c94 859cca4dafa6e4a52e58ce30f833649793c0c54b M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeFactory.xml
 
 b4f3088d8894ac224535a31ccf4d1600d3fc0c57
-2013-03-03 23:47:23 +0100
+1362350843
 Marek Majchrzak
 new plugins (findbug, pmd, checkstyle) project introduced
 
@@ -442,7 +450,7 @@ b4f3088d8894ac224535a31ccf4d1600d3fc0c57
 :000000 100644 0000000000000000000000000000000000000000 20d40b6bceca3a6c0237d7455ebf1820aeff3680 A	ic-depress-scm-svn/LICENSE.txt
 
 e34c6a9ae18f6228025e1007e04e0f0363b79c92
-2013-03-03 22:49:22 +0100
+1362347362
 Marek Majchrzak
 #9 added PO Metric plugin draft
 
@@ -467,7 +475,7 @@ e34c6a9ae18f6228025e1007e04e0f0363b79c92
 :100644 100644 b3418aed8c0555cb74c57b6b786cf29b583218f6 38e260e1528de8551a54aa82b1f8a2434e3157b2 M	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/po.png
 
 fe5cdba6e29b07d222d1a0ea12de9fca61dc9495
-2013-03-03 19:49:37 +0100
+1362336577
 Marek Majchrzak
 removed old test
 
@@ -482,7 +490,7 @@ fe5cdba6e29b07d222d1a0ea12de9fca61dc9495
 :100644 100644 817462e282bca9a7e050c494ed182e716ab4a9d4 3fdd6af27f407784a0a87d9c84becdfcc7f095b9 M	ic-depress-metric-po/build.properties
 
 ef1d2453bf8587aec197ebd60f8d5260f3b02692
-2013-03-02 22:05:28 +0100
+1362258328
 Marek Majchrzak
 removed old test
 
@@ -490,14 +498,14 @@ ef1d2453bf8587aec197ebd60f8d5260f3b02692
 :100644 000000 d3fe47b13f89b6d8eb1365cc232c7397fe0b3f8f 0000000000000000000000000000000000000000 D	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapteTableFactoryTest.java
 
 7a2538487a069f741db7be72c4c7bb6e1016bdc3
-2013-03-02 21:57:35 +0100
+1362257855
 Marek Majchrzak
 #4 added Judy Plugin help
 7a2538487a069f741db7be72c4c7bb6e1016bdc3
 :100644 100644 8abeb11a005dfe4776c33e8d16fe294ff6423a05 6cc1eefe013e03466ade0eaf562d4374a57e4fb5 M	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
 
 c95b165d6ff6e3472483d23e4f5835efb4e51d99
-2013-03-02 21:36:48 +0100
+1362256608
 Marek Majchrzak
 PO Plugin draft #9
 
@@ -535,7 +543,7 @@ c95b165d6ff6e3472483d23e4f5835efb4e51d99
 :000000 100644 0000000000000000000000000000000000000000 b3418aed8c0555cb74c57b6b786cf29b583218f6 A	ic-depress-metric-po/src/org/impressivecode/depress/metric/po/po.png
 
 791f5f97d1c7b3f5d4d5358af14d1c12f59d9b2c
-2013-03-02 10:32:02 +0100
+1362216722
 Sławek Kapłoński
  Added config window to knime plugin.
 
@@ -545,7 +553,7 @@ Sławek Kapłoński
 :100644 100644 b93e24b5b2ce8b2b0e61206e265ec16bd88c5cfe 84099f19c9f1e10dc7861d96b68c68897dc3c64a M	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/GitNodeModel.java
 
 9e0bfaf4b2449b2e81f712566f475526d30060cd
-2013-03-01 00:51:58 +0100
+1362095518
 Tomasz Kuzemko
 Importing generated plugin template files
 
@@ -565,7 +573,7 @@ Importing generated plugin template files
 :000000 100644 0000000000000000000000000000000000000000 3807b034d7b0169d1c54e2e47ba4664e2d1bbcb2 A	ic-depress-scm-git/src/org/impressivecode/depress/scm/git/package.html
 
 32f4602abf6e143b4c99f1fdcebc8890b0fcfa17
-2013-02-28 18:35:42 +0100
+1362072942
 Marek Majchrzak
 #4 help added
 
@@ -573,7 +581,7 @@ Marek Majchrzak
 :100644 100644 94bfc5de32734f065fb81ec740590db74d7a5626 aa9cd4bbce3d4936a4f8d8196d24fed5e2875c4b M	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
 
 45e7552855f2e09675705472954a46f1573a7f68
-2013-02-27 23:49:44 +0100
+1362005384
 Marek Majchrzak
 #4 help added
 
@@ -581,7 +589,7 @@ Marek Majchrzak
 :100644 100644 8abeb11a005dfe4776c33e8d16fe294ff6423a05 94bfc5de32734f065fb81ec740590db74d7a5626 M	ic-depress-metric-judy/src/org/impressivecode/depress/metric/judy/JudyAdapterNodeFactory.xml
 
 677baf983275b6506f8d5404959c873d822bec9c
-2013-02-27 23:20:10 +0100
+1362003610
 Marek Majchrzak
 #4 added progress, added tests
 
@@ -594,7 +602,7 @@ Marek Majchrzak
 :000000 100644 0000000000000000000000000000000000000000 1e3119f6f7ea054eab377251f9147956ddd03922 A	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/judy.xml
 
 b70ca05b7f982cf43d3f86e8a169a5c35ce46eed
-2013-02-26 23:27:48 +0100
+1361917668
 Marek Majchrzak
 Test added, #4
 
@@ -605,7 +613,7 @@ b70ca05b7f982cf43d3f86e8a169a5c35ce46eed
 :000000 100644 0000000000000000000000000000000000000000 d3fe47b13f89b6d8eb1365cc232c7397fe0b3f8f A	ic-depress-metric-judy/test/org/impressivecode/depress/metric/judy/JudyAdapteTableFactoryTest.java
 
 1a99dc5cc5a039dfefff720b3370a94b2b447138
-2013-02-25 23:12:54 +0100
+1361830374
 Marek Majchrzak
 updated gitignore
 
@@ -613,7 +621,7 @@ updated gitignore
 :100644 100644 771e20286a78ed78721a34d102ac473e9b2f6f45 0d28d71729724763a32c373e19c0226fb868199b M	.gitignore
 
 fd8866f9a38e94af5b2e4eab91e1e23c2656ed41
-2013-02-25 23:12:24 +0100
+1361830344
 Marek Majchrzak
 Judy Adapter prototype introduced #4
 
@@ -648,28 +656,28 @@ fd8866f9a38e94af5b2e4eab91e1e23c2656ed41
 :100644 000000 8fe7ad0a32bfa904af7b96f5f323b43066ee6ab1 0000000000000000000000000000000000000000 D	ic-depress-metrics-pitest/src/org/impressivecode/depress/metrics/pitest/PluginApp.java
 
 29bc91a1f9b407154c2fb484117f26c141a8de4f
-2013-02-25 20:42:19 +0100
+1361821339
 Marek Majchrzak
 #1 added copyright
 29bc91a1f9b407154c2fb484117f26c141a8de4f
 :100644 100644 d23a54cdfd877b2e88a9c02a09a82d326efd4391 53645683f753c3f5c8cb605ae86df7e43888816d M	README.md
 
 dc008eaf7ea2e9e0b9eda19d673453beb4fa1167
-2013-02-24 22:34:30 +0100
+1361741670
 Marek Majchrzak
 #1 added license link
 dc008eaf7ea2e9e0b9eda19d673453beb4fa1167
 :100644 100644 d8bdf98773e328acae2a0bd2650633fa27896c28 d23a54cdfd877b2e88a9c02a09a82d326efd4391 M	README.md
 
 a2556418b7387afc12b9cc79e6a03fd9fc8d661a
-2013-02-24 22:19:05 +0100
+1361740745
 Marek Majchrzak
 Update README.md
 a2556418b7387afc12b9cc79e6a03fd9fc8d661a
 :100644 100644 3de2f6acb28cde6f552475f589c736bd992f3f23 d8bdf98773e328acae2a0bd2650633fa27896c28 M	README.md
 
 a6e818bf4968ba178b982a3e73be7d36fd4f8201
-2013-02-24 22:12:38 +0100
+1361740358
 Marek Majchrzak
 #1 initial project structure
 
@@ -700,7 +708,7 @@ a6e818bf4968ba178b982a3e73be7d36fd4f8201
 :000000 100644 0000000000000000000000000000000000000000 da8571f2e4786041eb7b4d700afb33a6da3d4e8a A	ic-depress-scm-svn/src/org/impressivecode/depress/scm/svn/PluginApp.java
 
 41fb9e52da886ad4532d82aa373ae86bf1a689e7
-2013-02-24 22:11:44 +0100
+1361740304
 Marek Majchrzak
 #1 added gitignore
 
@@ -708,7 +716,7 @@ Marek Majchrzak
 :000000 100644 0000000000000000000000000000000000000000 771e20286a78ed78721a34d102ac473e9b2f6f45 A	.gitignore
 
 2068cf23224b019c92d351c840262a7475423aa3
-2013-02-24 21:36:58 +0100
+1361738218
 Marek Majchrzak
 #1 license and base directories
 
@@ -716,7 +724,7 @@ Marek Majchrzak
 :000000 100644 0000000000000000000000000000000000000000 20d40b6bceca3a6c0237d7455ebf1820aeff3680 A	license.txt
 
 77c03521a43005abf1f5ae1d93e2769d533383cd
-2012-10-22 03:54:43 -0700
+1350903283
 Lech Madeyski
 Initial commit
 

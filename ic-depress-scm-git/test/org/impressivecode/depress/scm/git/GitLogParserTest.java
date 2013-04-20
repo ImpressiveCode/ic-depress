@@ -18,13 +18,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package org.impressivecode.depress.scm.git;
 
+import static org.fest.assertions.Assertions.assertThat;
+import static org.impressivecode.depress.scm.git.GitParserOptions.options;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.Date;
 
+import org.impressivecode.depress.scm.SCMOperation;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,7 +49,8 @@ public class GitLogParserTest {
     }
 
     private GitCommit specificCommit() throws IOException, ParseException {
-        for (GitCommit c : parser.parse(logFilePath)) {
+        this.parser = new GitLogParser();
+        for (GitCommit c : parser.parseEntries(logFilePath, options("#([0-9]+)", "org."))) {
             if (c.getId().equals("45a2beca9d97777733e1a472e54c003551b7d9b1")) {
                 return c;
             }
@@ -56,17 +60,17 @@ public class GitLogParserTest {
 
     @Test(expected = FileNotFoundException.class)
     public void shouldThrowFileNotFound() throws Exception {
-        new GitLogParser().parse("fake_path");
+        new GitLogParser().parseEntries("fake_path", options(null, null));
     }
 
     @Test
     public void shouldCountCommits() throws Exception {
-        assertEquals(50, parser.parse(logFilePath).size());
+        assertEquals(51, parser.parseEntries(logFilePath, options(null, null)).size());
     }
 
     @Test
     public void shouldSpecificCommitDateMatch() throws Exception {
-        assertEquals(DateFormat.getDateTimeInstance().parse("2013-03-18 20:49:14 +0100"), specificCommit().getDate());
+        assertThat(specificCommit().getDate()).isEqualTo(new Date(1363636154*1000l));
     }
 
     @Test
@@ -76,31 +80,39 @@ public class GitLogParserTest {
 
     @Test
     public void shouldSpecificCommitMessageMatch() throws Exception {
-        assertEquals("#9 base version of PO Metric introduced", specificCommit().getMessage());
+        assertEquals("#9 base version of PO Metric introduced, #18 this is just matcher test", specificCommit().getMessage());
+    }
+
+    @Test
+    public void shouldFindMarkers() throws Exception {
+        assertThat(specificCommit().getMarkers()).containsOnly("9", "18");
     }
 
     @Test
     public void shouldSpecificCommitFilesSizeMatch() throws Exception {
-        assertEquals(15, specificCommit().files.size());
+        assertThat(specificCommit().getFiles()).hasSize(14);
+    }
+
+    @Test
+    public void shouldParseJavaFile() throws Exception {
+        assertThat(specificCommit().getFiles().get(0).getJavaClass()).isEqualTo("org.impressivecode.depress.metric.po.ChangeData");
     }
 
     @Test
     public void shouldSpecificCommitFilesMatch() throws Exception {
-        assertEquals("ic-depress-metric-po/META-INF/MANIFEST.MF", specificCommit().files.get(0).getPath());
-        assertEquals(GitCommitFileOperation.Modified, specificCommit().files.get(0).getOperation());
 
         assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java",
-                specificCommit().files.get(1).getPath());
-        assertEquals(GitCommitFileOperation.Added, specificCommit().files.get(1).getOperation());
+                specificCommit().getFiles().get(0).getPath());
+        assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(1).getOperation());
 
         assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java",
-                specificCommit().files.get(3).getPath());
-        assertEquals(GitCommitFileOperation.Deleted, specificCommit().files.get(3).getOperation());
+                specificCommit().getFiles().get(2).getPath());
+        assertEquals(SCMOperation.DELETED, specificCommit().getFiles().get(3).getOperation());
 
         assertEquals(
                 "ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java",
-                specificCommit().files.get(14).getPath());
-        assertEquals(GitCommitFileOperation.Added, specificCommit().files.get(14).getOperation());
+                specificCommit().getFiles().get(13).getPath());
+        assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(13).getOperation());
 
     }
 }

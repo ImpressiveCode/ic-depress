@@ -138,7 +138,7 @@ public class SCMAdapterTableFactoryTest {
         DataRow row = SCMAdapterTableFactory.createTableRow("rowId",scm);
 
         // then
-        assertThat(reader(createDataColumnSpec(), row).string(ACTION_COLNAME)).isEqualTo("operation");
+        assertThat(reader(createDataColumnSpec(), row).string(ACTION_COLNAME)).isEqualTo("MODIFIED");
     }
 
     private SCMDataType mockSCMDataType() {
@@ -150,7 +150,7 @@ public class SCMAdapterTableFactoryTest {
         when(scm.getCommitID()).thenReturn("commitID");
         when(scm.getMarkers()).thenReturn(Sets.newHashSet("1", "2"));
         when(scm.getMessage()).thenReturn("message");
-        when(scm.getOperation()).thenReturn("operation");
+        when(scm.getOperation()).thenReturn(SCMOperation.MODIFIED);
         return scm;
     }
 

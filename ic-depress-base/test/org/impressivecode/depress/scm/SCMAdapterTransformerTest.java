@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its;
+package org.impressivecode.depress.scm;
 
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
 import static org.mockito.Mockito.mock;
@@ -23,6 +23,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -36,39 +37,42 @@ import org.knime.core.node.ExecutionContext;
 import org.mockito.Mockito;
 
 import com.google.common.collect.Lists;
+
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class ITSAdapterTransformerTest {
+public class SCMAdapterTransformerTest {
 
     @Test
     public void shouldTransform() throws CanceledExecutionException {
 
-        OutputTransformer<ITSDataType> transformer = new ITSAdapterTransformer(createDataColumnSpec());
-        List<ITSDataType> entries = Lists.newArrayList(create("Bug1"), create("Bug2"));
+        OutputTransformer<SCMDataType> transformer = new SCMAdapterTransformer(createDataColumnSpec());
+        List<SCMDataType> entries = Lists.newArrayList(create("path1"), create("path2"));
 
         BufferedDataContainer container = mock(BufferedDataContainer.class);
         ExecutionContext exec = mock(ExecutionContext.class);
         when(exec.createDataContainer(Mockito.any(DataTableSpec.class))).thenReturn(container);
 
-        //when
-        transformer.transform(entries , exec);
+        // when
+        transformer.transform(entries, exec);
 
-        //then
+        // then
         verify(container, times(2)).addRowToTable(Mockito.any(DataRow.class));
     }
 
-    private ITSDataType create(final String bug) {
-        ITSDataType its = new ITSDataType();
-        its.setIssueId(bug);
-        its.setCreated(new Date(100));
-        its.setPriority(ITSPriority.BLOCKER);
-        its.setStatus(ITSStatus.CLOSED);
-        its.setType(ITSType.BUG);
-        its.setVersion(Lists.newArrayList("V1", "V2"));
-        return its;
+    private SCMDataType create(final String path) {
+        SCMDataType scm = new SCMDataType();
+        scm.setAuthor("a");
+        scm.setCommitDate(new Date());
+        scm.setCommitID("ID");
+        scm.setMarkers(Collections.<String> emptySet());
+        scm.setMessage("m");
+        scm.setOperation(SCMOperation.ADDED);
+        scm.setPath(path);
+        scm.setResourceName("r");
+        return scm;
     }
 
 }
