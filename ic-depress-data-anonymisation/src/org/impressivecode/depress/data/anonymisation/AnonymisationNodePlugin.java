@@ -15,6 +15,9 @@ import org.osgi.framework.BundleContext;
  * file in the project root directory accordingly.
  *
  * @author Andrzej Dudek
+ * @author Marcin Bogusz
+ * @author Konrad Kocik
+ * @author Artur Bilski
  */
 public class AnonymisationNodePlugin extends Plugin {
     // The shared instance.

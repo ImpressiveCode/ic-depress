@@ -15,7 +15,7 @@ import org.knime.core.node.NodeSettingsWO;
 
 /**
  * This is the model implementation of Anonymisation.
- * Encrypts and decrypts selected input data using symmetric algorithm (DES), using provided encryption key.
+ * Encrypts and decrypts selected input data using symmetric algorithm (Blowfish), using provided encryption key.
  *
  * @author Andrzej Dudek
  * @author Marcin Bogusz
@@ -24,6 +24,10 @@ import org.knime.core.node.NodeSettingsWO;
  */
 public class AnonymisationNodeModel extends NodeModel {
     
+	 static final String COLUMNS = "columns";
+	 static final String KEY = "key";
+	 static final int INUPT_PORT = 0;
+	
     /**
      * Constructor for the node model.
      */
