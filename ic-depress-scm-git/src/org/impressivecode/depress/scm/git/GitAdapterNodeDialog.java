@@ -30,19 +30,19 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
  */
-public class GitNodeDialog extends DefaultNodeSettingsPane {
+public class GitAdapterNodeDialog extends DefaultNodeSettingsPane {
 
-    protected GitNodeDialog() {
+    protected GitAdapterNodeDialog() {
         super();
 
-        addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(GitNodeModel.GIT_FILENAME,
-                GitNodeModel.GIT_FILENAME_DEFAULT), GitNodeModel.GIT_FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
+        addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(GitAdapterNodeModel.GIT_FILENAME,
+                GitAdapterNodeModel.GIT_FILENAME_DEFAULT), GitAdapterNodeModel.GIT_FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
 
-        addDialogComponent(new DialogComponentString(new SettingsModelString(GitNodeModel.GIT_REGEXP,
-                GitNodeModel.GIT_REGEXP_DEFAULT), "Issue marker: "));
+        addDialogComponent(new DialogComponentString(new SettingsModelString(GitAdapterNodeModel.GIT_REGEXP,
+                GitAdapterNodeModel.GIT_REGEXP_DEFAULT), "Issue marker: "));
 
         addDialogComponent(new DialogComponentOptionalString(new SettingsModelOptionalString(
-                GitNodeModel.GIT_PACKAGENAME, GitNodeModel.GIT_PACKAGENAME_DEFAULT,
-                GitNodeModel.GIT_PACKAGENAME_ACTIVE_STATE), "Package: "));
+                GitAdapterNodeModel.GIT_PACKAGENAME, GitAdapterNodeModel.GIT_PACKAGENAME_DEFAULT,
+                GitAdapterNodeModel.GIT_PACKAGENAME_ACTIVE_STATE), "Package: "));
     }
 }

@@ -15,7 +15,7 @@
             <p>
                 To use the offline version of plugin you need to generate git
                 log in a specific format using the following command:<br />
-                <i>git log --pretty=format:"%H%n%ci%n%an%n%B%n%H" --raw
+                <i>git log --pretty=format:"%H%n%ct%n%an%n%B%n%H" --raw
                     --no-merges --abbrev=40</i><br />
                 in the folder with your local git repository. Result of this
                 command should be saved in file on your disk and this file's
@@ -45,7 +45,6 @@
                         <li>T - file type changed (i.e. regular file to symlink)</li>
                     </ul>
             </p>
-            Git logo icon made by <a href="http://henrik.nyh.se/octopress/2007/06/alternative-git-logo-and-favicon/">Henrik Nyh</a>
         </intro>
 
         <option name="Selected file">File with Git log to analyze in offline version of plugin</option>

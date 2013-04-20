@@ -29,6 +29,7 @@ import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.collection.SetCell;
+import org.knime.core.data.date.DateAndTimeCell;
 import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.StringCell;
 
@@ -54,7 +55,7 @@ public class SCMAdapterTableFactory {
                 new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(MESSAGE_COLNAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(DATE_COLNAME, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(DATE_COLNAME, DateAndTimeCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(UID_COLNAME, StringCell.TYPE).createSpec() };
         return new DataTableSpec(allColSpecs);
     }

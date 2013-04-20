@@ -15,10 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its;
+package org.impressivecode.depress.scm;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.its.ITSAdapterTableFactory.createTableRow;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createTableRow;
 
 import java.util.List;
 
@@ -31,38 +31,37 @@ import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeLogger.LEVEL;
-
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class ITSAdapterTransformer implements OutputTransformer<ITSDataType> {
+public class SCMAdapterTransformer implements OutputTransformer<SCMDataType>{
 
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(ITSAdapterTransformer.class);
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(SCMAdapterTransformer.class);
 
     private final DataTableSpec tableSpec;
 
-    public ITSAdapterTransformer(final DataTableSpec tableSpec) {
+    public SCMAdapterTransformer(final DataTableSpec tableSpec) {
         checkNotNull(tableSpec, "table specifikation can not be null.");
         this.tableSpec = tableSpec;
     }
 
     @Override
-    public BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
-            throws CanceledExecutionException {
+    public BufferedDataTable transform(final List<SCMDataType> data, final ExecutionContext exec) throws CanceledExecutionException {
         BufferedDataContainer container = createDataContainer(exec);
-        for (ITSDataType entry : entries) {
+        Long counter = 0l;
+        for (SCMDataType entry : data) {
             progress(exec);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Transforming issue entry, issueId: " + entry.getIssueId());
+                LOGGER.debug("Transforming scm entry, id: " + entry.getCommitID());
             }
 
             if (LOGGER.isEnabledFor(LEVEL.ALL)) {
                 LOGGER.debug("Transforming issue entry:" + entry.toString());
             }
-            DataRow row = createTableRow(entry);
+            DataRow row = createTableRow(String.valueOf(counter++),entry);
             container.addRowToTable(row);
         }
         container.close();

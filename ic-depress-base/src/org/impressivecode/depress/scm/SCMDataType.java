@@ -31,7 +31,7 @@ public class SCMDataType {
     private String resourceName;
     private Set<String> markers = Collections.emptySet();
     private String author;
-    private String operation;
+    private SCMOperation operation;
     private String message;
     private String path;
     private Date commitDate;
@@ -45,11 +45,11 @@ public class SCMDataType {
         this.author = author;
     }
 
-    public String getOperation() {
+    public SCMOperation getOperation() {
         return operation;
     }
 
-    public void setOperation(final String operation) {
+    public void setOperation(final SCMOperation operation) {
         this.operation = operation;
     }
 
@@ -99,6 +99,13 @@ public class SCMDataType {
 
     public Set<String> getMarkers() {
         return markers;
+    }
+
+    @Override
+    public String toString() {
+        return String
+                .format("SCMDataType [resourceName=%s, markers=%s, author=%s, operation=%s, message=%s, path=%s, commitDate=%s, commitID=%s]",
+                        resourceName, markers, author, operation, message, path, commitDate, commitID);
     }
 
 }

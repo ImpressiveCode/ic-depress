@@ -6,7 +6,7 @@
          point="org.knime.workbench.repository.nodes">
       <node
             category-path="depress"
-            factory-class="org.impressivecode.depress.scm.git.GitNodeFactory"
+            factory-class="org.impressivecode.depress.scm.git.GitAdapterNodeFactory"
             id="org.impressivecode.depress.scm.git.GitNodeFactory"/>
    </extension>
 </plugin>
