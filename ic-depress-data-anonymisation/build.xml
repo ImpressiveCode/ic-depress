@@ -5,7 +5,8 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="ic-depress-data-anonymisation">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="./eclipse"/>
+    <property name="ECLIPSE_HOME" value="../../eclipse"/>
+    <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.7"/>
     <property name="source" value="1.7"/>
@@ -83,5 +84,29 @@
     <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
+    </target>
+    <target name="AnonymisationNodeModelTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="org.impressivecode.depress.data.anonymisation.AnonymisationNodeModelTest" todir="${junit.output.dir}"/>
+            <classpath refid="ic-depress-data-anonymisation.classpath"/>
+        </junit>
+    </target>
+    <target name="test-knime">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <jvmarg line="-ea -Xmx512M -XX:MaxPermSize=192m"/>
+            <classpath refid="ic-depress-data-anonymisation.classpath"/>
+        </junit>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
     </target>
 </project>
