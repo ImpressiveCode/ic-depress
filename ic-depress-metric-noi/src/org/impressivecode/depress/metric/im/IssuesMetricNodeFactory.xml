@@ -23,11 +23,12 @@
     </fullDescription>
 
     <ports>
-        <inPort index="0" name="ITS Data">Issue Tracking System Data could be retrieved from any ITS schould consists at
+        <inPort index="0" name="SCM Data">Change history data could be retrived from any Source Repository (e.g. GIT or SVN
+            Adapter plugin). It should consist at least from Class (RowId, type string) and Marker (string) collumn.
+        </inPort>
+        <inPort index="1" name="ITS Data">Issue Tracking System Data could be retrieved from any ITS schould consists at
             least from IssueId (RowId, type string).
         </inPort>
-        <inPort index="1" name="SCM Data">Change history data could be retrived from any Source Repository (e.g. GIT or SVN
-            Adapter plugin). It should consist at least from Class (RowId, type string) and Marker (string) collumn.</inPort>
         <outPort index="0" name="Metric results">Datatable with computed Number Of Issues Metric.</outPort>
     </ports>
 </knimeNode>
