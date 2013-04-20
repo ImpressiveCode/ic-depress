@@ -44,6 +44,8 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/org.knime.workbench.repository_2.7.1.0036288/lib/schemas.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.knime.base_2.7.3.0037004/knime-base.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.knime.base_2.7.3.0037004/lib/Jama-1.0.2.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.apache.commons.io_1.4.0.v20081110-1000.jar"/>
     </path>
     <path id="ic-depress-data-anonymisation.classpath">
@@ -97,6 +99,7 @@
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
+            <test name="org.impressivecode.depress.data.anonymisation.AnonymisationNodeModelTest" todir="${junit.output.dir}"/>
             <jvmarg line="-ea -Xmx512M -XX:MaxPermSize=192m"/>
             <classpath refid="ic-depress-data-anonymisation.classpath"/>
         </junit>
