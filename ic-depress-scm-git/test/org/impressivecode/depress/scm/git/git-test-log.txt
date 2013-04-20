@@ -26,8 +26,6 @@ Marek Majchrzak
 #27 example added
 
 58d0f9549014e63d21e037873adb68ee77396f82
-:100644 100644 c312ba8d13e90f7526d9bd0519e2a2f4aadfd284 ba7c79b1d52b6ba716946352a54c7c802f56d47d M	ic-depress-its-jira/build.properties
-
 94bf0858a67a67379bdc4f35a6b39db401638b55
 1364156213
 Marek Majchrzak
