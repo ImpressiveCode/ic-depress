@@ -15,12 +15,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its;
+package org.impressivecode.depress.scm.git;
+
+import org.impressivecode.depress.scm.SCMAdapterTableFactory;
+import org.knime.core.data.DataTableSpec;
+
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public enum ITSResolution {
-    INVALID, FIXED, WONT_FIX, DUPLICATE, UNRESOLVED, IMPLEMENTED, UNKNOWN;
+public class GitAdapterTableFactory {
+
+    private GitAdapterTableFactory() {
+
+    }
+
+    public static DataTableSpec[] createTableSpec() {
+        return new DataTableSpec[] { SCMAdapterTableFactory.createDataColumnSpec() };
+    }
 }

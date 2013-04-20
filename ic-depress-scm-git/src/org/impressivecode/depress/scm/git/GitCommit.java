@@ -18,66 +18,73 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package org.impressivecode.depress.scm.git;
 
-import java.security.InvalidParameterException;
-import java.text.DateFormat;
-import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.regex.Pattern;
+import java.util.Set;
 
-/*
+/**
  * Represents a parsed git commit
- *
+ * 
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
- *
+ * @author Marek Majchrzak, ImpressiveCode
  */
 
 public class GitCommit {
-    final String id;
-    public static final Pattern idRegex = Pattern.compile("^[a-f0-9]{40}$");
-    static final DateFormat commitDateFormat = DateFormat.getDateTimeInstance();
-    Date date;
-    String author;
-    StringBuilder messageBuilder;
-    public List<GitCommitFile> files;
+    private String id;
+    private Date date;
+    private String author;
+    private StringBuilder messageBuilder;
+    private List<GitCommitFile> files;
+    private Set<String> markers;
 
-    public GitCommit(String id) {
-        if (!idRegex.matcher(id).matches()) {
-            throw new InvalidParameterException("Commit id is invalid");
-        }
-        this.id = id;
+    public GitCommit() {
         this.messageBuilder = new StringBuilder();
         this.files = new ArrayList<GitCommitFile>();
-        
     }
 
     public String getId() {
         return id;
     }
 
-    public Date getDate() {
-        return date;
+    public void setId(final String id) {
+        this.id = id;
     }
 
-    public void setDate(String date) throws ParseException {
-        this.date = commitDateFormat.parse(date);
+    public Date getDate() {
+        return date;
     }
 
     public String getMessage() {
         return messageBuilder.toString();
     }
 
-    public void addToMessage(String text) {
+    public void addToMessage(final String text) {
         messageBuilder.append(text);
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(final String author) {
         this.author = author;
     }
 
     public String getAuthor() {
         return author;
+    }
+
+    public List<GitCommitFile> getFiles() {
+        return files;
+    }
+
+    public void setDate(final Date date) {
+        this.date = date;
+    }
+
+    public void setMarkers(final Set<String> markers) {
+        this.markers = markers;
+    }
+
+    public Set<String> getMarkers() {
+        return this.markers;
     }
 }

@@ -45,7 +45,6 @@
                         <li>T - file type changed (i.e. regular file to symlink)</li>
                     </ul>
             </p>
-            Git logo icon made by <a href="http://henrik.nyh.se/octopress/2007/06/alternative-git-logo-and-favicon/">Henrik Nyh</a>
         </intro>
 
         <option name="Selected file">File with Git log to analyze in offline version of plugin</option>
