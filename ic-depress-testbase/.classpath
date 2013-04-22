@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="lib/guava-14.0-rc3.jar"/>
 	<classpathentry kind="lib" path="lib/fest-assert-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/fest-util-1.1.6.jar"/>
