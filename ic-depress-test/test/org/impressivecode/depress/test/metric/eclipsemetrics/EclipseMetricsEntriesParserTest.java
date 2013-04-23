@@ -38,7 +38,7 @@ public class EclipseMetricsEntriesParserTest {
     @Test
     public void shouldParseEntries() throws ParserConfigurationException, SAXException, IOException {
         EclipseMetricsEntriesParser parser = new EclipseMetricsEntriesParser();
-        List<EclipseMetricsEntry> results = parser.parseEntries("examples/eclipsemetrics.xml");
+        List<EclipseMetricsEntry> results = parser.parseEntries(getClass().getResource("eclipsemetrics.xml").getPath());
         assertThat(results).hasSize(699);
         assertEntry(results.get(0));
     }
