@@ -34,9 +34,9 @@ import com.google.common.base.Preconditions;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-class JudyEntriesParser {
+public class JudyEntriesParser {
 
-    static List<Class> unmarshalResults(final String path) throws JAXBException {
+    public static List<Class> unmarshalResults(final String path) throws JAXBException {
         Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
         JAXBContext jaxbContext = JAXBContext.newInstance(JudyXmlResult.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
