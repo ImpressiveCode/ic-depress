@@ -7,9 +7,7 @@ Bundle-Vendor: ImpressiveCode
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.knime.workbench.core,
  org.knime.workbench.repository,
- org.knime.base;bundle-version="2.7.2",
- org.junit,
- org.impressivecode.depress.testbase
+ org.knime.base
 Export-Package: com.google.common.annotations,
  com.google.common.base,
  com.google.common.base.internal,
@@ -27,10 +25,6 @@ Export-Package: com.google.common.annotations,
  org.impressivecode.depress.its,
  org.impressivecode.depress.scm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Eclipse-RegisterBuddy: org.knime.core.node
-Bundle-ClassPath: bin/,
- lib/guava-14.0-rc3.jar,
- lib/fest-assert-1.4.jar,
- lib/fest-util-1.1.6.jar,
- lib/mockito-all-1.9.5.jar
-
+Eclipse-RegisterBuddy: registered
+Bundle-ClassPath: lib/guava-14.0-rc3.jar,
+ depressbase.jar

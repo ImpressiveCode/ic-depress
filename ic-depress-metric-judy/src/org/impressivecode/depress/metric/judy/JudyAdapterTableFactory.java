@@ -39,18 +39,18 @@ public class JudyAdapterTableFactory {
 
     }
 
-    static DataTableSpec[] createTableSpec() {
+    public static DataTableSpec[] createTableSpec() {
         return new DataTableSpec[] { createDataColumnSpec() };
     }
 
-    static DataTableSpec createDataColumnSpec() {
+    public static DataTableSpec createDataColumnSpec() {
         DataColumnSpec[] allColSpecs = new DataColumnSpec[1];
         allColSpecs[0] = new DataColumnSpecCreator(MUTANTS_SCORE, DoubleCell.TYPE).createSpec();
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
         return outputSpec;
     }
 
-    static DataRow createTableRow(final String className, final BigDecimal score) {
+    public static DataRow createTableRow(final String className, final BigDecimal score) {
         DataCell[] cells = new DataCell[1];
         cells[0] = getScoreCell(score);
         DataRow row = new DefaultRow(className, cells);
