@@ -4,17 +4,13 @@ Bundle-Name: ic-depress-metric-eclipsemetrics
 Bundle-SymbolicName: org.impressivecode.depress.metric.eclipsemetrics; singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Export-Package: org.impressivecode.depress.metric.eclipsemetrics
-Bundle-ClassPath: .,
- lib/fest-assert-1.4.jar,
- lib/fest-util-1.1.6.jar,
- lib/mockito-all-1.9.5.jar
+Bundle-ClassPath: plugin.jar
 Bundle-Vendor: ImpressiveCode
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.knime.workbench.core,
  org.knime.workbench.repository,
- org.knime.base,
- org.junit,
+ org.knime.base;bundle-version="2.7.1",
  org.impressivecode.depress.base
-Export-Package: org.impressivecode.depress.metric.eclipsemetrics
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Eclipse-BuddyPolicy: registered
 

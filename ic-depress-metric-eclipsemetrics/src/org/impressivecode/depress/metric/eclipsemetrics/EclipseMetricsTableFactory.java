@@ -44,11 +44,11 @@ public class EclipseMetricsTableFactory {
 
     }
 
-    static DataTableSpec[] createTableSpec() {
+    public static DataTableSpec[] createTableSpec() {
         return new DataTableSpec[] { createDataColumnSpec() };
     }
 
-    static DataTableSpec createDataColumnSpec() {
+    public static DataTableSpec createDataColumnSpec() {
         DataColumnSpec[] allColSpecs = { 
                 new DataColumnSpecCreator(NORM, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(NOF, DoubleCell.TYPE).createSpec(),

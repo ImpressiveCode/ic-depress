@@ -40,11 +40,11 @@ public class JaCoCoAdapterTableFactory {
 
     }
 
-    static DataTableSpec[] createTableSpec() {
+    public static DataTableSpec[] createTableSpec() {
         return new DataTableSpec[] { createDataColumnSpec() };
     }
 
-    static DataTableSpec createDataColumnSpec() {
+    public static DataTableSpec createDataColumnSpec() {
         DataColumnSpec[] allColSpecs = { 
                 new DataColumnSpecCreator(LINE_COVERAGE, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(INSTRUCTIONS_COVERAGE, DoubleCell.TYPE).createSpec(),

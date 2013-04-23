@@ -29,7 +29,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.knime.core.node.NodeLogger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -44,28 +43,27 @@ import com.google.common.base.Preconditions;
  * 
  */
 public class EclipseMetricsEntriesParser {
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(EclipseMetricsEntriesParser.class);
-    
+
     public List<EclipseMetricsEntry> parseEntries(final String path) throws ParserConfigurationException, SAXException,
     IOException {
         Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(path);
-        
+
         NodeList metricsList = getValuesNodes(doc);
-        Map<String,EclipseMetricsEntry> eclipsemetricsEntries = new LinkedHashMap<String,EclipseMetricsEntry>();
-        
+        Map<String, EclipseMetricsEntry> eclipsemetricsEntries = new LinkedHashMap<String, EclipseMetricsEntry>();
+
         for (int i = 0; i < metricsList.getLength(); i++) {
             Node item = metricsList.item(i);
 
             if (!isPerType(item)) {
                 continue;
             }
-            
+
             String metricId = ((Element) item.getParentNode()).getAttribute("id");
-            Map<String,Double> classesAndValues = parseMetricNode(item);
-            for (Map.Entry<String,Double> data : classesAndValues.entrySet()) {
+            Map<String, Double> classesAndValues = parseMetricNode(item);
+            for (Map.Entry<String, Double> data : classesAndValues.entrySet()) {
                 String className = data.getKey();
                 Double metricValue = data.getValue();
                 if (eclipsemetricsEntries.containsKey(className)) {
@@ -81,32 +79,28 @@ public class EclipseMetricsEntriesParser {
         }
         return new ArrayList<EclipseMetricsEntry>(eclipsemetricsEntries.values());
     }
-    
+
     private boolean isPerType(final Node item) {
         return ((Element) item).getAttribute("per").equals("type");
     }
-    
+
     private NodeList getValuesNodes(final Document doc) {
         return doc.getElementsByTagName("Values");
     }
-    
-    private Map<String,Double> parseMetricNode(Node node) {
-        Map<String,Double> values = new LinkedHashMap<String,Double>();
+
+    private Map<String, Double> parseMetricNode(final Node node) {
+        Map<String, Double> values = new LinkedHashMap<String, Double>();
         NodeList nodeList = node.getChildNodes();
-        for (int i=0; i<nodeList.getLength(); i++) {
+        for (int i = 0; i < nodeList.getLength(); i++) {
             Node childItem = nodeList.item(i);
             if (childItem.getNodeName().equals("Value")) {
                 Element elem = (Element) childItem;
                 String name = elem.getAttribute("name");
                 String packageName = elem.getAttribute("package");
-                //TODO decide how represent internal static classes
-                String className = "(default package)".equals(packageName) ? name : packageName+"."+name;
-                try {
-                    Double value = Double.parseDouble(elem.getAttribute("value").replace(",", "."));
-                    values.put(className, value);
-                } catch (Exception e) {
-                    LOGGER.error(e.getMessage());
-                }
+                // TODO decide how represent internal static classes
+                String className = "(default package)".equals(packageName) ? name : packageName + "." + name;
+                Double value = Double.parseDouble(elem.getAttribute("value").replace(",", "."));
+                values.put(className, value);
             }
         }
         return values;
