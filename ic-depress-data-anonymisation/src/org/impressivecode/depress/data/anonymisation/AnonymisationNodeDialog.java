@@ -25,18 +25,34 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
 
     /**
      * New pane for configuring the Anonymisation node.
+     * 
+     * I suggests a little refactoring and adding a little help for user @author Fizgon
      */
 	
+	// Declare Content Pane
+	
+	
+
+	
     protected AnonymisationNodeDialog() {
+    	//Groups 
     	createNewGroup("Column selection:");
+    	createNewGroup("Cryptographic key selection:");
+    	
+    	//Buttons 
+    	DialogComponentButton ButtonToCreateFile = new DialogComponentButton("Create new and load");
+    	DialogComponentButton ButtonToClear = new DialogComponentButton("Clear");
+    	
+    	//A little help 
+    	ButtonToCreateFile.setToolTipText("This create file with your key and load it automatically");    	
+    	
+    	//adding all components 
     	addDialogComponent(new DialogComponentColumnFilter(new SettingsModelFilterString(AnonymisationNodeModel.COLUMNS), 
     			AnonymisationNodeModel.INUPT_PORT, false));
-    	
-    	createNewGroup("Cryptographic key selection:");
     	setHorizontalPlacement(true);    	
     	addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(AnonymisationNodeModel.KEY, ""), "", ".txt"));
-    	addDialogComponent(new DialogComponentButton("Create new and load"));
-    	addDialogComponent(new DialogComponentButton("Clear")); 
+    	addDialogComponent(ButtonToCreateFile);
+    	addDialogComponent(ButtonToClear); 
     	  	
     }
 }

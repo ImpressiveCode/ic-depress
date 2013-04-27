@@ -4,20 +4,22 @@
     <name>Anonymisation</name>
     
     <shortDescription>
-        Encrypts and decrypts selected input data using symmetric algorithm (Blowfish), using provided encryption key.
+        Encrypts and decrypts selected input data using symmetric algorithm (DES), using provided encryption key.
     </shortDescription>
     
     <fullDescription>
-        <intro>Insert long description here...</intro>
+        <intro> It can translate one set of data to another with the same structure 
+        as origin and encrypt important information. To provide security, symmetrical translation (encryption and decryption) 
+        and constant output for the same input data uses key base encryption algorithm (Blowfish)</intro>
         
         
-        <option name="short name of first option (like in the dialog)">description of first option</option>
-        <option name="short name of second option (like in the dialog)">description of second option</option>
+        <option name="Anonymization">Chose columns for anonymization</option>
+        <option name="De-anonymization">Chose columns for de-anonymization</option>
         <!-- possibly more options that can also be grouped by tabs -->
         <!--
         <tab name="Standard Options">
-            <option name="short name of first option (like in the dialog)">description of first option</option>
-            <option name="short name of second option (like in the dialog)">description of second option</option>
+            <option name="short name of first option (like in the dialog)">description 1 </option>
+            <option name="short name of second option (like in the dialog)">description 2</option>
         </tab>
         <tab name="Advanced Options">
             <option name="short name of first advanced option (like in the dialog)">description of first advanced option</option>
@@ -26,9 +28,9 @@
     </fullDescription>
     
     <ports>
-        <inPort index="0" name="In-Port name">Description of first input port...</inPort>
+        <inPort index="0" name="In-Port name">Set of columns for anonymization or de-anonymization</inPort>
         <!-- possibly more input ports here-->
-        <outPort index="0" name="Out-Port name">Description of first output port...</outPort>
+        <outPort index="0" name="Out-Port name">Set of anonymization or de-anonymization columns</outPort>
         <!-- possibly more output ports here-->
     </ports>    
     <views>
