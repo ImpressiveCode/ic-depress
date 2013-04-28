@@ -3,9 +3,10 @@ package org.impressivecode.depress.data.anonymisation;
 import org.knime.core.node.NodeView;
 
 /**
- * <code>NodeView</code> for the "Anonymisation" Node.
- * Encrypts and decrypts selected input data using symmetric algorithm (Blowfish), using provided encryption key.
- *
+ * <code>NodeView</code> for the "Anonymisation" Node. Encrypts and decrypts
+ * selected input data using symmetric algorithm (Blowfish), using provided
+ * encryption key.
+ * 
  * @author Andrzej Dudek
  * @author Marcin Bogusz
  * @author Konrad Kocik
@@ -16,7 +17,8 @@ public class AnonymisationNodeView extends NodeView<AnonymisationNodeModel> {
     /**
      * Creates a new view.
      * 
-     * @param nodeModel The model (class: {@link AnonymisationNodeModel})
+     * @param nodeModel
+     *            The model (class: {@link AnonymisationNodeModel})
      */
     protected AnonymisationNodeView(final AnonymisationNodeModel nodeModel) {
         super(nodeModel);
@@ -48,4 +50,3 @@ public class AnonymisationNodeView extends NodeView<AnonymisationNodeModel> {
     }
 
 }
-

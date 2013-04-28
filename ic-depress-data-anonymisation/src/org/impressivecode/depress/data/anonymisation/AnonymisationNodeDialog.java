@@ -8,15 +8,16 @@ import org.knime.core.node.defaultnodesettings.SettingsModelFilterString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
- * <code>NodeDialog</code> for the "Anonymisation" Node.
- * Encrypts and decrypts selected input data using symmetric algorithm (Blowfish), using provided encryption key.
- *
+ * <code>NodeDialog</code> for the "Anonymisation" Node. Encrypts and decrypts
+ * selected input data using symmetric algorithm (Blowfish), using provided
+ * encryption key.
+ * 
  * This node dialog derives from {@link DefaultNodeSettingsPane} which allows
- * creation of a simple dialog with standard components. If you need a more 
- * complex dialog please derive directly from 
+ * creation of a simple dialog with standard components. If you need a more
+ * complex dialog please derive directly from
  * {@link org.knime.core.node.NodeDialogPane}.
  * 
- * @author Andrzej Dudek 
+ * @author Andrzej Dudek
  * @author Marcin Bogusz
  * @author Konrad Kocik
  * @author Artur Bilski
@@ -26,34 +27,32 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
     /**
      * New pane for configuring the Anonymisation node.
      * 
-     * I suggests a little refactoring and adding a little help for user @author Fizgon
+     * I suggests a little refactoring and adding a little help for user @author
+     * Fizgon
      */
-	
-	// Declare Content Pane
-	
-	
 
-	
+    // Declare Content Pane
+
     protected AnonymisationNodeDialog() {
-    	//Groups 
-    	createNewGroup("Column selection:");
-    	createNewGroup("Cryptographic key selection:");
-    	
-    	//Buttons 
-    	DialogComponentButton ButtonToCreateFile = new DialogComponentButton("Create new and load");
-    	DialogComponentButton ButtonToClear = new DialogComponentButton("Clear");
-    	
-    	//A little help 
-    	ButtonToCreateFile.setToolTipText("This create file with your key and load it automatically");    	
-    	
-    	//adding all components 
-    	addDialogComponent(new DialogComponentColumnFilter(new SettingsModelFilterString(AnonymisationNodeModel.COLUMNS), 
-    			AnonymisationNodeModel.INUPT_PORT, false));
-    	setHorizontalPlacement(true);    	
-    	addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(AnonymisationNodeModel.KEY, ""), "", ".txt"));
-    	addDialogComponent(ButtonToCreateFile);
-    	addDialogComponent(ButtonToClear); 
-    	  	
+        // Groups
+        createNewGroup("Column selection:");
+        createNewGroup("Cryptographic key selection:");
+
+        // Buttons
+        DialogComponentButton ButtonToCreateFile = new DialogComponentButton("Create new and load");
+        DialogComponentButton ButtonToClear = new DialogComponentButton("Clear");
+
+        // A little help
+        ButtonToCreateFile.setToolTipText("This create file with your key and load it automatically");
+
+        // adding all components
+        addDialogComponent(new DialogComponentColumnFilter(
+                new SettingsModelFilterString(AnonymisationNodeModel.COLUMNS), AnonymisationNodeModel.INUPT_PORT, false));
+        setHorizontalPlacement(true);
+        addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(AnonymisationNodeModel.KEY, ""), "",
+                ".txt"));
+        addDialogComponent(ButtonToCreateFile);
+        addDialogComponent(ButtonToClear);
+
     }
 }
-
