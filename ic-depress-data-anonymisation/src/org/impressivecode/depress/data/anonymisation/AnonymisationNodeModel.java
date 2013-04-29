@@ -89,7 +89,22 @@ public class AnonymisationNodeModel extends NodeModel {
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         // TODO: generated method stub
+        String path = settings.getRowKey("key").getString();
+        isKeyFileCorrect(path); 
     }
+   
+    protected static final boolean isKeyFileCorrect(String path) throws InvalidSettingsException {
+        File keyFile = new File(path);
+        if(!keyFile.exists())
+        {
+            throw new InvalidSettingsException("Key File doesnt exists!");
+        }
+        if(!keyFile.isFile())
+        {
+            throw new InvalidSettingsException("Key File is not a file!");
+        }
+        return true;
+        }
 
     /**
      * {@inheritDoc}
