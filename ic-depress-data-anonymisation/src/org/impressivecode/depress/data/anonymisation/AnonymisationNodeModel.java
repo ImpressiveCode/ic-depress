@@ -15,9 +15,8 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.config.Config;
 
 /**
- * This is the model implementation of Anonymisation. Encrypts and decrypts
- * selected input data using symmetric algorithm (Blowfish), using provided
- * encryption key.
+ * This is the model implementation of Anonymisation. Encrypts and decrypts selected 
+ * columns from input data set using Blowfish cryptographic algorithm.
  * 
  * @author Andrzej Dudek
  * @author Marcin Bogusz
