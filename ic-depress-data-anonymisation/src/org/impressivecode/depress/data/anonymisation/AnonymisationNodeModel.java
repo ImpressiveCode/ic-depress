@@ -90,9 +90,14 @@ public class AnonymisationNodeModel extends NodeModel {
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         // TODO: generated method stub
-        String path = settings.getRowKey(KEY).getString();
-        isKeyFileCorrect(path);
-        columnsCheck(settings.getConfig(COLUMNS));
+        if (settings.keySet().contains(KEY)) {
+            String path = settings.getRowKey(KEY).getString();
+            isKeyFileCorrect(path);
+        }
+
+        if (settings.keySet().contains(COLUMNS)) {
+            columnsCheck(settings.getConfig(COLUMNS));
+        }
 
     }
 
