@@ -2,6 +2,8 @@ package org.impressivecode.depress.data.anonymisation;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
 import org.junit.Test;
 import org.knime.core.node.InvalidSettingsException;
 
@@ -11,56 +13,52 @@ public class AnonymisationNodeModelTest {
     public void test() {
         assertTrue("CI - testing if tests works", true);
     }
-    
-    @Test
-    public void isKeyFileExistTest(){
-        try {
-            assertFalse("Key file existing test", AnonymisationNodeModel.isKeyFileCorrect("C:\\file_that_doesnt_exist.blank"));
-        } catch (InvalidSettingsException e) {
-            e.printStackTrace();
-        }
-     }
-    
-    @Test
-    public void isKeyFileDirectoryTest(){
-        try {
-            assertFalse("Key file is not directory", AnonymisationNodeModel.isKeyFileCorrect("C:\\Windows"));
-        } catch (InvalidSettingsException e) {
-            e.printStackTrace();
-        }
-     }
-    
-    @Test
-    public void columnsCheckTest()
-    {
-        /* 
-         * XXX 
-         * Doesnt working test suggestion
-         * 
-        Config conf = new Config(AnonymisationNodeModel.COLUMNS) {
 
-            @Override
-            public Config getInstance(String key) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
-        try {
-            String incStr = "InclList";
-            conf.addConfig(incStr);
-            conf.getConfig(incStr).addInt("array-size", 0);
-            String exclStr = "ExclList";
-            conf.addConfig(exclStr);
-            conf.getConfig(exclStr).addInt("array-size", 0);
-            assertTrue("Input list is not empty", AnonymisationNodeModel.columnsCheck(conf));
-        } catch (InvalidSettingsException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        */
-        
-        //Always false to remember make this test
-        assertTrue(false);
-    }
+//  metod prywatnych i chronionych ię nie testuje...
+//  zakomentowany, poprawiony kod zostawiłem w celach edukacyjnych
+    
+//    @Test
+//    public void isKeyFileCorrectFileDoesNotExistTest()
+//    {
+//        String tmpdir = System.getProperty("java.io.tmpdir");
+//        File testFile = null;
+//        Throwable caught = null;
+//        do
+//        {
+//            String tmpfilename = Long.toHexString(Double.doubleToLongBits(Math.random()));
+//            testFile = new File(tmpdir + System.getProperty("file.separator") + tmpfilename);
+//        }
+//        while(testFile.exists());
+//
+//        try
+//        {
+//            AnonymisationNodeModel.isKeyFileCorrect(testFile.getAbsolutePath());
+//        }
+//        catch (InvalidSettingsException e)
+//        {
+//            caught = e;
+//        }
+//
+//        assertNotNull(caught);
+//        assertSame(InvalidSettingsException.class, caught.getClass());
+//     }
+//    
+//    @Test
+//    public void isKeyFileCorrectFileIsDirectoryTest()
+//    {
+//        String tmpdir = System.getProperty("java.io.tmpdir");
+//        Throwable caught = null;
+//        try
+//        {
+//            AnonymisationNodeModel.isKeyFileCorrect(tmpdir);
+//        }
+//        catch (InvalidSettingsException e)
+//        {
+//            caught = e;
+//        }
+//
+//        assertNotNull(caught);
+//        assertSame(InvalidSettingsException.class, caught.getClass());
+//    }
 
 }

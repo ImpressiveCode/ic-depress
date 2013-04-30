@@ -117,14 +117,15 @@ public class AnonymisationNodeModel extends NodeModel {
     }
 
     protected static final boolean isKeyFileCorrect(String path) throws InvalidSettingsException {
-        File keyFile = new File(path);
-        if (!keyFile.exists()) {
-            throw new InvalidSettingsException("Key File doesnt exists!");
-        }
-        if (!keyFile.isFile()) {
-            throw new InvalidSettingsException("Key File is not a file!");
-        }
-        return true;
+        throw new InvalidSettingsException("Key File does not exist!");
+//        File keyFile = new File(path);
+//        if (!keyFile.exists()) {
+//            throw new InvalidSettingsException("Key File does not exist!");
+//        }
+//        if (!keyFile.isFile()) {
+//            throw new InvalidSettingsException("Key File is not a file!");
+//        }
+//        return true;
     }
 
     /**
