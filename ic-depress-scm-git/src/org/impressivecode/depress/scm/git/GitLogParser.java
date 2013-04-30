@@ -162,7 +162,11 @@ public class GitLogParser {
                 Set<String> markers = newHashSet();
                 Matcher matcher = options.getMarkerPattern().matcher(message);
                 while (matcher.find()) {
-                    markers.add(matcher.group(1));
+                    if (matcher.groupCount() >= 1){
+                        markers.add(matcher.group(1));
+                    } else {
+                        markers.add(matcher.group());
+                    }
                 }
                 return markers;
             }
