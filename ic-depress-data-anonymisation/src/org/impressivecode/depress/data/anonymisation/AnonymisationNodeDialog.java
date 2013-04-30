@@ -36,7 +36,7 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
     protected AnonymisationNodeDialog() {
         // Groups
         createNewGroup("Column selection:");
-        createNewGroup("Cryptographic key selection:");
+        
 
         // Buttons
         DialogComponentButton ButtonToCreateFile = new DialogComponentButton("Create new and load");
@@ -47,12 +47,15 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
 
         // adding all components
         addDialogComponent(new DialogComponentColumnFilter(
-                new SettingsModelFilterString(AnonymisationNodeModel.COLUMNS), AnonymisationNodeModel.INUPT_PORT, false));
+                new SettingsModelFilterString(AnonymisationNodeModel.COLUMNS), AnonymisationNodeModel.INPUT_PORT, false));
         setHorizontalPlacement(true);
+        
+        createNewGroup("Cryptographic key selection:");
         addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(AnonymisationNodeModel.KEY, ""), "",
                 ".txt"));
         addDialogComponent(ButtonToCreateFile);
         addDialogComponent(ButtonToClear);
 
     }
+
 }
