@@ -29,6 +29,7 @@ public class AnonymisationNodeModel extends NodeModel {
     static final String COLUMNS = "columns";
     static final String KEY = "key";
     static final int INPUT_PORT = 0;
+    public static final int KEY_LENGTH = 128;
 
     /**
      * Constructor for the node model.
