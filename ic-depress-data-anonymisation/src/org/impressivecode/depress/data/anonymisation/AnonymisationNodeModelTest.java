@@ -14,25 +14,6 @@ public class AnonymisationNodeModelTest {
     }
 
     @Test
-    public void isKeyFileExistTest() {
-        try {
-            assertFalse("Key file existing test",
-                    PropertiesValidator.isKeyFileCorrect("C:\\file_that_doesnt_exist.blank"));
-        } catch (InvalidSettingsException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void isKeyFileDirectoryTest() {
-        try {
-            assertFalse("Key file is not directory", PropertiesValidator.isKeyFileCorrect("C:\\Windows"));
-        } catch (InvalidSettingsException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
     public void columnsCheckTest() {
         /*
          * XXX Doesnt working test suggestion

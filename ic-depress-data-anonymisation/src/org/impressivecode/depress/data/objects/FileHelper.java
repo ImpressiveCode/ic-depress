@@ -16,32 +16,83 @@ import javax.annotation.processing.FilerException;
 import org.impressivecode.depress.data.anonymisation.AnonymisationNodeModel;
 
 public class FileHelper {
+    private static String TMP_DIR = System.getProperty("java.io.tmpdir");
+    private static String KEY_FILENAME = "key-file";
+    private static String KEY_FILENAME_EXT = "txt";
+    private static String DIR_SEPARATOR = System.getProperty("file.separator");
+    
+    /**
+     * Checks for filename correctness
+     * 
+     * @param String filename filename to be checked for valid characters
+     * @return result of test true means that filename is valid
+     */
+    private static boolean isFilenameValid(String filename)
+    {
+        final File aFile = new File(filename);
+        boolean isValid = true;
+        try
+        {
+            if (aFile.createNewFile())
+            {
+                aFile.delete();
+            }
+        }
+        catch (IOException e)
+        {
+            isValid = false;
+        }
+        return isValid;
+    }
 
-    public static String RandomString(int length) {
-
+    /**
+     * Method generates random character strings
+     * 
+     * @param length length of generated string
+     * @return String consisting of Pseudo Random Characters
+     */
+    private static String RandomString(int length) {
         SecureRandom random = new SecureRandom();
         return new java.math.BigInteger(length * 5, random).toString(32);
     }
 
+    /**
+     * Method abstracts creation of temporary key file
+     * with specific OS characteristics in mind
+     * 
+     * @param String length of generated string
+     * @return String string form of created temporary file
+     */
     public static String CreateTmpFile(String fileName) {
-        String path = System.getProperty("java.io.tmpdir") + "\\";
-        String ext = ".txt";
-        File tempFile = new File(path + fileName + ext);
+        int i = 0;
+        fileName = isFilenameValid(fileName) ? fileName : KEY_FILENAME;
+        File tempFile = null;
 
-        try {
-
-            int i = 0;
-            while (tempFile.exists()) {
-                tempFile = new File(path + fileName + ((i > 0) ? "(" + i + ")" : "") + ext);
+        try
+        {
+            do
+            {
+                tempFile = new File(TMP_DIR + DIR_SEPARATOR + fileName + "-" + i + "." + KEY_FILENAME_EXT);
                 i++;
             }
-        } catch (Exception e) {// Catch exception if any
+            while (tempFile.exists());
+        }
+        // Catch exception if any
+        catch (Exception e)
+        {
             System.err.println("Error: " + e.getMessage());
         }
 
         return tempFile.getPath();
     }
 
+    /**
+     * Writes text to specified path
+     * 
+     * @param fullPath location of the file where to write 
+     * @param text contents of the file
+     * @throws IOException
+     */
     public static void WriteToFile(String fullPath, String text) throws IOException {
         FileWriter fstream = new FileWriter(fullPath);
         BufferedWriter out = new BufferedWriter(fstream);
@@ -50,6 +101,13 @@ public class FileHelper {
         out.close();
     }
 
+    /**
+     * Generates key file
+     * 
+     * @param fileName name of the file to be created
+     * @return location of generated key file
+     * @throws IOException
+     */
     public static String GenerateKeyFile(String fileName) throws IOException {
 
         String path = CreateTmpFile(fileName);
@@ -58,6 +116,13 @@ public class FileHelper {
         return path;
     }
 
+    /**
+     * Method abstracts io calls
+     * 
+     * @param fullPath path of file to be read
+     * @return contents of the file
+     * @throws IOException
+     */
     public static String ReadFromFile(String fullPath) throws IOException {
         File file = new File(fullPath);
 
