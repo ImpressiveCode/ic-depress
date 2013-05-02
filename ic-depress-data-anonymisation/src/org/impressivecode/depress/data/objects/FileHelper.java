@@ -38,6 +38,13 @@ public class FileHelper {
         } catch (Exception e) {// Catch exception if any
             System.err.println("Error: " + e.getMessage());
         }
+        try {
+            tempFile.createNewFile();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return "";
+        }
 
         return tempFile.getPath();
     }
@@ -53,7 +60,7 @@ public class FileHelper {
     public static String GenerateKeyFile(String fileName) throws IOException {
 
         String path = CreateTmpFile(fileName);
-        WriteToFile(path, RandomString(AnonymisationNodeModel.KEY_LENGTH));
+        WriteToFile(path, CryptographicUtility.generateKey());
 
         return path;
     }
@@ -72,13 +79,13 @@ public class FileHelper {
         // Get the object of DataInputStream
         DataInputStream in = new DataInputStream(fstream);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
-        String text = "";
-        String line;
+        String line = br.readLine();
+        String text = line;
         // Read File Line By Line
         while ((line = br.readLine()) != null) {
             // Print the content on the console
-            text += line;
             text += '\n';
+            text += line;
         }
         return text;
     }
