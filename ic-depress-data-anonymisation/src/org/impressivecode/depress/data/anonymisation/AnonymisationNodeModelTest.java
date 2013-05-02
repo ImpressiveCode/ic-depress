@@ -1,10 +1,8 @@
 package org.impressivecode.depress.data.anonymisation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
-import org.impressivecode.depress.data.objects.PropertiesValidator;
 import org.junit.Test;
-import org.knime.core.node.InvalidSettingsException;
 
 public class AnonymisationNodeModelTest {
 

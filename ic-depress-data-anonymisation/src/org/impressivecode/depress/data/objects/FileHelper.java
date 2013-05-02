@@ -16,10 +16,10 @@ import javax.annotation.processing.FilerException;
 import org.impressivecode.depress.data.anonymisation.AnonymisationNodeModel;
 
 public class FileHelper {
-    private static String TMP_DIR = System.getProperty("java.io.tmpdir");
-    private static String KEY_FILENAME = "key-file";
-    private static String KEY_FILENAME_EXT = "txt";
-    private static String DIR_SEPARATOR = System.getProperty("file.separator");
+    public static final String TMP_DIR = System.getProperty("java.io.tmpdir");
+    public static final String KEY_FILENAME = "key-file";
+    public static final String KEY_FILENAME_EXT = "txt";
+    public static final String DIR_SEPARATOR = System.getProperty("file.separator");
     
     /**
      * Checks for filename correctness
