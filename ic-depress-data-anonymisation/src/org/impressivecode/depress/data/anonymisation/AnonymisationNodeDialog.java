@@ -3,6 +3,10 @@ package org.impressivecode.depress.data.anonymisation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import org.impressivecode.depress.data.objects.AnonymisationFileChooser;
 import org.impressivecode.depress.data.objects.CryptographicUtility;
 import org.impressivecode.depress.data.objects.FileHelper;
@@ -66,7 +70,6 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
                     fileChooser.SetSelectedPath(keyPath);
                     fileChooser.UpdateComponent();
                 } catch (IOException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
 
@@ -78,7 +81,6 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
                 fileChooser.SetSelectedPath("");
                 fileChooser.UpdateComponent();
             }
@@ -90,6 +92,15 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
         // adding all components
         columnFilter = new DialogComponentColumnFilter(new SettingsModelFilterString(AnonymisationNodeModel.COLUMNS),
                 AnonymisationNodeModel.INPUT_PORT, false);
+        columnFilter.getModel().addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent arg0) {
+                // TODO Auto-generated method stub
+                // Here should be update ColumnFilter config which will be load
+                // in Model.Execute();
+            }
+        });
         addDialogComponent(columnFilter);
         setHorizontalPlacement(true);
 
