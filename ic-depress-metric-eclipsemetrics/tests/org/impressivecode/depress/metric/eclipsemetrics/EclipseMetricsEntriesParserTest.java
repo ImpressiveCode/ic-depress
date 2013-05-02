@@ -33,26 +33,47 @@ import org.xml.sax.SAXException;
  * 
  */
 public class EclipseMetricsEntriesParserTest {
+    
+    EclipseMetricsEntriesParser parser = new EclipseMetricsEntriesParser();
 
     @Test
-    public void shouldParseEntries() throws ParserConfigurationException, SAXException, IOException {
-        EclipseMetricsEntriesParser parser = new EclipseMetricsEntriesParser();
+    public void shouldParseEntriesMetricsFlat() throws ParserConfigurationException, SAXException, IOException {
         List<EclipseMetricsEntry> results = parser.parseEntries("examples/eclipsemetrics.xml");
         assertThat(results).hasSize(699);
-        assertEntry(results.get(0));
+        assertEntry(results.get(15));
+    }
+    
+    @Test
+    public void shouldParseEntriesSourceTree() throws ParserConfigurationException, SAXException, IOException {
+        List<EclipseMetricsEntry> results = parser.parseEntries("tests/eclipsemetrics_(source_tree).xml");
+        assertThat(results).hasSize(699);
+        assertEntry(results.get(582));
+    }
+    
+    @Test
+    public void shouldProduceEqualLists() throws ParserConfigurationException, SAXException, IOException {
+        List<EclipseMetricsEntry> results1 = parser.parseEntries("examples/eclipsemetrics.xml");
+        List<EclipseMetricsEntry> results2 = parser.parseEntries("tests/eclipsemetrics_(source_tree).xml");
+        results1.retainAll(results2);
+        assertThat(results1).hasSize(0);
+    }
+    
+    @Test(expected = SAXException.class)
+    public void shouldThrowExceptionWhenWrongFileStructure() throws ParserConfigurationException, SAXException, IOException {
+        parser.parseEntries("tests/wrongFile.xml");
     }
 
     private void assertEntry(final EclipseMetricsEntry eclipseMetricsEntry) {
-        assertThat(eclipseMetricsEntry.getClassName()).isEqualTo("org.apache.commons.math3.linear.BlockRealMatrix");
-        assertThat(eclipseMetricsEntry.getNumberOfOverriddenMethods()).isEqualTo(31.0);
-        assertThat(eclipseMetricsEntry.getNumberOfAttributes()).isEqualTo(5.0);
+        assertThat(eclipseMetricsEntry.getClassName()).isEqualTo("org.apache.commons.math3.linear.OpenMapRealVector$OpenMapEntry");
+        assertThat(eclipseMetricsEntry.getNumberOfOverriddenMethods()).isEqualTo(3.0);
+        assertThat(eclipseMetricsEntry.getNumberOfAttributes()).isEqualTo(1.0);
         assertThat(eclipseMetricsEntry.getNumberOfChildren()).isEqualTo(0.0);
-        assertThat(eclipseMetricsEntry.getNumberOfMethods()).isEqualTo(52.0);
-        assertThat(eclipseMetricsEntry.getDepthOfInheritanceTree()).isEqualTo(3.0);
-        assertThat(eclipseMetricsEntry.getLackOfCohesionOfMethods()).isEqualTo(0.365);
-        assertThat(eclipseMetricsEntry.getNumberOfStaticMethods()).isEqualTo(2.0);
-        assertThat(eclipseMetricsEntry.getSpecializationIndex()).isEqualTo(1.788);
-        assertThat(eclipseMetricsEntry.getWeightedMethodsPerClass()).isEqualTo(197.0);
-        assertThat(eclipseMetricsEntry.getNumberOfStaticAttributes()).isEqualTo(2.0);
+        assertThat(eclipseMetricsEntry.getNumberOfMethods()).isEqualTo(4.0);
+        assertThat(eclipseMetricsEntry.getDepthOfInheritanceTree()).isEqualTo(2.0);
+        assertThat(eclipseMetricsEntry.getLackOfCohesionOfMethods()).isEqualTo(0.0);
+        assertThat(eclipseMetricsEntry.getNumberOfStaticMethods()).isEqualTo(0.0);
+        assertThat(eclipseMetricsEntry.getSpecializationIndex()).isEqualTo(1.5);
+        assertThat(eclipseMetricsEntry.getWeightedMethodsPerClass()).isEqualTo(4.0);
+        assertThat(eclipseMetricsEntry.getNumberOfStaticAttributes()).isEqualTo(0.0);
     }
 }

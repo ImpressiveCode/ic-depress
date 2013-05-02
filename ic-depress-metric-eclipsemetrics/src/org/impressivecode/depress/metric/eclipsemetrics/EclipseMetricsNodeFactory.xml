@@ -10,24 +10,18 @@
     <fullDescription>
         <intro>
             <p>
-            This node can be used to read data from Eclipse Metrics report (XML
-            format). Only <u>sourcefile</u> is retrieved. 
+            This node can be used to read data from Eclipse Metrics report (XML format). Only <u>sourcefile</u> is retrieved. 
             </p>
             <p>
-            The report must be generated using default <u>XML Export format</u>: <u>Metrics flat</u>. For further information
-            about report generation please refer to Eclipse Metrics documentation
-            <a href="http://metrics.sourceforge.net/">here</a>.
+            The report may be generated using <u>XML Export format</u>: <u>Metrics flat</u> or <u>Source tree</u>. For further information about report generation please refer to Eclipse Metrics documentation <a href="http://metrics.sourceforge.net/">here</a>.
             </p>
             <p>
-            Please check workflow examples
-            <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-metric-eclipsemetrics/examples">here</a>
-            or inside plugin jar. 
+            Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-metric-eclipsemetrics/examples">here</a> or inside plugin jar.
             <br/> 
-            Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>
             </p>
         </intro>
-        <option name="Eclipse Metrics file location">Enter a valid file. When you press ENTER, the file is analyzed and the settings pre-set.
-            You can also choose a previously read file from the drop-down list, or select a file from the "Browse..." dialog.
+        <option name="Eclipse Metrics file location">Enter a valid file. When you press ENTER, the file is analyzed and the settings pre-set. You can also choose a previously read file from the drop-down list, or select a file from the "Browse..." dialog.
         </option>
     </fullDescription>
     

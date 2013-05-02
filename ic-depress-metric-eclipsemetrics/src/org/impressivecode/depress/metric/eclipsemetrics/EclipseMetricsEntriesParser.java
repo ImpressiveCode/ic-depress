@@ -45,26 +45,77 @@ import com.google.common.base.Preconditions;
  */
 public class EclipseMetricsEntriesParser {
     private static final NodeLogger LOGGER = NodeLogger.getLogger(EclipseMetricsEntriesParser.class);
+    private Document doc;
 
     public List<EclipseMetricsEntry> parseEntries(final String path) throws ParserConfigurationException, SAXException,
             IOException {
         Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(path);
+        doc = dBuilder.parse(path);
 
-        NodeList metricsList = getAllMetricsNodes(doc);
+        if (!validXmlStructure()) {
+            throw new SAXException("Wrong or malformed file structure.");
+        }
+
         Map<String, EclipseMetricsEntry> eclipsemetricsEntriesMap = new LinkedHashMap<String, EclipseMetricsEntry>();
 
-        for (int i = 0; i < metricsList.getLength(); i++) {
-            Node metricNode = metricsList.item(i);
+        LOGGER.info("isXmlMetricsTree() " + isXmlMetricsTree());
 
-            if (!isNodePerType(metricNode)) {
-                continue;
+        if (isXmlMetricsTree()) {
+            // "Metrics flat" option
+            NodeList metricsList = getAllMetricsNodes();
+            for (int i = 0; i < metricsList.getLength(); i++) {
+                Node metricNode = metricsList.item(i);
+                if (!isNodePerType(metricNode)) {
+                    continue;
+                }
+                updateEclipseMetricsEntriesMap(eclipsemetricsEntriesMap, metricNode);
             }
-            updateEclipseMetricsEntriesMap(eclipsemetricsEntriesMap, metricNode);
+        } else {
+            // "Source tree" option
+            NodeList classList = getAllTypeNodes();
+            for (int i = 0; i < classList.getLength(); i++) {
+                Node typeNode = classList.item(i);
+                String className = getClassName(typeNode);
+                NodeList metricNodes = getMetricSubnodes(typeNode);
+
+                if (!eclipsemetricsEntriesMap.containsKey(className)) {
+                    EclipseMetricsEntry entry = new EclipseMetricsEntry();
+                    entry.setClassName(className);
+                    entry = updateEclipseMetricsEntry(metricNodes, entry);
+                    eclipsemetricsEntriesMap.put(className, entry);
+                }
+            }
         }
         return new ArrayList<EclipseMetricsEntry>(eclipsemetricsEntriesMap.values());
+    }
+
+    private EclipseMetricsEntry updateEclipseMetricsEntry(NodeList metricNodes, EclipseMetricsEntry entry) {
+        for (int i = 0; i < metricNodes.getLength(); i++) {
+            if (metricNodes.item(i).getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+            Element elem = (Element) metricNodes.item(i);
+            if (!elem.hasAttribute("value")) {
+                continue;
+            }
+            String metricId = elem.getAttribute("id");
+            Double metricValue = Double.parseDouble(elem.getAttribute("value").replace(",", "."));
+            entry.setValue(metricId, metricValue);
+        }
+        return entry;
+    }
+
+    private NodeList getMetricSubnodes(Node typeNode) {
+        Element elem = (Element) typeNode;
+        return elem.getElementsByTagName("Metric");
+    }
+
+    private String getClassName(Node typeNode) {
+        String className = ((Element) typeNode).getAttribute("handle");
+        className = className.replaceAll("\\{.+\\.java\\[", ".").replaceAll(".+<", "").replace("[", "$");
+        return className;
     }
 
     private void updateEclipseMetricsEntriesMap(Map<String, EclipseMetricsEntry> eclipsemetricsEntriesMap,
@@ -90,7 +141,41 @@ public class EclipseMetricsEntriesParser {
         return ((Element) item).getAttribute("per").equals("type");
     }
 
-    private NodeList getAllMetricsNodes(final Document doc) {
+    private boolean validXmlStructure() {
+        NodeList mainNodes = doc.getChildNodes();
+        for (int i = 0; i < mainNodes.getLength(); i++) {
+            Element elem = (Element) mainNodes.item(i);
+            if ("Metrics".equals(elem.getTagName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isXmlMetricsTree() {
+        NodeList mainNodes = doc.getChildNodes();
+        for (int i = 0; i < mainNodes.getLength(); i++) {
+            if (mainNodes.item(i).getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+            Element elem = (Element) mainNodes.item(i);
+            if ("Metrics".equals(elem.getTagName())) {
+                NodeList nodes = mainNodes.item(i).getChildNodes();
+                for (int j = 0; j < nodes.getLength(); j++) {
+                    if (nodes.item(j).getNodeType() != Node.ELEMENT_NODE) {
+                        continue;
+                    }
+                    Element elem1 = (Element) nodes.item(j);
+                    if ("Metric".equals(elem1.getTagName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private NodeList getAllMetricsNodes() {
         return doc.getElementsByTagName("Values");
     }
 
@@ -121,5 +206,9 @@ public class EclipseMetricsEntriesParser {
             }
         }
         return values;
+    }
+
+    private NodeList getAllTypeNodes() {
+        return doc.getElementsByTagName("Type");
     }
 }
