@@ -61,7 +61,7 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
                 String keyPath;
                 try {
                     keyPath = FileHelper.CreateTmpFile("KeyFile");
-                    FileHelper.WriteToFile(keyPath, CryptographicUtility.GenerateKey());
+                    FileHelper.WriteToFile(keyPath, CryptographicUtility.generateKey());
 
                     fileChooser.SetSelectedPath(keyPath);
                     fileChooser.UpdateComponent();

@@ -1,78 +1,61 @@
 package org.impressivecode.depress.data.objects;
 
-import java.security.InvalidAlgorithmParameterException;
-
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 public abstract class CryptographicUtility {
     
-    @SuppressWarnings("finally")
-    public static String GenerateKey()
+    public static String generateKey()
     {
         try
         {
             KeyGenerator keygenerator = KeyGenerator.getInstance("Blowfish");
-            SecretKey secretkey = keygenerator.generateKey();
-            return secretkey.toString();
+            SecretKey secretkey = keygenerator.generateKey();    
+            return secretkey.getEncoded().toString().substring(3);
         }
-        finally
+        catch (NoSuchAlgorithmException e)
         {
             return "";
         }
     }
-    
-    public static String UseAlgorithm(Object input, String key)
-    {
-        String output = BlowfishAlgorithm(input.toString(), key);
-        return output;
-    }
         
-    @SuppressWarnings("finally")
-    private static String BlowfishAlgorithm(String input, String key)
+    public static String useAlgorithm(String input, String key)
     {
         try
         {
-            if (ValidateKey(key))
-            {
-                byte[] byteKey = key.getBytes();
-                SecretKeySpec secretKey = new SecretKeySpec(byteKey, "Blowfish");
-                Cipher cipher = Cipher.getInstance("Blowfish");
-                cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-                byte[] encrypted = cipher.doFinal(input.getBytes());
-                return encrypted.toString();
-            }
-            else
-            { 
-                throw new InvalidAlgorithmParameterException(); 
-            }
-        }
-        finally
+            byte[] byteKey = key.getBytes();
+            SecretKeySpec secretKey = new SecretKeySpec(byteKey, "Blowfish");
+            Cipher cipher = Cipher.getInstance("Blowfish");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            byte[] encrypted = cipher.doFinal(input.getBytes());
+            return encrypted.toString();
+        } 
+        catch (NoSuchPaddingException nspe)
         {
             return input;
-        } 
-    }
-    
-    private static Boolean ValidateKey(String key)
-    {
-        switch(key.length())
-        {
-            case 8:
-                return true;
-            case 16:
-                return true;
-            case 24:
-                return true;
-            case 28:
-                return true;
-            case 32: 
-                return true;
-            case 48:
-                return true;
-            default:
-                return false;
         }
-    }    
+        catch (NoSuchAlgorithmException nsae)
+        {
+            return input;
+        }
+        catch (InvalidKeyException ike)
+        {
+            return input;
+        }
+        catch (BadPaddingException bpe)
+        {
+            return input;
+        }
+        catch (IllegalBlockSizeException ibse)
+        {
+            return input;
+        }
+    }
 }
