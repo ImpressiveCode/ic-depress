@@ -17,6 +17,8 @@ public class FileHelperTest {
     public void testCreateTmpFileInvalidFilename() {
         String expected = FileHelper.TMP_DIR + FileHelper.DIR_SEPARATOR
                 + FileHelper.KEY_FILENAME + "-" + 0 + "." + FileHelper.KEY_FILENAME_EXT;
+        File f = new File(expected);
+        f.delete();
         assertEquals(FileHelper.CreateTmpFile(""), expected);
     }
 
@@ -28,6 +30,8 @@ public class FileHelperTest {
         String fname = "validName";
         String expected = FileHelper.TMP_DIR + FileHelper.DIR_SEPARATOR
                 + fname + "-" + 0 + "." + FileHelper.KEY_FILENAME_EXT;
+        File f = new File(expected);
+        f.delete();
         assertEquals(FileHelper.CreateTmpFile(fname), expected);
     }
 
@@ -43,19 +47,29 @@ public class FileHelperTest {
         String fpath = FileHelper.CreateTmpFile(fname);
         File f = new File(fpath);
         f.createNewFile();
+        f.deleteOnExit();
         fpath = FileHelper.CreateTmpFile(fname);
         assertEquals(fpath, expected);
-        f.delete();
     }
 
+    /**
+     * Checks if file is written without errors given correct parameters
+     */
     @Test
-    public void testWriteToFile() {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    public void testGenerateKeyFile() {
-        fail("Not yet implemented");
+    public void testWriteToFileSchouldSucceed() {
+        Throwable thrown = null;
+        String fp = FileHelper.CreateTmpFile(FileHelper.KEY_FILENAME);
+        File f = new File(fp);
+        f.deleteOnExit();
+        
+        try {
+            FileHelper.WriteToFile(fp, FileHelper.KEY_FILENAME);
+        }
+        catch (IOException e)
+        {
+            thrown = e;
+        }
+        assertNull(thrown);
     }
 
     @Test
