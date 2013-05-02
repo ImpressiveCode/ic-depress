@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="icon.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.5105609"
+     inkscape:cx="372.04724"
+     inkscape:cy="480.19182"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1600"
+     inkscape:window-height="841"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2987"
+       width="400"
+       height="400"
+       x="227.61806"
+       y="336.16913"
+       inkscape:export-filename="/home/adudek/Dropbox/pwr/mmjio/proj/ic-depress/ic-depress-data-anonymisation/src/org/impressivecode/depress/data/anonymisation/default.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       id="g3131"
+       transform="translate(6.6547433,-0.35740813)">
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path3069"
+         d="m 227.84776,492.01239 c 23.29465,21.75074 96.51817,-72.21495 195.9696,11.11168 0,0 -22.55594,90.36933 -22.22336,88.89343 -72.84441,14.83107 -151.70599,44.73176 -173.74624,-100.00511 z"
+         style="fill:#000000;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="ccc"
+         inkscape:connector-curvature="0"
+         id="path3071"
+         d="m 260.11893,527.47281 c 18.62219,38.09554 58.66304,33.86105 130.59687,36.51096 -34.54266,-61.0696 -60.16501,-54.42232 -130.59687,-36.51096 z"
+         style="fill:#ffffff;stroke:#000000;stroke-width:1.11212301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path3069-3"
+         d="m 614.07888,492.01239 c -23.29465,21.75074 -96.51817,-72.21495 -195.9696,11.11168 0,0 22.55594,90.36933 22.22336,88.89343 72.84441,14.83107 151.70599,44.73176 173.74624,-100.00511 z"
+         style="fill:#000000;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="ccc"
+         inkscape:connector-curvature="0"
+         id="path3071-5"
+         d="m 581.80771,527.47281 c -18.62219,38.09554 -58.66304,33.86105 -130.59687,36.51096 34.54266,-61.0696 60.16501,-54.42232 130.59687,-36.51096 z"
+         style="fill:#ffffff;stroke:#000000;stroke-width:1.11212301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>
