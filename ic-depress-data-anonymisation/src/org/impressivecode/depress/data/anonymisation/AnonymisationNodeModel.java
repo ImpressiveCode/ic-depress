@@ -2,8 +2,11 @@ package org.impressivecode.depress.data.anonymisation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 import org.impressivecode.depress.data.objects.PropertiesValidator;
+import org.knime.core.data.DataCell;
+import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -47,6 +50,27 @@ public class AnonymisationNodeModel extends NodeModel {
             throws Exception {
 
         // TODO: Return a BufferedDataTable for each output port
+
+        for(BufferedDataTable table : inData){
+            Iterator<DataColumnSpec> columnsItarator = table.getDataTableSpec().iterator(); 
+            while(columnsItarator.hasNext())
+            {
+              //TODO
+                //iterating every column. Should iterate only those from NodeDialog.ColumnFilter.
+                //Other just add to output. (but how?)
+                DataColumnSpec columnSpec = columnsItarator.next();
+                for(DataCell cell : columnSpec.getDomain().getValues())
+                {
+                    if(!cell.isMissing())
+                    {
+                        //TODO
+                        //iterating every cell. Here should be anonymisation for that column
+                        String value = cell.toString();
+                        value.toString();
+                    }
+                }
+            }
+        }
         return new BufferedDataTable[] {};
     }
 
