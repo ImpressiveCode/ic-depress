@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- WARNING: Eclipse auto-generated file.
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
@@ -6,6 +6,7 @@
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="ic-depress-data-anonymisation">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="../../eclipse"/>
+    <property name="COMMON_LIBS" value="../dev-buildtools/common-libs/eclipse"/>
     <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.7"/>
@@ -48,9 +49,13 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.apache.commons.io_1.4.0.v20081110-1000.jar"/>
     </path>
+    <path id="mockito.userclasspath">
+        <pathelement location="${env.CI_HOME}/../../dev-buildtools/common-libs/mockito-all-1.9.5.jar"/>
+    </path>
     <path id="ic-depress-data-anonymisation.classpath">
         <pathelement location="bin"/>
         <path refid="Plug-in Dependencies.libraryclasspath"/>
+        <path refid="mockito.userclasspath"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -95,11 +100,20 @@
             <classpath refid="ic-depress-data-anonymisation.classpath"/>
         </junit>
     </target>
+    <target name="FileHelperTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="org.impressivecode.depress.data.objects.FileHelperTest" todir="${junit.output.dir}"/>
+            <classpath refid="ic-depress-data-anonymisation.classpath"/>
+        </junit>
+    </target>
     <target name="test-knime">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
             <test name="org.impressivecode.depress.data.anonymisation.AnonymisationNodeModelTest" todir="${junit.output.dir}"/>
+            <test name="org.impressivecode.depress.data.objects.FileHelperTest" todir="${junit.output.dir}"/>
             <jvmarg line="-ea -Xmx512M -XX:MaxPermSize=192m"/>
             <classpath refid="ic-depress-data-anonymisation.classpath"/>
         </junit>
