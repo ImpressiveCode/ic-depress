@@ -1,7 +1,6 @@
 package org.impressivecode.depress.data.objects;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.IOException;
