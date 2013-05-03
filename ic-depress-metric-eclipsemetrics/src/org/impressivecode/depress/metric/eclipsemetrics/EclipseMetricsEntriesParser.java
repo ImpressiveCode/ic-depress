@@ -35,6 +35,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import java.util.regex.*;
 
 import com.google.common.base.Preconditions;
 
@@ -101,8 +102,12 @@ public class EclipseMetricsEntriesParser {
                 continue;
             }
             String metricId = elem.getAttribute("id");
-            Double metricValue = Double.parseDouble(elem.getAttribute("value").replace(",", "."));
-            entry.setValue(metricId, metricValue);
+            try {
+                Double metricValue = Double.parseDouble(elem.getAttribute("value").replace(",", "."));
+                entry.setValue(metricId, metricValue);
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage());
+            }
         }
         return entry;
     }
@@ -113,8 +118,24 @@ public class EclipseMetricsEntriesParser {
     }
 
     private String getClassName(Node typeNode) {
-        String className = ((Element) typeNode).getAttribute("handle");
-        className = className.replaceAll("\\{.+\\.java\\[", ".").replaceAll(".+<", "").replace("[", "$");
+        String subjectString = ((Element) typeNode).getAttribute("handle");
+        String className = "";
+        
+        Pattern regexPackageName = Pattern.compile("(?<=<).+(?=\\{)");
+        Matcher regexMatcher = regexPackageName.matcher(subjectString);
+        while (regexMatcher.find()) {
+            className += regexMatcher.group();
+        }
+
+        String name1 = "";
+        Pattern regexName1 = Pattern.compile("(?<=\\.java\\[).+");
+        regexMatcher = regexName1.matcher(subjectString);
+        while (regexMatcher.find()) {
+            name1 = regexMatcher.group();
+        }
+        name1 = name1.replace("[", "$");
+        className += "." + name1;
+
         return className;
     }
 

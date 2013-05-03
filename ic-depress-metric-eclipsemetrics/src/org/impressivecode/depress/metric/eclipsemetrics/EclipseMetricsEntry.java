@@ -36,6 +36,36 @@ public class EclipseMetricsEntry {
     private Double weightedMethodsPerClass;
     private Double numberOfStaticAttributes;
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((className == null) ? 0 : className.hashCode());
+        result = prime * result + ((depthOfInheritanceTree == null) ? 0 : depthOfInheritanceTree.hashCode());
+        result = prime * result + ((lackOfCohesionOfMethods == null) ? 0 : lackOfCohesionOfMethods.hashCode());
+        result = prime * result + ((numberOfAttributes == null) ? 0 : numberOfAttributes.hashCode());
+        result = prime * result + ((numberOfChildren == null) ? 0 : numberOfChildren.hashCode());
+        result = prime * result + ((numberOfMethods == null) ? 0 : numberOfMethods.hashCode());
+        result = prime * result + ((numberOfOverriddenMethods == null) ? 0 : numberOfOverriddenMethods.hashCode());
+        result = prime * result + ((numberOfStaticAttributes == null) ? 0 : numberOfStaticAttributes.hashCode());
+        result = prime * result + ((numberOfStaticMethods == null) ? 0 : numberOfStaticMethods.hashCode());
+        result = prime * result + ((specializationIndex == null) ? 0 : specializationIndex.hashCode());
+        result = prime * result + ((weightedMethodsPerClass == null) ? 0 : weightedMethodsPerClass.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof EclipseMetricsEntry))
+            return false;
+        EclipseMetricsEntry other = (EclipseMetricsEntry) obj;
+        return other.toString().equals(this.toString());
+    }
+
     public String getClassName() {
         return className;
     }
