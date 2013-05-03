@@ -114,6 +114,7 @@
             <formatter type="xml"/>
             <test name="org.impressivecode.depress.data.anonymisation.AnonymisationNodeModelTest" todir="${junit.output.dir}"/>
             <test name="org.impressivecode.depress.data.objects.FileHelperTest" todir="${junit.output.dir}"/>
+            <test name="org.impressivecode.depress.data.objects.PropertiesValidatorTest" todir="${junit.output.dir}"/>
             <jvmarg line="-ea -Xmx512M -XX:MaxPermSize=192m"/>
             <classpath refid="ic-depress-data-anonymisation.classpath"/>
         </junit>
