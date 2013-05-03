@@ -60,36 +60,62 @@ public class EclipseMetricsEntriesParser {
         }
 
         Map<String, EclipseMetricsEntry> eclipsemetricsEntriesMap = new LinkedHashMap<String, EclipseMetricsEntry>();
+        NodeList classList = getAllTypeNodes();
+        for (int i = 0; i < classList.getLength(); i++) {
+            Node typeNode = classList.item(i);
+            String className = getClassName(typeNode);
+            NodeList metricNodes = getMetricSubnodes(typeNode);
 
-        LOGGER.info("isXmlMetricsTree() " + isXmlMetricsTree());
-
-        if (isXmlMetricsTree()) {
-            // "Metrics flat" option
-            NodeList metricsList = getAllMetricsNodes();
-            for (int i = 0; i < metricsList.getLength(); i++) {
-                Node metricNode = metricsList.item(i);
-                if (!isNodePerType(metricNode)) {
-                    continue;
-                }
-                updateEclipseMetricsEntriesMap(eclipsemetricsEntriesMap, metricNode);
-            }
-        } else {
-            // "Source tree" option
-            NodeList classList = getAllTypeNodes();
-            for (int i = 0; i < classList.getLength(); i++) {
-                Node typeNode = classList.item(i);
-                String className = getClassName(typeNode);
-                NodeList metricNodes = getMetricSubnodes(typeNode);
-
-                if (!eclipsemetricsEntriesMap.containsKey(className)) {
-                    EclipseMetricsEntry entry = new EclipseMetricsEntry();
-                    entry.setClassName(className);
-                    entry = updateEclipseMetricsEntry(metricNodes, entry);
-                    eclipsemetricsEntriesMap.put(className, entry);
-                }
+            if (!eclipsemetricsEntriesMap.containsKey(className)) {
+                EclipseMetricsEntry entry = new EclipseMetricsEntry();
+                entry.setClassName(className);
+                entry = updateEclipseMetricsEntry(metricNodes, entry);
+                eclipsemetricsEntriesMap.put(className, entry);
             }
         }
         return new ArrayList<EclipseMetricsEntry>(eclipsemetricsEntriesMap.values());
+    }
+
+    private boolean validXmlStructure() {
+        NodeList mainNodes = doc.getChildNodes();
+        for (int i = 0; i < mainNodes.getLength(); i++) {
+            Element elem = (Element) mainNodes.item(i);
+            if ("Metrics".equals(elem.getTagName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private NodeList getAllTypeNodes() {
+        return doc.getElementsByTagName("Type");
+    }
+
+    private String getClassName(Node typeNode) {
+        String subjectString = ((Element) typeNode).getAttribute("handle");
+        String className = "";
+
+        Pattern regexPackageName = Pattern.compile("(?<=<).+(?=\\{)");
+        Matcher regexMatcher = regexPackageName.matcher(subjectString);
+        while (regexMatcher.find()) {
+            className += regexMatcher.group();
+        }
+
+        String name1 = "";
+        Pattern regexName1 = Pattern.compile("(?<=\\.java\\[).+");
+        regexMatcher = regexName1.matcher(subjectString);
+        while (regexMatcher.find()) {
+            name1 = regexMatcher.group();
+        }
+        name1 = name1.replace("[", "$");
+        className += "." + name1;
+
+        return className;
+    }
+
+    private NodeList getMetricSubnodes(Node typeNode) {
+        Element elem = (Element) typeNode;
+        return elem.getElementsByTagName("Metric");
     }
 
     private EclipseMetricsEntry updateEclipseMetricsEntry(NodeList metricNodes, EclipseMetricsEntry entry) {
@@ -110,126 +136,5 @@ public class EclipseMetricsEntriesParser {
             }
         }
         return entry;
-    }
-
-    private NodeList getMetricSubnodes(Node typeNode) {
-        Element elem = (Element) typeNode;
-        return elem.getElementsByTagName("Metric");
-    }
-
-    private String getClassName(Node typeNode) {
-        String subjectString = ((Element) typeNode).getAttribute("handle");
-        String className = "";
-        
-        Pattern regexPackageName = Pattern.compile("(?<=<).+(?=\\{)");
-        Matcher regexMatcher = regexPackageName.matcher(subjectString);
-        while (regexMatcher.find()) {
-            className += regexMatcher.group();
-        }
-
-        String name1 = "";
-        Pattern regexName1 = Pattern.compile("(?<=\\.java\\[).+");
-        regexMatcher = regexName1.matcher(subjectString);
-        while (regexMatcher.find()) {
-            name1 = regexMatcher.group();
-        }
-        name1 = name1.replace("[", "$");
-        className += "." + name1;
-
-        return className;
-    }
-
-    private void updateEclipseMetricsEntriesMap(Map<String, EclipseMetricsEntry> eclipsemetricsEntriesMap,
-            Node metricNode) {
-        String metricId = parseMetricId(metricNode);
-        Map<String, Double> metricClassesAndValuesMap = parseMetricNode(metricNode);
-        for (Map.Entry<String, Double> data : metricClassesAndValuesMap.entrySet()) {
-            String className = data.getKey();
-            Double metricValue = data.getValue();
-            if (eclipsemetricsEntriesMap.containsKey(className)) {
-                EclipseMetricsEntry entry = eclipsemetricsEntriesMap.get(className);
-                entry.setValue(metricId, metricValue);
-            } else {
-                EclipseMetricsEntry entry = new EclipseMetricsEntry();
-                entry.setClassName(className);
-                entry.setValue(metricId, metricValue);
-                eclipsemetricsEntriesMap.put(className, entry);
-            }
-        }
-    }
-
-    private boolean isNodePerType(final Node item) {
-        return ((Element) item).getAttribute("per").equals("type");
-    }
-
-    private boolean validXmlStructure() {
-        NodeList mainNodes = doc.getChildNodes();
-        for (int i = 0; i < mainNodes.getLength(); i++) {
-            Element elem = (Element) mainNodes.item(i);
-            if ("Metrics".equals(elem.getTagName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isXmlMetricsTree() {
-        NodeList mainNodes = doc.getChildNodes();
-        for (int i = 0; i < mainNodes.getLength(); i++) {
-            if (mainNodes.item(i).getNodeType() != Node.ELEMENT_NODE) {
-                continue;
-            }
-            Element elem = (Element) mainNodes.item(i);
-            if ("Metrics".equals(elem.getTagName())) {
-                NodeList nodes = mainNodes.item(i).getChildNodes();
-                for (int j = 0; j < nodes.getLength(); j++) {
-                    if (nodes.item(j).getNodeType() != Node.ELEMENT_NODE) {
-                        continue;
-                    }
-                    Element elem1 = (Element) nodes.item(j);
-                    if ("Metric".equals(elem1.getTagName())) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    private NodeList getAllMetricsNodes() {
-        return doc.getElementsByTagName("Values");
-    }
-
-    private String parseMetricId(Node item) {
-        return ((Element) item.getParentNode()).getAttribute("id");
-    }
-
-    private Map<String, Double> parseMetricNode(Node metricNode) {
-        Map<String, Double> values = new LinkedHashMap<String, Double>();
-        NodeList childNodeList = metricNode.getChildNodes();
-        for (int i = 0; i < childNodeList.getLength(); i++) {
-            Node childItem = childNodeList.item(i);
-            if (childItem.getNodeName().equals("Value")) {
-                Element elem = (Element) childItem;
-                String name = elem.getAttribute("name");
-                String source = elem.getAttribute("source").replace(".java", "");
-                String packageName = elem.getAttribute("package");
-                String className = "(default package)".equals(packageName) ? name : packageName + "." + source;
-                if (!name.equals(source)) {
-                    className += "$" + name;
-                }
-                try {
-                    Double value = Double.parseDouble(elem.getAttribute("value").replace(",", "."));
-                    values.put(className, value);
-                } catch (Exception e) {
-                    LOGGER.error(e.getMessage());
-                }
-            }
-        }
-        return values;
-    }
-
-    private NodeList getAllTypeNodes() {
-        return doc.getElementsByTagName("Type");
     }
 }
