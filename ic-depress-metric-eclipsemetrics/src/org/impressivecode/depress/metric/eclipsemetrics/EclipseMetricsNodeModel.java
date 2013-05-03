@@ -19,6 +19,7 @@ package org.impressivecode.depress.metric.eclipsemetrics;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpecMethodLevel;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class EclipseMetricsNodeModel extends NodeModel {
     private final SettingsModelString fileSettings = createFileChooserSettings();
 
     protected EclipseMetricsNodeModel() {
-        super(0, 1);
+        super(0, 2);
     }
 
     @Override
@@ -61,23 +62,42 @@ public class EclipseMetricsNodeModel extends NodeModel {
 
         LOGGER.info("Preparing to read EclipseMetrics entries.");
         String eclipsemetricsFilePath = fileSettings.getStringValue();
-        List<EclipseMetricsEntry> entries = parseEntries(eclipsemetricsFilePath);
-        LOGGER.info("Transforming to EclipseMetrics entries.");
-        BufferedDataTable output = transform(entries, exec);
-        LOGGER.info("EclipseMetrics table created.");
-        return new BufferedDataTable[] { output };
+
+        List<EclipseMetricsEntry> entriesClassLevel = parseEntriesClassLevel(eclipsemetricsFilePath);
+        LOGGER.info("Transforming to EclipseMetrics class-level entries.");
+        BufferedDataTable output1 = transformClassLevel(entriesClassLevel, exec);
+        LOGGER.info("EclipseMetrics class-level table created.");
+
+        List<EclipseMetricsEntryMethodLevel> entriesMethodLevel = parseEntriesMethodLevel(eclipsemetricsFilePath);
+        LOGGER.info("Transforming to EclipseMetrics method-level entries.");
+        BufferedDataTable output2 = transformMethodLevel(entriesMethodLevel, exec);
+        LOGGER.info("EclipseMetrics method-level table created.");
+
+        return new BufferedDataTable[] { output1, output2 };
     }
 
-    private BufferedDataTable transform(final List<EclipseMetricsEntry> entries, final ExecutionContext exec)
+    private BufferedDataTable transformClassLevel(final List<EclipseMetricsEntry> entries, final ExecutionContext exec)
             throws CanceledExecutionException {
         EclipseMetricsTransformer transformer = new EclipseMetricsTransformer(createDataColumnSpec());
         return transformer.transform(entries, exec);
     }
+    
+    private BufferedDataTable transformMethodLevel(final List<EclipseMetricsEntryMethodLevel> entries, final ExecutionContext exec)
+            throws CanceledExecutionException {
+        EclipseMetricsTransformer transformer = new EclipseMetricsTransformer(createDataColumnSpecMethodLevel());
+        return transformer.transformMethodLevel(entries, exec);
+    }
 
-    private List<EclipseMetricsEntry> parseEntries(final String eclipsemetricsFilePath)
+    private List<EclipseMetricsEntry> parseEntriesClassLevel(final String eclipsemetricsFilePath)
             throws ParserConfigurationException, SAXException, IOException {
         EclipseMetricsEntriesParser parser = new EclipseMetricsEntriesParser();
-        return parser.parseEntries(eclipsemetricsFilePath);
+        return parser.parseEntriesClassLevel(eclipsemetricsFilePath);
+    }
+    
+    private List<EclipseMetricsEntryMethodLevel> parseEntriesMethodLevel(final String eclipsemetricsFilePath)
+            throws ParserConfigurationException, SAXException, IOException {
+        EclipseMetricsEntriesParser parser = new EclipseMetricsEntriesParser();
+        return parser.parseEntriesMethodLevel(eclipsemetricsFilePath);
     }
 
     @Override

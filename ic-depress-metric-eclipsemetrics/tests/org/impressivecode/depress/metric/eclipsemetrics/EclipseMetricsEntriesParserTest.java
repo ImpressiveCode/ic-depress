@@ -38,7 +38,7 @@ public class EclipseMetricsEntriesParserTest {
 
     @Test
     public void shouldParseEntries() throws ParserConfigurationException, SAXException, IOException {
-        List<EclipseMetricsEntry> results = parser.parseEntries("examples/eclipsemetrics.xml");
+        List<EclipseMetricsEntry> results = parser.parseEntriesClassLevel("examples/eclipsemetrics.xml");
         assertThat(results).hasSize(699);
         assertEntry(results.get(582));
         assertEntry2(results.get(195));
@@ -47,7 +47,7 @@ public class EclipseMetricsEntriesParserTest {
     @Test(expected = SAXException.class)
     public void shouldThrowExceptionWhenWrongFileStructure() throws ParserConfigurationException, SAXException,
             IOException {
-        parser.parseEntries("tests/wrongFile.xml");
+        parser.parseEntriesClassLevel("tests/wrongFile.xml");
     }
 
     private void assertEntry(final EclipseMetricsEntry eclipseMetricsEntry) {

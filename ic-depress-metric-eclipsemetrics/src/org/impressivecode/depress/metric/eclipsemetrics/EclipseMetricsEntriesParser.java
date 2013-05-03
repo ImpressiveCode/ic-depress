@@ -47,8 +47,13 @@ import com.google.common.base.Preconditions;
 public class EclipseMetricsEntriesParser {
     private static final NodeLogger LOGGER = NodeLogger.getLogger(EclipseMetricsEntriesParser.class);
     private Document doc;
+    
+    public List<EclipseMetricsEntryMethodLevel> parseEntriesMethodLevel(final String path) throws ParserConfigurationException, SAXException,
+    IOException {
+        return new ArrayList<EclipseMetricsEntryMethodLevel>();
+    }
 
-    public List<EclipseMetricsEntry> parseEntries(final String path) throws ParserConfigurationException, SAXException,
+    public List<EclipseMetricsEntry> parseEntriesClassLevel(final String path) throws ParserConfigurationException, SAXException,
             IOException {
         Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

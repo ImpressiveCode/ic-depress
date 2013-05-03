@@ -49,6 +49,27 @@ public class EclipseMetricsTransformer {
         this.tableSpec = tableSpec;
     }
 
+    public BufferedDataTable transformMethodLevel(final List<EclipseMetricsEntryMethodLevel> eclipsemetricsdata,
+            final ExecutionContext exec) throws CanceledExecutionException {
+        BufferedDataContainer container = createDataContainer(exec);
+        for (EclipseMetricsEntryMethodLevel entry : eclipsemetricsdata) {
+            progress(exec);
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Transforming metric, method: " + entry.getMethodName());
+            }
+
+            if (LOGGER.isEnabledFor(LEVEL.ALL)) {
+                LOGGER.debug("Transforming metric:" + entry.toString());
+            }
+            DataRow row = createTableRow(entry);
+            container.addRowToTable(row);
+        }
+        container.close();
+        BufferedDataTable out = container.getTable();
+        return out;
+    }
+
     public BufferedDataTable transform(final List<EclipseMetricsEntry> eclipsemetricsdata, final ExecutionContext exec)
             throws CanceledExecutionException {
         BufferedDataContainer container = createDataContainer(exec);
@@ -70,10 +91,24 @@ public class EclipseMetricsTransformer {
         return out;
     }
 
+    private DataRow createTableRow(final EclipseMetricsEntryMethodLevel entry) {
+        DataCell[] cells = getEclipseMetricsCells(entry);
+        DataRow row = new DefaultRow(entry.getMethodName(), cells);
+        return row;
+    }
+
     private DataRow createTableRow(final EclipseMetricsEntry entry) {
         DataCell[] cells = getEclipseMetricsCells(entry);
         DataRow row = new DefaultRow(entry.getClassName(), cells);
         return row;
+    }
+
+    private DataCell[] getEclipseMetricsCells(final EclipseMetricsEntryMethodLevel value) {
+        DataCell[] cells = { doubleOrMissingCell(value.getMethodLinesOfCode()),
+                doubleOrMissingCell(value.getNestedBlockDepth()),
+                doubleOrMissingCell(value.getMcCabeCyclomaticComplexity()),
+                doubleOrMissingCell(value.getNumberOfParameters()) };
+        return cells;
     }
 
     private DataCell[] getEclipseMetricsCells(final EclipseMetricsEntry value) {
