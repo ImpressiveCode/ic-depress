@@ -50,7 +50,7 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/org.apache.commons.io_1.4.0.v20081110-1000.jar"/>
     </path>
     <path id="mockito.userclasspath">
-        <pathelement location="${env.CI_HOME}/../../dev-buildtools/common-libs/mockito-all-1.9.5.jar"/>
+        <pathelement location="${env.COMMON_LIBS_HOME}/mockito-all-1.9.5.jar"/>
     </path>
     <path id="ic-depress-data-anonymisation.classpath">
         <pathelement location="bin"/>
