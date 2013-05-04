@@ -38,45 +38,61 @@ public class EclipseMetricsEntriesParserTest {
 
     @Test
     public void shouldParseEntries() throws ParserConfigurationException, SAXException, IOException {
-        List<EclipseMetricsEntry> results = parser.parseEntries("examples/eclipsemetrics.xml");
-        assertThat(results).hasSize(699);
-        assertEntry(results.get(582));
-        assertEntry2(results.get(195));
+        List<EclipseMetricsEntryClassLevel> results = parser.parseEntriesClassLevel("examples/eclipsemetrics.xml");
+        assertThat(results).hasSize(956);
+        assertEntry(results.get(6));
+        assertEntry2(results.get(7));
     }
 
     @Test(expected = SAXException.class)
     public void shouldThrowExceptionWhenWrongFileStructure() throws ParserConfigurationException, SAXException,
             IOException {
-        parser.parseEntries("tests/wrongFile.xml");
+        parser.parseEntriesClassLevel("tests/wrongFile.xml");
     }
 
-    private void assertEntry(final EclipseMetricsEntry eclipseMetricsEntry) {
+    private void assertEntry(final EclipseMetricsEntryClassLevel eclipseMetricsEntry) {
         assertThat(eclipseMetricsEntry.getClassName()).isEqualTo(
-                "org.apache.commons.math3.linear.OpenMapRealVector$OpenMapEntry");
-        assertThat(eclipseMetricsEntry.getNumberOfOverriddenMethods()).isEqualTo(3.0);
-        assertThat(eclipseMetricsEntry.getNumberOfAttributes()).isEqualTo(1.0);
+                "org.apache.commons.math3.stat.Frequency$NaturalComparator");
+        assertThat(eclipseMetricsEntry.getNumberOfOverriddenMethods()).isEqualTo(0.0);
+        assertThat(eclipseMetricsEntry.getNumberOfAttributes()).isEqualTo(0.0);
         assertThat(eclipseMetricsEntry.getNumberOfChildren()).isEqualTo(0.0);
-        assertThat(eclipseMetricsEntry.getNumberOfMethods()).isEqualTo(4.0);
-        assertThat(eclipseMetricsEntry.getDepthOfInheritanceTree()).isEqualTo(2.0);
+        assertThat(eclipseMetricsEntry.getNumberOfMethods()).isEqualTo(1.0);
+        assertThat(eclipseMetricsEntry.getDepthOfInheritanceTree()).isEqualTo(1.0);
         assertThat(eclipseMetricsEntry.getLackOfCohesionOfMethods()).isEqualTo(0.0);
         assertThat(eclipseMetricsEntry.getNumberOfStaticMethods()).isEqualTo(0.0);
-        assertThat(eclipseMetricsEntry.getSpecializationIndex()).isEqualTo(1.5);
-        assertThat(eclipseMetricsEntry.getWeightedMethodsPerClass()).isEqualTo(4.0);
-        assertThat(eclipseMetricsEntry.getNumberOfStaticAttributes()).isEqualTo(0.0);
+        assertThat(eclipseMetricsEntry.getSpecializationIndex()).isEqualTo(0.0);
+        assertThat(eclipseMetricsEntry.getWeightedMethodsPerClass()).isEqualTo(1.0);
+        assertThat(eclipseMetricsEntry.getNumberOfStaticAttributes()).isEqualTo(1.0);
     }
 
-    private void assertEntry2(final EclipseMetricsEntry eclipseMetricsEntry) {
+    private void assertEntry2(final EclipseMetricsEntryClassLevel eclipseMetricsEntry) {
         assertThat(eclipseMetricsEntry.getClassName()).isEqualTo(
-                "org.apache.commons.math3.analysis.interpolation.BicubicSplineFunction");
+                "org.apache.commons.math3.stat.Frequency");
         assertThat(eclipseMetricsEntry.getNumberOfOverriddenMethods()).isEqualTo(0.0);
-        assertThat(eclipseMetricsEntry.getNumberOfAttributes()).isEqualTo(6.0);
+        assertThat(eclipseMetricsEntry.getNumberOfAttributes()).isEqualTo(1.0);
         assertThat(eclipseMetricsEntry.getNumberOfChildren()).isEqualTo(0.0);
-        assertThat(eclipseMetricsEntry.getNumberOfMethods()).isEqualTo(9.0);
+        assertThat(eclipseMetricsEntry.getNumberOfMethods()).isEqualTo(33.0);
         assertThat(eclipseMetricsEntry.getDepthOfInheritanceTree()).isEqualTo(1.0);
-        assertThat(eclipseMetricsEntry.getLackOfCohesionOfMethods()).isEqualTo(0.833);
+        assertThat(eclipseMetricsEntry.getLackOfCohesionOfMethods()).isEqualTo(0.0);
         assertThat(eclipseMetricsEntry.getNumberOfStaticMethods()).isEqualTo(0.0);
         assertThat(eclipseMetricsEntry.getSpecializationIndex()).isEqualTo(0.0);
-        assertThat(eclipseMetricsEntry.getWeightedMethodsPerClass()).isEqualTo(24.0);
+        assertThat(eclipseMetricsEntry.getWeightedMethodsPerClass()).isEqualTo(59.0);
         assertThat(eclipseMetricsEntry.getNumberOfStaticAttributes()).isEqualTo(1.0);
+    }
+
+    @Test
+    public void shouldParseEntriesMethodLevel() throws ParserConfigurationException, SAXException, IOException {
+        List<EclipseMetricsEntryMethodLevel> results = parser.parseEntriesMethodLevel("examples/eclipsemetrics.xml");
+        assertThat(results).hasSize(7100);
+        assertEntry3(results.get(0));
+    }
+
+    private void assertEntry3(final EclipseMetricsEntryMethodLevel eclipseMetricsEntry) {
+        assertThat(eclipseMetricsEntry.getMethodName()).isEqualTo(
+                "org.apache.commons.math3.stat.descriptive.SummaryStatistics~clear");
+        assertThat(eclipseMetricsEntry.getMethodLinesOfCode()).isEqualTo(14.0);
+        assertThat(eclipseMetricsEntry.getNestedBlockDepth()).isEqualTo(2.0);
+        assertThat(eclipseMetricsEntry.getMcCabeCyclomaticComplexity()).isEqualTo(3.0);
+        assertThat(eclipseMetricsEntry.getNumberOfParameters()).isEqualTo(0.0);
     }
 }

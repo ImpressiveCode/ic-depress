@@ -26,6 +26,7 @@
     </fullDescription>
     
     <ports>
-        <outPort index="0" name="Metrics Table">Datatable just read from the Eclipse Metrics file.</outPort>
+        <outPort index="0" name="Class-level Metrics Table">Datatable just read from the Eclipse Metrics file grouped by class.</outPort>
+        <outPort index="1" name="Method-level Metrics Table">Datatable just read from the Eclipse Metrics file grouped by methods.</outPort>
     </ports>
 </knimeNode>

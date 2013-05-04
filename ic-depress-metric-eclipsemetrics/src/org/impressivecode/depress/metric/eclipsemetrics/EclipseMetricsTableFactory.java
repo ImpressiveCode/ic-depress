@@ -40,6 +40,11 @@ public class EclipseMetricsTableFactory {
     private static final String WMC = "WeightedMethodsPerClass";
     private static final String NSF = "NumberOfStaticAttributes";
 
+    private static final String MLOC = "Method Lines of Code";
+    private static final String NBD = "Nested Block Depth";
+    private static final String VG = "McCabe Cyclomatic Complexity";
+    private static final String PAR = "Number of Parameters";
+
     private EclipseMetricsTableFactory() {
 
     }
@@ -59,6 +64,15 @@ public class EclipseMetricsTableFactory {
                 new DataColumnSpecCreator(SIX, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(WMC, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(NSF, DoubleCell.TYPE).createSpec() };
+        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
+        return outputSpec;
+    }
+
+    static DataTableSpec createDataColumnSpecMethodLevel() {
+        DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(MLOC, DoubleCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(NBD, DoubleCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(VG, DoubleCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(PAR, DoubleCell.TYPE).createSpec() };
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
         return outputSpec;
     }

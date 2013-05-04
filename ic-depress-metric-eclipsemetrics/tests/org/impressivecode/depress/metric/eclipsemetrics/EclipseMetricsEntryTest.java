@@ -8,7 +8,7 @@ public class EclipseMetricsEntryTest {
 
     @Test
     public void shouldReturnSetValue() {
-        EclipseMetricsEntry entry = new EclipseMetricsEntry();
+        EclipseMetricsEntryClassLevel entry = new EclipseMetricsEntryClassLevel();
 
         String className = "package.name.then.ClassName$InternalClassName";
         entry.setClassName(className);
@@ -53,6 +53,31 @@ public class EclipseMetricsEntryTest {
         expected = 11.5;
         entry.setNumberOfStaticAttributes(expected);
         assertEquals(expected, entry.getNumberOfStaticAttributes());
+    }
+    
+    @Test
+    public void shouldReturnSetValue2() {
+        EclipseMetricsEntryMethodLevel entry = new EclipseMetricsEntryMethodLevel();
+
+        String methodName = "org.apache.commons.math3.stat.descriptive.SummaryStatistics~clear";
+        entry.setMethodName(methodName);
+        assertEquals(methodName, entry.getMethodName());
+
+        Double expected = 2.5;
+        entry.setMethodLinesOfCode(expected);
+        assertEquals(expected, entry.getMethodLinesOfCode());
+
+        expected = 3.5;
+        entry.setNestedBlockDepth(expected);
+        assertEquals(expected, entry.getNestedBlockDepth());
+
+        expected = 4.5;
+        entry.setMcCabeCyclomaticComplexity(expected);
+        assertEquals(expected, entry.getMcCabeCyclomaticComplexity());
+
+        expected = 5.5;
+        entry.setNumberOfParameters(expected);
+        assertEquals(expected, entry.getNumberOfParameters());
     }
 
 }
