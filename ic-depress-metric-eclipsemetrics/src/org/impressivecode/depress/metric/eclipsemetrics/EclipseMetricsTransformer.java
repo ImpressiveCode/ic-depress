@@ -70,10 +70,10 @@ public class EclipseMetricsTransformer {
         return out;
     }
 
-    public BufferedDataTable transform(final List<EclipseMetricsEntry> eclipsemetricsdata, final ExecutionContext exec)
+    public BufferedDataTable transformClassLevel(final List<EclipseMetricsEntryClassLevel> eclipsemetricsdata, final ExecutionContext exec)
             throws CanceledExecutionException {
         BufferedDataContainer container = createDataContainer(exec);
-        for (EclipseMetricsEntry entry : eclipsemetricsdata) {
+        for (EclipseMetricsEntryClassLevel entry : eclipsemetricsdata) {
             progress(exec);
 
             if (LOGGER.isDebugEnabled()) {
@@ -97,7 +97,7 @@ public class EclipseMetricsTransformer {
         return row;
     }
 
-    private DataRow createTableRow(final EclipseMetricsEntry entry) {
+    private DataRow createTableRow(final EclipseMetricsEntryClassLevel entry) {
         DataCell[] cells = getEclipseMetricsCells(entry);
         DataRow row = new DefaultRow(entry.getClassName(), cells);
         return row;
@@ -111,7 +111,7 @@ public class EclipseMetricsTransformer {
         return cells;
     }
 
-    private DataCell[] getEclipseMetricsCells(final EclipseMetricsEntry value) {
+    private DataCell[] getEclipseMetricsCells(final EclipseMetricsEntryClassLevel value) {
         DataCell[] cells = { doubleOrMissingCell(value.getNumberOfOverriddenMethods()),
                 doubleOrMissingCell(value.getNumberOfAttributes()), doubleOrMissingCell(value.getNumberOfChildren()),
                 doubleOrMissingCell(value.getNumberOfMethods()),

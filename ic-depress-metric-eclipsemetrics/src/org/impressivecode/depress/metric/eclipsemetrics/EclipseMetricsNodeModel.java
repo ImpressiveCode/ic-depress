@@ -63,7 +63,7 @@ public class EclipseMetricsNodeModel extends NodeModel {
         LOGGER.info("Preparing to read EclipseMetrics entries.");
         String eclipsemetricsFilePath = fileSettings.getStringValue();
 
-        List<EclipseMetricsEntry> entriesClassLevel = parseEntriesClassLevel(eclipsemetricsFilePath);
+        List<EclipseMetricsEntryClassLevel> entriesClassLevel = parseEntriesClassLevel(eclipsemetricsFilePath);
         LOGGER.info("Transforming to EclipseMetrics class-level entries.");
         BufferedDataTable output1 = transformClassLevel(entriesClassLevel, exec);
         LOGGER.info("EclipseMetrics class-level table created.");
@@ -76,24 +76,24 @@ public class EclipseMetricsNodeModel extends NodeModel {
         return new BufferedDataTable[] { output1, output2 };
     }
 
-    private BufferedDataTable transformClassLevel(final List<EclipseMetricsEntry> entries, final ExecutionContext exec)
+    private BufferedDataTable transformClassLevel(final List<EclipseMetricsEntryClassLevel> entries, final ExecutionContext exec)
             throws CanceledExecutionException {
         EclipseMetricsTransformer transformer = new EclipseMetricsTransformer(createDataColumnSpec());
-        return transformer.transform(entries, exec);
+        return transformer.transformClassLevel(entries, exec);
     }
-    
-    private BufferedDataTable transformMethodLevel(final List<EclipseMetricsEntryMethodLevel> entries, final ExecutionContext exec)
-            throws CanceledExecutionException {
+
+    private BufferedDataTable transformMethodLevel(final List<EclipseMetricsEntryMethodLevel> entries,
+            final ExecutionContext exec) throws CanceledExecutionException {
         EclipseMetricsTransformer transformer = new EclipseMetricsTransformer(createDataColumnSpecMethodLevel());
         return transformer.transformMethodLevel(entries, exec);
     }
 
-    private List<EclipseMetricsEntry> parseEntriesClassLevel(final String eclipsemetricsFilePath)
+    private List<EclipseMetricsEntryClassLevel> parseEntriesClassLevel(final String eclipsemetricsFilePath)
             throws ParserConfigurationException, SAXException, IOException {
         EclipseMetricsEntriesParser parser = new EclipseMetricsEntriesParser();
         return parser.parseEntriesClassLevel(eclipsemetricsFilePath);
     }
-    
+
     private List<EclipseMetricsEntryMethodLevel> parseEntriesMethodLevel(final String eclipsemetricsFilePath)
             throws ParserConfigurationException, SAXException, IOException {
         EclipseMetricsEntriesParser parser = new EclipseMetricsEntriesParser();

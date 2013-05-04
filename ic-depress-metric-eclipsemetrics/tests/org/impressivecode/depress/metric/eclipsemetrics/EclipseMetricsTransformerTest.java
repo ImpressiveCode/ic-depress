@@ -49,7 +49,7 @@ public class EclipseMetricsTransformerTest {
     public void shouldTransformEclipseMetricsEntriesList() throws CanceledExecutionException {
         // given
         EclipseMetricsTransformer transformer = new EclipseMetricsTransformer(createDataColumnSpec());
-        List<EclipseMetricsEntry> entries = Lists.newArrayList(
+        List<EclipseMetricsEntryClassLevel> entries = Lists.newArrayList(
                 createEclipseMetricsEntry("ClassA", 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0),
                 createEclipseMetricsEntry("ClassB", 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0));
         ExecutionContext exec = mock(ExecutionContext.class);
@@ -57,7 +57,7 @@ public class EclipseMetricsTransformerTest {
         when(exec.createDataContainer(Mockito.any(DataTableSpec.class))).thenReturn(container);
 
         // when
-        transformer.transform(entries, exec);
+        transformer.transformClassLevel(entries, exec);
 
         // then
         verify(container, times(2)).addRowToTable(Mockito.any(DataRow.class));
@@ -67,14 +67,14 @@ public class EclipseMetricsTransformerTest {
     public void shouldTransformEclipseMetricsEntry() throws CanceledExecutionException {
         // given
         EclipseMetricsTransformer transformer = new EclipseMetricsTransformer(createDataColumnSpec());
-        List<EclipseMetricsEntry> entries = Lists.newArrayList(createEclipseMetricsEntry("ClassA", 1.0, 2.0, 3.0, 4.0,
+        List<EclipseMetricsEntryClassLevel> entries = Lists.newArrayList(createEclipseMetricsEntry("ClassA", 1.0, 2.0, 3.0, 4.0,
                 5.0, 6.0, 7.0, 8.0, 9.0, 10.0));
         ExecutionContext exec = mock(ExecutionContext.class);
         BufferedDataContainer container = mock(BufferedDataContainer.class);
         when(exec.createDataContainer(Mockito.any(DataTableSpec.class))).thenReturn(container);
 
         // when
-        transformer.transform(entries, exec);
+        transformer.transformClassLevel(entries, exec);
 
         // then
         ArgumentCaptor<DataRow> captor = ArgumentCaptor.forClass(DataRow.class);
@@ -93,10 +93,10 @@ public class EclipseMetricsTransformerTest {
         assertThat(((DoubleCell) value.getCell(9)).getDoubleValue()).isEqualTo(10.0);
     }
 
-    private EclipseMetricsEntry createEclipseMetricsEntry(final String className, final double d, final double e,
+    private EclipseMetricsEntryClassLevel createEclipseMetricsEntry(final String className, final double d, final double e,
             final double f, final double g, final double h, final double i, final double j, final double k,
             final double l, final double m) {
-        EclipseMetricsEntry entry = new EclipseMetricsEntry();
+        EclipseMetricsEntryClassLevel entry = new EclipseMetricsEntryClassLevel();
         entry.setClassName(className);
 
         entry.setNumberOfOverriddenMethods(d);

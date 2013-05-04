@@ -22,13 +22,37 @@ package org.impressivecode.depress.metric.eclipsemetrics;
  * @author Mateusz Kutyba, Wroclaw University of Technology
  * 
  */
-public class EclipseMetricsEntryMethodLevel {
-    
+public class EclipseMetricsEntryMethodLevel implements EclipseMetricsEntry {
+
     private String methodName;
     private Double methodLinesOfCode;
     private Double nestedBlockDepth;
     private Double mcCabeCyclomaticComplexity;
     private Double numberOfParameters;
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((mcCabeCyclomaticComplexity == null) ? 0 : mcCabeCyclomaticComplexity.hashCode());
+        result = prime * result + ((methodLinesOfCode == null) ? 0 : methodLinesOfCode.hashCode());
+        result = prime * result + ((methodName == null) ? 0 : methodName.hashCode());
+        result = prime * result + ((nestedBlockDepth == null) ? 0 : nestedBlockDepth.hashCode());
+        result = prime * result + ((numberOfParameters == null) ? 0 : numberOfParameters.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof EclipseMetricsEntryMethodLevel))
+            return false;
+        EclipseMetricsEntryMethodLevel other = (EclipseMetricsEntryMethodLevel) obj;
+        return other.toString().equals(this.toString());
+    }
 
     public String getMethodName() {
         return methodName;
@@ -72,46 +96,27 @@ public class EclipseMetricsEntryMethodLevel {
 
     @Override
     public String toString() {
-        return String
-                .format("EclipseMetricsEntry [methodName=%s, methodLinesOfCode=%s, nestedBlockDepth=%s, "
-                        + "mcCabeCyclomaticComplexity=%s, numberOfParameters=%s]",
-                        methodName, methodLinesOfCode, nestedBlockDepth, mcCabeCyclomaticComplexity, numberOfParameters);
+        return String.format("EclipseMetricsEntry [methodName=%s, methodLinesOfCode=%s, nestedBlockDepth=%s, "
+                + "mcCabeCyclomaticComplexity=%s, numberOfParameters=%s]", methodName, methodLinesOfCode,
+                nestedBlockDepth, mcCabeCyclomaticComplexity, numberOfParameters);
     }
 
-    /*public void setValue(String metricId, Double value) {
+    public void setValue(String metricId, Double value) {
         switch (metricId) {
-        case "NORM":
-            numberOfOverriddenMethods = value;
+        case "MLOC":
+            methodLinesOfCode = value;
             break;
-        case "NOF":
-            numberOfAttributes = value;
+        case "NBD":
+            nestedBlockDepth = value;
             break;
-        case "NSC":
-            numberOfChildren = value;
+        case "VG":
+            mcCabeCyclomaticComplexity = value;
             break;
-        case "NOM":
-            numberOfMethods = value;
-            break;
-        case "DIT":
-            depthOfInheritanceTree = value;
-            break;
-        case "LCOM":
-            lackOfCohesionOfMethods = value;
-            break;
-        case "NSM":
-            numberOfStaticMethods = value;
-            break;
-        case "SIX":
-            specializationIndex = value;
-            break;
-        case "WMC":
-            weightedMethodsPerClass = value;
-            break;
-        case "NSF":
-            numberOfStaticAttributes = value;
+        case "PAR":
+            numberOfParameters = value;
             break;
         default:
             break;
         }
-    }*/
+    }
 }

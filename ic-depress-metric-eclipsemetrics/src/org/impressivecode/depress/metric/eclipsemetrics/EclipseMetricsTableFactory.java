@@ -69,8 +69,7 @@ public class EclipseMetricsTableFactory {
     }
 
     static DataTableSpec createDataColumnSpecMethodLevel() {
-        DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(NORM, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(MLOC, DoubleCell.TYPE).createSpec(),
+        DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(MLOC, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(NBD, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(VG, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(PAR, DoubleCell.TYPE).createSpec() };

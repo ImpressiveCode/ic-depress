@@ -8,7 +8,7 @@ public class EclipseMetricsEntryTest {
 
     @Test
     public void shouldReturnSetValue() {
-        EclipseMetricsEntry entry = new EclipseMetricsEntry();
+        EclipseMetricsEntryClassLevel entry = new EclipseMetricsEntryClassLevel();
 
         String className = "package.name.then.ClassName$InternalClassName";
         entry.setClassName(className);

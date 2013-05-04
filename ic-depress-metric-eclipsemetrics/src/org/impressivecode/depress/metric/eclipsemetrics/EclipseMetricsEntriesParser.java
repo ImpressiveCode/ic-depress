@@ -47,24 +47,49 @@ import com.google.common.base.Preconditions;
 public class EclipseMetricsEntriesParser {
     private static final NodeLogger LOGGER = NodeLogger.getLogger(EclipseMetricsEntriesParser.class);
     private Document doc;
-    
-    public List<EclipseMetricsEntryMethodLevel> parseEntriesMethodLevel(final String path) throws ParserConfigurationException, SAXException,
-    IOException {
-        return new ArrayList<EclipseMetricsEntryMethodLevel>();
+
+    public List<EclipseMetricsEntryMethodLevel> parseEntriesMethodLevel(final String path)
+            throws ParserConfigurationException, SAXException, IOException {
+        init(path);
+
+        Map<String, EclipseMetricsEntryMethodLevel> eclipsemetricsEntriesMap = new LinkedHashMap<String, EclipseMetricsEntryMethodLevel>();
+        NodeList methodList = getAllMethodNodes();
+        for (int i = 0; i < methodList.getLength(); i++) {
+            Node methodNode = methodList.item(i);
+            String methodName = getMethodName(methodNode);
+            NodeList metricNodes = getMetricSubnodes(methodNode);
+
+            if (!eclipsemetricsEntriesMap.containsKey(methodName)) {
+                EclipseMetricsEntry entry = new EclipseMetricsEntryMethodLevel();
+                ((EclipseMetricsEntryMethodLevel) entry).setMethodName(methodName);
+                entry = updateEclipseMetricsEntry(metricNodes, entry);
+                eclipsemetricsEntriesMap.put(methodName, (EclipseMetricsEntryMethodLevel) entry);
+            }
+        }
+        return new ArrayList<EclipseMetricsEntryMethodLevel>(eclipsemetricsEntriesMap.values());
     }
 
-    public List<EclipseMetricsEntry> parseEntriesClassLevel(final String path) throws ParserConfigurationException, SAXException,
-            IOException {
-        Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        doc = dBuilder.parse(path);
+    private String getMethodName(Node methodNode) {
+        String subjectString = ((Element) methodNode).getAttribute("handle");
 
-        if (!validXmlStructure()) {
-            throw new SAXException("Wrong or malformed file structure.");
+        String packageName = extractPackageName(subjectString);
+
+        String name1 = "";
+        Pattern regexName1 = Pattern.compile("(?<=\\.java\\[).+");
+        Matcher regexMatcher = regexName1.matcher(subjectString);
+        while (regexMatcher.find()) {
+            name1 = regexMatcher.group();
         }
+        String methodName = packageName + "." + name1;
 
-        Map<String, EclipseMetricsEntry> eclipsemetricsEntriesMap = new LinkedHashMap<String, EclipseMetricsEntry>();
+        return methodName;
+    }
+
+    public List<EclipseMetricsEntryClassLevel> parseEntriesClassLevel(final String path)
+            throws ParserConfigurationException, SAXException, IOException {
+        init(path);
+
+        Map<String, EclipseMetricsEntryClassLevel> eclipsemetricsEntriesMap = new LinkedHashMap<String, EclipseMetricsEntryClassLevel>();
         NodeList classList = getAllTypeNodes();
         for (int i = 0; i < classList.getLength(); i++) {
             Node typeNode = classList.item(i);
@@ -72,55 +97,13 @@ public class EclipseMetricsEntriesParser {
             NodeList metricNodes = getMetricSubnodes(typeNode);
 
             if (!eclipsemetricsEntriesMap.containsKey(className)) {
-                EclipseMetricsEntry entry = new EclipseMetricsEntry();
-                entry.setClassName(className);
+                EclipseMetricsEntry entry = new EclipseMetricsEntryClassLevel();
+                ((EclipseMetricsEntryClassLevel) entry).setClassName(className);
                 entry = updateEclipseMetricsEntry(metricNodes, entry);
-                eclipsemetricsEntriesMap.put(className, entry);
+                eclipsemetricsEntriesMap.put(className, (EclipseMetricsEntryClassLevel) entry);
             }
         }
-        return new ArrayList<EclipseMetricsEntry>(eclipsemetricsEntriesMap.values());
-    }
-
-    private boolean validXmlStructure() {
-        NodeList mainNodes = doc.getChildNodes();
-        for (int i = 0; i < mainNodes.getLength(); i++) {
-            Element elem = (Element) mainNodes.item(i);
-            if ("Metrics".equals(elem.getTagName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private NodeList getAllTypeNodes() {
-        return doc.getElementsByTagName("Type");
-    }
-
-    private String getClassName(Node typeNode) {
-        String subjectString = ((Element) typeNode).getAttribute("handle");
-        String className = "";
-
-        Pattern regexPackageName = Pattern.compile("(?<=<).+(?=\\{)");
-        Matcher regexMatcher = regexPackageName.matcher(subjectString);
-        while (regexMatcher.find()) {
-            className += regexMatcher.group();
-        }
-
-        String name1 = "";
-        Pattern regexName1 = Pattern.compile("(?<=\\.java\\[).+");
-        regexMatcher = regexName1.matcher(subjectString);
-        while (regexMatcher.find()) {
-            name1 = regexMatcher.group();
-        }
-        name1 = name1.replace("[", "$");
-        className += "." + name1;
-
-        return className;
-    }
-
-    private NodeList getMetricSubnodes(Node typeNode) {
-        Element elem = (Element) typeNode;
-        return elem.getElementsByTagName("Metric");
+        return new ArrayList<EclipseMetricsEntryClassLevel>(eclipsemetricsEntriesMap.values());
     }
 
     private EclipseMetricsEntry updateEclipseMetricsEntry(NodeList metricNodes, EclipseMetricsEntry entry) {
@@ -141,5 +124,67 @@ public class EclipseMetricsEntriesParser {
             }
         }
         return entry;
+    }
+
+    private NodeList getAllMethodNodes() {
+        return doc.getElementsByTagName("Method");
+    }
+
+    private void init(final String path) throws ParserConfigurationException, SAXException, IOException {
+        Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        doc = dBuilder.parse(path);
+
+        if (!validXmlStructure()) {
+            throw new SAXException("Wrong or malformed file structure.");
+        }
+    }
+
+    private boolean validXmlStructure() {
+        NodeList mainNodes = doc.getChildNodes();
+        for (int i = 0; i < mainNodes.getLength(); i++) {
+            Element elem = (Element) mainNodes.item(i);
+            if ("Metrics".equals(elem.getTagName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private NodeList getAllTypeNodes() {
+        return doc.getElementsByTagName("Type");
+    }
+
+    private String getClassName(Node typeNode) {
+        String subjectString = ((Element) typeNode).getAttribute("handle");
+
+        String packageName = extractPackageName(subjectString);
+
+        String name1 = "";
+        Pattern regexName1 = Pattern.compile("(?<=\\.java\\[).+");
+        Matcher regexMatcher = regexName1.matcher(subjectString);
+        while (regexMatcher.find()) {
+            name1 = regexMatcher.group();
+        }
+        name1 = name1.replace("[", "$");
+        String className = packageName + "." + name1;
+
+        return className;
+    }
+
+    private String extractPackageName(String subjectString) {
+        Pattern regexPackageName = Pattern.compile("(?<=<).+(?=\\{)");
+        Matcher regexMatcher = regexPackageName.matcher(subjectString);
+        String packageName = "";
+        while (regexMatcher.find()) {
+            packageName = regexMatcher.group();
+        }
+        return packageName;
+    }
+
+    private NodeList getMetricSubnodes(Node node) {
+        Element elem = (Element) node;
+        return elem.getElementsByTagName("Metric");
     }
 }

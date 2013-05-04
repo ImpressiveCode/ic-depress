@@ -38,7 +38,7 @@ public class EclipseMetricsEntriesParserTest {
 
     @Test
     public void shouldParseEntries() throws ParserConfigurationException, SAXException, IOException {
-        List<EclipseMetricsEntry> results = parser.parseEntriesClassLevel("examples/eclipsemetrics.xml");
+        List<EclipseMetricsEntryClassLevel> results = parser.parseEntriesClassLevel("examples/eclipsemetrics.xml");
         assertThat(results).hasSize(699);
         assertEntry(results.get(582));
         assertEntry2(results.get(195));
@@ -50,7 +50,7 @@ public class EclipseMetricsEntriesParserTest {
         parser.parseEntriesClassLevel("tests/wrongFile.xml");
     }
 
-    private void assertEntry(final EclipseMetricsEntry eclipseMetricsEntry) {
+    private void assertEntry(final EclipseMetricsEntryClassLevel eclipseMetricsEntry) {
         assertThat(eclipseMetricsEntry.getClassName()).isEqualTo(
                 "org.apache.commons.math3.linear.OpenMapRealVector$OpenMapEntry");
         assertThat(eclipseMetricsEntry.getNumberOfOverriddenMethods()).isEqualTo(3.0);
@@ -65,7 +65,7 @@ public class EclipseMetricsEntriesParserTest {
         assertThat(eclipseMetricsEntry.getNumberOfStaticAttributes()).isEqualTo(0.0);
     }
 
-    private void assertEntry2(final EclipseMetricsEntry eclipseMetricsEntry) {
+    private void assertEntry2(final EclipseMetricsEntryClassLevel eclipseMetricsEntry) {
         assertThat(eclipseMetricsEntry.getClassName()).isEqualTo(
                 "org.apache.commons.math3.analysis.interpolation.BicubicSplineFunction");
         assertThat(eclipseMetricsEntry.getNumberOfOverriddenMethods()).isEqualTo(0.0);
@@ -78,5 +78,21 @@ public class EclipseMetricsEntriesParserTest {
         assertThat(eclipseMetricsEntry.getSpecializationIndex()).isEqualTo(0.0);
         assertThat(eclipseMetricsEntry.getWeightedMethodsPerClass()).isEqualTo(24.0);
         assertThat(eclipseMetricsEntry.getNumberOfStaticAttributes()).isEqualTo(1.0);
+    }
+
+    @Test
+    public void shouldParseEntriesMethodLevel() throws ParserConfigurationException, SAXException, IOException {
+        List<EclipseMetricsEntryMethodLevel> results = parser.parseEntriesMethodLevel("examples/eclipsemetrics.xml");
+        assertThat(results).hasSize(6369);
+        assertEntry3(results.get(0));
+    }
+
+    private void assertEntry3(final EclipseMetricsEntryMethodLevel eclipseMetricsEntry) {
+        assertThat(eclipseMetricsEntry.getMethodName()).isEqualTo(
+                "org.apache.commons.math3.stat.descriptive.SummaryStatistics~clear");
+        assertThat(eclipseMetricsEntry.getMethodLinesOfCode()).isEqualTo(14.0);
+        assertThat(eclipseMetricsEntry.getNestedBlockDepth()).isEqualTo(2.0);
+        assertThat(eclipseMetricsEntry.getMcCabeCyclomaticComplexity()).isEqualTo(3.0);
+        assertThat(eclipseMetricsEntry.getNumberOfParameters()).isEqualTo(0.0);
     }
 }
