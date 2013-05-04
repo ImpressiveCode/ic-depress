@@ -95,6 +95,9 @@ public class JiraEntriesParser {
 
     private ITSResolution getResolution(final Element elem) {
         String resolution = extractValue(elem, "resolution");
+        if(resolution == null){
+            return ITSResolution.UNKNOWN;
+        }
         switch (resolution) {
         case "Unresolved":
             return ITSResolution.UNRESOLVED;
@@ -131,6 +134,9 @@ public class JiraEntriesParser {
 
     private ITSType getType(final Element elem) {
         String type = extractValue(elem, "type");
+        if(type == null){
+            return ITSType.UNKNOWN;
+        }
         switch (type) {
         case "Bug":
             return ITSType.BUG;
@@ -152,6 +158,9 @@ public class JiraEntriesParser {
 
     private ITSStatus getStatus(final Element elem) {
         String status = extractValue(elem, "status");
+        if(status == null) {
+            return ITSStatus.UNKNOWN;
+        }
         switch (status) {
         case "Open":
             return ITSStatus.OPEN;
@@ -174,6 +183,9 @@ public class JiraEntriesParser {
 
     private ITSPriority getPriority(final Element elem) {
         String priority = extractValue(elem, "priority");
+        if(priority == null){
+            return ITSPriority.UNKNOWN;
+        }
         switch (priority) {
         case "Trivial":
             return ITSPriority.TRIVIAL;
