@@ -19,6 +19,7 @@ package org.impressivecode.depress.test.metric.eclipsemetrics;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpecMethodLevel;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -26,7 +27,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsEntry;
+import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsEntryClassLevel;
+import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsEntryMethodLevel;
 import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTransformer;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
@@ -39,6 +41,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import com.google.common.collect.Lists;
+
 /**
  * 
  * @author Mateusz Kutyba, Wroclaw University of Technology
@@ -48,53 +51,56 @@ public class EclipseMetricsTransformerTest {
 
     @Test
     public void shouldTransformEclipseMetricsEntriesList() throws CanceledExecutionException {
-        //given
+        // given
         EclipseMetricsTransformer transformer = new EclipseMetricsTransformer(createDataColumnSpec());
-        List<EclipseMetricsEntry> entries = Lists.newArrayList(createEclipseMetricsEntry("ClassA", 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0),
-                createEclipseMetricsEntry("ClassB", 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0));
+        List<EclipseMetricsEntryClassLevel> entries = Lists.newArrayList(
+                createEclipseMetricsEntryClassLevel("ClassA", 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0),
+                createEclipseMetricsEntryClassLevel("ClassB", 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0));
         ExecutionContext exec = mock(ExecutionContext.class);
         BufferedDataContainer container = mock(BufferedDataContainer.class);
         when(exec.createDataContainer(Mockito.any(DataTableSpec.class))).thenReturn(container);
 
-        //when
-        transformer.transform(entries, exec);
+        // when
+        transformer.transformClassLevel(entries, exec);
 
-        //then
+        // then
         verify(container, times(2)).addRowToTable(Mockito.any(DataRow.class));
     }
 
     @Test
-    public void shouldTransformEclipseMetricsEntry() throws CanceledExecutionException {
-        //given
+    public void shouldTransformEclipseMetricsEntryClassLevel() throws CanceledExecutionException {
+        // given
         EclipseMetricsTransformer transformer = new EclipseMetricsTransformer(createDataColumnSpec());
-        List<EclipseMetricsEntry> entries = Lists.newArrayList(createEclipseMetricsEntry("ClassA", 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0));
+        List<EclipseMetricsEntryClassLevel> entries = Lists.newArrayList(createEclipseMetricsEntryClassLevel("ClassA",
+                1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0));
         ExecutionContext exec = mock(ExecutionContext.class);
         BufferedDataContainer container = mock(BufferedDataContainer.class);
         when(exec.createDataContainer(Mockito.any(DataTableSpec.class))).thenReturn(container);
 
-        //when
-        transformer.transform(entries, exec);
+        // when
+        transformer.transformClassLevel(entries, exec);
 
-        //then
+        // then
         ArgumentCaptor<DataRow> captor = ArgumentCaptor.forClass(DataRow.class);
         verify(container).addRowToTable(captor.capture());
         DataRow value = captor.getValue();
         assertThat(value.getKey().getString()).isEqualTo("ClassA");
-        assertThat(((DoubleCell)value.getCell(0)).getDoubleValue()).isEqualTo(1.0);
-        assertThat(((DoubleCell)value.getCell(1)).getDoubleValue()).isEqualTo(2.0);
-        assertThat(((DoubleCell)value.getCell(2)).getDoubleValue()).isEqualTo(3.0);
-        assertThat(((DoubleCell)value.getCell(3)).getDoubleValue()).isEqualTo(4.0);
-        assertThat(((DoubleCell)value.getCell(4)).getDoubleValue()).isEqualTo(5.0);
-        assertThat(((DoubleCell)value.getCell(5)).getDoubleValue()).isEqualTo(6.0);
-        assertThat(((DoubleCell)value.getCell(6)).getDoubleValue()).isEqualTo(7.0);
-        assertThat(((DoubleCell)value.getCell(7)).getDoubleValue()).isEqualTo(8.0);
-        assertThat(((DoubleCell)value.getCell(8)).getDoubleValue()).isEqualTo(9.0);
-        assertThat(((DoubleCell)value.getCell(9)).getDoubleValue()).isEqualTo(10.0);
+        assertThat(((DoubleCell) value.getCell(0)).getDoubleValue()).isEqualTo(1.0);
+        assertThat(((DoubleCell) value.getCell(1)).getDoubleValue()).isEqualTo(2.0);
+        assertThat(((DoubleCell) value.getCell(2)).getDoubleValue()).isEqualTo(3.0);
+        assertThat(((DoubleCell) value.getCell(3)).getDoubleValue()).isEqualTo(4.0);
+        assertThat(((DoubleCell) value.getCell(4)).getDoubleValue()).isEqualTo(5.0);
+        assertThat(((DoubleCell) value.getCell(5)).getDoubleValue()).isEqualTo(6.0);
+        assertThat(((DoubleCell) value.getCell(6)).getDoubleValue()).isEqualTo(7.0);
+        assertThat(((DoubleCell) value.getCell(7)).getDoubleValue()).isEqualTo(8.0);
+        assertThat(((DoubleCell) value.getCell(8)).getDoubleValue()).isEqualTo(9.0);
+        assertThat(((DoubleCell) value.getCell(9)).getDoubleValue()).isEqualTo(10.0);
     }
 
-    private EclipseMetricsEntry createEclipseMetricsEntry(final String className, final double d, final double e, final double f, final double g, final double h,
-            final double i, final double j, final double k, final double l, final double m) {
-        EclipseMetricsEntry entry = new EclipseMetricsEntry();
+    private EclipseMetricsEntryClassLevel createEclipseMetricsEntryClassLevel(final String className, final double d,
+            final double e, final double f, final double g, final double h, final double i, final double j,
+            final double k, final double l, final double m) {
+        EclipseMetricsEntryClassLevel entry = new EclipseMetricsEntryClassLevel();
         entry.setClassName(className);
 
         entry.setNumberOfOverriddenMethods(d);
@@ -107,7 +113,50 @@ public class EclipseMetricsTransformerTest {
         entry.setSpecializationIndex(k);
         entry.setWeightedMethodsPerClass(l);
         entry.setNumberOfStaticAttributes(m);
-        
+
+        return entry;
+    }
+
+    @Test
+    public void shouldTransformEclipseMetricsEntryMethodLevel() throws CanceledExecutionException {
+        // given
+        EclipseMetricsTransformer transformer = new EclipseMetricsTransformer(createDataColumnSpecMethodLevel());
+        List<EclipseMetricsEntryMethodLevel> entries = Lists.newArrayList(createEclipseMetricsEntryMethodLevel(
+                "methodA", 1.0, 2.0, 3.0, 4.0));
+        ExecutionContext exec = mock(ExecutionContext.class);
+        BufferedDataContainer container = mock(BufferedDataContainer.class);
+        when(exec.createDataContainer(Mockito.any(DataTableSpec.class))).thenReturn(container);
+
+        // when
+        transformer.transformMethodLevel(entries, exec);
+
+        // then
+        ArgumentCaptor<DataRow> captor = ArgumentCaptor.forClass(DataRow.class);
+        verify(container).addRowToTable(captor.capture());
+        DataRow value = captor.getValue();
+        assertThat(value.getKey().getString()).isEqualTo("ClassA");
+        assertThat(((DoubleCell) value.getCell(0)).getDoubleValue()).isEqualTo(1.0);
+        assertThat(((DoubleCell) value.getCell(1)).getDoubleValue()).isEqualTo(2.0);
+        assertThat(((DoubleCell) value.getCell(2)).getDoubleValue()).isEqualTo(3.0);
+        assertThat(((DoubleCell) value.getCell(3)).getDoubleValue()).isEqualTo(4.0);
+        assertThat(((DoubleCell) value.getCell(4)).getDoubleValue()).isEqualTo(5.0);
+        assertThat(((DoubleCell) value.getCell(5)).getDoubleValue()).isEqualTo(6.0);
+        assertThat(((DoubleCell) value.getCell(6)).getDoubleValue()).isEqualTo(7.0);
+        assertThat(((DoubleCell) value.getCell(7)).getDoubleValue()).isEqualTo(8.0);
+        assertThat(((DoubleCell) value.getCell(8)).getDoubleValue()).isEqualTo(9.0);
+        assertThat(((DoubleCell) value.getCell(9)).getDoubleValue()).isEqualTo(10.0);
+    }
+
+    private EclipseMetricsEntryMethodLevel createEclipseMetricsEntryMethodLevel(final String methodName,
+            final double d, final double e, final double f, final double g) {
+        EclipseMetricsEntryMethodLevel entry = new EclipseMetricsEntryMethodLevel();
+        entry.setMethodName(methodName);
+
+        entry.setMethodLinesOfCode(d);
+        entry.setNestedBlockDepth(e);
+        entry.setMcCabeCyclomaticComplexity(f);
+        entry.setNumberOfParameters(g);
+
         return entry;
     }
 }

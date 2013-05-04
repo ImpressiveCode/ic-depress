@@ -38,4 +38,3 @@ public class EclipseMetricsNodeDialog extends DefaultNodeSettingsPane {
         return new DialogComponentFileChooser(createFileChooserSettings(), HISTORY_ID, FILE_EXTENSION);
     }
 }
-
