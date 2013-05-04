@@ -39,7 +39,7 @@ public class SVNNodeDialog extends DefaultNodeSettingsPane {
 
 		pathChooserDialog = new DialogComponentFileChooser(
 				SVNSettings.SVN_PATH_MODEL,
-				SVNSettings.CFG_SVN_PATH, "*.xml");
+				SVNSettings.CFG_SVN_PATH, ".xml");
 
 		issueMakerDialog = new DialogComponentString(
 				SVNSettings.ISSUE_MARKER_MODEL,

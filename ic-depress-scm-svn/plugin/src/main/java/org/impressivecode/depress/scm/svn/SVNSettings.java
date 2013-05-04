@@ -28,14 +28,14 @@ public class SVNSettings {
 			SVNSettings.CFG_SVN_PATH, SVNSettings.DEFAULT_PATH);
 
 	public static final SettingsModelString ISSUE_MARKER_MODEL = new SettingsModelString(
-			SVNSettings.CFG_ISSUE_REGEX, "*");
+			SVNSettings.CFG_ISSUE_REGEX, "");
 
 	public static final SettingsModelString PACKAGE_MODEL = new SettingsModelString(
 			SVNSettings.CFG_PACKAGE, "*");
 
 	public static final String CFG_SVN_PATH = "svnPath";
 
-	public static final String DEFAULT_PATH = "D:\\Git\\Knime\\SVNLog\\Log.xml";
+	public static final String DEFAULT_PATH = "";
 
 	private static final String CFG_PACKAGE = "package";
 
@@ -48,7 +48,7 @@ public class SVNSettings {
 			ISSUE_MARKER_MODEL.loadSettingsFrom(settings);
 			PACKAGE_MODEL.loadSettingsFrom(settings);
 		} catch (InvalidSettingsException e) {
-			Logger.instance(). error(SVNLocale.eLoadSettings(), e);
+			Logger.instance().error(SVNLocale.eLoadSettings(), e);
 		}
 	}
 
