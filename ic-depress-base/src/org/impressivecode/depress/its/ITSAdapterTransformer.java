@@ -22,6 +22,7 @@ import static org.impressivecode.depress.its.ITSAdapterTableFactory.createTableR
 
 import java.util.List;
 
+import org.impressivecode.depress.common.OutputTransformer;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
@@ -30,12 +31,13 @@ import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeLogger.LEVEL;
+
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class ITSAdapterTransformer {
+public class ITSAdapterTransformer implements OutputTransformer<ITSDataType> {
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(ITSAdapterTransformer.class);
 
@@ -46,7 +48,9 @@ public class ITSAdapterTransformer {
         this.tableSpec = tableSpec;
     }
 
-    public BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
+    @Override
+    public BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
+            throws CanceledExecutionException {
         BufferedDataContainer container = createDataContainer(exec);
         for (ITSDataType entry : entries) {
             progress(exec);

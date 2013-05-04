@@ -53,7 +53,7 @@ public class EclipseMetricsTableFactory {
         return new DataTableSpec[] { createDataColumnSpec() };
     }
 
-    static DataTableSpec createDataColumnSpec() {
+    public static DataTableSpec createDataColumnSpec() {
         DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(NORM, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(NOF, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(NSC, DoubleCell.TYPE).createSpec(),
@@ -68,7 +68,7 @@ public class EclipseMetricsTableFactory {
         return outputSpec;
     }
 
-    static DataTableSpec createDataColumnSpecMethodLevel() {
+    public static DataTableSpec createDataColumnSpecMethodLevel() {
         DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(MLOC, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(NBD, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(VG, DoubleCell.TYPE).createSpec(),
