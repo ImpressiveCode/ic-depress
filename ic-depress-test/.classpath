@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="lib/fest-assert-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/fest-util-1.1.6.jar"/>
 	<classpathentry kind="lib" path="lib/mockito-all-1.9.5.jar" sourcepath="lib/mockito-all-1.9.5-sources.jar"/>
+	<classpathentry kind="lib" path="/ic-depress-scm-gitonline/lib/org.eclipse.jgit-2.3.1.201302201838-r.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

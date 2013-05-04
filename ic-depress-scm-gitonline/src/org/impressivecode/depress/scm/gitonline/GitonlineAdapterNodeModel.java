@@ -66,7 +66,7 @@ public class GitonlineAdapterNodeModel extends NodeModel {
     // example value: the models count variable filled from the dialog
     // and used in the models execution method. The default components of the
     // dialog work with "SettingsModels".
-    private final SettingsModelString gitFileName = new SettingsModelString(GitonlineAdapterNodeModel.GIT_REPOSITORY_ADDRESS,
+    private final SettingsModelString gitRepositoryAddress = new SettingsModelString(GitonlineAdapterNodeModel.GIT_REPOSITORY_ADDRESS,
             GitonlineAdapterNodeModel.GIT_REPOSITORY_DEFAULT);
     private final SettingsModelString gitRegExp = new SettingsModelString(GitonlineAdapterNodeModel.GIT_REGEXP,
             GitonlineAdapterNodeModel.GIT_REGEXP_DEFAULT);
@@ -81,10 +81,11 @@ public class GitonlineAdapterNodeModel extends NodeModel {
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
 
-        logger.info("Reading logs from file " + this.gitFileName.getStringValue());
-
-        GitLogParser parser = new GitLogParser();
-        List<GitCommit> commits = parser.parseEntries(this.gitFileName.getStringValue(),
+        logger.info("Reading logs from repository " + this.gitRepositoryAddress.getStringValue());
+        System.out.println("Reading logs from repository " + this.gitRepositoryAddress.getStringValue());
+        GitonlineLogParser parser = new GitonlineLogParser();
+        
+        List<GitCommit> commits = parser.parseEntries(this.gitRepositoryAddress.getStringValue(),
                 options(gitRegExp.getStringValue(), gitPackageName.getStringValue()));
 
         BufferedDataTable out = transform(commits, exec);
@@ -106,21 +107,25 @@ public class GitonlineAdapterNodeModel extends NodeModel {
 
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
-        gitFileName.saveSettingsTo(settings);
+        gitRepositoryAddress.saveSettingsTo(settings);
         gitRegExp.saveSettingsTo(settings);
         gitPackageName.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        gitFileName.loadSettingsFrom(settings);
+        gitRepositoryAddress.loadSettingsFrom(settings);
         gitRegExp.loadSettingsFrom(settings);
         gitPackageName.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        gitFileName.validateSettings(settings);
+        String addr = gitRepositoryAddress.getStringValue();
+        if (!addr.endsWith(".git")){
+            gitRepositoryAddress.setStringValue(addr+".git");
+        }
+        gitRepositoryAddress.validateSettings(settings);
         gitRegExp.validateSettings(settings);
         gitPackageName.validateSettings(settings);
     }
