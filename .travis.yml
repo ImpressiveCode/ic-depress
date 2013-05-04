@@ -8,8 +8,11 @@ env:
     - REPO="adudek/ic-depress"
     - CI_HOME=`pwd`/$REPO/ic-depress-data-anonymisation
     - ECLIPSE_HOME=$CI_HOME/../../eclipse
+    - COMMON_LIBS_HOME=$CI_HOME/../dev-buildtools/common-libs
 
 before_install:
+  - echo $COMMON_LIBS_HOME
+  - ls -lavh $COMMON_LIBS_HOME
   - wget http://www.knime.org/knime_downloads/linux/eclipse_knime_$KNIME_VER.linux.gtk.$ARCH.tar.gz
   - tar -zxf eclipse_knime_$KNIME_VER.linux.gtk.$ARCH.tar.gz
   - ln -s `pwd`/eclipse_knime_$KNIME_VER $ECLIPSE_HOME

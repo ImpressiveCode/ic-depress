@@ -1,35 +1,14 @@
 package org.impressivecode.depress.data.anonymisation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
-import org.impressivecode.depress.data.objects.PropertiesValidator;
 import org.junit.Test;
-import org.knime.core.node.InvalidSettingsException;
 
 public class AnonymisationNodeModelTest {
 
     @Test
     public void test() {
         assertTrue("CI - testing if tests works", true);
-    }
-
-    @Test
-    public void isKeyFileExistTest() {
-        try {
-            assertFalse("Key file existing test",
-                    PropertiesValidator.isKeyFileCorrect("C:\\file_that_doesnt_exist.blank"));
-        } catch (InvalidSettingsException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void isKeyFileDirectoryTest() {
-        try {
-            assertFalse("Key file is not directory", PropertiesValidator.isKeyFileCorrect("C:\\Windows"));
-        } catch (InvalidSettingsException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test
