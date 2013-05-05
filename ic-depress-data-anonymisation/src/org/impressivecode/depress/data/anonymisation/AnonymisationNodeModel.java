@@ -2,12 +2,15 @@ package org.impressivecode.depress.data.anonymisation;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
-
 import org.impressivecode.depress.data.objects.PropertiesValidator;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
+import org.knime.core.data.DataColumnSpecCreator;
+import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.container.ColumnRearranger;
+import org.knime.core.data.container.SingleCellFactory;
+import org.knime.core.data.def.StringCell;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
@@ -16,10 +19,11 @@ import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.SettingsModelFilterString;
 
 /**
- * This is the model implementation of Anonymisation. Encrypts and decrypts selected 
- * columns from input data set using Blowfish cryptographic algorithm.
+ * This is the model implementation of Anonymisation. Encrypts and decrypts
+ * selected columns from input data set using Blowfish cryptographic algorithm.
  * 
  * @author Andrzej Dudek
  * @author Marcin Bogusz
@@ -33,6 +37,9 @@ public class AnonymisationNodeModel extends NodeModel {
     static final int INPUT_PORT = 0;
     public static final int KEY_LENGTH = 128;
 
+    // Settings from Dialog
+    public static SettingsModelFilterString filterStringSettings = new SettingsModelFilterString("columnfilterConfig");
+
     /**
      * Constructor for the node model.
      */
@@ -45,33 +52,40 @@ public class AnonymisationNodeModel extends NodeModel {
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
-            throws Exception {
 
-        // TODO: Return a BufferedDataTable for each output port
+    protected BufferedDataTable[] execute(BufferedDataTable[] inData, ExecutionContext exec) throws Exception {
+        DataTableSpec inSpec = inData[0].getDataTableSpec();
+        ColumnRearranger rearranger = createColumnRearranger(inSpec);
+        BufferedDataTable outTable = exec.createColumnRearrangeTable(inData[0], rearranger, exec);
+        return new BufferedDataTable[] { outTable };
+    }
 
-        for(BufferedDataTable table : inData){
-            Iterator<DataColumnSpec> columnsItarator = table.getDataTableSpec().iterator(); 
-            while(columnsItarator.hasNext())
-            {
-              //TODO
-                //iterating every column. Should iterate only those from NodeDialog.ColumnFilter.
-                //Other just add to output. (but how?)
-                DataColumnSpec columnSpec = columnsItarator.next();
-                for(DataCell cell : columnSpec.getDomain().getValues())
-                {
-                    if(!cell.isMissing())
-                    {
-                        //TODO
-                        //iterating every cell. Here should be anonymisation for that column
-                        String value = cell.toString();
-                        value.toString();
-                    }
+    private ColumnRearranger createColumnRearranger(DataTableSpec spec) throws InvalidSettingsException {
+        // check user settings against input spec here
+        // fail with InvalidSettingsException if invalid
+        ColumnRearranger result = new ColumnRearranger(spec);
+        for (String colName : filterStringSettings.getExcludeList()) {
+            // index of modified column
+            final int index = spec.findColumnIndex(colName);
+
+            // remove previous version of column
+            result.remove(index);
+
+            // new column initalization
+            DataColumnSpecCreator appendSpecCreator = new DataColumnSpecCreator(
+                    spec.getColumnNames()[index].toUpperCase(), StringCell.TYPE);
+            DataColumnSpec appendSpec = appendSpecCreator.createSpec();
+            result.insertAt(index, new SingleCellFactory(appendSpec) {
+                public DataCell getCell(final DataRow row) {
+                    // TODO
+                    // Anonymize cell of selected column here
+                    DataCell resultCell = new StringCell(row.getCell(index).toString().toUpperCase());
+                    return resultCell;
                 }
-            }
+            });
         }
-        return new BufferedDataTable[] {};
+
+        return result;
     }
 
     /**
@@ -124,7 +138,7 @@ public class AnonymisationNodeModel extends NodeModel {
         }
 
     }
-    
+
     /**
      * {@inheritDoc}
      */

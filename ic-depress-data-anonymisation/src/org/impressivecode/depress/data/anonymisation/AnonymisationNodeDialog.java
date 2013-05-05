@@ -96,9 +96,8 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
 
             @Override
             public void stateChanged(ChangeEvent arg0) {
-                // TODO Auto-generated method stub
-                // Here should be update ColumnFilter config which will be load
-                // in Model.Execute();
+                //Save actual ColumnFilterSettings into static field : AnonymisationNodeModel.filterStringSettings;
+                AnonymisationNodeModel.filterStringSettings = (SettingsModelFilterString) arg0.getSource();
             }
         });
         addDialogComponent(columnFilter);
