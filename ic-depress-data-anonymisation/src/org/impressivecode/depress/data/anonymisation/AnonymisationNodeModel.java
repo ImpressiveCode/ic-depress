@@ -52,7 +52,7 @@ public class AnonymisationNodeModel extends NodeModel {
     /**
      * {@inheritDoc}
      */
-
+        
     protected BufferedDataTable[] execute(BufferedDataTable[] inData, ExecutionContext exec) throws Exception {
         DataTableSpec inSpec = inData[0].getDataTableSpec();
         ColumnRearranger rearranger = createColumnRearranger(inSpec);
@@ -87,6 +87,7 @@ public class AnonymisationNodeModel extends NodeModel {
 
         return result;
     }
+    
 
     /**
      * {@inheritDoc}

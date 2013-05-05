@@ -13,8 +13,6 @@ import java.security.SecureRandom;
 
 import javax.annotation.processing.FilerException;
 
-import org.impressivecode.depress.data.anonymisation.AnonymisationNodeModel;
-
 public class FileHelper {
     public static final String TMP_DIR = System.getProperty("java.io.tmpdir");
     public static final String KEY_FILENAME = "key-file";

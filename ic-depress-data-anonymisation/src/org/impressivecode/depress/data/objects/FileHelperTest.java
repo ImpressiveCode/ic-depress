@@ -1,7 +1,6 @@
 package org.impressivecode.depress.data.objects;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,9 +71,23 @@ public class FileHelperTest {
         assertNull(thrown);
     }
 
+
+    /**
+     * Checks if file is read without errors given correct parameters
+     */
     @Test
-    public void testReadFromFile() {
-        fail("Not yet implemented");
+    public void testReadFromFileShouldSucceed() throws IOException {
+        String actual = null;
+        String expected = FileHelper.KEY_FILENAME + "\n";
+
+        String fp = FileHelper.CreateTmpFile(FileHelper.KEY_FILENAME);
+        File f = new File(fp);
+        f.deleteOnExit();
+        FileHelper.WriteToFile(fp, FileHelper.KEY_FILENAME);
+        actual = FileHelper.ReadFromFile(fp);
+
+        assertEquals(expected, actual);
+        
     }
 
 }

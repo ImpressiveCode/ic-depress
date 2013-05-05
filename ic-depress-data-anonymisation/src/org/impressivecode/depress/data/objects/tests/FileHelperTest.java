@@ -29,11 +29,6 @@ public class FileHelperTest {
     }
     
     @Test
-    public void RandomString(){
-        assertNotSame(FileHelper.RandomString(15), FileHelper.RandomString(15));
-    }
-    
-    @Test
     public void WriteToFile(){
         File f = new File(FileHelper.CreateTmpFile("TestFile"));
         long sizeBefore = f.length();
