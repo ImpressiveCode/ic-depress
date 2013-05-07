@@ -22,17 +22,14 @@ import static org.fest.assertions.Assertions.assertThat;
 import static org.impressivecode.depress.scm.gitonline.GitonlineParserOptions.options;
 import static org.junit.Assert.assertEquals;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.gitonline.GitCommit;
-import org.impressivecode.depress.scm.gitonline.GitCommitFile;
 import org.impressivecode.depress.scm.gitonline.GitonlineLogParser;
 import org.junit.Before;
 import org.junit.Test;
@@ -111,18 +108,18 @@ public class GitonlineLogParserTest {
     @Test
     public void shouldSpecificCommitFilesMatch() throws Exception {
 
-        //assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java",
-        //        specificCommit().getFiles().get(0).getPath());
-        //assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(1).getOperation());
+        assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java",
+                specificCommit().getFiles().get(0).getPath());
+        assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(1).getOperation());
 
-        //assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java",
-        //        specificCommit().getFiles().get(2).getPath());
-        //assertEquals(SCMOperation.DELETED, specificCommit().getFiles().get(3).getOperation());
+        assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java",
+                specificCommit().getFiles().get(2).getPath());
+        assertEquals(SCMOperation.DELETED, specificCommit().getFiles().get(3).getOperation());
 
-        //assertEquals(
-        //        "ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java",
-        //        specificCommit().getFiles().get(13).getPath());
-        //assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(13).getOperation());
+        assertEquals(
+                "ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java",
+                specificCommit().getFiles().get(13).getPath());
+        assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(13).getOperation());
 
     }
 }

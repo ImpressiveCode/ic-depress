@@ -208,7 +208,6 @@ public class GitonlineLogParser {
     private List<String> getFilesInCommit(Repository repository, RevCommit commit) throws IOException {
         RevWalk rw = new RevWalk(repository);
         List<String> filesList = new ArrayList<String>();
-        System.out.println("----"+commit.getId()+"-------");
         String fileLine = "";
         if (commit.getParentCount() == 0) {
             TreeWalk tw = new TreeWalk(repository);
@@ -228,7 +227,6 @@ public class GitonlineLogParser {
             List<DiffEntry> diffs = df.scan(parent.getTree(), commit.getTree());
             for (DiffEntry diff : diffs) {
                 String objectId = diff.getNewId().name();
-                System.out.println(diff.getOldPath()+" - "+diff.getChangeType());
                 if (diff.getChangeType().equals(ChangeType.DELETE)) {
                     fileLine = diff.getOldPath()+" "+objectId+" "+this.setOperationSymbol(diff.getChangeType().name());
                     filesList.add(fileLine);
