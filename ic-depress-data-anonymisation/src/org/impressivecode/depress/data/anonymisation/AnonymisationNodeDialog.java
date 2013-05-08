@@ -9,6 +9,7 @@ import javax.swing.event.ChangeListener;
 
 import org.impressivecode.depress.data.objects.AnonymisationFileChooser;
 import org.impressivecode.depress.data.objects.CryptographicUtility;
+import org.impressivecode.depress.data.objects.EncryptionAnalyzer;
 import org.impressivecode.depress.data.objects.FileHelper;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
@@ -66,7 +67,6 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
                 try {
                     keyPath = FileHelper.CreateTmpFile("key-file");
                     FileHelper.WriteToFile(keyPath, CryptographicUtility.generateKey());
-
                     fileChooser.SetSelectedPath(keyPath);
                     fileChooser.UpdateComponent();
                 } catch (IOException e1) {
