@@ -57,7 +57,7 @@ public class SVNNodeFactory extends NodeFactory<SVNNodeModel> {
 	 */
 	@Override
 	public int getNrNodeViews() {
-		return 1;
+		return 0;
 	}
 
 	@Override

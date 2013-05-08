@@ -74,12 +74,8 @@ public class SVNLogFileLoader {
 			// recommended
 			doc.getDocumentElement().normalize();
 
-			System.out.println("Root element :"
-					+ doc.getDocumentElement().getNodeName());
-
 			NodeList nList = doc.getElementsByTagName("logentry");
 
-			System.out.println("----------------------------");
 
 			for (int logentry = 0; logentry < nList.getLength(); logentry++) {
 				Node nNode = nList.item(logentry);
@@ -139,16 +135,11 @@ public class SVNLogFileLoader {
 
 						SVNLogRow r = new SVNLogRow();
 						r.setMarker(new StringCell(inIssueMarker));
-						System.out.println("Marker: " + inIssueMarker);
 
 						r.setAction(new StringCell(ePathElement
 								.getAttribute("action")));
-						System.out.println("Action: "
-								+ ePathElement.getAttribute("action"));
 
 						r.setPath(new StringCell(pathString));
-
-						System.out.println("Path: " + pathString);
 
 						r.setClassName(new StringCell(
 								getClassNameFromPath(pathString)));
@@ -158,19 +149,7 @@ public class SVNLogFileLoader {
 						r.setDate(new StringCell(dateString));
 
 						inProgress.onReadProgress(logentry / nList.getLength(),
-								r);
-
-						System.out.println("Marker: " + inIssueMarker);
-						System.out.println("Action: "
-								+ ePathElement.getAttribute("action"));
-						System.out.println("Path: " + pathString);
-						System.out.println("UID: " + uidString);
-						System.out.println("Author: " + authorString);
-						System.out.println("Package: " + inPackage);
-						System.out.println("Message: " + messageString);
-						System.out.println("Class: "
-								+ getClassNameFromPath(pathString));
-						System.out.println("Date: " + dateString);
+								r);			
 					}
 				}
 			}
