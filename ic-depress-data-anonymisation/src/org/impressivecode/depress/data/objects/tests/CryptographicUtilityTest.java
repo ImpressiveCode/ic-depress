@@ -15,14 +15,22 @@ public class CryptographicUtilityTest {
     @Test
     public void testUseAlgorithm() {
         String key = CryptographicUtility.generateKey();
-        String clearText = "Some clear input";
+        String clearText = "Someclearinput";
         String encryptedText = null;
         String decryptedText = null;
-        
+
+        System.out.print("tekst wejściowy: ");
+        System.out.println(clearText);
+        System.out.print("klucz: ");
+        System.out.println(key);
         encryptedText = CryptographicUtility.useAlgorithm(clearText, key, true);
+        System.out.print("zaszyfrowany tekst: ");
+        
         System.out.println(encryptedText);
         decryptedText = CryptographicUtility.useAlgorithm(encryptedText, key, false);
+        System.out.print("odszyfrowany tekst: ");
         System.out.println(decryptedText);
+        assertEquals(clearText, decryptedText);
     }
 
 }
