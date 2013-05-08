@@ -3,7 +3,7 @@ package org.impressivecode.depress.scm.svn;
 import java.io.File;
 import java.io.IOException;
 
-import org.impressivecode.depress.scm.svn.SVNLogLoader.IReadProgressListener;
+import org.impressivecode.depress.scm.svn.SVNLogFileLoader.IReadProgressListener;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
@@ -102,7 +102,8 @@ public class SVNNodeModel extends NodeModel {
 
 		reader = new ModelRowReader(dataContainer, exec);
 
-		new SVNLogLoader().loadXml(SVNSettings.SVN_PATH_MODEL.getStringValue(),
+		new SVNLogRepoLoader().load(
+				SVNSettings.SVN_PATH_MODEL.getStringValue(),
 				SVNSettings.ISSUE_MARKER_MODEL.getStringValue(),
 				SVNSettings.PACKAGE_MODEL.getStringValue(), reader);
 

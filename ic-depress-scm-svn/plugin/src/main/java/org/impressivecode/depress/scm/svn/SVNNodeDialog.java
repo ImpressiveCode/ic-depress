@@ -38,15 +38,13 @@ public class SVNNodeDialog extends DefaultNodeSettingsPane {
 		super();
 
 		pathChooserDialog = new DialogComponentFileChooser(
-				SVNSettings.SVN_PATH_MODEL,
-				SVNSettings.CFG_SVN_PATH, ".xml");
+				SVNSettings.SVN_PATH_MODEL, SVNSettings.CFG_SVN_PATH, ".xml");
 
 		issueMakerDialog = new DialogComponentString(
-				SVNSettings.ISSUE_MARKER_MODEL,
-				SVNLocale.nIssueMarker());
+				SVNSettings.ISSUE_MARKER_MODEL, SVNLocale.nIssueMarker());
 
-		packageDialog = new DialogComponentString(
-				SVNSettings.PACKAGE_MODEL, SVNLocale.nPackage());
+		packageDialog = new DialogComponentString(SVNSettings.PACKAGE_MODEL,
+				SVNLocale.nPackage());
 
 		addDialogComponent(pathChooserDialog);
 		addDialogComponent(issueMakerDialog);
@@ -56,8 +54,6 @@ public class SVNNodeDialog extends DefaultNodeSettingsPane {
 	@Override
 	public void saveAdditionalSettingsTo(NodeSettingsWO settings)
 			throws InvalidSettingsException {
-		// TODO Auto-generated method stub
 		super.saveAdditionalSettingsTo(settings);
-		Logger.instance().info("dsds");
 	}
 }

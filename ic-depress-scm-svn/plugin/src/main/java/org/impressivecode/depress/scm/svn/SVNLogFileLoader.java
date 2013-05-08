@@ -30,7 +30,7 @@ import org.w3c.dom.NodeList;
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class SVNLogLoader {
+public class SVNLogFileLoader {
 
 	public interface IReadProgressListener {
 
@@ -45,9 +45,14 @@ public class SVNLogLoader {
 	 * different one at the same location
 	 */
 
-	// Methods
-	public void loadXml(String inPath, String inIssueMarker, String inPackage,
+	public void load(String inPath, String inIssueMarker, String inPackage,
 			IReadProgressListener inProgress) {
+		loadXml(inPath, inIssueMarker, inPackage, inProgress);
+	}
+
+	// Methods
+	protected void loadXml(String inPath, String inIssueMarker,
+			String inPackage, IReadProgressListener inProgress) {
 
 		try {
 
@@ -131,7 +136,7 @@ public class SVNLogLoader {
 						}
 
 						// Uzupełnienie SVNLogRow
-						
+
 						SVNLogRow r = new SVNLogRow();
 						r.setMarker(new StringCell(inIssueMarker));
 						System.out.println("Marker: " + inIssueMarker);
@@ -142,7 +147,7 @@ public class SVNLogLoader {
 								+ ePathElement.getAttribute("action"));
 
 						r.setPath(new StringCell(pathString));
-						
+
 						System.out.println("Path: " + pathString);
 
 						r.setClassName(new StringCell(
@@ -170,11 +175,12 @@ public class SVNLogLoader {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.instance().error(" loadXml ", e);
 			try {
 				inProgress.onReadProgress(100, null);
 			} catch (CanceledExecutionException e1) {
-				e1.printStackTrace();
+				Logger.instance()
+						.error(" loadXml onReadProgress complete ", e1);
 			}
 		}
 	}
