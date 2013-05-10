@@ -4,7 +4,7 @@ import org.knime.core.node.NodeView;
 
 /**
  * <code>NodeView</code> for the "Anonymisation" Node. Encrypts and decrypts selected 
- * columns from input data set using Blowfish cryptographic algorithm.
+ * columns from input data set using DES cryptographic algorithm.
  * 
  * @author Andrzej Dudek
  * @author Marcin Bogusz

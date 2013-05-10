@@ -19,7 +19,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * <code>NodeDialog</code> for the "Anonymisation" Encrypts and decrypts
- * selected columns from input data set using Blowfish cryptographic algorithm.
+ * selected columns from input data set using DES cryptographic algorithm.
  * 
  * This node dialog derives from {@link DefaultNodeSettingsPane} which allows
  * creation of a simple dialog with standard components. If you need a more

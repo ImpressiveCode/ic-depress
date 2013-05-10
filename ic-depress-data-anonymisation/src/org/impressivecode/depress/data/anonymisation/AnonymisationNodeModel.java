@@ -25,7 +25,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelFilterString;
 
 /**
  * This is the model implementation of Anonymisation. Encrypts and decrypts
- * selected columns from input data set using Blowfish cryptographic algorithm.
+ * selected columns from input data set using DES cryptographic algorithm.
  * 
  * @author Andrzej Dudek
  * @author Marcin Bogusz
