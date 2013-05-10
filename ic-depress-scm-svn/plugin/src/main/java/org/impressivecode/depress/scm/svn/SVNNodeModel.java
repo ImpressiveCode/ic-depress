@@ -51,21 +51,23 @@ public class SVNNodeModel extends NodeModel {
 		}
 
 		@Override
-		public void onReadProgress(double inProgres, SVNLogRow inRow)
-				throws CanceledExecutionException {
-
+		public void onReadProgress(double inProgres, SVNLogRow inRow) {
 			if (inRow != null) {
 				container
 						.addRowToTable(SVNLogRowSpec.createRow(++rowId, inRow));
 			}
 
-			exec.checkCanceled();
 			exec.setProgress(inProgres);// ,
 										// SVNLocale.iCurrentProgress(inProgres));
 		}
 
 		public BufferedDataTable[] toDataTable() {
 			return new BufferedDataTable[] { container.getTable() };
+		}
+
+		@Override
+		public void checkLoading() throws CanceledExecutionException {
+			exec.checkCanceled();
 		}
 	}
 

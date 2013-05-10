@@ -11,16 +11,20 @@ import org.knime.core.node.CanceledExecutionException;
 public class SVNLogLoaderTest {
 
 	SVNLogFileLoader loader;
-	IReadProgressListener logic;
+	IReadProgressListener listener;
 
 	@Before
 	public void setUp() throws Exception {
 		loader = new SVNLogFileLoader();
-		logic = new IReadProgressListener() {
+		listener = new IReadProgressListener() {
 
 			@Override
-			public void onReadProgress(double inProgres, SVNLogRow inRow)
-					throws CanceledExecutionException {
+			public void onReadProgress(double inProgres, SVNLogRow inRow) {
+
+			}
+
+			@Override
+			public void checkLoading() throws CanceledExecutionException {
 
 			}
 		};
@@ -28,17 +32,17 @@ public class SVNLogLoaderTest {
 
 	@Test
 	public void testLoadXmlIssue() {
-		loader.load(TestSettings.xmlTestSvnLogPath, null, "", logic);
+		loader.load(TestSettings.xmlTestSvnLogPath, null, "", listener);
 	}
 
 	@Test
 	public void testLoadXmlPackage() {
-		loader.load(TestSettings.xmlTestSvnLogPath, "", null, logic);
+		loader.load(TestSettings.xmlTestSvnLogPath, "", null, listener);
 	}
 
 	@Test
 	public void testLoadXmlPath() {
-		loader.load(null, "", "", logic);
+		loader.load(null, "", "", listener);
 	}
 
 }

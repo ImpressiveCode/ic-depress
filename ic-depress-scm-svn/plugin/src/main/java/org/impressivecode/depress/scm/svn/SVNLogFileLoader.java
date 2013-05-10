@@ -73,6 +73,9 @@ public class SVNLogFileLoader extends SVNLogLoader {
 			Logger.instance().warn(SVNLocale.iStartLoadLocalRepo());
 
 			for (int logentry = 0; logentry < nList.getLength(); logentry++) {
+
+				inProgress.checkLoading();
+
 				Node nNode = nList.item(logentry);
 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -104,6 +107,9 @@ public class SVNLogFileLoader extends SVNLogLoader {
 							.getElementsByTagName("path");
 
 					for (int path = 0; path < nPathsList.getLength(); path++) {
+
+						inProgress.checkLoading();
+
 						Node nPathNode = nPathsList.item(path);
 						Element ePathElement = (Element) nPathNode;
 
@@ -145,17 +151,17 @@ public class SVNLogFileLoader extends SVNLogLoader {
 
 						inProgress.onReadProgress(
 								percent(logentry, nList.getLength()), r);
+
 					}
 				}
+
 			}
+		} catch (CanceledExecutionException e) {
+			Logger.instance().warn(SVNLocale.iCancelLoading());
+			inProgress.onReadProgress(0, null);
 		} catch (Exception e) {
-			Logger.instance().error(" loadXml ", e);
-			try {
-				inProgress.onReadProgress(100, null);
-			} catch (CanceledExecutionException e1) {
-				Logger.instance()
-						.error(" loadXml onReadProgress complete ", e1);
-			}
+			Logger.instance().error(" LoadXml ", e);
+			inProgress.onReadProgress(0, null);
 		}
 
 		finally {

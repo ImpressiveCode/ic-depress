@@ -24,8 +24,9 @@ public abstract class SVNLogLoader {
 
 	public interface IReadProgressListener {
 
-		void onReadProgress(double inProgres, SVNLogRow inRow)
-				throws CanceledExecutionException;
+		void onReadProgress(double inProgres, SVNLogRow inRow);
+
+		void checkLoading() throws CanceledExecutionException;
 
 	}
 

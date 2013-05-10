@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.knime.core.node.CanceledExecutionException;
-import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNLogEntry;
 import org.tmatesoft.svn.core.SVNLogEntryPath;
 import org.tmatesoft.svn.core.SVNNodeKind;
@@ -87,6 +86,9 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 			Logger.instance().warn(SVNLocale.iStartLoadOnlineRepo());
 
 			for (int entryIndex = 0; entryIndex < entries.size(); entryIndex++) {
+
+				inProgress.checkLoading();
+
 				String marker = new String(inIssueMarker);
 				String uid = new String(entries.get(entryIndex).getRevision()
 						+ ""); // revision
@@ -110,6 +112,9 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 
 				for (Map.Entry<String, SVNLogEntryPath> mapElement : entryPaths
 						.entrySet()) {
+
+					inProgress.checkLoading();
+
 					String action = new String(Character.toString(mapElement
 							.getValue().getType()) + "");
 					String path = new String(mapElement.getValue().getPath()
@@ -142,14 +147,12 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 				}
 			}
 
-		} catch (SVNException | CanceledExecutionException e) {
-			Logger.instance().error("loadRepo ", e);
-			try {
-				inProgress.onReadProgress(100, null);
-			} catch (CanceledExecutionException e1) {
-				Logger.instance().error(" loadRepo onReadProgress complete ",
-						e1);
-			}
+		} catch (CanceledExecutionException e) {
+			Logger.instance().warn(SVNLocale.iCancelLoading());
+			inProgress.onReadProgress(0, null);
+		} catch (Exception e) {
+			Logger.instance().error(" LoadRepository ", e);
+			inProgress.onReadProgress(0, null);
 		}
 
 		finally {

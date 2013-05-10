@@ -45,7 +45,7 @@ public final class Logger {
 		if (logger != null) {
 			logger.error(info, e);
 		} else {
-			System.out.println(info != null ? info : "" + " " + e != null ? e
+			System.err.println(info != null ? info : "" + " " + e != null ? e
 					.getMessage() : "");
 		}
 	}

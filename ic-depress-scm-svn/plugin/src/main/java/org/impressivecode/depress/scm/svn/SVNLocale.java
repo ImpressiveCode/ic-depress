@@ -72,24 +72,28 @@ public class SVNLocale {
 		return "Init : " + url;
 	}
 
-	public static Object iStartLoadOnlineRepo() {
+	public static String iStartLoadOnlineRepo() {
 		return "Start loading repository";
 	}
 
-	public static Object iEndLoadOnlineRepo() {
+	public static String iEndLoadOnlineRepo() {
 		return "End loading repository";
 	}
 
-	public static Object iInitLocalRepo(String inPath) {
+	public static String iInitLocalRepo(String inPath) {
 		return "Init : " + Paths.get(inPath).getFileName();
 	}
 
-	public static Object iEndLoadLocalRepo() {
+	public static String iEndLoadLocalRepo() {
 		return "Start loading file";
 	}
 
-	public static Object iStartLoadLocalRepo() {
+	public static String iStartLoadLocalRepo() {
 		return "End loading file";
+	}
+
+	public static String iCancelLoading() {
+		return "Cancel loading";
 	}
 
 }
