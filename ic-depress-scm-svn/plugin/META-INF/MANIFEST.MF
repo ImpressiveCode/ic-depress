@@ -3,13 +3,24 @@ Bundle-ManifestVersion: 2
 Bundle-Name: SVN-Node extension for KNIME Workbench
 Bundle-SymbolicName: org.impressivecode.depress.scm.svn; singleton:=true
 Bundle-Version: 1.0.0
-Bundle-ClassPath: svn.jar
+Bundle-ClassPath: svn.jar,
+ lib/antlr-runtime-3.4.jar,
+ lib/jna-3.4.0.jar,
+ lib/sequence-library-1.0.2.jar,
+ lib/sqljet-1.1.7.jar,
+ lib/svnkit-1.7.9.jar,
+ lib/svnkit-cli-1.7.9.jar,
+ lib/svnkit-javahl16-1.7.9.jar,
+ lib/trilead-ssh2-1.0.0-build216.jar
 Bundle-Activator: org.impressivecode.depress.scm.svn.SVNNodePlugin
 Bundle-Vendor: KNIME
-Require-Bundle: org.eclipse.core.runtime,
- org.knime.workbench.core,
- org.knime.workbench.repository,
+Require-Bundle: org.knime.workbench.core,
  org.knime.base
 Bundle-ActivationPolicy: lazy
-Export-Package: org.impressivecode.depress.scm.svn
+Export-Package: org.impressivecode.depress.scm.svn;
+  uses:="org.eclipse.core.runtime,
+   org.knime.core.node,
+   org.osgi.framework,
+   org.knime.core.data,
+   org.knime.core.node.defaultnodesettings"
 

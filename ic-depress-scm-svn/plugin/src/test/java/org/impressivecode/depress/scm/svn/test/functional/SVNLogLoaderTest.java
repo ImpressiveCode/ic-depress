@@ -1,8 +1,9 @@
 package org.impressivecode.depress.scm.svn.test.functional;
 
 import org.impressivecode.depress.scm.svn.SVNLogFileLoader;
+import org.impressivecode.depress.scm.svn.SVNLogLoader.IReadProgressListener;
+import org.impressivecode.depress.scm.svn.SVNLogRepoLoader;
 import org.impressivecode.depress.scm.svn.SVNLogRow;
-import org.impressivecode.depress.scm.svn.SVNLogFileLoader.IReadProgressListener;
 import org.impressivecode.depress.scm.svn.test.TestSettings;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ public class SVNLogLoaderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		loader = new SVNLogFileLoader();
+		loader = new SVNLogRepoLoader();
 	}
 
 	@Test
@@ -23,7 +24,7 @@ public class SVNLogLoaderTest {
 				new IReadProgressListener() {
 
 					@Override
-					public void onReadProgress(int inProgres, SVNLogRow inRow)
+					public void onReadProgress(double inProgres, SVNLogRow inRow)
 							throws CanceledExecutionException {
 
 					}
@@ -36,7 +37,7 @@ public class SVNLogLoaderTest {
 				new IReadProgressListener() {
 
 					@Override
-					public void onReadProgress(int inProgres, SVNLogRow inRow)
+					public void onReadProgress(double inProgres, SVNLogRow inRow)
 							throws CanceledExecutionException {
 
 					}

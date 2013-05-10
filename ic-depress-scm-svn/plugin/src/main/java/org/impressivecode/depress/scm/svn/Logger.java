@@ -1,6 +1,5 @@
 package org.impressivecode.depress.scm.svn;
 
-import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeLogger.LEVEL;
 
@@ -45,12 +44,17 @@ public final class Logger {
 	public void error(Object info, Throwable e) {
 		if (logger != null) {
 			logger.error(info, e);
+		} else {
+			System.out.println(info != null ? info : "" + " " + e != null ? e
+					.getMessage() : "");
 		}
 	}
 
 	public void warn(Object info) {
 		if (logger != null) {
 			logger.warn(info);
+		} else {
+			System.out.println(info != null ? info : "");
 		}
 	}
 

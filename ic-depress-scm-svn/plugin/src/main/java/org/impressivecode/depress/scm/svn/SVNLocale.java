@@ -1,5 +1,7 @@
 package org.impressivecode.depress.scm.svn;
 
+import java.nio.file.Paths;
+
 /*
  ImpressiveCode Depress Framework
  Copyright (C) 2013  ImpressiveCode contributors
@@ -34,12 +36,12 @@ public class SVNLocale {
 		return "Error durninig validate setting";
 	}
 
-	public static String iCurrentProgress(int inProgres) {
+	public static String iCurrentProgress(double inProgres) {
 		return String.format("Current progress %d", inProgres);
 	}
 
 	public static Object iEndLoading() {
-		return "Start loading";
+		return "End loading";
 	}
 
 	public static String iSettingsLoaded() {
@@ -50,8 +52,8 @@ public class SVNLocale {
 		return "Settings saved";
 	}
 
-	public static Object iStartLoading() {
-		return "End loading";
+	public static String iStartLoading() {
+		return "Start loading";
 	}
 
 	public static String nIssueMarker() {
@@ -60,6 +62,34 @@ public class SVNLocale {
 
 	public static String nPackage() {
 		return "Package";
+	}
+
+	public static String iIvalidRepoPath() {
+		return "Invalid repo path";
+	}
+
+	public static String iInitOnlineRepo(String url) {
+		return "Init : " + url;
+	}
+
+	public static Object iStartLoadOnlineRepo() {
+		return "Start loading repository";
+	}
+
+	public static Object iEndLoadOnlineRepo() {
+		return "End loading repository";
+	}
+
+	public static Object iInitLocalRepo(String inPath) {
+		return "Init : " + Paths.get(inPath).getFileName();
+	}
+
+	public static Object iEndLoadLocalRepo() {
+		return "Start loading file";
+	}
+
+	public static Object iStartLoadLocalRepo() {
+		return "End loading file";
 	}
 
 }

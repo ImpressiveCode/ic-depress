@@ -3,7 +3,7 @@ package org.impressivecode.depress.scm.svn;
 import java.io.File;
 import java.io.IOException;
 
-import org.impressivecode.depress.scm.svn.SVNLogFileLoader.IReadProgressListener;
+import org.impressivecode.depress.scm.svn.SVNLogLoader.IReadProgressListener;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
@@ -51,7 +51,7 @@ public class SVNNodeModel extends NodeModel {
 		}
 
 		@Override
-		public void onReadProgress(int inProgres, SVNLogRow inRow)
+		public void onReadProgress(double inProgres, SVNLogRow inRow)
 				throws CanceledExecutionException {
 
 			if (inRow != null) {
@@ -60,7 +60,8 @@ public class SVNNodeModel extends NodeModel {
 			}
 
 			exec.checkCanceled();
-			exec.setProgress(inProgres, SVNLocale.iCurrentProgress(inProgres));
+			exec.setProgress(inProgres);// ,
+										// SVNLocale.iCurrentProgress(inProgres));
 		}
 
 		public BufferedDataTable[] toDataTable() {
@@ -70,6 +71,7 @@ public class SVNNodeModel extends NodeModel {
 
 	private BufferedDataContainer dataContainer;
 	private ModelRowReader reader;
+	private SVNLogLoader loader;
 
 	/**
 	 * Constructor for the node model.
@@ -102,8 +104,9 @@ public class SVNNodeModel extends NodeModel {
 
 		reader = new ModelRowReader(dataContainer, exec);
 
-		new SVNLogRepoLoader().load(
-				SVNSettings.SVN_PATH_MODEL.getStringValue(),
+		loader = new SVNLogRepoLoader();
+
+		loader.load(SVNSettings.SVN_PATH_MODEL.getStringValue(),
 				SVNSettings.ISSUE_MARKER_MODEL.getStringValue(),
 				SVNSettings.PACKAGE_MODEL.getStringValue(), reader);
 

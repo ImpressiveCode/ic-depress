@@ -5,7 +5,6 @@ import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.knime.core.data.def.StringCell;
 import org.knime.core.node.CanceledExecutionException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -30,14 +29,7 @@ import org.w3c.dom.NodeList;
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class SVNLogFileLoader {
-
-	public interface IReadProgressListener {
-
-		void onReadProgress(int inProgres, SVNLogRow inRow)
-				throws CanceledExecutionException;
-
-	}
+public class SVNLogFileLoader extends SVNLogLoader {
 
 	/**
 	 * Actions: A - the item is added D - the item was deleted M - properties or
@@ -55,6 +47,8 @@ public class SVNLogFileLoader {
 			String inPackage, IReadProgressListener inProgress) {
 
 		try {
+
+			Logger.instance().warn(SVNLocale.iInitLocalRepo(inPath));
 
 			if (inPackage.endsWith(".*")) {
 				inPackage = inPackage.substring(0, inPackage.length() - 2);
@@ -76,6 +70,7 @@ public class SVNLogFileLoader {
 
 			NodeList nList = doc.getElementsByTagName("logentry");
 
+			Logger.instance().warn(SVNLocale.iStartLoadLocalRepo());
 
 			for (int logentry = 0; logentry < nList.getLength(); logentry++) {
 				Node nNode = nList.item(logentry);
@@ -120,6 +115,8 @@ public class SVNLogFileLoader {
 							continue;
 						}
 
+						Logger.instance().warn("File : " + path);
+
 						if (ePathElement.getAttribute("kind").equals("dir")) // directory
 																				// is
 																				// not
@@ -131,25 +128,23 @@ public class SVNLogFileLoader {
 							continue;
 						}
 
-						// UzupeÅ‚nienie SVNLogRow
+						// Uzupe³nienie SVNLogRow
 
 						SVNLogRow r = new SVNLogRow();
-						r.setMarker(new StringCell(inIssueMarker));
+						r.setMarker(inIssueMarker);
 
-						r.setAction(new StringCell(ePathElement
-								.getAttribute("action")));
+						r.setAction(ePathElement.getAttribute("action"));
 
-						r.setPath(new StringCell(pathString));
+						r.setPath(pathString);
 
-						r.setClassName(new StringCell(
-								getClassNameFromPath(pathString)));
-						r.setUid(new StringCell(uidString));
-						r.setAuthor(new StringCell(authorString));
-						r.setMessage(new StringCell(messageString));
-						r.setDate(new StringCell(dateString));
+						r.setClassName(getClassNameFromPath(pathString));
+						r.setUid(uidString);
+						r.setAuthor(authorString);
+						r.setMessage(messageString);
+						r.setDate(dateString);
 
-						inProgress.onReadProgress(logentry / nList.getLength(),
-								r);			
+						inProgress.onReadProgress(
+								percent(logentry, nList.getLength()), r);
 					}
 				}
 			}
@@ -162,9 +157,13 @@ public class SVNLogFileLoader {
 						.error(" loadXml onReadProgress complete ", e1);
 			}
 		}
+
+		finally {
+			Logger.instance().warn(SVNLocale.iEndLoadLocalRepo());
+		}
 	}
 
-	public final String getClassNameFromPath(String path) {
+	private final String getClassNameFromPath(String path) {
 		int lastDot = path.lastIndexOf(".");
 
 		if (lastDot == -1) {
@@ -179,7 +178,7 @@ public class SVNLogFileLoader {
 				1, smallPath.length()));
 	}
 
-	public final boolean isPackageValid(String path, String packageString) {
+	private final boolean isPackageValid(String path, String packageString) {
 		path = path.replaceAll("/", ".");
 
 		if (path.charAt(0) == '.') {
@@ -193,42 +192,8 @@ public class SVNLogFileLoader {
 		return path.contains(packageString);
 	}
 
-	public final boolean isMarkerInMessage(String message, String marker) {
+	private final boolean isMarkerInMessage(String message, String marker) {
 		return message.contains(marker);
-	}
-
-	public void loadXml3(String inPath, String inIsueMarker, String inPackage,
-			IReadProgressListener inProgress) {
-
-		Logger.instance().warn("Start loading..");
-
-		Logger.instance().warn("Path : " + inPath);
-		Logger.instance().warn("IsueMarker : " + inIsueMarker);
-		Logger.instance().warn("Package : " + inPackage);
-
-		try {
-			for (int i = 0; i < 100; ++i) {
-
-				SVNLogRow r = new SVNLogRow();
-
-				r.setClassName(new StringCell(" ClassName  " + i));
-				r.setAuthor(new StringCell(" Author  " + i));
-				r.setAction(new StringCell(" Action  " + i));
-				r.setDate(new StringCell(" Date  " + i));
-				r.setMarker(new StringCell(" Maker  " + i));
-				r.setMessage(new StringCell(" Message  " + i));
-				r.setPath(new StringCell(" Path  " + i));
-				r.setUid(new StringCell(" Uid  " + i));
-
-				inProgress.onReadProgress(i, r);
-
-			}
-		} catch (CanceledExecutionException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Logger.instance().warn("End loading..");
 	}
 
 }

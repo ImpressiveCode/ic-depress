@@ -57,19 +57,18 @@ public class SVNLogRowSpec {
 		return result;
 	}
 
-	
 	public static DataRow createRow(int rowId, SVNLogRow inRow) {
 
 		DataCell[] cells = new DataCell[columns.size()];
 
-		cells[0] = inRow.getClassName();
-		cells[1] = inRow.getAuthor();
-		cells[2] = inRow.getMessage();
-		cells[3] = inRow.getMarker();
-		cells[4] = inRow.getAction();
-		cells[5] = inRow.getPath();
-		cells[6] = inRow.getDate();
-		cells[7] = inRow.getUid();
+		cells[0] = new StringCell(inRow.getClassName());
+		cells[1] = new StringCell(inRow.getAuthor());
+		cells[2] = new StringCell(inRow.getMessage());
+		cells[3] = new StringCell(inRow.getMarker());
+		cells[4] = new StringCell(inRow.getAction());
+		cells[5] = new StringCell(inRow.getPath());
+		cells[6] = new StringCell(inRow.getDate());
+		cells[7] = new StringCell(inRow.getUid());
 
 		return new DefaultRow(new RowKey(Integer.toString(rowId)), cells);
 	}
