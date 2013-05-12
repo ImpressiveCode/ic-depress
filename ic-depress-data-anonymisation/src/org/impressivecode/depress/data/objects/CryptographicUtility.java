@@ -14,6 +14,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.xmlbeans.impl.util.Base64;
+import org.impressivecode.depress.data.anonymisation.AnonymisationNodeModel;
+import org.knime.core.util.crypto.HexUtils;
 
 import com.sun.xml.internal.fastinfoset.algorithm.HexadecimalEncodingAlgorithm;
 
@@ -25,7 +27,7 @@ public abstract class CryptographicUtility {
     public static String generateKey()
     {
         SecureRandom random = new SecureRandom();
-        return new java.math.BigInteger(32 * 5, random).toString(32);
+        return new java.math.BigInteger(AnonymisationNodeModel.KEY_LENGTH * 5, random).toString(32);
     }
         
     public static String useAlgorithm(String input, String passphrase, boolean encrypt)
@@ -39,6 +41,15 @@ public abstract class CryptographicUtility {
         Throwable thrown = null;
         byte[] transformed = null;
         int encryptMode = encrypt ? Cipher.ENCRYPT_MODE : Cipher.DECRYPT_MODE;
+        if(encrypt)
+        {
+            try {
+                input = HexUtils.bytesToHex(input.getBytes("ASCII"));
+            } catch (UnsupportedEncodingException e1) {
+                // TODO Auto-generated catch block
+                //            e1.printStackTrace();
+            }
+        }
         
         byte[] encodedKey = null;
         byte[] encodedInput = null;
@@ -55,7 +66,7 @@ public abstract class CryptographicUtility {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        Key key = new SecretKeySpec(encodedKey, 0, 8, "DES");
+        Key key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "DES");
 
         try
         {

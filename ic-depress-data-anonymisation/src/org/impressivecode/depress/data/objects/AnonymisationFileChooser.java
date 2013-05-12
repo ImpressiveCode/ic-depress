@@ -3,6 +3,7 @@ package org.impressivecode.depress.data.objects;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.impressivecode.depress.data.anonymisation.AnonymisationNodeModel;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
@@ -33,6 +34,7 @@ public class AnonymisationFileChooser extends DialogComponentFileChooser {
 
     public void UpdateComponent() {
         super.updateComponent();
+        AnonymisationNodeModel.KeyPathSetting = SelectedPath;
     }
 
     public void SetSelectedPath(String newPath) {

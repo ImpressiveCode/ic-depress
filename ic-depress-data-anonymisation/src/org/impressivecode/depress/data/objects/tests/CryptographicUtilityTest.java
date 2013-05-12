@@ -22,7 +22,9 @@ public class CryptographicUtilityTest {
     public void testUseAlgorithm() throws UnsupportedEncodingException {
         String key = "12332222";
         String clearText = "Some abcdefghijklmnoprstuvwx   (){}..yz   ";
-        clearText = HexUtils.bytesToHex(clearText.getBytes("ASCII"));
+String a = "123";
+String b = "test123test";
+       String cellVal = CryptographicUtility.useAlgorithm("12341234", "123t3est", true);
 
         String encryptedText = null;
         String decryptedText = null;

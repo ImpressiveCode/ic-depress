@@ -106,6 +106,8 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
         createNewGroup("Cryptographic key selection:");
 
         fileChooser = new AnonymisationFileChooser(new SettingsModelString(AnonymisationNodeModel.KEY, ""), "", ".txt");
+        
+        
 
         addDialogComponent(buttonToCreateFile);
         addDialogComponent(buttonToClear);

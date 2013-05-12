@@ -3,7 +3,9 @@ package org.impressivecode.depress.data.anonymisation;
 import java.io.File;
 import java.io.IOException;
 
+import org.impressivecode.depress.data.objects.CryptographicUtility;
 import org.impressivecode.depress.data.objects.EncryptionAnalyzer;
+import org.impressivecode.depress.data.objects.FileHelper;
 import org.impressivecode.depress.data.objects.PropertiesValidator;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
@@ -37,10 +39,13 @@ public class AnonymisationNodeModel extends NodeModel {
     static final String COLUMNS = "columns";
     static final String KEY = "key";
     static final int INPUT_PORT = 0;
-    public static final int KEY_LENGTH = 128;
+    public static final int KEY_LENGTH = 8;
 
     // Settings from Dialog
     public static SettingsModelFilterString filterStringSettings = new SettingsModelFilterString("columnfilterConfig");
+    
+    public static String KeyPathSetting = "";
+    
 
     /**
      * Constructor for the node model.
@@ -66,7 +71,7 @@ public class AnonymisationNodeModel extends NodeModel {
         // check user settings against input spec here
         // fail with InvalidSettingsException if invalid
         ColumnRearranger result = new ColumnRearranger(spec);
-        for (String colName : filterStringSettings.getExcludeList()) {
+        for (String colName : filterStringSettings.getIncludeList()) {
             // index of modified column
             final int index = spec.findColumnIndex(colName);
 
@@ -81,7 +86,18 @@ public class AnonymisationNodeModel extends NodeModel {
                 public DataCell getCell(final DataRow row) {
                     // TODO
                     // Anonymize cell of selected column here
-                    DataCell resultCell = new StringCell(row.getCell(index).toString().toUpperCase());
+                    String cellVal = "";
+                    if(!row.getCell(index).isMissing())
+                    {
+                        cellVal =  row.getCell(index).toString();
+                        try {
+                            cellVal = CryptographicUtility.useAlgorithm(cellVal, FileHelper.ReadFromFile(KeyPathSetting), true);
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                    DataCell resultCell = new StringCell(cellVal);
                     return resultCell;
                 }
             });
