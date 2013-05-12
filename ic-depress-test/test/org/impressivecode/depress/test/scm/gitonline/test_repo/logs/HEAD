@@ -1,0 +1,12 @@
+0000000000000000000000000000000000000000 c10f2ad763c3c78ba267d473608253d9796542cc Sławek Kapłoński <slawek@kaplonski.pl> 1367058416 +0200	clone: from https://github.com/slawqo/ic-depress.git
+c10f2ad763c3c78ba267d473608253d9796542cc 09000745d43fe3b2ca4b828b6199dc34a1a6b67e Sławek Kapłoński <slawek@kaplonski.pl> 1367058555 +0200	checkout: moving from master to dev
+09000745d43fe3b2ca4b828b6199dc34a1a6b67e c10f2ad763c3c78ba267d473608253d9796542cc Sławek Kapłoński <slawek@kaplonski.pl> 1367066635 +0200	checkout: moving from dev to master
+c10f2ad763c3c78ba267d473608253d9796542cc 09000745d43fe3b2ca4b828b6199dc34a1a6b67e Sławek Kapłoński <slawek@kaplonski.pl> 1367066821 +0200	checkout: moving from master to dev
+09000745d43fe3b2ca4b828b6199dc34a1a6b67e d50500d18fa3db5bfe17f02ffe071bf5b0650aa3 Sławek Kapłoński <slawek@kaplonski.pl> 1367345357 +0200	pull pwr dev: Fast-forward
+d50500d18fa3db5bfe17f02ffe071bf5b0650aa3 e0b97769694bb1e0d15c446e134d3e1e0dea0ee9 Sławek Kapłoński <slawek@kaplonski.pl> 1367349708 +0200	commit: #48 Fixed error. Now if marker pattern doesn't contain capture group then all pattern is get as marker
+e0b97769694bb1e0d15c446e134d3e1e0dea0ee9 2dbf9b76b36e98a0f39526bc9759502291484cd7 Sławek Kapłoński <slawek@kaplonski.pl> 1367354902 +0200	commit: Package name in settings window of node now don't have checkbox.
+2dbf9b76b36e98a0f39526bc9759502291484cd7 8e4f30963c3374229cbea745cb9482a60e37c29b Sławek Kapłoński <slawek@kaplonski.pl> 1367610020 +0200	commit: Start of new plugin: Git online. There are only copied files from Git plugin and renamed to new plugin name.
+8e4f30963c3374229cbea745cb9482a60e37c29b 7c4e8ea216557b5bb4421dada877cdb6a8f92b31 Sławek Kapłoński <slawek@kaplonski.pl> 1367702318 +0200	commit: #58 Git online plugin version with almost worked unit tests. Node is now still not working correct
+7c4e8ea216557b5bb4421dada877cdb6a8f92b31 30fcbd952c6c9e33cc9adff12dcc586789680554 Sławek Kapłoński <slawek@kaplonski.pl> 1367961007 +0200	pull pwr dev: Merge made by the 'recursive' strategy.
+30fcbd952c6c9e33cc9adff12dcc586789680554 74c5da110607718bb2798a5efb197434c1892598 Sławek Kapłoński <slawek@kaplonski.pl> 1367962129 +0200	commit: Fixed test with files count in commit. Now all unit tests are ok
+74c5da110607718bb2798a5efb197434c1892598 8e71684d6e1ee19f3529a37f3ec13b487a009969 Sławek Kapłoński <slawek@kaplonski.pl> 1367962566 +0200	commit: Fixed imports in unit test for git online plugin. Turned on last unit tests for this plugin
