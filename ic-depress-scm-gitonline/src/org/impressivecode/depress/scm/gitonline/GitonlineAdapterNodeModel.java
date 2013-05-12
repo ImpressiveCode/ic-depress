@@ -80,17 +80,16 @@ public class GitonlineAdapterNodeModel extends NodeModel {
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
-
+        
         logger.info("Reading logs from repository " + this.gitRepositoryAddress.getStringValue());
-        System.out.println("Reading logs from repository " + this.gitRepositoryAddress.getStringValue());
         GitonlineLogParser parser = new GitonlineLogParser();
         
         List<GitCommit> commits = parser.parseEntries(this.gitRepositoryAddress.getStringValue(),
                 options(gitRegExp.getStringValue(), gitPackageName.getStringValue()));
-
+        
         BufferedDataTable out = transform(commits, exec);
         logger.info("Reading git logs finished.");
-
+        
         return new BufferedDataTable[] { out };
     }
 

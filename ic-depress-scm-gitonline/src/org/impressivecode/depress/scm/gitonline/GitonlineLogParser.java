@@ -61,6 +61,7 @@ import org.eclipse.jgit.util.io.DisabledOutputStream;
  */
 public class GitonlineLogParser {
 
+    
     public List<GitCommit> parseEntries(final String path, final GitonlineParserOptions gitParserOptions) throws IOException,
     ParseException, NoHeadException, GitAPIException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
