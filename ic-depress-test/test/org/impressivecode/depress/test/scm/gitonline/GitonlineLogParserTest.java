@@ -43,7 +43,9 @@ import org.junit.Test;
 
 public class GitonlineLogParserTest {
 
-    private final static String repoPath = "/home/slawek/dev/java/ic-depress/.git";
+    private final static String repoPath = GitonlineLogParserTest.class.getResource("").getPath()+"test_repo";
+    
+    //private final static String repoPath = "/home/slawek/dev/java/ic-depress/.git";
     private GitonlineLogParser parser;
 
     @Before
@@ -60,7 +62,6 @@ public class GitonlineLogParserTest {
             }
         }
         throw new IllegalStateException("Fail");
-        //return new GitCommit();
     }
 
     @Test(expected = NoHeadException.class)
@@ -68,11 +69,11 @@ public class GitonlineLogParserTest {
         new GitonlineLogParser().parseEntries("fake_path", options(null, null));
     }
 
-    //nie przechodzi testu teraz bo za każdym razem może być inna liczba commitów
-    //@Test
-    //public void shouldCountCommits() throws Exception {
-    //    assertEquals(51, parser.parseEntries(repoPath, options(null, null)).size());
-    //}
+    @Test
+    public void shouldCountCommits() throws Exception {
+        GitonlineLogParser parser = new GitonlineLogParser();
+        assertEquals(183, parser.parseEntries(repoPath, options("#([0-9]+)", "org.")).size());
+    }
 
     @Test
     public void shouldSpecificCommitDateMatch() throws Exception {
