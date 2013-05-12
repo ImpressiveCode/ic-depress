@@ -40,17 +40,17 @@ public class EclipseMetricsTableFactory {
     private static final String WMC = "WeightedMethodsPerClass";
     private static final String NSF = "NumberOfStaticAttributes";
 
-    private static final String MLOC = "Method Lines of Code";
-    private static final String NBD = "Nested Block Depth";
-    private static final String VG = "McCabe Cyclomatic Complexity";
-    private static final String PAR = "Number of Parameters";
+    private static final String MLOC = "MethodLinesOfCode";
+    private static final String NBD = "NestedBlockDepth";
+    private static final String VG = "McCabeCyclomaticComplexity";
+    private static final String PAR = "NumberOfParameters";
 
     private EclipseMetricsTableFactory() {
 
     }
 
     static DataTableSpec[] createTableSpec() {
-        return new DataTableSpec[] { createDataColumnSpec() };
+        return new DataTableSpec[] { createDataColumnSpec(), createDataColumnSpecMethodLevel() };
     }
 
     public static DataTableSpec createDataColumnSpec() {

@@ -20,6 +20,7 @@ package org.impressivecode.depress.metric.eclipsemetrics;
 import static com.google.common.base.Preconditions.checkArgument;
 import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpec;
 import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpecMethodLevel;
+import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTableFactory.createTableSpec;
 
 import java.io.File;
 import java.io.IOException;
@@ -107,7 +108,7 @@ public class EclipseMetricsNodeModel extends NodeModel {
     @Override
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         checkArgument(inSpecs.length == 0, "Invalid state");
-        return new DataTableSpec[] { createDataColumnSpec() };
+        return createTableSpec();
     }
 
     @Override
