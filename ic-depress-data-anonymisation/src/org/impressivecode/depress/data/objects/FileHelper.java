@@ -9,8 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.security.SecureRandom;
-
 import javax.annotation.processing.FilerException;
 
 public class FileHelper {
@@ -43,24 +41,6 @@ public class FileHelper {
         return isValid;
     }
 
-    /**
-     * Method generates random character strings
-     * 
-     * @param length length of generated string
-     * @return String consisting of Pseudo Random Characters
-     */
-    private static String RandomString(int length) {
-        SecureRandom random = new SecureRandom();
-        return new java.math.BigInteger(length * 5, random).toString(32);
-    }
-
-    /**
-     * Method abstracts creation of temporary key file
-     * with specific OS characteristics in mind
-     * 
-     * @param String length of generated string
-     * @return String string form of created temporary file
-     */
     public static String CreateTmpFile(String fileName) {
         int i = 0;
         fileName = isFilenameValid(fileName) ? fileName : KEY_FILENAME;

@@ -18,7 +18,9 @@ import sun.misc.BASE64Encoder;
 public abstract class CryptographicUtility {
     
     public static boolean isEncrypted(String s) {
-        return s.matches("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
+        return s.length() > 11
+                && s.length()%4 == 0
+                && s.matches("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
     }
     
     public static String generateKey()
