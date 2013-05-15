@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.impressivecode.depress.data.objects.CryptographicUtility;
-import org.impressivecode.depress.data.objects.EncryptionAnalyzer;
 import org.impressivecode.depress.data.objects.FileHelper;
 import org.impressivecode.depress.data.objects.PropertiesValidator;
 import org.knime.core.data.DataCell;
