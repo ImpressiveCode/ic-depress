@@ -3,7 +3,6 @@ package org.impressivecode.depress.data.anonymisation;
 import java.io.File;
 import java.io.IOException;
 
-import org.impressivecode.depress.data.objects.EncryptionAnalyzer;
 import org.impressivecode.depress.data.objects.PropertiesValidator;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
