@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.knime.core.node.CanceledExecutionException;
+import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNLogEntry;
 import org.tmatesoft.svn.core.SVNLogEntryPath;
 import org.tmatesoft.svn.core.SVNNodeKind;
@@ -85,6 +86,8 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 
 			Logger.instance().warn(SVNLocale.iStartLoadOnlineRepo());
 
+			inProgress.onReadProgress(0, null);
+
 			for (int entryIndex = 0; entryIndex < entries.size(); entryIndex++) {
 
 				inProgress.checkLoading();
@@ -110,15 +113,13 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 				Map<String, SVNLogEntryPath> entryPaths = entries.get(
 						entryIndex).getChangedPaths();
 
-				for (Map.Entry<String, SVNLogEntryPath> mapElement : entryPaths
-						.entrySet()) {
+				for (SVNLogEntryPath mapElement : entryPaths.values()) {
 
 					inProgress.checkLoading();
 
 					String action = new String(Character.toString(mapElement
-							.getValue().getType()) + "");
-					String path = new String(mapElement.getValue().getPath()
-							+ "");
+							.getType()) + "");
+					String path = new String(mapElement.getPath() + "");
 
 					SVNNodeKind nodeKind = repository.checkPath(path, -1);
 
@@ -132,13 +133,14 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 
 					// Uzupe³nienie SVNLogRow
 					SVNLogRow r = new SVNLogRow();
-					r.setMarker(marker);
+
+					r.setMarker(cleanString(marker));
 					r.setAction(action);
 					r.setPath(path);
 					r.setClassName(getClassNameFromPath(path));
 					r.setUid(uid);
 					r.setAuthor(author);
-					r.setMessage(message);
+					r.setMessage(cleanString(message));
 					r.setDate(date);
 
 					inProgress.onReadProgress(
@@ -147,6 +149,9 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 				}
 			}
 
+		} catch (SVNException e) {
+			Logger.instance().error(SVNLocale.iSVNInternalError(), e);
+			inProgress.onReadProgress(0, null);
 		} catch (CanceledExecutionException e) {
 			Logger.instance().warn(SVNLocale.iCancelLoading());
 			inProgress.onReadProgress(0, null);

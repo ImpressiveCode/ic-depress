@@ -36,4 +36,13 @@ public abstract class SVNLogLoader {
 	protected double percent(double cur, double all) {
 		return (cur / all);
 	}
+
+	protected String cleanString(String inText) {
+
+		if (inText != null && inText.length() > 0) {
+			return inText.replace('\n', ' ').replace('\r', ' ');
+		}
+
+		return "";
+	}
 }

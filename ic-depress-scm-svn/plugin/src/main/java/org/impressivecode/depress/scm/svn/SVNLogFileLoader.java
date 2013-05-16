@@ -6,6 +6,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.knime.core.node.CanceledExecutionException;
+import org.tmatesoft.svn.core.SVNException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -123,30 +124,22 @@ public class SVNLogFileLoader extends SVNLogLoader {
 
 						Logger.instance().warn("File : " + path);
 
-						if (ePathElement.getAttribute("kind").equals("dir")) // directory
-																				// is
-																				// not
-																				// important
-																				// so
-																				// skip
-																				// it
-						{
+						// directory is not important so skip it
+						if (ePathElement.getAttribute("kind").equals("dir")) {
 							continue;
 						}
 
 						// Uzupe³nienie SVNLogRow
 
 						SVNLogRow r = new SVNLogRow();
-						r.setMarker(inIssueMarker);
 
+						r.setMarker(cleanString(inIssueMarker));
 						r.setAction(ePathElement.getAttribute("action"));
-
 						r.setPath(pathString);
-
 						r.setClassName(getClassNameFromPath(pathString));
 						r.setUid(uidString);
 						r.setAuthor(authorString);
-						r.setMessage(messageString);
+						r.setMessage(cleanString(messageString));
 						r.setDate(dateString);
 
 						inProgress.onReadProgress(
@@ -160,7 +153,7 @@ public class SVNLogFileLoader extends SVNLogLoader {
 			Logger.instance().warn(SVNLocale.iCancelLoading());
 			inProgress.onReadProgress(0, null);
 		} catch (Exception e) {
-			Logger.instance().error(" LoadXml ", e);
+			Logger.instance().error(SVNLocale.iSVNInternalError(), e);
 			inProgress.onReadProgress(0, null);
 		}
 

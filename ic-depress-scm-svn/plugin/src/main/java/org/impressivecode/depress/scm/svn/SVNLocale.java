@@ -96,4 +96,8 @@ public class SVNLocale {
 		return "Cancel loading";
 	}
 
+	public static String iSVNInternalError() {
+		return "Svn internal error";
+	}
+
 }

@@ -28,16 +28,20 @@ public class SVNSettings {
 			SVNSettings.CFG_SVN_PATH, SVNSettings.DEFAULT_PATH);
 
 	public static final SettingsModelString ISSUE_MARKER_MODEL = new SettingsModelString(
-			SVNSettings.CFG_ISSUE_REGEX, "");
+			SVNSettings.CFG_ISSUE_REGEX, SVNSettings.DEFAULT_ISSUE);
 
 	public static final SettingsModelString PACKAGE_MODEL = new SettingsModelString(
-			SVNSettings.CFG_PACKAGE, "*");
-
-	public static final String CFG_SVN_PATH = "svnPath";
+			SVNSettings.CFG_PACKAGE, SVNSettings.DEFAULT_PACKAGE);
 
 	public static final String DEFAULT_PATH = "";
 
-	private static final String CFG_PACKAGE = "package";
+	public static final String DEFAULT_ISSUE = "";
+
+	public static final String DEFAULT_PACKAGE = "";
+
+	public static final String CFG_SVN_PATH = "svnPath";
+
+	public static final String CFG_PACKAGE = "package";
 
 	public static final String CFG_ISSUE_REGEX = "issueMarker";
 
