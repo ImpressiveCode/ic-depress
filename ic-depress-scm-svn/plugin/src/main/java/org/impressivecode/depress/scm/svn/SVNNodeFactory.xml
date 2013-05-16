@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./default.png" type="Source">
-    <name>SVNPlugin</name>
+    <name>SVN Plugin</name>
     
     <shortDescription>
         This plug-in reads metrics related to selected project stored in SVN repository.

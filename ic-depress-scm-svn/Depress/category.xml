@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site>
-   <feature url="features/Depress_1.0.0.qualifier.jar" id="Depress" version="1.0.0.qualifier"/>
-   <category-def name="id_svn_plugin" label="SVN Plugin"/>
-</site>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="Depress"
-      label="Depress"
+      id="org.impressivecode.depress.svn"
+      label="SVN plugin"
       version="1.0.0.qualifier">
 
    <description url="http://www.example.com/description">
@@ -20,6 +20,7 @@
          id="org.impressivecode.depress.scm.svn"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="1.0.0"
+         unpack="false"/>
 
 </feature>
