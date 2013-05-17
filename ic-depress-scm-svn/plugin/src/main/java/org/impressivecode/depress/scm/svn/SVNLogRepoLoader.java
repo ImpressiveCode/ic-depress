@@ -8,7 +8,6 @@ import org.knime.core.node.CanceledExecutionException;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNLogEntry;
 import org.tmatesoft.svn.core.SVNLogEntryPath;
-import org.tmatesoft.svn.core.SVNNodeKind;
 import org.tmatesoft.svn.core.SVNURL;
 import org.tmatesoft.svn.core.auth.ISVNAuthenticationManager;
 import org.tmatesoft.svn.core.internal.io.dav.DAVRepositoryFactory;
@@ -58,7 +57,11 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 			String inIssueMarker, String[] inPackages,
 			IReadProgressListener inProgress) {
 
+		inProgress.onReadProgress(0, null);
+
 		DAVRepositoryFactory.setup();
+
+		inProgress.onReadProgress(0.25, null);
 
 		String url = inPath;
 		String name = inUser;
@@ -71,44 +74,48 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 			@SuppressWarnings("deprecation")
 			SVNRepository repository = SVNRepositoryFactory.create(SVNURL
 					.parseURIDecoded(url));
+
+			inProgress.onReadProgress(0.5, null);
+
 			ISVNAuthenticationManager authManager = SVNWCUtil
 					.createDefaultAuthenticationManager(name, password);
 			repository.setAuthenticationManager(authManager);
 
+			inProgress.onReadProgress(0.75, null);
+
 			String targetPaths[] = inPackages;
 			List<SVNLogEntry> entries = new ArrayList<SVNLogEntry>();
+
 			long startRevision = 0;
 			long endRevision = -1;
 			boolean changedPath = true;
 			boolean strictNode = false;
+
 			repository.log(targetPaths, entries, startRevision, endRevision,
 					changedPath, strictNode);
+
+			inProgress.onReadProgress(100, null);
 
 			Logger.instance().warn(SVNLocale.iStartLoadOnlineRepo());
 
 			inProgress.onReadProgress(0, null);
 
+			tmData.issueMarker = inIssueMarker;
+
 			for (int entryIndex = 0; entryIndex < entries.size(); entryIndex++) {
 
 				inProgress.checkLoading();
 
-				String marker = new String(inIssueMarker);
-				String uid = new String(entries.get(entryIndex).getRevision()
-						+ ""); // revision
-				String author = new String(entries.get(entryIndex).getAuthor()
-						+ "");
-				String date = new String(entries.get(entryIndex).getDate()
-						.toString()
-						+ "");
-				String message = new String(entries.get(entryIndex)
-						.getMessage() + "");
+				tmData.uid = Long.toString(entries.get(entryIndex)
+						.getRevision());
 
-				// if message has not appropriate markers then will not include
-				// that row
-				if (isMarkerInMessage(message, marker) == false) {
+				tmData.author = entries.get(entryIndex).getAuthor();
+				tmData.date = entries.get(entryIndex).getDate().toString();
+				tmData.message = entries.get(entryIndex).getMessage();
+
+				if (!isMarkerInMessage(tmData.message, tmData.issueMarker)) {
 					continue;
 				}
-				// //////////////////////////////////////////////////////////////////////
 
 				Map<String, SVNLogEntryPath> entryPaths = entries.get(
 						entryIndex).getChangedPaths();
@@ -117,34 +124,17 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 
 					inProgress.checkLoading();
 
-					String action = new String(Character.toString(mapElement
-							.getType()) + "");
-					String path = new String(mapElement.getPath() + "");
+					tmData.action = Character.toString(mapElement.getType());
 
-					SVNNodeKind nodeKind = repository.checkPath(path, -1);
+					tmData.path = mapElement.getPath();
 
-					Logger.instance().warn("File : " + path);
-
-					if (nodeKind != SVNNodeKind.FILE) // directory is not
-														// important so skip it
-					{
+					if (!isValidFile(tmData.path)) {
 						continue;
 					}
 
-					// Uzupe³nienie SVNLogRow
-					SVNLogRow r = new SVNLogRow();
-
-					r.setMarker(cleanString(marker));
-					r.setAction(action);
-					r.setPath(path);
-					r.setClassName(getClassNameFromPath(path));
-					r.setUid(uid);
-					r.setAuthor(author);
-					r.setMessage(cleanString(message));
-					r.setDate(date);
-
 					inProgress.onReadProgress(
-							percent(entryIndex, entries.size()), r);
+							percent(entryIndex, entries.size()),
+							tmData.createRow());
 
 				}
 			}
@@ -156,7 +146,7 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 			Logger.instance().warn(SVNLocale.iCancelLoading());
 			inProgress.onReadProgress(0, null);
 		} catch (Exception e) {
-			Logger.instance().error(" LoadRepository ", e);
+			Logger.instance().error(SVNLocale.iSVNInternalError(), e);
 			inProgress.onReadProgress(0, null);
 		}
 
@@ -165,23 +155,4 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 		}
 	}
 
-	public final boolean isMarkerInMessage(String message, String marker) {
-		return message.contains(marker);
-	}
-
-	public final String getClassNameFromPath(String path) {
-
-		int lastDot = path.lastIndexOf(".");
-
-		if (lastDot == -1) {
-			lastDot = path.length() - 1;
-		}
-
-		int lastSlash = path.lastIndexOf("/") + 1;
-
-		String smallPath = path.substring(lastSlash, lastDot);
-
-		return (smallPath.substring(0, 1).toUpperCase() + smallPath.substring(
-				1, smallPath.length()));
-	}
 }

@@ -54,11 +54,6 @@ public class SVNLogFileLoader extends SVNLogLoader {
 				inPackage = inPackage.substring(0, inPackage.length() - 2);
 			}
 
-			String authorString = new String();
-			String messageString = new String();
-			String dateString = new String();
-			String uidString = new String();
-
 			File fXmlFile = new File(inPath);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
 					.newInstance();
@@ -72,6 +67,8 @@ public class SVNLogFileLoader extends SVNLogLoader {
 
 			Logger.instance().warn(SVNLocale.iStartLoadLocalRepo());
 
+			tmData.issueMarker = inIssueMarker;
+
 			for (int logentry = 0; logentry < nList.getLength(); logentry++) {
 
 				inProgress.checkLoading();
@@ -81,23 +78,20 @@ public class SVNLogFileLoader extends SVNLogLoader {
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
 
-					uidString = eElement.getAttribute("revision");
+					tmData.uid = eElement.getAttribute("revision");
 
-					authorString = eElement.getElementsByTagName("author")
+					tmData.author = eElement.getElementsByTagName("author")
 							.item(0).getTextContent();
 
-					dateString = eElement.getElementsByTagName("date").item(0)
+					tmData.date = eElement.getElementsByTagName("date").item(0)
 							.getTextContent();
 
-					messageString = eElement.getElementsByTagName("msg")
+					tmData.message = eElement.getElementsByTagName("msg")
 							.item(0).getTextContent();
 
-					// if message has not appropriate markers then will not
-					// include that row
-					if (isMarkerInMessage(messageString, inIssueMarker) == false) {
+					if (!isMarkerInMessage(tmData.message, tmData.issueMarker)) {
 						continue;
 					}
-					// //////////////////////////////////////////////////////////////////////
 
 					Node pathsNode = eElement.getElementsByTagName("paths")
 							.item(0);
@@ -113,36 +107,21 @@ public class SVNLogFileLoader extends SVNLogLoader {
 						Node nPathNode = nPathsList.item(path);
 						Element ePathElement = (Element) nPathNode;
 
-						String pathString = ePathElement.getTextContent();
+						tmData.path = ePathElement.getTextContent();
 
-						// if package is not valid then will not include this
-						// row
-						if (isPackageValid(pathString, inPackage) == false) {
+						if (isValidFile(tmData.path)) {
 							continue;
 						}
 
-						Logger.instance().warn("File : " + path);
-
-						// directory is not important so skip it
-						if (ePathElement.getAttribute("kind").equals("dir")) {
+						if (isPackageValid(tmData.path, inPackage) == false) {
 							continue;
 						}
 
-						// Uzupe³nienie SVNLogRow
-
-						SVNLogRow r = new SVNLogRow();
-
-						r.setMarker(cleanString(inIssueMarker));
-						r.setAction(ePathElement.getAttribute("action"));
-						r.setPath(pathString);
-						r.setClassName(getClassNameFromPath(pathString));
-						r.setUid(uidString);
-						r.setAuthor(authorString);
-						r.setMessage(cleanString(messageString));
-						r.setDate(dateString);
+						tmData.action = ePathElement.getAttribute("action");
 
 						inProgress.onReadProgress(
-								percent(logentry, nList.getLength()), r);
+								percent(logentry, nList.getLength()),
+								tmData.createRow());
 
 					}
 				}
@@ -161,21 +140,6 @@ public class SVNLogFileLoader extends SVNLogLoader {
 		}
 	}
 
-	private final String getClassNameFromPath(String path) {
-		int lastDot = path.lastIndexOf(".");
-
-		if (lastDot == -1) {
-			lastDot = path.length() - 1;
-		}
-
-		int lastSlash = path.lastIndexOf("/") + 1;
-
-		String smallPath = path.substring(lastSlash, lastDot);
-
-		return (smallPath.substring(0, 1).toUpperCase() + smallPath.substring(
-				1, smallPath.length()));
-	}
-
 	private final boolean isPackageValid(String path, String packageString) {
 		path = path.replaceAll("/", ".");
 
@@ -188,10 +152,6 @@ public class SVNLogFileLoader extends SVNLogLoader {
 		}
 
 		return path.contains(packageString);
-	}
-
-	private final boolean isMarkerInMessage(String message, String marker) {
-		return message.contains(marker);
 	}
 
 }
