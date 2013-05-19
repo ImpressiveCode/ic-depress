@@ -23,6 +23,7 @@ import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelFilterString;
+import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * This is the model implementation of Anonymisation. Encrypts and decrypts
@@ -35,16 +36,16 @@ import org.knime.core.node.defaultnodesettings.SettingsModelFilterString;
  */
 public class AnonymisationNodeModel extends NodeModel {
 
-    static final String COLUMNS = "columns";
-    static final String KEY = "key";
+    static final String COLUMNS_CONFIG_NAME = "columns";
+    static final String KEY_CONFIG_NAME = "key";
     static final int INPUT_PORT = 0;
     public static final int KEY_LENGTH = 8;
 
-    // Settings from Dialog
-    public static SettingsModelFilterString filterStringSettings = new SettingsModelFilterString("columnfilterConfig");
-    
-    public static String KeyPathSetting = "";
-    
+    // saved Settings from Dialog
+    public static SettingsModelFilterString filterStringSettings = new SettingsModelFilterString(COLUMNS_CONFIG_NAME);
+
+    //Saved keyFile Settings
+    public static SettingsModelString keyPathSetting = new SettingsModelString(KEY_CONFIG_NAME, FileHelper.getUniqueFile(FileHelper.KEY_FILENAME).getPath());
 
     /**
      * Constructor for the node model.
@@ -61,6 +62,15 @@ public class AnonymisationNodeModel extends NodeModel {
         
     protected BufferedDataTable[] execute(BufferedDataTable[] inData, ExecutionContext exec) throws Exception {
         DataTableSpec inSpec = inData[0].getDataTableSpec();
+        java.io.File keyFile = new File(keyPathSetting.getStringValue());
+        // Able execute Node without enter into configuration
+        if (!keyFile.exists()) {
+            FileHelper.GenerateKeyFile(FileHelper.KEY_FILENAME);
+        }
+        if(filterStringSettings.getExcludeList().isEmpty() && filterStringSettings.getIncludeList().isEmpty())
+        {
+            filterStringSettings.setIncludeList(inSpec.getColumnNames());
+        }
         ColumnRearranger rearranger = createColumnRearranger(inSpec);
         BufferedDataTable outTable = exec.createColumnRearrangeTable(inData[0], rearranger, exec);
         return new BufferedDataTable[] { outTable };
@@ -70,7 +80,7 @@ public class AnonymisationNodeModel extends NodeModel {
         // check user settings against input spec here
         // fail with InvalidSettingsException if invalid
         ColumnRearranger result = new ColumnRearranger(spec);
-        for (String colName : filterStringSettings.getExcludeList()) {
+        for (String colName : filterStringSettings.getIncludeList()) {
             // index of modified column
             final int index = spec.findColumnIndex(colName);
 
@@ -86,11 +96,11 @@ public class AnonymisationNodeModel extends NodeModel {
                     // TODO
                     // Anonymize cell of selected column here
                     String cellVal = "";
-                    if(!row.getCell(index).isMissing())
-                    {
-                        cellVal =  row.getCell(index).toString();
+                    if (!row.getCell(index).isMissing() && !row.getCell(index).toString().isEmpty()) {
+                        cellVal = row.getCell(index).toString();
                         try {
-                            cellVal = CryptographicUtility.useAlgorithm(cellVal, FileHelper.ReadFromFile(KeyPathSetting), true);
+                            cellVal = CryptographicUtility.useAlgorithm(cellVal,
+                                    FileHelper.ReadFromFile(keyPathSetting.getStringValue()), true);
                         } catch (IOException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
@@ -121,6 +131,14 @@ public class AnonymisationNodeModel extends NodeModel {
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
 
         // TODO: generated method stub
+
+        //Check incoming table
+        if (inSpecs[0].getNumColumns()<=0) {
+            throw new InvalidSettingsException(
+                    "Input table must contain at least "
+                    + "one column");
+        }
+        
         return new DataTableSpec[] { null };
     }
 
@@ -130,6 +148,8 @@ public class AnonymisationNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         // TODO: generated method stub
+        filterStringSettings.saveSettingsTo(settings);
+        keyPathSetting.saveSettingsTo(settings);
     }
 
     /**
@@ -138,6 +158,8 @@ public class AnonymisationNodeModel extends NodeModel {
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         // TODO: generated method stub
+        filterStringSettings.loadSettingsFrom(settings);
+        keyPathSetting.loadSettingsFrom(settings);        
     }
 
     /**
@@ -146,15 +168,17 @@ public class AnonymisationNodeModel extends NodeModel {
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         // TODO: generated method stub
-        if (settings.keySet().contains(KEY)) {
-            String path = settings.getRowKey(KEY).getString();
+        if (settings.keySet().contains(KEY_CONFIG_NAME)) {
+            String path = settings.getRowKey(KEY_CONFIG_NAME).getString();
             PropertiesValidator.isKeyFileCorrect(path);
         }
 
-        if (settings.keySet().contains(COLUMNS)) {
-            PropertiesValidator.columnsCheck(settings.getConfig(COLUMNS));
+        if (settings.keySet().contains(COLUMNS_CONFIG_NAME)) {
+            PropertiesValidator.columnsCheck(settings.getConfig(COLUMNS_CONFIG_NAME));
         }
-
+        
+        keyPathSetting.validateSettings(settings);
+        filterStringSettings.validateSettings(settings);
     }
 
     /**

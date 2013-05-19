@@ -9,7 +9,6 @@ import org.impressivecode.depress.data.objects.FileHelper;
 import org.impressivecode.depress.data.objects.PropertiesValidator;
 import org.junit.Test;
 import org.knime.core.node.InvalidSettingsException;
-import org.knime.core.node.config.Config;
 
 public class PropertiesValidatorTest {
 
