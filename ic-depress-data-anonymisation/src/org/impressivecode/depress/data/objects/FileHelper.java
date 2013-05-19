@@ -62,10 +62,23 @@ public class FileHelper {
      * @return String string form of created temporary file
      */
     public static String CreateTmpFile(String fileName) {
-        int i = 0;
         fileName = isFilenameValid(fileName) ? fileName : KEY_FILENAME;
-        File tempFile = null;
+        File tempFile = getUniqueFile(fileName);
+        try {
+            tempFile.createNewFile();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return "";
+        }
 
+        return tempFile.getPath();
+    }
+
+    public static File getUniqueFile(String fileName) {
+        
+        File tempFile = null;
+        int i = 0;
         try
         {
             do
@@ -80,15 +93,7 @@ public class FileHelper {
         {
             System.err.println("Error: " + e.getMessage());
         }
-        try {
-            tempFile.createNewFile();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return "";
-        }
-
-        return tempFile.getPath();
+        return tempFile;
     }
 
     /**

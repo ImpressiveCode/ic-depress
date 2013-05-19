@@ -47,10 +47,11 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
 
     DialogComponentColumnFilter columnFilter;
 
-    private AnonymisationFileChooser fileChooser;
+    AnonymisationFileChooser fileChooser;
 
     // Declare Content Pane
     protected AnonymisationNodeDialog() {
+        super();
 
         // Groups
         createNewGroup("Column selection:");
@@ -65,8 +66,7 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
 
                 String keyPath;
                 try {
-                    keyPath = FileHelper.CreateTmpFile("key-file");
-                    FileHelper.WriteToFile(keyPath, CryptographicUtility.generateKey());
+                    keyPath = FileHelper.GenerateKeyFile(FileHelper.KEY_FILENAME);
                     fileChooser.SetSelectedPath(keyPath);
                     fileChooser.UpdateComponent();
                 } catch (IOException e1) {
@@ -90,24 +90,15 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
         buttonToCreateFile.setToolTipText("This create file with your key and load it automatically");
 
         // adding all components
-        columnFilter = new DialogComponentColumnFilter(new SettingsModelFilterString(AnonymisationNodeModel.COLUMNS),
-                AnonymisationNodeModel.INPUT_PORT, false);
-        columnFilter.getModel().addChangeListener(new ChangeListener() {
-
-            @Override
-            public void stateChanged(ChangeEvent arg0) {
-                //Save actual ColumnFilterSettings into static field : AnonymisationNodeModel.filterStringSettings;
-                AnonymisationNodeModel.filterStringSettings = (SettingsModelFilterString) arg0.getSource();
-            }
-        });
+        columnFilter = new DialogComponentColumnFilter(new SettingsModelFilterString(
+                AnonymisationNodeModel.COLUMNS_CONFIG_NAME), AnonymisationNodeModel.INPUT_PORT, false);
         addDialogComponent(columnFilter);
         setHorizontalPlacement(true);
 
         createNewGroup("Cryptographic key selection:");
 
-        fileChooser = new AnonymisationFileChooser(new SettingsModelString(AnonymisationNodeModel.KEY, ""), "", ".txt");
-        
-        
+        fileChooser = new AnonymisationFileChooser(new SettingsModelString(AnonymisationNodeModel.KEY_CONFIG_NAME,
+                FileHelper.getUniqueFile(FileHelper.KEY_FILENAME).getPath()), "", ".txt");
 
         addDialogComponent(buttonToCreateFile);
         addDialogComponent(buttonToClear);

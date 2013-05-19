@@ -34,7 +34,7 @@ public class AnonymisationFileChooser extends DialogComponentFileChooser {
 
     public void UpdateComponent() {
         super.updateComponent();
-        AnonymisationNodeModel.KeyPathSetting = SelectedPath;
+        AnonymisationNodeModel.keyPathSetting.setStringValue(SelectedPath);
     }
 
     public void SetSelectedPath(String newPath) {
