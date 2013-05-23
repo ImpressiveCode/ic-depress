@@ -75,14 +75,15 @@ public class AnonymisationNodeModel extends NodeModel {
         // Column Values Set
         Object[] rows = InputTableSpec.getColumnSpec(columnName).getDomain().getValues().toArray();
 
-        for (int i = 0; i < importantRows && i < rows.length; i++) {
+        boolean isEncrypted = true;
+        int i = 0;
+        while(isEncrypted && i < importantRows && i < rows.length)
+        {
             String rowVal = rows[i].toString();
-            boolean isEncrypted = CryptographicUtility.isEncrypted(rowVal);
-            if (!isEncrypted) {
-                return false;
-            }
+            isEncrypted = CryptographicUtility.isEncrypted(rowVal);
+            i++;
         }
-        return true;
+        return isEncrypted && i > 0;
     }
 
     public static boolean isColumnEncrypted(int columnIndex, int importantRows) throws InvalidAttributesException {
