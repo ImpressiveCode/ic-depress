@@ -3,6 +3,8 @@ package org.impressivecode.depress.data.anonymisation;
 import java.io.File;
 import java.io.IOException;
 
+import javax.naming.directory.InvalidAttributesException;
+
 import org.impressivecode.depress.data.objects.CryptographicUtility;
 import org.impressivecode.depress.data.objects.FileHelper;
 import org.impressivecode.depress.data.objects.PropertiesValidator;
@@ -40,12 +42,17 @@ public class AnonymisationNodeModel extends NodeModel {
     static final String KEY_CONFIG_NAME = "key";
     static final int INPUT_PORT = 0;
     public static final int KEY_LENGTH = 8;
+    public static int ANALYSIS_IMPORTANT_ROWS = 30;
 
     // saved Settings from Dialog
     public static SettingsModelFilterString filterStringSettings = new SettingsModelFilterString(COLUMNS_CONFIG_NAME);
 
-    //Saved keyFile Settings
-    public static SettingsModelString keyPathSetting = new SettingsModelString(KEY_CONFIG_NAME, FileHelper.getUniqueFile(FileHelper.KEY_FILENAME).getPath());
+    // Saved keyFile Settings
+    public static SettingsModelString keyPathSetting = new SettingsModelString(KEY_CONFIG_NAME, FileHelper
+            .getUniqueFile(FileHelper.KEY_FILENAME).getPath());
+
+    // Saved Input DataTableSpec
+    public static DataTableSpec InputTableSpec;
 
     /**
      * Constructor for the node model.
@@ -56,19 +63,45 @@ public class AnonymisationNodeModel extends NodeModel {
         super(1, 1);
     }
 
+    public static boolean isColumnEncrypted(String columnName, int importantRows) throws InvalidAttributesException {
+
+        if (columnName == null) {
+            throw new InvalidAttributesException();
+        }
+        if (columnName == "") {
+            throw new InvalidAttributesException();
+        }
+
+        // Column Values Set
+        Object[] rows = InputTableSpec.getColumnSpec(columnName).getDomain().getValues().toArray();
+
+        for (int i = 0; i < importantRows && i < rows.length; i++) {
+            String rowVal = rows[i].toString();
+            boolean isEncrypted = CryptographicUtility.isEncrypted(rowVal);
+            if (!isEncrypted) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isColumnEncrypted(int columnIndex, int importantRows) throws InvalidAttributesException {
+        return isColumnEncrypted(InputTableSpec.getColumnSpec(columnIndex).getName(), importantRows);
+    }
+
     /**
      * {@inheritDoc}
      */
-        
+
     protected BufferedDataTable[] execute(BufferedDataTable[] inData, ExecutionContext exec) throws Exception {
+
         DataTableSpec inSpec = inData[0].getDataTableSpec();
         java.io.File keyFile = new File(keyPathSetting.getStringValue());
         // Able execute Node without enter into configuration
         if (!keyFile.exists()) {
             FileHelper.GenerateKeyFile(FileHelper.KEY_FILENAME);
         }
-        if(filterStringSettings.getExcludeList().isEmpty() && filterStringSettings.getIncludeList().isEmpty())
-        {
+        if (filterStringSettings.getExcludeList().isEmpty() && filterStringSettings.getIncludeList().isEmpty()) {
             filterStringSettings.setIncludeList(inSpec.getColumnNames());
         }
         ColumnRearranger rearranger = createColumnRearranger(inSpec);
@@ -114,7 +147,6 @@ public class AnonymisationNodeModel extends NodeModel {
 
         return result;
     }
-    
 
     /**
      * {@inheritDoc}
@@ -132,13 +164,13 @@ public class AnonymisationNodeModel extends NodeModel {
 
         // TODO: generated method stub
 
-        //Check incoming table
-        if (inSpecs[0].getNumColumns()<=0) {
-            throw new InvalidSettingsException(
-                    "Input table must contain at least "
-                    + "one column");
+        // Check incoming table
+        if (inSpecs[0].getNumColumns() <= 0) {
+            throw new InvalidSettingsException("Input table must contain at least " + "one column");
         }
-        
+
+        InputTableSpec = inSpecs[0];
+
         return new DataTableSpec[] { null };
     }
 
@@ -159,7 +191,7 @@ public class AnonymisationNodeModel extends NodeModel {
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         // TODO: generated method stub
         filterStringSettings.loadSettingsFrom(settings);
-        keyPathSetting.loadSettingsFrom(settings);        
+        keyPathSetting.loadSettingsFrom(settings);
     }
 
     /**
@@ -176,7 +208,7 @@ public class AnonymisationNodeModel extends NodeModel {
         if (settings.keySet().contains(COLUMNS_CONFIG_NAME)) {
             PropertiesValidator.columnsCheck(settings.getConfig(COLUMNS_CONFIG_NAME));
         }
-        
+
         keyPathSetting.validateSettings(settings);
         filterStringSettings.validateSettings(settings);
     }
