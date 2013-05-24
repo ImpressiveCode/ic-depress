@@ -1,0 +1,2003 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE bugzilla SYSTEM "https://bugzilla.mozilla.org/page.cgi?id=bugzilla.dtd">
+
+<bugzilla version="4.2.6+"
+          urlbase="https://bugzilla.mozilla.org/"
+          
+          maintainer="bugzilla-admin@mozilla.org"
+>
+
+    <bug>
+          <bug_id>534051</bug_id>
+          
+          <creation_ts>2009-12-10 14:11:00 -0800</creation_ts>
+          <short_desc>Workers: Don&apos;t change the global object while GC is running</short_desc>
+          <delta_ts>2010-08-14 01:35:59 -0700</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>3</classification_id>
+          <classification>Components</classification>
+          <product>Core</product>
+          <component>DOM</component>
+          <version>Trunk</version>
+          <rep_platform>x86</rep_platform>
+          <op_sys>Windows 7</op_sys>
+          <bug_status>RESOLVED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          <bug_file_loc></bug_file_loc>
+          <status_whiteboard>[sg:critical?] fixes 533000</status_whiteboard>
+          <keywords></keywords>
+          <priority>--</priority>
+          <bug_severity>critical</bug_severity>
+          <target_milestone>mozilla1.9.2</target_milestone>
+          <dependson>534308</dependson>
+    
+    <dependson>536478</dependson>
+    
+    <dependson>560144</dependson>
+          <blocked>533000</blocked>
+          <everconfirmed>1</everconfirmed>
+          <reporter name="ben turner [:bent]">bent.mozilla</reporter>
+          <assigned_to name="ben turner [:bent]">bent.mozilla</assigned_to>
+          <cc>dolske</cc>
+    
+    <cc>dveditz</cc>
+    
+    <cc>gavin.sharp</cc>
+    
+    <cc>hskupin</cc>
+    
+    <cc>jorendorff</cc>
+    
+    <cc>jst</cc>
+    
+    <cc>jwalden+bmo</cc>
+    
+    <cc>mrbkap</cc>
+    
+    <cc>peterv</cc>
+    
+    <cc>por5858</cc>
+    
+    <cc>reed</cc>
+    
+    <cc>samuel.sidler+old</cc>
+          
+          <cf_tracking_firefox5>---</cf_tracking_firefox5>
+          <cf_status_firefox5>---</cf_status_firefox5>
+          <cf_tracking_firefox6>---</cf_tracking_firefox6>
+          <cf_status_firefox6>---</cf_status_firefox6>
+          <cf_tracking_firefox7>---</cf_tracking_firefox7>
+          <cf_status_firefox7>---</cf_status_firefox7>
+          <cf_tracking_firefox8>---</cf_tracking_firefox8>
+          <cf_status_firefox8>---</cf_status_firefox8>
+          <cf_tracking_firefox9>---</cf_tracking_firefox9>
+          <cf_status_firefox9>---</cf_status_firefox9>
+          <cf_tracking_firefox10>---</cf_tracking_firefox10>
+          <cf_status_firefox10>---</cf_status_firefox10>
+          <cf_tracking_firefox11>---</cf_tracking_firefox11>
+          <cf_status_firefox11>---</cf_status_firefox11>
+          <cf_tracking_firefox12>---</cf_tracking_firefox12>
+          <cf_status_firefox12>---</cf_status_firefox12>
+          <cf_tracking_firefox13>---</cf_tracking_firefox13>
+          <cf_status_firefox13>---</cf_status_firefox13>
+          <cf_tracking_firefox14>---</cf_tracking_firefox14>
+          <cf_status_firefox14>---</cf_status_firefox14>
+          <cf_tracking_firefox15>---</cf_tracking_firefox15>
+          <cf_status_firefox15>---</cf_status_firefox15>
+          <cf_tracking_firefox16>---</cf_tracking_firefox16>
+          <cf_status_firefox16>---</cf_status_firefox16>
+          <cf_tracking_firefox17>---</cf_tracking_firefox17>
+          <cf_status_firefox17>---</cf_status_firefox17>
+          <cf_tracking_firefox18>---</cf_tracking_firefox18>
+          <cf_status_firefox18>---</cf_status_firefox18>
+          <cf_tracking_firefox19>---</cf_tracking_firefox19>
+          <cf_status_firefox19>---</cf_status_firefox19>
+          <cf_tracking_firefox20>---</cf_tracking_firefox20>
+          <cf_status_firefox20>---</cf_status_firefox20>
+          <cf_tracking_firefox21>---</cf_tracking_firefox21>
+          <cf_status_firefox21>---</cf_status_firefox21>
+          <cf_tracking_firefox22>---</cf_tracking_firefox22>
+          <cf_status_firefox22>---</cf_status_firefox22>
+          <cf_tracking_firefox23>---</cf_tracking_firefox23>
+          <cf_status_firefox23>---</cf_status_firefox23>
+          <cf_tracking_firefox24>---</cf_tracking_firefox24>
+          <cf_status_firefox24>---</cf_status_firefox24>
+          <cf_tracking_esr10>---</cf_tracking_esr10>
+          <cf_status_esr10>---</cf_status_esr10>
+          <cf_tracking_firefox_esr17>---</cf_tracking_firefox_esr17>
+          <cf_status_firefox_esr17>---</cf_status_firefox_esr17>
+          <cf_tracking_b2g18>---</cf_tracking_b2g18>
+          <cf_status_b2g18>---</cf_status_b2g18>
+          <cf_status_b2g18_1_0_0>---</cf_status_b2g18_1_0_0>
+          <cf_status_b2g18_1_0_1>---</cf_status_b2g18_1_0_1>
+          <cf_blocking_20>---</cf_blocking_20>
+          <cf_status_20>---</cf_status_20>
+          <cf_tracking_firefox_relnote>---</cf_tracking_firefox_relnote>
+          <cf_tracking_relnote_b2g>---</cf_tracking_relnote_b2g>
+          <cf_blocking_192>---</cf_blocking_192>
+          <cf_status_192>final-fixed</cf_status_192>
+          <cf_blocking_191>.8+</cf_blocking_191>
+          <cf_status_191>.8-fixed</cf_status_191>
+          <cf_blocking_fennec10>---</cf_blocking_fennec10>
+          <cf_blocking_fennec>---</cf_blocking_fennec>
+          <cf_blocking_thunderbird33>---</cf_blocking_thunderbird33>
+          <cf_status_thunderbird33>---</cf_status_thunderbird33>
+          <cf_blocking_thunderbird32>---</cf_blocking_thunderbird32>
+          <cf_status_thunderbird32>---</cf_status_thunderbird32>
+          <cf_blocking_thunderbird31>---</cf_blocking_thunderbird31>
+          <cf_status_thunderbird31>---</cf_status_thunderbird31>
+          <cf_blocking_thunderbird30>---</cf_blocking_thunderbird30>
+          <cf_status_thunderbird30>---</cf_status_thunderbird30>
+          <cf_tracking_thunderbird6>---</cf_tracking_thunderbird6>
+          <cf_status_thunderbird6>---</cf_status_thunderbird6>
+          <cf_tracking_thunderbird7>---</cf_tracking_thunderbird7>
+          <cf_status_thunderbird7>---</cf_status_thunderbird7>
+          <cf_tracking_thunderbird8>---</cf_tracking_thunderbird8>
+          <cf_status_thunderbird8>---</cf_status_thunderbird8>
+          <cf_tracking_thunderbird9>---</cf_tracking_thunderbird9>
+          <cf_status_thunderbird9>---</cf_status_thunderbird9>
+          <cf_tracking_thunderbird10>---</cf_tracking_thunderbird10>
+          <cf_status_thunderbird10>---</cf_status_thunderbird10>
+          <cf_tracking_thunderbird11>---</cf_tracking_thunderbird11>
+          <cf_status_thunderbird11>---</cf_status_thunderbird11>
+          <cf_tracking_thunderbird12>---</cf_tracking_thunderbird12>
+          <cf_status_thunderbird12>---</cf_status_thunderbird12>
+          <cf_tracking_thunderbird13>---</cf_tracking_thunderbird13>
+          <cf_status_thunderbird13>---</cf_status_thunderbird13>
+          <cf_tracking_thunderbird14>---</cf_tracking_thunderbird14>
+          <cf_status_thunderbird14>---</cf_status_thunderbird14>
+          <cf_tracking_thunderbird15>---</cf_tracking_thunderbird15>
+          <cf_status_thunderbird15>---</cf_status_thunderbird15>
+          <cf_tracking_thunderbird16>---</cf_tracking_thunderbird16>
+          <cf_status_thunderbird16>---</cf_status_thunderbird16>
+          <cf_tracking_thunderbird17>---</cf_tracking_thunderbird17>
+          <cf_status_thunderbird17>---</cf_status_thunderbird17>
+          <cf_tracking_thunderbird18>---</cf_tracking_thunderbird18>
+          <cf_status_thunderbird18>---</cf_status_thunderbird18>
+          <cf_tracking_thunderbird19>---</cf_tracking_thunderbird19>
+          <cf_status_thunderbird19>---</cf_status_thunderbird19>
+          <cf_tracking_thunderbird20>---</cf_tracking_thunderbird20>
+          <cf_status_thunderbird20>---</cf_status_thunderbird20>
+          <cf_tracking_thunderbird21>---</cf_tracking_thunderbird21>
+          <cf_status_thunderbird21>---</cf_status_thunderbird21>
+          <cf_tracking_thunderbird22>---</cf_tracking_thunderbird22>
+          <cf_status_thunderbird22>---</cf_status_thunderbird22>
+          <cf_tracking_thunderbird23>---</cf_tracking_thunderbird23>
+          <cf_status_thunderbird23>---</cf_status_thunderbird23>
+          <cf_tracking_thunderbird24>---</cf_tracking_thunderbird24>
+          <cf_status_thunderbird24>---</cf_status_thunderbird24>
+          <cf_tracking_thunderbird_esr10>---</cf_tracking_thunderbird_esr10>
+          <cf_status_thunderbird_esr10>---</cf_status_thunderbird_esr10>
+          <cf_tracking_thunderbird_esr17>---</cf_tracking_thunderbird_esr17>
+          <cf_status_thunderbird_esr17>---</cf_status_thunderbird_esr17>
+          <cf_blocking_seamonkey21>---</cf_blocking_seamonkey21>
+          <cf_status_seamonkey21>---</cf_status_seamonkey21>
+          <cf_tracking_seamonkey22>---</cf_tracking_seamonkey22>
+          <cf_status_seamonkey22>---</cf_status_seamonkey22>
+          <cf_tracking_seamonkey23>---</cf_tracking_seamonkey23>
+          <cf_status_seamonkey23>---</cf_status_seamonkey23>
+          <cf_tracking_seamonkey24>---</cf_tracking_seamonkey24>
+          <cf_status_seamonkey24>---</cf_status_seamonkey24>
+          <cf_tracking_seamonkey25>---</cf_tracking_seamonkey25>
+          <cf_status_seamonkey25>---</cf_status_seamonkey25>
+          <cf_tracking_seamonkey26>---</cf_tracking_seamonkey26>
+          <cf_status_seamonkey26>---</cf_status_seamonkey26>
+          <cf_tracking_seamonkey27>---</cf_tracking_seamonkey27>
+          <cf_status_seamonkey27>---</cf_status_seamonkey27>
+          <cf_tracking_seamonkey28>---</cf_tracking_seamonkey28>
+          <cf_status_seamonkey28>---</cf_status_seamonkey28>
+          <cf_tracking_seamonkey29>---</cf_tracking_seamonkey29>
+          <cf_status_seamonkey29>---</cf_status_seamonkey29>
+          <cf_tracking_seamonkey210>---</cf_tracking_seamonkey210>
+          <cf_status_seamonkey210>---</cf_status_seamonkey210>
+          <cf_tracking_seamonkey211>---</cf_tracking_seamonkey211>
+          <cf_status_seamonkey211>---</cf_status_seamonkey211>
+          <cf_tracking_seamonkey212>---</cf_tracking_seamonkey212>
+          <cf_status_seamonkey212>---</cf_status_seamonkey212>
+          <cf_tracking_seamonkey213>---</cf_tracking_seamonkey213>
+          <cf_status_seamonkey213>---</cf_status_seamonkey213>
+          <cf_tracking_seamonkey214>---</cf_tracking_seamonkey214>
+          <cf_status_seamonkey214>---</cf_status_seamonkey214>
+          <cf_tracking_seamonkey215>---</cf_tracking_seamonkey215>
+          <cf_status_seamonkey215>---</cf_status_seamonkey215>
+          <cf_tracking_seamonkey216>---</cf_tracking_seamonkey216>
+          <cf_status_seamonkey216>---</cf_status_seamonkey216>
+          <cf_tracking_seamonkey217>---</cf_tracking_seamonkey217>
+          <cf_status_seamonkey217>---</cf_status_seamonkey217>
+          <cf_tracking_seamonkey218>---</cf_tracking_seamonkey218>
+          <cf_status_seamonkey218>---</cf_status_seamonkey218>
+          <cf_tracking_seamonkey219>---</cf_tracking_seamonkey219>
+          <cf_status_seamonkey219>---</cf_status_seamonkey219>
+          <cf_tracking_seamonkey220>---</cf_tracking_seamonkey220>
+          <cf_status_seamonkey220>---</cf_status_seamonkey220>
+          <cf_tracking_seamonkey221>---</cf_tracking_seamonkey221>
+          <cf_status_seamonkey221>---</cf_status_seamonkey221>
+          <cf_colo_site>---</cf_colo_site>
+          <cf_office>---</cf_office>
+          <cf_crash_signature></cf_crash_signature>
+          
+          <cf_blocking_kilimanjaro>---</cf_blocking_kilimanjaro>
+          <cf_blocking_b2g>---</cf_blocking_b2g>
+          <cf_blocking_basecamp>---</cf_blocking_basecamp>
+          
+          <cf_last_resolved>2009-12-11 13:23:14</cf_last_resolved>
+          
+          <votes>0</votes>
+
+      
+
+      
+
+      <flag name="blocking1.9.2"
+          id="347625"
+          type_id="479"
+          status="+"
+          setter="jst"
+    />
+    <flag name="wanted1.9.0.x"
+          id="348051"
+          type_id="385"
+          status="-"
+          setter="dveditz"
+    />
+
+          <long_desc isprivate="0">
+            <commentid>4444209</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-10 14:11:09 -0800</bug_when>
+            <thetext>We&apos;re setting the global object on the context from another thread outside of a request. That&apos;s bad according to all sane peers, so we should stop. Also, I think we should check request depth inside JS_SetGlobalObject.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4444252</commentid>
+              <attachid>416977</attachid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-10 14:27:52 -0800</bug_when>
+            <thetext>Created attachment 416977
+Patch</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4444405</commentid>
+              <attachid>416977</attachid>
+            <who name="Jason Orendorff [:jorendorff]">jorendorff</who>
+            <bug_when>2009-12-10 15:47:41 -0800</bug_when>
+            <thetext>Comment on attachment 416977
+Patch
+
+OK. The JS change is a bit risky though. At a first glance I couldn&apos;t be sure that all the *other* places that call this function are doing it right.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4444411</commentid>
+            <who name="Jason Orendorff [:jorendorff]">jorendorff</who>
+            <bug_when>2009-12-10 15:52:36 -0800</bug_when>
+            <thetext>Sorry--I meant to add: I&apos;m OK with adding that CHECK_REQUEST if the tests pass. If they don&apos;t, that is if other code triggers the assertion, we need to look into it. People definitely shouldn&apos;t be racing with the GC to call that function. Shudder.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4444452</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-10 16:19:51 -0800</bug_when>
+            <thetext>I pushed the patch to the tryserver</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4445645</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-11 12:46:36 -0800</bug_when>
+            <thetext>And tryserver loved it. Peterv and I think that this is the cause of bug 533000.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4445647</commentid>
+              <attachid>416977</attachid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-11 12:47:07 -0800</bug_when>
+            <thetext>Comment on attachment 416977
+Patch
+
+Over-the-shoulder r+sr=jst.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4445669</commentid>
+            <who name="Johnny Stenback (:jst, jst@mozilla.com)">jst</who>
+            <bug_when>2009-12-11 13:02:13 -0800</bug_when>
+            <thetext>We need this on the branches, fixes GC crashes.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4445698</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-11 13:23:14 -0800</bug_when>
+            <thetext>Pushed changeset 2000e14d36b2 to mozilla-central.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4445702</commentid>
+              <attachid>416977</attachid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-11 13:24:40 -0800</bug_when>
+            <thetext>Comment on attachment 416977
+Patch
+
+This patch should apply without any changes to 1.9.2 and 1.9.1.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4449122</commentid>
+            <who name="Samuel Sidler (old account; do not CC)">samuel.sidler+old</who>
+            <bug_when>2009-12-14 11:53:24 -0800</bug_when>
+            <thetext>This was blocking 1.9.2 (you accidentally removed the flag), so I&apos;d go ahead and land there and ask jst to re-mark as blocking.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4449439</commentid>
+            <who name="Johnny Stenback (:jst, jst@mozilla.com)">jst</who>
+            <bug_when>2009-12-14 14:22:09 -0800</bug_when>
+            <thetext>blocking, still! :)</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4449539</commentid>
+              <attachid>416977</attachid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2009-12-14 15:02:10 -0800</bug_when>
+            <thetext>Comment on attachment 416977
+Patch
+
+Approved for 1.9.1.7, a=dveditz for release-drivers</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4450167</commentid>
+            <who name="Justin Dolske [:Dolske]">dolske</who>
+            <bug_when>2009-12-15 00:27:27 -0800</bug_when>
+            <thetext>Pushed to 192: http://hg.mozilla.org/releases/mozilla-1.9.2/rev/f8e3e9f4d7c4</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4451595</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-15 15:40:36 -0800</bug_when>
+            <thetext>Pushed to 1.9.1 also. http://hg.mozilla.org/releases/mozilla-1.9.1/rev/620cfa6038af and http://hg.mozilla.org/releases/mozilla-1.9.1/rev/c3f393d2d171.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4508999</commentid>
+            <who name="Henrik Skupin (:whimboo)">hskupin</who>
+            <bug_when>2010-01-27 14:32:22 -0800</bug_when>
+            <thetext>Ben, is there a way for QA to test this fix or do we have to trust hopefully existing tests?</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4509583</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2010-01-27 19:08:44 -0800</bug_when>
+            <thetext>This is guarded by a hard assertion so we&apos;ll see crash reports if anyone violates it.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4509881</commentid>
+            <who name="Henrik Skupin (:whimboo)">hskupin</who>
+            <bug_when>2010-01-28 02:54:17 -0800</bug_when>
+            <thetext>But that means there no way for us to verify this fix manually. Is that correct?</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4510294</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2010-01-28 09:57:04 -0800</bug_when>
+            <thetext>Yes.</thetext>
+          </long_desc>
+      
+          <attachment
+              isobsolete="0"
+              ispatch="1"
+              isprivate="0"
+          >
+            <attachid>416977</attachid>
+            <date>2009-12-10 14:27:00 -0800</date>
+            <delta_ts>2009-12-14 15:02:10 -0800</delta_ts>
+            <desc>Patch</desc>
+            <filename>changes.patch</filename>
+            <type>text/plain</type>
+            <size>997</size>
+            <attacher>bent.mozilla</attacher>
+            
+<flag name="review"
+          id="347478"
+          type_id="4"
+          status="+"
+          setter="bent.mozilla"
+    />
+    <flag name="review"
+          id="347479"
+          type_id="4"
+          status="+"
+          setter="jorendorff"
+    />
+    <flag name="superreview"
+          id="347480"
+          type_id="5"
+          status="+"
+          setter="bent.mozilla"
+    />
+    <flag name="approval1.9.1.8"
+          id="347639"
+          type_id="566"
+          status="+"
+          setter="dveditz"
+    />
+          </attachment>
+      
+
+    </bug>
+    <bug>
+          <bug_id>572986</bug_id>
+          <alias>CVE-2010-1208</alias>
+          <creation_ts>2010-06-18 00:33:00 -0700</creation_ts>
+          <short_desc>DOM Attribute Cloning Remote Code Execution Vulnerability (ZDI-CAN-832)</short_desc>
+          <delta_ts>2010-09-15 16:09:16 -0700</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>3</classification_id>
+          <classification>Components</classification>
+          <product>Core</product>
+          <component>DOM</component>
+          <version>unspecified</version>
+          <rep_platform>All</rep_platform>
+          <op_sys>All</op_sys>
+          <bug_status>RESOLVED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          <bug_file_loc></bug_file_loc>
+          <status_whiteboard>[sg:critical?]</status_whiteboard>
+          <keywords>fixed1.9.0.20, verified1.9.1, verified1.9.2</keywords>
+          <priority>--</priority>
+          <bug_severity>critical</bug_severity>
+          <target_milestone>mozilla1.9.2</target_milestone>
+          
+          
+          <everconfirmed>1</everconfirmed>
+          <reporter name="Reed Loden [:reed]">reed</reporter>
+          <assigned_to name="Olli Pettay [:smaug]">bugs</assigned_to>
+          <cc>abillings</cc>
+    
+    <cc>brandon</cc>
+    
+    <cc>bugs</cc>
+    
+    <cc>bzbarsky</cc>
+    
+    <cc>dsicore</cc>
+    
+    <cc>dveditz</cc>
+    
+    <cc>gavin.sharp</cc>
+    
+    <cc>jonas</cc>
+    
+    <cc>LegNeato</cc>
+    
+    <cc>mh+mozilla</cc>
+    
+    <cc>reed</cc>
+    
+    <cc>sayrer</cc>
+          
+          <cf_tracking_firefox5>---</cf_tracking_firefox5>
+          <cf_status_firefox5>---</cf_status_firefox5>
+          <cf_tracking_firefox6>---</cf_tracking_firefox6>
+          <cf_status_firefox6>---</cf_status_firefox6>
+          <cf_tracking_firefox7>---</cf_tracking_firefox7>
+          <cf_status_firefox7>---</cf_status_firefox7>
+          <cf_tracking_firefox8>---</cf_tracking_firefox8>
+          <cf_status_firefox8>---</cf_status_firefox8>
+          <cf_tracking_firefox9>---</cf_tracking_firefox9>
+          <cf_status_firefox9>---</cf_status_firefox9>
+          <cf_tracking_firefox10>---</cf_tracking_firefox10>
+          <cf_status_firefox10>---</cf_status_firefox10>
+          <cf_tracking_firefox11>---</cf_tracking_firefox11>
+          <cf_status_firefox11>---</cf_status_firefox11>
+          <cf_tracking_firefox12>---</cf_tracking_firefox12>
+          <cf_status_firefox12>---</cf_status_firefox12>
+          <cf_tracking_firefox13>---</cf_tracking_firefox13>
+          <cf_status_firefox13>---</cf_status_firefox13>
+          <cf_tracking_firefox14>---</cf_tracking_firefox14>
+          <cf_status_firefox14>---</cf_status_firefox14>
+          <cf_tracking_firefox15>---</cf_tracking_firefox15>
+          <cf_status_firefox15>---</cf_status_firefox15>
+          <cf_tracking_firefox16>---</cf_tracking_firefox16>
+          <cf_status_firefox16>---</cf_status_firefox16>
+          <cf_tracking_firefox17>---</cf_tracking_firefox17>
+          <cf_status_firefox17>---</cf_status_firefox17>
+          <cf_tracking_firefox18>---</cf_tracking_firefox18>
+          <cf_status_firefox18>---</cf_status_firefox18>
+          <cf_tracking_firefox19>---</cf_tracking_firefox19>
+          <cf_status_firefox19>---</cf_status_firefox19>
+          <cf_tracking_firefox20>---</cf_tracking_firefox20>
+          <cf_status_firefox20>---</cf_status_firefox20>
+          <cf_tracking_firefox21>---</cf_tracking_firefox21>
+          <cf_status_firefox21>---</cf_status_firefox21>
+          <cf_tracking_firefox22>---</cf_tracking_firefox22>
+          <cf_status_firefox22>---</cf_status_firefox22>
+          <cf_tracking_firefox23>---</cf_tracking_firefox23>
+          <cf_status_firefox23>---</cf_status_firefox23>
+          <cf_tracking_firefox24>---</cf_tracking_firefox24>
+          <cf_status_firefox24>---</cf_status_firefox24>
+          <cf_tracking_esr10>---</cf_tracking_esr10>
+          <cf_status_esr10>---</cf_status_esr10>
+          <cf_tracking_firefox_esr17>---</cf_tracking_firefox_esr17>
+          <cf_status_firefox_esr17>---</cf_status_firefox_esr17>
+          <cf_tracking_b2g18>---</cf_tracking_b2g18>
+          <cf_status_b2g18>---</cf_status_b2g18>
+          <cf_status_b2g18_1_0_0>---</cf_status_b2g18_1_0_0>
+          <cf_status_b2g18_1_0_1>---</cf_status_b2g18_1_0_1>
+          <cf_blocking_20>final+</cf_blocking_20>
+          <cf_status_20>?</cf_status_20>
+          <cf_tracking_firefox_relnote>---</cf_tracking_firefox_relnote>
+          <cf_tracking_relnote_b2g>---</cf_tracking_relnote_b2g>
+          <cf_blocking_192>.7+</cf_blocking_192>
+          <cf_status_192>.7-fixed</cf_status_192>
+          <cf_blocking_191>.11+</cf_blocking_191>
+          <cf_status_191>.11-fixed</cf_status_191>
+          <cf_blocking_fennec10>---</cf_blocking_fennec10>
+          <cf_blocking_fennec>---</cf_blocking_fennec>
+          <cf_blocking_thunderbird33>---</cf_blocking_thunderbird33>
+          <cf_status_thunderbird33>---</cf_status_thunderbird33>
+          <cf_blocking_thunderbird32>---</cf_blocking_thunderbird32>
+          <cf_status_thunderbird32>---</cf_status_thunderbird32>
+          <cf_blocking_thunderbird31>---</cf_blocking_thunderbird31>
+          <cf_status_thunderbird31>---</cf_status_thunderbird31>
+          <cf_blocking_thunderbird30>---</cf_blocking_thunderbird30>
+          <cf_status_thunderbird30>---</cf_status_thunderbird30>
+          <cf_tracking_thunderbird6>---</cf_tracking_thunderbird6>
+          <cf_status_thunderbird6>---</cf_status_thunderbird6>
+          <cf_tracking_thunderbird7>---</cf_tracking_thunderbird7>
+          <cf_status_thunderbird7>---</cf_status_thunderbird7>
+          <cf_tracking_thunderbird8>---</cf_tracking_thunderbird8>
+          <cf_status_thunderbird8>---</cf_status_thunderbird8>
+          <cf_tracking_thunderbird9>---</cf_tracking_thunderbird9>
+          <cf_status_thunderbird9>---</cf_status_thunderbird9>
+          <cf_tracking_thunderbird10>---</cf_tracking_thunderbird10>
+          <cf_status_thunderbird10>---</cf_status_thunderbird10>
+          <cf_tracking_thunderbird11>---</cf_tracking_thunderbird11>
+          <cf_status_thunderbird11>---</cf_status_thunderbird11>
+          <cf_tracking_thunderbird12>---</cf_tracking_thunderbird12>
+          <cf_status_thunderbird12>---</cf_status_thunderbird12>
+          <cf_tracking_thunderbird13>---</cf_tracking_thunderbird13>
+          <cf_status_thunderbird13>---</cf_status_thunderbird13>
+          <cf_tracking_thunderbird14>---</cf_tracking_thunderbird14>
+          <cf_status_thunderbird14>---</cf_status_thunderbird14>
+          <cf_tracking_thunderbird15>---</cf_tracking_thunderbird15>
+          <cf_status_thunderbird15>---</cf_status_thunderbird15>
+          <cf_tracking_thunderbird16>---</cf_tracking_thunderbird16>
+          <cf_status_thunderbird16>---</cf_status_thunderbird16>
+          <cf_tracking_thunderbird17>---</cf_tracking_thunderbird17>
+          <cf_status_thunderbird17>---</cf_status_thunderbird17>
+          <cf_tracking_thunderbird18>---</cf_tracking_thunderbird18>
+          <cf_status_thunderbird18>---</cf_status_thunderbird18>
+          <cf_tracking_thunderbird19>---</cf_tracking_thunderbird19>
+          <cf_status_thunderbird19>---</cf_status_thunderbird19>
+          <cf_tracking_thunderbird20>---</cf_tracking_thunderbird20>
+          <cf_status_thunderbird20>---</cf_status_thunderbird20>
+          <cf_tracking_thunderbird21>---</cf_tracking_thunderbird21>
+          <cf_status_thunderbird21>---</cf_status_thunderbird21>
+          <cf_tracking_thunderbird22>---</cf_tracking_thunderbird22>
+          <cf_status_thunderbird22>---</cf_status_thunderbird22>
+          <cf_tracking_thunderbird23>---</cf_tracking_thunderbird23>
+          <cf_status_thunderbird23>---</cf_status_thunderbird23>
+          <cf_tracking_thunderbird24>---</cf_tracking_thunderbird24>
+          <cf_status_thunderbird24>---</cf_status_thunderbird24>
+          <cf_tracking_thunderbird_esr10>---</cf_tracking_thunderbird_esr10>
+          <cf_status_thunderbird_esr10>---</cf_status_thunderbird_esr10>
+          <cf_tracking_thunderbird_esr17>---</cf_tracking_thunderbird_esr17>
+          <cf_status_thunderbird_esr17>---</cf_status_thunderbird_esr17>
+          <cf_blocking_seamonkey21>---</cf_blocking_seamonkey21>
+          <cf_status_seamonkey21>---</cf_status_seamonkey21>
+          <cf_tracking_seamonkey22>---</cf_tracking_seamonkey22>
+          <cf_status_seamonkey22>---</cf_status_seamonkey22>
+          <cf_tracking_seamonkey23>---</cf_tracking_seamonkey23>
+          <cf_status_seamonkey23>---</cf_status_seamonkey23>
+          <cf_tracking_seamonkey24>---</cf_tracking_seamonkey24>
+          <cf_status_seamonkey24>---</cf_status_seamonkey24>
+          <cf_tracking_seamonkey25>---</cf_tracking_seamonkey25>
+          <cf_status_seamonkey25>---</cf_status_seamonkey25>
+          <cf_tracking_seamonkey26>---</cf_tracking_seamonkey26>
+          <cf_status_seamonkey26>---</cf_status_seamonkey26>
+          <cf_tracking_seamonkey27>---</cf_tracking_seamonkey27>
+          <cf_status_seamonkey27>---</cf_status_seamonkey27>
+          <cf_tracking_seamonkey28>---</cf_tracking_seamonkey28>
+          <cf_status_seamonkey28>---</cf_status_seamonkey28>
+          <cf_tracking_seamonkey29>---</cf_tracking_seamonkey29>
+          <cf_status_seamonkey29>---</cf_status_seamonkey29>
+          <cf_tracking_seamonkey210>---</cf_tracking_seamonkey210>
+          <cf_status_seamonkey210>---</cf_status_seamonkey210>
+          <cf_tracking_seamonkey211>---</cf_tracking_seamonkey211>
+          <cf_status_seamonkey211>---</cf_status_seamonkey211>
+          <cf_tracking_seamonkey212>---</cf_tracking_seamonkey212>
+          <cf_status_seamonkey212>---</cf_status_seamonkey212>
+          <cf_tracking_seamonkey213>---</cf_tracking_seamonkey213>
+          <cf_status_seamonkey213>---</cf_status_seamonkey213>
+          <cf_tracking_seamonkey214>---</cf_tracking_seamonkey214>
+          <cf_status_seamonkey214>---</cf_status_seamonkey214>
+          <cf_tracking_seamonkey215>---</cf_tracking_seamonkey215>
+          <cf_status_seamonkey215>---</cf_status_seamonkey215>
+          <cf_tracking_seamonkey216>---</cf_tracking_seamonkey216>
+          <cf_status_seamonkey216>---</cf_status_seamonkey216>
+          <cf_tracking_seamonkey217>---</cf_tracking_seamonkey217>
+          <cf_status_seamonkey217>---</cf_status_seamonkey217>
+          <cf_tracking_seamonkey218>---</cf_tracking_seamonkey218>
+          <cf_status_seamonkey218>---</cf_status_seamonkey218>
+          <cf_tracking_seamonkey219>---</cf_tracking_seamonkey219>
+          <cf_status_seamonkey219>---</cf_status_seamonkey219>
+          <cf_tracking_seamonkey220>---</cf_tracking_seamonkey220>
+          <cf_status_seamonkey220>---</cf_status_seamonkey220>
+          <cf_tracking_seamonkey221>---</cf_tracking_seamonkey221>
+          <cf_status_seamonkey221>---</cf_status_seamonkey221>
+          <cf_colo_site>---</cf_colo_site>
+          <cf_office>---</cf_office>
+          <cf_crash_signature></cf_crash_signature>
+          
+          <cf_blocking_kilimanjaro>---</cf_blocking_kilimanjaro>
+          <cf_blocking_b2g>---</cf_blocking_b2g>
+          <cf_blocking_basecamp>---</cf_blocking_basecamp>
+          
+          <cf_last_resolved>2010-06-25 16:53:54</cf_last_resolved>
+          
+          <votes>0</votes>
+
+      
+
+      
+
+      
+
+          <long_desc isprivate="0">
+            <commentid>4752093</commentid>
+              <attachid>452203</attachid>
+            <who name="Reed Loden [:reed]">reed</who>
+            <bug_when>2010-06-18 00:33:50 -0700</bug_when>
+            <thetext>Created attachment 452203
+PoC
+
+ZDI-CAN-832: Mozilla Firefox DOM Attribute Cloning Remote Code Execution Vulnerability
+
+-- ABSTRACT ------------------------------------------------------------
+
+TippingPoint has identified a vulnerability affecting the following 
+products:
+
+    Mozilla Firefox 3.6.x
+
+-- VULNERABILITY DETAILS -----------------------------------------------
+
+This vulnerability allows remote attackers to execute arbitrary code on
+vulnerable installations of Mozilla Firefox. User interaction is
+required to exploit this vulnerability in that the target must visit a
+malicious page or open a malicious file.
+
+The specific flaw exists due to a workaround that was implemented in
+order to support recursive cloning of attribute nodes. If an event is
+added to the first attribute node, the application can be made to free
+the node, and then later access a reference to it. This can lead to code
+execution under the  context of the application.
+
+The issue occurs due to a workaround in the application using the first
+child when cloning an attribute node and inserting children. Due to the
+side-effect of a attribute&apos;s children not actually being inserted due to
+bug id 56758 [https://bugzilla.mozilla.org/show_bug.cgi?id=56758], an
+event can be made to remove each attribute. This will then free a
+reference to an attribute node, which can then be replaced with another
+type of the same size. The application will later use this freed type.
+
+content\base\src\nsNodeUtils.cpp:517
+nsresult
+nsNodeUtils::CloneAndAdopt(nsINode *aNode, PRBool aClone, PRBool aDeep,
+                           nsNodeInfoManager *aNewNodeInfoManager,
+                           JSContext *aCx, JSObject *aOldScope,
+                           JSObject *aNewScope,
+                           nsCOMArray&lt;nsINode&gt; &amp;aNodesWithProperties,
+                           nsINode *aParent, nsIDOMNode **aResult)
+...
+
+  // The DOM spec says to always adopt/clone/import the children of
+attribute
+  // nodes.
+  // XXX The following block is here because our implementation of
+attribute
+  //     nodes is broken when it comes to inserting children. Instead of
+cloning
+  //     their children we force creation of the only child by calling
+  //     GetChildAt(0). We can remove this when
+  //     https://bugzilla.mozilla.org/show_bug.cgi?id=56758 is fixed.
+
+  if (aClone &amp;&amp; aNode-&gt;IsNodeOfType(nsINode::eATTRIBUTE)) {
+    nsCOMPtr&lt;nsINode&gt; attrChildNode = aNode-&gt;GetChildAt(0);
+    // We only need to do this if the child node has properties (because
+we
+    // might need to call a userdata handler).
+    if (attrChildNode &amp;&amp; attrChildNode-&gt;HasProperties()) {
+      nsCOMPtr&lt;nsINode&gt; clonedAttrChildNode = clone-&gt;GetChildAt(0);
+      if (clonedAttrChildNode) {
+        PRBool ok = aNodesWithProperties.AppendObject(attrChildNode) &amp;&amp;
+                   
+aNodesWithProperties.AppendObject(clonedAttrChildNode);
+        NS_ENSURE_TRUE(ok, NS_ERROR_OUT_OF_MEMORY);
+      }
+    }
+  }
+
+Version(s)  tested: Mozilla Firefox 3.6.3
+Platform(s) tested: Windows XP SP3
+
+-- CREDIT --------------------------------------------------------------
+
+This vulnerability was discovered by:
+    * regenrecht</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752105</commentid>
+            <who name="Reed Loden [:reed]">reed</who>
+            <bug_when>2010-06-18 00:53:45 -0700</bug_when>
+            <thetext>I can&apos;t get this to crash on trunk... Will try 3.6.x later unless somebody beats me to it.
+
+Error: node is null
+Source File: file:///.../poc.html
+Line: 24
+
+Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.3a6pre) Gecko/20100617 Minefield/3.7a6pre</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752111</commentid>
+            <who name="Olli Pettay [:smaug]">bugs</who>
+            <bug_when>2010-06-18 00:57:51 -0700</bug_when>
+            <thetext>IIRC, either boris or jonas changed attribute handling a bit.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752117</commentid>
+            <who name="Olli Pettay [:smaug]">bugs</who>
+            <bug_when>2010-06-18 01:03:20 -0700</bug_when>
+            <thetext>But I&apos;m investigating this on 1.9.2.
+I think I know where the problem is.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752185</commentid>
+            <who name="Olli Pettay [:smaug]">bugs</who>
+            <bug_when>2010-06-18 02:26:19 -0700</bug_when>
+            <thetext>Jonas, nsDOMAttribute::EnsureChildState is your code.
+I don&apos;t really understand why it updates the value in some cases, but not
+always. And does it really have to notify.
+If it wouldn&apos;t notify, we wouldn&apos;t fire the extra mutation event which
+causes this bug.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752186</commentid>
+            <who name="Olli Pettay [:smaug]">bugs</who>
+            <bug_when>2010-06-18 02:27:19 -0700</bug_when>
+            <thetext>Btw, I can&apos;t reproduce the crash on 1.9.2 debug build, but I do see lots of
+evil assertions and I can see the extra mutation event.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752220</commentid>
+              <attachid>452225</attachid>
+            <who name="Olli Pettay [:smaug]">bugs</who>
+            <bug_when>2010-06-18 03:05:01 -0700</bug_when>
+            <thetext>Created attachment 452225
+very safe patch
+
+This should be very safe patch, but I don&apos;t like this.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752255</commentid>
+              <attachid>452232</attachid>
+            <who name="Olli Pettay [:smaug]">bugs</who>
+            <bug_when>2010-06-18 03:39:58 -0700</bug_when>
+            <thetext>Created attachment 452232
+patch
+
+Usually when attribute is in element, textnode&apos;s value gets updated via
+mutation observer. 
+Setting .value should create a Text node, so in practice we can
+just remove the old. The new one will be created lazily.
+
+I&apos;ll write some tests for this.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752356</commentid>
+            <who name="Olli Pettay [:smaug]">bugs</who>
+            <bug_when>2010-06-18 05:43:16 -0700</bug_when>
+            <thetext>Ah, on trunk SetText isn&apos;t called with notify=true.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752364</commentid>
+            <who name="Olli Pettay [:smaug]">bugs</who>
+            <bug_when>2010-06-18 05:48:30 -0700</bug_when>
+            <thetext>This was fixed on trunk in  Bug 429175.
+Should we actually land that to branches too.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752543</commentid>
+            <who name="Jonas Sicking (:sicking)">jonas</who>
+            <bug_when>2010-06-18 08:12:59 -0700</bug_when>
+            <thetext>(In reply to comment #9)
+&gt; This was fixed on trunk in  Bug 429175.
+&gt; Should we actually land that to branches too.
+
+Hum, I had convinced myself that the callsites that were fixed there weren&apos;t actually causing vulnerabilities, but obviously I was wrong.
+
+I don&apos;t think we should port that bug still though as lots of callsites were for sure not vulnerable and just false positives.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752546</commentid>
+              <attachid>452232</attachid>
+            <who name="Jonas Sicking (:sicking)">jonas</who>
+            <bug_when>2010-06-18 08:14:13 -0700</bug_when>
+            <thetext>Comment on attachment 452232
+patch
+
+Why do you need the added RemoveChildAt call?</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752771</commentid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2010-06-18 10:36:21 -0700</bug_when>
+            <thetext>I assume this is also a problem on 1.9.1?
+
+If this is the right patch can we get this in in time for 1.9.2.6 (code freeze probably end of next week?)</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4752937</commentid>
+            <who name="Olli Pettay [:smaug]">bugs</who>
+            <bug_when>2010-06-18 11:25:17 -0700</bug_when>
+            <thetext>(In reply to comment #11)
+&gt; (From update of attachment 452232 [details])
+&gt; Why do you need the added RemoveChildAt call?
+
+I was sanitizing value handling (actually make it work more like what the spec
+and other browsers do), but then I realized that it is not needed for this
+bug. That is why I cancelled the review.
+I&apos;ll fix that in a separate non-sg* bug.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4753387</commentid>
+            <who name="Jonas Sicking (:sicking)">jonas</who>
+            <bug_when>2010-06-18 14:30:55 -0700</bug_when>
+            <thetext>I would say we should just change the SetText call to have aNotify=false and mark this bug fixed. All this stuff is significantly different on trunk anyway.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4753685</commentid>
+            <who name="Boris Zbarsky (:bz)">bzbarsky</who>
+            <bug_when>2010-06-18 16:23:29 -0700</bug_when>
+            <thetext>&gt; I would say we should just change the SetText call to have aNotify=false
+
+Is there any danger of that causing ranges to get out of sync?</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4759645</commentid>
+            <who name="Robert Sayre">sayrer</who>
+            <bug_when>2010-06-22 13:57:34 -0700</bug_when>
+            <thetext>can you update the status here? or request view?</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4759661</commentid>
+            <who name="Olli Pettay [:smaug]">bugs</who>
+            <bug_when>2010-06-22 14:02:52 -0700</bug_when>
+            <thetext>I will need to investigate if the simple fix would cause problems (event security problems) with ranges. I&apos;ll try to do that tomorrow.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4760724</commentid>
+              <attachid>453323</attachid>
+            <who name="Olli Pettay [:smaug]">bugs</who>
+            <bug_when>2010-06-23 01:57:25 -0700</bug_when>
+            <thetext>Created attachment 453323
+patch
+
+Since nsIRange has strong refs to mRoot and mStartParent and mEndParent, I
+can&apos;t really see how this could cause bad problems with ranges.
+Few things can go wrong, but not because of this patch, but because
+we don&apos;t handle attribute nodes the same way as other nodes.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4764427</commentid>
+              <attachid>453323</attachid>
+            <who name="Christian Legnitto [:LegNeato]">LegNeato</who>
+            <bug_when>2010-06-24 13:37:50 -0700</bug_when>
+            <thetext>Comment on attachment 453323
+patch
+
+a=LegNeato for 1.9.2.6 and 1.9.1.11. Please land this on mozilla-1.9.2 default and mozilla-1.9.1 default.
+
+Code freeze is this Friday @ 11:59 pm PST.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4767440</commentid>
+            <who name="Reed Loden [:reed]">reed</who>
+            <bug_when>2010-06-25 16:53:54 -0700</bug_when>
+            <thetext>http://hg.mozilla.org/releases/mozilla-1.9.2/rev/cad7ffc0b2b3
+http://hg.mozilla.org/releases/mozilla-1.9.1/rev/aaa9c80a559c</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4799947</commentid>
+            <who name="Al Billings [:abillings]">abillings</who>
+            <bug_when>2010-07-16 14:35:25 -0700</bug_when>
+            <thetext>Verified fixed in 1.9.2.7 with Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.7) Gecko/20100713 Firefox/3.6.7 (.NET CLR 3.5.30729) using PoC. PoC crashes 1.9.2.6.
+
+Verified fixed for 1.9.1.11 with Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.11) Gecko/20100701 Firefox/3.5.11 (.NET CLR 3.5.30729) as well. Crashes 1.9.1.10.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4802218</commentid>
+              <attachid>453323</attachid>
+            <who name="Smokey Ardisson (offline for a while; not following bugs - do not email)">alqahira</who>
+            <bug_when>2010-07-18 21:57:37 -0700</bug_when>
+            <thetext>Comment on attachment 453323
+patch
+
+Requesting approval1.9.0.next on this patch so that we can take it in upcoming Camino 2.0.x security and stability updates.  If approved, I&apos;ll handle the checkins, unless the patch author requests otherwise.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4813581</commentid>
+              <attachid>453323</attachid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2010-07-22 19:17:44 -0700</bug_when>
+            <thetext>Comment on attachment 453323
+patch
+
+Approved for 1.9.0.20, a=dveditz</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4816601</commentid>
+            <who name="Smokey Ardisson (offline for a while; not following bugs - do not email)">alqahira</who>
+            <bug_when>2010-07-24 14:50:37 -0700</bug_when>
+            <thetext>Checking in content/base/src/nsDOMAttribute.cpp;
+/cvsroot/mozilla/content/base/src/nsDOMAttribute.cpp,v  &lt;--  nsDOMAttribute.cpp
+new revision: 1.112; previous revision: 1.111
+done</thetext>
+          </long_desc>
+      
+          <attachment
+              isobsolete="0"
+              ispatch="1"
+              isprivate="0"
+          >
+            <attachid>452225</attachid>
+            <date>2010-06-18 03:05:00 -0700</date>
+            <delta_ts>2010-06-18 03:05:01 -0700</delta_ts>
+            <desc>very safe patch</desc>
+            <filename>uber_safe_patch.diff</filename>
+            <type>text/plain</type>
+            <size>677</size>
+            <attacher>bugs</attacher>
+            
+
+          </attachment>
+          <attachment
+              isobsolete="0"
+              ispatch="1"
+              isprivate="0"
+          >
+            <attachid>452232</attachid>
+            <date>2010-06-18 03:39:00 -0700</date>
+            <delta_ts>2010-06-18 08:14:13 -0700</delta_ts>
+            <desc>patch</desc>
+            <filename>attribute_clone_crash.diff</filename>
+            <type>text/plain</type>
+            <size>1090</size>
+            <attacher>bugs</attacher>
+            
+
+          </attachment>
+          <attachment
+              isobsolete="0"
+              ispatch="1"
+              isprivate="0"
+          >
+            <attachid>453323</attachid>
+            <date>2010-06-23 01:57:00 -0700</date>
+            <delta_ts>2010-07-22 19:17:44 -0700</delta_ts>
+            <desc>patch</desc>
+            <filename>192_dom_attr_crash.diff</filename>
+            <type>text/plain</type>
+            <size>556</size>
+            <attacher>bugs</attacher>
+            
+<flag name="review"
+          id="379464"
+          type_id="4"
+          status="+"
+          setter="jonas"
+    />
+          </attachment>
+      
+
+    </bug>
+    <bug>
+          <bug_id>533000</bug_id>
+          <alias>CVE-2010-0160</alias>
+          <creation_ts>2009-12-04 14:08:00 -0800</creation_ts>
+          <short_desc>Web Worker Array Handling Heap Corruption Vulnerability (ZDI-CAN-624)</short_desc>
+          <delta_ts>2010-09-15 16:09:38 -0700</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>3</classification_id>
+          <classification>Components</classification>
+          <product>Core</product>
+          <component>DOM</component>
+          <version>Trunk</version>
+          <rep_platform>x86</rep_platform>
+          <op_sys>Windows Vista</op_sys>
+          <bug_status>RESOLVED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          <bug_file_loc></bug_file_loc>
+          <status_whiteboard>[sg:critical?] See comment 18, remaining OOM DoS moved to bug 542742</status_whiteboard>
+          <keywords>crash, verified1.9.1</keywords>
+          <priority>--</priority>
+          <bug_severity>critical</bug_severity>
+          <target_milestone>mozilla1.9.2</target_milestone>
+          <dependson>531222</dependson>
+    
+    <dependson>534051</dependson>
+          
+          <everconfirmed>1</everconfirmed>
+          <reporter name="Daniel Veditz [:dveditz]">dveditz</reporter>
+          <assigned_to name="Nobody; OK to take it and work on it">nobody</assigned_to>
+          <cc>abillings</cc>
+    
+    <cc>benjamin</cc>
+    
+    <cc>bent.mozilla</cc>
+    
+    <cc>dveditz</cc>
+    
+    <cc>gavin.sharp</cc>
+    
+    <cc>hskupin</cc>
+    
+    <cc>jonas</cc>
+    
+    <cc>jst</cc>
+    
+    <cc>jwalden+bmo</cc>
+    
+    <cc>mrbkap</cc>
+    
+    <cc>peterv</cc>
+    
+    <cc>reed</cc>
+    
+    <cc>samuel.sidler+old</cc>
+          
+          <cf_tracking_firefox5>---</cf_tracking_firefox5>
+          <cf_status_firefox5>---</cf_status_firefox5>
+          <cf_tracking_firefox6>---</cf_tracking_firefox6>
+          <cf_status_firefox6>---</cf_status_firefox6>
+          <cf_tracking_firefox7>---</cf_tracking_firefox7>
+          <cf_status_firefox7>---</cf_status_firefox7>
+          <cf_tracking_firefox8>---</cf_tracking_firefox8>
+          <cf_status_firefox8>---</cf_status_firefox8>
+          <cf_tracking_firefox9>---</cf_tracking_firefox9>
+          <cf_status_firefox9>---</cf_status_firefox9>
+          <cf_tracking_firefox10>---</cf_tracking_firefox10>
+          <cf_status_firefox10>---</cf_status_firefox10>
+          <cf_tracking_firefox11>---</cf_tracking_firefox11>
+          <cf_status_firefox11>---</cf_status_firefox11>
+          <cf_tracking_firefox12>---</cf_tracking_firefox12>
+          <cf_status_firefox12>---</cf_status_firefox12>
+          <cf_tracking_firefox13>---</cf_tracking_firefox13>
+          <cf_status_firefox13>---</cf_status_firefox13>
+          <cf_tracking_firefox14>---</cf_tracking_firefox14>
+          <cf_status_firefox14>---</cf_status_firefox14>
+          <cf_tracking_firefox15>---</cf_tracking_firefox15>
+          <cf_status_firefox15>---</cf_status_firefox15>
+          <cf_tracking_firefox16>---</cf_tracking_firefox16>
+          <cf_status_firefox16>---</cf_status_firefox16>
+          <cf_tracking_firefox17>---</cf_tracking_firefox17>
+          <cf_status_firefox17>---</cf_status_firefox17>
+          <cf_tracking_firefox18>---</cf_tracking_firefox18>
+          <cf_status_firefox18>---</cf_status_firefox18>
+          <cf_tracking_firefox19>---</cf_tracking_firefox19>
+          <cf_status_firefox19>---</cf_status_firefox19>
+          <cf_tracking_firefox20>---</cf_tracking_firefox20>
+          <cf_status_firefox20>---</cf_status_firefox20>
+          <cf_tracking_firefox21>---</cf_tracking_firefox21>
+          <cf_status_firefox21>---</cf_status_firefox21>
+          <cf_tracking_firefox22>---</cf_tracking_firefox22>
+          <cf_status_firefox22>---</cf_status_firefox22>
+          <cf_tracking_firefox23>---</cf_tracking_firefox23>
+          <cf_status_firefox23>---</cf_status_firefox23>
+          <cf_tracking_firefox24>---</cf_tracking_firefox24>
+          <cf_status_firefox24>---</cf_status_firefox24>
+          <cf_tracking_esr10>---</cf_tracking_esr10>
+          <cf_status_esr10>---</cf_status_esr10>
+          <cf_tracking_firefox_esr17>---</cf_tracking_firefox_esr17>
+          <cf_status_firefox_esr17>---</cf_status_firefox_esr17>
+          <cf_tracking_b2g18>---</cf_tracking_b2g18>
+          <cf_status_b2g18>---</cf_status_b2g18>
+          <cf_status_b2g18_1_0_0>---</cf_status_b2g18_1_0_0>
+          <cf_status_b2g18_1_0_1>---</cf_status_b2g18_1_0_1>
+          <cf_blocking_20>final+</cf_blocking_20>
+          <cf_status_20>---</cf_status_20>
+          <cf_tracking_firefox_relnote>---</cf_tracking_firefox_relnote>
+          <cf_tracking_relnote_b2g>---</cf_tracking_relnote_b2g>
+          <cf_blocking_192>---</cf_blocking_192>
+          <cf_status_192>final-fixed</cf_status_192>
+          <cf_blocking_191>.8+</cf_blocking_191>
+          <cf_status_191>.8-fixed</cf_status_191>
+          <cf_blocking_fennec10>---</cf_blocking_fennec10>
+          <cf_blocking_fennec>---</cf_blocking_fennec>
+          <cf_blocking_thunderbird33>---</cf_blocking_thunderbird33>
+          <cf_status_thunderbird33>---</cf_status_thunderbird33>
+          <cf_blocking_thunderbird32>---</cf_blocking_thunderbird32>
+          <cf_status_thunderbird32>---</cf_status_thunderbird32>
+          <cf_blocking_thunderbird31>---</cf_blocking_thunderbird31>
+          <cf_status_thunderbird31>---</cf_status_thunderbird31>
+          <cf_blocking_thunderbird30>---</cf_blocking_thunderbird30>
+          <cf_status_thunderbird30>---</cf_status_thunderbird30>
+          <cf_tracking_thunderbird6>---</cf_tracking_thunderbird6>
+          <cf_status_thunderbird6>---</cf_status_thunderbird6>
+          <cf_tracking_thunderbird7>---</cf_tracking_thunderbird7>
+          <cf_status_thunderbird7>---</cf_status_thunderbird7>
+          <cf_tracking_thunderbird8>---</cf_tracking_thunderbird8>
+          <cf_status_thunderbird8>---</cf_status_thunderbird8>
+          <cf_tracking_thunderbird9>---</cf_tracking_thunderbird9>
+          <cf_status_thunderbird9>---</cf_status_thunderbird9>
+          <cf_tracking_thunderbird10>---</cf_tracking_thunderbird10>
+          <cf_status_thunderbird10>---</cf_status_thunderbird10>
+          <cf_tracking_thunderbird11>---</cf_tracking_thunderbird11>
+          <cf_status_thunderbird11>---</cf_status_thunderbird11>
+          <cf_tracking_thunderbird12>---</cf_tracking_thunderbird12>
+          <cf_status_thunderbird12>---</cf_status_thunderbird12>
+          <cf_tracking_thunderbird13>---</cf_tracking_thunderbird13>
+          <cf_status_thunderbird13>---</cf_status_thunderbird13>
+          <cf_tracking_thunderbird14>---</cf_tracking_thunderbird14>
+          <cf_status_thunderbird14>---</cf_status_thunderbird14>
+          <cf_tracking_thunderbird15>---</cf_tracking_thunderbird15>
+          <cf_status_thunderbird15>---</cf_status_thunderbird15>
+          <cf_tracking_thunderbird16>---</cf_tracking_thunderbird16>
+          <cf_status_thunderbird16>---</cf_status_thunderbird16>
+          <cf_tracking_thunderbird17>---</cf_tracking_thunderbird17>
+          <cf_status_thunderbird17>---</cf_status_thunderbird17>
+          <cf_tracking_thunderbird18>---</cf_tracking_thunderbird18>
+          <cf_status_thunderbird18>---</cf_status_thunderbird18>
+          <cf_tracking_thunderbird19>---</cf_tracking_thunderbird19>
+          <cf_status_thunderbird19>---</cf_status_thunderbird19>
+          <cf_tracking_thunderbird20>---</cf_tracking_thunderbird20>
+          <cf_status_thunderbird20>---</cf_status_thunderbird20>
+          <cf_tracking_thunderbird21>---</cf_tracking_thunderbird21>
+          <cf_status_thunderbird21>---</cf_status_thunderbird21>
+          <cf_tracking_thunderbird22>---</cf_tracking_thunderbird22>
+          <cf_status_thunderbird22>---</cf_status_thunderbird22>
+          <cf_tracking_thunderbird23>---</cf_tracking_thunderbird23>
+          <cf_status_thunderbird23>---</cf_status_thunderbird23>
+          <cf_tracking_thunderbird24>---</cf_tracking_thunderbird24>
+          <cf_status_thunderbird24>---</cf_status_thunderbird24>
+          <cf_tracking_thunderbird_esr10>---</cf_tracking_thunderbird_esr10>
+          <cf_status_thunderbird_esr10>---</cf_status_thunderbird_esr10>
+          <cf_tracking_thunderbird_esr17>---</cf_tracking_thunderbird_esr17>
+          <cf_status_thunderbird_esr17>---</cf_status_thunderbird_esr17>
+          <cf_blocking_seamonkey21>---</cf_blocking_seamonkey21>
+          <cf_status_seamonkey21>---</cf_status_seamonkey21>
+          <cf_tracking_seamonkey22>---</cf_tracking_seamonkey22>
+          <cf_status_seamonkey22>---</cf_status_seamonkey22>
+          <cf_tracking_seamonkey23>---</cf_tracking_seamonkey23>
+          <cf_status_seamonkey23>---</cf_status_seamonkey23>
+          <cf_tracking_seamonkey24>---</cf_tracking_seamonkey24>
+          <cf_status_seamonkey24>---</cf_status_seamonkey24>
+          <cf_tracking_seamonkey25>---</cf_tracking_seamonkey25>
+          <cf_status_seamonkey25>---</cf_status_seamonkey25>
+          <cf_tracking_seamonkey26>---</cf_tracking_seamonkey26>
+          <cf_status_seamonkey26>---</cf_status_seamonkey26>
+          <cf_tracking_seamonkey27>---</cf_tracking_seamonkey27>
+          <cf_status_seamonkey27>---</cf_status_seamonkey27>
+          <cf_tracking_seamonkey28>---</cf_tracking_seamonkey28>
+          <cf_status_seamonkey28>---</cf_status_seamonkey28>
+          <cf_tracking_seamonkey29>---</cf_tracking_seamonkey29>
+          <cf_status_seamonkey29>---</cf_status_seamonkey29>
+          <cf_tracking_seamonkey210>---</cf_tracking_seamonkey210>
+          <cf_status_seamonkey210>---</cf_status_seamonkey210>
+          <cf_tracking_seamonkey211>---</cf_tracking_seamonkey211>
+          <cf_status_seamonkey211>---</cf_status_seamonkey211>
+          <cf_tracking_seamonkey212>---</cf_tracking_seamonkey212>
+          <cf_status_seamonkey212>---</cf_status_seamonkey212>
+          <cf_tracking_seamonkey213>---</cf_tracking_seamonkey213>
+          <cf_status_seamonkey213>---</cf_status_seamonkey213>
+          <cf_tracking_seamonkey214>---</cf_tracking_seamonkey214>
+          <cf_status_seamonkey214>---</cf_status_seamonkey214>
+          <cf_tracking_seamonkey215>---</cf_tracking_seamonkey215>
+          <cf_status_seamonkey215>---</cf_status_seamonkey215>
+          <cf_tracking_seamonkey216>---</cf_tracking_seamonkey216>
+          <cf_status_seamonkey216>---</cf_status_seamonkey216>
+          <cf_tracking_seamonkey217>---</cf_tracking_seamonkey217>
+          <cf_status_seamonkey217>---</cf_status_seamonkey217>
+          <cf_tracking_seamonkey218>---</cf_tracking_seamonkey218>
+          <cf_status_seamonkey218>---</cf_status_seamonkey218>
+          <cf_tracking_seamonkey219>---</cf_tracking_seamonkey219>
+          <cf_status_seamonkey219>---</cf_status_seamonkey219>
+          <cf_tracking_seamonkey220>---</cf_tracking_seamonkey220>
+          <cf_status_seamonkey220>---</cf_status_seamonkey220>
+          <cf_tracking_seamonkey221>---</cf_tracking_seamonkey221>
+          <cf_status_seamonkey221>---</cf_status_seamonkey221>
+          <cf_colo_site>---</cf_colo_site>
+          <cf_office>---</cf_office>
+          <cf_crash_signature></cf_crash_signature>
+          
+          <cf_blocking_kilimanjaro>---</cf_blocking_kilimanjaro>
+          <cf_blocking_b2g>---</cf_blocking_b2g>
+          <cf_blocking_basecamp>---</cf_blocking_basecamp>
+          
+          <cf_last_resolved>2010-01-27 17:50:53</cf_last_resolved>
+          
+          <votes>0</votes>
+
+      
+
+      
+
+      <flag name="blocking1.9.2"
+          id="346849"
+          type_id="479"
+          status="-"
+          setter="mbeltzner"
+    />
+    <flag name="wanted1.9.0.x"
+          id="346851"
+          type_id="385"
+          status="-"
+          setter="dveditz"
+    />
+
+          <long_desc isprivate="0">
+            <commentid>4437051</commentid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2009-12-04 14:08:36 -0800</bug_when>
+            <thetext>Received this from ZDI today, from the same guy who found bug 514554:
+
+ZDI-CAN-624: Mozilla Firefox Web Worker Array Handling Heap Corruption Vulnerability
+
+-- ABSTRACT ------------------------------------------------------------
+
+TippingPoint has identified a vulnerability affecting the following 
+products:
+
+    Mozilla Firefox 3.5.x
+
+-- VULNERABILITY DETAILS -----------------------------------------------
+
+This vulnerability allows remote attackers to execute arbitrary code on
+vulnerable installations of Mozilla Firefox. User interaction is
+required to exploit this vulnerability in that the target must visit a
+malicious page.
+
+The specific flaw exists within the implementation of web worker
+threads. Due to mishandling the array data type while processing posted
+messages, a web worker thread can be made to corrupt heap memory. An
+attacker can exploit this vulnerability to execute arbitrary code under
+the context of the user running the browser.
+
+Version(s)  tested: Firefox 3.5
+Platform(s) tested: Vista 32, 64
+
+The faulty code resides within the handling of postMessage method calls.
+Specifically, the passing of an array argument to a postMessage call as
+follows:
+
+var sprayContainer = new Array();
+var worker = new Worker(&quot;crash.js&quot;);
+
+for (i=0; i&lt;600; i++)  
+{
+    worker.postMessage(sprayContainer[i]);
+}
+
+--------------------------------------------
+
+where crash.js contains:
+
+--------------------------------------------
+
+onmessage = function(event){
+var worker = new Worker(&quot;workCRASH1.js&quot;);
+	worker.onmessage = function(event)
+	{	
+		worker.postMessage(event.data);
+		postMessage(event.data);
+	};
+
+worker.postMessage(event.data);
+postMessage(event.data);
+}
+
+-- CREDIT --------------------------------------------------------------
+
+This vulnerability was discovered by:
+    * Orlando Barrera II, SecTheory</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4437175</commentid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2009-12-04 15:07:01 -0800</bug_when>
+            <thetext>I&apos;ve asked for a copy of the &quot;workCRASH1.js&quot; script</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4438632</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-06 19:43:35 -0800</bug_when>
+            <thetext>I first assumed that &apos;workCRASH1.js&apos; was a typo and should have been &apos;crash.js&apos; but I&apos;m unable to get any crash (or any kind of misbehavior at all) with that substitution.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4438642</commentid>
+            <who name="Samuel Sidler (old account; do not CC)">samuel.sidler+old</who>
+            <bug_when>2009-12-06 20:20:25 -0800</bug_when>
+            <thetext>We don&apos;t have workers on 1.9.0, so this shouldn&apos;t block there.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4438712</commentid>
+            <who name="Reed Loden [:reed]">reed</who>
+            <bug_when>2009-12-06 23:09:43 -0800</bug_when>
+            <thetext>(In reply to comment #3)
+&gt; We don&apos;t have workers on 1.9.0, so this shouldn&apos;t block there.
+
+We blocked on 1.9.0 for bug 514554 (for reasons in c3, c12, c13). Why is this different?</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4439593</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-07 17:08:32 -0800</bug_when>
+            <thetext>(In reply to comment #4)
+&gt; We blocked on 1.9.0 for bug 514554 (for reasons in c3, c12, c13). Why is this
+&gt; different?
+
+That was a crash in XPConnect so the bug did exist on 1.9.0. This one... Well, I can&apos;t reproduce yet so I don&apos;t know where the problem lives.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4440652</commentid>
+            <who name="Mike Beltzner [:beltzner]">mbeltzner</who>
+            <bug_when>2009-12-08 11:30:47 -0800</bug_when>
+            <thetext>Thanks, Reed, for setting all the blocking flags. Since we can&apos;t reproduce this at the moment, not blocking 1.9.2.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4440889</commentid>
+            <who name="Reed Loden [:reed]">reed</who>
+            <bug_when>2009-12-08 13:36:14 -0800</bug_when>
+            <thetext>(In reply to comment #6)
+&gt; Thanks, Reed, for setting all the blocking flags. Since we can&apos;t reproduce this
+&gt; at the moment, not blocking 1.9.2.
+
+We can&apos;t reproduce it because we don&apos;t have the entire testcase, which happens more often than not, sadly. ZDI has a good record of reporting real sg:critical bugs, so it may be wise to pre-emptively block on just that history, as it ensures we continue working to get the complete testcase and get this fixed.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4442926</commentid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2009-12-09 16:44:35 -0800</bug_when>
+            <thetext>The file contents I received were identical to crash.js -- I will double-check that they sent the correct file since Ben tried that and couldn&apos;t reproduce.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4444166</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-10 13:53:42 -0800</bug_when>
+            <thetext>Aha, I couldn&apos;t get this to crash before, but today seems to be my lucky day.
+
+3.5.3: bp-2d41cafb-867a-4882-9070-538092091210
+3.5.4: bp-bb770e6b-4b8f-42f1-a600-5fbfe2091210
+3.5.5: bp-b2e31d18-1a84-436e-ab82-4559f2091210</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4449319</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-14 13:25:47 -0800</bug_when>
+            <thetext>Possible causes include bug 534051 and bug 534341. Both are now fixed, but I was still able to get another crash on 3.5.6pre even with those applied. Leaving this open a little while longer.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4449325</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2009-12-14 13:27:03 -0800</bug_when>
+            <thetext>Oh, and as far as I can tell any remaining bug is related to the cycle collector and has nothing to do with arrays or passing uninitialized array values to workers as claimed in comment 0.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4449434</commentid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2009-12-14 14:19:36 -0800</bug_when>
+            <thetext>Ben: does this also crash in 3.6 and trunk, or was it fixed in those versions?</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4449438</commentid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2009-12-14 14:21:44 -0800</bug_when>
+            <thetext>The 1.9.0 branch does not include web workers. The testcase here definitely does not affect it. The underlying flaw may not be in workers and may or may not exist in 1.9.0, but it doesn&apos;t need to block until we know that&apos;s the case and that it&apos;s likely to be exploitable there.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4451293</commentid>
+              <attachid>417764</attachid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2009-12-15 13:32:02 -0800</bug_when>
+            <thetext>Created attachment 417764
+PoC files</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4453187</commentid>
+            <who name="Peter Van der Beken [:peterv]">peterv</who>
+            <bug_when>2009-12-16 10:50:20 -0800</bug_when>
+            <thetext>(In reply to comment #11)
+&gt; Oh, and as far as I can tell any remaining bug is related to the cycle
+&gt; collector and has nothing to do with arrays or passing uninitialized array
+&gt; values to workers as claimed in comment 0.
+
+I figured out that that crash would be fixed by taking bug 502687 on branches. Nominated those for blocking.
+
+No idea if that fixes all the remaining crashes that this triggers.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4457329</commentid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2009-12-18 11:13:12 -0800</bug_when>
+            <thetext>I&apos;ll move the 1.9.0 blocking flags over to bug 502687 since there&apos;s no way to test/verify this one on that branch.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4484984</commentid>
+            <who name="Johnny Stenback (:jst, jst@mozilla.com)">jst</who>
+            <bug_when>2010-01-12 18:15:29 -0800</bug_when>
+            <thetext>Seems like bug 534051, bug 534341, and bug 502687 have all been fixed for 1.9.1.8, is there anything left to do for 1.9.1.8 here?</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4494629</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2010-01-19 13:28:41 -0800</bug_when>
+            <thetext>The testcase still crashes 1.9.1.8pre (with those three bugs already fixed), but it&apos;s an unhandled exception generated by a failing malloc (OOM). Not exploitable, and jst+sicking recommend not trying to enforce nothrow malloc here.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4494630</commentid>
+            <who name="ben turner [:bent]">bent.mozilla</who>
+            <bug_when>2010-01-19 13:29:15 -0800</bug_when>
+            <thetext>WONTFIX based on that.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4494798</commentid>
+            <who name="Jonas Sicking (:sicking)">jonas</who>
+            <bug_when>2010-01-19 14:31:24 -0800</bug_when>
+            <thetext>I just want to point out that the actual Heap Corruption issue is FIXED as part of bug 534051, bug 534341, and bug 502687. If I understand correctly.
+
+The issue that bent was referring to in comment 18, is how we handle out-of-memory. Currently we crash in a non-exploitable way, which is deemed ok at this time.
+
+So it might be more correct to say that this bug is WORKSFORME or FIXED, given that Heap Corruption issue described in the summary has indeed been fixed.
+
+Making it so.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4506147</commentid>
+            <who name="Mike Beltzner [:beltzner]">mbeltzner</who>
+            <bug_when>2010-01-26 10:20:05 -0800</bug_when>
+            <thetext>--&gt; 1.9.1.8-fixed</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4509438</commentid>
+            <who name="Henrik Skupin (:whimboo)">hskupin</who>
+            <bug_when>2010-01-27 17:23:11 -0800</bug_when>
+            <thetext>This has not been fixed by the mentioned bugs for 3.5.8pre builds like Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.8pre) Gecko/20100127 Shiretoko/3.5.8pre (.NET CLR 3.5.30729) ID:20100127050511
+
+After a couple of minutes Firefox is still crashing: bp-c75cf819-b9ab-4fa0-bc8e-db80b2100127</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4509475</commentid>
+            <who name="Jonas Sicking (:sicking)">jonas</who>
+            <bug_when>2010-01-27 17:50:53 -0800</bug_when>
+            <thetext>See comment 18. The heap corruption issue, which is what this bug was filed as, is no longer there.
+
+We do still crash due to out-of-memory problems. But that&apos;s a separate issue (and a incredibly generic one, there are loads of ways to get firefox to use up all your memory). Feel free to file a separate bug on that.
+
+Sorry to be strict, but it makes tracking issues much easier. Especially since this has a ZDI number attached to it.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4509906</commentid>
+            <who name="Henrik Skupin (:whimboo)">hskupin</who>
+            <bug_when>2010-01-28 03:24:08 -0800</bug_when>
+            <thetext>Sorry Jonas, I have overseen that comment. So I have filed bug 542742 for the remaining OOM crash. I have run builds pre/post of the patch landing under WinGDB and see a clearly different stack. So I will call it verified fixed.
+
+Given by the other bugs the lastest fix on 1.9.2 has been checked-in for 1.9.2final. Updating flags accordingly. Can we remove the blocking1.9.3? flag?</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4550972</commentid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2010-02-23 14:45:47 -0800</bug_when>
+            <thetext>&quot;FIXED&quot; is better, we know exactly which patches in &quot;depends on&quot; bugs made this problem go away.</thetext>
+          </long_desc>
+      
+      
+
+    </bug>
+    <bug>
+          <bug_id>522430</bug_id>
+          <alias>CVE-2009-3986</alias>
+          <creation_ts>2009-10-14 23:43:00 -0700</creation_ts>
+          <short_desc>window.opener allows chrome access from unprivileged pages</short_desc>
+          <delta_ts>2010-03-24 12:06:03 -0700</delta_ts>
+          <reporter_accessible>1</reporter_accessible>
+          <cclist_accessible>1</cclist_accessible>
+          <classification_id>3</classification_id>
+          <classification>Components</classification>
+          <product>Core</product>
+          <component>DOM</component>
+          <version>Trunk</version>
+          <rep_platform>All</rep_platform>
+          <op_sys>All</op_sys>
+          <bug_status>RESOLVED</bug_status>
+          <resolution>FIXED</resolution>
+          
+          
+          <bug_file_loc></bug_file_loc>
+          <status_whiteboard>[sg:moderate]</status_whiteboard>
+          <keywords>verified1.9.0.16, verified1.9.1</keywords>
+          <priority>P2</priority>
+          <bug_severity>critical</bug_severity>
+          <target_milestone>mozilla1.9.2</target_milestone>
+          
+          <blocked>554410</blocked>
+          <everconfirmed>1</everconfirmed>
+          <reporter name="David James">james82</reporter>
+          <assigned_to name="Blake Kaplan (:mrbkap)">mrbkap</assigned_to>
+          <cc>abillings</cc>
+    
+    <cc>benjamin</cc>
+    
+    <cc>bzbarsky</cc>
+    
+    <cc>dveditz</cc>
+    
+    <cc>gavin.sharp</cc>
+    
+    <cc>johnath</cc>
+    
+    <cc>jst</cc>
+    
+    <cc>jwalden+bmo</cc>
+    
+    <cc>martijn.martijn</cc>
+    
+    <cc>moz_bug_r_a4</cc>
+    
+    <cc>mrbkap</cc>
+    
+    <cc>reed</cc>
+    
+    <cc>samuel.sidler+old</cc>
+          
+          <cf_tracking_firefox5>---</cf_tracking_firefox5>
+          <cf_status_firefox5>---</cf_status_firefox5>
+          <cf_tracking_firefox6>---</cf_tracking_firefox6>
+          <cf_status_firefox6>---</cf_status_firefox6>
+          <cf_tracking_firefox7>---</cf_tracking_firefox7>
+          <cf_status_firefox7>---</cf_status_firefox7>
+          <cf_tracking_firefox8>---</cf_tracking_firefox8>
+          <cf_status_firefox8>---</cf_status_firefox8>
+          <cf_tracking_firefox9>---</cf_tracking_firefox9>
+          <cf_status_firefox9>---</cf_status_firefox9>
+          <cf_tracking_firefox10>---</cf_tracking_firefox10>
+          <cf_status_firefox10>---</cf_status_firefox10>
+          <cf_tracking_firefox11>---</cf_tracking_firefox11>
+          <cf_status_firefox11>---</cf_status_firefox11>
+          <cf_tracking_firefox12>---</cf_tracking_firefox12>
+          <cf_status_firefox12>---</cf_status_firefox12>
+          <cf_tracking_firefox13>---</cf_tracking_firefox13>
+          <cf_status_firefox13>---</cf_status_firefox13>
+          <cf_tracking_firefox14>---</cf_tracking_firefox14>
+          <cf_status_firefox14>---</cf_status_firefox14>
+          <cf_tracking_firefox15>---</cf_tracking_firefox15>
+          <cf_status_firefox15>---</cf_status_firefox15>
+          <cf_tracking_firefox16>---</cf_tracking_firefox16>
+          <cf_status_firefox16>---</cf_status_firefox16>
+          <cf_tracking_firefox17>---</cf_tracking_firefox17>
+          <cf_status_firefox17>---</cf_status_firefox17>
+          <cf_tracking_firefox18>---</cf_tracking_firefox18>
+          <cf_status_firefox18>---</cf_status_firefox18>
+          <cf_tracking_firefox19>---</cf_tracking_firefox19>
+          <cf_status_firefox19>---</cf_status_firefox19>
+          <cf_tracking_firefox20>---</cf_tracking_firefox20>
+          <cf_status_firefox20>---</cf_status_firefox20>
+          <cf_tracking_firefox21>---</cf_tracking_firefox21>
+          <cf_status_firefox21>---</cf_status_firefox21>
+          <cf_tracking_firefox22>---</cf_tracking_firefox22>
+          <cf_status_firefox22>---</cf_status_firefox22>
+          <cf_tracking_firefox23>---</cf_tracking_firefox23>
+          <cf_status_firefox23>---</cf_status_firefox23>
+          <cf_tracking_firefox24>---</cf_tracking_firefox24>
+          <cf_status_firefox24>---</cf_status_firefox24>
+          <cf_tracking_esr10>---</cf_tracking_esr10>
+          <cf_status_esr10>---</cf_status_esr10>
+          <cf_tracking_firefox_esr17>---</cf_tracking_firefox_esr17>
+          <cf_status_firefox_esr17>---</cf_status_firefox_esr17>
+          <cf_tracking_b2g18>---</cf_tracking_b2g18>
+          <cf_status_b2g18>---</cf_status_b2g18>
+          <cf_status_b2g18_1_0_0>---</cf_status_b2g18_1_0_0>
+          <cf_status_b2g18_1_0_1>---</cf_status_b2g18_1_0_1>
+          <cf_blocking_20>---</cf_blocking_20>
+          <cf_status_20>---</cf_status_20>
+          <cf_tracking_firefox_relnote>---</cf_tracking_firefox_relnote>
+          <cf_tracking_relnote_b2g>---</cf_tracking_relnote_b2g>
+          <cf_blocking_192>---</cf_blocking_192>
+          <cf_status_192>beta2-fixed</cf_status_192>
+          <cf_blocking_191>.6+</cf_blocking_191>
+          <cf_status_191>.6-fixed</cf_status_191>
+          <cf_blocking_fennec10>---</cf_blocking_fennec10>
+          <cf_blocking_fennec>---</cf_blocking_fennec>
+          <cf_blocking_thunderbird33>---</cf_blocking_thunderbird33>
+          <cf_status_thunderbird33>---</cf_status_thunderbird33>
+          <cf_blocking_thunderbird32>---</cf_blocking_thunderbird32>
+          <cf_status_thunderbird32>---</cf_status_thunderbird32>
+          <cf_blocking_thunderbird31>---</cf_blocking_thunderbird31>
+          <cf_status_thunderbird31>---</cf_status_thunderbird31>
+          <cf_blocking_thunderbird30>---</cf_blocking_thunderbird30>
+          <cf_status_thunderbird30>---</cf_status_thunderbird30>
+          <cf_tracking_thunderbird6>---</cf_tracking_thunderbird6>
+          <cf_status_thunderbird6>---</cf_status_thunderbird6>
+          <cf_tracking_thunderbird7>---</cf_tracking_thunderbird7>
+          <cf_status_thunderbird7>---</cf_status_thunderbird7>
+          <cf_tracking_thunderbird8>---</cf_tracking_thunderbird8>
+          <cf_status_thunderbird8>---</cf_status_thunderbird8>
+          <cf_tracking_thunderbird9>---</cf_tracking_thunderbird9>
+          <cf_status_thunderbird9>---</cf_status_thunderbird9>
+          <cf_tracking_thunderbird10>---</cf_tracking_thunderbird10>
+          <cf_status_thunderbird10>---</cf_status_thunderbird10>
+          <cf_tracking_thunderbird11>---</cf_tracking_thunderbird11>
+          <cf_status_thunderbird11>---</cf_status_thunderbird11>
+          <cf_tracking_thunderbird12>---</cf_tracking_thunderbird12>
+          <cf_status_thunderbird12>---</cf_status_thunderbird12>
+          <cf_tracking_thunderbird13>---</cf_tracking_thunderbird13>
+          <cf_status_thunderbird13>---</cf_status_thunderbird13>
+          <cf_tracking_thunderbird14>---</cf_tracking_thunderbird14>
+          <cf_status_thunderbird14>---</cf_status_thunderbird14>
+          <cf_tracking_thunderbird15>---</cf_tracking_thunderbird15>
+          <cf_status_thunderbird15>---</cf_status_thunderbird15>
+          <cf_tracking_thunderbird16>---</cf_tracking_thunderbird16>
+          <cf_status_thunderbird16>---</cf_status_thunderbird16>
+          <cf_tracking_thunderbird17>---</cf_tracking_thunderbird17>
+          <cf_status_thunderbird17>---</cf_status_thunderbird17>
+          <cf_tracking_thunderbird18>---</cf_tracking_thunderbird18>
+          <cf_status_thunderbird18>---</cf_status_thunderbird18>
+          <cf_tracking_thunderbird19>---</cf_tracking_thunderbird19>
+          <cf_status_thunderbird19>---</cf_status_thunderbird19>
+          <cf_tracking_thunderbird20>---</cf_tracking_thunderbird20>
+          <cf_status_thunderbird20>---</cf_status_thunderbird20>
+          <cf_tracking_thunderbird21>---</cf_tracking_thunderbird21>
+          <cf_status_thunderbird21>---</cf_status_thunderbird21>
+          <cf_tracking_thunderbird22>---</cf_tracking_thunderbird22>
+          <cf_status_thunderbird22>---</cf_status_thunderbird22>
+          <cf_tracking_thunderbird23>---</cf_tracking_thunderbird23>
+          <cf_status_thunderbird23>---</cf_status_thunderbird23>
+          <cf_tracking_thunderbird24>---</cf_tracking_thunderbird24>
+          <cf_status_thunderbird24>---</cf_status_thunderbird24>
+          <cf_tracking_thunderbird_esr10>---</cf_tracking_thunderbird_esr10>
+          <cf_status_thunderbird_esr10>---</cf_status_thunderbird_esr10>
+          <cf_tracking_thunderbird_esr17>---</cf_tracking_thunderbird_esr17>
+          <cf_status_thunderbird_esr17>---</cf_status_thunderbird_esr17>
+          <cf_blocking_seamonkey21>---</cf_blocking_seamonkey21>
+          <cf_status_seamonkey21>---</cf_status_seamonkey21>
+          <cf_tracking_seamonkey22>---</cf_tracking_seamonkey22>
+          <cf_status_seamonkey22>---</cf_status_seamonkey22>
+          <cf_tracking_seamonkey23>---</cf_tracking_seamonkey23>
+          <cf_status_seamonkey23>---</cf_status_seamonkey23>
+          <cf_tracking_seamonkey24>---</cf_tracking_seamonkey24>
+          <cf_status_seamonkey24>---</cf_status_seamonkey24>
+          <cf_tracking_seamonkey25>---</cf_tracking_seamonkey25>
+          <cf_status_seamonkey25>---</cf_status_seamonkey25>
+          <cf_tracking_seamonkey26>---</cf_tracking_seamonkey26>
+          <cf_status_seamonkey26>---</cf_status_seamonkey26>
+          <cf_tracking_seamonkey27>---</cf_tracking_seamonkey27>
+          <cf_status_seamonkey27>---</cf_status_seamonkey27>
+          <cf_tracking_seamonkey28>---</cf_tracking_seamonkey28>
+          <cf_status_seamonkey28>---</cf_status_seamonkey28>
+          <cf_tracking_seamonkey29>---</cf_tracking_seamonkey29>
+          <cf_status_seamonkey29>---</cf_status_seamonkey29>
+          <cf_tracking_seamonkey210>---</cf_tracking_seamonkey210>
+          <cf_status_seamonkey210>---</cf_status_seamonkey210>
+          <cf_tracking_seamonkey211>---</cf_tracking_seamonkey211>
+          <cf_status_seamonkey211>---</cf_status_seamonkey211>
+          <cf_tracking_seamonkey212>---</cf_tracking_seamonkey212>
+          <cf_status_seamonkey212>---</cf_status_seamonkey212>
+          <cf_tracking_seamonkey213>---</cf_tracking_seamonkey213>
+          <cf_status_seamonkey213>---</cf_status_seamonkey213>
+          <cf_tracking_seamonkey214>---</cf_tracking_seamonkey214>
+          <cf_status_seamonkey214>---</cf_status_seamonkey214>
+          <cf_tracking_seamonkey215>---</cf_tracking_seamonkey215>
+          <cf_status_seamonkey215>---</cf_status_seamonkey215>
+          <cf_tracking_seamonkey216>---</cf_tracking_seamonkey216>
+          <cf_status_seamonkey216>---</cf_status_seamonkey216>
+          <cf_tracking_seamonkey217>---</cf_tracking_seamonkey217>
+          <cf_status_seamonkey217>---</cf_status_seamonkey217>
+          <cf_tracking_seamonkey218>---</cf_tracking_seamonkey218>
+          <cf_status_seamonkey218>---</cf_status_seamonkey218>
+          <cf_tracking_seamonkey219>---</cf_tracking_seamonkey219>
+          <cf_status_seamonkey219>---</cf_status_seamonkey219>
+          <cf_tracking_seamonkey220>---</cf_tracking_seamonkey220>
+          <cf_status_seamonkey220>---</cf_status_seamonkey220>
+          <cf_tracking_seamonkey221>---</cf_tracking_seamonkey221>
+          <cf_status_seamonkey221>---</cf_status_seamonkey221>
+          <cf_colo_site>---</cf_colo_site>
+          <cf_office>---</cf_office>
+          <cf_crash_signature></cf_crash_signature>
+          
+          <cf_blocking_kilimanjaro>---</cf_blocking_kilimanjaro>
+          <cf_blocking_b2g>---</cf_blocking_b2g>
+          <cf_blocking_basecamp>---</cf_blocking_basecamp>
+          
+          <cf_last_resolved>2010-03-22 18:16:30</cf_last_resolved>
+          
+          <votes>0</votes>
+
+      
+
+      
+
+      <flag name="blocking1.9.2"
+          id="338346"
+          type_id="479"
+          status="+"
+          setter="jst"
+    />
+    <flag name="wanted1.9.0.x"
+          id="337473"
+          type_id="385"
+          status="+"
+          setter="samuel.sidler+old"
+    />
+
+          <long_desc isprivate="0">
+            <commentid>4347358</commentid>
+            <who name="David James">james82</who>
+            <bug_when>2009-10-14 23:43:52 -0700</bug_when>
+            <thetext>User-Agent:       Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.4) Gecko/20091007 Firefox/3.5.4
+Build Identifier: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.4) Gecko/20091007 Firefox/3.5.4
+
+When new windows are opened in Firefox, the new window has a reference to the window that created it using window.opener. If window.opener is a ChromeWindow, then any webpage opened in this window will be able to access the functions inside the ChromeWindow.
+
+Both Firefox itself and many extensions for Firefox often open windows from within chrome code. With this security hole, windows opened by chrome code are unsafe.
+
+Reproducible: Always
+
+Steps to Reproduce:
+1. Select Help -&gt; About Mozilla Firefox
+2. Click on &quot;Licensing Information&quot;
+3. A new window will open with licensing information. In this window, go to http://www.google.com
+4. In the URL bar, type javascript:window.opener.URLBarSetURI({spec:&quot;https://www.ebay.com/&quot;},true)
+5. In the URL bar, type javascript:window.opener.BrowserOffline.toggleOfflineStatus()
+6. Browse to a web page that contains the above code in a script tag. Note that Firefox&apos;s security model does not prevent this code from running.
+Actual Results:  
+1. The URL bar of the opening window is set to &quot;https://www.ebay.com/&quot;
+2. The browser is set to work offline
+3. Web pages can access and run chrome code
+
+Expected Results:  
+The new window should not be able to access properties of the chrome window.
+
+This bug likely effects not just Firefox itself, but also many extensions which open windows using window.open.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4348481</commentid>
+            <who name="Samuel Sidler (old account; do not CC)">samuel.sidler+old</who>
+            <bug_when>2009-10-15 13:25:06 -0700</bug_when>
+            <thetext>Blake: Weren&apos;t XOW supposed to protect us from this? (Note: The JS in step 4 doesn&apos;t actually work for me, but step 5 definitely does.)</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4349638</commentid>
+            <who name="Benjamin Smedberg  [:bsmedberg]">benjamin</who>
+            <bug_when>2009-10-16 07:01:31 -0700</bug_when>
+            <thetext>Once you&apos;ve done this it&apos;s trivial to exploit to gain sg:crit access. Is this sg:moderate only because you have to do something &quot;unusual&quot; to get the browser to do this bad window.open?
+
+(To exploit, call openURI with a chrome URI and then a javascript URI).
+
+I thought we nulled out window.opener when a chrome-privileged page calls window.open without the &quot;chrome&quot; feature, but I can&apos;t find the code to actually do that.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4350173</commentid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2009-10-16 12:17:44 -0700</bug_when>
+            <thetext>It&apos;s &quot;moderate&quot; because we don&apos;t know of any Firefox dialogs that will open random pages in this way. There is quite a bit of mitigation value if an attacker has to tell the user
+ 1) open the about dialog
+ 2) click the license link
+ 3) now please come visit my page in that window
+    (type the URL, paste it, use a bookmark)
+
+It&apos;s more likely that some add-on somewhere is doing something like this although we don&apos;t know of any specific examples. It would be an sg:critical bug for users of that add-on. Does that make it sg:critical overall? Always? Only if the addon is really popular? I don&apos;t know, maybe.
+
+I guess that&apos;s a long-winded &quot;yes&quot; to your question.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4350197</commentid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2009-10-16 12:37:03 -0700</bug_when>
+            <thetext>It&apos;s not &apos;any&apos; window opened by &apos;any&apos; chrome dialog. New windows opened from the bookmarks/history dialog don&apos;t do this, for instance. Is it limited to XUL &lt;label class=&quot;text-link&quot;&gt; links?</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4350375</commentid>
+            <who name="David James">james82</who>
+            <bug_when>2009-10-16 13:54:45 -0700</bug_when>
+            <thetext>This bug doesn&apos;t affect &apos;any&apos; windows opened from chrome, but it does impact common ways of opening windows from chrome.
+
+Here are some more examples:
+
+Reproduction Recipe A:
+  1) Install LiveHTTPHeaders
+  2) Go to Tools -&gt; LiveHttpHeaders
+  3) Select About -&gt; Check for update
+  4) In the new window, type the URL: &quot;javascript:window.opener&quot;
+
+This shows that LiveHTTPHeaders opens a hole with this code:
+  document.commandDispatcher.focusedWindow.open(url);
+
+Reproduction Recipe B:
+  1) Go to Tools -&gt; Options -&gt; Tabs and deselect &quot;Open new windows in a new tab instead&quot;
+  2) Install YSlow
+  3) Run YSlow on your favourite website
+  4) Open the YSlow Panel and click an external link
+  5) In the new window, type the URL: &quot;javascript:window.opener&quot;
+
+This shows that YSlow opens a hole with the following code:
+  window.open(url, &quot; blank&quot;);</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4355974</commentid>
+            <who name="Blake Kaplan (:mrbkap)">mrbkap</who>
+            <bug_when>2009-10-20 15:29:37 -0700</bug_when>
+            <thetext>(In reply to comment #1)
+&gt; Blake: Weren&apos;t XOW supposed to protect us from this? (Note: The JS in step 4
+&gt; doesn&apos;t actually work for me, but step 5 definitely does.)
+
+Sort of -- the problem is that the object we&apos;re handing out is *so* wrong, XOWs don&apos;t even notice.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4355978</commentid>
+              <attachid>407407</attachid>
+            <who name="Blake Kaplan (:mrbkap)">mrbkap</who>
+            <bug_when>2009-10-20 15:31:32 -0700</bug_when>
+            <thetext>Created attachment 407407
+Proposed fix
+
+Easy fix: don&apos;t return an opener if we&apos;re not chrome and the window that we&apos;re returning is a chrome window (even content windows with chrome privileges get wrapped and protected).</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4355983</commentid>
+              <attachid>407408</attachid>
+            <who name="Blake Kaplan (:mrbkap)">mrbkap</who>
+            <bug_when>2009-10-20 15:33:28 -0700</bug_when>
+            <thetext>Created attachment 407408
+Assertion
+
+I don&apos;t want to land this at the same time as attachment 407407 because I think this assertion + that fix make the problem here extremely obvious to interested onlookers. This assertion checks to make sure that we don&apos;t ever try to wrap a chrome window in a content scope. As a belt and braces, we could either throw in these cases, or wrap all [object ChromeWindow]s in SystemOnlyWrappers.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4377762</commentid>
+            <who name="Johnny Stenback (:jst, jst@mozilla.com)">jst</who>
+            <bug_when>2009-11-03 09:25:27 -0800</bug_when>
+            <thetext>Blake, can you land this for trunk and 1.9.2?</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4377835</commentid>
+            <who name="Blake Kaplan (:mrbkap)">mrbkap</who>
+            <bug_when>2009-11-03 09:50:57 -0800</bug_when>
+            <thetext>http://hg.mozilla.org/mozilla-central/rev/2a7e710043b6 and
+http://hg.mozilla.org/releases/mozilla-1.9.2/rev/d9ea184f0558 are your answers.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4381053</commentid>
+              <attachid>407407</attachid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2009-11-04 15:47:23 -0800</bug_when>
+            <thetext>Comment on attachment 407407
+Proposed fix
+
+Does the lack of a 1.9.0.16 approval request mean we need a different back-port? Or just an oversight?</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4384076</commentid>
+              <attachid>407407</attachid>
+            <who name="Blake Kaplan (:mrbkap)">mrbkap</who>
+            <bug_when>2009-11-06 02:45:21 -0800</bug_when>
+            <thetext>Comment on attachment 407407
+Proposed fix
+
+In this case it means that I forgot to request approval.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4384794</commentid>
+              <attachid>407407</attachid>
+            <who name="Daniel Veditz [:dveditz]">dveditz</who>
+            <bug_when>2009-11-06 11:09:07 -0800</bug_when>
+            <thetext>Comment on attachment 407407
+Proposed fix
+
+Approved for 1.9.1.6 and 1.9.0.16, a=dveditz for release-drivers</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4390590</commentid>
+            <who name="Johnny Stenback (:jst, jst@mozilla.com)">jst</who>
+            <bug_when>2009-11-10 12:37:40 -0800</bug_when>
+            <thetext>http://hg.mozilla.org/releases/mozilla-1.9.1/rev/6c34838b10ea</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4398179</commentid>
+            <who name="Johnny Stenback (:jst, jst@mozilla.com)">jst</who>
+            <bug_when>2009-11-13 15:35:14 -0800</bug_when>
+            <thetext>Fixed in CVS.</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4410821</commentid>
+            <who name="Al Billings [:abillings]">abillings</who>
+            <bug_when>2009-11-20 12:58:49 -0800</bug_when>
+            <thetext>Verified fixed in 1.9.1.6 with Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.6pre) Gecko/20091119 Shiretoko/3.5.6pre (.NET CLR 3.5.30729) using steps in comment 0. 
+
+Used steps in comment 5 for 1.9.0.16 since the licensing link doesn&apos;t exist in 1.9.0. Verified fixed for 1.9.0.16 with Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.16pre) Gecko/2009111921 GranParadiso/3.0.16pre (.NET CLR 3.5.30729).</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4597880</commentid>
+            <who name="Blake Kaplan (:mrbkap)">mrbkap</who>
+            <bug_when>2010-03-22 16:39:36 -0700</bug_when>
+            <thetext>http://hg.mozilla.org/mozilla-central/rev/07e47cdf85ad</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4597958</commentid>
+            <who name="Blake Kaplan (:mrbkap)">mrbkap</who>
+            <bug_when>2010-03-22 17:10:26 -0700</bug_when>
+            <thetext>I had to back that out because we hit it on tinderbox alive tests... http://hg.mozilla.org/mozilla-central/rev/61cd29e06840</thetext>
+          </long_desc>
+          <long_desc isprivate="0">
+            <commentid>4601949</commentid>
+              <attachid>407408</attachid>
+            <who name="Blake Kaplan (:mrbkap)">mrbkap</who>
+            <bug_when>2010-03-24 12:06:03 -0700</bug_when>
+            <thetext>Comment on attachment 407408
+Assertion
+
+Sadly, we can&apos;t do this. Given code like:
+    var chromeWin = aWindow 
+                        .QueryInterface(Ci.nsIInterfaceRequestor)
+                        .getInterface(Ci.nsIWebNavigation)
+                        .QueryInterface(Ci.nsIDocShellTreeItem)
+                        .rootTreeItem
+                        .QueryInterface(Ci.nsIInterfaceRequestor)
+                        .getInterface(Ci.nsIDOMWindow)
+                        .QueryInterface(Ci.nsIDOMChromeWindow);
+
+on a content window (through an XPCNativeWrapper, even), we start in a content scope (the window)... when GI to docshelltreeitem, we create a docshell JS object in the scope we think we&apos;re in (i.e. the content window), then when we get the DOMWindow from that, we wrap it in the current scope, which is still the content window... But it&apos;s not *really* in that scope, we just think it is.</thetext>
+          </long_desc>
+      
+          <attachment
+              isobsolete="0"
+              ispatch="1"
+              isprivate="0"
+          >
+            <attachid>407407</attachid>
+            <date>2009-10-20 15:31:00 -0700</date>
+            <delta_ts>2009-11-06 11:09:07 -0800</delta_ts>
+            <desc>Proposed fix</desc>
+            <filename>522430-window-opener-fail</filename>
+            <type>text/plain</type>
+            <size>2781</size>
+            <attacher>mrbkap</attacher>
+            
+<flag name="review"
+          id="338348"
+          type_id="4"
+          status="+"
+          setter="jst"
+    />
+    <flag name="superreview"
+          id="338349"
+          type_id="5"
+          status="+"
+          setter="jonas"
+    />
+          </attachment>
+          <attachment
+              isobsolete="1"
+              ispatch="1"
+              isprivate="0"
+          >
+            <attachid>407408</attachid>
+            <date>2009-10-20 15:33:00 -0700</date>
+            <delta_ts>2010-03-24 12:06:03 -0700</delta_ts>
+            <desc>Assertion</desc>
+            <filename>522430-add-assertion</filename>
+            <type>text/plain</type>
+            <size>1521</size>
+            <attacher>mrbkap</attacher>
+            
+<flag name="review"
+          id="338350"
+          type_id="4"
+          status="+"
+          setter="jst"
+    />
+          </attachment>
+      
+
+    </bug>
+
+</bugzilla>
