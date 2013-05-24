@@ -22,15 +22,21 @@ import static org.fest.assertions.Assertions.assertThat;
 import static org.impressivecode.depress.scm.gitonline.GitonlineParserOptions.options;
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.core.ZipFile;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.gitonline.GitCommit;
 import org.impressivecode.depress.scm.gitonline.GitonlineLogParser;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,15 +48,51 @@ import org.junit.Test;
  */
 
 public class GitonlineLogParserTest {
+    private final static String repoZipPath = GitonlineLogParserTest.class.getResource("/").getPath()+"../test/org/impressivecode/depress/test/scm/gitonline/test_repo.zip";
+    private String repoPath;
+    private File tempDir = null;
 
-    private final static String repoPath = GitonlineLogParserTest.class.getResource("").getPath()+"test_repo";
-    
-    //private final static String repoPath = "/home/slawek/dev/java/ic-depress/.git";
     private GitonlineLogParser parser;
 
     @Before
     public void setUp() throws Exception {
+        unpack();
         specificCommit();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        if (tempDir != null && tempDir.exists()) {
+            deleteRecursive(tempDir);
+        }
+    }
+
+    public void unpack() throws IOException, ZipException {
+        tempDir = File.createTempFile("temp-GitOnlineLogParserTest-", Long.toString(System.nanoTime()));
+
+        if (!tempDir.delete())
+        {
+            throw new IOException("Cannot delete temp file: " + tempDir.getAbsolutePath());
+        }
+
+        if (!tempDir.mkdir())
+        {
+            throw new IOException("Cannot create temp dir: " + tempDir.getAbsolutePath());
+        }
+
+        ZipFile zip = new ZipFile(repoZipPath);
+        zip.extractAll(tempDir.getAbsolutePath());
+
+        repoPath = tempDir.getAbsolutePath() + File.separatorChar + ".git";
+    }
+
+    void deleteRecursive(File f) throws IOException {
+        if (f.isDirectory()) {
+            for (File c : f.listFiles())
+                deleteRecursive(c);
+        }
+        if (!f.delete())
+            throw new FileNotFoundException("Failed to delete file: " + f);
     }
 
     private GitCommit specificCommit() throws IOException, ParseException, NoHeadException, GitAPIException {
@@ -98,7 +140,7 @@ public class GitonlineLogParserTest {
 
     @Test
     public void shouldSpecificCommitFilesSizeMatch() throws Exception {
-        assertThat(specificCommit().getFiles()).hasSize(14);
+        assertThat(specificCommit().getFiles()).hasSize(13);
     }
 
     @Test
@@ -119,8 +161,8 @@ public class GitonlineLogParserTest {
 
         assertEquals(
                 "ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java",
-                specificCommit().getFiles().get(13).getPath());
-        assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(13).getOperation());
+                specificCommit().getFiles().get(12).getPath());
+        assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(12).getOperation());
 
     }
 }
