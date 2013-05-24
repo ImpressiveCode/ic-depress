@@ -53,7 +53,7 @@ public class BugzillaAdapterNodeModel extends NodeModel {
 
     private static final String DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.its.jira.confname";
+    private static final String CONFIG_NAME = "depress.its.bugzilla.confname";
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaAdapterNodeModel.class);
 

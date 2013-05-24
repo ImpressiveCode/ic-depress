@@ -30,7 +30,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 public class BugzillaAdapterNodeDialog extends DefaultNodeSettingsPane {
 
     private static final String FILE_EXTENSION = ".xml";
-    private static final String HISTORY_ID = "depress.its.jira.historyid";
+    private static final String HISTORY_ID = "depress.its.bugzilla.historyid";
 
     protected BugzillaAdapterNodeDialog() {
         addDialogComponent(getFileChooserComponent());
