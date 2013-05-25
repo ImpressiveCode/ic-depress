@@ -29,6 +29,16 @@ public abstract class CryptographicUtility {
         return new java.math.BigInteger(32 * 5, random).toString(32);
     }
         
+    /**
+     * Uses encryption.decryption algorithm depends on encrypt parameter
+     * @param input
+     * input data
+     * @param passphrase
+     * Key phrase
+     * @param encrypt
+     * Set encryption algorithm into Encrypt/Decrypt state
+     * @return
+     */
     public static String useAlgorithm(String input, String passphrase, boolean encrypt)
     {
         Throwable thrown = null;

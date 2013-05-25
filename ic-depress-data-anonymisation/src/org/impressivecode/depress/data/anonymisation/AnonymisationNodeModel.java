@@ -110,7 +110,7 @@ public class AnonymisationNodeModel extends NodeModel {
         return new BufferedDataTable[] { outTable };
     }
 
-    private ColumnRearranger createColumnRearranger(DataTableSpec spec) throws InvalidSettingsException {
+    private ColumnRearranger createColumnRearranger(final DataTableSpec spec) throws InvalidSettingsException {
         // check user settings against input spec here
         // fail with InvalidSettingsException if invalid
         ColumnRearranger result = new ColumnRearranger(spec);
@@ -123,7 +123,7 @@ public class AnonymisationNodeModel extends NodeModel {
 
             // new column initalization
             DataColumnSpecCreator appendSpecCreator = new DataColumnSpecCreator(
-                    spec.getColumnNames()[index].toUpperCase(), StringCell.TYPE);
+                    spec.getColumnNames()[index], StringCell.TYPE);
             DataColumnSpec appendSpec = appendSpecCreator.createSpec();
             result.insertAt(index, new SingleCellFactory(appendSpec) {
                 public DataCell getCell(final DataRow row) {
@@ -132,9 +132,12 @@ public class AnonymisationNodeModel extends NodeModel {
                     String cellVal = "";
                     if (!row.getCell(index).isMissing() && !row.getCell(index).toString().isEmpty()) {
                         cellVal = row.getCell(index).toString();
+                        //remove newLine mark from end if exists
+                        cellVal = cellVal.endsWith("\r") ? cellVal.substring(0, 12) : cellVal;
                         try {
+                            boolean shouldEncrypt = !CryptographicUtility.isEncrypted(cellVal);
                             cellVal = CryptographicUtility.useAlgorithm(cellVal,
-                                    FileHelper.ReadFromFile(keyPathSetting.getStringValue()), true);
+                                    FileHelper.ReadFromFile(keyPathSetting.getStringValue()), shouldEncrypt);
                         } catch (IOException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
