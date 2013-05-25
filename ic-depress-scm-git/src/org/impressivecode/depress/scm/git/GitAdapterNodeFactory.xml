@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./git.png" type="Source">
+    <name>Git SCM</name>
+
+    <shortDescription>
+        Git SCM, ImpressiveCode Depress
+    </shortDescription>
+
+    <fullDescription>
+        <intro>
+            This node can be used to load git log from file (offline version)
+            or directly from git repository (online version). Currently only
+            offline operation is supported<br />
+            <p>
+                To use the offline version of plugin you need to generate git
+                log in a specific format using the following command:<br />
+                <i>git log --pretty=format:"%H%n%ct%n%an%n%B%n%H" --raw
+                    --no-merges --abbrev=40</i><br />
+                in the folder with your local git repository. Result of this
+                command should be saved in file on your disk and this file's
+                path needs to be given in "Selected file" field in
+                configuration dialog.
+            </p>
+            <p>
+                This node analyzes information about every class in every
+                commit from the given git's log file or git repository and
+                returns a table with the following data: <br />
+                <ul>
+                    <li>name of class</li>
+                    <li>marker</li>
+                    <li>author of change</li>
+                    <li>action</li>
+                    <li>complete message from commit</li>
+                    <li>original path of class</li>
+                    <li>date of change</li>
+                    <li>Unique ID of record</li>
+                </ul>
+                Action could consists of following values:
+                 <ul>   <li>M - modification</li>
+                        <li>A - added</li>
+                        <li>C - copied</li>
+                        <li>D - deleted</li>
+                        <li>R - renamed</li>
+                        <li>T - file type changed (i.e. regular file to symlink)</li>
+                    </ul>
+            </p>
+        </intro>
+
+        <option name="Selected file">File with Git log to analyze in offline version of plugin</option>
+        <option name="Issue marker">Marker for extraction name of class</option>
+        <option name="Package">Name of package</option>
+    </fullDescription>
+
+    <ports>
+        <outPort index="0" name="Change history data">Table with data read from Git log file or Git repository</outPort>
+    </ports>
+</knimeNode>

@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ic-depress-base
 Bundle-SymbolicName: org.impressivecode.depress.base;singleton:=true
-Bundle-Version: 0.1.0
+Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: ImpressiveCode
-Require-Bundle: org.knime.base;bundle-version="2.7.1",
- org.knime.workbench.core;bundle-version="2.7.0",
- org.knime.workbench.repository;bundle-version="2.7.1",
- org.junit
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
+ org.knime.workbench.core,
+ org.knime.workbench.repository,
+ org.knime.base
 Export-Package: com.google.common.annotations,
  com.google.common.base,
  com.google.common.base.internal,
@@ -22,9 +22,9 @@ Export-Package: com.google.common.annotations,
  com.google.common.reflect,
  com.google.common.util.concurrent,
  org.impressivecode.depress.common,
+ org.impressivecode.depress.its,
  org.impressivecode.depress.scm
-Eclipse-BuddyPolicy: registered
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Bundle-ClassPath: bin/,
- lib/guava-14.0-rc3.jar
-
+Eclipse-RegisterBuddy: registered
+Bundle-ClassPath: lib/guava-14.0-rc3.jar,
+ depressbase.jar
