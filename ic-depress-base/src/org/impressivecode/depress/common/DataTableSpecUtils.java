@@ -20,12 +20,8 @@ package org.impressivecode.depress.common;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.DataType;
-import org.knime.core.data.def.DoubleCell;
-import org.knime.core.data.def.IntCell;
 
 import com.google.common.collect.Sets;
 
@@ -43,18 +39,10 @@ public class DataTableSpecUtils {
             DataColumnSpec spec = iterator.next();
             boolean hasColumn = spec.equalStructure(dataTableSpec.getColumnSpec(spec.getName()));
             if (!hasColumn) {
-                missing.add(spec.getName()+":"+spec.getType());
+                missing.add(spec.getName() + ":" + spec.getType());
             }
         }
 
         return missing;
-    }
-
-    public static DataCell integerOrMissingCell(final Integer value) {
-        return value == null ? DataType.getMissingCell() : new IntCell(value);
-    }
-
-    public static DataCell doubleOrMissingCell(final Double value) {
-        return value == null ? DataType.getMissingCell() : new DoubleCell(value);
     }
 }

@@ -55,6 +55,7 @@ class ChangeDataTransformer {
             String key = curr.getClassName();
             changeData.put(key, mergeChangeData(changeData.get(key), curr));
         }
+        iterator.close();
         return changeData;
     }
 
@@ -75,7 +76,7 @@ class ChangeDataTransformer {
     }
 
     private String extractClassName(final DataRow row) {
-        return ((StringCell) row.getCell(changeHistory.findColumnIndex(SCMAdapterTableFactory.CLASS_COLNAME)))
+        return ((StringCell) row.getCell(changeHistory.findColumnIndex(SCMAdapterTableFactory.RESOURCE_NAME)))
                 .getStringValue();
     }
 
