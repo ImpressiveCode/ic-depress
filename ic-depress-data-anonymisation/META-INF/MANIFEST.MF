@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Anonymisation-Node extension for KNIME Workbench
+Bundle-SymbolicName: org.impressivecode.depress.data.anonymisation; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-ClassPath: anonymisation.jar
+Bundle-Activator: org.impressivecode.depress.data.anonymisation.AnonymisationNodePlugin
+Bundle-Vendor: Andrzej Dudek
+Require-Bundle: org.eclipse.core.runtime,
+ org.knime.workbench.core,
+ org.knime.workbench.repository,
+ org.knime.base,
+ org.junit
+Bundle-ActivationPolicy: lazy
+Export-Package: org.impressivecode.depress.data.anonymisation
+

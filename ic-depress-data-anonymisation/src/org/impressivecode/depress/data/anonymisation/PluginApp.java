@@ -1,4 +1,4 @@
-package org.impressivecode.depress.data.anonymization;
+package org.impressivecode.depress.data.anonymisation;
 
 /*
  ImpressiveCode Depress Framework
