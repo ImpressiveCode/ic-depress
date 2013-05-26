@@ -69,6 +69,7 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
                     fileChooser.SetSelectedPath(keyPath);
                     fileChooser.UpdateComponent();
                 } catch (IOException e1) {
+                    System.err.println("Error: " + e1.getMessage());
                     e1.printStackTrace();
                 }
 
@@ -103,6 +104,7 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
                 columnFilterSettings.setIncludeList(getColumnsFromInput(false));
             }
         } catch (Exception ex) {
+            System.err.println("Error: " + ex.getMessage());
         };
 
         columnFilter = new DialogComponentColumnFilter(columnFilterSettings, AnonymisationNodeModel.INPUT_PORT, false);

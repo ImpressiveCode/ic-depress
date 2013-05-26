@@ -36,6 +36,7 @@ public class FileHelper {
         }
         catch (IOException e)
         {
+            System.err.println("Error: " + e.getMessage());
             isValid = false;
         }
         return isValid;
@@ -47,7 +48,7 @@ public class FileHelper {
         try {
             tempFile.createNewFile();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            System.err.println("Error: " + e.getMessage());
             e.printStackTrace();
             return "";
         }
