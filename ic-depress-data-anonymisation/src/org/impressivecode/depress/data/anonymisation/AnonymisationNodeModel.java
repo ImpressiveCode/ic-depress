@@ -148,7 +148,7 @@ public class AnonymisationNodeModel extends NodeModel {
                     if (!row.getCell(index).isMissing() && !row.getCell(index).toString().isEmpty()) {
                         cellVal = row.getCell(index).toString();
                         //remove newLine mark from end if exists
-                        cellVal = cellVal.endsWith("\r") ? cellVal.substring(0, 12) : cellVal;
+                        cellVal = cellVal.endsWith("\r") ? cellVal.substring(0, cellVal.length()-1) : cellVal;
                         try {
                             boolean shouldEncrypt = !CryptographicUtility.isEncrypted(cellVal);
                             cellVal = CryptographicUtility.useAlgorithm(cellVal,
