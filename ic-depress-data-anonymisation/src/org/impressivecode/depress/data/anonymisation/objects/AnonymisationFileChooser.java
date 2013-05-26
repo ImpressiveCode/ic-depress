@@ -1,4 +1,4 @@
-package org.impressivecode.depress.data.objects;
+package org.impressivecode.depress.data.anonymisation.objects;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;

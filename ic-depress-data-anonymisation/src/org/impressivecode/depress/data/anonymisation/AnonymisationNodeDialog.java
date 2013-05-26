@@ -8,8 +8,8 @@ import java.util.Collection;
 
 import javax.naming.directory.InvalidAttributesException;
 
-import org.impressivecode.depress.data.objects.AnonymisationFileChooser;
-import org.impressivecode.depress.data.objects.FileHelper;
+import org.impressivecode.depress.data.anonymisation.objects.AnonymisationFileChooser;
+import org.impressivecode.depress.data.anonymisation.objects.FileHelper;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentColumnFilter;

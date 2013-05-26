@@ -1,4 +1,4 @@
-package org.impressivecode.depress.data.objects;
+package org.impressivecode.depress.data.anonymisation.objects;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

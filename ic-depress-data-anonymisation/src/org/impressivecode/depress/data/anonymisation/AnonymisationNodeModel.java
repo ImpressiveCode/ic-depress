@@ -5,9 +5,9 @@ import java.io.IOException;
 
 import javax.naming.directory.InvalidAttributesException;
 
-import org.impressivecode.depress.data.objects.CryptographicUtility;
-import org.impressivecode.depress.data.objects.FileHelper;
-import org.impressivecode.depress.data.objects.PropertiesValidator;
+import org.impressivecode.depress.data.anonymisation.objects.CryptographicUtility;
+import org.impressivecode.depress.data.anonymisation.objects.FileHelper;
+import org.impressivecode.depress.data.anonymisation.objects.PropertiesValidator;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
