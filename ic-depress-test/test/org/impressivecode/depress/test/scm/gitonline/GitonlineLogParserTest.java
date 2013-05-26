@@ -139,7 +139,7 @@ public class GitonlineLogParserTest {
 
     @Test
     public void shouldSpecificCommitFilesSizeMatch() throws Exception {
-        assertThat(specificCommit().getFiles()).hasSize(13);
+        assertThat(specificCommit().getFiles()).hasSize(14); // Remember we only count .java files
     }
 
     @Test
@@ -152,16 +152,16 @@ public class GitonlineLogParserTest {
 
         assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java",
                 specificCommit().getFiles().get(0).getPath());
-        assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(1).getOperation());
+        assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(0).getOperation());
 
         assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java",
                 specificCommit().getFiles().get(2).getPath());
-        assertEquals(SCMOperation.DELETED, specificCommit().getFiles().get(3).getOperation());
+        assertEquals(SCMOperation.DELETED, specificCommit().getFiles().get(2).getOperation());
 
         assertEquals(
                 "ic-depress-metric-po/test/org/impressivecode/depress/metric/po/PeopleOrganizationMetricProcessorTest.java",
-                specificCommit().getFiles().get(12).getPath());
-        assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(12).getOperation());
+                specificCommit().getFiles().get(13).getPath());
+        assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(13).getOperation());
 
     }
 }
