@@ -58,8 +58,6 @@ public class AnonymisationNodeModel extends NodeModel {
      * Constructor for the node model.
      */
     protected AnonymisationNodeModel() {
-
-        // TODO: Specify the amount of input and output ports needed.
         super(1, 1);
     }
 
@@ -127,8 +125,6 @@ public class AnonymisationNodeModel extends NodeModel {
             DataColumnSpec appendSpec = appendSpecCreator.createSpec();
             result.insertAt(index, new SingleCellFactory(appendSpec) {
                 public DataCell getCell(final DataRow row) {
-                    // TODO
-                    // Anonymize cell of selected column here
                     String cellVal = "";
                     if (!row.getCell(index).isMissing() && !row.getCell(index).toString().isEmpty()) {
                         cellVal = row.getCell(index).toString();
@@ -139,7 +135,7 @@ public class AnonymisationNodeModel extends NodeModel {
                             cellVal = CryptographicUtility.useAlgorithm(cellVal,
                                     FileHelper.ReadFromFile(keyPathSetting.getStringValue()), shouldEncrypt);
                         } catch (IOException e) {
-                            // TODO Auto-generated catch block
+                            System.err.println("Error: " + e.getMessage());
                             e.printStackTrace();
                         }
                     }
