@@ -18,9 +18,12 @@
 package org.impressivecode.depress.common;
 
 import java.util.Iterator;
+import java.util.Set;
 
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataTableSpec;
+
+import com.google.common.collect.Sets;
 
 /**
  * 
@@ -28,17 +31,18 @@ import org.knime.core.data.DataTableSpec;
  * 
  */
 public class DataTableSpecUtils {
-    public static boolean containsColumnSubset(final DataTableSpec dataTableSpec,
+    public static Set<String> findMissingColumnSubset(final DataTableSpec dataTableSpec,
             final DataTableSpec subsetDataTableSpec) {
+        Set<String> missing = Sets.newHashSet();
         Iterator<DataColumnSpec> iterator = subsetDataTableSpec.iterator();
         while (iterator.hasNext()) {
             DataColumnSpec spec = iterator.next();
             boolean hasColumn = spec.equalStructure(dataTableSpec.getColumnSpec(spec.getName()));
             if (!hasColumn) {
-                return false;
+                missing.add(spec.getName() + ":" + spec.getType());
             }
         }
 
-        return true;
+        return missing;
     }
 }

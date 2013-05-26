@@ -17,10 +17,20 @@
  */
 package org.impressivecode.depress.scm;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.impressivecode.depress.common.Cells.dateTimeCell;
+import static org.impressivecode.depress.common.Cells.stringCell;
+import static org.impressivecode.depress.common.Cells.stringOrMissingCell;
+import static org.impressivecode.depress.common.Cells.stringSetCell;
+
+import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
+import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.collection.SetCell;
+import org.knime.core.data.date.DateAndTimeCell;
+import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.StringCell;
 
 /**
@@ -29,17 +39,49 @@ import org.knime.core.data.def.StringCell;
  * 
  */
 public class SCMAdapterTableFactory {
-    private static final String MARKER = "Marker";
+    public static final String MARKER = "Marker";
     public static final String AUTHOR_COLNAME = "Author";
-    public static final String CLASS_COLNAME = "Class";
+    public static final String RESOURCE_NAME = "Class";
+    public final static String ACTION_COLNAME = "Action";
+    public final static String MESSAGE_COLNAME = "Message";
+    public final static String PATH_COLNAME = "Path";
+    public final static String DATE_COLNAME = "Date";
+    public final static String UID_COLNAME = "CommitID";
 
     public static DataTableSpec createDataColumnSpec() {
-        DataColumnSpec[] allColSpecs = new DataColumnSpec[3];
-        allColSpecs[0] = new DataColumnSpecCreator(CLASS_COLNAME, StringCell.TYPE).createSpec();
-        allColSpecs[1] = new DataColumnSpecCreator(MARKER, SetCell.getCollectionType(StringCell.TYPE)).createSpec();
-        allColSpecs[2] = new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE).createSpec();
-        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
-        //TODO add missing columns and improve tests
-        return outputSpec;
+        DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(MARKER, SetCell.getCollectionType(StringCell.TYPE)).createSpec(),
+                new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(MESSAGE_COLNAME, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(DATE_COLNAME, DateAndTimeCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(UID_COLNAME, StringCell.TYPE).createSpec() };
+        return new DataTableSpec(allColSpecs);
+    }
+
+    public static DataRow createTableRow(final String rowId, final SCMDataType scmData) {
+        assertData(scmData);
+        DataCell[] cells = { 
+                stringCell(scmData.getResourceName()), 
+                stringSetCell(scmData.getMarkers()),
+                stringCell(scmData.getAuthor()), 
+                stringCell(scmData.getOperation()),
+                stringOrMissingCell(scmData.getMessage()), 
+                stringCell(scmData.getPath()),
+                dateTimeCell(scmData.getCommitDate()), 
+                stringCell(scmData.getCommitID()), };
+        DataRow row = new DefaultRow(rowId, cells);
+        return row;
+    }
+
+    private static void assertData(final SCMDataType scmData) {
+        checkNotNull(scmData, "Issue Tracking System data has to be set.");
+        checkNotNull(scmData.getResourceName(), "Resource has to be set.");
+        checkNotNull(scmData.getAuthor(), "Author has to be set.");
+        checkNotNull(scmData.getOperation(), "Operation has to be set.");
+        checkNotNull(scmData.getPath(), "Path has to be set.");
+        checkNotNull(scmData.getCommitDate(), "CommitDate has to be set.");
+        checkNotNull(scmData.getCommitID(), "CommitId has to be set.");
     }
 }

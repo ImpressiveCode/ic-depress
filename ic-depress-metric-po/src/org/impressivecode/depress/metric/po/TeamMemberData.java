@@ -26,7 +26,15 @@ public class TeamMemberData {
     private String name;
     private boolean exEngineer;
     private Integer exLevel;
-    private boolean external;
+    private String organizationPath;
+
+    public String getOrganizationPath() {
+        return organizationPath;
+    }
+
+    public void setOrganizationPath(final String organizationPath) {
+        this.organizationPath = organizationPath;
+    }
 
     public void setName(final String name) {
         this.name = name;
@@ -38,10 +46,6 @@ public class TeamMemberData {
 
     public void setExLevel(final Integer exLevel) {
         this.exLevel = exLevel;
-    }
-
-    public void setExternal(final boolean external) {
-        this.external = external;
     }
 
     public String getName() {
@@ -56,7 +60,9 @@ public class TeamMemberData {
         return exLevel;
     }
 
-    public boolean isExternal() {
-        return external;
+    @Override
+    public String toString() {
+        return String.format("TeamMemberData [name=%s, exEngineer=%s, exLevel=%s, organizationPath=%s]",
+                name, exEngineer, exLevel, organizationPath);
     }
 }
