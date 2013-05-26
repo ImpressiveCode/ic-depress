@@ -56,7 +56,6 @@ public class PropertiesValidator {
         Config excludeColumns = config.getConfig("ExclList");
         boolean isValid = false;
 
-//      FIXME: Co w przypadku kiedy nie zawiera tych kluczy? False czy Exeption? 
         if (includeColumns.containsKey("array-size") && excludeColumns.containsKey("array-size")) {
             int includeSize = includeColumns.getInt("array-size");
             int excludeSize = excludeColumns.getInt("array-size");

@@ -31,8 +31,7 @@ public class AnonymisationFileChooser extends DialogComponentFileChooser {
 
     public AnonymisationFileChooser(SettingsModelString stringModel, String historyID, String... validExtensions) {
         super(stringModel, historyID, validExtensions);
-        // TODO Auto-generated constructor stub
-
+        
         SelectedPath = stringModel.getStringValue();
         ((SettingsModelString) getModel()).setStringValue(SelectedPath);
 
@@ -42,7 +41,6 @@ public class AnonymisationFileChooser extends DialogComponentFileChooser {
 
             @Override
             public void stateChanged(ChangeEvent e) {
-                // TODO Auto-generated method stub
                 SelectedPath = ((SettingsModelString) e.getSource()).getStringValue();
                 UpdateComponent();
             }

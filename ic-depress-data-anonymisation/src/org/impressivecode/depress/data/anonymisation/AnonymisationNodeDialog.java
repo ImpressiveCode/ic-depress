@@ -80,8 +80,7 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
-
+                
                 String keyPath;
                 try {
                     keyPath = FileHelper.GenerateKeyFile(FileHelper.KEY_FILENAME);

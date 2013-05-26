@@ -39,7 +39,7 @@ public class AnonymisationNodeView extends NodeView<AnonymisationNodeModel> {
      */
     protected AnonymisationNodeView(final AnonymisationNodeModel nodeModel) {
         super(nodeModel);
-        // TODO: generated method stub
+       
     }
 
     /**
@@ -47,7 +47,7 @@ public class AnonymisationNodeView extends NodeView<AnonymisationNodeModel> {
      */
     @Override
     protected void modelChanged() {
-        // TODO: generated method stub
+       
     }
 
     /**
@@ -55,7 +55,7 @@ public class AnonymisationNodeView extends NodeView<AnonymisationNodeModel> {
      */
     @Override
     protected void onClose() {
-        // TODO: generated method stub
+       
     }
 
     /**
@@ -63,7 +63,7 @@ public class AnonymisationNodeView extends NodeView<AnonymisationNodeModel> {
      */
     @Override
     protected void onOpen() {
-        // TODO: generated method stub
+       
     }
 
 }
