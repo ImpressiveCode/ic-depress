@@ -129,7 +129,6 @@ public class GitonlineLogParserTest {
 
     @Test
     public void shouldSpecificCommitMessageMatch() throws Exception {
-        System.out.println(specificCommit().getMessage());
         assertEquals("#9 base version of PO Metric introduced", specificCommit().getMessage());
     }
 
