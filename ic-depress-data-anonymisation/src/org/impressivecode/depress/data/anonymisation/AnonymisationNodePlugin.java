@@ -34,7 +34,7 @@ import org.osgi.framework.BundleContext;
  * @author Andrzej Dudek
  * @author Marcin Bogusz
  * @author Konrad Kocik
- * @author Artur Bilski
+ * 
  */
 public class AnonymisationNodePlugin extends Plugin {
     // The shared instance.

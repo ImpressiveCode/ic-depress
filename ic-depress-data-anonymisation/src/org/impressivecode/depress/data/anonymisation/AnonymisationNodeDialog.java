@@ -47,7 +47,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * @author Andrzej Dudek
  * @author Marcin Bogusz
  * @author Konrad Kocik
- * @author Artur Bilski
+ * 
  */
 public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
 

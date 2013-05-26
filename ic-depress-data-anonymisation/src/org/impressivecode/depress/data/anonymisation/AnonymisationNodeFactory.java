@@ -29,7 +29,7 @@ import org.knime.core.node.NodeView;
  * @author Andrzej Dudek
  * @author Marcin Bogusz
  * @author Konrad Kocik
- * @author Artur Bilski
+ * 
  */
 public class AnonymisationNodeFactory extends NodeFactory<AnonymisationNodeModel> {
 
