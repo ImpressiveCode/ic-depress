@@ -11,7 +11,7 @@
         <intro>
             This node can be used to load git log directly from git repository (online version).<br />
             <p>
-                To use this plugin You should only give Git's repository address (local or remote) in configuration windows.
+                To use this plugin You should only give Git's repository address (local) in configuration windows.
             </p>
             <p>
                 This node analyzes information about every class in every
@@ -38,7 +38,7 @@
             </p>
         </intro>
 
-        <option name="Repository address">Address of Git's repository which should be analyzed</option>
+        <option name="Repository address">Address of Git's repository which should be analyzed. It should be local path and point exactly to .git folder e.g.: /home/user/your_project/.git</option>
         <option name="Issue marker">Marker for extraction name of class</option>
         <option name="Package">Name of package</option>
     </fullDescription>
