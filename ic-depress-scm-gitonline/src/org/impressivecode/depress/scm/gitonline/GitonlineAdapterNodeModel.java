@@ -56,6 +56,8 @@ public class GitonlineAdapterNodeModel extends NodeModel {
 
     static final String GIT_REPOSITORY_ADDRESS = "depress.scm.gitonline.filename";
     static final String GIT_REPOSITORY_DEFAULT = "";
+    static final String GIT_BRANCH = "depress.scm.git.branch";
+    static final String GIT_BRANCH_DEFAULT = "";
     static final String GIT_REGEXP = "depress.scm.git.regexp";
     static final String GIT_REGEXP_DEFAULT = "";
     static final String GIT_PACKAGENAME = "depress.scm.gitonline.package";
@@ -68,6 +70,8 @@ public class GitonlineAdapterNodeModel extends NodeModel {
     // dialog work with "SettingsModels".
     private final SettingsModelString gitRepositoryAddress = new SettingsModelString(GitonlineAdapterNodeModel.GIT_REPOSITORY_ADDRESS,
             GitonlineAdapterNodeModel.GIT_REPOSITORY_DEFAULT);
+    private final SettingsModelOptionalString gitBranch = new SettingsModelOptionalString(GitonlineAdapterNodeModel.GIT_BRANCH,
+            GitonlineAdapterNodeModel.GIT_BRANCH_DEFAULT, true);
     private final SettingsModelString gitRegExp = new SettingsModelString(GitonlineAdapterNodeModel.GIT_REGEXP,
             GitonlineAdapterNodeModel.GIT_REGEXP_DEFAULT);
     private final SettingsModelOptionalString gitPackageName = new SettingsModelOptionalString(
@@ -80,16 +84,18 @@ public class GitonlineAdapterNodeModel extends NodeModel {
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
-        
-        logger.info("Reading logs from repository " + this.gitRepositoryAddress.getStringValue());
+
+        String gitPath = getGitPath(this.gitRepositoryAddress.getStringValue());
+
+        logger.info("Reading logs from repository " + gitPath);
         GitonlineLogParser parser = new GitonlineLogParser();
-        
-        List<GitCommit> commits = parser.parseEntries(this.gitRepositoryAddress.getStringValue(),
-                options(gitRegExp.getStringValue(), gitPackageName.getStringValue()));
-        
+
+        List<GitCommit> commits = parser.parseEntries(gitPath,
+                options(gitRegExp.getStringValue(), gitPackageName.getStringValue(), gitBranch.getStringValue()));
+
         BufferedDataTable out = transform(commits, exec);
         logger.info("Reading git logs finished.");
-        
+
         return new BufferedDataTable[] { out };
     }
 
@@ -107,6 +113,7 @@ public class GitonlineAdapterNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         gitRepositoryAddress.saveSettingsTo(settings);
+        gitBranch.saveSettingsTo(settings);
         gitRegExp.saveSettingsTo(settings);
         gitPackageName.saveSettingsTo(settings);
     }
@@ -114,17 +121,15 @@ public class GitonlineAdapterNodeModel extends NodeModel {
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         gitRepositoryAddress.loadSettingsFrom(settings);
+        gitBranch.loadSettingsFrom(settings);
         gitRegExp.loadSettingsFrom(settings);
         gitPackageName.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        String addr = gitRepositoryAddress.getStringValue();
-        if (!addr.endsWith(".git")){
-            gitRepositoryAddress.setStringValue(addr+".git");
-        }
         gitRepositoryAddress.validateSettings(settings);
+        gitBranch.loadSettingsFrom(settings);
         gitRegExp.validateSettings(settings);
         gitPackageName.validateSettings(settings);
     }
@@ -169,5 +174,13 @@ public class GitonlineAdapterNodeModel extends NodeModel {
 
     private void progress(final ExecutionContext exec) throws CanceledExecutionException {
         exec.checkCanceled();
+    }
+
+    public static String getGitPath(String repositoryPath) {
+        File repoFile = new File(repositoryPath);
+        if (!repoFile.getName().equals(".git")) {
+            return repoFile.getAbsolutePath() + File.separatorChar + ".git";
+        }
+        return repoFile.getAbsolutePath();
     }
 }

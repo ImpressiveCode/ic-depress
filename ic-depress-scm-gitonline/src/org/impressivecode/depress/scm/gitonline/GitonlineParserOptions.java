@@ -27,13 +27,15 @@ import com.google.common.base.Strings;
 public class GitonlineParserOptions {
     private Pattern markerRegexp;
     private String packageString;
+    private String branch;
 
-    public static GitonlineParserOptions options(final String markerRegexp, final String packageString) {
+    public static GitonlineParserOptions options(final String markerRegexp, final String packageString, final String branch) {
         GitonlineParserOptions options = new GitonlineParserOptions();
         if (!Strings.isNullOrEmpty(markerRegexp)) {
             options.markerRegexp = Pattern.compile(markerRegexp);
         }
         options.packageString = Strings.emptyToNull(packageString);
+        options.branch = Strings.emptyToNull(branch);
         return options;
     }
 
@@ -51,5 +53,13 @@ public class GitonlineParserOptions {
 
     public String getPackagePrefix() {
         return packageString;
+    }
+
+    public boolean hasBranch() {
+        return this.branch != null;
+    }
+
+    public String getBranch() {
+        return branch;
     }
 }

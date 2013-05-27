@@ -21,18 +21,22 @@ package org.impressivecode.depress.test.scm.gitonline;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.impressivecode.depress.scm.gitonline.GitonlineParserOptions.options;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.core.ZipFile;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.gitonline.GitCommit;
 import org.impressivecode.depress.scm.gitonline.GitonlineLogParser;
@@ -97,8 +101,8 @@ public class GitonlineLogParserTest {
 
     private GitCommit specificCommit() throws IOException, ParseException, NoHeadException, GitAPIException {
         this.parser = new GitonlineLogParser();
-        this.parser.parseEntries(repoPath, options("#([0-9]+)", "org."));
-        for (GitCommit c : parser.parseEntries(repoPath, options("#([0-9]+)", "org."))) {
+        this.parser.parseEntries(repoPath, options("#([0-9]+)", "org.", null));
+        for (GitCommit c : parser.parseEntries(repoPath, options("#([0-9]+)", "org.", null))) {
             if (c.getId().equals("45a2beca9d97777733e1a472e54c003551b7d9b1")) {
                 return c;
             }
@@ -108,13 +112,13 @@ public class GitonlineLogParserTest {
 
     @Test(expected = NoHeadException.class)
     public void shouldThrowFileNotFound() throws Exception {
-        new GitonlineLogParser().parseEntries("fake_path", options(null, null));
+        new GitonlineLogParser().parseEntries("fake_path", options(null, null, null));
     }
 
     @Test
     public void shouldCountCommits() throws Exception {
         GitonlineLogParser parser = new GitonlineLogParser();
-        assertEquals(183, parser.parseEntries(repoPath, options("#([0-9]+)", "org.")).size());
+        assertEquals(183, parser.parseEntries(repoPath, options("#([0-9]+)", "org.", null)).size());
     }
 
     @Test
@@ -163,5 +167,55 @@ public class GitonlineLogParserTest {
                 specificCommit().getFiles().get(13).getPath());
         assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(13).getOperation());
 
+    }
+
+    @Test
+    public void shouldSpecificBranchCommitCountMatch() throws Exception {
+        assertEquals(43, new GitonlineLogParser().parseEntries(repoPath, options("#([0-9]+)", "org.", "master")).size());
+    }
+
+    @Test
+    public void shouldSpecificBranchFirstCommitIdMatch() throws Exception {
+        assertEquals("c10f2ad763c3c78ba267d473608253d9796542cc",
+                new GitonlineLogParser().parseEntries(repoPath, options("#([0-9]+)", "org.", "master")).get(0).getId());
+    }
+
+    @Test
+    public void shouldSpecificRemoteBranchCommitCountMatch() throws Exception {
+        assertEquals(108, new GitonlineLogParser().parseEntries(repoPath, options("#([0-9]+)", "org.", "tomek/new-metrics")).size());
+    }
+
+    @Test
+    public void shouldSpecificRemoteBranchFirstCommitIdMatch() throws Exception {
+        assertEquals("a99f5a83953121301a0c615ed3d78b1869423d08",
+                new GitonlineLogParser().parseEntries(repoPath, options("#([0-9]+)", "org.", "tomek/new-metrics")).get(0).getId());
+    }
+
+    @Test
+    public void shouldGetBranches() throws Exception {
+        List<String> expectedBranches = new ArrayList<String>();
+        expectedBranches.add("dev");
+        expectedBranches.add("master");
+        expectedBranches.add("origin/HEAD");
+        expectedBranches.add("origin/dev");
+        expectedBranches.add("origin/master");
+        expectedBranches.add("origin/new-metrics");
+        expectedBranches.add("pwr/dev");
+        expectedBranches.add("pwr/master");
+        expectedBranches.add("tomek/dev");
+        expectedBranches.add("tomek/master");
+        expectedBranches.add("tomek/new-metrics");
+
+        assertArrayEquals(expectedBranches.toArray(), GitonlineLogParser.getBranches(repoPath).toArray());
+    }
+
+    @Test(expected=NoHeadException.class)
+    public void shouldThrowOnNonExistingRepo() throws Exception {
+        GitonlineLogParser.getBranches("/some/fake/path/.git");
+    }
+
+    @Test
+    public void shouldGetCurrentBranch() throws Exception {
+        assertEquals("dev", GitonlineLogParser.getCurrentBranch(repoPath));
     }
 }

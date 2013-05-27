@@ -33,12 +33,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.ListBranchCommand;
+import org.eclipse.jgit.api.LogCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.RawTextComparator;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -61,42 +64,89 @@ import org.eclipse.jgit.util.io.DisabledOutputStream;
  */
 public class GitonlineLogParser {
 
-    
+
     public List<GitCommit> parseEntries(final String path, final GitonlineParserOptions gitParserOptions) throws IOException,
     ParseException, NoHeadException, GitAPIException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
-        
+
         List<GitCommit> commitsList = processRepo(path, gitParserOptions);
-      
+
         return commitsList;
     }
 
-    private List<GitCommit> processRepo(final String path, final GitonlineParserOptions gitParserOptions) throws IOException, NoHeadException, GitAPIException{
+    public static String getCurrentBranch(final String path) throws IOException, NoHeadException {
+        Git git = initializeGit(path);
+        return git.getRepository().getBranch();
+    }
+
+    public static List<String> getBranches(final String path) throws IOException, GitAPIException {
+        Git git = initializeGit(path);
+
+        List<Ref> refs = git.branchList().setListMode(ListBranchCommand.ListMode.ALL).call();
+        List<String> branches = new ArrayList<String>();
+        for (Ref r : refs) {
+            branches.add(r.getName().replace("refs/heads/", "").replace("refs/remotes/", ""));
+        }
+
+        return branches;
+    }
+
+    private static Git initializeGit(final String path) throws IOException, NoHeadException {
         RepositoryBuilder gitRepoBuilder = new RepositoryBuilder();
         Repository gitRepo = gitRepoBuilder.setGitDir(new File(path)).readEnvironment().findGitDir().build();
         Git git = new Git(gitRepo);
+
+        // Make sure path contains a git repository.
+        if (!gitRepo.getObjectDatabase().exists()) {
+            throw new NoHeadException("Directory " + path + " does not look like a git repository.");
+        }
+
+        return git;
+    }
+
+    private List<GitCommit> processRepo(final String path, final GitonlineParserOptions gitParserOptions) throws IOException, NoHeadException, GitAPIException{
+        Git git = initializeGit(path);
         List<GitCommit> analyzedCommits = new ArrayList<GitCommit>();
-        
-        Iterable<RevCommit> loglines = git.log().call();
+
+        LogCommand log = git.log();
+
+        if (gitParserOptions.hasBranch()) {
+            List<Ref> branches = git.branchList().setListMode(ListBranchCommand.ListMode.ALL).call();
+            Ref branch = null;
+            for (Ref b : branches)
+            {
+                if (b.getName().equals("refs/heads/" + gitParserOptions.getBranch())
+                        || b.getName().equals("refs/remotes/" + gitParserOptions.getBranch())) {
+                    branch = b;
+                    break;
+                }
+            }
+            if (branch == null) {
+                throw new IOException("Specified branch was not found in git repository");
+            }
+            log.add(branch.getObjectId());
+        }
+
+        Iterable<RevCommit> loglines = log.call();
         Iterator<RevCommit> logIterator = loglines.iterator();
         while (logIterator.hasNext()){
             RevCommit commit = logIterator.next();
-            GitcommitProcessor proc = new GitcommitProcessor(gitParserOptions, gitRepo);
+            GitcommitProcessor proc = new GitcommitProcessor(gitParserOptions, git.getRepository());
             proc.setRevCommit(commit);
             proc.processCommitData();
             analyzedCommits.add(proc.getResult());
         }
         return analyzedCommits;
     }
-    
-    
+
+
     class GitcommitProcessor {
 
         private final Pattern PATTERN = Pattern.compile("^(.*) [a-f0-9]{40} (A|C|D|M|R|T)");
-        
-        private GitonlineParserOptions options;
-        private GitCommit analyzedCommit = new GitCommit();
-        private Repository repository; 
+
+        private final GitonlineParserOptions options;
+        private final GitCommit analyzedCommit = new GitCommit();
+        private final Repository repository;
         private RevCommit revCommit;
 
         public GitcommitProcessor(final GitonlineParserOptions options, final Repository repository) {
@@ -107,7 +157,7 @@ public class GitonlineLogParser {
         public void setRevCommit (final RevCommit revcommit){
             this.revCommit = revcommit;
         }
-        
+
         public GitCommit getResult() {
             return this.analyzedCommit;
         }
@@ -204,12 +254,16 @@ public class GitonlineLogParser {
             return javaClass;
         }
     }
-    
+
     //modified method from https://github.com/gitblit/gitblit/blob/master/src/main/java/com/gitblit/utils/JGitUtils.java#L718
     private List<String> getFilesInCommit(Repository repository, RevCommit commit) throws IOException {
         RevWalk rw = new RevWalk(repository);
         List<String> filesList = new ArrayList<String>();
         String fileLine = "";
+        // FIXME: need to skip merge commits
+        //if (commit.getParentCount() > 1) {
+        // Merge commit
+        //}
         if (commit.getParentCount() == 0) {
             TreeWalk tw = new TreeWalk(repository);
             tw.reset();
@@ -245,7 +299,7 @@ public class GitonlineLogParser {
         }
         return filesList;
     }
-    
+
     private char setOperationSymbol(final String operationCode) {
         char op;
         switch (operationCode) {
@@ -270,4 +324,5 @@ public class GitonlineLogParser {
         }
         return op;
     }
+
 }
