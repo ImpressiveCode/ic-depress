@@ -27,6 +27,3 @@ jdk:
 branches:
   only:
     - dev
-
-notifications:
-  email: true
