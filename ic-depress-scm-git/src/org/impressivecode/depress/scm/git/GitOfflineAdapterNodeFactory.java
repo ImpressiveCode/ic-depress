@@ -26,11 +26,11 @@ import org.knime.core.node.NodeView;
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
  */
-public class GitAdapterNodeFactory extends NodeFactory<GitAdapterNodeModel> {
+public class GitOfflineAdapterNodeFactory extends NodeFactory<GitOfflineAdapterNodeModel> {
 
     @Override
-    public GitAdapterNodeModel createNodeModel() {
-        return new GitAdapterNodeModel();
+    public GitOfflineAdapterNodeModel createNodeModel() {
+        return new GitOfflineAdapterNodeModel();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class GitAdapterNodeFactory extends NodeFactory<GitAdapterNodeModel> {
     }
 
     @Override
-    public NodeView<GitAdapterNodeModel> createNodeView(final int viewIndex, final GitAdapterNodeModel nodeModel) {
+    public NodeView<GitOfflineAdapterNodeModel> createNodeView(final int viewIndex, final GitOfflineAdapterNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 
@@ -50,6 +50,6 @@ public class GitAdapterNodeFactory extends NodeFactory<GitAdapterNodeModel> {
 
     @Override
     public NodeDialogPane createNodeDialogPane() {
-        return new GitAdapterNodeDialog();
+        return new GitOfflineAdapterNodeDialog();
     }
 }

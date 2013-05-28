@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm.gitonline;
+package org.impressivecode.depress.scm.git;
 
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
@@ -26,11 +26,11 @@ import org.knime.core.node.NodeView;
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
  */
-public class GitonlineAdapterNodeFactory extends NodeFactory<GitonlineAdapterNodeModel> {
+public class GitOnlineAdapterNodeFactory extends NodeFactory<GitOnlineAdapterNodeModel> {
 
     @Override
-    public GitonlineAdapterNodeModel createNodeModel() {
-        return new GitonlineAdapterNodeModel();
+    public GitOnlineAdapterNodeModel createNodeModel() {
+        return new GitOnlineAdapterNodeModel();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class GitonlineAdapterNodeFactory extends NodeFactory<GitonlineAdapterNod
     }
 
     @Override
-    public NodeView<GitonlineAdapterNodeModel> createNodeView(final int viewIndex, final GitonlineAdapterNodeModel nodeModel) {
+    public NodeView<GitOnlineAdapterNodeModel> createNodeView(final int viewIndex, final GitOnlineAdapterNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 
@@ -50,6 +50,6 @@ public class GitonlineAdapterNodeFactory extends NodeFactory<GitonlineAdapterNod
 
     @Override
     public NodeDialogPane createNodeDialogPane() {
-        return new GitonlineAdapterNodeDialog();
+        return new GitOnlineAdapterNodeDialog();
     }
 }

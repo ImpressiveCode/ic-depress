@@ -15,10 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm.gitonline;
+package org.impressivecode.depress.scm.git;
 
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.scm.gitonline.GitonlineParserOptions.options;
+import static org.impressivecode.depress.scm.git.GitParserOptions.options;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,10 +49,10 @@ import com.google.common.collect.Lists;
  * @author Sławomir Kapłoński
  * @author Marek Majchrzak, ImpressiveCode
  */
-public class GitonlineAdapterNodeModel extends NodeModel {
+public class GitOnlineAdapterNodeModel extends NodeModel {
 
     // the logger instance
-    private static final NodeLogger logger = NodeLogger.getLogger(GitonlineAdapterNodeModel.class);
+    private static final NodeLogger logger = NodeLogger.getLogger(GitOnlineAdapterNodeModel.class);
 
     static final String GIT_REPOSITORY_ADDRESS = "depress.scm.gitonline.filename";
     static final String GIT_REPOSITORY_DEFAULT = "";
@@ -68,16 +68,16 @@ public class GitonlineAdapterNodeModel extends NodeModel {
     // example value: the models count variable filled from the dialog
     // and used in the models execution method. The default components of the
     // dialog work with "SettingsModels".
-    private final SettingsModelString gitRepositoryAddress = new SettingsModelString(GitonlineAdapterNodeModel.GIT_REPOSITORY_ADDRESS,
-            GitonlineAdapterNodeModel.GIT_REPOSITORY_DEFAULT);
-    private final SettingsModelOptionalString gitBranch = new SettingsModelOptionalString(GitonlineAdapterNodeModel.GIT_BRANCH,
-            GitonlineAdapterNodeModel.GIT_BRANCH_DEFAULT, true);
-    private final SettingsModelString gitRegExp = new SettingsModelString(GitonlineAdapterNodeModel.GIT_REGEXP,
-            GitonlineAdapterNodeModel.GIT_REGEXP_DEFAULT);
+    private final SettingsModelString gitRepositoryAddress = new SettingsModelString(GitOnlineAdapterNodeModel.GIT_REPOSITORY_ADDRESS,
+            GitOnlineAdapterNodeModel.GIT_REPOSITORY_DEFAULT);
+    private final SettingsModelOptionalString gitBranch = new SettingsModelOptionalString(GitOnlineAdapterNodeModel.GIT_BRANCH,
+            GitOnlineAdapterNodeModel.GIT_BRANCH_DEFAULT, true);
+    private final SettingsModelString gitRegExp = new SettingsModelString(GitOnlineAdapterNodeModel.GIT_REGEXP,
+            GitOnlineAdapterNodeModel.GIT_REGEXP_DEFAULT);
     private final SettingsModelOptionalString gitPackageName = new SettingsModelOptionalString(
-            GitonlineAdapterNodeModel.GIT_PACKAGENAME, GitonlineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT, true);
+            GitOnlineAdapterNodeModel.GIT_PACKAGENAME, GitOnlineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT, true);
 
-    protected GitonlineAdapterNodeModel() {
+    protected GitOnlineAdapterNodeModel() {
         super(0, 1);
     }
 
@@ -88,7 +88,7 @@ public class GitonlineAdapterNodeModel extends NodeModel {
         String gitPath = getGitPath(this.gitRepositoryAddress.getStringValue());
 
         logger.info("Reading logs from repository " + gitPath);
-        GitonlineLogParser parser = new GitonlineLogParser();
+        GitOnlineLogParser parser = new GitOnlineLogParser();
 
         List<GitCommit> commits = parser.parseEntries(gitPath,
                 options(gitRegExp.getStringValue(), gitPackageName.getStringValue(), gitBranch.getStringValue()));
@@ -107,7 +107,7 @@ public class GitonlineAdapterNodeModel extends NodeModel {
     @Override
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         Preconditions.checkArgument(inSpecs.length == 0);
-        return GitonlineAdapterTableFactory.createTableSpec();
+        return GitAdapterTableFactory.createTableSpec();
     }
 
     @Override
@@ -176,7 +176,7 @@ public class GitonlineAdapterNodeModel extends NodeModel {
         exec.checkCanceled();
     }
 
-    public static String getGitPath(String repositoryPath) {
+    public static String getGitPath(final String repositoryPath) {
         File repoFile = new File(repositoryPath);
         if (!repoFile.getName().equals(".git")) {
             return repoFile.getAbsolutePath() + File.separatorChar + ".git";

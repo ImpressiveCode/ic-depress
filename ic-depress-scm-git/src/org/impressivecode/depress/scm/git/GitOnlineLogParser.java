@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm.gitonline;
+package org.impressivecode.depress.scm.git;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
@@ -50,22 +50,15 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
 
 /**
- * <code>GitLogParser</code> converts git's log output into appropriate
- * structure.
- * 
- * Expects to receive git log generated using the following command:
- * 
- * git log --pretty=format:"%H%n%ct%n%an%n%B%n%H" --raw --no-merges --abbrev=40
  * 
  * 
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
- * @author Marek Majchrzak, ImpressiveCode
  */
-public class GitonlineLogParser {
+public class GitOnlineLogParser {
 
 
-    public List<GitCommit> parseEntries(final String path, final GitonlineParserOptions gitParserOptions) throws IOException,
+    public List<GitCommit> parseEntries(final String path, final GitParserOptions gitParserOptions) throws IOException,
     ParseException, NoHeadException, GitAPIException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
 
@@ -104,7 +97,7 @@ public class GitonlineLogParser {
         return git;
     }
 
-    private List<GitCommit> processRepo(final String path, final GitonlineParserOptions gitParserOptions) throws IOException, NoHeadException, GitAPIException{
+    private List<GitCommit> processRepo(final String path, final GitParserOptions gitParserOptions) throws IOException, NoHeadException, GitAPIException{
         Git git = initializeGit(path);
         List<GitCommit> analyzedCommits = new ArrayList<GitCommit>();
 
@@ -144,12 +137,12 @@ public class GitonlineLogParser {
 
         private final Pattern PATTERN = Pattern.compile("^(.*) [a-f0-9]{40} (A|C|D|M|R|T)");
 
-        private final GitonlineParserOptions options;
+        private final GitParserOptions options;
         private final GitCommit analyzedCommit = new GitCommit();
         private final Repository repository;
         private RevCommit revCommit;
 
-        public GitcommitProcessor(final GitonlineParserOptions options, final Repository repository) {
+        public GitcommitProcessor(final GitParserOptions options, final Repository repository) {
             this.options = options;
             this.repository = repository;
         }
@@ -256,7 +249,7 @@ public class GitonlineLogParser {
     }
 
     //modified method from https://github.com/gitblit/gitblit/blob/master/src/main/java/com/gitblit/utils/JGitUtils.java#L718
-    private List<String> getFilesInCommit(Repository repository, RevCommit commit) throws IOException {
+    private List<String> getFilesInCommit(final Repository repository, final RevCommit commit) throws IOException {
         RevWalk rw = new RevWalk(repository);
         List<String> filesList = new ArrayList<String>();
         String fileLine = "";

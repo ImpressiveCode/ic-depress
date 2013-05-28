@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.scm.git;
 
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.scm.git.GitParserOptions.options;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,10 +48,10 @@ import com.google.common.collect.Lists;
  * @author Sławomir Kapłoński
  * @author Marek Majchrzak, ImpressiveCode
  */
-public class GitAdapterNodeModel extends NodeModel {
+public class GitOfflineAdapterNodeModel extends NodeModel {
 
     // the logger instance
-    private static final NodeLogger logger = NodeLogger.getLogger(GitAdapterNodeModel.class);
+    private static final NodeLogger logger = NodeLogger.getLogger(GitOfflineAdapterNodeModel.class);
 
     static final String GIT_FILENAME = "depress.scm.git.filename";
     static final String GIT_FILENAME_DEFAULT = "";
@@ -66,14 +65,14 @@ public class GitAdapterNodeModel extends NodeModel {
     // example value: the models count variable filled from the dialog
     // and used in the models execution method. The default components of the
     // dialog work with "SettingsModels".
-    private final SettingsModelString gitFileName = new SettingsModelString(GitAdapterNodeModel.GIT_FILENAME,
-            GitAdapterNodeModel.GIT_FILENAME_DEFAULT);
-    private final SettingsModelString gitRegExp = new SettingsModelString(GitAdapterNodeModel.GIT_REGEXP,
-            GitAdapterNodeModel.GIT_REGEXP_DEFAULT);
+    private final SettingsModelString gitFileName = new SettingsModelString(GitOfflineAdapterNodeModel.GIT_FILENAME,
+            GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT);
+    private final SettingsModelString gitRegExp = new SettingsModelString(GitOfflineAdapterNodeModel.GIT_REGEXP,
+            GitOfflineAdapterNodeModel.GIT_REGEXP_DEFAULT);
     private final SettingsModelOptionalString gitPackageName = new SettingsModelOptionalString(
-            GitAdapterNodeModel.GIT_PACKAGENAME, GitAdapterNodeModel.GIT_PACKAGENAME_DEFAULT, true);
+            GitOfflineAdapterNodeModel.GIT_PACKAGENAME, GitOfflineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT, true);
 
-    protected GitAdapterNodeModel() {
+    protected GitOfflineAdapterNodeModel() {
         super(0, 1);
     }
 
@@ -83,9 +82,9 @@ public class GitAdapterNodeModel extends NodeModel {
 
         logger.info("Reading logs from file " + this.gitFileName.getStringValue());
 
-        GitLogParser parser = new GitLogParser();
+        GitOfflineLogParser parser = new GitOfflineLogParser();
         List<GitCommit> commits = parser.parseEntries(this.gitFileName.getStringValue(),
-                options(gitRegExp.getStringValue(), gitPackageName.getStringValue()));
+                GitParserOptions.options(gitRegExp.getStringValue(), gitPackageName.getStringValue()));
 
         BufferedDataTable out = transform(commits, exec);
         logger.info("Reading git logs finished.");

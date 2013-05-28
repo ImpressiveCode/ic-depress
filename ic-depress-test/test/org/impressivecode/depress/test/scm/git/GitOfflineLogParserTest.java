@@ -29,7 +29,7 @@ import java.util.Date;
 
 import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.git.GitCommit;
-import org.impressivecode.depress.scm.git.GitLogParser;
+import org.impressivecode.depress.scm.git.GitOfflineLogParser;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,10 +40,10 @@ import org.junit.Test;
  * @author Marek Majchrzak, Impressive Code
  */
 
-public class GitLogParserTest {
+public class GitOfflineLogParserTest {
 
-    private final static String logFilePath = GitLogParserTest.class.getResource("git-test-log.txt").getPath();
-    private GitLogParser parser;
+    private final static String logFilePath = GitOfflineLogParserTest.class.getResource("git-test-log.txt").getPath();
+    private GitOfflineLogParser parser;
 
     @Before
     public void setUp() throws Exception {
@@ -51,7 +51,7 @@ public class GitLogParserTest {
     }
 
     private GitCommit specificCommit() throws IOException, ParseException {
-        this.parser = new GitLogParser();
+        this.parser = new GitOfflineLogParser();
         for (GitCommit c : parser.parseEntries(logFilePath, options("#([0-9]+)", "org."))) {
             if (c.getId().equals("45a2beca9d97777733e1a472e54c003551b7d9b1")) {
                 return c;
@@ -62,7 +62,7 @@ public class GitLogParserTest {
 
     @Test(expected = FileNotFoundException.class)
     public void shouldThrowFileNotFound() throws Exception {
-        new GitLogParser().parseEntries("fake_path", options(null, null));
+        new GitOfflineLogParser().parseEntries("fake_path", options(null, null));
     }
 
     @Test

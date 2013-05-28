@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm.gitonline;
+package org.impressivecode.depress.scm.git;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,24 +38,24 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
  */
-public class GitonlineAdapterNodeDialog extends DefaultNodeSettingsPane {
+public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
     // the logger instance
-    private static final NodeLogger logger = NodeLogger.getLogger(GitonlineAdapterNodeDialog.class);
+    private static final NodeLogger logger = NodeLogger.getLogger(GitOnlineAdapterNodeDialog.class);
 
-    private final SettingsModelString branch = new SettingsModelString(GitonlineAdapterNodeModel.GIT_BRANCH, GitonlineAdapterNodeModel.GIT_BRANCH_DEFAULT);
-    private final SettingsModelString repoPath = new SettingsModelString(GitonlineAdapterNodeModel.GIT_REPOSITORY_ADDRESS,
-            GitonlineAdapterNodeModel.GIT_REPOSITORY_DEFAULT);
+    private final SettingsModelString branch = new SettingsModelString(GitOnlineAdapterNodeModel.GIT_BRANCH, GitOnlineAdapterNodeModel.GIT_BRANCH_DEFAULT);
+    private final SettingsModelString repoPath = new SettingsModelString(GitOnlineAdapterNodeModel.GIT_REPOSITORY_ADDRESS,
+            GitOnlineAdapterNodeModel.GIT_REPOSITORY_DEFAULT);
     private final List<String> branchList = new ArrayList<String>();
 
     DialogComponentStringSelection comboBox;
 
-    protected GitonlineAdapterNodeDialog() {
+    protected GitOnlineAdapterNodeDialog() {
         super();
 
         branchList.add("<Click on \"Get Branches\">");
 
-        DialogComponentFileChooser comp = new DialogComponentFileChooser(repoPath, GitonlineAdapterNodeModel.GIT_REPOSITORY_ADDRESS, JFileChooser.OPEN_DIALOG, true);
+        DialogComponentFileChooser comp = new DialogComponentFileChooser(repoPath, GitOnlineAdapterNodeModel.GIT_REPOSITORY_ADDRESS, JFileChooser.OPEN_DIALOG, true);
         comp.setBorderTitle("Choose project directory:");
 
         if (branch.isEnabled()) {
@@ -70,8 +70,8 @@ public class GitonlineAdapterNodeDialog extends DefaultNodeSettingsPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String gitPath = GitonlineAdapterNodeModel.getGitPath(repoPath.getStringValue());
-                    comboBox.replaceListItems(GitonlineLogParser.getBranches(gitPath), GitonlineLogParser.getCurrentBranch(gitPath));
+                    String gitPath = GitOnlineAdapterNodeModel.getGitPath(repoPath.getStringValue());
+                    comboBox.replaceListItems(GitOnlineLogParser.getBranches(gitPath), GitOnlineLogParser.getCurrentBranch(gitPath));
                     if (!branch.isEnabled()) {
                         branch.setEnabled(true);
                     }
@@ -90,10 +90,10 @@ public class GitonlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(button);
         setHorizontalPlacement(false);
 
-        addDialogComponent(new DialogComponentString(new SettingsModelString(GitonlineAdapterNodeModel.GIT_REGEXP,
-                GitonlineAdapterNodeModel.GIT_REGEXP_DEFAULT), "Issue marker: "));
+        addDialogComponent(new DialogComponentString(new SettingsModelString(GitOnlineAdapterNodeModel.GIT_REGEXP,
+                GitOnlineAdapterNodeModel.GIT_REGEXP_DEFAULT), "Issue marker: "));
 
-        addDialogComponent(new DialogComponentString(new SettingsModelString(GitonlineAdapterNodeModel.GIT_PACKAGENAME,
-                GitonlineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT), "Package: "));
+        addDialogComponent(new DialogComponentString(new SettingsModelString(GitOnlineAdapterNodeModel.GIT_PACKAGENAME,
+                GitOnlineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT), "Package: "));
     }
 }

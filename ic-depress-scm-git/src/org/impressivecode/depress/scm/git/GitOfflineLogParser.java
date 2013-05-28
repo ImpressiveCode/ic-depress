@@ -51,7 +51,7 @@ import com.google.common.io.LineProcessor;
  * @author Sławomir Kapłoński
  * @author Marek Majchrzak, ImpressiveCode
  */
-public class GitLogParser {
+public class GitOfflineLogParser {
 
     public List<GitCommit> parseEntries(final String path, final GitParserOptions gitParserOptions) throws IOException,
     ParseException {
