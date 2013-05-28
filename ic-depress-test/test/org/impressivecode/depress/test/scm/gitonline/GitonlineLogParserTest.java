@@ -36,7 +36,6 @@ import net.lingala.zip4j.core.ZipFile;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.gitonline.GitCommit;
 import org.impressivecode.depress.scm.gitonline.GitonlineLogParser;
