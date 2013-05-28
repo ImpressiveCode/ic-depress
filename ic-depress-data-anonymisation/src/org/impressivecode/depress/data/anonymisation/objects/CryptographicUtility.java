@@ -20,12 +20,16 @@ package org.impressivecode.depress.data.anonymisation.objects;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.knime.core.util.crypto.HexUtils;
@@ -55,8 +59,16 @@ public abstract class CryptographicUtility {
      * @param encrypt
      *            Set encryption algorithm into Encrypt/Decrypt state
      * @return
+     * @throws NoSuchAlgorithmException
+     * @throws IOException
+     * @throws NoSuchPaddingException
+     * @throws InvalidKeyException
+     * @throws BadPaddingException
+     * @throws IllegalBlockSizeException
      */
-    public static String useAlgorithm(String input, String passphrase, boolean encrypt) {
+    public static String useAlgorithm(String input, String passphrase, boolean encrypt)
+            throws NoSuchAlgorithmException, IOException, NoSuchPaddingException, InvalidKeyException,
+            IllegalBlockSizeException, BadPaddingException {
         Throwable thrown = null;
         byte[] transformed = null;
         int encryptMode = 0;
@@ -64,13 +76,8 @@ public abstract class CryptographicUtility {
         byte[] encodedInput = null;
 
         // convert passprase to key
-        try {
-            md = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+
+        md = MessageDigest.getInstance("MD5");
 
         md.update(passphrase.getBytes(Charset.defaultCharset()));
         byte[] encodedKey = md.digest();
@@ -87,24 +94,13 @@ public abstract class CryptographicUtility {
             encryptMode = Cipher.DECRYPT_MODE;
         }
 
-        try {
-            encodedInput = new BASE64Decoder().decodeBuffer(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        encodedInput = new BASE64Decoder().decodeBuffer(input);
 
         // finally dencryption :)
-        try {
-            Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
-            cipher.init(encryptMode, key);
-            transformed = cipher.doFinal(encodedInput);
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
-            thrown = e;
-            throw new RuntimeException(e);
-        }
+
+        Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+        cipher.init(encryptMode, key);
+        transformed = cipher.doFinal(encodedInput);
 
         String out = new BASE64Encoder().encodeBuffer(transformed);
         out = out.replaceAll("\n", "");

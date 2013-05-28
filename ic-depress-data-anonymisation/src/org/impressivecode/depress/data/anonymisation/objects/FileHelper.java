@@ -34,72 +34,53 @@ public class FileHelper {
     public static final String KEY_FILENAME = "key-file";
     public static final String KEY_FILENAME_EXT = "txt";
     public static final String DIR_SEPARATOR = System.getProperty("file.separator");
-    
+
     /**
      * Checks for filename correctness
      * 
-     * @param String filename filename to be checked for valid characters
+     * @param String
+     *            filename filename to be checked for valid characters
      * @return result of test true means that filename is valid
      */
-    private static boolean isFilenameValid(String filename)
-    {
+    private static boolean isFilenameValid(String filename) {
         final File aFile = new File(filename);
         boolean isValid = true;
-        try
-        {
-            if (aFile.createNewFile())
-            {
+        try {
+            if (aFile.createNewFile()) {
                 aFile.delete();
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
             isValid = false;
         }
         return isValid;
     }
 
-    public static String CreateTmpFile(String fileName) {
+    public static String CreateTmpFile(String fileName) throws IOException {
         fileName = isFilenameValid(fileName) ? fileName : KEY_FILENAME;
         File tempFile = getUniqueFile(fileName);
-        try {
-            tempFile.createNewFile();
-        } catch (IOException e) {
-            System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
-            return "";
-        }
-
+        tempFile.createNewFile();
         return tempFile.getPath();
     }
 
     public static File getUniqueFile(String fileName) {
-        
+
         File tempFile = null;
         int i = 0;
-        try
-        {
-            do
-            {
-                tempFile = new File(TMP_DIR + DIR_SEPARATOR + fileName + "-" + i + "." + KEY_FILENAME_EXT);
-                i++;
-            }
-            while (tempFile.exists());
-        }
-        // Catch exception if any
-        catch (Exception e)
-        {
-            System.err.println("Error: " + e.getMessage());
-        }
+        do {
+            tempFile = new File(TMP_DIR + DIR_SEPARATOR + fileName + "-" + i + "." + KEY_FILENAME_EXT);
+            i++;
+        } while (tempFile.exists());
         return tempFile;
     }
 
     /**
      * Writes text to specified path
      * 
-     * @param fullPath location of the file where to write 
-     * @param text contents of the file
+     * @param fullPath
+     *            location of the file where to write
+     * @param text
+     *            contents of the file
      * @throws IOException
      */
     public static void WriteToFile(String fullPath, String text) throws IOException {
@@ -113,7 +94,8 @@ public class FileHelper {
     /**
      * Generates key file
      * 
-     * @param fileName name of the file to be created
+     * @param fileName
+     *            name of the file to be created
      * @return location of generated key file
      * @throws IOException
      */
@@ -128,7 +110,8 @@ public class FileHelper {
     /**
      * Method abstracts io calls
      * 
-     * @param fullPath path of file to be read
+     * @param fullPath
+     *            path of file to be read
      * @return contents of the file
      * @throws IOException
      */

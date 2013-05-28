@@ -28,7 +28,8 @@ public class PropertiesValidator {
     /**
      * Checks if supplied path to key file is valid
      * 
-     * @param path full path of the required key file
+     * @param path
+     *            full path of the required key file
      * @return binominal status of file validity
      * @throws InvalidSettingsException
      */
@@ -42,11 +43,12 @@ public class PropertiesValidator {
         }
         return true;
     }
-    
+
     /**
      * Checks if node configuration is correct
      * 
-     * @param config Node configuration instance
+     * @param config
+     *            Node configuration instance
      * @return binominal status of column validity
      * @throws InvalidSettingsException
      */
@@ -61,13 +63,11 @@ public class PropertiesValidator {
             int excludeSize = excludeColumns.getInt("array-size");
             if (includeSize == 0 && excludeSize == 0) {
                 throw new InvalidSettingsException("Input Table cannot be empty!");
-            }
-            else
-            {
+            } else {
                 isValid = true;
             }
         }
         return isValid;
     }
-    
+
 }

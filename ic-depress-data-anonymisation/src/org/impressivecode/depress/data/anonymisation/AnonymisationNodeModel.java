@@ -21,7 +21,6 @@ package org.impressivecode.depress.data.anonymisation;
 
 import java.io.File;
 import java.io.IOException;
-
 import javax.naming.directory.InvalidAttributesException;
 
 import org.impressivecode.depress.data.anonymisation.objects.CryptographicUtility;
@@ -94,8 +93,7 @@ public class AnonymisationNodeModel extends NodeModel {
 
         boolean isEncrypted = true;
         int i = 0;
-        while(isEncrypted && i < importantRows && i < rows.length)
-        {
+        while (isEncrypted && i < importantRows && i < rows.length) {
             String rowVal = rows[i].toString();
             isEncrypted = CryptographicUtility.isEncrypted(rowVal);
             i++;
@@ -113,21 +111,26 @@ public class AnonymisationNodeModel extends NodeModel {
 
     protected BufferedDataTable[] execute(BufferedDataTable[] inData, ExecutionContext exec) throws Exception {
 
-        DataTableSpec inSpec = inData[0].getDataTableSpec();
-        java.io.File keyFile = new File(keyPathSetting.getStringValue());
-        // Able execute Node without enter into configuration
-        if (!keyFile.exists()) {
-            FileHelper.GenerateKeyFile(FileHelper.KEY_FILENAME);
+        try {
+            DataTableSpec inSpec = inData[0].getDataTableSpec();
+            java.io.File keyFile = new File(keyPathSetting.getStringValue());
+            // Able execute Node without enter into configuration
+            if (!keyFile.exists()) {
+                FileHelper.GenerateKeyFile(FileHelper.KEY_FILENAME);
+            }
+            if (filterStringSettings.getExcludeList().isEmpty() && filterStringSettings.getIncludeList().isEmpty()) {
+                filterStringSettings.setIncludeList(inSpec.getColumnNames());
+            }
+            ColumnRearranger rearranger = createColumnRearranger(inSpec);
+            BufferedDataTable outTable = exec.createColumnRearrangeTable(inData[0], rearranger, exec);
+            return new BufferedDataTable[] { outTable };
+        } catch (Exception ex) {
+            System.err.println("Error: " + ex.getMessage());
         }
-        if (filterStringSettings.getExcludeList().isEmpty() && filterStringSettings.getIncludeList().isEmpty()) {
-            filterStringSettings.setIncludeList(inSpec.getColumnNames());
-        }
-        ColumnRearranger rearranger = createColumnRearranger(inSpec);
-        BufferedDataTable outTable = exec.createColumnRearrangeTable(inData[0], rearranger, exec);
-        return new BufferedDataTable[] { outTable };
+        return new BufferedDataTable[] {};
     }
 
-    private ColumnRearranger createColumnRearranger(final DataTableSpec spec) throws InvalidSettingsException {
+    private ColumnRearranger createColumnRearranger(final DataTableSpec spec) {
         // check user settings against input spec here
         // fail with InvalidSettingsException if invalid
         ColumnRearranger result = new ColumnRearranger(spec);
@@ -139,23 +142,22 @@ public class AnonymisationNodeModel extends NodeModel {
             result.remove(index);
 
             // new column initalization
-            DataColumnSpecCreator appendSpecCreator = new DataColumnSpecCreator(
-                    spec.getColumnNames()[index], StringCell.TYPE);
+            DataColumnSpecCreator appendSpecCreator = new DataColumnSpecCreator(spec.getColumnNames()[index],
+                    StringCell.TYPE);
             DataColumnSpec appendSpec = appendSpecCreator.createSpec();
             result.insertAt(index, new SingleCellFactory(appendSpec) {
                 public DataCell getCell(final DataRow row) {
                     String cellVal = "";
                     if (!row.getCell(index).isMissing() && !row.getCell(index).toString().isEmpty()) {
                         cellVal = row.getCell(index).toString();
-                        //remove newLine mark from end if exists
-                        cellVal = cellVal.endsWith("\r") ? cellVal.substring(0, cellVal.length()-1) : cellVal;
+                        // remove newLine mark from end if exists
+                        cellVal = cellVal.endsWith("\r") ? cellVal.substring(0, cellVal.length() - 1) : cellVal;
+                        boolean shouldEncrypt = !CryptographicUtility.isEncrypted(cellVal);
                         try {
-                            boolean shouldEncrypt = !CryptographicUtility.isEncrypted(cellVal);
                             cellVal = CryptographicUtility.useAlgorithm(cellVal,
                                     FileHelper.ReadFromFile(keyPathSetting.getStringValue()), shouldEncrypt);
-                        } catch (IOException e) {
-                            System.err.println("Error: " + e.getMessage());
-                            e.printStackTrace();
+                        } catch (Exception ex) {
+                            System.err.println("Error: " + ex.getMessage());
                         }
                     }
                     DataCell resultCell = new StringCell(cellVal);
@@ -196,7 +198,7 @@ public class AnonymisationNodeModel extends NodeModel {
      */
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
-       
+
         filterStringSettings.saveSettingsTo(settings);
         keyPathSetting.saveSettingsTo(settings);
     }
@@ -206,7 +208,7 @@ public class AnonymisationNodeModel extends NodeModel {
      */
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-       
+
         filterStringSettings.loadSettingsFrom(settings);
         keyPathSetting.loadSettingsFrom(settings);
     }
@@ -216,7 +218,7 @@ public class AnonymisationNodeModel extends NodeModel {
      */
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-       
+
         if (settings.keySet().contains(KEY_CONFIG_NAME)) {
             String path = settings.getRowKey(KEY_CONFIG_NAME).getString();
             PropertiesValidator.isKeyFileCorrect(path);
@@ -236,7 +238,7 @@ public class AnonymisationNodeModel extends NodeModel {
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
             CanceledExecutionException {
-       
+
     }
 
     /**
@@ -245,7 +247,7 @@ public class AnonymisationNodeModel extends NodeModel {
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
             CanceledExecutionException {
-       
+
     }
 
 }

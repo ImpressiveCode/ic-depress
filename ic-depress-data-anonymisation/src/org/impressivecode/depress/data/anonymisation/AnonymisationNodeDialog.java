@@ -71,86 +71,85 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
     protected AnonymisationNodeDialog() {
         super();
 
-        // Groups
-        createNewGroup("Column selection:");
-
-        // Buttons
-        buttonToCreateFile = new DialogComponentButton("Create new and load");
-        buttonToCreateFile.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                String keyPath;
-                try {
-                    keyPath = FileHelper.GenerateKeyFile(FileHelper.KEY_FILENAME);
-                    fileChooser.SetSelectedPath(keyPath);
-                    fileChooser.UpdateComponent();
-                } catch (IOException e1) {
-                    System.err.println("Error: " + e1.getMessage());
-                    e1.printStackTrace();
-                }
-
-            }
-        });
-
-        buttonToClear = new DialogComponentButton("Clear");
-        buttonToClear.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fileChooser.SetSelectedPath("");
-                fileChooser.UpdateComponent();
-            }
-        });
-
-        // A little help
-        buttonToCreateFile.setToolTipText("This create file with your key and load it automatically");
-
-        SettingsModelFilterString columnFilterSettings = new SettingsModelFilterString(
-                AnonymisationNodeModel.COLUMNS_CONFIG_NAME);
-
         try {
+            // Groups
+            createNewGroup("Column selection:");
+
+            // Buttons
+            buttonToCreateFile = new DialogComponentButton("Create new and load");
+            buttonToCreateFile.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    String keyPath;
+                    try {
+                        keyPath = FileHelper.GenerateKeyFile(FileHelper.KEY_FILENAME);
+                        fileChooser.SetSelectedPath(keyPath);
+                        fileChooser.UpdateComponent();
+                    } catch (IOException ex) {
+                        System.err.println("Error: " + ex.getMessage());
+                    }
+                }
+            });
+
+            buttonToClear = new DialogComponentButton("Clear");
+            buttonToClear.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    fileChooser.SetSelectedPath("");
+                    fileChooser.UpdateComponent();
+                }
+            });
+
+            // A little help
+            buttonToCreateFile.setToolTipText("This create file with your key and load it automatically");
+
+            SettingsModelFilterString columnFilterSettings = new SettingsModelFilterString(
+                    AnonymisationNodeModel.COLUMNS_CONFIG_NAME);
+
             if (isInputDataEncrypted()) {
-                //if is data encrypted, then node should decrypt incoming encrypted Data and leave plain text data;               
+                // if is data encrypted, then node should decrypt incoming
+                // encrypted Data and leave plain text data;
                 columnFilterSettings.setIncludeList(getColumnsFromInput(true));
                 columnFilterSettings.setExcludeList(getColumnsFromInput(false));
-            }
-            else
-            {
-                //if incoming data is not containing encrypted columns, then all column should be encrypted
+            } else {
+                // if incoming data is not containing encrypted columns, then
+                // all column should be encrypted
                 columnFilterSettings.setIncludeList(getColumnsFromInput(false));
             }
+
+            columnFilter = new DialogComponentColumnFilter(columnFilterSettings, AnonymisationNodeModel.INPUT_PORT,
+                    false);
+            addDialogComponent(columnFilter);
+            setHorizontalPlacement(true);
+
+            createNewGroup("Cryptographic key selection:");
+
+            fileChooser = new AnonymisationFileChooser(new SettingsModelString(AnonymisationNodeModel.KEY_CONFIG_NAME,
+                    FileHelper.getUniqueFile(FileHelper.KEY_FILENAME).getPath()), "", ".txt");
+
+            // adding all components
+            addDialogComponent(buttonToCreateFile);
+            addDialogComponent(buttonToClear);
+            addDialogComponent(fileChooser);
         } catch (Exception ex) {
             System.err.println("Error: " + ex.getMessage());
-        };
-
-        columnFilter = new DialogComponentColumnFilter(columnFilterSettings, AnonymisationNodeModel.INPUT_PORT, false);
-        addDialogComponent(columnFilter);
-        setHorizontalPlacement(true);
-
-        createNewGroup("Cryptographic key selection:");
-
-        fileChooser = new AnonymisationFileChooser(new SettingsModelString(AnonymisationNodeModel.KEY_CONFIG_NAME,
-                FileHelper.getUniqueFile(FileHelper.KEY_FILENAME).getPath()), "", ".txt");
-
-        // adding all components
-        addDialogComponent(buttonToCreateFile);
-        addDialogComponent(buttonToClear);
-        addDialogComponent(fileChooser);
+        }
     }
 
     /**
      * Method is analyzing incoming data from Input.
-     * @return
-     * Return TRUE if at least one of input data is probably encrypted
+     * 
+     * @return Return TRUE if at least one of input data is probably encrypted
      * @throws InvalidAttributesException
      */
     private boolean isInputDataEncrypted() throws InvalidAttributesException {
         for (String columnName : AnonymisationNodeModel.InputTableSpec.getColumnNames()) {
-            boolean isColumnEncrypted = AnonymisationNodeModel.isColumnEncrypted(columnName, AnonymisationNodeModel.ANALYSIS_IMPORTANT_ROWS);
-            if (isColumnEncrypted) 
-            {
+            boolean isColumnEncrypted = AnonymisationNodeModel.isColumnEncrypted(columnName,
+                    AnonymisationNodeModel.ANALYSIS_IMPORTANT_ROWS);
+            if (isColumnEncrypted) {
                 return true;
             }
         }
@@ -162,15 +161,15 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
      * 
      * @param isEncryptedParam
      *            Defines type of returned columns
-     * @return
-     * Return List of columns which specified state from input
+     * @return Return List of columns which specified state from input
      * @throws InvalidAttributesException
      */
     private Collection<String> getColumnsFromInput(boolean isEncryptedParam) throws InvalidAttributesException {
         ArrayList<String> columnList = new ArrayList<String>();
 
         for (String columnName : AnonymisationNodeModel.InputTableSpec.getColumnNames()) {
-            boolean isCurrentColumnEnctypted = AnonymisationNodeModel.isColumnEncrypted(columnName, AnonymisationNodeModel.ANALYSIS_IMPORTANT_ROWS);
+            boolean isCurrentColumnEnctypted = AnonymisationNodeModel.isColumnEncrypted(columnName,
+                    AnonymisationNodeModel.ANALYSIS_IMPORTANT_ROWS);
             if (isCurrentColumnEnctypted && isEncryptedParam) {
                 columnList.add(columnName);
             } else if (!isCurrentColumnEnctypted && !isEncryptedParam) {
