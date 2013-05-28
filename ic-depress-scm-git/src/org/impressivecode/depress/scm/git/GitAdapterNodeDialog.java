@@ -21,9 +21,7 @@ import javax.swing.JFileChooser;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
-import org.knime.core.node.defaultnodesettings.DialogComponentOptionalString;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
-import org.knime.core.node.defaultnodesettings.SettingsModelOptionalString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
@@ -41,8 +39,7 @@ public class GitAdapterNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(new DialogComponentString(new SettingsModelString(GitAdapterNodeModel.GIT_REGEXP,
                 GitAdapterNodeModel.GIT_REGEXP_DEFAULT), "Issue marker: "));
 
-        addDialogComponent(new DialogComponentOptionalString(new SettingsModelOptionalString(
-                GitAdapterNodeModel.GIT_PACKAGENAME, GitAdapterNodeModel.GIT_PACKAGENAME_DEFAULT,
-                GitAdapterNodeModel.GIT_PACKAGENAME_ACTIVE_STATE), "Package: "));
+        addDialogComponent(new DialogComponentString(new SettingsModelString(GitAdapterNodeModel.GIT_PACKAGENAME, 
+                GitAdapterNodeModel.GIT_PACKAGENAME_DEFAULT), "Package: "));
     }
 }
