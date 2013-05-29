@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./default.png" type="Manipulator">
+    <name>Anonymisation</name>
+    
+    <shortDescription>
+        Encrypts and decrypts selected columns from input data set using DES cryptographic algorithm.
+    </shortDescription>    
+    <fullDescription>
+        <intro>Selected columns from input data set, which are plain text, will be encrypted. 
+        Selected columns from input data set, which are already encrypted, will be decrypted.
+        The same cryptographic key has to be used for encryption and decryption process, because of symmetric cipher algorithm usage (DES).
+        Potentially encrypted columns from input data set are marked, so they can be distinguished from plain text columns.
+        Output data set has the same structure as input data set - only difference is, that selected columns are encrypted or decrypted.
+        </intro>        
+        <option name="Column selection">Section, where columns, which will be treated by cryptographic algorithm, can be selected.</option>
+        <option name="Exclude">Columns, which will be not treated by cryptographic algorithm.</option>
+        <option name="Include">Columns, which will be treated by cryptographic algorithm.</option>
+        <option name="Search">Column(s) with given name will be searched in appropriate column set.</option>
+        <option name="Select all search hints">All search hints will be automatically selected.</option>
+        <option name="Cryptographic key selection">Section, where file with cryptographic key can be selected.</option>
+        <option name="Selected file">Path to the file, which contains cryptographic key.</option>
+        <option name="Create new and load">File with cryptographic key will be generated automatically and its path will be loaded.</option>
+        <option name="Clear">Selected path will be cleared.</option>        
+    </fullDescription>    
+    <ports>
+        <inPort index="0" name="In-Port name">Input data set.</inPort>
+        <outPort index="0" name="Out-Port name">Output data set with selected columns treated by cryptographic algorithm.</outPort>
+    </ports>    
+</knimeNode>
