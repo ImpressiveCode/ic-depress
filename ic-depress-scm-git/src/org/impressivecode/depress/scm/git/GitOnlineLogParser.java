@@ -32,15 +32,19 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ListBranchCommand;
 import org.eclipse.jgit.api.LogCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.RawTextComparator;
+import org.eclipse.jgit.lib.ProgressMonitor;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
@@ -82,6 +86,16 @@ public class GitOnlineLogParser {
         }
 
         return branches;
+    }
+    
+    public static void cloneRepository(final String remoteAddress, final String localPath, ProgressMonitor monitor) throws InvalidRemoteException, TransportException, GitAPIException{
+        CloneCommand clone = Git.cloneRepository();
+        clone.setBare(false);
+        clone.setCloneAllBranches(true);
+        clone.setDirectory(new File(localPath));
+        clone.setURI(remoteAddress);
+        clone.setProgressMonitor(monitor);
+        clone.call();   
     }
 
     private static Git initializeGit(final String path) throws IOException, NoHeadException {

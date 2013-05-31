@@ -19,13 +19,16 @@ package org.impressivecode.depress.scm.git;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.NoWorkTreeException;
+import org.eclipse.jgit.lib.TextProgressMonitor;
 import org.knime.core.node.NodeLogger;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
@@ -46,13 +49,28 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
     private final SettingsModelString branch = new SettingsModelString(GitOnlineAdapterNodeModel.GIT_BRANCH, GitOnlineAdapterNodeModel.GIT_BRANCH_DEFAULT);
     private final SettingsModelString repoPath = new SettingsModelString(GitOnlineAdapterNodeModel.GIT_REPOSITORY_ADDRESS,
             GitOnlineAdapterNodeModel.GIT_REPOSITORY_DEFAULT);
+    private final SettingsModelString remoteRepo = new SettingsModelString(GitOnlineAdapterNodeModel.GIT_REMOTE_REPOSITORY_ADDRESS,
+            GitOnlineAdapterNodeModel.GIT_REMOTE_REPOSITORY_DEFAULT);
     private final List<String> branchList = new ArrayList<String>();
+    
 
     DialogComponentStringSelection comboBox;
 
     protected GitOnlineAdapterNodeDialog() {
         super();
 
+        final DialogComponentString remoteRepoAddress = new DialogComponentString(remoteRepo, "Remote repository address: ");
+        final DialogComponentButton cloneButton = new DialogComponentButton("Clone repository");
+        cloneButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (cloneRepository()){
+                    getBranchesList();
+                }
+            }
+            
+        });
+        
         branchList.add("<Click on \"Get Branches\">");
 
         DialogComponentFileChooser comp = new DialogComponentFileChooser(repoPath, GitOnlineAdapterNodeModel.GIT_REPOSITORY_ADDRESS, JFileChooser.OPEN_DIALOG, true);
@@ -69,21 +87,14 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    String gitPath = GitOnlineAdapterNodeModel.getGitPath(repoPath.getStringValue());
-                    comboBox.replaceListItems(GitOnlineLogParser.getBranches(gitPath), GitOnlineLogParser.getCurrentBranch(gitPath));
-                    if (!branch.isEnabled()) {
-                        branch.setEnabled(true);
-                    }
-                } catch (NoWorkTreeException | IOException | GitAPIException e1) {
-                    logger.error("Failed to get list of branches from repository", e1);
-                    List<String> errorBranchList = new ArrayList<String>();
-                    errorBranchList.add("<Error>");
-                    comboBox.replaceListItems(errorBranchList, null);
-                }
+                getBranchesList();
             }
         });
-
+        
+        setHorizontalPlacement(true);
+        addDialogComponent(remoteRepoAddress);
+        addDialogComponent(cloneButton);
+        setHorizontalPlacement(false);
         addDialogComponent(comp);
         setHorizontalPlacement(true);
         addDialogComponent(comboBox);
@@ -95,5 +106,46 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
         addDialogComponent(new DialogComponentString(new SettingsModelString(GitOnlineAdapterNodeModel.GIT_PACKAGENAME,
                 GitOnlineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT), "Package: "));
+    }
+    
+    
+    private Boolean cloneRepository(){
+        try {
+            String gitRemote = remoteRepo.getStringValue();
+            String gitPath = repoPath.getStringValue();
+            File localRepo = new File(gitPath);
+            if (gitRemote.length() != 0 && gitPath.length() != 0){                
+                if (localRepo.isDirectory() == false || localRepo.list().length > 0){
+                    logger.error("Local path should be empty");
+                    return false;
+                } else {
+                    //@TODO: make that cloning progress will be displayed in knime console in some way:
+                    TextProgressMonitor monitor = new TextProgressMonitor();
+                    GitOnlineLogParser.cloneRepository(gitRemote, gitPath, monitor); 
+                    return true;
+                }
+            } else {
+                logger.error("Remote repository and local path should be given.");
+                return false;
+            }
+        } catch (Exception e1){
+            logger.error("Failed to get list of branches from repository", e1);
+            return false;
+        }
+    }
+    
+    private void getBranchesList(){
+        try {
+            String gitPath = GitOnlineAdapterNodeModel.getGitPath(repoPath.getStringValue());
+            comboBox.replaceListItems(GitOnlineLogParser.getBranches(gitPath), GitOnlineLogParser.getCurrentBranch(gitPath));
+            if (!branch.isEnabled()) {
+                branch.setEnabled(true);
+            }
+        } catch (NoWorkTreeException | IOException | GitAPIException e1) {
+            logger.error("Failed to get list of branches from repository", e1);
+            List<String> errorBranchList = new ArrayList<String>();
+            errorBranchList.add("<Error>");
+            comboBox.replaceListItems(errorBranchList, null);
+        }
     }
 }
