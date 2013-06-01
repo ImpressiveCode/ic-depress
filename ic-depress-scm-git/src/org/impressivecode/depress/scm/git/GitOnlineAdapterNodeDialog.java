@@ -28,7 +28,6 @@ import javax.swing.JFileChooser;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.NoWorkTreeException;
-import org.eclipse.jgit.lib.TextProgressMonitor;
 import org.knime.core.node.NodeLogger;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
@@ -122,7 +121,8 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
                     return false;
                 } else {
                     //@TODO: make that cloning progress will be displayed in knime console in some way:
-                    TextProgressMonitor monitor = new TextProgressMonitor();
+                    //TextProgressMonitor monitor = new TextProgressMonitor();
+                    NodeLoggerProgressMonitor monitor = new NodeLoggerProgressMonitor(logger);
                     GitOnlineLogParser.cloneRepository(gitRemote, gitPath, monitor); 
                     return true;
                 }
