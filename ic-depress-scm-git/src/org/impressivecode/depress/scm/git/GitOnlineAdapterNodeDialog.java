@@ -91,6 +91,7 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
             }
         });
         
+        createNewGroup("Choose repository");
         setHorizontalPlacement(true);
         addDialogComponent(remoteRepoAddress);
         addDialogComponent(cloneButton);
@@ -100,7 +101,8 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(comboBox);
         addDialogComponent(button);
         setHorizontalPlacement(false);
-
+        
+        createNewGroup("Other settings");
         addDialogComponent(new DialogComponentString(new SettingsModelString(GitOnlineAdapterNodeModel.GIT_REGEXP,
                 GitOnlineAdapterNodeModel.GIT_REGEXP_DEFAULT), "Issue marker: "));
 
