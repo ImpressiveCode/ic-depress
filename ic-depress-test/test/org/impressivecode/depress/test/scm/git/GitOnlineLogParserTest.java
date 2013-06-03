@@ -50,7 +50,7 @@ import org.junit.Test;
  */
 
 public class GitOnlineLogParserTest {
-    private final static String repoZipPath = GitOnlineLogParserTest.class.getResource("/").getPath()+"../test/org/impressivecode/depress/test/scm/gitonline/test_repo.zip";
+    private final static String repoZipPath = GitOnlineLogParserTest.class.getResource("/").getPath()+"../test/org/impressivecode/depress/test/scm/git/test_repo.zip";
     private String repoPath;
     private File tempDir = null;
 
