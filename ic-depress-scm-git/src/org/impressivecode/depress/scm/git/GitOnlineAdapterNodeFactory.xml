@@ -42,7 +42,9 @@
         </intro>
 
         <option name="Remote repository address">Address of remote GIT's repository which You want to clone and analyze</option>
-        <option name="Repository address">Address of Git's repository which should be analyzed. It should be local path and it should be empty. If You want to clone remote repo it will be cloned into this path.</option>
+        <option name="Repository address">Address of Git's repository which should be analyzed. 
+            It should be local path and if it will be empty than clonning will be exactly into this path or if it will be not empty than clonning will be into path get from repository's url. 
+            If You want to clone remote repo it will be cloned into this path.</option>
         <option name="Choose branch">You can get list of branches into analyzed repository with button "Get branches" and select branch which You want to analyze</option>
         <option name="Issue marker">Marker for extraction name of class</option>
         <option name="Package">Name of package</option>

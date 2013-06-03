@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.SwingWorker;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.NoWorkTreeException;
@@ -63,9 +64,27 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         cloneButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (cloneRepository()){
-                    getBranchesList();
-                }
+                
+                new SwingWorker<Void, String>() {
+                    Boolean cloneResult;
+                    @SuppressWarnings("deprecation")
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        cloneButton.setText("Clonning...");
+                        cloneButton.setEnabled(false);
+                        cloneResult = cloneRepository();
+                        return null;
+                    }
+
+                    @SuppressWarnings("deprecation")
+                    @Override
+                    protected void done() {
+                        cloneButton.setText("Clone repository");
+                        cloneButton.setEnabled(true);
+                        if (cloneResult)
+                            getBranchesList();
+                    }
+                }.execute();
             }
             
         });
@@ -116,12 +135,15 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
             String gitPath = repoPath.getStringValue();
             File localRepo = new File(gitPath);
             if (gitRemote.length() != 0 && gitPath.length() != 0){                
-                if (localRepo.isDirectory() == false || localRepo.list().length > 0){
+                if (localRepo.isDirectory() == false){
                     logger.error("Local path should be empty");
                     return false;
                 } else {
-                    //@TODO: make that cloning progress will be displayed in knime console in some way:
-                    //TextProgressMonitor monitor = new TextProgressMonitor();
+                    if (localRepo.list().length > 0){
+                        gitPath = gitPath+File.separatorChar+this.getLocalPathName(gitRemote);
+                        localRepo = new File(gitPath);
+                        repoPath.setStringValue(gitPath);
+                    }
                     NodeLoggerProgressMonitor monitor = new NodeLoggerProgressMonitor(logger);
                     GitOnlineLogParser.cloneRepository(gitRemote, gitPath, monitor); 
                     return true;
@@ -149,5 +171,16 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
             errorBranchList.add("<Error>");
             comboBox.replaceListItems(errorBranchList, null);
         }
+    }
+    
+    private String getLocalPathName(final String url){
+        String folderName;
+        String[] splittedUrl = url.split("/");
+        String possiblePathName = splittedUrl[splittedUrl.length - 1];
+        if (possiblePathName.length() == 0)
+            possiblePathName = splittedUrl[splittedUrl.length - 2];
+        
+        folderName = possiblePathName.replace(".git", "");
+        return folderName;
     }
 }
