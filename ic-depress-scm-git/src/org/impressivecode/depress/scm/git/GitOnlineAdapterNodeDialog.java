@@ -55,7 +55,7 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
     private final List<String> branchList = new ArrayList<String>();
     private final String initialProgressInfo = "Cloning progress: not running";
     final DialogComponentLabel progressInfoLabel = new DialogComponentLabel(initialProgressInfo);
-    
+
 
     DialogComponentStringSelection comboBox;
 
@@ -64,17 +64,17 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
         final DialogComponentString remoteRepoAddress = new DialogComponentString(remoteRepo, "Remote repository address: ");
         final DialogComponentButton cloneButton = new DialogComponentButton("Clone repository");
-        
+
         cloneButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 new SwingWorker<Void, String>() {
                     Boolean cloneResult;
                     @SuppressWarnings("deprecation")
                     @Override
                     protected Void doInBackground() throws Exception {
-                        cloneButton.setText("Clonning...");
+                        cloneButton.setText("Cloning...");
                         cloneButton.setEnabled(false);
                         cloneResult = cloneRepository();
                         return null;
@@ -91,9 +91,9 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
                     }
                 }.execute();
             }
-            
+
         });
-        
+
         branchList.add("<Click on \"Get Branches\">");
 
         DialogComponentFileChooser comp = new DialogComponentFileChooser(repoPath, GitOnlineAdapterNodeModel.GIT_REPOSITORY_ADDRESS, JFileChooser.OPEN_DIALOG, true);
@@ -113,7 +113,7 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
                 getBranchesList();
             }
         });
-        
+
         createNewGroup("Choose repository");
         setHorizontalPlacement(true);
         addDialogComponent(remoteRepoAddress);
@@ -125,7 +125,7 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(comboBox);
         addDialogComponent(button);
         setHorizontalPlacement(false);
-        
+
         createNewGroup("Other settings");
         addDialogComponent(new DialogComponentString(new SettingsModelString(GitOnlineAdapterNodeModel.GIT_REGEXP,
                 GitOnlineAdapterNodeModel.GIT_REGEXP_DEFAULT), "Issue marker: "));
@@ -133,14 +133,14 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(new DialogComponentString(new SettingsModelString(GitOnlineAdapterNodeModel.GIT_PACKAGENAME,
                 GitOnlineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT), "Package: "));
     }
-    
-    
+
+
     private Boolean cloneRepository(){
         try {
             String gitRemote = remoteRepo.getStringValue();
             String gitPath = repoPath.getStringValue();
             File localRepo = new File(gitPath);
-            if (gitRemote.length() != 0 && gitPath.length() != 0){                
+            if (gitRemote.length() != 0 && gitPath.length() != 0){
                 if (localRepo.isDirectory() == false){
                     logger.error("Local path should be empty");
                     return false;
@@ -153,7 +153,7 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
                     //NodeLoggerProgressMonitor monitor = new NodeLoggerProgressMonitor(logger);
                     LabelProgressMonitor monitor = new LabelProgressMonitor(progressInfoLabel, "Cloning progress: ");
                     progressInfoLabel.setText("Clonning progress: starting");
-                    GitOnlineLogParser.cloneRepository(gitRemote, gitPath, monitor); 
+                    GitOnlineLogParser.cloneRepository(gitRemote, gitPath, monitor);
                     return true;
                 }
             } else {
@@ -165,7 +165,7 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
             return false;
         }
     }
-    
+
     private void getBranchesList(){
         try {
             String gitPath = GitOnlineAdapterNodeModel.getGitPath(repoPath.getStringValue());
@@ -180,14 +180,14 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
             comboBox.replaceListItems(errorBranchList, null);
         }
     }
-    
+
     private String getLocalPathName(final String url){
         String folderName;
         String[] splittedUrl = url.split("/");
         String possiblePathName = splittedUrl[splittedUrl.length - 1];
         if (possiblePathName.length() == 0)
             possiblePathName = splittedUrl[splittedUrl.length - 2];
-        
+
         folderName = possiblePathName.replace(".git", "");
         return folderName;
     }
