@@ -33,6 +33,7 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
+import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
@@ -52,6 +53,8 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
     private final SettingsModelString remoteRepo = new SettingsModelString(GitOnlineAdapterNodeModel.GIT_REMOTE_REPOSITORY_ADDRESS,
             GitOnlineAdapterNodeModel.GIT_REMOTE_REPOSITORY_DEFAULT);
     private final List<String> branchList = new ArrayList<String>();
+    private final String initialProgressInfo = "Cloning progress: not running";
+    final DialogComponentLabel progressInfoLabel = new DialogComponentLabel(initialProgressInfo);
     
 
     DialogComponentStringSelection comboBox;
@@ -61,6 +64,7 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
         final DialogComponentString remoteRepoAddress = new DialogComponentString(remoteRepo, "Remote repository address: ");
         final DialogComponentButton cloneButton = new DialogComponentButton("Clone repository");
+        
         cloneButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,6 +85,7 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
                     protected void done() {
                         cloneButton.setText("Clone repository");
                         cloneButton.setEnabled(true);
+                        progressInfoLabel.setText(initialProgressInfo);
                         if (cloneResult)
                             getBranchesList();
                     }
@@ -114,6 +119,7 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(remoteRepoAddress);
         addDialogComponent(cloneButton);
         setHorizontalPlacement(false);
+        addDialogComponent(progressInfoLabel);
         addDialogComponent(comp);
         setHorizontalPlacement(true);
         addDialogComponent(comboBox);
@@ -144,7 +150,9 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
                         localRepo = new File(gitPath);
                         repoPath.setStringValue(gitPath);
                     }
-                    NodeLoggerProgressMonitor monitor = new NodeLoggerProgressMonitor(logger);
+                    //NodeLoggerProgressMonitor monitor = new NodeLoggerProgressMonitor(logger);
+                    LabelProgressMonitor monitor = new LabelProgressMonitor(progressInfoLabel, "Cloning progress: ");
+                    progressInfoLabel.setText("Clonning progress: starting");
                     GitOnlineLogParser.cloneRepository(gitRemote, gitPath, monitor); 
                     return true;
                 }
