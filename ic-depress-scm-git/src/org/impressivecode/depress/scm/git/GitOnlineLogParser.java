@@ -87,7 +87,7 @@ public class GitOnlineLogParser {
 
         return branches;
     }
-    
+
     public static void cloneRepository(final String remoteAddress, final String localPath, ProgressMonitor monitor) throws InvalidRemoteException, TransportException, GitAPIException{
         CloneCommand clone = Git.cloneRepository();
         clone.setBare(false);
@@ -95,7 +95,7 @@ public class GitOnlineLogParser {
         clone.setDirectory(new File(localPath));
         clone.setURI(remoteAddress);
         clone.setProgressMonitor(monitor);
-        clone.call();   
+        clone.call();
     }
 
     private static Git initializeGit(final String path) throws IOException, NoHeadException {
@@ -267,11 +267,10 @@ public class GitOnlineLogParser {
         RevWalk rw = new RevWalk(repository);
         List<String> filesList = new ArrayList<String>();
         String fileLine = "";
-        // FIXME: need to skip merge commits
-        //if (commit.getParentCount() > 1) {
-        // Merge commit
-        //}
-        if (commit.getParentCount() == 0) {
+
+        if (commit.getParentCount() > 1) {
+            // Merge commit
+        } else if (commit.getParentCount() == 0) {
             TreeWalk tw = new TreeWalk(repository);
             tw.reset();
             tw.setRecursive(true);
