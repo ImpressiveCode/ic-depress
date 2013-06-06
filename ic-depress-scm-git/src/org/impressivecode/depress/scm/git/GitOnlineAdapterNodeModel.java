@@ -56,6 +56,8 @@ public class GitOnlineAdapterNodeModel extends NodeModel {
 
     static final String GIT_REPOSITORY_ADDRESS = "depress.scm.gitonline.filename";
     static final String GIT_REPOSITORY_DEFAULT = "";
+    static final String GIT_REMOTE_REPOSITORY_ADDRESS = "depress.scm.gitonline.remoteaddress";
+    static final String GIT_REMOTE_REPOSITORY_DEFAULT = "";
     static final String GIT_BRANCH = "depress.scm.git.branch";
     static final String GIT_BRANCH_DEFAULT = "";
     static final String GIT_REGEXP = "depress.scm.git.regexp";
