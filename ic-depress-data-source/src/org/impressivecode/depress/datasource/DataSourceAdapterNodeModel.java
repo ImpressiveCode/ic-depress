@@ -15,10 +15,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.datasource;
+package org.impressivecode.depress.datasource;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static org.impressivecode.depress.metric.datasource.DataSourceAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.datasource.DataSourceAdapterTableFactory.createDataColumnSpec;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,22 +64,22 @@ public class DataSourceAdapterNodeModel extends NodeModel {
 
         LOGGER.info("Preparing to read datasource entries.");
         String datasourceFilePath = fileSettings.getStringValue();
-        ArrayList<ClassDataEntry> entries = parseEntries(datasourceFilePath);
+        ArrayList<DataSourceAdapterClassDataEntry> entries = parseEntries(datasourceFilePath);
         LOGGER.info("Transforming to datasource entries.");
         BufferedDataTable out = transform(entries, exec);
         LOGGER.info("datasource table created.");
         return new BufferedDataTable[] { out };
     }
 
-    private BufferedDataTable transform(final ArrayList<ClassDataEntry> entries, final ExecutionContext exec)
+    private BufferedDataTable transform(final ArrayList<DataSourceAdapterClassDataEntry> entries, final ExecutionContext exec)
             throws CanceledExecutionException {
         DataSourceAdapterTransformer transformer = new DataSourceAdapterTransformer(createDataColumnSpec());
         return transformer.transform(entries, exec);
     }
 
-    private ArrayList<ClassDataEntry> parseEntries(final String datasourceFilePath) throws ParserConfigurationException,
+    private ArrayList<DataSourceAdapterClassDataEntry> parseEntries(final String datasourceFilePath) throws ParserConfigurationException,
     SAXException, IOException {
-    	ClassDataEntriesParser parser = new ClassDataEntriesParser();
+    	DataSourceAdapterClassDataEntriesParser parser = new DataSourceAdapterClassDataEntriesParser();
         return parser.parseEntries(datasourceFilePath);
     }
 

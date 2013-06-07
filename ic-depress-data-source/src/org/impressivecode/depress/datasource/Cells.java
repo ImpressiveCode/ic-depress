@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.datasource;
+package org.impressivecode.depress.datasource;
 
 import static com.google.common.collect.Lists.transform;
 import static com.google.common.collect.Sets.newHashSet;

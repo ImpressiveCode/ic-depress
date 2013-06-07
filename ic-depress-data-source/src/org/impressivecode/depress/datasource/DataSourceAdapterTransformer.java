@@ -1,21 +1,21 @@
 /*
-ImpressiveCode Depress Framework
-Copyright (C) 2013  ImpressiveCode contributors
+ ImpressiveCode Depress Framework
+ Copyright (C) 2013  ImpressiveCode contributors
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.datasource;
+package org.impressivecode.depress.datasource;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -52,10 +52,10 @@ public class DataSourceAdapterTransformer {
         this.tableSpec = tableSpec;
     }
 
-    public BufferedDataTable transform(final List<ClassDataEntry> datasource_data, final ExecutionContext exec)
+    public BufferedDataTable transform(final List<DataSourceAdapterClassDataEntry> datasource_data, final ExecutionContext exec)
             throws CanceledExecutionException {
         BufferedDataContainer container = createDataContainer(exec);
-        for (ClassDataEntry entry : datasource_data) {
+        for (DataSourceAdapterClassDataEntry entry : datasource_data) {
             progress(exec);
 
             if (LOGGER.isDebugEnabled()) {
@@ -73,13 +73,13 @@ public class DataSourceAdapterTransformer {
         return out;
     }
 
-    private DataRow createTableRow(final ClassDataEntry entry) {
+    private DataRow createTableRow(final DataSourceAdapterClassDataEntry entry) {
         DataCell[] cells = getDataSourceCells(entry);
         DataRow row = new DefaultRow(RowKey.createRowKey(rowCounter++), cells);
         return row;
     }
 
-    private DataCell[] getDataSourceCells(final ClassDataEntry value) {
+    private DataCell[] getDataSourceCells(final DataSourceAdapterClassDataEntry value) {
         DataCell[] cells = {
         		Cells.stringOrMissingCell(value.getClassName()),
         		Cells.stringOrMissingCell(value.getMethodName()),
