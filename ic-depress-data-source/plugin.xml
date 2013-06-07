@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+   <extension point="org.knime.workbench.repository.nodes">
+      <node
+            category-path="depress"
+            factory-class="org.impressivecode.depress.metric.datasource.DataSourceAdapterNodeFactory"
+            id="org.impressivecode.depress.metric.judy">
+      </node>
+</extension>
+</plugin>
