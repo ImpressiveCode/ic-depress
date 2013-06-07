@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?eclipse version="3.0"?><plugin>
+
+   <extension point="org.knime.workbench.repository.nodes">
+      <node category-path="/depress.category" factory-class="org.impressivecode.depress.scm.svn.SVNNodeFactory" id="org.impressivecode.depress.scm.svn.SVNNodeFactory"/>
+</extension>
+   <extension
+         point="org.knime.workbench.repository.categories">
+      <category
+            level-id="depress.category"
+            name="DePress"
+            path="/">
+      </category>
+   </extension>
+   
+</plugin>

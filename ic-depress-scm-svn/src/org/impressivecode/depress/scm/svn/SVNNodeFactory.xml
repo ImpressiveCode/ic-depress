@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./default.png" type="Source">
+    <name>SVN SCM</name>
+    
+    <shortDescription>
+        This plug-in reads metrics related to selected project stored in SVN repository.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>Knime plugin to read commits metrics from <br></br>
+        - svn repository log file or online svn repository </intro>
+        
+    
+        <option name="Selected file">SVN XML log file to load or web path to repository<br></br>
+        Example :<br></br>
+        local: <br></br>
+        - file : (C:\repo\app\log.xml)<br></br>
+        web: <br></br>
+        - anonymous access : (http://svn/app/trunk)<br></br>
+        - secured access : (http://svn/app/trunk;login;password)
+        </option>
+       
+    
+        <option name="Issue marker">marker type that you're looking at <br></br>
+        Example :<br></br>
+        - #21 or #bugfix
+        </option>
+        
+		<option name="Package">Package name (local xml) or Project directory (online repository) <br></br>
+		Example :<br></br>
+		- local (java class namespace): <br></br>
+		* (org.*)<br></br>
+		- web (repository path to directory): <br></br>
+		* single directory (\tag\org\)<br></br>
+		* multi directory (\tag\org\;\trunk\org\)
+		</option>
+       
+    </fullDescription>
+ 
+    <ports>
+        <outPort index="0" name="SVN log Metrics">Table with svn commit logs data</outPort>
+        <!-- possibly more output ports here-->
+    </ports>    
+</knimeNode>

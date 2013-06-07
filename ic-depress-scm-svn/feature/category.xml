@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.impressivecode.depress_1.0.0.qualifier.jar" id="org.impressivecode.depress" version="1.0.0.qualifier">
+      <category name="svn_plugin"/>
+   </feature>
+   <feature url="features/org.impressivecode.depress.svn_1.0.0.qualifier.jar" id="org.impressivecode.depress.svn" version="1.0.0.qualifier">
+      <category name="org.impressivecode.depress"/>
+   </feature>
+   <category-def name="org.impressivecode.depress" label="Depress"/>
+</site>
