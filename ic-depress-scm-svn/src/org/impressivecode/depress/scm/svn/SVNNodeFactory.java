@@ -1,9 +1,3 @@
-package org.impressivecode.depress.scm.svn;
-
-import org.knime.core.node.NodeDialogPane;
-import org.knime.core.node.NodeFactory;
-import org.knime.core.node.NodeView;
-
 /*
  ImpressiveCode Depress Framework
  Copyright (C) 2013  ImpressiveCode contributors
@@ -21,6 +15,12 @@ import org.knime.core.node.NodeView;
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+package org.impressivecode.depress.scm.svn;
+
+import org.knime.core.node.NodeDialogPane;
+import org.knime.core.node.NodeFactory;
+import org.knime.core.node.NodeView;
 
 /**
  * <code>NodeFactory</code> for the "SVNNode" Node. KNIME

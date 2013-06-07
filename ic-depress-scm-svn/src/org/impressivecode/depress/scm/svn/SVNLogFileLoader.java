@@ -1,16 +1,3 @@
-package org.impressivecode.depress.scm.svn;
-
-import java.io.File;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.knime.core.node.CanceledExecutionException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 /*
  ImpressiveCode Depress Framework
  Copyright (C) 2013  ImpressiveCode contributors
@@ -28,6 +15,19 @@ import org.w3c.dom.NodeList;
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+package org.impressivecode.depress.scm.svn;
+
+import java.io.File;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.knime.core.node.CanceledExecutionException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class SVNLogFileLoader extends SVNLogLoader {
 
@@ -109,7 +109,7 @@ public class SVNLogFileLoader extends SVNLogLoader {
 
 						tmData.path = ePathElement.getTextContent();
 
-						if (isValidFile(tmData.path)) {
+						if (!isValidFile(tmData.path)) {
 							continue;
 						}
 

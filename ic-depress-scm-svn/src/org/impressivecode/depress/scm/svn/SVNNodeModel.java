@@ -1,20 +1,3 @@
-package org.impressivecode.depress.scm.svn;
-
-import java.io.File;
-import java.io.IOException;
-
-import org.impressivecode.depress.scm.svn.SVNLogLoader.IReadProgressListener;
-import org.knime.core.data.DataTableSpec;
-import org.knime.core.node.BufferedDataContainer;
-import org.knime.core.node.BufferedDataTable;
-import org.knime.core.node.CanceledExecutionException;
-import org.knime.core.node.ExecutionContext;
-import org.knime.core.node.ExecutionMonitor;
-import org.knime.core.node.InvalidSettingsException;
-import org.knime.core.node.NodeModel;
-import org.knime.core.node.NodeSettingsRO;
-import org.knime.core.node.NodeSettingsWO;
-
 /*
  ImpressiveCode Depress Framework
  Copyright (C) 2013  ImpressiveCode contributors
@@ -32,6 +15,24 @@ import org.knime.core.node.NodeSettingsWO;
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+package org.impressivecode.depress.scm.svn;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.impressivecode.depress.scm.svn.SVNLogLoader.IReadProgressListener;
+import org.knime.core.data.DataTableSpec;
+import org.knime.core.node.BufferedDataContainer;
+import org.knime.core.node.BufferedDataTable;
+import org.knime.core.node.CanceledExecutionException;
+import org.knime.core.node.ExecutionContext;
+import org.knime.core.node.ExecutionMonitor;
+import org.knime.core.node.InvalidSettingsException;
+import org.knime.core.node.NodeModel;
+import org.knime.core.node.NodeSettingsRO;
+import org.knime.core.node.NodeSettingsWO;
+
 public class SVNNodeModel extends NodeModel {
 
 	class ModelRowReader implements IReadProgressListener {
@@ -108,9 +109,9 @@ public class SVNNodeModel extends NodeModel {
 
 		loader = new SVNLogRepoLoader();
 
-		loader.load(SVNSettings.SVN_PATH_MODEL.getStringValue(),
-				SVNSettings.ISSUE_MARKER_MODEL.getStringValue(),
-				SVNSettings.PACKAGE_MODEL.getStringValue(), reader);
+		loader.load(SVNSettings.SVN_PATH.getStringValue(),
+				SVNSettings.SVN_ISSUE_MARKER.getStringValue(),
+				SVNSettings.SVN_PACKAGE.getStringValue(), reader);
 
 		Logger.instance().warn(SVNLocale.iEndLoading());
 

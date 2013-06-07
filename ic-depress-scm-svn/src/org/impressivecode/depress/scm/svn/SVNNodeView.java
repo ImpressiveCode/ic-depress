@@ -1,7 +1,3 @@
-package org.impressivecode.depress.scm.svn;
-
-import org.knime.core.node.NodeView;
-
 /*
 ImpressiveCode Depress Framework
 Copyright (C) 2013  ImpressiveCode contributors
@@ -18,51 +14,54 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
+
+package org.impressivecode.depress.scm.svn;
+
+import org.knime.core.node.NodeView;
+
 public class SVNNodeView extends NodeView<SVNNodeModel> {
 
-    /**
-     * Creates a new view.
-     * 
-     * @param nodeModel The model (class: {@link SVNNodeModel})
-     */
-    protected SVNNodeView(final SVNNodeModel nodeModel) {
-        super(nodeModel);
+	/**
+	 * Creates a new view.
+	 * 
+	 * @param nodeModel
+	 *            The model (class: {@link SVNNodeModel})
+	 */
+	protected SVNNodeView(final SVNNodeModel nodeModel) {
+		super(nodeModel);
 
-    }
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void modelChanged() {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void modelChanged() {
 
-        // update the view.
-        SVNNodeModel nodeModel = 
-            getNodeModel();
-        assert nodeModel != null;
-        
-        // be aware of a possibly not executed nodeModel! The data you retrieve
-        // from your nodemodel could be null, emtpy, or invalid in any kind.
-        
-    }
+		// update the view.
+		SVNNodeModel nodeModel = getNodeModel();
+		assert nodeModel != null;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void onClose() {
-    
-    	
-    }
+		// be aware of a possibly not executed nodeModel! The data you retrieve
+		// from your nodemodel could be null, emtpy, or invalid in any kind.
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void onOpen() {
-    	
-    }
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void onClose() {
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void onOpen() {
+
+	}
 
 }
-

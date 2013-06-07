@@ -1,5 +1,3 @@
-package org.impressivecode.depress.scm.svn;
-
 /*
  ImpressiveCode Depress Framework
  Copyright (C) 2013  ImpressiveCode contributors
@@ -17,6 +15,8 @@ package org.impressivecode.depress.scm.svn;
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+package org.impressivecode.depress.scm.svn;
 
 public class SVNLogRow {
 

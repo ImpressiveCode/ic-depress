@@ -1,8 +1,3 @@
-package org.impressivecode.depress.scm.svn;
-
-import org.knime.core.node.NodeLogger;
-import org.knime.core.node.NodeLogger.LEVEL;
-
 /*
  ImpressiveCode Depress Framework
  Copyright (C) 2013  ImpressiveCode contributors
@@ -20,6 +15,12 @@ import org.knime.core.node.NodeLogger.LEVEL;
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+package org.impressivecode.depress.scm.svn;
+
+import org.knime.core.node.NodeLogger;
+import org.knime.core.node.NodeLogger.LEVEL;
+
 public final class Logger {
 
 	private NodeLogger logger;
@@ -44,17 +45,12 @@ public final class Logger {
 	public void error(Object info, Throwable e) {
 		if (logger != null) {
 			logger.error(info, e);
-		} else {
-			System.err.println(info != null ? info : "" + " " + e != null ? e
-					.getMessage() : "");
 		}
 	}
 
 	public void warn(Object info) {
 		if (logger != null) {
 			logger.warn(info);
-		} else {
-			System.out.println(info != null ? info : "");
 		}
 	}
 

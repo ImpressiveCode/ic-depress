@@ -1,11 +1,3 @@
-package org.impressivecode.depress.scm.svn;
-
-import org.knime.core.node.InvalidSettingsException;
-import org.knime.core.node.NodeSettingsWO;
-import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
-import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
-import org.knime.core.node.defaultnodesettings.DialogComponentString;
-
 /*
  ImpressiveCode Depress Framework
  Copyright (C) 2013  ImpressiveCode contributors
@@ -24,6 +16,14 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package org.impressivecode.depress.scm.svn;
+
+import org.knime.core.node.InvalidSettingsException;
+import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
+import org.knime.core.node.defaultnodesettings.DialogComponentString;
+
 public class SVNNodeDialog extends DefaultNodeSettingsPane {
 
 	private DialogComponentFileChooser pathChooserDialog;
@@ -38,12 +38,12 @@ public class SVNNodeDialog extends DefaultNodeSettingsPane {
 		super();
 
 		pathChooserDialog = new DialogComponentFileChooser(
-				SVNSettings.SVN_PATH_MODEL, SVNSettings.CFG_SVN_PATH, ".xml");
+				SVNSettings.SVN_PATH, SVNSettings.SVN_PATH_CFG, ".xml");
 
 		issueMakerDialog = new DialogComponentString(
-				SVNSettings.ISSUE_MARKER_MODEL, SVNLocale.nIssueMarker());
+				SVNSettings.SVN_ISSUE_MARKER, SVNLocale.nIssueMarker());
 
-		packageDialog = new DialogComponentString(SVNSettings.PACKAGE_MODEL,
+		packageDialog = new DialogComponentString(SVNSettings.SVN_PACKAGE,
 				SVNLocale.nPackage());
 
 		addDialogComponent(pathChooserDialog);

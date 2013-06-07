@@ -1,7 +1,3 @@
-package org.impressivecode.depress.scm.svn;
-
-import org.knime.core.node.CanceledExecutionException;
-
 /*
  ImpressiveCode Depress Framework
  Copyright (C) 2013  ImpressiveCode contributors
@@ -19,6 +15,10 @@ import org.knime.core.node.CanceledExecutionException;
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+package org.impressivecode.depress.scm.svn;
+
+import org.knime.core.node.CanceledExecutionException;
 
 public abstract class SVNLogLoader {
 
@@ -103,9 +103,9 @@ public abstract class SVNLogLoader {
 		if (dirs.length > 0) {
 			String last = dirs[dirs.length - 1];
 
-			return last.contains(".");
+			return last.toLowerCase().contains(".java");
 		} else {
-			return dirs[0].contains(".");
+			return dirs[0].toLowerCase().contains(".java");
 		}
 	}
 
