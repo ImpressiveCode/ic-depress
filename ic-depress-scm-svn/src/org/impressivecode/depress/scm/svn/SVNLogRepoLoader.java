@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.knime.core.node.CanceledExecutionException;
+import org.knime.core.node.NodeLogger;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNLogEntry;
 import org.tmatesoft.svn.core.SVNLogEntryPath;
@@ -34,6 +35,9 @@ import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
 public class SVNLogRepoLoader extends SVNLogFileLoader {
+
+	private static final NodeLogger logger = NodeLogger
+			.getLogger(SVNLogFileLoader.class);
 
 	private final int PathId = 0;
 	private final int UserId = 1;
@@ -66,7 +70,7 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 			return inPath;
 		}
 
-		Logger.instance().warn(SVNLocale.iIvalidRepoPath());
+		logger.warn(SVNLocale.iIvalidRepoPath());
 
 		return null;
 	}
@@ -87,7 +91,7 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 
 		try {
 
-			Logger.instance().warn(SVNLocale.iInitOnlineRepo(url));
+			logger.warn(SVNLocale.iInitOnlineRepo(url));
 
 			@SuppressWarnings("deprecation")
 			SVNRepository repository = SVNRepositoryFactory.create(SVNURL
@@ -114,7 +118,7 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 
 			inProgress.onReadProgress(100, null);
 
-			Logger.instance().warn(SVNLocale.iStartLoadOnlineRepo());
+			logger.warn(SVNLocale.iStartLoadOnlineRepo());
 
 			inProgress.onReadProgress(0, null);
 
@@ -158,18 +162,18 @@ public class SVNLogRepoLoader extends SVNLogFileLoader {
 			}
 
 		} catch (SVNException e) {
-			Logger.instance().error(SVNLocale.iSVNInternalError(), e);
+			logger.error(SVNLocale.iSVNInternalError(), e);
 			inProgress.onReadProgress(0, null);
 		} catch (CanceledExecutionException e) {
-			Logger.instance().warn(SVNLocale.iCancelLoading());
+			logger.warn(SVNLocale.iCancelLoading());
 			inProgress.onReadProgress(0, null);
 		} catch (Exception e) {
-			Logger.instance().error(SVNLocale.iSVNInternalError(), e);
+			logger.error(SVNLocale.iSVNInternalError(), e);
 			inProgress.onReadProgress(0, null);
 		}
 
 		finally {
-			Logger.instance().warn(SVNLocale.iEndLoadOnlineRepo());
+			logger.warn(SVNLocale.iEndLoadOnlineRepo());
 		}
 	}
 

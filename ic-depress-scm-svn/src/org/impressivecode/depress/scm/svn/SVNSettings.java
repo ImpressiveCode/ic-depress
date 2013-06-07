@@ -19,17 +19,22 @@
 package org.impressivecode.depress.scm.svn;
 
 import org.knime.core.node.InvalidSettingsException;
+import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 public class SVNSettings {
 
+	private static final NodeLogger logger = NodeLogger
+			.getLogger(SVNSettings.class);
+
 	public final static SettingsModelString SVN_PATH = new SettingsModelString(
 			SVNSettings.SVN_PATH_CFG, SVNSettings.SVN_DEFAULT_FILE_PATH);
 
 	public static final SettingsModelString SVN_ISSUE_MARKER = new SettingsModelString(
-			SVNSettings.SVN_ISSUE_REGEX_CFG, SVNSettings.SVN_DEFAULT_ISSUE_REGEX);
+			SVNSettings.SVN_ISSUE_REGEX_CFG,
+			SVNSettings.SVN_DEFAULT_ISSUE_REGEX);
 
 	public static final SettingsModelString SVN_PACKAGE = new SettingsModelString(
 			SVNSettings.SVN_PACKAGE_CFG, SVNSettings.SVN_DEFAULT_PACKAGE);
@@ -53,7 +58,7 @@ public class SVNSettings {
 			SVN_ISSUE_MARKER.loadSettingsFrom(settings);
 			SVN_PACKAGE.loadSettingsFrom(settings);
 		} catch (InvalidSettingsException e) {
-			Logger.instance().error(SVNLocale.eLoadSettings(), e);
+			logger.error(SVNLocale.eLoadSettings(), e);
 		}
 	}
 
@@ -69,7 +74,7 @@ public class SVNSettings {
 			SVN_ISSUE_MARKER.validateSettings(settings);
 			SVN_PACKAGE.validateSettings(settings);
 		} catch (InvalidSettingsException e) {
-			Logger.instance().error(SVNLocale.eValidateSettings(), e);
+			logger.error(SVNLocale.eValidateSettings(), e);
 		}
 	}
 }

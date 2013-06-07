@@ -29,11 +29,15 @@ import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
+import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 
 public class SVNNodeModel extends NodeModel {
+
+	private static final NodeLogger logger = NodeLogger
+			.getLogger(SVNNodeModel.class);
 
 	class ModelRowReader implements IReadProgressListener {
 
@@ -100,7 +104,7 @@ public class SVNNodeModel extends NodeModel {
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
 			final ExecutionContext exec) throws Exception {
 
-		Logger.instance().warn(SVNLocale.iStartLoading());
+		logger.warn(SVNLocale.iStartLoading());
 
 		dataContainer = exec.createDataContainer(new DataTableSpec(
 				SVNLogRowSpec.createColumnSpec()));
@@ -113,7 +117,7 @@ public class SVNNodeModel extends NodeModel {
 				SVNSettings.SVN_ISSUE_MARKER.getStringValue(),
 				SVNSettings.SVN_PACKAGE.getStringValue(), reader);
 
-		Logger.instance().warn(SVNLocale.iEndLoading());
+		logger.warn(SVNLocale.iEndLoading());
 
 		reader.close();
 
@@ -136,7 +140,7 @@ public class SVNNodeModel extends NodeModel {
 	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
 			throws InvalidSettingsException {
 		SVNSettings.loadSettingsFrom(settings);
-		Logger.instance().warn(SVNLocale.iSettingsLoaded());
+		logger.warn(SVNLocale.iSettingsLoaded());
 	}
 
 	/**
@@ -163,7 +167,7 @@ public class SVNNodeModel extends NodeModel {
 	@Override
 	protected void saveSettingsTo(final NodeSettingsWO settings) {
 		SVNSettings.saveSettingsTo(settings);
-		Logger.instance().warn(SVNLocale.iSettingsSaved());
+		logger.warn(SVNLocale.iSettingsSaved());
 	}
 
 	/**

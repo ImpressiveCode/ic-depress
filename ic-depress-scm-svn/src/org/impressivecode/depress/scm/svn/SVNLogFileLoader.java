@@ -24,12 +24,16 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.knime.core.node.CanceledExecutionException;
+import org.knime.core.node.NodeLogger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class SVNLogFileLoader extends SVNLogLoader {
+
+	private static final NodeLogger logger = NodeLogger
+			.getLogger(SVNLogFileLoader.class);
 
 	/**
 	 * Actions: A - the item is added D - the item was deleted M - properties or
@@ -48,7 +52,7 @@ public class SVNLogFileLoader extends SVNLogLoader {
 
 		try {
 
-			Logger.instance().warn(SVNLocale.iInitLocalRepo(inPath));
+			logger.warn(SVNLocale.iInitLocalRepo(inPath));
 
 			if (inPackage.endsWith(".*")) {
 				inPackage = inPackage.substring(0, inPackage.length() - 2);
@@ -65,7 +69,7 @@ public class SVNLogFileLoader extends SVNLogLoader {
 
 			NodeList nList = doc.getElementsByTagName("logentry");
 
-			Logger.instance().warn(SVNLocale.iStartLoadLocalRepo());
+			logger.warn(SVNLocale.iStartLoadLocalRepo());
 
 			tmData.issueMarker = inIssueMarker;
 
@@ -128,15 +132,15 @@ public class SVNLogFileLoader extends SVNLogLoader {
 
 			}
 		} catch (CanceledExecutionException e) {
-			Logger.instance().warn(SVNLocale.iCancelLoading());
+			logger.warn(SVNLocale.iCancelLoading());
 			inProgress.onReadProgress(0, null);
 		} catch (Exception e) {
-			Logger.instance().error(SVNLocale.iSVNInternalError(), e);
+			logger.error(SVNLocale.iSVNInternalError(), e);
 			inProgress.onReadProgress(0, null);
 		}
 
 		finally {
-			Logger.instance().warn(SVNLocale.iEndLoadLocalRepo());
+			logger.warn(SVNLocale.iEndLoadLocalRepo());
 		}
 	}
 
