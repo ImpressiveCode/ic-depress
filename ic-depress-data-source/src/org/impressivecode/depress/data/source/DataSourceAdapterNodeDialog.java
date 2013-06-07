@@ -18,10 +18,7 @@
 
 package org.impressivecode.depress.data.source;
 import static org.impressivecode.depress.data.source.DataSourceAdapterNodeModel.createFileChooserSettings;
-
 import javax.swing.JFileChooser;
-
-
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 

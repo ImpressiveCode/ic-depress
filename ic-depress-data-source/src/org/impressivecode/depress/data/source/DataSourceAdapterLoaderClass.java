@@ -24,7 +24,6 @@ package org.impressivecode.depress.data.source;
  * 
  */
 import java.io.*; 
-
 import org.impressivecode.depress.data.source.DataSourceAdapterFileOperation;
 
 public class DataSourceAdapterLoaderClass extends ClassLoader 
