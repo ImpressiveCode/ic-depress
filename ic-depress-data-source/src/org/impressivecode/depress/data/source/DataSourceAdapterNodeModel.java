@@ -15,10 +15,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.datasource;
+package org.impressivecode.depress.data.source;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static org.impressivecode.depress.datasource.DataSourceAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.data.source.DataSourceAdapterTableFactory.createDataColumnSpec;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class DataSourceAdapterNodeModel extends NodeModel {
 
     private static final String DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.metric.datasource.confname";
+    private static final String CONFIG_NAME = "depress.datasource.confname";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
     
@@ -122,9 +122,6 @@ public class DataSourceAdapterNodeModel extends NodeModel {
 
     static SettingsModelString createFileChooserSettings() {
         return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
-    }
     
-    static SettingsModelString BBBB() {
-        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
     }
 }

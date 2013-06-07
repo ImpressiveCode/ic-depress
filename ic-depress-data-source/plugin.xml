@@ -5,8 +5,8 @@
    <extension point="org.knime.workbench.repository.nodes">
       <node
             category-path="depress"
-            factory-class="org.impressivecode.depress.datasource.DataSourceAdapterNodeFactory"
-            id="org.impressivecode.depress.metric.judy">
+            factory-class="org.impressivecode.depress.data.source.DataSourceAdapterNodeFactory"
+            id="org.impressivecode.depress.data.source">
       </node>
 </extension>
 </plugin>

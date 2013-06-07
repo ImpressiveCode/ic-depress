@@ -16,7 +16,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.impressivecode.depress.datasource;
+package org.impressivecode.depress.data.source;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +26,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-
+/**
+ * 
+ * @author Marcin Strzeszyna
+ * @author Wieslaw Rybicki
+ * 
+ */
 public class DataSourceAdapterClassDataEntriesParser {
 
 	public ArrayList<DataSourceAdapterClassDataEntry> parseEntries(String path) throws IOException{
@@ -76,6 +81,7 @@ public class DataSourceAdapterClassDataEntriesParser {
 		{
 	        int modifier = temp.getModifiers();
 			DataSourceAdapterClassDataEntry entity = new DataSourceAdapterClassDataEntry();
+			entity.setLocation(path);
 			entity.setClassName(cl.getName());
 			entity.setMethodName(temp.getName());
 			entity.setIsPublic(Modifier.isPublic(modifier));
@@ -84,7 +90,6 @@ public class DataSourceAdapterClassDataEntriesParser {
 			entity.setIsStatic(Modifier.isStatic(modifier));
 			entity.setIsFinal(Modifier.isFinal(modifier));
 			entity.setIsAbstract(Modifier.isAbstract(modifier));
-			entity.setLocation(path);
 			output.add(entity);
 		}
 	}

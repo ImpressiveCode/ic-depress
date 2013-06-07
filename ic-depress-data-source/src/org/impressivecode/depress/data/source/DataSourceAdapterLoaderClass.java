@@ -16,12 +16,16 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.impressivecode.depress.datasource;
-
+package org.impressivecode.depress.data.source;
+/**
+ * 
+ * @author Marcin Strzeszyna
+ * @author Wieslaw Rybicki
+ * 
+ */
 import java.io.*; 
 
-import org.impressivecode.depress.datasource.DataSourceAdapterFileOperation;
-
+import org.impressivecode.depress.data.source.DataSourceAdapterFileOperation;
 
 public class DataSourceAdapterLoaderClass extends ClassLoader 
 {
@@ -40,13 +44,13 @@ public class DataSourceAdapterLoaderClass extends ClassLoader
 		}
 		catch(IOException e)
 		{
-				System.out.println("cLadowaczKlas IO Exceptio"+e);
+				System.out.println("Loadedclass IO Exceptio"+e);
 				throw new ClassNotFoundException(name);
 		}
-		System.out.println("Pierwsza przeszla"+byteTable.length);
-		Class<?> zaladowanaKlasa = defineClass(name,byteTable,0,byteTable.length);
-		if(zaladowanaKlasa==null) throw new ClassNotFoundException(name);
-		return zaladowanaKlasa;
+		System.out.println("First go"+byteTable.length);
+		Class<?> Loadedclass = defineClass(name,byteTable,0,byteTable.length);
+		if(Loadedclass==null) throw new ClassNotFoundException(name);
+		return Loadedclass;
 	}
 	
 	String path;

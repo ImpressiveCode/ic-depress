@@ -16,8 +16,13 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.impressivecode.depress.datasource;
-
+package org.impressivecode.depress.data.source;
+/**
+ * 
+ * @author Marcin Strzeszyna
+ * @author Wieslaw Rybicki
+ * 
+ */
 import java.io.*;
 import java.util.*;
 

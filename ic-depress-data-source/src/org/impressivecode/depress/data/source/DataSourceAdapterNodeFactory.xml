@@ -22,6 +22,7 @@
             returns a table with the following data:
 			<br />
                 <ul>
+                	<li>Location</li>
                     <li>Class Name</li>
 			        <li>Method Name</li>
 			        <li>Public</li>
@@ -29,8 +30,7 @@
 			        <li>Private</li>
 			        <li>Static</li>
 			        <li>Final</li>
-			        <li>Abstract</li>
-			        <li>Location</li>
+			        <li>Abstract</li>			        
                 </ul>           
             </p>
             <p>

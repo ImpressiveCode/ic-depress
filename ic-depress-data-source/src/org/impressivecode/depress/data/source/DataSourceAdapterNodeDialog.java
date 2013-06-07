@@ -16,8 +16,8 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.impressivecode.depress.datasource;
-import static org.impressivecode.depress.datasource.DataSourceAdapterNodeModel.createFileChooserSettings;
+package org.impressivecode.depress.data.source;
+import static org.impressivecode.depress.data.source.DataSourceAdapterNodeModel.createFileChooserSettings;
 
 import javax.swing.JFileChooser;
 
@@ -32,7 +32,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
  */
 public class DataSourceAdapterNodeDialog extends DefaultNodeSettingsPane {
 
-    private static final String HISTORY_ID = "depress.metric.datasource.historyid";
+    private static final String HISTORY_ID = "depress.datasource.historyid";
 
     protected DataSourceAdapterNodeDialog() {
         addDialogComponent(getFileChooserComponent());

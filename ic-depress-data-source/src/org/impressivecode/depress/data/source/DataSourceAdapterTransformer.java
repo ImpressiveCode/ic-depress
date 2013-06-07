@@ -15,14 +15,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.datasource;
+package org.impressivecode.depress.data.source;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-
+import static org.impressivecode.depress.common.Cells;
 import java.util.List;
-
-
-
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
@@ -41,6 +38,7 @@ import org.knime.core.node.NodeLogger.LEVEL;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
+
 public class DataSourceAdapterTransformer {
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(DataSourceAdapterTransformer.class);
@@ -81,6 +79,7 @@ public class DataSourceAdapterTransformer {
 
     private DataCell[] getDataSourceCells(final DataSourceAdapterClassDataEntry value) {
         DataCell[] cells = {
+        		Cells.stringOrMissingCell(value.getLocation()),
         		Cells.stringOrMissingCell(value.getClassName()),
         		Cells.stringOrMissingCell(value.getMethodName()),
         		BooleanCell.get(value.getIsPublic()),
@@ -89,7 +88,6 @@ public class DataSourceAdapterTransformer {
         		BooleanCell.get(value.getIsStatic()),
         		BooleanCell.get(value.getIsFinal()),
         		BooleanCell.get(value.getIsAbstract()),
-        		Cells.stringOrMissingCell(value.getLocation()),
                 };   
         return cells;
     }
