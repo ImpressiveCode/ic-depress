@@ -18,52 +18,38 @@
  */
 package org.impressivecode.depress.data.anonymisation;
 
+import org.knime.core.node.NodeDialogPane;
+import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 
 /**
- * <code>NodeView</code> for the "Anonymisation" Node. Encrypts and decrypts selected 
- * columns from input data set using DES cryptographic algorithm.
- * 
- * @author Andrzej Dudek
- * @author Marcin Bogusz
- * @author Konrad Kocik
+ * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class AnonymisationNodeView extends NodeView<AnonymisationNodeModel> {
+public class DecryptionNodeFactory extends NodeFactory<DecryptionNodeModel> {
 
-    /**
-     * Creates a new view.
-     * 
-     * @param nodeModel
-     *            The model (class: {@link AnonymisationNodeModel})
-     */
-    protected AnonymisationNodeView(final AnonymisationNodeModel nodeModel) {
-        super(nodeModel);
-       
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected void modelChanged() {
-       
+    public DecryptionNodeModel createNodeModel() {
+        return new DecryptionNodeModel();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected void onClose() {
-       
+    public int getNrNodeViews() {
+        return 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected void onOpen() {
-       
+    public NodeView<DecryptionNodeModel> createNodeView(final int viewIndex, final DecryptionNodeModel nodeModel) {
+        throw new IllegalStateException("View not supported");
     }
 
+    @Override
+    public boolean hasDialog() {
+        return true;
+    }
+
+    @Override
+    public NodeDialogPane createNodeDialogPane() {
+        return new EncryptionNodeDialog();
+    }
 }

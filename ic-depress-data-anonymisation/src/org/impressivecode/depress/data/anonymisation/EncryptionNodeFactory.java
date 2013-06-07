@@ -23,54 +23,33 @@ import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 
 /**
- * <code>NodeFactory</code> for the "Anonymisation" Node. Encrypts and decrypts selected 
- * columns from input data set using DES cryptographic algorithm.
- * 
- * @author Andrzej Dudek
- * @author Marcin Bogusz
- * @author Konrad Kocik
+ * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class AnonymisationNodeFactory extends NodeFactory<AnonymisationNodeModel> {
+public class EncryptionNodeFactory extends NodeFactory<EncryptionNodeModel> {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public AnonymisationNodeModel createNodeModel() {
-        return new AnonymisationNodeModel();
+    public EncryptionNodeModel createNodeModel() {
+        return new EncryptionNodeModel();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getNrNodeViews() {
         return 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public NodeView<AnonymisationNodeModel> createNodeView(final int viewIndex, final AnonymisationNodeModel nodeModel) {
-        return new AnonymisationNodeView(nodeModel);
+    public NodeView<EncryptionNodeModel> createNodeView(final int viewIndex, final EncryptionNodeModel nodeModel) {
+        throw new IllegalStateException("View not supported");
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean hasDialog() {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public NodeDialogPane createNodeDialogPane() {
-        return new AnonymisationNodeDialog();
+        return new EncryptionNodeDialog();
     }
-
 }
