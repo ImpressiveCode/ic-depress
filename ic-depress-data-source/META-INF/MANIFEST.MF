@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ic-depress-metric-jacoco
+Bundle-SymbolicName: org.impressivecode.depress.metric.jacoco;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: ImpressiveCode
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
+ org.knime.workbench.core,
+ org.knime.workbench.repository,
+ org.knime.base;bundle-version="2.7.1"
+Bundle-ClassPath: plugin.jar,
+ lib/guava-14.0-rc3.jar
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: org.impressivecode.depress.metric.datasource
+Eclipse-BuddyPolicy: registered
