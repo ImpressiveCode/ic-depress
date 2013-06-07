@@ -80,7 +80,7 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
             buttonToCreateFile.addActionListener(new ActionListener() {
 
                 @Override
-                public void actionPerformed(ActionEvent e) {
+                public void actionPerformed(final ActionEvent e) {
 
                     String keyPath;
                     try {
@@ -97,7 +97,7 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
             buttonToClear.addActionListener(new ActionListener() {
 
                 @Override
-                public void actionPerformed(ActionEvent e) {
+                public void actionPerformed(final ActionEvent e) {
                     fileChooser.SetSelectedPath("");
                     fileChooser.UpdateComponent();
                 }
@@ -135,6 +135,7 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
             addDialogComponent(buttonToClear);
             addDialogComponent(fileChooser);
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.err.println("Error: " + ex.getMessage());
         }
     }
@@ -164,7 +165,7 @@ public class AnonymisationNodeDialog extends DefaultNodeSettingsPane {
      * @return Return List of columns which specified state from input
      * @throws InvalidAttributesException
      */
-    private Collection<String> getColumnsFromInput(boolean isEncryptedParam) throws InvalidAttributesException {
+    private Collection<String> getColumnsFromInput(final boolean isEncryptedParam) throws InvalidAttributesException {
         ArrayList<String> columnList = new ArrayList<String>();
 
         for (String columnName : AnonymisationNodeModel.InputTableSpec.getColumnNames()) {
