@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./DataSource.png" type="Source">
+    <name>DataSource Adapter</name>
+
+    <shortDescription>
+        Java Code reader DataSource Adapter. ImpressiveCode DePress Plugin Framework.
+    </shortDescription>
+
+    <fullDescription>
+        <intro>
+            <p>
+            This node can be used to read data from java ".class" file coverage. 
+            </p>
+            <p>
+            To use plugin you need to specify a folder that has a ".class" files. 
+            Plugin has searches in the folders and subfolders and analyzes all ".class" files
+            in that folders. 
+            </p>
+            <p>
+            This node analyzes information about every class and method and
+            returns a table with the following data:
+			<br />
+                <ul>
+                    <li>Class Name</li>
+			        <li>Method Name</li>
+			        <li>Public</li>
+			        <li>Protected</li>
+			        <li>Private</li>
+			        <li>Static</li>
+			        <li>Final</li>
+			        <li>Abstract</li>
+			        <li>Location</li>
+                </ul>           
+            </p>
+            <p>
+            <br/> 
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
+        </intro>
+        <option name=".class file location">The example file is analyzed is at www.antil.za.pl/test.rar
+        </option>
+    </fullDescription>
+
+    <ports>
+        <outPort index="0" name="Coverage Table">Datatable read ".class" file.</outPort>
+    </ports>
+</knimeNode>
