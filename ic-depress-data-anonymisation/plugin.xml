@@ -3,16 +3,16 @@
 <plugin> 
     <extension point="org.knime.workbench.repository.nodes">
       <node
-            category-path="depress.data"
-            expert-flag="false"
-            factory-class="org.impressivecode.depress.data.anonymisation.EncryptionNodeFactory"
-            id="org.impressivecode.depress.data.encryption">
-      </node>
-      <node
-            category-path="depress.data"
+            category-path="depress/depress.data"
             expert-flag="false"
             factory-class="org.impressivecode.depress.data.anonymisation.DecryptionNodeFactory"
             id="org.impressivecode.depress.data.decryption">
+      </node>
+      <node
+            category-path="depress/depress.data"
+            expert-flag="false"
+            factory-class="org.impressivecode.depress.data.anonymisation.EncryptionNodeFactory"
+            id="org.impressivecode.depress.data.encryption">
       </node>
     </extension>
 </plugin>

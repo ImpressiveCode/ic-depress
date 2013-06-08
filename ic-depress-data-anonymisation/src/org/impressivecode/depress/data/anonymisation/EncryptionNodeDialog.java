@@ -38,7 +38,7 @@ public class EncryptionNodeDialog extends NodeDialogPane {
 
     EncryptionNodeDialog() {
         filterPanel = new DataColumnSpecFilterPanel();
-        super.addTab("Column Filter", filterPanel);
+        super.addTab("Column Filter (Encryption)", filterPanel);
     }
 
     @Override

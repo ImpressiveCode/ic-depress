@@ -44,7 +44,7 @@ public class DecryptionNodeModel extends NodeModel {
         super(1, 1);
     }
 
-    public static final String CFG_KEY_FILTER = "depress.data.anonymisation.decryption";
+    public static final String CFG_KEY_FILTER = "depress.data.anondecryption";
 
     private DataColumnSpecFilterConfiguration configuration;
 
