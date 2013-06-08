@@ -26,10 +26,10 @@ import org.knime.core.node.NodeView;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class EncryptionNodeFactory extends NodeFactory<EncryptionNodeModel> {
+public class EncryptionNodeFactory extends NodeFactory<CryptoNodeModel> {
 
     @Override
-    public EncryptionNodeModel createNodeModel() {
+    public CryptoNodeModel createNodeModel() {
         return new EncryptionNodeModel();
     }
 
@@ -39,7 +39,7 @@ public class EncryptionNodeFactory extends NodeFactory<EncryptionNodeModel> {
     }
 
     @Override
-    public NodeView<EncryptionNodeModel> createNodeView(final int viewIndex, final EncryptionNodeModel nodeModel) {
+    public NodeView<CryptoNodeModel> createNodeView(final int viewIndex, final CryptoNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 
@@ -50,6 +50,6 @@ public class EncryptionNodeFactory extends NodeFactory<EncryptionNodeModel> {
 
     @Override
     public NodeDialogPane createNodeDialogPane() {
-        return new EncryptionNodeDialog();
+        return new CryptoNodeDialog("Column Encryption", EncryptionNodeModel.CFG_ENCRYPTION_KEY_FILTER);
     }
 }

@@ -32,13 +32,15 @@ import org.knime.core.node.util.filter.column.DataColumnSpecFilterPanel;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class DecryptionNodeDialog extends NodeDialogPane {
+public class CryptoNodeDialog extends NodeDialogPane {
 
     private final DataColumnSpecFilterPanel filterPanel;
+    private final String cfg;
 
-    DecryptionNodeDialog() {
-        filterPanel = new DataColumnSpecFilterPanel();
-        super.addTab("Column Filter (Decryption)", filterPanel);
+    CryptoNodeDialog(final String tabName, final String configRoot) {
+        filterPanel = new DataColumnSpecFilterPanel(true,  ConfigurationFactory.filter());
+        this.cfg = configRoot;
+        super.addTab(tabName, filterPanel);
     }
 
     @Override
@@ -49,16 +51,14 @@ public class DecryptionNodeDialog extends NodeDialogPane {
             throw new NotConfigurableException("No columns available for " + "selection.");
         }
 
-        DataColumnSpecFilterConfiguration config = new DataColumnSpecFilterConfiguration(
-                DecryptionNodeModel.CFG_KEY_FILTER);
+        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(cfg);
         config.loadConfigurationInDialog(settings, specs[0]);
         filterPanel.loadConfiguration(config, specs[0]);
     }
 
     @Override
     public void saveSettingsTo(final NodeSettingsWO settings) throws InvalidSettingsException {
-        DataColumnSpecFilterConfiguration config = new DataColumnSpecFilterConfiguration(
-                DecryptionNodeModel.CFG_KEY_FILTER);
+        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(cfg);
         filterPanel.saveConfiguration(config);
         config.saveConfiguration(settings);
     }

@@ -19,94 +19,45 @@
 
 package org.impressivecode.depress.data.anonymisation;
 
-import java.io.File;
-import java.io.IOException;
-
+import org.knime.core.data.DataCell;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.node.BufferedDataTable;
-import org.knime.core.node.CanceledExecutionException;
-import org.knime.core.node.ExecutionContext;
-import org.knime.core.node.ExecutionMonitor;
-import org.knime.core.node.InvalidSettingsException;
-import org.knime.core.node.NodeModel;
-import org.knime.core.node.NodeSettingsRO;
-import org.knime.core.node.NodeSettingsWO;
-import org.knime.core.node.util.filter.NameFilterConfiguration.FilterResult;
-import org.knime.core.node.util.filter.column.DataColumnSpecFilterConfiguration;
+import org.knime.core.data.def.StringCell;
+import org.knime.core.node.NodeLogger;
+import org.knime.core.util.KnimeEncryption;
+
+import com.google.common.base.Preconditions;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class DecryptionNodeModel extends NodeModel {
+public class DecryptionNodeModel extends CryptoNodeModel {
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(DecryptionNodeModel.class);
+
+    public static final String CFG_DECRYPTION_KEY_FILTER = "depress.data.anondecryption";
 
     protected DecryptionNodeModel() {
-        super(1, 1);
-    }
-
-    public static final String CFG_KEY_FILTER = "depress.data.anondecryption";
-
-    private DataColumnSpecFilterConfiguration configuration;
-
-    @Override
-    protected void reset() {
-        // no op
+        super(CFG_DECRYPTION_KEY_FILTER);
     }
 
     @Override
-    protected BufferedDataTable[] execute(final BufferedDataTable[] data, final ExecutionContext exec) throws Exception {
-        //TODO add validation before of column type before execution
-        ColumnDecryptorTransformer transfomer = createColumnDecryptor(data[0].getDataTableSpec());
-        BufferedDataTable out = transfomer.transform(data[0], exec);
-        return new BufferedDataTable[] { out };
-    }
+    protected ColumnCryptoTransformer transformer(final DataTableSpec spec, final String[] transforms) {
+        return new ColumnCryptoTransformer(spec, transforms) {
 
-    @Override
-    protected void saveInternals(final File nodeInternDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
-        // no op
-    }
+            @Override
+            protected DataCell transformCell(final DataCell dataCell) {
+                Preconditions.checkArgument(StringCell.TYPE.equals(dataCell.getType()),
+                        "Only string cells supported yet");
 
-    @Override
-    protected void loadInternals(final File nodeInternDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
-        // no op
-    }
-
-    @Override
-    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
-        return inSpecs;
-    }
-
-    private ColumnDecryptorTransformer createColumnDecryptor(final DataTableSpec spec) {
-        if (configuration == null) {
-            configuration = new DataColumnSpecFilterConfiguration(CFG_KEY_FILTER);
-            // auto-configure
-            configuration.loadDefaults(spec, true);
-        }
-        final FilterResult filter = configuration.applyTo(spec);
-        final String[] encrypts = filter.getIncludes();
-        final ColumnDecryptorTransformer transfomer = new ColumnDecryptorTransformer(spec, encrypts);
-        return transfomer;
-    }
-
-    @Override
-    protected void saveSettingsTo(final NodeSettingsWO settings) {
-        if (configuration != null) {
-            configuration.saveConfiguration(settings);
-        }
-    }
-
-    @Override
-    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        DataColumnSpecFilterConfiguration conf = new DataColumnSpecFilterConfiguration(CFG_KEY_FILTER);
-        conf.loadConfigurationInModel(settings);
-        configuration = conf;
-    }
-
-    @Override
-    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        DataColumnSpecFilterConfiguration conf = new DataColumnSpecFilterConfiguration(CFG_KEY_FILTER);
-        conf.loadConfigurationInModel(settings);
+                try {
+                    String origin = ((StringCell) dataCell).getStringValue();
+                    String transformed = KnimeEncryption.decrypt(origin);
+                    return new StringCell(transformed);
+                } catch (Exception e) {
+                    LOGGER.error("Unable to proceed due to invalid encryption settings", e);
+                    throw new IllegalStateException("Unable to proceed due to invalid encryption");
+                }
+            }
+        };
     }
 }

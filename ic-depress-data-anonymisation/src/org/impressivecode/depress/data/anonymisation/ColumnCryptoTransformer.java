@@ -28,15 +28,11 @@ import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.container.CloseableRowIterator;
 import org.knime.core.data.def.DefaultRow;
-import org.knime.core.data.def.StringCell;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
-import org.knime.core.node.NodeLogger;
-import org.knime.core.util.KnimeEncryption;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -44,17 +40,16 @@ import com.google.common.collect.Sets;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class ColumnEncryptorTransformer {
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(ColumnEncryptorTransformer.class);
+public abstract class ColumnCryptoTransformer {
     private final DataTableSpec tableSpec;
 
-    private final Set<Integer> colToBeEncrypted;
+    private final Set<Integer> colToBeTransformed;
 
-    public ColumnEncryptorTransformer(final DataTableSpec tableSpec, final String[] encrypts) {
+    public ColumnCryptoTransformer(final DataTableSpec tableSpec, final String[] decrypts) {
         checkNotNull(tableSpec, "table specifikation can not be null.");
-        checkNotNull(encrypts, "encrypts specifikation can not be null.");
+        checkNotNull(decrypts, "decrypts specifikation can not be null.");
         this.tableSpec = tableSpec;
-        this.colToBeEncrypted = indices(encrypts);
+        this.colToBeTransformed = indices(decrypts);
     }
 
     public BufferedDataTable transform(final BufferedDataTable data, final ExecutionContext exec)
@@ -63,8 +58,8 @@ public class ColumnEncryptorTransformer {
         CloseableRowIterator iterator = data.iterator();
         while (iterator.hasNext()) {
             progress(exec);
-            DataRow encryptedRow = encryptRow(iterator.next());
-            container.addRowToTable(encryptedRow);
+            DataRow transformedRow = transformRow(iterator.next());
+            container.addRowToTable(transformedRow);
         }
 
         container.close();
@@ -72,28 +67,27 @@ public class ColumnEncryptorTransformer {
         return out;
     }
 
-    private Set<Integer> indices(final String[] encrypts) {
+    private Set<Integer> indices(final String[] transforms) {
         Set<Integer> colIndices = Sets.newHashSet();
-        for (int i = 0; i < encrypts.length; i++) {
-            int index = tableSpec.findColumnIndex(encrypts[i]);
+        for (int i = 0; i < transforms.length; i++) {
+            int index = tableSpec.findColumnIndex(transforms[i]);
             colIndices.add(index);
         }
         return colIndices;
     }
 
-    private DataRow encryptRow(final DataRow row) {
-        DataRow encrypted = new DefaultRow(row.getKey(), encodeCells(row));
-        return encrypted;
+    private DataRow transformRow(final DataRow row) {
+        return new DefaultRow(row.getKey(), transformCells(row));
     }
 
-    private List<DataCell> encodeCells(final DataRow row) {
+    private List<DataCell> transformCells(final DataRow row) {
         List<DataCell> cells = Lists.newArrayList();
         for (int i = 0; i < row.getNumCells(); i++) {
             DataCell dataCell = row.getCell(i);
             if (dataCell.isMissing()) {
                 cells.add(dataCell);
-            } else if (colToBeEncrypted.contains(i)) {
-                cells.add(encryptCell(dataCell));
+            } else if (colToBeTransformed.contains(i)) {
+                cells.add(transformCell(dataCell));
             } else {
                 cells.add(dataCell);
             }
@@ -102,18 +96,7 @@ public class ColumnEncryptorTransformer {
         return cells;
     }
 
-    private DataCell encryptCell(final DataCell dataCell) {
-        Preconditions.checkArgument(StringCell.TYPE.equals(dataCell.getType()), "Only string cells supported yet");
-
-        try {
-            String origin = ((StringCell) dataCell).getStringValue();
-            String encrypted = KnimeEncryption.encrypt(origin.toCharArray());
-            return new StringCell(encrypted);
-        } catch (Exception e) {
-            LOGGER.error("Unable to proceed due to invalid encryption settings", e);
-            throw new IllegalStateException("Unable to proceed due to invalid encryption");
-        }
-    }
+    protected abstract DataCell transformCell(final DataCell dataCell);
 
     private BufferedDataContainer createDataContainer(final ExecutionContext exec) {
         return exec.createDataContainer(tableSpec);
