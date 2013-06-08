@@ -48,6 +48,10 @@ public class SCMAdapterTableFactory {
     public final static String DATE_COLNAME = "Date";
     public final static String UID_COLNAME = "CommitID";
 
+    public static DataTableSpec[] createTableSpec() {
+        return new DataTableSpec[] { SCMAdapterTableFactory.createDataColumnSpec() };
+    }
+
     public static DataTableSpec createDataColumnSpec() {
         DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(MARKER, SetCell.getCollectionType(StringCell.TYPE)).createSpec(),

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+   <extension
+         point="org.knime.workbench.repository.nodes">
+      <node
+            category-path="depress/depress.scm"
+            factory-class="org.impressivecode.depress.scm.svn.SVNOfflineAdapterNodeFactory"
+            id="org.impressivecode.depress.scm.gitoffline"/>
+   </extension>
+</plugin>
