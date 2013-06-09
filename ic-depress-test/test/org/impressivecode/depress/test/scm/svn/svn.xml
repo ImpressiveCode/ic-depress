@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log>
+<logentry
+   revision="928306">
+<author>psteitz</author>
+<date>2010-03-27T23:57:25.560655Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/site/site.xml</path>
+</paths>
+<msg>Added 2.1 and snapshot javadoc links.</msg>
+</logentry>
+<logentry
+   revision="928309">
+<author>psteitz</author>
+<date>2010-03-28T00:22:00.279896Z</date>
+<paths>
+<path
+   kind="dir"
+   action="D">/commons/proper/math/tags/MATH_2_1_RC3/src/mantissa</path>
+<path
+   prop-mods="false"
+   text-mods="false"
+   kind="file"
+   copyfrom-path="/commons/proper/math/trunk/checkstyle.xml"
+   copyfrom-rev="928245"
+   action="R">/commons/proper/math/tags/MATH_2_1_RC3/checkstyle.xml</path>
+<path
+   prop-mods="false"
+   text-mods="false"
+   kind="file"
+   copyfrom-path="/commons/proper/math/trunk/src/site/site.xml"
+   copyfrom-rev="928306"
+   action="R">/commons/proper/math/tags/MATH_2_1_RC3/src/site/site.xml</path>
+<path
+   prop-mods="false"
+   text-mods="false"
+   kind="dir"
+   copyfrom-path="/commons/proper/math/trunk"
+   copyfrom-rev="928240"
+   action="A">/commons/proper/math/tags/MATH_2_1_RC3</path>
+<path
+   prop-mods="false"
+   text-mods="false"
+   kind="file"
+   copyfrom-path="/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolatingFunction.java"
+   copyfrom-rev="928245"
+   action="R">/commons/proper/math/tags/MATH_2_1_RC3/src/main/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolatingFunction.java</path>
+<path
+   kind="dir"
+   action="D">/commons/proper/math/tags/MATH_2_1_RC3/src/experimental</path>
+</paths>
+<msg>Tagged 2.1 RC3</msg>
+</logentry>
+<logentry
+   revision="928382">
+<author>luc</author>
+<date>2010-03-28T12:10:15.390008Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/site/xdoc/userguide/ode.xml</path>
+</paths>
+<msg>removed wrong subscript</msg>
+</logentry>
+<logentry
+   revision="928383">
+<author>luc</author>
+<date>2010-03-28T12:12:43.405837Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/site/xdoc/userguide/ode.xml</path>
+</paths>
+<msg>removed wrong subscript</msg>
+</logentry>
+<logentry
+   revision="928539">
+<author>psteitz</author>
+<date>2010-03-29T00:10:10.127715Z</date>
+<paths>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/siteMods/site.css</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/math-RC.sh</path>
+<path
+   kind="dir"
+   action="A">/commons/proper/math/trunk/siteMods</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/math-pre-RC.sh</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/siteMods/site.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/siteMods/pom.xml</path>
+</paths>
+<msg>Added files used in creating RCs.</msg>
+</logentry>
+<logentry
+   revision="929473">
+<author>psteitz</author>
+<date>2010-03-31T11:01:39.035125Z</date>
+<paths>
+<path
+   prop-mods="false"
+   text-mods="false"
+   kind="dir"
+   copyfrom-path="/commons/proper/math/tags/MATH_2_1_RC3"
+   copyfrom-rev="929470"
+   action="A">/commons/proper/math/tags/MATH_2_1</path>
+<path
+   kind="dir"
+   action="D">/commons/proper/math/tags/MATH_2_1_RC3</path>
+</paths>
+<msg>Tagged 2.1 release.</msg>
+</logentry>
+<logentry
+   revision="930146">
+<author>psteitz</author>
+<date>2010-04-02T01:53:38.530023Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/doap_math.rdf</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/build.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/site/xdoc/changes.xml</path>
+</paths>
+<msg>Updated to reflect 2.1 release.</msg>
+</logentry>
+<logentry
+   revision="930147">
+<author>psteitz</author>
+<date>2010-04-02T01:54:38.662293Z</date>
+<paths>
+<path
+   kind="file"
+   action="D">/commons/proper/math/trunk/src/site/xdoc/releases.xml</path>
+<path
+   kind="file"
+   action="D">/commons/proper/math/trunk/src/site/xdoc/tasks.xml</path>
+</paths>
+<msg>Removed obsolete files.</msg>
+</logentry>
+<logentry
+   revision="932871">
+<author>luc</author>
+<date>2010-04-11T11:54:22.849742Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/geometry/Rotation.java</path>
+</paths>
+<msg>improved javadoc, mainly explaining the underlying conventions with quaternions
+Jira: MATH-363</msg>
+</logentry>
+<logentry
+   revision="936207">
+<author>niallp</author>
+<date>2010-04-21T09:02:56.762056Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/commons/proper/chain/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/net/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/logging/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/beanutils/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/scxml/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/primitives/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/compress/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/jxpath/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/dbutils/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/cli/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/dbcp/trunk/pom-1.3.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/pool/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/codec/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/commons-skin/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/collections/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/lang/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/proxy/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/exec/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/fileupload/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/validator/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/betwixt/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/modeler/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/email/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/commons-sandbox-parent/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/vfs/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/el/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/launcher/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/jexl/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/daemon/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/sanselan/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/jci/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/digester/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/jexl/trunk/jexl2-compat/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/io/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/configuration/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/discovery/trunk/pom.xml</path>
+<path
+   kind="file"
+   action="M">/commons/proper/dbcp/trunk/pom.xml</path>
+</paths>
+<msg>Upgrade to commons-parent version 15</msg>
+</logentry>
+<logentry
+   revision="936225">
+<author>niallp</author>
+<date>2010-04-21T09:29:42.721487Z</date>
+<paths>
+<path
+   kind="file"
+   action="A">/commons/proper/dbutils/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/discovery/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/configuration/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/io/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/collections/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/exec/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/fileupload/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/betwixt/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/primitives/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/compress/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/vfs/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/el/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/jexl/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/sanselan/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/digester/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/cli/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/dbcp/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/pool/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/codec/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/proxy/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/lang/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/validator/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/beanutils/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/logging/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/net/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/scxml/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/email/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/modeler/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/jxpath/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/launcher/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/daemon/trunk/src/site/xdoc/mail-lists.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/jci/trunk/src/site/xdoc/mail-lists.xml</path>
+</paths>
+<msg>Generate custom Mailing List pages for components (using "mvn commons:mail-page")
+See http://commons.apache.org/commons-build-plugin/mail-page.html</msg>
+</logentry>
+<logentry
+   revision="936295">
+<author>erans</author>
+<date>2010-04-21T13:27:44.654436Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/optimization/fitting/PolynomialFitter.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/SmoothingBicubicSplineInterpolatorTest.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BivariateRealGridInterpolator.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/site/xdoc/userguide/analysis.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolatorTest.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingBicubicSplineInterpolator.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/BivariateRealFunction.java</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolatorTest.java</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolator.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/site/xdoc/changes.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolator.java</path>
+</paths>
+<msg>sdsd MATH-365 sdsdsd</msg>
+</logentry>
+<logentry
+   revision="936391">
+<author>erans</author>
+<date>2010-04-21T17:00:56.129409Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/SmoothingBicubicSplineInterpolatorTest.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BivariateRealGridInterpolator.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolatorTest.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingBicubicSplineInterpolator.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolator.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolator.java</path>
+</paths>
+<msg>Had forgotten to set the svn:keywords property.
+</msg>
+</logentry>
+<logentry
+   revision="936471">
+<author>erans</author>
+<date>2010-04-21T20:02:43.428520Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolatorTest.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolator.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolator.java</path>
+</paths>
+<msg>Had forgotten to set svn:eol-style.
+</msg>
+</logentry>
+<logentry
+   revision="937080">
+<author>erans</author>
+<date>2010-04-22T22:09:21.053775Z</date>
+<paths>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/TricubicSplineInterpolatingFunctionTest.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolatingFunction.java</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/TricubicSplineInterpolator.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/site/xdoc/userguide/analysis.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/TricubicSplineInterpolatingFunction.java</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/TrivariateRealGridInterpolator.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolator.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolatingFunctionTest.java</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/TrivariateRealFunction.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/site/xdoc/changes.xml</path>
+<path
+   kind="file"
+   action="A">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/TricubicSplineInterpolatorTest.java</path>
+</paths>
+<msg>MATH-366
+</msg>
+</logentry>
+<logentry
+   revision="937545">
+<author>erans</author>
+<date>2010-04-23T22:33:37.969056Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/site/xdoc/userguide/analysis.xml</path>
+</paths>
+<msg>Removed package names in links.
+</msg>
+</logentry>
+</log>
