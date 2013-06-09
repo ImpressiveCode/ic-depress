@@ -48,6 +48,12 @@ public class SCMAdapterTableFactory {
     public final static String DATE_COLNAME = "Date";
     public final static String UID_COLNAME = "CommitID";
 
+    public static final DataColumnSpec MARKER_COLSPEC = new DataColumnSpecCreator(MARKER,
+            SetCell.getCollectionType(StringCell.TYPE)).createSpec();
+
+    public static final DataColumnSpec MESSAGE_COLSPEC = new DataColumnSpecCreator(MESSAGE_COLNAME,
+            SetCell.getCollectionType(StringCell.TYPE)).createSpec();
+
     public static DataTableSpec[] createTableSpec() {
         return new DataTableSpec[] { SCMAdapterTableFactory.createDataColumnSpec() };
     }
@@ -57,7 +63,7 @@ public class SCMAdapterTableFactory {
                 new DataColumnSpecCreator(MARKER, SetCell.getCollectionType(StringCell.TYPE)).createSpec(),
                 new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(MESSAGE_COLNAME, StringCell.TYPE).createSpec(),
+                MESSAGE_COLSPEC,
                 new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(DATE_COLNAME, DateAndTimeCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(UID_COLNAME, StringCell.TYPE).createSpec() };

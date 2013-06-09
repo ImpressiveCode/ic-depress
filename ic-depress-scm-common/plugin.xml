@@ -6,7 +6,7 @@
          point="org.knime.workbench.repository.nodes">
       <node
             category-path="depress/depress.scm"
-            factory-class="org.impressivecode.depress.scm.svn.SVNOfflineAdapterNodeFactory"
-            id="org.impressivecode.depress.scm.svnoffline"/>
+            factory-class="org.impressivecode.depress.scm.markerparser.MarkerParserNodeFactory"
+            id="org.impressivecode.depress.scm.markerparser"/>
    </extension>
 </plugin>
