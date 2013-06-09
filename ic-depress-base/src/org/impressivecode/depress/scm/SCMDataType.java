@@ -26,7 +26,7 @@ import java.util.Set;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class SCMDataType {
+public class SCMDataType implements Cloneable{
 
     private String resourceName;
     private Set<String> markers = Collections.emptySet();
@@ -108,4 +108,8 @@ public class SCMDataType {
                         resourceName, markers, author, operation, message, path, commitDate, commitID);
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
