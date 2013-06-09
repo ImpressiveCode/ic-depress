@@ -23,6 +23,12 @@
             name="ITS"
             path="depress/">
       </category>
+       <category
+             description="DePress Data Plugins"
+             level-id="depress.data"
+             name="Data"
+             path="depress/">
+       </category>
    </extension>
     
 </plugin>
