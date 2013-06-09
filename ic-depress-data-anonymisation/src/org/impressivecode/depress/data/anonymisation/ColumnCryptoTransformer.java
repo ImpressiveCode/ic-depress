@@ -45,11 +45,11 @@ public abstract class ColumnCryptoTransformer {
 
     private final Set<Integer> colToBeTransformed;
 
-    public ColumnCryptoTransformer(final DataTableSpec tableSpec, final String[] decrypts) {
+    public ColumnCryptoTransformer(final DataTableSpec tableSpec, final String[] transforms) {
         checkNotNull(tableSpec, "table specifikation can not be null.");
-        checkNotNull(decrypts, "decrypts specifikation can not be null.");
+        checkNotNull(transforms, "decrypts specifikation can not be null.");
         this.tableSpec = tableSpec;
-        this.colToBeTransformed = indices(decrypts);
+        this.colToBeTransformed = indices(transforms);
     }
 
     public BufferedDataTable transform(final BufferedDataTable data, final ExecutionContext exec)
