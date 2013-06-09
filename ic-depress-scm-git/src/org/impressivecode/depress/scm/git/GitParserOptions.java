@@ -27,13 +27,19 @@ import com.google.common.base.Strings;
 public class GitParserOptions {
     private Pattern markerRegexp;
     private String packageString;
+    private String branch;
 
     public static GitParserOptions options(final String markerRegexp, final String packageString) {
+        return options(markerRegexp, packageString, null);
+    }
+
+    public static GitParserOptions options(final String markerRegexp, final String packageString, final String branch) {
         GitParserOptions options = new GitParserOptions();
         if (!Strings.isNullOrEmpty(markerRegexp)) {
             options.markerRegexp = Pattern.compile(markerRegexp);
         }
         options.packageString = Strings.emptyToNull(packageString);
+        options.branch = Strings.emptyToNull(branch);
         return options;
     }
 
@@ -51,5 +57,13 @@ public class GitParserOptions {
 
     public String getPackagePrefix() {
         return packageString;
+    }
+
+    public boolean hasBranch() {
+        return this.branch != null;
+    }
+
+    public String getBranch() {
+        return branch;
     }
 }

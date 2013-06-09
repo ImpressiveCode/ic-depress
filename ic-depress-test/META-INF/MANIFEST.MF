@@ -17,7 +17,9 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.impressivecode.depress.metric.judy,
  org.impressivecode.depress.its.jira,
  org.impressivecode.depress.metric.po,
- org.impressivecode.depress.its.bugzilla;bundle-version="0.1.0"
+ org.impressivecode.depress.its.bugzilla,
+ org.impressivecode.depress.data.anonymisation,
+ org.impressivecode.depress.scm.svn
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Eclipse-RegisterBuddy: org.knime.core.node
 Bundle-ClassPath: bin/,
