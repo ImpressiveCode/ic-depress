@@ -11,6 +11,24 @@
             name="DePress"
             path="/">
       </category>
+      <category
+            description="DePress SCM Plugins"
+            level-id="depress.scm"
+            name="SCM"
+            path="depress/">
+      </category>
+       <category
+            description="DePress ITS Plugins"
+            level-id="depress.its"
+            name="ITS"
+            path="depress/">
+      </category>
+       <category
+             description="DePress Data Plugins"
+             level-id="depress.data"
+             name="Data"
+             path="depress/">
+       </category>
    </extension>
     
 </plugin>
