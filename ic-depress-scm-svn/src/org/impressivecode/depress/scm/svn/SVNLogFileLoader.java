@@ -19,12 +19,14 @@
 package org.impressivecode.depress.scm.svn;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.knime.core.node.CanceledExecutionException;
-import org.knime.core.node.NodeLogger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -32,130 +34,131 @@ import org.w3c.dom.NodeList;
 
 public class SVNLogFileLoader extends SVNLogLoader {
 
-	private static final NodeLogger logger = NodeLogger
-			.getLogger(SVNLogFileLoader.class);
+    /**
+     * Actions: A - the item is added D - the item was deleted M - properties or
+     * textual contents on the were changed R - the item was replaced by a
+     * different one at the same location
+     * 
+     * @throws Exception
+     * 
+     * @throws FileNotFoundException
+     */
 
-	/**
-	 * Actions: A - the item is added D - the item was deleted M - properties or
-	 * textual contents on the were changed R - the item was replaced by a
-	 * different one at the same location
-	 */
+    public void load(String inPath, String inIssueMarker, String inPackage, IReadProgressListener inProgress)
+            throws CanceledExecutionException, Exception {
 
-	public void load(String inPath, String inIssueMarker, String inPackage,
-			IReadProgressListener inProgress) {
-		loadXml(inPath, inIssueMarker, inPackage, inProgress);
-	}
+        if (new File(inPath).exists()) {
+            loadXml(inPath, inIssueMarker, inPackage, inProgress);
+            return;
+        }
 
-	// Methods
-	protected void loadXml(String inPath, String inIssueMarker,
-			String inPackage, IReadProgressListener inProgress) {
+        throw new Exception(SVNLocale.eIvalidLocalPath(inPath));
+    }
 
-		try {
+    // Methods
+    protected void loadXml(String inPath, String inIssueMarker, String inPackage, IReadProgressListener inProgress)
+            throws CanceledExecutionException, Exception {
 
-			logger.warn(SVNLocale.iInitLocalRepo(inPath));
+        try {
 
-			if (inPackage.endsWith(".*")) {
-				inPackage = inPackage.substring(0, inPackage.length() - 2);
-			}
+            if (inPackage.endsWith(".*")) {
+                inPackage = inPackage.substring(0, inPackage.length() - 2);
+            }
 
-			File fXmlFile = new File(inPath);
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
-					.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(fXmlFile);
+            File fXmlFile = new File(inPath);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
 
-			// recommended
-			doc.getDocumentElement().normalize();
+            // recommended
+            doc.getDocumentElement().normalize();
 
-			NodeList nList = doc.getElementsByTagName("logentry");
+            NodeList nList = doc.getElementsByTagName("logentry");
 
-			logger.warn(SVNLocale.iStartLoadLocalRepo());
+            tmpData.issueMarker = inIssueMarker;
 
-			tmData.issueMarker = inIssueMarker;
+            for (int logentry = 0; logentry < nList.getLength(); logentry++) {
 
-			for (int logentry = 0; logentry < nList.getLength(); logentry++) {
+                inProgress.checkLoading();
 
-				inProgress.checkLoading();
+                Node nNode = nList.item(logentry);
 
-				Node nNode = nList.item(logentry);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
 
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-					Element eElement = (Element) nNode;
+                    tmpData.uid = eElement.getAttribute("revision");
 
-					tmData.uid = eElement.getAttribute("revision");
+                    tmpData.author = getValue(eElement, "author");
 
-					tmData.author = eElement.getElementsByTagName("author")
-							.item(0).getTextContent();
+                    tmpData.date = getValue(eElement, "date");
 
-					tmData.date = eElement.getElementsByTagName("date").item(0)
-							.getTextContent();
+                    tmpData.message = getValue(eElement, "msg");
 
-					tmData.message = eElement.getElementsByTagName("msg")
-							.item(0).getTextContent();
+                    if (!isMarkerInMessage(tmpData.message, tmpData.issueMarker)) {
+                        continue;
+                    }
 
-					if (!isMarkerInMessage(tmData.message, tmData.issueMarker)) {
-						continue;
-					}
+                    Node pathsNode = eElement.getElementsByTagName("paths").item(0);
+                    Element ePathsElement = (Element) pathsNode;
 
-					Node pathsNode = eElement.getElementsByTagName("paths")
-							.item(0);
-					Element ePathsElement = (Element) pathsNode;
+                    NodeList nPathsList = ePathsElement.getElementsByTagName("path");
 
-					NodeList nPathsList = ePathsElement
-							.getElementsByTagName("path");
+                    for (int path = 0; path < nPathsList.getLength(); path++) {
 
-					for (int path = 0; path < nPathsList.getLength(); path++) {
+                        inProgress.checkLoading();
 
-						inProgress.checkLoading();
+                        Node nPathNode = nPathsList.item(path);
+                        Element ePathElement = (Element) nPathNode;
 
-						Node nPathNode = nPathsList.item(path);
-						Element ePathElement = (Element) nPathNode;
+                        tmpData.path = ePathElement.getTextContent();
 
-						tmData.path = ePathElement.getTextContent();
+                        if (!isValidFile(tmpData.path)) {
+                            continue;
+                        }
 
-						if (!isValidFile(tmData.path)) {
-							continue;
-						}
+                        if (isPackageValid(tmpData.path, inPackage) == false) {
+                            continue;
+                        }
 
-						if (isPackageValid(tmData.path, inPackage) == false) {
-							continue;
-						}
+                        tmpData.action = ePathElement.getAttribute("action");
 
-						tmData.action = ePathElement.getAttribute("action");
+                        inProgress.onReadProgress(percent(logentry, nList.getLength()), tmpData.createRow());
+                    }
+                }
 
-						inProgress.onReadProgress(
-								percent(logentry, nList.getLength()),
-								tmData.createRow());
+            }
+        } catch (CanceledExecutionException e) {
+            throw e;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 
-					}
-				}
+    private String getValue(Element inElement, String iName) {
+        if (inElement.getElementsByTagName(iName) != null && inElement.getElementsByTagName(iName).getLength() > 0) {
+            return inElement.getElementsByTagName(iName).item(0).getTextContent();
+        }
 
-			}
-		} catch (CanceledExecutionException e) {
-			logger.warn(SVNLocale.iCancelLoading());
-			inProgress.onReadProgress(0, null);
-		} catch (Exception e) {
-			logger.error(SVNLocale.iSVNInternalError(), e);
-			inProgress.onReadProgress(0, null);
-		}
+        return null;
+    }
 
-		finally {
-			logger.warn(SVNLocale.iEndLoadLocalRepo());
-		}
-	}
+    private final boolean isPackageValid(String path, String packageString) {
+        path = path.replaceAll("/", ".");
 
-	private final boolean isPackageValid(String path, String packageString) {
-		path = path.replaceAll("/", ".");
+        if (path.charAt(0) == '.') {
+            path = path.substring(1);
+        }
 
-		if (path.charAt(0) == '.') {
-			path = path.substring(1);
-		}
+        if (packageString.equals("*")) {
+            return true;
+        }
 
-		if (packageString.equals("*")) {
-			return true;
-		}
+        return path.contains(packageString);
+    }
 
-		return path.contains(packageString);
-	}
+    @Override
+    public SimpleDateFormat getDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT);
+    }
 
 }

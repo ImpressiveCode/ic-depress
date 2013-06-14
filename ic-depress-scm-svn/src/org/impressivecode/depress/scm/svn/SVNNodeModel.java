@@ -18,12 +18,18 @@
 
 package org.impressivecode.depress.scm.svn;
 
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataColumnSpec;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
+import org.impressivecode.depress.common.OutputTransformer;
+import org.impressivecode.depress.scm.SCMAdapterTableFactory;
+import org.impressivecode.depress.scm.SCMAdapterTransformer;
+import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.svn.SVNLogLoader.IReadProgressListener;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
@@ -34,149 +40,144 @@ import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 
+import com.google.common.collect.Lists;
+
 public class SVNNodeModel extends NodeModel {
 
-	private static final NodeLogger logger = NodeLogger
-			.getLogger(SVNNodeModel.class);
+    private static final NodeLogger logger = NodeLogger.getLogger(SVNNodeModel.class);
 
-	class ModelRowReader implements IReadProgressListener {
+    class ModelRowReader implements IReadProgressListener {
 
-		private int rowId = 0;
-		private BufferedDataContainer container;
-		private ExecutionContext exec;
+        private ExecutionContext exec;
+        private List<SCMDataType> data;
 
-		public ModelRowReader(final BufferedDataContainer inContainer,
-				ExecutionContext inExec) {
-			container = inContainer;
-			exec = inExec;
-		}
+        public ModelRowReader(ExecutionContext inExec) {
+            exec = inExec;
+            data = Lists.newLinkedList();
+        }
 
-		public void close() {
-			container.close();
-		}
+        @Override
+        public void onReadProgress(double inProgres, SCMDataType inRow) {
+            if (inRow != null) {
+                data.add(inRow);
+            }
+            exec.setProgress(inProgres);
+        }
 
-		@Override
-		public void onReadProgress(double inProgres, SVNLogRow inRow) {
-			if (inRow != null) {
-				container
-						.addRowToTable(SVNLogRowSpec.createRow(++rowId, inRow));
-			}
+        public List<SCMDataType> getData() {
+            return data;
+        }
 
-			exec.setProgress(inProgres);// ,
-										// SVNLocale.iCurrentProgress(inProgres));
-		}
+        @Override
+        public void checkLoading() throws CanceledExecutionException {
+            exec.checkCanceled();
+        }
+    }
 
-		public BufferedDataTable[] toDataTable() {
-			return new BufferedDataTable[] { container.getTable() };
-		}
+    private ModelRowReader reader;
+    private SVNLogLoader loader;
 
-		@Override
-		public void checkLoading() throws CanceledExecutionException {
-			exec.checkCanceled();
-		}
-	}
+    /**
+     * Constructor for the node model.
+     */
+    protected SVNNodeModel() {
+        super(0, 1);
+    }
 
-	private BufferedDataContainer dataContainer;
-	private ModelRowReader reader;
-	private SVNLogLoader loader;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
+        return new DataTableSpec[] { SCMAdapterTableFactory.createDataColumnSpec() };
+    }
 
-	/**
-	 * Constructor for the node model.
-	 */
-	protected SVNNodeModel() {
-		super(0, 1);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
+            throws Exception {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
-			throws InvalidSettingsException {
-		return new DataTableSpec[] { new DataTableSpec(
-				SVNLogRowSpec.createColumnSpec()) };
-	}
+        logger.warn(SVNLocale.iStartLoading());
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
-			final ExecutionContext exec) throws Exception {
+        reader = new ModelRowReader(exec);
 
-		logger.warn(SVNLocale.iStartLoading());
+        loader = SVNLogLoader.create(SVNSettings.SVN_PATH.getStringValue());
 
-		dataContainer = exec.createDataContainer(new DataTableSpec(
-				SVNLogRowSpec.createColumnSpec()));
+        logger.warn(SVNLocale.iInitOnlineRepo(SVNSettings.SVN_PATH.getStringValue()));
 
-		reader = new ModelRowReader(dataContainer, exec);
+        try {
 
-		loader = new SVNLogRepoLoader();
+            loader.load(SVNSettings.SVN_PATH.getStringValue(), SVNSettings.SVN_ISSUE_MARKER.getStringValue(),
+                    SVNSettings.SVN_PACKAGE.getStringValue(), reader);
 
-		loader.load(SVNSettings.SVN_PATH.getStringValue(),
-				SVNSettings.SVN_ISSUE_MARKER.getStringValue(),
-				SVNSettings.SVN_PACKAGE.getStringValue(), reader);
+            OutputTransformer<SCMDataType> transformer = new SCMAdapterTransformer(createDataColumnSpec());
 
-		logger.warn(SVNLocale.iEndLoading());
+            BufferedDataTable out = transformer.transform(reader.getData(), exec);
 
-		reader.close();
+            logger.warn(SVNLocale.iEndLoading());
 
-		return reader.toDataTable();
-	}
+            return new BufferedDataTable[] { out };
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void loadInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
-	}
+        } catch (CanceledExecutionException e) {
+            logger.error(SVNLocale.iCancelLoading());
+        } catch (Exception e) {
+            logger.error(SVNLocale.iSVNInternalError(), e);
+        }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		SVNSettings.loadSettingsFrom(settings);
-		logger.warn(SVNLocale.iSettingsLoaded());
-	}
+        return new BufferedDataTable[] {};
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void reset() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+            CanceledExecutionException {
+    }
 
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+        SVNSettings.loadSettingsFrom(settings);
+        logger.warn(SVNLocale.iSettingsLoaded());
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void saveInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void reset() {
 
-	}
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void saveSettingsTo(final NodeSettingsWO settings) {
-		SVNSettings.saveSettingsTo(settings);
-		logger.warn(SVNLocale.iSettingsSaved());
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+            CanceledExecutionException {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void validateSettings(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		SVNSettings.validateSettings(settings);
-	}
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void saveSettingsTo(final NodeSettingsWO settings) {
+        SVNSettings.saveSettingsTo(settings);
+        logger.warn(SVNLocale.iSettingsSaved());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+        SVNSettings.validateSettings(settings);
+    }
 
 }

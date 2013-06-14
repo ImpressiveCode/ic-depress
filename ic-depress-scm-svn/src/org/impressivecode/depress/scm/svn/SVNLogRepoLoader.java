@@ -18,13 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package org.impressivecode.depress.scm.svn;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.knime.core.node.CanceledExecutionException;
-import org.knime.core.node.NodeLogger;
-import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNLogEntry;
 import org.tmatesoft.svn.core.SVNLogEntryPath;
 import org.tmatesoft.svn.core.SVNURL;
@@ -34,147 +34,123 @@ import org.tmatesoft.svn.core.io.SVNRepository;
 import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
-public class SVNLogRepoLoader extends SVNLogFileLoader {
+public class SVNLogRepoLoader extends SVNLogLoader {
 
-	private static final NodeLogger logger = NodeLogger
-			.getLogger(SVNLogFileLoader.class);
+    private final int PathId = 0;
+    private final int UserId = 1;
+    private final int PassId = 2;
 
-	private final int PathId = 0;
-	private final int UserId = 1;
-	private final int PassId = 2;
+    @Override
+    public void load(String inPath, String inIssueMarker, String inPackage, IReadProgressListener inProgress)
+            throws CanceledExecutionException, Exception {
 
-	@Override
-	public void load(String inPath, String inIssueMarker, String inPackage,
-			IReadProgressListener inProgress) {
+        String[] params = GetParams(inPath.split(";"));
 
-		if (inPath.startsWith("http://")) {
-			String[] params = GetParams(inPath.split(";"));
+        if (params != null) {
+            loadRepo(params[PathId], params[UserId], params[PassId], inIssueMarker, inPackage.split(";"), inProgress);
+            return;
+        }
 
-			if (params != null) {
-				loadRepo(params[PathId], params[UserId], params[PassId],
-						inIssueMarker, inPackage.split(";"), inProgress);
-			}
-		} else {
-			loadXml(inPath, inIssueMarker, inPackage, inProgress);
-		}
+        throw new Exception(SVNLocale.eIvalidOnlinePath(inPath));
+    }
 
-	}
+    private String[] GetParams(String[] inPath) {
 
-	private String[] GetParams(String[] inPath) {
+        if (inPath.length == 1) {
+            return new String[] { inPath[0], "", "" };
+        }
 
-		if (inPath.length == 1) {
-			return new String[] { inPath[0], "", "" };
-		}
+        if (inPath.length == 3) {
+            return inPath;
+        }
+        return null;
+    }
 
-		if (inPath.length == 3) {
-			return inPath;
-		}
+    protected void loadRepo(String inPath, String inUser, String inPass, String inIssueMarker, String[] inPackages,
+            IReadProgressListener inProgress) throws CanceledExecutionException, Exception {
 
-		logger.warn(SVNLocale.iIvalidRepoPath());
+        inProgress.onReadProgress(0, null);
 
-		return null;
-	}
+        DAVRepositoryFactory.setup();
 
-	protected void loadRepo(String inPath, String inUser, String inPass,
-			String inIssueMarker, String[] inPackages,
-			IReadProgressListener inProgress) {
+        inProgress.onReadProgress(0.25, null);
 
-		inProgress.onReadProgress(0, null);
+        String url = inPath;
+        String name = inUser;
+        String password = inPass;
 
-		DAVRepositoryFactory.setup();
+        try {
 
-		inProgress.onReadProgress(0.25, null);
+            @SuppressWarnings("deprecation")
+            SVNRepository repository = SVNRepositoryFactory.create(SVNURL.parseURIDecoded(url));
 
-		String url = inPath;
-		String name = inUser;
-		String password = inPass;
+            inProgress.onReadProgress(0.5, null);
 
-		try {
+            ISVNAuthenticationManager authManager = SVNWCUtil.createDefaultAuthenticationManager(name, password);
+            repository.setAuthenticationManager(authManager);
 
-			logger.warn(SVNLocale.iInitOnlineRepo(url));
+            inProgress.onReadProgress(0.75, null);
 
-			@SuppressWarnings("deprecation")
-			SVNRepository repository = SVNRepositoryFactory.create(SVNURL
-					.parseURIDecoded(url));
+            String targetPaths[] = inPackages;
+            List<SVNLogEntry> entries = new ArrayList<SVNLogEntry>();
 
-			inProgress.onReadProgress(0.5, null);
+            long startRevision = 0;
+            long endRevision = -1;
+            boolean changedPath = true;
+            boolean strictNode = false;
 
-			ISVNAuthenticationManager authManager = SVNWCUtil
-					.createDefaultAuthenticationManager(name, password);
-			repository.setAuthenticationManager(authManager);
+            repository.log(targetPaths, entries, startRevision, endRevision, changedPath, strictNode);
 
-			inProgress.onReadProgress(0.75, null);
+            inProgress.onReadProgress(100, null);
 
-			String targetPaths[] = inPackages;
-			List<SVNLogEntry> entries = new ArrayList<SVNLogEntry>();
+            inProgress.onReadProgress(0, null);
 
-			long startRevision = 0;
-			long endRevision = -1;
-			boolean changedPath = true;
-			boolean strictNode = false;
+            tmpData.issueMarker = inIssueMarker;
 
-			repository.log(targetPaths, entries, startRevision, endRevision,
-					changedPath, strictNode);
+            for (int entryIndex = 0; entryIndex < entries.size(); entryIndex++) {
 
-			inProgress.onReadProgress(100, null);
+                inProgress.checkLoading();
 
-			logger.warn(SVNLocale.iStartLoadOnlineRepo());
+                tmpData.uid = Long.toString(entries.get(entryIndex).getRevision());
 
-			inProgress.onReadProgress(0, null);
+                tmpData.author = entries.get(entryIndex).getAuthor();
+                tmpData.date = entries.get(entryIndex).getDate().toString();
+                tmpData.message = entries.get(entryIndex).getMessage();
 
-			tmData.issueMarker = inIssueMarker;
+                if (!isMarkerInMessage(tmpData.message, tmpData.issueMarker)) {
+                    continue;
+                }
 
-			for (int entryIndex = 0; entryIndex < entries.size(); entryIndex++) {
+                Map<String, SVNLogEntryPath> entryPaths = entries.get(entryIndex).getChangedPaths();
 
-				inProgress.checkLoading();
+                for (SVNLogEntryPath mapElement : entryPaths.values()) {
 
-				tmData.uid = Long.toString(entries.get(entryIndex)
-						.getRevision());
+                    inProgress.checkLoading();
 
-				tmData.author = entries.get(entryIndex).getAuthor();
-				tmData.date = entries.get(entryIndex).getDate().toString();
-				tmData.message = entries.get(entryIndex).getMessage();
+                    tmpData.action = Character.toString(mapElement.getType());
 
-				if (!isMarkerInMessage(tmData.message, tmData.issueMarker)) {
-					continue;
-				}
+                    tmpData.path = mapElement.getPath();
 
-				Map<String, SVNLogEntryPath> entryPaths = entries.get(
-						entryIndex).getChangedPaths();
+                    if (!isValidFile(tmpData.path)) {
+                        continue;
+                    }
 
-				for (SVNLogEntryPath mapElement : entryPaths.values()) {
+                    inProgress.onReadProgress(percent(entryIndex, entries.size()), tmpData.createRow());
 
-					inProgress.checkLoading();
+                }
+            }
 
-					tmData.action = Character.toString(mapElement.getType());
+        } catch (CanceledExecutionException e) {
+            throw e;
+        } catch (Exception e) {
+            throw e;
+        }
 
-					tmData.path = mapElement.getPath();
+    }
 
-					if (!isValidFile(tmData.path)) {
-						continue;
-					}
-
-					inProgress.onReadProgress(
-							percent(entryIndex, entries.size()),
-							tmData.createRow());
-
-				}
-			}
-
-		} catch (SVNException e) {
-			logger.error(SVNLocale.iSVNInternalError(), e);
-			inProgress.onReadProgress(0, null);
-		} catch (CanceledExecutionException e) {
-			logger.warn(SVNLocale.iCancelLoading());
-			inProgress.onReadProgress(0, null);
-		} catch (Exception e) {
-			logger.error(SVNLocale.iSVNInternalError(), e);
-			inProgress.onReadProgress(0, null);
-		}
-
-		finally {
-			logger.warn(SVNLocale.iEndLoadOnlineRepo());
-		}
-	}
+    @Override
+    public SimpleDateFormat getDateFormat() {
+        return new SimpleDateFormat("E MMM dd HH:mm:ss zzz yyyy", Locale.ROOT);
+    }
 
 }

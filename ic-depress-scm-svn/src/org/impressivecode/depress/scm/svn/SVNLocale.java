@@ -28,76 +28,84 @@ import java.nio.file.Paths;
  * */
 public class SVNLocale {
 
-	public static String eLoadSettings() {
-		return "Error durning load setting";
-	}
+    public static String eLoadSettings() {
+        return "Error durning load setting";
+    }
 
-	public static String eValidateSettings() {
-		return "Error durninig validate setting";
-	}
+    public static String eValidateSettings() {
+        return "Error durninig validate setting";
+    }
 
-	public static String iCurrentProgress(double inProgres) {
-		return String.format("Current progress %d", inProgres);
-	}
+    public static String iCurrentProgress(double inProgres) {
+        return String.format("Current progress %d", inProgres);
+    }
 
-	public static Object iEndLoading() {
-		return "End loading";
-	}
+    public static Object iEndLoading() {
+        return "End loading";
+    }
 
-	public static String iSettingsLoaded() {
-		return "Settings loaded";
-	}
+    public static String iSettingsLoaded() {
+        return "Settings loaded";
+    }
 
-	public static String iSettingsSaved() {
-		return "Settings saved";
-	}
+    public static String iSettingsSaved() {
+        return "Settings saved";
+    }
 
-	public static String iStartLoading() {
-		return "Start loading";
-	}
+    public static String iStartLoading() {
+        return "Start loading";
+    }
 
-	public static String nIssueMarker() {
-		return "Issue Marker";
-	}
+    public static String nIssueMarker() {
+        return "Issue Marker";
+    }
 
-	public static String nPackage() {
-		return "Package";
-	}
+    public static String nPackage() {
+        return "Package";
+    }
 
-	public static String iIvalidRepoPath() {
-		return "Invalid repo path";
-	}
+    public static String iIvalidRepoPath() {
+        return "Invalid repo path";
+    }
 
-	public static String iInitOnlineRepo(String url) {
-		return "Init : " + url;
-	}
+    public static String iInitOnlineRepo(String url) {
+        return "Init : " + url;
+    }
 
-	public static String iStartLoadOnlineRepo() {
-		return "Start loading repository";
-	}
+    public static String iStartLoadOnlineRepo() {
+        return "Start loading repository";
+    }
 
-	public static String iEndLoadOnlineRepo() {
-		return "End loading repository";
-	}
+    public static String iEndLoadOnlineRepo() {
+        return "End loading repository";
+    }
 
-	public static String iInitLocalRepo(String inPath) {
-		return "Init : " + Paths.get(inPath).getFileName();
-	}
+    public static String iInitLocalRepo(String inPath) {
+        return "Init : " + Paths.get(inPath).getFileName();
+    }
 
-	public static String iEndLoadLocalRepo() {
-		return "Start loading file";
-	}
+    public static String iEndLoadLocalRepo() {
+        return "Start loading file";
+    }
 
-	public static String iStartLoadLocalRepo() {
-		return "End loading file";
-	}
+    public static String iStartLoadLocalRepo() {
+        return "End loading file";
+    }
 
-	public static String iCancelLoading() {
-		return "Cancel loading";
-	}
+    public static String iCancelLoading() {
+        return "Cancel loading";
+    }
 
-	public static String iSVNInternalError() {
-		return "Svn internal error";
-	}
+    public static String iSVNInternalError() {
+        return "Svn internal error";
+    }
+
+    public static String eIvalidLocalPath(String inPath) {
+        return String.format("File not exists %s", inPath);
+    }
+
+    public static String eIvalidOnlinePath(String inPath) {
+        return String.format("Invalid online path %s", inPath);
+    }
 
 }

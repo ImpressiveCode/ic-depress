@@ -15,7 +15,9 @@
         <option name="Selected file">SVN XML log file to load or web path to repository<br></br>
         Example :<br></br>
         local: <br></br>
+        - svn export command (svn log --xml --verbose http://svn.project/trunk > C:\repo\app\log.xml)<br></br>
         - file : (C:\repo\app\log.xml)<br></br>
+        
         web: <br></br>
         - anonymous access : (http://svn/app/trunk)<br></br>
         - secured access : (http://svn/app/trunk;login;password)

@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="lib" path="lib/svnkit-1.7.9.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ic-depress-base"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -10,7 +10,8 @@ Bundle-Vendor: KNIME
 Require-Bundle: org.eclipse.core.runtime,
  org.knime.workbench.core,
  org.knime.workbench.repository,
- org.knime.base
+ org.knime.base,
+ org.impressivecode.depress.base;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.impressivecode.depress.scm.svn
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

@@ -18,98 +18,138 @@
 
 package org.impressivecode.depress.scm.svn;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashSet;
+
+import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.scm.SCMOperation;
 import org.knime.core.node.CanceledExecutionException;
 
 public abstract class SVNLogLoader {
 
-	public interface IReadProgressListener {
+    public interface IReadProgressListener {
 
-		void onReadProgress(double inProgres, SVNLogRow inRow);
+        void onReadProgress(double inProgres, SCMDataType inRow);
 
-		void checkLoading() throws CanceledExecutionException;
+        void checkLoading() throws CanceledExecutionException;
 
-	}
+    }
 
-	protected Tmp tmData = new Tmp();
+    public SVNLogLoader() {
+        tmpData = new Tmp(getDateFormat());
+    }
 
-	public class Tmp {
+    protected Tmp tmpData;
 
-		public String author;
-		public String message;
-		public String date;
-		public String uid;
-		public String issueMarker;
-		public String action;
-		public String path;
+    public class Tmp {
 
-		public SVNLogRow createRow() {
-			SVNLogRow r = new SVNLogRow();
+        private SimpleDateFormat format;
 
-			r.setMarker(cleanString(issueMarker));
-			r.setAction(action);
-			r.setPath(path);
-			r.setClassName(getClassNameFromPath(path));
-			r.setUid(uid);
-			r.setAuthor(author);
-			r.setMessage(cleanString(message));
-			r.setDate(date);
+        public String author;
+        public String message;
+        public String date;
+        public String uid;
+        public String issueMarker;
+        public String action;
+        public String path;
 
-			return r;
-		}
+        public Tmp(SimpleDateFormat dateFormat) {
+            format = dateFormat;
+        }
 
-		protected final String cleanString(String inText) {
+        public SCMDataType createRow() throws ParseException {
+            SCMDataType r = new SCMDataType();
 
-			if (inText != null && inText.length() > 0) {
-				return inText.replace('\n', ' ').replace('\r', ' ');
-			}
+            r.setMarkers(new HashSet<String>());
+            r.getMarkers().add(cleanString(issueMarker));
+            r.setOperation(toOperation(action));
+            r.setPath(path);
+            r.setResourceName(getClassNameFromPath(path));
+            r.setCommitID(uid);
+            r.setAuthor(author);
+            r.setMessage(cleanString(message));
+            r.setCommitDate(format.parse(date));
 
-			return "";
-		}
+            return r;
+        }
 
-		protected final String getClassNameFromPath(String path) {
-			int lastDot = path.lastIndexOf(".");
+        private SCMOperation toOperation(String action) {
 
-			if (lastDot == -1) {
-				lastDot = path.length() - 1;
-			}
+            switch (action) {
+            case "M":
+                return SCMOperation.MODIFIED;
+            case "A":
+                return SCMOperation.ADDED;
+            case "D":
+                return SCMOperation.DELETED;
+            default:
+                return SCMOperation.OTHER;
+            }
 
-			int lastSlash = path.lastIndexOf("/") + 1;
+        }
 
-			String fileName = path.substring(lastSlash, path.length());
+        protected final String cleanString(String inText) {
 
-			if (fileName.contains(".java") || fileName.contains(".JAVA")) {
+            if (inText != null && inText.length() > 0) {
+                return inText.replace('\n', ' ').replace('\r', ' ');
+            }
 
-				String smallPath = path.substring(lastSlash, lastDot);
+            return "";
+        }
 
-				return (smallPath.substring(0, 1).toUpperCase() + smallPath
-						.substring(1, smallPath.length()));
-			}
+        protected final String getClassNameFromPath(String path) {
+            int lastDot = path.lastIndexOf(".");
 
-			return "";
-		}
-	}
+            if (lastDot == -1) {
+                lastDot = path.length() - 1;
+            }
 
-	public abstract void load(String inPath, String inIssueMarker,
-			String inPackage, IReadProgressListener inProgress);
+            int lastSlash = path.lastIndexOf("/") + 1;
 
-	protected final double percent(double cur, double all) {
-		return (cur / all);
-	}
+            String fileName = path.substring(lastSlash, path.length());
 
-	protected final boolean isValidFile(String path) {
+            if (fileName.contains(".java") || fileName.contains(".JAVA")) {
 
-		String[] dirs = path.split("/");
+                String smallPath = path.substring(lastSlash, lastDot);
 
-		if (dirs.length > 0) {
-			String last = dirs[dirs.length - 1];
+                return (smallPath.substring(0, 1).toUpperCase() + smallPath.substring(1, smallPath.length()));
+            }
 
-			return last.toLowerCase().contains(".java");
-		} else {
-			return dirs[0].toLowerCase().contains(".java");
-		}
-	}
+            return "";
+        }
+    }
 
-	protected final boolean isMarkerInMessage(String message, String marker) {
-		return message.contains(marker);
-	}
+    public abstract SimpleDateFormat getDateFormat();
+
+    public abstract void load(String inPath, String inIssueMarker, String inPackage, IReadProgressListener inProgress)
+            throws CanceledExecutionException, Exception;
+
+    protected final double percent(double cur, double all) {
+        return (cur / all);
+    }
+
+    protected final boolean isValidFile(String path) {
+
+        String[] dirs = path.split("/");
+
+        if (dirs.length > 0) {
+            String last = dirs[dirs.length - 1];
+
+            return last.toLowerCase().contains(".");
+        } else {
+            return dirs[0].toLowerCase().contains(".");
+        }
+    }
+
+    protected final boolean isMarkerInMessage(String message, String marker) {
+        return message.contains(marker);
+    }
+
+    public static SVNLogLoader create(String inPath) {
+        if (inPath.startsWith("http://")) {
+            return new SVNLogRepoLoader();
+        }
+        return new SVNLogFileLoader();
+    }
 }

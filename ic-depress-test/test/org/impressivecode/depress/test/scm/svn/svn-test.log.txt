@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log>
+
+<logentry
+   revision="33">
+<author>p.blachut</author>
+<date>2010-04-05T03:03:13.596432Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/canvg.js</path>
+<path
+   kind="file"
+   action="A">/trunk/flashcanvas.js</path>
+<path
+   kind="file"
+   action="M">/trunk/test.htm</path>
+<path
+   kind="file"
+   action="A">/trunk/flashcanvas.swf</path>
+</paths>
+<msg>added ie support to test page through flashcanvas</msg>
+</logentry>
+<logentry
+   revision="32">
+<author>p.blachut</author>
+<date>2010-04-05T01:40:41.779970Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/canvg.js</path>
+</paths>
+<msg>- refactored point/path parsing
+- added skewX, skewY, matrix transforms
+- added center of rotation to rotation transform</msg>
+</logentry>
+<logentry
+   revision="31">
+<author>p.blachut</author>
+<date>2010-04-04T16:38:07.948920Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+<path
+   action="A"
+   kind="file">/trunk/test/27.svg</path>
+<path
+   action="M"
+   kind="file">/trunk/test.htm</path>
+</paths>
+<msg>added arc support to paths</msg>
+</logentry>
+<logentry
+   revision="30">
+<author>p.blachut</author>
+<date>2010-04-03T14:02:52.757574Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+</paths>
+<msg>Fix Issue 18: Fix relative h,v commands</msg>
+</logentry>
+<logentry
+   revision="29">
+<author>m.haber</author>
+<date>2010-04-03T06:29:27.800328Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+</paths>
+<msg>fixed stroke style inheritance</msg>
+</logentry>
+<logentry
+   revision="28">
+<author>m.haber</author>
+<date>2010-04-03T05:18:04.068162Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+</paths>
+<msg>Fix Issue 16: Prevent JS errors when console not present. Minor support for &lt;a&gt; elements.</msg>
+</logentry>
+<logentry
+   revision="27">
+<author>m.burgknap</author>
+<date>2010-04-02T20:21:15.411465Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/canvg.java</path>
+</paths>
+<msg>#32 Test message</msg>
+</logentry>
+<logentry
+   revision="26">
+<author>m.haber</author>
+<date>2010-04-02T17:53:04.124732Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/canvg.java</path>
+</paths>
+<msg>- refactored out context, propertysource (now natively stored in 2dcontext of canvas)
+- cleaned up inheritance chain
+- now objects will render themselves instead of children</msg>
+</logentry>
+<logentry
+   revision="25">
+<author>m.haber</author>
+<date>2010-04-01T05:21:06.538491Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/canvg.js</path>
+</paths>
+<msg>better stroke/fill property handling including initial values</msg>
+</logentry>
+<logentry
+   revision="24">
+<author>m.haber</author>
+<date>2010-03-30T23:39:31.762016Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/canvg.js</path>
+</paths>
+<msg>- refactored units: now handles various lengths, angles, times, etc. also handles units relative to canvas or object.</msg>
+</logentry>
+<logentry
+   revision="23">
+<author>m.burgknap</author>
+<date>2010-03-30T23:36:37.312455Z</date>
+<paths>
+<path
+   action="A"
+   kind="file">/trunk/test/24.svg</path>
+<path
+   action="A"
+   kind="file">/trunk/test/25.svg</path>
+<path
+   action="A"
+   kind="file">/trunk/test/26.svg</path>
+<path
+   action="M"
+   kind="file">/trunk/test.htm</path>
+</paths>
+<msg>- reorganized examples on test page
+- added canvas reset prior to running an example on the test page</msg>
+</logentry>
+<logentry
+   revision="22">
+<author>m.haber</author>
+<date>2010-03-30T14:54:24.533205Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+</paths>
+<msg>- added default stroke parameter values (for ff)
+- fixed some point parsing when extra whitespace existed</msg>
+</logentry>
+<logentry
+   revision="21">
+<author>p.obraniak</author>
+<date>2010-03-30T08:26:22.386153Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/test/22.svg</path>
+<path
+   action="M"
+   kind="file">/trunk/test/23.svg</path>
+</paths>
+<msg>fixing svn mime type for svgs</msg>
+</logentry>
+<logentry
+   revision="20">
+<author>p.obraniak</author>
+<date>2010-03-30T08:19:48.183084Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/test.htm</path>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+<path
+   action="A"
+   kind="file">/trunk/test/23.svg</path>
+</paths>
+<msg>- pushing styles to context stack for g/use
+- tiger demo ... RAR!</msg>
+</logentry>
+<logentry
+   revision="19">
+<author>p.obraniak</author>
+<date>2010-03-30T07:29:26.516078Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+</paths>
+<msg>major refactoring: 
+- added 2 new element base classes
+- all rendered elements are now paths
+- added rounded rectangles
+- fixed animation to only redraw when needed</msg>
+</logentry>
+<logentry
+   revision="18">
+<author>m.burgknap</author>
+<date>2010-03-29T21:15:17.997752Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/canvg.js</path>
+</paths>
+<msg>fixed path parser reset to reset current/control point</msg>
+</logentry>
+<logentry
+   revision="17">
+<author>p.obraniak</author>
+<date>2010-03-29T21:12:28.750322Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/canvg.js</path>
+</paths>
+<msg>- adding support for line cap, line join, line miter
+- fixed translation transform parameter parsing
+- adding support for styles based on tag name
+</msg>
+</logentry>
+<logentry
+   revision="16">
+<author>m.burgknap</author>
+<date>2010-03-29T20:33:37.384836Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/test.htm</path>
+</paths>
+<msg>added custom width/height choosing to test page when rendering custom svg xml</msg>
+</logentry>
+<logentry
+   revision="15">
+<author>m.burgknap</author>
+<date>2010-03-29T20:33:06.331190Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+</paths>
+<msg>fixed bug in path parsing of commands</msg>
+</logentry>
+<logentry
+   revision="14">
+<author>m.burgknap</author>
+<date>2010-03-29T20:18:44.095352Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+</paths>
+<msg>fixed path lexing when no comma between coordinates</msg>
+</logentry>
+<logentry
+   revision="13">
+<author>m.burgknap</author>
+<date>2010-03-29T19:48:24.192861Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/canvg.js</path>
+</paths>
+<msg>fixed path relative commands parsing</msg>
+</logentry>
+<logentry
+   revision="12">
+<author>m.burgknap</author>
+<date>2010-03-29T00:54:27.148508Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/canvg.js</path>
+</paths>
+<msg>- fixed viewbox attribute handling
+- fixed animation attributeType attribute default value
+- fixed rendering text position</msg>
+</logentry>
+<logentry
+   revision="11">
+<author>m.burgknap</author>
+<date>2010-03-28T21:41:57.342516Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/canvg.js</path>
+</paths>
+<msg>- added functionality for gradient units being absolute or relative
+- fixed viewbox relative width/height</msg>
+</logentry>
+<logentry
+   revision="10">
+<author>p.obraniak</author>
+<date>2010-03-28T21:19:14.906115Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/canvg.js</path>
+</paths>
+<msg>added title/desc element stubs</msg>
+</logentry>
+<logentry
+   revision="9">
+<author>m.burgknap</author>
+<date>2010-03-28T21:12:12.163511Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+<path
+   action="A"
+   kind="file">/trunk/test/22.svg</path>
+<path
+   action="M"
+   kind="file">/trunk/test.htm</path>
+</paths>
+<msg>- basic style tag implementation
+- basic svg viewbox/width/height implementation
+- rewrote path implementation with a parser engine, only missing 'a' command now
+- added test for world map</msg>
+</logentry>
+<logentry
+   revision="8">
+<author>p.obraniak</author>
+<date>2010-03-26T17:36:20.764056Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+</paths>
+<msg>implemented 'T' command for paths</msg>
+</logentry>
+<logentry
+   revision="7">
+<author>p.obraniak</author>
+<date>2010-03-26T17:12:47.507116Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+</paths>
+<msg>fixing duration on animations</msg>
+</logentry>
+<logentry
+   revision="6">
+<author>p.obraniak</author>
+<date>2010-03-26T16:57:24.021049Z</date>
+<paths>
+<path
+   action="M"
+   kind="file">/trunk/canvg.js</path>
+</paths>
+<msg>fixing progress calculation</msg>
+</logentry>
+<logentry
+   revision="5">
+<author>p.blachut</author>
+<date>2010-03-26T16:39:30.102085Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/test/10.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/20.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/11.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/21.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/12.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/13.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/14.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/15.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/16.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/17.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/18.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/19.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/1.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/2.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/3.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/4.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/5.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/6.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/7.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/8.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/9.svg</path>
+</paths>
+<msg>fixing mime type on svg again</msg>
+</logentry>
+<logentry
+   revision="4">
+<author>m.burgknap</author>
+<date>2010-03-26T16:38:00.418117Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/test/13.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/14.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/15.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/16.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/17.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/18.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/19.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/1.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/2.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/3.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/4.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/5.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/6.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/7.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/8.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/9.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/10.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/20.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/11.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/21.svg</path>
+<path
+   kind="file"
+   action="M">/trunk/test/12.svg</path>
+</paths>
+<msg>fixing svg mime type</msg>
+</logentry>
+<logentry
+   revision="3">
+<author>m.burgknap</author>
+<date>2010-03-26T16:36:49.449390Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/trunk/test.htm</path>
+</paths>
+<msg>fixing html mime type</msg>
+</logentry>
+<logentry
+   revision="2">
+<author>m.burgknap</author>
+<date>2010-03-26T16:34:18.674884Z</date>
+<paths>
+<path
+   kind="file"
+   action="A">/trunk/test/10.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/11.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/20.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/12.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/21.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/13.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/14.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/15.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/16.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/17.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/18.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/19.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test.htm</path>
+<path
+   kind="file"
+   action="A">/trunk/canvg.js</path>
+<path
+   kind="file"
+   action="A">/trunk/test/1.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/2.svg</path>
+<path
+   kind="dir"
+   action="A">/trunk/test</path>
+<path
+   kind="file"
+   action="A">/trunk/test/3.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/4.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/5.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/6.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/7.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/rgbcolor.js</path>
+<path
+   kind="file"
+   action="A">/trunk/test/8.svg</path>
+<path
+   kind="file"
+   action="A">/trunk/test/9.svg</path>
+</paths>
+<msg></msg>
+</logentry>
+<logentry
+   revision="1">
+<date>2010-03-26T16:26:39.614211Z</date>
+<paths>
+<path
+   kind="dir"
+   action="A">/tags</path>
+<path
+   kind="dir"
+   action="A">/trunk</path>
+<path
+   kind="dir"
+   action="A">/wiki</path>
+<path
+   kind="dir"
+   action="A">/branches</path>
+</paths>
+<msg>Initial directory structure.</msg>
+</logentry>
+</log>
