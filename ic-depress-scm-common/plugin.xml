@@ -8,5 +8,10 @@
             category-path="depress/depress.scm"
             factory-class="org.impressivecode.depress.scm.markerparser.MarkerParserNodeFactory"
             id="org.impressivecode.depress.scm.markerparser"/>
+      <node
+            category-path="depress/depress.scm"
+            factory-class="org.impressivecode.depress.scm.extmarkerparser.ExtendedMarkerParserNodeFactory"
+            id="org.impressivecode.depress.scm.extmarkerparser">
+      </node>
    </extension>
 </plugin>
