@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
-<knimeNode icon="./marker.png" type="Manipulator">
-    <name>Marker Parser</name>
+<knimeNode icon="./extmarker.png" type="Manipulator">
+    <name>Marker Parser(+)</name>
 
     <shortDescription>
-       Issue Marker Parser, ImpressiveCode Depress
+       Marker Parser(+), ImpressiveCode Depress
     </shortDescription>
 
     <fullDescription>
@@ -16,6 +16,7 @@
              Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
             </p>
         </intro>
+
     </fullDescription>
 
     <ports>
