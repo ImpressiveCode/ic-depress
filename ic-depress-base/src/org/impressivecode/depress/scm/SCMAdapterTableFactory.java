@@ -40,8 +40,8 @@ import org.knime.core.data.def.StringCell;
  * 
  */
 public class SCMAdapterTableFactory {
-    public static final String MARKER = "Marker(Base)";
-    public static final String EXT_MARKER = "Marker(Ext)";
+    public static final String MARKER = "Marker";
+    public static final String EXT_MARKER = "Marker(+)";
 
     public static final String AUTHOR_COLNAME = "Author";
     public static final String RESOURCE_NAME = "Class";
