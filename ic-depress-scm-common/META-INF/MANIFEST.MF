@@ -12,5 +12,6 @@ Require-Bundle: org.impressivecode.depress.base;bundle-version="0.1.0",
  org.knime.base;bundle-version="2.7.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: org.impressivecode.depress.scm.markerparser
+Export-Package: org.impressivecode.depress.scm.extmarkerparser,
+ org.impressivecode.depress.scm.markerparser
 Eclipse-BuddyPolicy: registered

@@ -30,7 +30,7 @@ import com.google.common.base.Strings;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-class Configuration {
+public class Configuration {
     private final Pattern idRegexp;
     private final String builderFormat;
     private final String[] keywords;
@@ -40,7 +40,7 @@ class Configuration {
     public Configuration(final SettingsModelString regExpID, final SettingsModelString regExpKeywords,
             final SettingsModelString keywords, final SettingsModelString onlyIds, final SettingsModelString builder) {
         if (emptyToNull(regExpID.getStringValue()) != null) {
-            this.idRegexp = Pattern.compile(regExpID.getStringValue());
+            this.idRegexp = Pattern.compile(regExpID.getStringValue(),  Pattern.MULTILINE);
         } else {
             this.idRegexp = null;
         }
@@ -59,7 +59,7 @@ class Configuration {
         this.builderFormat = Strings.emptyToNull(builder.getStringValue());
 
 
-        this.onlyNumbers = Pattern.compile(onlyIds.getStringValue());
+        this.onlyNumbers = Pattern.compile(onlyIds.getStringValue(), Pattern.MULTILINE);
     }
 
     public Pattern getOnlyNumbers() {

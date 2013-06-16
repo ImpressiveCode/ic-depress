@@ -30,20 +30,27 @@ public class ExtendedMarkerParserNodeDialog extends DefaultNodeSettingsPane {
 
     protected ExtendedMarkerParserNodeDialog() {
         super();
-
+        createNewGroup("ID Settings");
         addDialogComponent(new DialogComponentString(new SettingsModelString(ExtendedMarkerParserNodeModel.CFG_REGEXP_ID,
-                ExtendedMarkerParserNodeModel.REGEXP_ID_DEFAULT), "ID regexp:", true, 25));
-
-        addDialogComponent(new DialogComponentString(new SettingsModelString(ExtendedMarkerParserNodeModel.CFG_REGEXP_ONLYIDS,
-                ExtendedMarkerParserNodeModel.REGEXP_ONLYIDS_DEFAULT), "Only IDs regexp:", true, 25));
-
-        addDialogComponent(new DialogComponentString(new SettingsModelString(ExtendedMarkerParserNodeModel.CFG_REGEXP_KEYWORDS,
-                ExtendedMarkerParserNodeModel.REGEXP_KEYWORDS_DEFAULT), "Keywords regexp:", false, 25));
-
-        addDialogComponent(new DialogComponentString(new SettingsModelString(ExtendedMarkerParserNodeModel.CFG_KEYWORDS,
-                ExtendedMarkerParserNodeModel.KEYWORDS_DEFAULT), "Keywords:", false, 25));
+                ExtendedMarkerParserNodeModel.REGEXP_ID_DEFAULT), 
+                "ID regexp:      ", true, 33));
 
         addDialogComponent(new DialogComponentString(new SettingsModelString(ExtendedMarkerParserNodeModel.CFG_IDBUILDER,
-                ExtendedMarkerParserNodeModel.IDBUILDER_DEFAULT), "ID builder:", false, 25));
+                ExtendedMarkerParserNodeModel.IDBUILDER_DEFAULT), 
+                "ID builder:     ", false, 33));
+
+        createNewGroup("Confidence");
+        addDialogComponent(new DialogComponentString(new SettingsModelString(ExtendedMarkerParserNodeModel.CFG_REGEXP_ONLYIDS,
+                ExtendedMarkerParserNodeModel.REGEXP_ONLYIDS_DEFAULT), 
+                "Only IDs regexp:", true, 33));
+
+        addDialogComponent(new DialogComponentString(new SettingsModelString(ExtendedMarkerParserNodeModel.CFG_REGEXP_KEYWORDS,
+                ExtendedMarkerParserNodeModel.REGEXP_KEYWORDS_DEFAULT), 
+                "Keywords regexp:", false, 33));
+
+        addDialogComponent(new DialogComponentString(new SettingsModelString(ExtendedMarkerParserNodeModel.CFG_KEYWORDS,
+                ExtendedMarkerParserNodeModel.KEYWORDS_DEFAULT), 
+                "Keywords(,):    ", false, 33));
+
     }
 }

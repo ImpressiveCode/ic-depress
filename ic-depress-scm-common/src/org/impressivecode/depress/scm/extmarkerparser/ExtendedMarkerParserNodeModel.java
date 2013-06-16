@@ -52,7 +52,7 @@ public class ExtendedMarkerParserNodeModel extends NodeModel {
     static final String REGEXP_ID_DEFAULT = "([0-9]+)";
 
     static final String CFG_REGEXP_KEYWORDS = "depress.scm.svn.extmarkerparser.keywordsregexp";
-    static final String REGEXP_KEYWORDS_DEFAULT = "";
+    static final String REGEXP_KEYWORDS_DEFAULT = "(?i)^.*\\b(bugs?|fix(e[ds])?|defects?|patch|pr)\\b.*$";
 
     static final String CFG_KEYWORDS = "depress.scm.svn.extmarkerparser.keywords";
     static final String KEYWORDS_DEFAULT = "exception";
@@ -61,15 +61,11 @@ public class ExtendedMarkerParserNodeModel extends NodeModel {
     static final String IDBUILDER_DEFAULT = "%s";
 
     static final String CFG_REGEXP_ONLYIDS = "depress.scm.svn.extmarkerparser.onlyids";
-    static final String REGEXP_ONLYIDS_DEFAULT = "^[-,0-9 ]+$";
+    static final String REGEXP_ONLYIDS_DEFAULT = "^[,0-9 ]+$";
 
     private final SettingsModelString regExpID = new SettingsModelString(CFG_REGEXP_ID, REGEXP_ID_DEFAULT);
-
-    private final SettingsModelString regExpKeywords = new SettingsModelString(CFG_REGEXP_KEYWORDS,
-            REGEXP_KEYWORDS_DEFAULT);
-
+    private final SettingsModelString regExpKeywords = new SettingsModelString(CFG_REGEXP_KEYWORDS, REGEXP_KEYWORDS_DEFAULT);
     private final SettingsModelString keywords = new SettingsModelString(CFG_KEYWORDS, KEYWORDS_DEFAULT);
-
     private final SettingsModelString builder = new SettingsModelString(CFG_IDBUILDER, IDBUILDER_DEFAULT);
     private final SettingsModelString regExpOnlyIds = new SettingsModelString(CFG_REGEXP_ONLYIDS, REGEXP_ONLYIDS_DEFAULT);
 
@@ -81,14 +77,15 @@ public class ExtendedMarkerParserNodeModel extends NodeModel {
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
 
-        AppendedColumnTable table = new AppendedColumnTable(inData[0], markerCellFactory(inData[0]), EXT_MARKER_COLSPEC, CONFIDENCE_COLSPEC);
+        AppendedColumnTable table = new AppendedColumnTable(inData[0], markerCellFactory(inData[0]),
+                EXT_MARKER_COLSPEC, CONFIDENCE_COLSPEC);
 
         return new BufferedDataTable[] { preapreTable(table, exec) };
     }
 
     private MarkerCellFactory markerCellFactory(final BufferedDataTable inData) {
-        return new MarkerCellFactory(new Configuration(regExpID, regExpKeywords, keywords, regExpOnlyIds, builder), inData.getSpec()
-                .findColumnIndex(MESSAGE_COLNAME));
+        return new MarkerCellFactory(new Configuration(regExpID, regExpKeywords, keywords, regExpOnlyIds, builder),
+                inData.getSpec().findColumnIndex(MESSAGE_COLNAME));
     }
 
     private BufferedDataTable preapreTable(final AppendedColumnTable table, final ExecutionContext exec)

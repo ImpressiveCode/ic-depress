@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./extmarker.png" type="Manipulator">
-    <name>Extended Issue ID Parser</name>
+    <name>Marker Parser(+)</name>
 
     <shortDescription>
-       Extended Issue ID Parser, ImpressiveCode Depress
+       Marker Parser(+), ImpressiveCode Depress
     </shortDescription>
 
     <fullDescription>
