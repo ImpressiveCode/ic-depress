@@ -17,9 +17,6 @@
             </p>
         </intro>
 
-        <option name="Selected file">File with SVN log to analyze in offline version of plugin</option>
-        <option name="Issue marker">Regular expression (java style) for extracting issue ID e.g. (MATH-[0-9]+)</option>
-        <option name="Package">Prefix of package</option>
     </fullDescription>
 
     <ports>
