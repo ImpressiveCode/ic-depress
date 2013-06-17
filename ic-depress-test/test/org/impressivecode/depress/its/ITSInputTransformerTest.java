@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.im;
+package org.impressivecode.depress.its;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_NAME;
@@ -27,7 +27,7 @@ import java.util.List;
 import org.impressivecode.depress.common.Cells;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.metric.im.IssueInputTransformer;
+import org.impressivecode.depress.its.ITSInputTransformer;
 import org.junit.Test;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
@@ -42,21 +42,21 @@ import org.mockito.Mockito;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class IssueInputTransformerTest {
+public class ITSInputTransformerTest {
 
     @Test(expected = InvalidSettingsException.class)
     public void shouldValidateSpec() throws InvalidSettingsException {
         // given
         DataTableSpec spec = new DataTableSpec(new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec());
         // when
-        new IssueInputTransformer(spec);
+        new ITSInputTransformer(spec);
     }
 
     @Test
     public void shoulTransform() throws InvalidSettingsException {
         // given
         DataTableSpec spec = ITSAdapterTableFactory.createDataColumnSpec();
-        IssueInputTransformer transformer = new IssueInputTransformer(spec);
+        ITSInputTransformer transformer = new ITSInputTransformer(spec);
         DataTable inTable = mock(DataTable.class);
         RowIterator iterator = mock(RowIterator.class);
         when(iterator.hasNext()).thenReturn(true, false);

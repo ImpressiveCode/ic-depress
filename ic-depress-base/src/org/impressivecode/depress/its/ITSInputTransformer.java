@@ -15,10 +15,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.im;
+package org.impressivecode.depress.its;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_NAME;
+import static com.google.common.collect.Lists.newArrayListWithExpectedSize;
 
 import java.util.List;
 import java.util.Set;
@@ -26,51 +26,44 @@ import java.util.Set;
 import org.impressivecode.depress.common.DataTableSpecUtils;
 import org.impressivecode.depress.common.InputTransformer;
 import org.impressivecode.depress.common.TableCellReader;
-import org.impressivecode.depress.scm.SCMAdapterTableFactory;
-import org.impressivecode.depress.scm.SCMDataType;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTable;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.RowIterator;
-import org.knime.core.data.collection.SetCell;
 import org.knime.core.data.def.StringCell;
 import org.knime.core.node.InvalidSettingsException;
 
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class HistoryInputTransformer implements InputTransformer<SCMDataType> {
-
+public class ITSInputTransformer implements InputTransformer<ITSDataType> {
     private final DataTableSpec tableSpec;
 
-    public HistoryInputTransformer(final DataTableSpec tableSpec) throws InvalidSettingsException {
+    public ITSInputTransformer(final DataTableSpec tableSpec) throws InvalidSettingsException {
         this.tableSpec = validate(tableSpec);
     }
 
     @Override
-    public List<SCMDataType> transform(final DataTable inTable) {
+    public List<ITSDataType> transform(final DataTable inTable) {
         checkNotNull(inTable, "InTable has to be set");
-        List<SCMDataType> scmData = Lists.newArrayListWithExpectedSize(1000);
+        List<ITSDataType> issueData = newArrayListWithExpectedSize(1000);
         RowIterator iterator = inTable.iterator();
         while (iterator.hasNext()) {
-            scmData.add(scm(iterator.next()));
+            issueData.add(issue(iterator.next()));
         }
-        return scmData;
+        return issueData;
     }
 
-    private SCMDataType scm(final DataRow row) {
+    private ITSDataType issue(final DataRow row) {
         TableCellReader reader = new TableCellReader(tableSpec, row);
-        SCMDataType scm = new SCMDataType();
-        scm.setResourceName(reader.string(RESOURCE_NAME));
-        scm.setMarkers(reader.stringSet(SCMAdapterTableFactory.MARKER));
-        return scm;
+        ITSDataType its = new ITSDataType();
+        its.setIssueId(reader.string(ITSAdapterTableFactory.ISSUE_ID));
+        return its;
     }
 
     private static DataTableSpec validate(final DataTableSpec spec) throws InvalidSettingsException {
@@ -78,7 +71,7 @@ public class HistoryInputTransformer implements InputTransformer<SCMDataType> {
 
         Set<String> missing = DataTableSpecUtils.findMissingColumnSubset(spec, createHistoryColumnSpec());
         if (!missing.isEmpty()) {
-            throw new InvalidSettingsException("History data table does not contain required columns. Missing: "
+            throw new InvalidSettingsException("Issue data table does not contain required columns. Missing: "
                     + Iterables.toString(missing));
         }
 
@@ -86,11 +79,7 @@ public class HistoryInputTransformer implements InputTransformer<SCMDataType> {
     }
 
     private static DataTableSpec createHistoryColumnSpec() {
-        DataColumnSpec[] allColSpecs = {
-                new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(SCMAdapterTableFactory.MARKER, SetCell.getCollectionType(StringCell.TYPE)).createSpec(),
-        };
-        return new DataTableSpec(allColSpecs);
+        DataColumnSpec spec = new DataColumnSpecCreator(ITSAdapterTableFactory.ISSUE_ID, StringCell.TYPE).createSpec();
+        return new DataTableSpec(spec);
     }
-
 }

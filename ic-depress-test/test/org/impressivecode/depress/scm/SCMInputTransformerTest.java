@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.im;
+package org.impressivecode.depress.scm;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_NAME;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 
 import org.impressivecode.depress.common.Cells;
-import org.impressivecode.depress.metric.im.HistoryInputTransformer;
+import org.impressivecode.depress.scm.SCMInputTransformer;
 import org.impressivecode.depress.scm.SCMAdapterTableFactory;
 import org.impressivecode.depress.scm.SCMDataType;
 import org.junit.Test;
@@ -44,21 +44,21 @@ import com.google.common.collect.Sets;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class HistoryInputTransformerTest {
+public class SCMInputTransformerTest {
 
     @Test(expected = InvalidSettingsException.class)
     public void shouldValidateSpec() throws InvalidSettingsException {
         // given
         DataTableSpec spec = new DataTableSpec(new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec());
         // when
-        new HistoryInputTransformer(spec);
+        new SCMInputTransformer(spec);
     }
 
     @Test
     public void shoulTransform() throws InvalidSettingsException {
         // given
         DataTableSpec spec = SCMAdapterTableFactory.createDataColumnSpec();
-        HistoryInputTransformer transformer = new HistoryInputTransformer(spec);
+        SCMInputTransformer transformer = new SCMInputTransformer(spec);
         DataTable inTable = mock(DataTable.class);
         RowIterator iterator = mock(RowIterator.class);
         when(iterator.hasNext()).thenReturn(true, false);
