@@ -18,7 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.support.activitymatcher;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
+import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
@@ -30,23 +32,19 @@ public class ActivityMatcherNodeDialog extends DefaultNodeSettingsPane {
 
     protected ActivityMatcherNodeDialog() {
         super();
-        createNewGroup("ID Settings");
-        addDialogComponent(new DialogComponentString(new SettingsModelString(ActivityMatcherParserNodeModel.CFG_REGEXP_ID,
-                ActivityMatcherParserNodeModel.REGEXP_ID_DEFAULT), 
-                "ID regexp:      ", true, 33));
+        createNewGroup("Matcher Settings");
+        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(ActivityMatcherParserNodeModel.CFG_INTERVAL,
+                ActivityMatcherParserNodeModel.INTERVAL_DEFAULT), 
+                "Interval(min): ", 33));
 
         addDialogComponent(new DialogComponentString(new SettingsModelString(ActivityMatcherParserNodeModel.CFG_IDBUILDER,
                 ActivityMatcherParserNodeModel.IDBUILDER_DEFAULT), 
-                "ID builder:     ", false, 33));
+                "ID Builder:     ", false, 33));
 
         createNewGroup("Confidence");
-        addDialogComponent(new DialogComponentString(new SettingsModelString(ActivityMatcherParserNodeModel.CFG_REGEXP_ONLYIDS,
-                ActivityMatcherParserNodeModel.REGEXP_ONLYIDS_DEFAULT), 
-                "Only IDs regexp:", true, 33));
-
         addDialogComponent(new DialogComponentString(new SettingsModelString(ActivityMatcherParserNodeModel.CFG_REGEXP_KEYWORDS,
                 ActivityMatcherParserNodeModel.REGEXP_KEYWORDS_DEFAULT), 
-                "Keywords regexp:", false, 33));
+                "Keywords Regexp:", false, 33));
 
         addDialogComponent(new DialogComponentString(new SettingsModelString(ActivityMatcherParserNodeModel.CFG_KEYWORDS,
                 ActivityMatcherParserNodeModel.KEYWORDS_DEFAULT), 

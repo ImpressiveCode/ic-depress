@@ -20,7 +20,6 @@ package org.impressivecode.depress.support.activitymatcher;
 import static org.impressivecode.depress.common.Cells.integerOrMissingCell;
 
 import java.util.Set;
-import java.util.regex.Matcher;
 
 import org.impressivecode.depress.common.Cells;
 import org.knime.base.data.append.column.AppendedCellFactory;
@@ -52,16 +51,7 @@ public class ActivityMarkerCellFactory implements AppendedCellFactory {
         String message = ((StringCell) row.getCell(msgCellIndex)).getStringValue();
 
         final Set<String> markers = Sets.newHashSet();
-        if (this.cfg.getIdRegexp() != null) {
-            Matcher matcher = this.cfg.getIdRegexp().matcher(message);
-            while (matcher.find()) {
-                if (matcher.groupCount() >= 1) {
-                    markers.add(matcher.group(1));
-                } else {
-                    markers.add(matcher.group());
-                }
-            }
-        }
+
 
         Integer confidence = null;
         if (!markers.isEmpty()) {
@@ -72,18 +62,7 @@ public class ActivityMarkerCellFactory implements AppendedCellFactory {
     }
 
     private int checkConfidence(final String message, final Set<String> markers) {
-
-        if (hasKeywords(message)) {
-            return 2;
-        } else if (onlyNumbers(message)) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    private boolean onlyNumbers(final String message) {
-        return cfg.getOnlyNumbers().matcher(message).matches();
+        return 0;
     }
 
     private boolean hasKeywords(final String message) {

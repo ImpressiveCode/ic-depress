@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.support.extmarkerparser;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.CONFIDENCE_COLSPEC;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.EXT_CONFIDENCE_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.EXT_MARKER_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
 
@@ -78,7 +78,7 @@ public class ExtendedMarkerParserNodeModel extends NodeModel {
             throws Exception {
 
         AppendedColumnTable table = new AppendedColumnTable(inData[0], markerCellFactory(inData[0]),
-                EXT_MARKER_COLSPEC, CONFIDENCE_COLSPEC);
+                EXT_MARKER_COLSPEC, EXT_CONFIDENCE_COLSPEC);
 
         return new BufferedDataTable[] { preapreTable(table, exec) };
     }
@@ -103,7 +103,7 @@ public class ExtendedMarkerParserNodeModel extends NodeModel {
         Preconditions.checkArgument(inSpecs.length == 1);
         validate(inSpecs[0]);
 
-        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], EXT_MARKER_COLSPEC, CONFIDENCE_COLSPEC);
+        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], EXT_MARKER_COLSPEC, EXT_CONFIDENCE_COLSPEC);
 
         return new DataTableSpec[] { dts };
     }

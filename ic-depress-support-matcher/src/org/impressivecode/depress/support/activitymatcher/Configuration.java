@@ -19,8 +19,11 @@ package org.impressivecode.depress.support.activitymatcher;
 
 import static com.google.common.base.Strings.emptyToNull;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
+import org.impressivecode.depress.its.ITSDataType;
+import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Strings;
@@ -31,19 +34,14 @@ import com.google.common.base.Strings;
  * 
  */
 public class Configuration {
-    private final Pattern idRegexp;
     private final String builderFormat;
     private final String[] keywords;
     private final Pattern keywordsRegexp;
-    private final Pattern onlyNumbers;
+    private final List<ITSDataType> issues;
+    private final int interval;
 
-    public Configuration(final SettingsModelString regExpID, final SettingsModelString regExpKeywords,
-            final SettingsModelString keywords, final SettingsModelString onlyIds, final SettingsModelString builder) {
-        if (emptyToNull(regExpID.getStringValue()) != null) {
-            this.idRegexp = Pattern.compile(regExpID.getStringValue(),  Pattern.MULTILINE);
-        } else {
-            this.idRegexp = null;
-        }
+    public Configuration(final SettingsModelInteger interval, final SettingsModelString regExpKeywords, final SettingsModelString keywords,
+            final SettingsModelString builder, final List<ITSDataType> issues) {
 
         if (emptyToNull(regExpKeywords.getStringValue()) != null) {
             this.keywordsRegexp = Pattern.compile(regExpKeywords.getStringValue());
@@ -57,17 +55,16 @@ public class Configuration {
         }
 
         this.builderFormat = Strings.emptyToNull(builder.getStringValue());
-
-
-        this.onlyNumbers = Pattern.compile(onlyIds.getStringValue(), Pattern.MULTILINE);
+        this.issues = issues;
+        this.interval = interval.getIntValue();
     }
 
-    public Pattern getOnlyNumbers() {
-        return onlyNumbers;
+    public int getInterval() {
+        return interval;
     }
 
-    public Pattern getIdRegexp() {
-        return idRegexp;
+    public List<ITSDataType> getIssues() {
+        return issues;
     }
 
     public String getBuilderFormat() {
