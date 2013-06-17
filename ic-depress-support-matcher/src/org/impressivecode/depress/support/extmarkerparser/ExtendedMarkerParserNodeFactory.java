@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm.markerparser;
+package org.impressivecode.depress.support.extmarkerparser;
 
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
@@ -27,11 +27,11 @@ import org.knime.core.node.NodeView;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class MarkerParserNodeFactory extends NodeFactory<MarkerParserNodeModel> {
+public class ExtendedMarkerParserNodeFactory extends NodeFactory<ExtendedMarkerParserNodeModel> {
 
     @Override
-    public MarkerParserNodeModel createNodeModel() {
-        return new MarkerParserNodeModel();
+    public ExtendedMarkerParserNodeModel createNodeModel() {
+        return new ExtendedMarkerParserNodeModel();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class MarkerParserNodeFactory extends NodeFactory<MarkerParserNodeModel> 
     }
 
     @Override
-    public NodeView<MarkerParserNodeModel> createNodeView(final int viewIndex, final MarkerParserNodeModel nodeModel) {
+    public NodeView<ExtendedMarkerParserNodeModel> createNodeView(final int viewIndex, final ExtendedMarkerParserNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 
@@ -51,6 +51,6 @@ public class MarkerParserNodeFactory extends NodeFactory<MarkerParserNodeModel> 
 
     @Override
     public NodeDialogPane createNodeDialogPane() {
-        return new MarkerParserNodeDialog();
+        return new ExtendedMarkerParserNodeDialog();
     }
 }

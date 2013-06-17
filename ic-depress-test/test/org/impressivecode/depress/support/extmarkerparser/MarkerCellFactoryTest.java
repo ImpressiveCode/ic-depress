@@ -15,25 +15,27 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm.extmarkerparser;
+package org.impressivecode.depress.support.extmarkerparser;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static org.fest.assertions.Assertions.assertThat;
-import static org.impressivecode.depress.scm.extmarkerparser.ExtendedMarkerParserNodeModel.CFG_IDBUILDER;
-import static org.impressivecode.depress.scm.extmarkerparser.ExtendedMarkerParserNodeModel.CFG_KEYWORDS;
-import static org.impressivecode.depress.scm.extmarkerparser.ExtendedMarkerParserNodeModel.CFG_REGEXP_ID;
-import static org.impressivecode.depress.scm.extmarkerparser.ExtendedMarkerParserNodeModel.CFG_REGEXP_KEYWORDS;
-import static org.impressivecode.depress.scm.extmarkerparser.ExtendedMarkerParserNodeModel.CFG_REGEXP_ONLYIDS;
-import static org.impressivecode.depress.scm.extmarkerparser.ExtendedMarkerParserNodeModel.IDBUILDER_DEFAULT;
-import static org.impressivecode.depress.scm.extmarkerparser.ExtendedMarkerParserNodeModel.KEYWORDS_DEFAULT;
-import static org.impressivecode.depress.scm.extmarkerparser.ExtendedMarkerParserNodeModel.REGEXP_ID_DEFAULT;
-import static org.impressivecode.depress.scm.extmarkerparser.ExtendedMarkerParserNodeModel.REGEXP_KEYWORDS_DEFAULT;
-import static org.impressivecode.depress.scm.extmarkerparser.ExtendedMarkerParserNodeModel.REGEXP_ONLYIDS_DEFAULT;
+import static org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeModel.CFG_IDBUILDER;
+import static org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeModel.CFG_KEYWORDS;
+import static org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeModel.CFG_REGEXP_ID;
+import static org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeModel.CFG_REGEXP_KEYWORDS;
+import static org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeModel.CFG_REGEXP_ONLYIDS;
+import static org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeModel.IDBUILDER_DEFAULT;
+import static org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeModel.KEYWORDS_DEFAULT;
+import static org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeModel.REGEXP_ID_DEFAULT;
+import static org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeModel.REGEXP_KEYWORDS_DEFAULT;
+import static org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeModel.REGEXP_ONLYIDS_DEFAULT;
 import static org.mockito.Mockito.when;
 
 import java.util.Set;
 
 import org.impressivecode.depress.common.Cells;
+import org.impressivecode.depress.support.extmarkerparser.Configuration;
+import org.impressivecode.depress.support.extmarkerparser.ExtMarkerCellFactory;
 import org.junit.Test;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
@@ -57,7 +59,7 @@ public class MarkerCellFactoryTest {
     public void shouldComputeConfidence2() {
         // given
         Configuration configuration = mockConfiguraton();
-        MarkerCellFactory mcf = new MarkerCellFactory(configuration, 0);
+        ExtMarkerCellFactory mcf = new ExtMarkerCellFactory(configuration, 0);
 
         // when
         DataCell[] cells = mcf.getAppendedCell(mockRow("fixed bug 1234 1235"));
@@ -72,7 +74,7 @@ public class MarkerCellFactoryTest {
     public void shouldComputeConfidence2WhenGivenKeyword() {
         // given
         Configuration configuration = mockConfiguraton();
-        MarkerCellFactory mcf = new MarkerCellFactory(configuration, 0);
+        ExtMarkerCellFactory mcf = new ExtMarkerCellFactory(configuration, 0);
 
         // when
         DataCell[] cells = mcf.getAppendedCell(mockRow("exception 1234 1235"));
@@ -87,7 +89,7 @@ public class MarkerCellFactoryTest {
     public void shouldComputeConfidence0WhenGivenKeyword() {
         // given
         Configuration configuration = mockConfiguraton();
-        MarkerCellFactory mcf = new MarkerCellFactory(configuration, 0);
+        ExtMarkerCellFactory mcf = new ExtMarkerCellFactory(configuration, 0);
 
         // when
         DataCell[] cells = mcf.getAppendedCell(mockRow("tralalla 1234 1235"));
@@ -102,7 +104,7 @@ public class MarkerCellFactoryTest {
     public void shouldComputeConfidenceMissing() {
         // given
         Configuration configuration = mockConfiguraton();
-        MarkerCellFactory mcf = new MarkerCellFactory(configuration, 0);
+        ExtMarkerCellFactory mcf = new ExtMarkerCellFactory(configuration, 0);
 
         // when
         DataCell[] cells = mcf.getAppendedCell(mockRow("tralalla"));
@@ -117,7 +119,7 @@ public class MarkerCellFactoryTest {
     public void shouldComputeConfidence1WhenOnlyNumbers() {
         // given
         Configuration configuration = mockConfiguraton();
-        MarkerCellFactory mcf = new MarkerCellFactory(configuration, 0);
+        ExtMarkerCellFactory mcf = new ExtMarkerCellFactory(configuration, 0);
 
         // when
         DataCell[] cells = mcf.getAppendedCell(mockRow("1234,1235"));

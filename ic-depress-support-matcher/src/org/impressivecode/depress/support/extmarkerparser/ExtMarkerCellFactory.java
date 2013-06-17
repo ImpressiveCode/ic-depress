@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm.extmarkerparser;
+package org.impressivecode.depress.support.extmarkerparser;
 
 import static org.impressivecode.depress.common.Cells.integerOrMissingCell;
 
@@ -37,12 +37,12 @@ import com.google.common.collect.Sets;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class MarkerCellFactory implements AppendedCellFactory {
+public class ExtMarkerCellFactory implements AppendedCellFactory {
 
     private final Configuration cfg;
     private final int msgCellIndex;
 
-    public MarkerCellFactory(final Configuration configuration, final int findColumnIndex) {
+    public ExtMarkerCellFactory(final Configuration configuration, final int findColumnIndex) {
         this.cfg = configuration;
         this.msgCellIndex = findColumnIndex;
     }

@@ -15,27 +15,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm.markerparser;
+package org.impressivecode.depress.support.activitymatcher;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MARKER_COLSPEC;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.CONFIDENCE_COLSPEC;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.EXT_MARKER_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.impressivecode.depress.common.Cells;
 import org.impressivecode.depress.scm.SCMAdapterTableFactory;
-import org.knime.base.data.append.column.AppendedCellFactory;
 import org.knime.base.data.append.column.AppendedColumnTable;
-import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
-import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.def.StringCell;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
@@ -47,22 +40,36 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
-import com.google.common.collect.Sets;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class MarkerParserNodeModel extends NodeModel {
+public class ActivityMatcherParserNodeModel extends NodeModel {
 
-    static final String CFG_REGEXP = "depress.scm.svn.markerparser";
-    static final String REGEXP_DEFAULT = "";
+    static final String CFG_REGEXP_ID = "depress.support.matcher.extmarkerparser.idregexp";
+    static final String REGEXP_ID_DEFAULT = "([0-9]+)";
 
-    private final SettingsModelString regExp = new SettingsModelString(CFG_REGEXP, REGEXP_DEFAULT);
+    static final String CFG_REGEXP_KEYWORDS = "depress.support.matcher.extmarkerparser.keywordsregexp";
+    static final String REGEXP_KEYWORDS_DEFAULT = "(?i)^.*\\b(bugs?|fix(e[ds])?|defects?|patch|pr)\\b.*$";
 
-    protected MarkerParserNodeModel() {
+    static final String CFG_KEYWORDS = "depress.support.matcher.extmarkerparser.keywords";
+    static final String KEYWORDS_DEFAULT = "exception";
+
+    static final String CFG_IDBUILDER = "depress.support.matcher.extmarkerparser.builder";
+    static final String IDBUILDER_DEFAULT = "%s";
+
+    static final String CFG_REGEXP_ONLYIDS = "depress.support.matcher.extmarkerparser.onlyids";
+    static final String REGEXP_ONLYIDS_DEFAULT = "^[,0-9 ]+$";
+
+    private final SettingsModelString regExpID = new SettingsModelString(CFG_REGEXP_ID, REGEXP_ID_DEFAULT);
+    private final SettingsModelString regExpKeywords = new SettingsModelString(CFG_REGEXP_KEYWORDS, REGEXP_KEYWORDS_DEFAULT);
+    private final SettingsModelString keywords = new SettingsModelString(CFG_KEYWORDS, KEYWORDS_DEFAULT);
+    private final SettingsModelString builder = new SettingsModelString(CFG_IDBUILDER, IDBUILDER_DEFAULT);
+    private final SettingsModelString regExpOnlyIds = new SettingsModelString(CFG_REGEXP_ONLYIDS, REGEXP_ONLYIDS_DEFAULT);
+
+    protected ActivityMatcherParserNodeModel() {
         super(1, 1);
     }
 
@@ -70,13 +77,15 @@ public class MarkerParserNodeModel extends NodeModel {
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
 
-        AppendedColumnTable table = new AppendedColumnTable(inData[0], markerCellFactory(inData[0]), MARKER_COLSPEC);
+        AppendedColumnTable table = new AppendedColumnTable(inData[0], markerCellFactory(inData[0]),
+                EXT_MARKER_COLSPEC, CONFIDENCE_COLSPEC);
 
         return new BufferedDataTable[] { preapreTable(table, exec) };
     }
 
-    private MarkerCellFactory markerCellFactory(final BufferedDataTable inData) {
-        return new MarkerCellFactory(regExp.getStringValue(), inData.getSpec().findColumnIndex(MESSAGE_COLNAME));
+    private ActivityMarkerCellFactory markerCellFactory(final BufferedDataTable inData) {
+        return new ActivityMarkerCellFactory(new Configuration(regExpID, regExpKeywords, keywords, regExpOnlyIds, builder),
+                inData.getSpec().findColumnIndex(MESSAGE_COLNAME));
     }
 
     private BufferedDataTable preapreTable(final AppendedColumnTable table, final ExecutionContext exec)
@@ -94,7 +103,7 @@ public class MarkerParserNodeModel extends NodeModel {
         Preconditions.checkArgument(inSpecs.length == 1);
         validate(inSpecs[0]);
 
-        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], MARKER_COLSPEC);
+        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], EXT_MARKER_COLSPEC, CONFIDENCE_COLSPEC);
 
         return new DataTableSpec[] { dts };
     }
@@ -117,17 +126,29 @@ public class MarkerParserNodeModel extends NodeModel {
 
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
-        regExp.saveSettingsTo(settings);
+        regExpID.saveSettingsTo(settings);
+        builder.saveSettingsTo(settings);
+        regExpKeywords.saveSettingsTo(settings);
+        keywords.saveSettingsTo(settings);
+        regExpOnlyIds.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        regExp.loadSettingsFrom(settings);
+        regExpID.loadSettingsFrom(settings);
+        builder.loadSettingsFrom(settings);
+        regExpKeywords.loadSettingsFrom(settings);
+        keywords.loadSettingsFrom(settings);
+        regExpOnlyIds.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        regExp.validateSettings(settings);
+        regExpID.validateSettings(settings);
+        builder.validateSettings(settings);
+        regExpKeywords.validateSettings(settings);
+        keywords.validateSettings(settings);
+        regExpOnlyIds.validateSettings(settings);
     }
 
     @Override
@@ -140,38 +161,5 @@ public class MarkerParserNodeModel extends NodeModel {
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
     CanceledExecutionException {
         // NOOP
-    }
-
-    public class MarkerCellFactory implements AppendedCellFactory {
-
-        private final Pattern markerRegexp;
-        private final int msgCellIndex;
-
-        public MarkerCellFactory(final String regexp, final int msgCellIndex) {
-            if (!Strings.isNullOrEmpty(regexp)) {
-                markerRegexp = Pattern.compile(regexp);
-            } else {
-                markerRegexp = null;
-            }
-
-            this.msgCellIndex = msgCellIndex;
-        }
-
-        @Override
-        public DataCell[] getAppendedCell(final DataRow row) {
-            Set<String> markers = Sets.newHashSet();
-            if (this.markerRegexp != null) {
-                String message = ((StringCell) row.getCell(msgCellIndex)).getStringValue();
-                Matcher matcher = this.markerRegexp.matcher(message);
-                while (matcher.find()) {
-                    if (matcher.groupCount() >= 1) {
-                        markers.add(matcher.group(1));
-                    } else {
-                        markers.add(matcher.group());
-                    }
-                }
-            }
-            return new DataCell[] { Cells.stringSetCell(markers) };
-        }
     }
 }
