@@ -9,7 +9,7 @@
 
 	<fullDescription>
 		<intro>
-			This node can be used to read data from Jira entries file.
+			This node can be used to read data from Bugzilla entries file.
 
 			<p>
             <!-- add help -->
