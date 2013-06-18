@@ -30,20 +30,50 @@ public class EncryptionNodeModel extends CryptoNodeModel {
 
             @Override
             protected DataCell transformCell(final DataCell dataCell) {
+                DataCell transformedCell = null;
                 Preconditions.checkArgument(
                     dataCell.getType().equals(StringCell.TYPE)
-                    || SetCell.class.isInstance(dataCell)
-                    || ListCell.class.isInstance(dataCell),
+                    || dataCell instanceof SetCell
+                    || dataCell instanceof ListCell,
                     "Cell type " + dataCell.getType().toString() + " is not supported");
-
+                
+                if(dataCell.getType().equals(StringCell.TYPE)){
+                    transformedCell = makeTransformation((StringCell)dataCell);
+                }
+                else if(dataCell instanceof SetCell){
+                    transformedCell = makeTransformation((SetCell)dataCell);
+                }
+                else if(dataCell instanceof ListCell){
+                    transformedCell = makeTransformation((ListCell)dataCell);
+                }
+                else {
+                    LOGGER.error("This exception should not be thrown unless something is wrong");
+                    throw new IllegalStateException("This exception should not be thrown unless something is wrong");
+                }
+                return transformedCell;
+            }
+            
+            protected DataCell makeTransformation(final StringCell stringCell)
+            {
+                String transformed = null;
+                String origin = stringCell.getStringValue();
                 try {
-                    String origin = ((StringCell) dataCell).getStringValue();
-                    String transformed = KnimeEncryption.encrypt(origin.toCharArray());
-                    return new StringCell(transformed);
+                    transformed = KnimeEncryption.encrypt(origin.toCharArray());
                 } catch (Exception e) {
                     LOGGER.error("Unable to proceed due to invalid cryptography settings", e);
                     throw new IllegalStateException("Unable to proceed due to invalid cryptography settings");
                 }
+                return new StringCell(transformed);
+            }
+            
+            protected DataCell makeTransformation(final SetCell setCell)
+            {
+                return null;
+            }
+            
+            protected DataCell makeTransformation(final ListCell setCell)
+            {
+                return null;
             }
         };
     }
