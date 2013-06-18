@@ -1,9 +1,13 @@
 package org.impressivecode.depress.data.anonymisation;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.collection.CollectionCellFactory;
 import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.collection.SetCell;
 import org.knime.core.data.def.StringCell;
@@ -68,12 +72,30 @@ public class EncryptionNodeModel extends CryptoNodeModel {
             
             protected DataCell makeTransformation(final SetCell setCell)
             {
-                return null;
+                Collection<DataCell> transformedSet = new HashSet<DataCell>();
+                Iterator<DataCell> setCellIterator = setCell.iterator();
+                
+                while (setCellIterator.hasNext())
+                {
+                    StringCell origin = ((StringCell) setCellIterator.next());
+                    DataCell transformed = makeTransformation(origin);
+                    transformedSet.add(transformed);
+                }
+                return CollectionCellFactory.createSetCell(transformedSet);
             }
             
             protected DataCell makeTransformation(final ListCell listCell)
             {
-                return null;
+                Collection<DataCell> transformedList = new ArrayList<DataCell>();
+                Iterator<DataCell> listCellIterator = listCell.iterator();
+                
+                while (listCellIterator.hasNext())
+                {
+                    StringCell origin = ((StringCell) listCellIterator.next());
+                    DataCell transformed = makeTransformation(origin);
+                    transformedList.add(transformed);
+                }
+                return CollectionCellFactory.createListCell(transformedList);
             }
         };
     }
