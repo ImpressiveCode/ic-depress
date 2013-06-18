@@ -27,6 +27,8 @@ import java.util.List;
 import org.impressivecode.depress.common.InputTransformer;
 import org.impressivecode.depress.common.OutputTransformer;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSInputTransformer;
+import org.impressivecode.depress.scm.SCMInputTransformer;
 import org.impressivecode.depress.scm.SCMDataType;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
@@ -96,8 +98,8 @@ public class IssuesMetricNodeModel extends NodeModel {
         if (inSpecs.length != 2) {
             throw new InvalidSettingsException("Wrong number of input suorces");
         }
-        this.historyTransfomer = new HistoryInputTransformer(inSpecs[0]);
-        this.issueTransfomer = new IssueInputTransformer(inSpecs[1]);
+        this.historyTransfomer = new SCMInputTransformer(inSpecs[0]);
+        this.issueTransfomer = new ITSInputTransformer(inSpecs[1]);
 
         return new DataTableSpec[] { createDataColumnSpec() };
     }

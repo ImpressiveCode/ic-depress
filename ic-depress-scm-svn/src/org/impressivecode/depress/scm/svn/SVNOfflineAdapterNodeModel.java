@@ -50,99 +50,86 @@ import com.google.common.base.Preconditions;
  */
 public class SVNOfflineAdapterNodeModel extends NodeModel {
 
-	// the logger instance
-	private static final NodeLogger LOGGER = NodeLogger
-			.getLogger(SVNOfflineAdapterNodeModel.class);
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(SVNOfflineAdapterNodeModel.class);
 
-	static final String CFG_FILENAME = "depress.scm.svn.filename";
-	static final String FILENAME_DEFAULT = "";
-	static final String CFG_REGEXP = "depress.scm.svn.regexp";
-	static final String REGEXP_DEFAULT = "";
-	static final String CFG_PACKAGENAME = "depress.scm.svn.package";
-	static final String PACKAGENAME_DEFAULT = "org.";
+    static final String CFG_FILENAME = "depress.scm.svn.filename";
+    static final String FILENAME_DEFAULT = "";
+    static final String CFG_REGEXP = "depress.scm.svn.regexp";
+    static final String REGEXP_DEFAULT = "";
+    static final String CFG_PACKAGENAME = "depress.scm.svn.package";
+    static final String PACKAGENAME_DEFAULT = "org.";
 
-	private final SettingsModelString fileName = new SettingsModelString(
-			SVNOfflineAdapterNodeModel.CFG_FILENAME,
-			SVNOfflineAdapterNodeModel.FILENAME_DEFAULT);
-	private final SettingsModelString regExp = new SettingsModelString(
-			SVNOfflineAdapterNodeModel.CFG_REGEXP,
-			SVNOfflineAdapterNodeModel.REGEXP_DEFAULT);
-	private final SettingsModelOptionalString packageName = new SettingsModelOptionalString(
-			SVNOfflineAdapterNodeModel.CFG_PACKAGENAME,
-			SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT, true);
+    private final SettingsModelString fileName = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_FILENAME,
+            SVNOfflineAdapterNodeModel.FILENAME_DEFAULT);
+    private final SettingsModelString regExp = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_REGEXP,
+            SVNOfflineAdapterNodeModel.REGEXP_DEFAULT);
+    private final SettingsModelOptionalString packageName = new SettingsModelOptionalString(
+            SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT, true);
 
-	protected SVNOfflineAdapterNodeModel() {
-		super(0, 1);
-	}
+    protected SVNOfflineAdapterNodeModel() {
+        super(0, 1);
+    }
 
-	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
-			final ExecutionContext exec) throws Exception {
+    @Override
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
+            throws Exception {
 
-		LOGGER.info("Reading logs from file " + this.fileName.getStringValue());
-		SVNOfflineParser parser = new SVNOfflineParser(options(
-				regExp.getStringValue(), packageName.getStringValue()));
-		List<SCMDataType> commits = parser.parseEntries(this.fileName
-				.getStringValue());
-		LOGGER.info("Reading logs finished");
-		BufferedDataTable out = transform(commits, exec);
-		LOGGER.info("Transforming logs finished.");
-		return new BufferedDataTable[] { out };
-	}
+        LOGGER.info("Reading logs from file " + this.fileName.getStringValue());
+        SVNOfflineParser parser = new SVNOfflineParser(options(regExp.getStringValue(), packageName.getStringValue()));
+        List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
+        LOGGER.info("Reading logs finished");
+        BufferedDataTable out = transform(commits, exec);
+        LOGGER.info("Transforming logs finished.");
+        return new BufferedDataTable[] { out };
+    }
 
-	private BufferedDataTable transform(final List<SCMDataType> commits,
-			final ExecutionContext exec) throws CanceledExecutionException {
-		OutputTransformer<SCMDataType> transformer = new SCMAdapterTransformer(
-				createDataColumnSpec());
-		return transformer.transform(commits, exec);
-	}
+    private BufferedDataTable transform(final List<SCMDataType> commits, final ExecutionContext exec)
+            throws CanceledExecutionException {
+        OutputTransformer<SCMDataType> transformer = new SCMAdapterTransformer(createDataColumnSpec());
+        return transformer.transform(commits, exec);
+    }
 
-	@Override
-	protected void reset() {
-		// NOOP
-	}
+    @Override
+    protected void reset() {
+        // NOOP
+    }
 
-	@Override
-	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
-			throws InvalidSettingsException {
-		Preconditions.checkArgument(inSpecs.length == 0);
-		return SCMAdapterTableFactory.createTableSpec();
-	}
+    @Override
+    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
+        Preconditions.checkArgument(inSpecs.length == 0);
+        return SCMAdapterTableFactory.createTableSpec();
+    }
 
-	@Override
-	protected void saveSettingsTo(final NodeSettingsWO settings) {
-		fileName.saveSettingsTo(settings);
-		regExp.saveSettingsTo(settings);
-		packageName.saveSettingsTo(settings);
-	}
+    @Override
+    protected void saveSettingsTo(final NodeSettingsWO settings) {
+        fileName.saveSettingsTo(settings);
+        regExp.saveSettingsTo(settings);
+        packageName.saveSettingsTo(settings);
+    }
 
-	@Override
-	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		fileName.loadSettingsFrom(settings);
-		regExp.loadSettingsFrom(settings);
-		packageName.loadSettingsFrom(settings);
-	}
+    @Override
+    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+        fileName.loadSettingsFrom(settings);
+        regExp.loadSettingsFrom(settings);
+        packageName.loadSettingsFrom(settings);
+    }
 
-	@Override
-	protected void validateSettings(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		fileName.validateSettings(settings);
-		regExp.validateSettings(settings);
-		packageName.validateSettings(settings);
-	}
+    @Override
+    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+        fileName.validateSettings(settings);
+        regExp.validateSettings(settings);
+        packageName.validateSettings(settings);
+    }
 
-	@Override
-	protected void loadInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
-		// NOOP
-	}
+    @Override
+    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+    CanceledExecutionException {
+        // NOOP
+    }
 
-	@Override
-	protected void saveInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
-		// NOOP
-	}
+    @Override
+    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+    CanceledExecutionException {
+        // NOOP
+    }
 }

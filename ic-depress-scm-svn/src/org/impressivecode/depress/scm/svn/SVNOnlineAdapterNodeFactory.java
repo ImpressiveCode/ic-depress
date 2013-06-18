@@ -22,53 +22,33 @@ import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 
 /**
- * <code>NodeFactory</code> for the "SVNOnlineAdapter" Node.
- * 
- * 
  * @author IcDepress
  */
-public class SVNOnlineAdapterNodeFactory extends
-		NodeFactory<SVNOnlineAdapterNodeModel> {
+public class SVNOnlineAdapterNodeFactory extends NodeFactory<SVNOnlineAdapterNodeModel> {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public SVNOnlineAdapterNodeModel createNodeModel() {
-		return new SVNOnlineAdapterNodeModel();
-	}
+    @Override
+    public SVNOnlineAdapterNodeModel createNodeModel() {
+        return new SVNOnlineAdapterNodeModel();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int getNrNodeViews() {
-		return 0;
-	}
+    @Override
+    public int getNrNodeViews() {
+        return 0;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public NodeView<SVNOnlineAdapterNodeModel> createNodeView(
-			final int viewIndex, final SVNOnlineAdapterNodeModel nodeModel) {
-		return new SVNOnlineAdapterNodeView(nodeModel);
-	}
+    @Override
+    public NodeView<SVNOnlineAdapterNodeModel> createNodeView(final int viewIndex,
+            final SVNOnlineAdapterNodeModel nodeModel) {
+        throw new IllegalStateException("View not supported");
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean hasDialog() {
-		return true;
-	}
+    @Override
+    public boolean hasDialog() {
+        return true;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public NodeDialogPane createNodeDialogPane() {
-		return new SVNOnlineAdapterNodeDialog();
-	}
-
+    @Override
+    public NodeDialogPane createNodeDialogPane() {
+        return new SVNOnlineAdapterNodeDialog();
+    }
 }

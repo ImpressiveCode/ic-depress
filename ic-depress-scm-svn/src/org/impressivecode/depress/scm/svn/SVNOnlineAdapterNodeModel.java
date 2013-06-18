@@ -44,169 +44,126 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
 /**
- * This is the model implementation of SVNOnlineAdapter.
- * 
  * 
  * @author IcDepress
  */
 public class SVNOnlineAdapterNodeModel extends NodeModel {
 
-	// the logger instance
-	private static final NodeLogger logger = NodeLogger
-			.getLogger(SVNOnlineAdapterNodeModel.class);
+    private static final NodeLogger logger = NodeLogger.getLogger(SVNOnlineAdapterNodeModel.class);
 
-	public static String SVN_REPOSITORY_DEFAULT = "";
+    public static String SVN_REPOSITORY_DEFAULT = "";
 
-	public static String SVN_REPOSITORY_ADDRESS = "depress.scm.svnonline.remoteaddress";
+    public static String SVN_REPOSITORY_ADDRESS = "depress.scm.svnonline.remoteaddress";
 
-	public static String SVN_REGEXP = "org.";
+    public static String SVN_REGEXP = "org.";
 
-	public static String SVN_PACKAGENAME = "depress.scm.svnonline.package";
+    public static String SVN_PACKAGENAME = "depress.scm.svnonline.package";
 
-	public static String SVN_PACKAGENAME_DEFAULT = "";
+    public static String SVN_PACKAGENAME_DEFAULT = "";
 
-	public static String SVN_REGEXP_DEFAULT = "";
+    public static String SVN_REGEXP_DEFAULT = "";
 
-	private final SettingsModelString svnRepositoryAddress = new SettingsModelString(
-			SVNOnlineAdapterNodeModel.SVN_REPOSITORY_ADDRESS,
-			SVNOnlineAdapterNodeModel.SVN_REPOSITORY_DEFAULT);
-	private final SettingsModelString svnRegExp = new SettingsModelString(
-			SVNOnlineAdapterNodeModel.SVN_REGEXP,
-			SVNOnlineAdapterNodeModel.SVN_REGEXP_DEFAULT);
-	private final SettingsModelOptionalString svnPackageName = new SettingsModelOptionalString(
-			SVNOnlineAdapterNodeModel.SVN_PACKAGENAME,
-			SVNOnlineAdapterNodeModel.SVN_PACKAGENAME_DEFAULT, true);
+    private final SettingsModelString svnRepositoryAddress = new SettingsModelString(
+            SVNOnlineAdapterNodeModel.SVN_REPOSITORY_ADDRESS, SVNOnlineAdapterNodeModel.SVN_REPOSITORY_DEFAULT);
+    private final SettingsModelString svnRegExp = new SettingsModelString(SVNOnlineAdapterNodeModel.SVN_REGEXP,
+            SVNOnlineAdapterNodeModel.SVN_REGEXP_DEFAULT);
+    private final SettingsModelOptionalString svnPackageName = new SettingsModelOptionalString(
+            SVNOnlineAdapterNodeModel.SVN_PACKAGENAME, SVNOnlineAdapterNodeModel.SVN_PACKAGENAME_DEFAULT, true);
 
-	/**
-	 * Constructor for the node model.
-	 */
-	protected SVNOnlineAdapterNodeModel() {
-		super(0, 1);
-	}
+    protected SVNOnlineAdapterNodeModel() {
+        super(0, 1);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
-			final ExecutionContext exec) throws Exception {
+    @Override
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
+            throws Exception {
 
-		String svnPath = getSvnPath(this.svnRepositoryAddress.getStringValue());
+        String svnPath = getSvnPath(this.svnRepositoryAddress.getStringValue());
 
-		logger.info("Reading logs from repository " + svnPath);
-		SVNOnlineLogParser parser = new SVNOnlineLogParser();
+        logger.info("Reading logs from repository " + svnPath);
+        SVNOnlineLogParser parser = new SVNOnlineLogParser();
 
-		List<SVNCommit> commits = parser.parseEntries(svnPath, SVNParserOptions
-				.options(svnRegExp.getStringValue(),
-						svnPackageName.getStringValue()));
+        List<SVNCommit> commits = parser.parseEntries(svnPath,
+                SVNParserOptions.options(svnRegExp.getStringValue(), svnPackageName.getStringValue()));
 
-		BufferedDataTable out = transform(commits, exec);
-		logger.info("Reading git logs finished.");
+        BufferedDataTable out = transform(commits, exec);
+        logger.info("Reading git logs finished.");
 
-		return new BufferedDataTable[] { out };
-	}
+        return new BufferedDataTable[] { out };
+    }
 
-	private BufferedDataTable transform(final List<SVNCommit> commits,
-			final ExecutionContext exec) throws CanceledExecutionException {
-		List<SCMDataType> data = Lists.newLinkedList();
-		for (SVNCommit commit : commits) {
-			for (SVNCommitFile file : commit.getFiles()) {
-				progress(exec);
-				data.add(scm(commit, file));
-			}
-		}
-		OutputTransformer<SCMDataType> transformer = new SCMAdapterTransformer(
-				createDataColumnSpec());
-		return transformer.transform(data, exec);
-	}
+    private BufferedDataTable transform(final List<SVNCommit> commits, final ExecutionContext exec)
+            throws CanceledExecutionException {
+        List<SCMDataType> data = Lists.newLinkedList();
+        for (SVNCommit commit : commits) {
+            for (SVNCommitFile file : commit.getFiles()) {
+                progress(exec);
+                data.add(scm(commit, file));
+            }
+        }
+        OutputTransformer<SCMDataType> transformer = new SCMAdapterTransformer(createDataColumnSpec());
+        return transformer.transform(data, exec);
+    }
 
-	private SCMDataType scm(final SVNCommit commit, final SVNCommitFile file) {
-		SCMDataType scm = new SCMDataType();
-		scm.setAuthor(commit.getAuthor());
-		scm.setCommitDate(commit.getDate());
-		scm.setCommitID(commit.getId());
-		scm.setMarkers(commit.getMarkers());
-		scm.setMessage(commit.getMessage());
-		scm.setOperation(file.getOperation());
-		scm.setPath(file.getPath());
-		scm.setResourceName(file.getJavaClass());
-		return scm;
-	}
+    private SCMDataType scm(final SVNCommit commit, final SVNCommitFile file) {
+        SCMDataType scm = new SCMDataType();
+        scm.setAuthor(commit.getAuthor());
+        scm.setCommitDate(commit.getDate());
+        scm.setCommitID(commit.getId());
+        scm.setMarkers(commit.getMarkers());
+        scm.setMessage(commit.getMessage());
+        scm.setOperation(file.getOperation());
+        scm.setPath(file.getPath());
+        scm.setResourceName(file.getJavaClass());
+        return scm;
+    }
 
-	private void progress(final ExecutionContext exec)
-			throws CanceledExecutionException {
-		exec.checkCanceled();
-	}
+    private void progress(final ExecutionContext exec) throws CanceledExecutionException {
+        exec.checkCanceled();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void reset() {
-	}
+    @Override
+    protected void reset() {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
-			throws InvalidSettingsException {
-		Preconditions.checkArgument(inSpecs.length == 0);
-		return SVNAdapterTableFactory.createTableSpec();
-	}
+    @Override
+    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
+        Preconditions.checkArgument(inSpecs.length == 0);
+        return SVNAdapterTableFactory.createTableSpec();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void saveSettingsTo(final NodeSettingsWO settings) {
-		svnRepositoryAddress.saveSettingsTo(settings);
-		svnRegExp.saveSettingsTo(settings);
-		svnPackageName.saveSettingsTo(settings);
-	}
+    @Override
+    protected void saveSettingsTo(final NodeSettingsWO settings) {
+        svnRepositoryAddress.saveSettingsTo(settings);
+        svnRegExp.saveSettingsTo(settings);
+        svnPackageName.saveSettingsTo(settings);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		svnRepositoryAddress.loadSettingsFrom(settings);
-		svnRegExp.loadSettingsFrom(settings);
-		svnPackageName.loadSettingsFrom(settings);
-	}
+    @Override
+    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+        svnRepositoryAddress.loadSettingsFrom(settings);
+        svnRegExp.loadSettingsFrom(settings);
+        svnPackageName.loadSettingsFrom(settings);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void validateSettings(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		svnRepositoryAddress.validateSettings(settings);
-		svnRegExp.validateSettings(settings);
-		svnPackageName.validateSettings(settings);
-	}
+    @Override
+    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+        svnRepositoryAddress.validateSettings(settings);
+        svnRegExp.validateSettings(settings);
+        svnPackageName.validateSettings(settings);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void loadInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
-	}
+    @Override
+    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+    CanceledExecutionException {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void saveInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
-	}
+    @Override
+    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+    CanceledExecutionException {
+    }
 
-	public static String getSvnPath(final String repositoryPath) {
-		return URI.create(repositoryPath).toString();
-	}
-
+    private String getSvnPath(final String repositoryPath) {
+        return URI.create(repositoryPath).toString();
+    }
 }

@@ -76,7 +76,8 @@ public class SVNOfflineParser {
         return convertToSCMType(log, parserOptions);
     }
 
-    private List<SCMDataType> convertToSCMType(final SVNLog log, final SVNParserOptions parserOptions) throws CloneNotSupportedException {
+    private List<SCMDataType> convertToSCMType(final SVNLog log, final SVNParserOptions parserOptions)
+            throws CloneNotSupportedException {
         List<SCMDataType> scmEntries = Lists.newArrayListWithCapacity(1000);
         for (Logentry entry : log.getLogentry()) {
             SCMDataType base = scmBase(entry);

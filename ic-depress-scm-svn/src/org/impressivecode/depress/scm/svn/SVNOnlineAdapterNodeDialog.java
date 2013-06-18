@@ -22,40 +22,25 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
- * <code>NodeDialog</code> for the "SVNOnlineAdapter" Node.
- * 
- * 
- * This node dialog derives from {@link DefaultNodeSettingsPane} which allows
- * creation of a simple dialog with standard components. If you need a more
- * complex dialog please derive directly from
- * {@link org.knime.core.node.NodeDialogPane}.
  * 
  * @author IcDepress
  */
 public class SVNOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
-	private final SettingsModelString remoteRepo = new SettingsModelString(
-			SVNOnlineAdapterNodeModel.SVN_REPOSITORY_ADDRESS,
-			SVNOnlineAdapterNodeModel.SVN_REPOSITORY_DEFAULT);
+    private final SettingsModelString remoteRepo = new SettingsModelString(
+            SVNOnlineAdapterNodeModel.SVN_REPOSITORY_ADDRESS, SVNOnlineAdapterNodeModel.SVN_REPOSITORY_DEFAULT);
 
-	/**
-	 * New pane for configuring SVNOnlineAdapter node dialog. This is just a
-	 * suggestion to demonstrate possible default dialog components.
-	 */
-	protected SVNOnlineAdapterNodeDialog() {
-		super();
+    protected SVNOnlineAdapterNodeDialog() {
+        super();
 
-		final DialogComponentString remoteRepoAddress = new DialogComponentString(
-				remoteRepo, "Repository address: ");
+        final DialogComponentString remoteRepoAddress = new DialogComponentString(remoteRepo, "Repository address: ");
 
-		addDialogComponent(remoteRepoAddress);
+        addDialogComponent(remoteRepoAddress);
 
-		addDialogComponent(new DialogComponentString(new SettingsModelString(
-				SVNOnlineAdapterNodeModel.SVN_REGEXP,
-				SVNOnlineAdapterNodeModel.SVN_REGEXP_DEFAULT), "Issue marker: "));
+        addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOnlineAdapterNodeModel.SVN_REGEXP,
+                SVNOnlineAdapterNodeModel.SVN_REGEXP_DEFAULT), "Issue marker: "));
 
-		addDialogComponent(new DialogComponentString(new SettingsModelString(
-				SVNOnlineAdapterNodeModel.SVN_PACKAGENAME,
-				SVNOnlineAdapterNodeModel.SVN_PACKAGENAME_DEFAULT), "Package: "));
-	}
+        addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOnlineAdapterNodeModel.SVN_PACKAGENAME,
+                SVNOnlineAdapterNodeModel.SVN_PACKAGENAME_DEFAULT), "Package: "));
+    }
 }
