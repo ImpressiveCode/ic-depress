@@ -17,6 +17,7 @@ import org.knime.core.util.KnimeEncryption;
 import com.google.common.base.Preconditions;
 /**
  * @author Marek Majchrzak, ImpressiveCode
+ * @author Andrzej Dudek, Wrocław University of Technology
  * 
  */
 public class EncryptionNodeModel extends CryptoNodeModel {
