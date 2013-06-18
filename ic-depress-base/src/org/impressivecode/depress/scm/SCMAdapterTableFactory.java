@@ -55,7 +55,6 @@ public class SCMAdapterTableFactory {
     public final static String EXT_CONFIDENCE_COLNAME = "Confidence(+)";
     public final static String AM_CONFIDENCE_COLNAME = "Confidence(a)";
 
-
     public static final DataColumnSpec MARKER_COLSPEC = new DataColumnSpecCreator(MARKER,
             SetCell.getCollectionType(StringCell.TYPE)).createSpec();
 
@@ -71,8 +70,8 @@ public class SCMAdapterTableFactory {
     public static final DataColumnSpec AM_CONFIDENCE_COLSPEC = new DataColumnSpecCreator(AM_CONFIDENCE_COLNAME,
             IntCell.TYPE).createSpec();
 
-    public static final DataColumnSpec MESSAGE_COLSPEC = new DataColumnSpecCreator(MESSAGE_COLNAME,
-            SetCell.getCollectionType(StringCell.TYPE)).createSpec();
+    public static final DataColumnSpec MESSAGE_COLSPEC = new DataColumnSpecCreator(MESSAGE_COLNAME, StringCell.TYPE)
+    .createSpec();
 
     public static DataTableSpec[] createTableSpec() {
         return new DataTableSpec[] { SCMAdapterTableFactory.createDataColumnSpec() };
@@ -82,7 +81,8 @@ public class SCMAdapterTableFactory {
         DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(MARKER, SetCell.getCollectionType(StringCell.TYPE)).createSpec(),
                 new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(), MESSAGE_COLSPEC,
+                new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(), 
+                MESSAGE_COLSPEC,
                 new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(DATE_COLNAME, DateAndTimeCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(UID_COLNAME, StringCell.TYPE).createSpec() };
