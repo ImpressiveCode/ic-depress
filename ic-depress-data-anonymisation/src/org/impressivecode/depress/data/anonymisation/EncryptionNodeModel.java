@@ -47,8 +47,8 @@ public class EncryptionNodeModel extends CryptoNodeModel {
                     transformedCell = makeTransformation((ListCell)dataCell);
                 }
                 else {
-                    LOGGER.error("This exception should not be thrown unless something is wrong");
-                    throw new IllegalStateException("This exception should not be thrown unless something is wrong");
+                    LOGGER.error("This exception should never be thrown unless something is wrong");
+                    throw new IllegalStateException("This exception should never be thrown unless something is wrong");
                 }
                 return transformedCell;
             }
