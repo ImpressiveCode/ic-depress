@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+   <extension
+         point="org.knime.workbench.repository.nodes">
+      <node
+            category-path="depress/depress.scm"
+            factory-class="org.impressivecode.depress.support.markerparser.MarkerParserNodeFactory"
+            id="org.impressivecode.depress.support.markerparser"/>
+      <node
+            category-path="depress/depress.scm"
+            factory-class="org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeFactory"
+            id="org.impressivecode.depress.support.extmarkerparser">
+      </node>
+      <node
+            category-path="depress/depress.scm"
+            factory-class="org.impressivecode.depress.support.activitymatcher.ActivityMatcherParserNodeFactory"
+            id="org.impressivecode.depress.support.activitymatcher">
+      </node>
+   </extension>
+</plugin>

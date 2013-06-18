@@ -15,22 +15,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm.svn;
+package org.impressivecode.depress.support.extmarkerparser;
 
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
+
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class SVNOfflineAdapterNodeFactory extends NodeFactory<SVNOfflineAdapterNodeModel> {
+public class ExtendedMarkerParserNodeFactory extends NodeFactory<ExtendedMarkerParserNodeModel> {
 
     @Override
-    public SVNOfflineAdapterNodeModel createNodeModel() {
-        return new SVNOfflineAdapterNodeModel();
+    public ExtendedMarkerParserNodeModel createNodeModel() {
+        return new ExtendedMarkerParserNodeModel();
     }
 
     @Override
@@ -39,8 +40,7 @@ public class SVNOfflineAdapterNodeFactory extends NodeFactory<SVNOfflineAdapterN
     }
 
     @Override
-    public NodeView<SVNOfflineAdapterNodeModel> createNodeView(final int viewIndex,
-            final SVNOfflineAdapterNodeModel nodeModel) {
+    public NodeView<ExtendedMarkerParserNodeModel> createNodeView(final int viewIndex, final ExtendedMarkerParserNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 
@@ -51,6 +51,6 @@ public class SVNOfflineAdapterNodeFactory extends NodeFactory<SVNOfflineAdapterN
 
     @Override
     public NodeDialogPane createNodeDialogPane() {
-        return new SVNOfflineAdapterNodeDialog();
+        return new ExtendedMarkerParserNodeDialog();
     }
 }
