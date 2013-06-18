@@ -71,7 +71,7 @@ public class EncryptionNodeModel extends CryptoNodeModel {
                 return null;
             }
             
-            protected DataCell makeTransformation(final ListCell setCell)
+            protected DataCell makeTransformation(final ListCell listCell)
             {
                 return null;
             }
