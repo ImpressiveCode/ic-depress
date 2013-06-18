@@ -17,32 +17,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.svn;
 
-import javax.swing.JFileChooser;
-
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
-import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author IcDepress
  */
-public class SVNOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
+public class SVNOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
-    protected SVNOfflineAdapterNodeDialog() {
+    private final SettingsModelString remoteRepo = new SettingsModelString(
+            SVNOnlineAdapterNodeModel.SVN_REPOSITORY_ADDRESS, SVNOnlineAdapterNodeModel.SVN_REPOSITORY_DEFAULT);
+
+    protected SVNOnlineAdapterNodeDialog() {
         super();
 
-        addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(
-                SVNOfflineAdapterNodeModel.CFG_FILENAME, SVNOfflineAdapterNodeModel.FILENAME_DEFAULT),
-                SVNOfflineAdapterNodeModel.FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
+        final DialogComponentString remoteRepoAddress = new DialogComponentString(remoteRepo, "Repository address: ");
 
-        addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_REGEXP,
-                SVNOfflineAdapterNodeModel.REGEXP_DEFAULT), "Issue marker: "));
+        addDialogComponent(remoteRepoAddress);
 
-        addDialogComponent(new DialogComponentString(new SettingsModelString(
-                SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT),
-                "Package: "));
+        addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOnlineAdapterNodeModel.SVN_REGEXP,
+                SVNOnlineAdapterNodeModel.SVN_REGEXP_DEFAULT), "Issue marker: "));
+
+        addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOnlineAdapterNodeModel.SVN_PACKAGENAME,
+                SVNOnlineAdapterNodeModel.SVN_PACKAGENAME_DEFAULT), "Package: "));
     }
 }

@@ -22,15 +22,13 @@ import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 
 /**
- * 
- * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author IcDepress
  */
-public class SVNOfflineAdapterNodeFactory extends NodeFactory<SVNOfflineAdapterNodeModel> {
+public class SVNOnlineAdapterNodeFactory extends NodeFactory<SVNOnlineAdapterNodeModel> {
 
     @Override
-    public SVNOfflineAdapterNodeModel createNodeModel() {
-        return new SVNOfflineAdapterNodeModel();
+    public SVNOnlineAdapterNodeModel createNodeModel() {
+        return new SVNOnlineAdapterNodeModel();
     }
 
     @Override
@@ -39,8 +37,8 @@ public class SVNOfflineAdapterNodeFactory extends NodeFactory<SVNOfflineAdapterN
     }
 
     @Override
-    public NodeView<SVNOfflineAdapterNodeModel> createNodeView(final int viewIndex,
-            final SVNOfflineAdapterNodeModel nodeModel) {
+    public NodeView<SVNOnlineAdapterNodeModel> createNodeView(final int viewIndex,
+            final SVNOnlineAdapterNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 
@@ -51,6 +49,6 @@ public class SVNOfflineAdapterNodeFactory extends NodeFactory<SVNOfflineAdapterN
 
     @Override
     public NodeDialogPane createNodeDialogPane() {
-        return new SVNOfflineAdapterNodeDialog();
+        return new SVNOnlineAdapterNodeDialog();
     }
 }

@@ -50,7 +50,6 @@ import com.google.common.base.Preconditions;
  */
 public class SVNOfflineAdapterNodeModel extends NodeModel {
 
-    // the logger instance
     private static final NodeLogger LOGGER = NodeLogger.getLogger(SVNOfflineAdapterNodeModel.class);
 
     static final String CFG_FILENAME = "depress.scm.svn.filename";
@@ -76,8 +75,7 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
             throws Exception {
 
         LOGGER.info("Reading logs from file " + this.fileName.getStringValue());
-        SVNOfflineParser parser = new SVNOfflineParser(options(regExp.getStringValue(),
-                packageName.getStringValue()));
+        SVNOfflineParser parser = new SVNOfflineParser(options(regExp.getStringValue(), packageName.getStringValue()));
         List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
         LOGGER.info("Reading logs finished");
         BufferedDataTable out = transform(commits, exec);

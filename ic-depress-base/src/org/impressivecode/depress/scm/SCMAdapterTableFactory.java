@@ -65,7 +65,7 @@ public class SCMAdapterTableFactory {
             IntCell.TYPE).createSpec();
 
     public static final DataColumnSpec AM_MARKER_COLSPEC = new DataColumnSpecCreator(AM_MARKER,
-            SetCell.getCollectionType(StringCell.TYPE)).createSpec();
+            StringCell.TYPE).createSpec();
 
     public static final DataColumnSpec AM_CONFIDENCE_COLSPEC = new DataColumnSpecCreator(AM_CONFIDENCE_COLNAME,
             IntCell.TYPE).createSpec();
