@@ -63,7 +63,7 @@ public class SCMAdapterTableFactory {
             IntCell.TYPE).createSpec();
 
     public static final DataColumnSpec MESSAGE_COLSPEC = new DataColumnSpecCreator(MESSAGE_COLNAME,
-            SetCell.getCollectionType(StringCell.TYPE)).createSpec();
+            StringCell.TYPE).createSpec();
 
     public static DataTableSpec[] createTableSpec() {
         return new DataTableSpec[] { SCMAdapterTableFactory.createDataColumnSpec() };
