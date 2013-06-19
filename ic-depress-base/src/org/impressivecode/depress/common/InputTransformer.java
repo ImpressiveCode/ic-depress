@@ -20,6 +20,8 @@ package org.impressivecode.depress.common;
 import java.util.List;
 
 import org.knime.core.data.DataTable;
+import org.knime.core.data.DataTableSpec;
+import org.knime.core.node.InvalidSettingsException;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
@@ -28,5 +30,7 @@ import org.knime.core.data.DataTable;
 public interface InputTransformer<T> {
 
     List<T> transform(final DataTable inTable);
+
+    void validate(DataTableSpec spec) throws InvalidSettingsException;
 
 }

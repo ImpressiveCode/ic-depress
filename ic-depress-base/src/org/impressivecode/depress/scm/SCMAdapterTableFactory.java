@@ -46,6 +46,7 @@ public class SCMAdapterTableFactory {
 
     public static final String AUTHOR_COLNAME = "Author";
     public static final String RESOURCE_NAME = "Class";
+    public static final DataColumnSpec RESOURCE_COLSPEC = new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec();
     public final static String ACTION_COLNAME = "Action";
     public final static String MESSAGE_COLNAME = "Message";
     public final static String PATH_COLNAME = "Path";
@@ -78,8 +79,9 @@ public class SCMAdapterTableFactory {
     }
 
     public static DataTableSpec createDataColumnSpec() {
-        DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(MARKER, SetCell.getCollectionType(StringCell.TYPE)).createSpec(),
+        DataColumnSpec[] allColSpecs = { 
+                RESOURCE_COLSPEC,
+                MARKER_COLSPEC,
                 new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(), 
                 MESSAGE_COLSPEC,

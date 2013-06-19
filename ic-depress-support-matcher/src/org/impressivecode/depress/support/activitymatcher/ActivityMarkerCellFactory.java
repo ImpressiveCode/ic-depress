@@ -17,19 +17,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.support.activitymatcher;
 
-import static org.impressivecode.depress.common.Cells.integerOrMissingCell;
-
 import java.util.Set;
 
 import org.impressivecode.depress.common.Cells;
+import org.impressivecode.depress.its.ITSDataType;
 import org.knime.base.data.append.column.AppendedCellFactory;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
+import org.knime.core.data.date.DateAndTimeCell;
 import org.knime.core.data.def.StringCell;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
 
 /**
  * 
@@ -40,25 +40,42 @@ public class ActivityMarkerCellFactory implements AppendedCellFactory {
 
     private final Configuration cfg;
     private final int msgCellIndex;
+    private final int commitDateCellIndex;
 
-    public ActivityMarkerCellFactory(final Configuration configuration, final int findColumnIndex) {
+    public ActivityMarkerCellFactory(final Configuration configuration, final int commitDateCellIndex,
+            final int messageCellIndex) {
         this.cfg = configuration;
-        this.msgCellIndex = findColumnIndex;
+        this.msgCellIndex = messageCellIndex;
+        this.commitDateCellIndex = commitDateCellIndex;
     }
 
     @Override
     public DataCell[] getAppendedCell(final DataRow row) {
-        String message = ((StringCell) row.getCell(msgCellIndex)).getStringValue();
+        final String message = ((StringCell) row.getCell(msgCellIndex)).getStringValue();
+        long commitTimeInMillis = ((DateAndTimeCell) row.getCell(commitDateCellIndex)).getUTCTimeInMillis();
 
-        final Set<String> markers = Sets.newHashSet();
+        // naive approach
+        final Iterable<ITSDataType> markers = findIssuesFromGivenInterval(commitTimeInMillis);
 
+        final Iterable<Integer> confidence = Iterables.transform(markers, new Function<ITSDataType, Integer>() {
+            @Override
+            public Integer apply(final ITSDataType issue) {
+                return 0;
+            }
+        });
 
-        Integer confidence = null;
-        if (!markers.isEmpty()) {
-            confidence = checkConfidence(message, markers);
-        }
+        return new DataCell[] { Cells.stringListCell(applyBuilder(markers)), Cells.integerListCell(confidence) };
+    }
 
-        return new DataCell[] { Cells.stringSetCell(applyBuilder(markers)), integerOrMissingCell(confidence) };
+    private Iterable<ITSDataType> findIssuesFromGivenInterval(final long commitTimeInMillis) {
+        final long min = commitTimeInMillis - this.cfg.getIntervalInMillis();
+        final long max = commitTimeInMillis + this.cfg.getIntervalInMillis();
+        return Iterables.filter(this.cfg.getIssues(), new Predicate<ITSDataType>() {
+            @Override
+            public boolean apply(final ITSDataType issue) {
+                return min < issue.getResolved().getTime() && issue.getResolved().getTime() < max;
+            }
+        });
     }
 
     private int checkConfidence(final String message, final Set<String> markers) {
@@ -85,20 +102,19 @@ public class ActivityMarkerCellFactory implements AppendedCellFactory {
 
     }
 
-    private Set<String> applyBuilder(final Set<String> markers) {
-        Set<String> transformed = Sets.newHashSet(Iterables.transform(markers, new Function<String, String>() {
+    private Iterable<String> applyBuilder(final Iterable<ITSDataType> markers) {
+        return Iterables.transform(markers, new Function<ITSDataType, String>() {
             @Override
-            public String apply(final String id) {
+            public String apply(final ITSDataType id) {
                 String transformedId = null;
                 if (cfg.getBuilderFormat() != null) {
-                    transformedId = String.format(cfg.getBuilderFormat(), id);
+                    transformedId = String.format(cfg.getBuilderFormat(), id.getIssueId());
                 } else {
-                    transformedId = id;
+                    transformedId = id.getIssueId();
                 }
 
                 return transformedId;
             }
-        }));
-        return transformed;
+        });
     }
 }

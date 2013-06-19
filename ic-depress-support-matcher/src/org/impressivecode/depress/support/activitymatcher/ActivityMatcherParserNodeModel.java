@@ -17,10 +17,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.support.activitymatcher;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static org.impressivecode.depress.its.ITSAdapterTableFactory.ISSUE_ID_COLSPEC;
+import static org.impressivecode.depress.its.ITSAdapterTableFactory.RESOLVED_DATE_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.AM_CONFIDENCE_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.AM_MARKER_COLSPEC;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.DATE_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLSPEC;
+import static org.knime.base.data.append.column.AppendedColumnTable.getTableSpec;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,9 +33,9 @@ import java.util.List;
 import org.impressivecode.depress.common.InputTransformer;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSInputTransformer;
-import org.impressivecode.depress.scm.SCMAdapterTableFactory;
+import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.scm.SCMInputTransformer;
 import org.knime.base.data.append.column.AppendedColumnTable;
-import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -66,14 +70,18 @@ public class ActivityMatcherParserNodeModel extends NodeModel {
     static final String IDBUILDER_DEFAULT = "%s";
 
     private final SettingsModelInteger interval = new SettingsModelInteger(CFG_INTERVAL, INTERVAL_DEFAULT);
-    private final SettingsModelString regExpKeywords = new SettingsModelString(CFG_REGEXP_KEYWORDS, REGEXP_KEYWORDS_DEFAULT);
+    private final SettingsModelString regExpKeywords = new SettingsModelString(CFG_REGEXP_KEYWORDS,
+            REGEXP_KEYWORDS_DEFAULT);
     private final SettingsModelString keywords = new SettingsModelString(CFG_KEYWORDS, KEYWORDS_DEFAULT);
     private final SettingsModelString builder = new SettingsModelString(CFG_IDBUILDER, IDBUILDER_DEFAULT);
 
     private InputTransformer<ITSDataType> issueTransfomer;
+    private InputTransformer<SCMDataType> historyTransfomer;
 
     protected ActivityMatcherParserNodeModel() {
         super(2, 1);
+        this.issueTransfomer = new ITSInputTransformer(new DataTableSpec(ISSUE_ID_COLSPEC, RESOLVED_DATE_COLSPEC));
+        this.historyTransfomer = new SCMInputTransformer(new DataTableSpec(MESSAGE_COLSPEC));
     }
 
     @Override
@@ -88,7 +96,7 @@ public class ActivityMatcherParserNodeModel extends NodeModel {
 
     private ActivityMarkerCellFactory markerCellFactory(final BufferedDataTable inData, final List<ITSDataType> issues) {
         return new ActivityMarkerCellFactory(new Configuration(interval, regExpKeywords, keywords, builder, issues),
-                inData.getSpec().findColumnIndex(MESSAGE_COLNAME));
+                inData.getSpec().findColumnIndex(DATE_COLNAME), inData.getSpec().findColumnIndex(MESSAGE_COLNAME));
     }
 
     private BufferedDataTable preapreTable(final AppendedColumnTable table, final ExecutionContext exec)
@@ -98,34 +106,18 @@ public class ActivityMatcherParserNodeModel extends NodeModel {
 
     @Override
     protected void reset() {
-        this.issueTransfomer = null;
     }
 
     @Override
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         Preconditions.checkArgument(inSpecs.length == 2);
-        this.issueTransfomer = new ITSInputTransformer(inSpecs[0]);
-        validateMessageColumn(inSpecs[1]);
 
-        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[1], AM_MARKER_COLSPEC, AM_CONFIDENCE_COLSPEC);
+        this.historyTransfomer.validate(inSpecs[0]);
+        this.issueTransfomer.validate(inSpecs[1]);
+
+        final DataTableSpec dts = getTableSpec(inSpecs[0], AM_MARKER_COLSPEC, AM_CONFIDENCE_COLSPEC);
 
         return new DataTableSpec[] { dts };
-    }
-
-    private void validateMessageColumn(final DataTableSpec spec) throws InvalidSettingsException {
-        checkNotNull(spec, "DataTableSpec hat to be set");
-        DataColumnSpec columnSpec = spec.getColumnSpec(MESSAGE_COLNAME);
-        if (columnSpec == null) {
-            throw new InvalidSettingsException("Missing SCM column: " + MESSAGE_COLNAME);
-        }
-
-        if (hasSameStructure(columnSpec)) {
-            throw new InvalidSettingsException("Inlvalid type of column: " + MESSAGE_COLNAME);
-        }
-    }
-
-    private boolean hasSameStructure(final DataColumnSpec columnSpec) {
-        return columnSpec.equalStructure(SCMAdapterTableFactory.MESSAGE_COLSPEC);
     }
 
     @Override
