@@ -24,7 +24,9 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Tomasz Banach
+ * @author £ukasz Waga
+ * @author Monika Pruszkowska
  * 
  */
 public class CheckStyleAdapterNodeDialog extends DefaultNodeSettingsPane {

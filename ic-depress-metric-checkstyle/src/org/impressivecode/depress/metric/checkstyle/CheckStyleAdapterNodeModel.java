@@ -41,7 +41,9 @@ import org.xml.sax.SAXException;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Tomasz Banach
+ * @author £ukasz Waga
+ * @author Monika Pruszkowska
  * 
  */
 public class CheckStyleAdapterNodeModel extends NodeModel {

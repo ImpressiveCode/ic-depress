@@ -19,7 +19,9 @@ package org.impressivecode.depress.metric.checkstyle;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Tomasz Banach
+ * @author £ukasz Waga
+ * @author Monika Pruszkowska
  * 
  */
 public class CheckStyleEntry {
@@ -30,8 +32,6 @@ public class CheckStyleEntry {
     private String severityType;
     private String messageText;
     private String sourcePlace;
-    //private Double instructionCoverageCounter;
-    //private Double classCoverageCounter;
 
     public void setLineNumber(final String lineNumberValue) {
         this.lineNumber = lineNumberValue;
@@ -40,14 +40,6 @@ public class CheckStyleEntry {
     public void setColumnNumber(final String columnNumberValue) {
     	this.columnNumber = columnNumberValue;
     }
-
-    /*public void setInstructionCoverageCounter(final Double coverageCounterValue) {
-        this.instructionCoverageCounter = coverageCounterValue;
-    }*/
-
-    /*public void setBranchCoverageCounter(final Double coverageCounterValue) {
-        this.sourcePlace = coverageCounterValue;
-    }*/
 
     public void setMessageText(final String messageTextValue) {
         this.messageText = messageTextValue;
@@ -60,14 +52,6 @@ public class CheckStyleEntry {
     public void setSourcePlace(final String sourcePlaceValue) {
         this.sourcePlace = sourcePlaceValue;
     }
-
-    /*public void setClassCoverageCounter(final Double coverageCounterValue) {
-        this.classCoverageCounter = coverageCounterValue;
-    }*/
-
-    /*public Double getClassCoverageCounter() {
-        return classCoverageCounter;
-    }*/
 
     public void setFileName(final String fileName) {
         this.fileName = fileName;
@@ -97,9 +81,6 @@ public class CheckStyleEntry {
         return sourcePlace;
     }
 
-    /*public Double getInstructionCoverageCounter() {
-        return instructionCoverageCounter;
-    }*/
 
     @Override
     public String toString() {

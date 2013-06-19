@@ -23,7 +23,9 @@ import org.knime.core.node.NodeView;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Tomasz Banach
+ * @author £ukasz Waga
+ * @author Monika Pruszkowska
  * 
  */
 public class CheckStyleAdapterNodeFactory extends NodeFactory<CheckStyleAdapterNodeModel> {

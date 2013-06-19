@@ -20,17 +20,17 @@ package org.impressivecode.depress.metric.checkstyle;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.def.DoubleCell;
 import org.knime.core.data.def.StringCell;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Tomasz Banach
+ * @author £ukasz Waga
+ * @author Monika Pruszkowska
  * 
  */
 public class CheckStyleAdapterTableFactory {
 
-    //private static final String METHOD_COVERAGE = "MethodCoverage";
     private static final String SOURCE_PLACE = "Source Place";
     private static final String MESSAGE_TEXT = "Message Text";
     private static final String SEVERITY_TYPE = "Severity Type";
@@ -38,7 +38,6 @@ public class CheckStyleAdapterTableFactory {
     private static final String COLUMN_NUMBER = "column Number";
     private static final String FILE_NAME = "File Name";
     
-    //private static final String CLASS_COVERAGE = "ClassCoverage";
 
     private CheckStyleAdapterTableFactory() {
 
@@ -56,9 +55,7 @@ public class CheckStyleAdapterTableFactory {
                 new DataColumnSpecCreator(SEVERITY_TYPE, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(MESSAGE_TEXT, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(SOURCE_PLACE, StringCell.TYPE).createSpec(),
-                //new DataColumnSpecCreator(METHOD_COVERAGE, DoubleCell.TYPE).createSpec(), 
-                //new DataColumnSpecCreator(CLASS_COVERAGE, DoubleCell.TYPE).createSpec()
-                };
+        };
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
         return outputSpec;
     }

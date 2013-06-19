@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.metric.checkstyle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.common.Cells.doubleOrMissingCell;
 
 import java.util.List;
 
@@ -26,7 +25,6 @@ import org.impressivecode.depress.common.Cells;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
-//import org.knime.core.data.RowKey;
 import org.knime.core.data.def.DefaultRow;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
@@ -37,7 +35,9 @@ import org.knime.core.node.NodeLogger.LEVEL;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Tomasz Banach
+ * @author £ukasz Waga
+ * @author Monika Pruszkowska
  * 
  */
 public class CheckStyleAdapterTransformer {
@@ -77,7 +77,6 @@ public class CheckStyleAdapterTransformer {
 
     private DataRow createTableRow(final CheckStyleEntry entry) {
         DataCell[] cells = getCheckSyleCells(entry);
-        //RowKey keyi = RowKey.createRowKey(i);
         String keyi = Integer.toString(i);
         DataRow row = new DefaultRow(keyi, cells);
         return row;
@@ -87,13 +86,11 @@ public class CheckStyleAdapterTransformer {
         DataCell[] cells = { 
         		Cells.stringOrMissingCell(value.getFileName()),
                 Cells.stringOrMissingCell(value.getLineNumber()),
-                //doubleOrMissingCell(value.getInstructionCoverageCounter())
                 Cells.stringOrMissingCell(value.getColumnNumber()),
                 Cells.stringOrMissingCell(value.getSeverityType()),
                 Cells.stringOrMissingCell(value.getMessageText()),
                 Cells.stringOrMissingCell(value.getSourcePlace()),
-                //doubleOrMissingCell(value.getClassCoverageCounter())
-                };
+        };
         return cells;
     }
 

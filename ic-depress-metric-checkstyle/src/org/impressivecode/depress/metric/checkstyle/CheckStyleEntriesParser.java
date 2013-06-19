@@ -37,7 +37,9 @@ import com.google.common.collect.Lists;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Tomasz Banach
+ * @author £ukasz Waga
+ * @author Monika Pruszkowska
  * 
  */
 public class CheckStyleEntriesParser {
@@ -70,58 +72,15 @@ public class CheckStyleEntriesParser {
     }
 
     private CheckStyleEntry parse(final Node node) {
-        //NodeList cNodes = node.getChildNodes();
-        //List<CheckStyleEntry> checkstyleEntries = Lists.newLinkedList();
         CheckStyleEntry checkstyle = new CheckStyleEntry();
         checkstyle.setFileName(getFileName(node));
 
-        //for (int i = 0; i < cNodes.getLength(); i++) {
-          //  Node item = cNodes.item(i);
-
-            /*if (!isError(node)) {
-                continue;
-            }*/
-            
-            /*Element elem = (Element) node;
-            Double line = Double.valueOf(elem.getAttribute("line"));
-            checkstyle.setLineNumber(line);*/
-            
-            //if (isLineNumber(node)) {
-                checkstyle.setLineNumber(getLineNumberValue(node));
-                //continue;
-            //}
-            
-            //if (isColumnNumber(node)) {
-            	checkstyle.setColumnNumber(getColumnNumberValue(node));
-            	//continue;
-            //}
-                
-            //if (isSourcePlace(node)) {
-                checkstyle.setSeverityType(getSeverityTypeValue(node));
-                //continue;
-            //}
-
-            //if (isSeverityType(node)) {
-                checkstyle.setMessageText(getMessageTextValue(node));
-                //continue;
-            //}
-
-            //if (isMessageText(node)) {
-                checkstyle.setSourcePlace(getSourcePlaceValue(node));
-                //continue;
-            //}
-
-            /*if (isComplexityCoverageCounter(item)) {
-                checkstyle.setComplexityCoverageCounter(getCoverageCounterValue(item));
-                continue;
-            }*/
-
-            
-
-            /*if (isClassCoverageCounter(item)) {
-                checkstyle.setClassCoverageCounter(getCoverageCounterValue(item));
-                continue;
-            }*/
+        checkstyle.setLineNumber(getLineNumberValue(node));
+        checkstyle.setColumnNumber(getColumnNumberValue(node));
+        checkstyle.setSeverityType(getSeverityTypeValue(node));
+        checkstyle.setMessageText(getMessageTextValue(node));
+        checkstyle.setSourcePlace(getSourcePlaceValue(node));
+        
         return checkstyle;
     }
 
@@ -132,66 +91,36 @@ public class CheckStyleEntriesParser {
     private String getLineNumberValue(final Node item) {
         Element elem = (Element) item;
         String line = String.valueOf(elem.getAttribute("line"));
-        //Double missed = Double.valueOf(elem.getAttribute("missed"));
         return line;
     }
     
     private String getColumnNumberValue(final Node item) {
         Element elem = (Element) item;
         String column = String.valueOf(elem.getAttribute("column"));
-        //Double missed = Double.valueOf(elem.getAttribute("missed"));
         return column;
     }
     
     private String getSeverityTypeValue(final Node item) {
         Element elem = (Element) item;
         String severity = String.valueOf(elem.getAttribute("severity"));
-        //Double missed = Double.valueOf(elem.getAttribute("missed"));
         return severity;
     }
     
     private String getMessageTextValue(final Node item) {
         Element elem = (Element) item;
         String message = String.valueOf(elem.getAttribute("message"));
-        //Double missed = Double.valueOf(elem.getAttribute("missed"));
         return message;
     }
     
     private String getSourcePlaceValue(final Node item) {
         Element elem = (Element) item;
         String source = String.valueOf(elem.getAttribute("source"));
-        //Double missed = Double.valueOf(elem.getAttribute("missed"));
         return source;
     }
 
-    /*private boolean isLineNumber(final Node node) {
-        return ((Element) node).getAttribute("type").equals("line");
-    }*/
-
-    /*private boolean isSeverityType(final Node node) {
-        return ((Element) node).getAttribute("type").equals("severity");
-    }*/
-
-    /*private boolean isMessageText(final Node node) {
-        return ((Element) node).getAttribute("type").equals("message");
-    }*/
-
-    /*private boolean isSourcePlace(final Node node) {
-        return ((Element) node).getAttribute("type").equals("source");
-    }*/
-
-    /*private boolean isMethodCoverageCounter(final Node node) {
-        return ((Element) node).getAttribute("type").equals("METHOD");
-    }*/
-
-    /*private boolean isClassCoverageCounter(final Node node) {
-        return ((Element) node).getAttribute("type").equals("CLASS");
-    }*/
-
     private String getFileName(final Node sourceFile) {
         Node packageNode = sourceFile.getParentNode();
-        String packageName = ((Element) packageNode).getAttribute("name");//.replace('/', '.');
-        //String fileName = ((Element) sourceFile).getAttribute("name").replace(".java", "");
-        return packageName;// + "." + fileName;
+        String packageName = ((Element) packageNode).getAttribute("name");
+        return packageName;
     }
 }
