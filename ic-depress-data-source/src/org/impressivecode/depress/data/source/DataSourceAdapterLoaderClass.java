@@ -17,6 +17,7 @@
  */
 
 package org.impressivecode.depress.data.source;
+
 /**
  * 
  * @author Marcin Strzeszyna
@@ -25,6 +26,8 @@ package org.impressivecode.depress.data.source;
  */
 import java.io.*; 
 import org.impressivecode.depress.data.source.DataSourceAdapterFileOperation;
+import org.impressivecode.depress.data.source.DataSourceAdapterTransformer;
+import org.knime.core.node.NodeLogger;
 
 public class DataSourceAdapterLoaderClass extends ClassLoader 
 {
