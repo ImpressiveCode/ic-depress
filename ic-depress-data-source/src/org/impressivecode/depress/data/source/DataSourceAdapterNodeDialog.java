@@ -24,7 +24,8 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Marcin Strzeszyna
+ * @author Wieslaw Rybicki
  * 
  */
 public class DataSourceAdapterNodeDialog extends DefaultNodeSettingsPane {
