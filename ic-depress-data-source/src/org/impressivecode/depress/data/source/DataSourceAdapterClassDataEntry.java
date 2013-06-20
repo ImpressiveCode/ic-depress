@@ -24,10 +24,16 @@ package org.impressivecode.depress.data.source;
  * 
  */
 public class DataSourceAdapterClassDataEntry {
-	String className;
-	String methodName;
-	Boolean isPublic;
-	Boolean isProtected;
+private String className;
+	private String methodName;
+	private Boolean isPublic;
+	private Boolean isProtected;
+	private Boolean isPrivate;
+	private Boolean isStatic;
+	private Boolean isFinal;
+	private Boolean isAbstract;
+	private String location;
+	
 	public void setClassName(String className) {
 		this.className = className;
 	}
@@ -63,12 +69,6 @@ public class DataSourceAdapterClassDataEntry {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-
-	Boolean isPrivate;
-	Boolean isStatic;
-	Boolean isFinal;
-	Boolean isAbstract;
-	String location;
 	
 	public String getClassName()
 	{
@@ -109,3 +109,4 @@ public class DataSourceAdapterClassDataEntry {
 	
 	
 }
+
