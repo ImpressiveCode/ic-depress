@@ -28,6 +28,8 @@ import org.impressivecode.depress.data.source.DataSourceAdapterFileOperation;
 
 public class DataSourceAdapterLoaderClass extends ClassLoader 
 {
+	private static final NodeLogger LOGGER = NodeLogger.getLogger(DataSourceAdapterTransformer.class);
+	private String path;
 	public DataSourceAdapterLoaderClass(String pathToFile)
 	{
 		path = pathToFile;
@@ -43,14 +45,15 @@ public class DataSourceAdapterLoaderClass extends ClassLoader
 		}
 		catch(IOException e)
 		{
-				System.out.println("Loadedclass IO Exceptio"+e);
+				LOGGER.info("Class not found @" + path);
 				throw new ClassNotFoundException(name);
 		}
-		System.out.println("First go"+byteTable.length);
-		Class<?> Loadedclass = defineClass(name,byteTable,0,byteTable.length);
-		if(Loadedclass==null) throw new ClassNotFoundException(name);
-		return Loadedclass;
+		
+		LOGGER.info("Class found @" + path + " Number of bytes read: " + byteTable.length);
+		Class<?> loadedClass = defineClass(name,byteTable,0,byteTable.length);
+		if(loadedClass==null) throw new ClassNotFoundException(name);
+		return loadedClass;
 	}
 	
-	String path;
+	
 }
