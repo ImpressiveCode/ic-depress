@@ -41,7 +41,8 @@ import org.xml.sax.SAXException;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Marcin Strzeszyna
+ * @author Wieslaw Rybicki
  * 
  */
 public class DataSourceAdapterNodeModel extends NodeModel {
