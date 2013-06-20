@@ -25,6 +25,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+
+import org.impressivecode.depress.data.source.DataSourceAdapterTransformer;
+import org.knime.core.node.NodeLogger;
 /**
  * 
  * @author Marcin Strzeszyna
@@ -34,6 +37,7 @@ import java.util.ArrayList;
 public class DataSourceAdapterClassDataEntriesParser {
 
 	public ArrayList<DataSourceAdapterClassDataEntry> parseEntries(String path) throws IOException{
+		final NodeLogger LOGGER = NodeLogger.getLogger(DataSourceAdapterTransformer.class);
 		File chosenFile = new File(path);
 		ArrayList<File> folders = DataSourceAdapterFileOperation.getAllFolder(chosenFile);
 		ArrayList<File> classFile = DataSourceAdapterFileOperation.getAllClass(folders);
@@ -44,29 +48,31 @@ public class DataSourceAdapterClassDataEntriesParser {
 		
 		for(String temp : classFileName)
 		{
+			String classStr = "";
+			String addPath = "";
+			
 			try
 			{
 				String s = "\\";
 				URL url = new URL(urlPath);
 				
 				if ( temp.contains(s)){
-					String classStr = temp.subSequence(temp.lastIndexOf(s) + 1, temp.length()).toString();
-					String addPath = temp.subSequence(0, temp.lastIndexOf(s)).toString();
+					classStr = temp.subSequence(temp.lastIndexOf(s) + 1, temp.length()).toString();
+					addPath = temp.subSequence(0, temp.lastIndexOf(s)).toString();
 					temp = classStr;
 					url = new URL(urlPath.concat(addPath.concat("\\")));
 				}
 				URLClassLoader pLoad = new URLClassLoader(new URL[]{url});
-				System.out.println(url);
 				Class<?> tempClass = pLoad.loadClass(temp);	
 				AddToMethodTable(output, tempClass, url.toString());
 			}
 			catch(ClassNotFoundException e)
 			{
-				System.out.println("ClassNotFound"+e);
+				LOGGER.info("Class: " + classStr + " not found!");
 			}
 			catch(MalformedURLException m)
 			{
-				System.out.println("BUNT2"+m);
+				LOGGER.info("Malformed URL");
 			}
 		}
 		return output;
