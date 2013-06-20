@@ -58,7 +58,7 @@ public class DataSourceAdapterClassDataEntriesParser {
 				URLClassLoader pLoad = new URLClassLoader(new URL[]{url});
 				System.out.println(url);
 				Class<?> tempClass = pLoad.loadClass(temp);	
-				dodajDoTabeliMetod(output, tempClass, url.toString());
+				AddToMethodTable(output, tempClass, url.toString());
 			}
 			catch(ClassNotFoundException e)
 			{
@@ -72,7 +72,7 @@ public class DataSourceAdapterClassDataEntriesParser {
 		return output;
 	}
 	
-	private void dodajDoTabeliMetod(ArrayList<DataSourceAdapterClassDataEntry> output, Class<?> cl, String path)
+	private void AddToMethodTable(ArrayList<DataSourceAdapterClassDataEntry> output, Class<?> cl, String path)
 	{
 		
 		Method[] m = cl.getDeclaredMethods();
