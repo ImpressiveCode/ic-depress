@@ -89,6 +89,7 @@ public class DataSourceAdapterTransformer {
         		BooleanCell.get(value.getIsStatic()),
         		BooleanCell.get(value.getIsFinal()),
         		BooleanCell.get(value.getIsAbstract()),
+          BooleanCell.get(value.getIsInterface()),
                 };   
         return cells;
     }
