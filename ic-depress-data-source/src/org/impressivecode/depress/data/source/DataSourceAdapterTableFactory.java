@@ -44,7 +44,7 @@ public class DataSourceAdapterTableFactory {
     }
 
     public static DataTableSpec createDataColumnSpec() {
-    	DataColumnSpec[] temp  = new DataColumnSpec[9];
+    	DataColumnSpec[] temp  = new DataColumnSpec[10];
     	temp[0] = new DataColumnSpecCreator("Location", StringCell.TYPE).createSpec();
     	temp[1] = new DataColumnSpecCreator("Class Name", StringCell.TYPE).createSpec();
     	temp[2] = new DataColumnSpecCreator("Method Name", StringCell.TYPE).createSpec();
@@ -54,6 +54,7 @@ public class DataSourceAdapterTableFactory {
     	temp[6] = new DataColumnSpecCreator("Static", BooleanCell.TYPE).createSpec();
     	temp[7] = new DataColumnSpecCreator("Final", BooleanCell.TYPE).createSpec();
     	temp[8] = new DataColumnSpecCreator("Abstract", BooleanCell.TYPE).createSpec();
+        temp[9] = new DataColumnSpecCreator("Interface", BooleanCell.TYPE).createSpec();
     	DataTableSpec output = new DataTableSpec(temp);
     	return output;
     }
