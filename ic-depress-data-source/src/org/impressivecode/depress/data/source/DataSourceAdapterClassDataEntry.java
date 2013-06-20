@@ -32,6 +32,7 @@ private String className;
 	private Boolean isStatic;
 	private Boolean isFinal;
 	private Boolean isAbstract;
+	private Boolean isInterface;
 	private String location;
 	
 	public void setClassName(String className) {
@@ -64,6 +65,10 @@ private String className;
 
 	public void setIsAbstract(Boolean isAbstract) {
 		this.isAbstract = isAbstract;
+	}
+
+	public void setIsInterface(Boolean isInterface) {
+		this.isInterface = isInterface;
 	}
 
 	public void setLocation(String location) {
@@ -101,6 +106,10 @@ private String className;
 
 	public Boolean getIsAbstract() {
 		return isAbstract;
+	}
+
+	public Boolean getIsInterface() {
+		return isInterface;
 	}
 
 	public String getLocation() {
