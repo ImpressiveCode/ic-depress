@@ -51,11 +51,9 @@ public class DataAnonymisationTest {
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceprion2() throws Exception {
-        DataColumnSpec[] allColSpecs = new DataColumnSpec[1];
-        allColSpecs[0] = new DataColumnSpecCreator("string", StringCell.TYPE).createSpec();
-        DataTableSpec dataTableSpec = new DataTableSpec(allColSpecs);
+        DataTableSpec spec = new DataTableSpec(new DataColumnSpecCreator("string cell", StringCell.TYPE).createSpec());
 
-        new ColumnCryptoTransformer(dataTableSpec, null) {
+        new ColumnCryptoTransformer(spec, null) {
             @Override
             protected DataCell transformCell(DataCell dataCell) {
                 return null;
