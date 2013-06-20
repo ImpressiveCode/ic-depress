@@ -20,7 +20,7 @@ public class SVNOnlineParserTest {
 
 	private final static String repoZipPath = SVNOnlineParserTest.class
 			.getResource("/").getPath()
-			+ "../test/org/impressivecode/depress/test/scm/svn/test_repo.zip";
+			+ "../test/org/impressivecode/depress/test/scm/svn/test-repo.zip";
 	private String repoPath;
 	private File tempDir = null;
 
@@ -85,7 +85,7 @@ public class SVNOnlineParserTest {
 		ZipFile zip = new ZipFile(repoZipPath);
 		zip.extractAll(tempDir.getAbsolutePath());
 
-		repoPath = tempDir.getAbsolutePath() + File.separatorChar + ".git";
+		repoPath = tempDir.getAbsolutePath() + File.separatorChar + ".svn";
 	}
 
 	void deleteRecursive(final File f) throws IOException {
