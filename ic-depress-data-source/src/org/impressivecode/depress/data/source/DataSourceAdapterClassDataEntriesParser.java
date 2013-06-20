@@ -95,6 +95,7 @@ public class DataSourceAdapterClassDataEntriesParser {
 			entity.setIsStatic(Modifier.isStatic(modifier));
 			entity.setIsFinal(Modifier.isFinal(modifier));
 			entity.setIsAbstract(Modifier.isAbstract(modifier));
+			entity.setIsInterface(Modifier.isInterface(modifier));
 			output.add(entity);
 		}
 	}
