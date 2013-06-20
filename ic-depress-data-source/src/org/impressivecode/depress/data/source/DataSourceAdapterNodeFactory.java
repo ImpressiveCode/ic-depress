@@ -22,7 +22,8 @@ import org.knime.core.node.NodeView;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Marcin Strzeszyna
+ * @author Wieslaw Rybicki
  * 
  */
 public class DataSourceAdapterNodeFactory extends NodeFactory<DataSourceAdapterNodeModel> {
