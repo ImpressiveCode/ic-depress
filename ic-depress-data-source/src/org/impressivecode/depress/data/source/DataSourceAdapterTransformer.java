@@ -35,7 +35,8 @@ import org.knime.core.node.NodeLogger.LEVEL;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Marcin Strzeszyna
+ * @author Wieslaw Rybicki
  * 
  */
 
