@@ -26,7 +26,8 @@ import org.knime.core.data.def.StringCell;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Marcin Strzeszyna
+ * @author Wieslaw Rybicki
  * 
  */
 public class DataSourceAdapterTableFactory {
