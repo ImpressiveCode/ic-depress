@@ -42,7 +42,7 @@ public class CheckStyleEntriesParserTest {
 
     @Test
     public void shouldParseEntries() throws ParserConfigurationException, SAXException, IOException {
-        List<CheckStyleEntry> results = parser.parseEntries("examples/checkstyle.xml");
+        List<CheckStyleEntry> results = parser.parseEntries("checkstyle-test.xml");
         assertEntry(results.get(6));
         assertEntry2(results.get(89));
     }
@@ -50,7 +50,7 @@ public class CheckStyleEntriesParserTest {
     @Test(expected = SAXException.class)
     public void shouldThrowExceptionWhenWrongFileStructure() throws ParserConfigurationException, SAXException,
             IOException {
-        parser.parseEntries("tests/wrongFile.xml");
+        parser.parseEntries("wrongFile.xml");
     }
 
     private void assertEntry(final CheckStyleEntry checkStyleEntry) {

@@ -15,10 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.test.metric.checkstyle;
+package org.impressivecode.depress.test.metric.pmd;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.impressivecode.depress.metric.checkstyle.CheckStyleAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.metric.pmd.PMDAdapterTableFactory.createDataColumnSpec;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -26,8 +26,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.impressivecode.depress.metric.checkstyle.CheckStyleAdapterTransformer;
-import org.impressivecode.depress.metric.checkstyle.CheckStyleEntry;
+import org.impressivecode.depress.metric.pmd.PMDAdapterTransformer;
+import org.impressivecode.depress.metric.pmd.PMDEntry;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
@@ -47,15 +47,15 @@ import com.google.common.collect.Lists;
  * @author Monika Pruszkowska
  * 
  */
-public class CheckStyleTransformerTest {
+public class PMDTransformerTest {
 
     @Test
     public void shouldTransformCheckStyleEntriesList() throws CanceledExecutionException {
         // given
-        CheckStyleAdapterTransformer transformer = new CheckStyleAdapterTransformer(createDataColumnSpec());
-        List<CheckStyleEntry> entries = Lists.newArrayList(
-                createCheckStyleEntry("file1.name", "10", "4", "this is an example message1", "error_severity1", "\\source\\file.ext1"),
-                createCheckStyleEntry("file2.name", "21", "14", "this is an example message2", "error_severity2", "\\source\\file.ext2"));
+        PMDAdapterTransformer transformer = new PMDAdapterTransformer(createDataColumnSpec());
+        List<PMDEntry> entries = Lists.newArrayList(
+                createPMDEntry("file1.name", "10", "4", "6", "6", "aRule", "aRuleSet", "(customPackage)", "customClass", "nonexistent.url", "8", "this is an example message1"),
+                createPMDEntry("file2.name", "12", "6", "8", "8", "aRule2", "aRuleSet2", "(customPackage2)", "customClass2", "nonexistent2.url", "10", "this is an example message2"));
         ExecutionContext exec = mock(ExecutionContext.class);
         BufferedDataContainer container = mock(BufferedDataContainer.class);
         when(exec.createDataContainer(Mockito.any(DataTableSpec.class))).thenReturn(container);
@@ -70,9 +70,9 @@ public class CheckStyleTransformerTest {
     @Test
     public void shouldTransformCheckStyleEntry() throws CanceledExecutionException {
         // given
-        CheckStyleAdapterTransformer transformer = new CheckStyleAdapterTransformer(createDataColumnSpec());
-        List<CheckStyleEntry> entries = Lists.newArrayList(createCheckStyleEntry("test_file.name",
-                "10", "4", "this is an example message", "error_severity", "\\source\\file.ext"));
+        PMDAdapterTransformer transformer = new PMDAdapterTransformer(createDataColumnSpec());
+        List<PMDEntry> entries = Lists.newArrayList(createPMDEntry("Yang.java",
+                "2", "2","0", "0", "MethodArgumentCouldBeFinal", "Optimization Rules", "(default)", "Yang", "http://pmd.sourceforge.net/rules/optimizations.html#MethodArgumentCouldBeFinal", "3", "Parameter 'str' is not assigned and could be declared final"));
         ExecutionContext exec = mock(ExecutionContext.class);
         BufferedDataContainer container = mock(BufferedDataContainer.class);
         when(exec.createDataContainer(Mockito.any(DataTableSpec.class))).thenReturn(container);
@@ -87,22 +87,36 @@ public class CheckStyleTransformerTest {
         assertThat(((StringCell) value.getCell(0)).getStringValue()).isEqualTo("test_file.name");
         assertThat(((StringCell) value.getCell(1)).getStringValue()).isEqualTo("10");
         assertThat(((StringCell) value.getCell(2)).getStringValue()).isEqualTo("4");
-        assertThat(((StringCell) value.getCell(3)).getStringValue()).isEqualTo("this is an example message");
-        assertThat(((StringCell) value.getCell(4)).getStringValue()).isEqualTo("error_severity");
-        assertThat(((StringCell) value.getCell(5)).getStringValue()).isEqualTo("\\source\\file.ext");
+        assertThat(((StringCell) value.getCell(3)).getStringValue()).isEqualTo("7");
+        assertThat(((StringCell) value.getCell(4)).getStringValue()).isEqualTo("7");
+        assertThat(((StringCell) value.getCell(5)).getStringValue()).isEqualTo("sample_rule");
+        assertThat(((StringCell) value.getCell(6)).getStringValue()).isEqualTo("sample_ruleSet");
+        assertThat(((StringCell) value.getCell(7)).getStringValue()).isEqualTo("(custom)");
+        assertThat(((StringCell) value.getCell(8)).getStringValue()).isEqualTo("aClass");
+        assertThat(((StringCell) value.getCell(9)).getStringValue()).isEqualTo("a.url.test");
+        assertThat(((StringCell) value.getCell(10)).getStringValue()).isEqualTo("9");
+        assertThat(((StringCell) value.getCell(11)).getStringValue()).isEqualTo("this is an example message");
+        
     }
 
-    private CheckStyleEntry createCheckStyleEntry(final String fileName, final String d,
-            final String e, final String f, final String g, final String h) {
-        CheckStyleEntry entry = new CheckStyleEntry();
+    private PMDEntry createPMDEntry(final String fileName, final String d,
+            final String e, final String f, final String g, final String h, final String i, 
+            final String j, final String k, final String l, final String m, final String n) {
+        PMDEntry entry = new PMDEntry();
+        
         entry.setFileName(fileName);
-
-        entry.setLineNumber(d);
-        entry.setColumnNumber(e);
-        entry.setMessageText(f);
-        entry.setSeverityType(g);
-        entry.setSourcePlace(h);
-
+        entry.setBeginLine(d);
+        entry.setEndLine(e);
+        entry.setBeginColumn(f);
+        entry.setEndColumn(g);
+        entry.setRule(h);
+        entry.setRuleSet(i);
+        entry.setPackageName(j);
+        entry.setClassName(k);
+        entry.setInfoUrl(l);
+        entry.setPriority(m);
+        entry.setMessageText(n);
+        
         return entry;
     }
 
