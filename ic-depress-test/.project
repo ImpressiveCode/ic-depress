@@ -3,6 +3,8 @@
 	<name>ic-depress-test</name>
 	<comment></comment>
 	<projects>
+		<project>ic-depress-base</project>
+		<project>ic-depress-data-anonymisation</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
