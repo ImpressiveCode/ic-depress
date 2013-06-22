@@ -15,17 +15,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.test.metric.pmd;
+package org.impressivecode.depress.metric.pmd;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.impressivecode.depress.metric.pmd.PMDEntry;
 import org.junit.Test;
 
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ≈Åukasz Waga
  * @author Monika Pruszkowska
  * 
  */
@@ -46,7 +45,7 @@ public class PMDEntryTest {
         expected = "6";
         entry.setEndLine(expected);
         assertEquals(expected, entry.getEndLine());
-        
+
         expected = "12";
         entry.setBeginColumn(expected);
         assertEquals(expected, entry.getBeginColumn());
@@ -54,11 +53,11 @@ public class PMDEntryTest {
         expected = "16";
         entry.setEndColumn(expected);
         assertEquals(expected, entry.getEndColumn());
-        
+
         expected = "sample_rule";
         entry.setRule(expected);
         assertEquals(expected, entry.getRule());
-        
+
         expected = "sample_ruleSet";
         entry.setRuleSet(expected);
         assertEquals(expected, entry.getRuleSet());
@@ -66,25 +65,23 @@ public class PMDEntryTest {
         expected = "package.na.me";
         entry.setPackageName(expected);
         assertEquals(expected, entry.getPackageName());
-        
+
         expected = "package.name.then.ClassName$InternalClassName";
         entry.setClassName(expected);
         assertEquals(expected, entry.getClassName());
-        
+
         expected = "this.is.an.info.Url";
         entry.setInfoUrl(expected);
         assertEquals(expected, entry.getInfoUrl());
-        
+
         expected = "11";
         entry.setPriority(expected);
         assertEquals(expected, entry.getPriority());
-        
+
         expected = "This is a proper text message";
         entry.setMessageText(expected);
         assertEquals(expected, entry.getMessageText());
-        
 
     }
-    
 
 }

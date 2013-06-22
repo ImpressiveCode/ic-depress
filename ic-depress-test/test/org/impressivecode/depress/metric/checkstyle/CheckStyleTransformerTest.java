@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.test.metric.checkstyle;
+package org.impressivecode.depress.metric.checkstyle;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.impressivecode.depress.metric.checkstyle.CheckStyleAdapterTableFactory.createDataColumnSpec;
@@ -26,8 +26,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.impressivecode.depress.metric.checkstyle.CheckStyleAdapterTransformer;
-import org.impressivecode.depress.metric.checkstyle.CheckStyleEntry;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
@@ -43,7 +41,7 @@ import com.google.common.collect.Lists;
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ï¿½ukasz Waga
  * @author Monika Pruszkowska
  * 
  */
@@ -87,8 +85,8 @@ public class CheckStyleTransformerTest {
         assertThat(((StringCell) value.getCell(0)).getStringValue()).isEqualTo("test_file.name");
         assertThat(((StringCell) value.getCell(1)).getStringValue()).isEqualTo("10");
         assertThat(((StringCell) value.getCell(2)).getStringValue()).isEqualTo("4");
-        assertThat(((StringCell) value.getCell(3)).getStringValue()).isEqualTo("this is an example message");
-        assertThat(((StringCell) value.getCell(4)).getStringValue()).isEqualTo("error_severity");
+        assertThat(((StringCell) value.getCell(3)).getStringValue()).isEqualTo("error_severity");
+        assertThat(((StringCell) value.getCell(4)).getStringValue()).isEqualTo("this is an example message");
         assertThat(((StringCell) value.getCell(5)).getStringValue()).isEqualTo("\\source\\file.ext");
     }
 
