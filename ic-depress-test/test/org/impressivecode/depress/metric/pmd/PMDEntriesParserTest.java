@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.test.metric.pmd;
+package org.impressivecode.depress.metric.pmd;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -24,15 +24,13 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.impressivecode.depress.metric.pmd.PMDEntriesParser;
-import org.impressivecode.depress.metric.pmd.PMDEntry;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ≈Åukasz Waga
  * @author Monika Pruszkowska
  * 
  */
@@ -42,20 +40,13 @@ public class PMDEntriesParserTest {
 
     @Test
     public void shouldParseEntries() throws ParserConfigurationException, SAXException, IOException {
-        List<PMDEntry> results = parser.parseEntries("pmd.xml");
-        assertEntry(results.get(1));
-        assertEntry2(results.get(12));
-    }
-
-    @Test(expected = SAXException.class)
-    public void shouldThrowExceptionWhenWrongFileStructure() throws ParserConfigurationException, SAXException,
-            IOException {
-        parser.parseEntries("wrongFile.xml");
+        List<PMDEntry> results = parser.parseEntries(getClass().getResource("pmd.xml").getPath());
+        assertEntry(results.get(0));
+        assertEntry2(results.get(11));
     }
 
     private void assertEntry(final PMDEntry pMDEntry) {
-        assertThat(pMDEntry.getFileName()).isEqualTo(
-                "Yang.java");
+        assertThat(pMDEntry.getFileName()).isEqualTo("Yang.java");
         assertThat(pMDEntry.getBeginLine()).isEqualTo("2");
         assertThat(pMDEntry.getEndLine()).isEqualTo("2");
         assertThat(pMDEntry.getBeginColumn()).isEqualTo("0");
@@ -64,14 +55,14 @@ public class PMDEntriesParserTest {
         assertThat(pMDEntry.getRuleSet()).isEqualTo("Optimization Rules");
         assertThat(pMDEntry.getPackageName()).isEqualTo("(default)");
         assertThat(pMDEntry.getClassName()).isEqualTo("Yang");
-        assertThat(pMDEntry.getInfoUrl()).isEqualTo("http://pmd.sourceforge.net/rules/optimizations.html#MethodArgumentCouldBeFinal");
+        assertThat(pMDEntry.getInfoUrl()).isEqualTo(
+                "http://pmd.sourceforge.net/rules/optimizations.html#MethodArgumentCouldBeFinal");
         assertThat(pMDEntry.getPriority()).isEqualTo("3");
-        assertThat(pMDEntry.getMessageText()).isEqualTo("Parameter 'str' is not assigned and could be declared final");
+        assertThat(pMDEntry.getMessageText()).contains("Parameter 'str' is not assigned and could be declared final");
     }
 
     private void assertEntry2(final PMDEntry pMDEntry) {
-    	assertThat(pMDEntry.getFileName()).isEqualTo(
-                "Ying.java");
+        assertThat(pMDEntry.getFileName()).isEqualTo("Ying.java");
         assertThat(pMDEntry.getBeginLine()).isEqualTo("3");
         assertThat(pMDEntry.getEndLine()).isEqualTo("3");
         assertThat(pMDEntry.getBeginColumn()).isEqualTo("0");
@@ -80,9 +71,10 @@ public class PMDEntriesParserTest {
         assertThat(pMDEntry.getRuleSet()).isEqualTo("Unused Code Rules");
         assertThat(pMDEntry.getPackageName()).isEqualTo("(default)");
         assertThat(pMDEntry.getClassName()).isEqualTo("Ying");
-        assertThat(pMDEntry.getInfoUrl()).isEqualTo("http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField");
+        assertThat(pMDEntry.getInfoUrl()).isEqualTo(
+                "http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField");
         assertThat(pMDEntry.getPriority()).isEqualTo("3");
-        assertThat(pMDEntry.getMessageText()).isEqualTo("Avoid unused private fields such as 'gOOD'.");
+        assertThat(pMDEntry.getMessageText()).contains("Avoid unused private fields such as 'gOOD'.");
     }
 
 }

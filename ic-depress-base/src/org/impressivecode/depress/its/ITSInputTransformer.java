@@ -26,13 +26,10 @@ import java.util.Set;
 import org.impressivecode.depress.common.DataTableSpecUtils;
 import org.impressivecode.depress.common.InputTransformer;
 import org.impressivecode.depress.common.TableCellReader;
-import org.knime.core.data.DataColumnSpec;
-import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTable;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.RowIterator;
-import org.knime.core.data.def.StringCell;
 import org.knime.core.node.InvalidSettingsException;
 
 import com.google.common.collect.Iterables;
@@ -42,10 +39,10 @@ import com.google.common.collect.Iterables;
  * 
  */
 public class ITSInputTransformer implements InputTransformer<ITSDataType> {
-    private final DataTableSpec tableSpec;
+    private final DataTableSpec minimalRequiredTableSpec;
 
-    public ITSInputTransformer(final DataTableSpec tableSpec) throws InvalidSettingsException {
-        this.tableSpec = validate(tableSpec);
+    public ITSInputTransformer(final DataTableSpec tableSpec) {
+        this.minimalRequiredTableSpec = tableSpec;
     }
 
     @Override
@@ -60,26 +57,22 @@ public class ITSInputTransformer implements InputTransformer<ITSDataType> {
     }
 
     private ITSDataType issue(final DataRow row) {
-        TableCellReader reader = new TableCellReader(tableSpec, row);
+        TableCellReader reader = new TableCellReader(minimalRequiredTableSpec, row);
         ITSDataType its = new ITSDataType();
-        its.setIssueId(reader.string(ITSAdapterTableFactory.ISSUE_ID));
+        //add additional if required
+        its.setIssueId(reader.stringOptional(ITSAdapterTableFactory.ISSUE_ID));
+        its.setResolved(reader.dateOptional(ITSAdapterTableFactory.RESOLVED_DATE));
         return its;
     }
 
-    private static DataTableSpec validate(final DataTableSpec spec) throws InvalidSettingsException {
+    @Override
+    public void validate(final DataTableSpec spec) throws InvalidSettingsException {
         checkNotNull(spec, "DataTableSpec hat to be set");
 
-        Set<String> missing = DataTableSpecUtils.findMissingColumnSubset(spec, createHistoryColumnSpec());
+        Set<String> missing = DataTableSpecUtils.findMissingColumnSubset(spec, this.minimalRequiredTableSpec);
         if (!missing.isEmpty()) {
             throw new InvalidSettingsException("Issue data table does not contain required columns. Missing: "
                     + Iterables.toString(missing));
         }
-
-        return spec;
-    }
-
-    private static DataTableSpec createHistoryColumnSpec() {
-        DataColumnSpec spec = new DataColumnSpecCreator(ITSAdapterTableFactory.ISSUE_ID, StringCell.TYPE).createSpec();
-        return new DataTableSpec(spec);
     }
 }

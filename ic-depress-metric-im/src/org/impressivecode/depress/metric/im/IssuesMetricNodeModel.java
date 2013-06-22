@@ -19,6 +19,8 @@ package org.impressivecode.depress.metric.im;
 
 import static com.google.common.base.Preconditions.checkState;
 import static org.impressivecode.depress.metric.im.IssuesMetricTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MARKER_COLSPEC;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_COLSPEC;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,10 +28,11 @@ import java.util.List;
 
 import org.impressivecode.depress.common.InputTransformer;
 import org.impressivecode.depress.common.OutputTransformer;
+import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSInputTransformer;
-import org.impressivecode.depress.scm.SCMInputTransformer;
 import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.scm.SCMInputTransformer;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -55,6 +58,8 @@ public class IssuesMetricNodeModel extends NodeModel {
 
     protected IssuesMetricNodeModel() {
         super(2, 1);
+        this.historyTransfomer = new SCMInputTransformer(new DataTableSpec(RESOURCE_COLSPEC, MARKER_COLSPEC));
+        this.issueTransfomer = new ITSInputTransformer(new DataTableSpec(ITSAdapterTableFactory.ISSUE_ID_COLSPEC));
     }
 
     @Override
@@ -71,8 +76,6 @@ public class IssuesMetricNodeModel extends NodeModel {
 
     @Override
     protected void reset() {
-        this.issueTransfomer = null;
-        this.historyTransfomer = null;
     }
 
     private List<IssuesMetricType> computeMetric(final BufferedDataTable[] inData, final ExecutionContext exec)
@@ -98,8 +101,8 @@ public class IssuesMetricNodeModel extends NodeModel {
         if (inSpecs.length != 2) {
             throw new InvalidSettingsException("Wrong number of input suorces");
         }
-        this.historyTransfomer = new SCMInputTransformer(inSpecs[0]);
-        this.issueTransfomer = new ITSInputTransformer(inSpecs[1]);
+        this.historyTransfomer.validate(inSpecs[0]);
+        this.issueTransfomer.validate(inSpecs[1]);
 
         return new DataTableSpec[] { createDataColumnSpec() };
     }

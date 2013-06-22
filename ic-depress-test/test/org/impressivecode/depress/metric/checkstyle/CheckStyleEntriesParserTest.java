@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.test.metric.checkstyle;
+package org.impressivecode.depress.metric.checkstyle;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -24,15 +24,13 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.impressivecode.depress.metric.checkstyle.CheckStyleEntriesParser;
-import org.impressivecode.depress.metric.checkstyle.CheckStyleEntry;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ï¿½ukasz Waga
  * @author Monika Pruszkowska
  * 
  */
@@ -42,35 +40,29 @@ public class CheckStyleEntriesParserTest {
 
     @Test
     public void shouldParseEntries() throws ParserConfigurationException, SAXException, IOException {
-        List<CheckStyleEntry> results = parser.parseEntries("checkstyle-test.xml");
-        assertEntry(results.get(6));
-        assertEntry2(results.get(89));
-    }
-
-    @Test(expected = SAXException.class)
-    public void shouldThrowExceptionWhenWrongFileStructure() throws ParserConfigurationException, SAXException,
-            IOException {
-        parser.parseEntries("wrongFile.xml");
+        List<CheckStyleEntry> results = parser.parseEntries(getClass().getResource("checkstyle-test.xml").getPath());
+        assertEntry(results.get(5));
+        assertEntry2(results.get(88));
     }
 
     private void assertEntry(final CheckStyleEntry checkStyleEntry) {
-        assertThat(checkStyleEntry.getFileName()).isEqualTo(
-                "com\\virtusa\\gto\\locc\\FileParser.html");
+        assertThat(checkStyleEntry.getFileName()).isEqualTo("com\\virtusa\\gto\\locc\\FileParser.java");
         assertThat(checkStyleEntry.getLineNumber()).isEqualTo("40");
         assertThat(checkStyleEntry.getColumnNumber()).isEqualTo("9");
         assertThat(checkStyleEntry.getSeverityType()).isEqualTo("error");
         assertThat(checkStyleEntry.getMessageText()).isEqualTo("Missing a Javadoc comment.");
-        assertThat(checkStyleEntry.getSourcePlace()).isEqualTo("com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck");
+        assertThat(checkStyleEntry.getSourcePlace()).isEqualTo(
+                "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck");
     }
 
     private void assertEntry2(final CheckStyleEntry checkStyleEntry) {
-    	assertThat(checkStyleEntry.getFileName()).isEqualTo(
-                "com\\virtusa\\gto\\locc\\MetricsPrinter.java");
+        assertThat(checkStyleEntry.getFileName()).isEqualTo("com\\virtusa\\gto\\locc\\MetricsPrinter.java");
         assertThat(checkStyleEntry.getLineNumber()).isEqualTo("33");
         assertThat(checkStyleEntry.getColumnNumber()).isEqualTo("5");
         assertThat(checkStyleEntry.getSeverityType()).isEqualTo("error");
         assertThat(checkStyleEntry.getMessageText()).isEqualTo("Missing a Javadoc comment.");
-        assertThat(checkStyleEntry.getSourcePlace()).isEqualTo("com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck");
+        assertThat(checkStyleEntry.getSourcePlace()).isEqualTo(
+                "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck");
     }
 
 }

@@ -21,6 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Sets.newHashSet;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 
 import org.knime.core.data.DataCell;
@@ -48,11 +49,11 @@ public final class TableCellReader {
         this.row = checkNotNull(row, "Row have to be set");
     }
 
-    public static TableCellReader reader(final DataTableSpec spec, final DataRow row){
+    public static TableCellReader reader(final DataTableSpec spec, final DataRow row) {
         return new TableCellReader(spec, row);
     }
 
-    public String key(){
+    public String key() {
         return row.getKey().getString();
     }
 
@@ -60,8 +61,21 @@ public final class TableCellReader {
         return ((StringCell) row.getCell(spec.findColumnIndex(colName))).getStringValue();
     }
 
+    public String stringOptional(final String colName) {
+        return !spec.containsName(colName) ? null : string(colName);
+
+    }
+
     public Calendar date(final String colName) {
         return ((DateAndTimeCell) row.getCell(spec.findColumnIndex(colName))).getUTCCalendarClone();
+    }
+
+    public Date dateOptional(final String colName) {
+        return !spec.containsName(colName) ? null : date(colName).getTime();
+    }
+
+    public Set<String> stringSetOptional(final String colName) {
+        return !spec.containsName(colName) ? null : stringSet(colName);
     }
 
     public Set<String> stringSet(final String colName) {

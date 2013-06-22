@@ -23,7 +23,6 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import org.impressivecode.depress.metric.judy.JudyEntriesParser;
 import org.impressivecode.depress.metric.judy.JudyXmlResult.Classes.Class;
 import org.junit.Test;
 
@@ -39,5 +38,4 @@ public class JudyEntriesParserTest {
         List<Class> results = JudyEntriesParser.unmarshalResults(getClass().getResource("judy.xml").getPath());
         assertEquals(results.size(), 2);
     }
-
 }

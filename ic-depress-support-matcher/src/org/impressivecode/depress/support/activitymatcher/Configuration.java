@@ -63,6 +63,10 @@ public class Configuration {
         return interval;
     }
 
+    public long getIntervalInMillis() {
+        return interval * 60000;
+    }
+
     public List<ITSDataType> getIssues() {
         return issues;
     }

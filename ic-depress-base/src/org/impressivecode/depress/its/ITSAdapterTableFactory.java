@@ -56,15 +56,18 @@ public class ITSAdapterTableFactory {
     public static final String DESCRIPTION = "Description";
     public static final String COMMENTS = "Comments";
 
+    public static final DataColumnSpec ISSUE_ID_COLSPEC = new DataColumnSpecCreator(ISSUE_ID, StringCell.TYPE).createSpec();
+    public static final DataColumnSpec RESOLVED_DATE_COLSPEC = new DataColumnSpecCreator(RESOLVED_DATE, DateAndTimeCell.TYPE).createSpec();
+
     private ITSAdapterTableFactory() {
 
     }
 
     public static DataTableSpec createDataColumnSpec() {
         DataColumnSpec[] allColSpecs = { 
-                new DataColumnSpecCreator(ISSUE_ID, StringCell.TYPE).createSpec(),
+                ISSUE_ID_COLSPEC,
                 new DataColumnSpecCreator(CREATION_DATE, DateAndTimeCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(RESOLVED_DATE, DateAndTimeCell.TYPE).createSpec(), //should be a list or new column wit all updates
+                RESOLVED_DATE_COLSPEC, //should be a list or new column wit all updates
                 new DataColumnSpecCreator(UPDATED_DATE, DateAndTimeCell.TYPE).createSpec(), //should be a list or new column wit all updates
                 new DataColumnSpecCreator(STATUS, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(TYPE, StringCell.TYPE).createSpec(),

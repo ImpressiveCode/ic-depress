@@ -17,7 +17,6 @@
  */
 package org.impressivecode.depress.common;
 
-import static com.google.common.collect.Lists.transform;
 import static com.google.common.collect.Sets.newHashSet;
 
 import java.util.Calendar;
@@ -37,6 +36,7 @@ import org.knime.core.data.def.StringCell;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * 
@@ -81,13 +81,23 @@ public class Cells {
         }
     }
 
-    public static DataCell stringListCell(final List<String> stringList) {
-        List<DataCell> coll = transform(stringList, new Function<String, DataCell>() {
+    public static DataCell stringListCell(final Iterable<String> stringList) {
+        List<DataCell> coll = Lists.newArrayList(Iterables.transform(stringList, new Function<String, DataCell>() {
             @Override
             public DataCell apply(final String value) {
                 return stringCell(value);
             }
-        });
+        }));
+        return CollectionCellFactory.createListCell(coll);
+    }
+
+    public static DataCell integerListCell(final Iterable<Integer> confidence) {
+        List<DataCell> coll = Lists.newArrayList(Iterables.transform(confidence, new Function<Integer, DataCell>() {
+            @Override
+            public DataCell apply(final Integer value) {
+                return integerCell(value);
+            }
+        }));
         return CollectionCellFactory.createListCell(coll);
     }
 
@@ -114,5 +124,4 @@ public class Cells {
                 calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
                 calendar.get(Calendar.SECOND), calendar.get(Calendar.MILLISECOND));
     }
-
 }
