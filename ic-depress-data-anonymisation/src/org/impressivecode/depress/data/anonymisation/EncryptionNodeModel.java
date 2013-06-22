@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.DataType;
 import org.knime.core.data.collection.CollectionCellFactory;
 import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.collection.SetCell;
@@ -81,8 +80,14 @@ public class EncryptionNodeModel extends CryptoNodeModel {
                 
                 while (setCellIterator.hasNext())
                 {
-                    StringCell origin = ((StringCell) setCellIterator.next());
-                    DataCell transformed = makeTransformation(origin);
+                    DataCell original = setCellIterator.next();
+                    DataCell transformed = original;
+                            
+                    if(!original.isMissing())
+                    {
+                        StringCell origin = ((StringCell) original);
+                        transformed = makeTransformation(origin);
+                    }
                     transformedSet.add(transformed);
                 }
                 return CollectionCellFactory.createSetCell(transformedSet);
@@ -95,8 +100,14 @@ public class EncryptionNodeModel extends CryptoNodeModel {
                 
                 while (listCellIterator.hasNext())
                 {
-                    StringCell origin = ((StringCell) listCellIterator.next());
-                    DataCell transformed = makeTransformation(origin);
+                    DataCell original = listCellIterator.next();
+                    DataCell transformed = original;
+                            
+                    if(!original.isMissing())
+                    {
+                        StringCell origin = ((StringCell) original);
+                        transformed = makeTransformation(origin);
+                    }
                     transformedList.add(transformed);
                 }
                 return CollectionCellFactory.createListCell(transformedList);

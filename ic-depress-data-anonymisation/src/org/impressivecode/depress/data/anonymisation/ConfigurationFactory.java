@@ -18,7 +18,6 @@
 package org.impressivecode.depress.data.anonymisation;
 
 import org.knime.core.data.DataColumnSpec;
-import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.def.StringCell;
 import org.knime.core.node.util.filter.InputFilter;
 import org.knime.core.node.util.filter.column.DataColumnSpecFilterConfiguration;
