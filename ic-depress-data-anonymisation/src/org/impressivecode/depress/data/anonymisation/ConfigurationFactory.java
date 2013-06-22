@@ -42,7 +42,11 @@ final class ConfigurationFactory {
 
         @Override
         public final boolean include(final DataColumnSpec cspec) {
-            return cspec.getType().equals(StringCell.TYPE);
+            return
+                    cspec.getType().equals(StringCell.TYPE)
+                    ||
+                    cspec.getType().isCollectionType()
+                    && cspec.getType().getCollectionElementType().equals(StringCell.TYPE);
         }
 
     }
