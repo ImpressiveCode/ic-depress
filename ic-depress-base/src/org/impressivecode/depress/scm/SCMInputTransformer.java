@@ -26,14 +26,10 @@ import java.util.Set;
 import org.impressivecode.depress.common.DataTableSpecUtils;
 import org.impressivecode.depress.common.InputTransformer;
 import org.impressivecode.depress.common.TableCellReader;
-import org.knime.core.data.DataColumnSpec;
-import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTable;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.RowIterator;
-import org.knime.core.data.collection.SetCell;
-import org.knime.core.data.def.StringCell;
 import org.knime.core.node.InvalidSettingsException;
 
 import com.google.common.collect.Iterables;
@@ -46,10 +42,11 @@ import com.google.common.collect.Lists;
  */
 public class SCMInputTransformer implements InputTransformer<SCMDataType> {
 
-    private final DataTableSpec tableSpec;
+    private final DataTableSpec minimalTableSpec;
 
-    public SCMInputTransformer(final DataTableSpec tableSpec) throws InvalidSettingsException {
-        this.tableSpec = validate(tableSpec);
+    public SCMInputTransformer(final DataTableSpec tableSpec) {
+        checkNotNull(tableSpec, "DataTableSpec hat to be set");
+        this.minimalTableSpec = tableSpec;
     }
 
     @Override
@@ -64,31 +61,21 @@ public class SCMInputTransformer implements InputTransformer<SCMDataType> {
     }
 
     private SCMDataType scm(final DataRow row) {
-        TableCellReader reader = new TableCellReader(tableSpec, row);
+        TableCellReader reader = new TableCellReader(minimalTableSpec, row);
         SCMDataType scm = new SCMDataType();
-        scm.setResourceName(reader.string(RESOURCE_NAME));
-        scm.setMarkers(reader.stringSet(SCMAdapterTableFactory.MARKER));
+        scm.setResourceName(reader.stringOptional(RESOURCE_NAME));
+        scm.setMarkers(reader.stringSetOptional(SCMAdapterTableFactory.MARKER));
         return scm;
     }
 
-    private static DataTableSpec validate(final DataTableSpec spec) throws InvalidSettingsException {
+    @Override
+    public void validate(final DataTableSpec spec) throws InvalidSettingsException {
         checkNotNull(spec, "DataTableSpec hat to be set");
 
-        Set<String> missing = DataTableSpecUtils.findMissingColumnSubset(spec, createHistoryColumnSpec());
+        Set<String> missing = DataTableSpecUtils.findMissingColumnSubset(spec, this.minimalTableSpec);
         if (!missing.isEmpty()) {
             throw new InvalidSettingsException("History data table does not contain required columns. Missing: "
                     + Iterables.toString(missing));
         }
-
-        return spec;
     }
-
-    private static DataTableSpec createHistoryColumnSpec() {
-        DataColumnSpec[] allColSpecs = {
-                new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(SCMAdapterTableFactory.MARKER, SetCell.getCollectionType(StringCell.TYPE)).createSpec(),
-        };
-        return new DataTableSpec(allColSpecs);
-    }
-
 }

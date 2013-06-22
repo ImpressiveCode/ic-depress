@@ -19,6 +19,8 @@
 
 package org.impressivecode.depress.data.anonymisation;
 
+import static org.impressivecode.depress.data.anonymisation.ConfigurationFactory.checkStructure;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -55,26 +57,18 @@ public class DecryptionNodeModel extends CryptoNodeModel {
 
             @Override
             protected DataCell transformCell(final DataCell dataCell) {
-                Preconditions.checkArgument(
-                        dataCell.getType().equals(StringCell.TYPE)
-                        ||
-                        dataCell.getType().isCollectionType()
-                        && dataCell.getType().getCollectionElementType().equals(StringCell.TYPE),
-                    "Cell type " + dataCell.getType().toString() + " is not supported"
-                );
-                
+                Preconditions.checkArgument(checkStructure(dataCell.getType()), "Cell type " + dataCell.getType().toString()
+                        + " is not supported");
+
                 DataCell transformedCell = null;
-                
-                if(dataCell.getType().equals(StringCell.TYPE)){
-                    transformedCell = makeTransformation((StringCell)dataCell);
-                }
-                else if(dataCell instanceof SetCell){
-                    transformedCell = makeTransformation((SetCell)dataCell);
-                }
-                else if(dataCell instanceof ListCell){
-                    transformedCell = makeTransformation((ListCell)dataCell);
-                }
-                else {
+
+                if (dataCell.getType().equals(StringCell.TYPE)) {
+                    transformedCell = makeTransformation((StringCell) dataCell);
+                } else if (dataCell instanceof SetCell) {
+                    transformedCell = makeTransformation((SetCell) dataCell);
+                } else if (dataCell instanceof ListCell) {
+                    transformedCell = makeTransformation((ListCell) dataCell);
+                } else {
                     LOGGER.error("This exception should never be thrown unless something is wrong");
                     throw new IllegalStateException("This exception should never be thrown unless something is wrong");
                 }
@@ -82,28 +76,24 @@ public class DecryptionNodeModel extends CryptoNodeModel {
             }
 
             protected DataCell makeTransformation(final StringCell stringCell) {
-                String origin = stringCell.getStringValue();
-                String transformed = null;
                 try {
-                    transformed = KnimeEncryption.decrypt(origin);
+                    String origin = stringCell.getStringValue();
+                    return new StringCell(KnimeEncryption.decrypt(origin));
                 } catch (Exception e) {
                     LOGGER.error("Unable to proceed due to invalid encryption settings", e);
                     throw new IllegalStateException("Unable to proceed due to invalid encryption");
                 }
-                return new StringCell(transformed);
             }
 
-            private DataCell makeTransformation(SetCell setCell) {
+            private DataCell makeTransformation(final SetCell setCell) {
                 Collection<DataCell> transformedSet = new HashSet<DataCell>();
                 Iterator<DataCell> setCellIterator = setCell.iterator();
-                
-                while (setCellIterator.hasNext())
-                {
+
+                while (setCellIterator.hasNext()) {
                     DataCell original = setCellIterator.next();
                     DataCell transformed = original;
-                            
-                    if(!original.isMissing())
-                    {
+
+                    if (!original.isMissing()) {
                         StringCell origin = ((StringCell) original);
                         transformed = makeTransformation(origin);
                     }
@@ -111,19 +101,16 @@ public class DecryptionNodeModel extends CryptoNodeModel {
                 }
                 return CollectionCellFactory.createSetCell(transformedSet);
             }
-            
-            protected DataCell makeTransformation(final ListCell listCell)
-            {
+
+            protected DataCell makeTransformation(final ListCell listCell) {
                 Collection<DataCell> transformedList = new ArrayList<DataCell>();
                 Iterator<DataCell> listCellIterator = listCell.iterator();
-                
-                while (listCellIterator.hasNext())
-                {
+
+                while (listCellIterator.hasNext()) {
                     DataCell original = listCellIterator.next();
                     DataCell transformed = original;
-                            
-                    if(!original.isMissing())
-                    {
+
+                    if (!original.isMissing()) {
                         StringCell origin = ((StringCell) original);
                         transformed = makeTransformation(origin);
                     }

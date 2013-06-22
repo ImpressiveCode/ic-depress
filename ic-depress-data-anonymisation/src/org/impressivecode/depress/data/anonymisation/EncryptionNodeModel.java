@@ -15,6 +15,7 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.util.KnimeEncryption;
 
 import com.google.common.base.Preconditions;
+
 /**
  * @author Marek Majchrzak, ImpressiveCode
  * @author Andrzej Dudek, Wrocław University of Technology
@@ -35,56 +36,43 @@ public class EncryptionNodeModel extends CryptoNodeModel {
 
             @Override
             protected DataCell transformCell(final DataCell dataCell) {
-                Preconditions.checkArgument(
-                        dataCell.getType().equals(StringCell.TYPE)
-                        ||
-                        dataCell.getType().isCollectionType()
-                        && dataCell.getType().getCollectionElementType().equals(StringCell.TYPE),
-                    "Cell type " + dataCell.getType().toString() + " is not supported"
-                );
-                
+                Preconditions.checkArgument(ConfigurationFactory.checkStructure(dataCell.getType()), "Cell type "
+                        + dataCell.getType().toString() + " is not supported");
+
                 DataCell transformedCell = null;
-                if(dataCell.getType().equals(StringCell.TYPE)){
-                    transformedCell = makeTransformation((StringCell)dataCell);
-                }
-                else if(dataCell instanceof SetCell){
-                    transformedCell = makeTransformation((SetCell)dataCell);
-                }
-                else if(dataCell instanceof ListCell){
-                    transformedCell = makeTransformation((ListCell)dataCell);
-                }
-                else {
+                if (dataCell.getType().equals(StringCell.TYPE)) {
+                    transformedCell = makeTransformation((StringCell) dataCell);
+                } else if (dataCell instanceof SetCell) {
+                    transformedCell = makeTransformation((SetCell) dataCell);
+                } else if (dataCell instanceof ListCell) {
+                    transformedCell = makeTransformation((ListCell) dataCell);
+                } else {
                     LOGGER.error("This exception should never be thrown unless something is wrong");
                     throw new IllegalStateException("This exception should never be thrown unless something is wrong");
                 }
                 return transformedCell;
             }
-            
-            protected DataCell makeTransformation(final StringCell stringCell)
-            {
-                String transformed = null;
-                String origin = stringCell.getStringValue();
+
+            protected DataCell makeTransformation(final StringCell stringCell) {
                 try {
-                    transformed = KnimeEncryption.encrypt(origin.toCharArray());
+                    String origin = stringCell.getStringValue();
+                    return new StringCell(KnimeEncryption.encrypt(origin.toCharArray()));
                 } catch (Exception e) {
                     LOGGER.error("Unable to proceed due to invalid cryptography settings", e);
                     throw new IllegalStateException("Unable to proceed due to invalid cryptography settings");
                 }
-                return new StringCell(transformed);
+
             }
-            
-            protected DataCell makeTransformation(final SetCell setCell)
-            {
+
+            protected DataCell makeTransformation(final SetCell setCell) {
                 Collection<DataCell> transformedSet = new HashSet<DataCell>();
                 Iterator<DataCell> setCellIterator = setCell.iterator();
-                
-                while (setCellIterator.hasNext())
-                {
+
+                while (setCellIterator.hasNext()) {
                     DataCell original = setCellIterator.next();
                     DataCell transformed = original;
-                            
-                    if(!original.isMissing())
-                    {
+
+                    if (!original.isMissing()) {
                         StringCell origin = ((StringCell) original);
                         transformed = makeTransformation(origin);
                     }
@@ -92,19 +80,16 @@ public class EncryptionNodeModel extends CryptoNodeModel {
                 }
                 return CollectionCellFactory.createSetCell(transformedSet);
             }
-            
-            protected DataCell makeTransformation(final ListCell listCell)
-            {
+
+            protected DataCell makeTransformation(final ListCell listCell) {
                 Collection<DataCell> transformedList = new ArrayList<DataCell>();
                 Iterator<DataCell> listCellIterator = listCell.iterator();
-                
-                while (listCellIterator.hasNext())
-                {
+
+                while (listCellIterator.hasNext()) {
                     DataCell original = listCellIterator.next();
                     DataCell transformed = original;
-                            
-                    if(!original.isMissing())
-                    {
+
+                    if (!original.isMissing()) {
                         StringCell origin = ((StringCell) original);
                         transformed = makeTransformation(origin);
                     }

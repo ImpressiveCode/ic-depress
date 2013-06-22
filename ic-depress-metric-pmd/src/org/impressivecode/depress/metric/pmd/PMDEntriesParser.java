@@ -38,13 +38,13 @@ import com.google.common.collect.Lists;
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ï¿½ukasz Waga
  * @author Monika Pruszkowska
  * 
  */
 public class PMDEntriesParser {
-    public List<PMDEntry> parseEntries(final String path) throws ParserConfigurationException, SAXException,
-    IOException {
+    public List<PMDEntry> parseEntries(final String path) throws
+    IOException, ParserConfigurationException, SAXException {
         Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -60,8 +60,8 @@ public class PMDEntriesParser {
                 if (!isError(item2)) {
                     continue;
                 }
-	            PMDEntry entry = parse(item2);
-	            pmdEntries.add(entry);
+                PMDEntry entry = parse(item2);
+                pmdEntries.add(entry);
             }
         }
         return pmdEntries;
@@ -86,7 +86,7 @@ public class PMDEntriesParser {
         pmd.setClassName(getClassName(node));
         pmd.setInfoUrl(getInfoUrlValue(node));
         pmd.setPriority(getPriorityValue(node));
-        
+
         return pmd;
     }
 
@@ -99,69 +99,69 @@ public class PMDEntriesParser {
         String line = String.valueOf(elem.getAttribute("beginline"));
         return line;
     }
-    
+
     private String getEndLineValue(final Node item) {
-    	Element elem = (Element) item;
-    	String endLine = String.valueOf(elem.getAttribute("endline"));
-    	return endLine;
+        Element elem = (Element) item;
+        String endLine = String.valueOf(elem.getAttribute("endline"));
+        return endLine;
     }
-    
+
     private String getBeginColumnValue(final Node item) {
         Element elem = (Element) item;
         String bgnColumn = String.valueOf(elem.getAttribute("begincolumn"));
         return bgnColumn;
     }
-    
+
     private String getEndColumnValue(final Node item) {
         Element elem = (Element) item;
         String endColumn = String.valueOf(elem.getAttribute("endcolumn"));
         return endColumn;
     }
-    
+
     private String getRuleValue(final Node item) {
         Element elem = (Element) item;
         String rule = String.valueOf(elem.getAttribute("rule"));
         return rule;
     }
-    
+
     private String getMessageTextValue(final Node item) {
         Node node = item;
         //String message = String.valueOf(elem.getAttribute("message"));
         String message = String.valueOf(node.getFirstChild().getTextContent());
         return message;
     }
-    
+
     private String getRuleSetValue(final Node item) {
         Element elem = (Element) item;
         String ruleSet = String.valueOf(elem.getAttribute("ruleset"));
         return ruleSet;
     }
-    
+
     private String getPackageNameValue(final Node item) {
         Element elem = (Element) item;
         String packageName = String.valueOf(elem.getAttribute("package"));
         return packageName;
     }
-    
+
     private String getClassName(final Node item) {
         Element elem = (Element) item;
         String className = String.valueOf(elem.getAttribute("class"));
         return className;
     }
-    
+
     private String getInfoUrlValue(final Node item) {
         Element elem = (Element) item;
         String infoUrl = String.valueOf(elem.getAttribute("externalInfoUrl"));
         return infoUrl;
     }
-    
+
     private String getPriorityValue(final Node item) {
         Element elem = (Element) item;
         String priority = String.valueOf(elem.getAttribute("priority"));
         return priority;
     }
-    
-    
+
+
 
     private String getFileName(final Node sourceFile) {
         Node packageNode = sourceFile.getParentNode();

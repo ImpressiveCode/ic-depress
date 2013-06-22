@@ -15,17 +15,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.test.metric.checkstyle;
+package org.impressivecode.depress.metric.checkstyle;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.impressivecode.depress.metric.checkstyle.CheckStyleEntry;
 import org.junit.Test;
 
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ï¿½ukasz Waga
  * @author Monika Pruszkowska
  * 
  */
@@ -60,6 +59,6 @@ public class CheckStyleEntryTest {
         assertEquals(expected, entry.getSourcePlace());
 
     }
-    
+
 
 }
