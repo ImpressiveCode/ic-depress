@@ -18,6 +18,7 @@
 package org.impressivecode.depress.data.anonymisation;
 
 import org.knime.core.data.DataColumnSpec;
+import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.def.StringCell;
 import org.knime.core.node.util.filter.InputFilter;
 import org.knime.core.node.util.filter.column.DataColumnSpecFilterConfiguration;
@@ -42,7 +43,11 @@ final class ConfigurationFactory {
 
         @Override
         public final boolean include(final DataColumnSpec cspec) {
-            return cspec.getType().equals(StringCell.TYPE);
+            return
+                    cspec.getType().equals(StringCell.TYPE)
+                    ||
+                    cspec.getType().isCollectionType()
+                    && cspec.getType().getCollectionElementType().equals(StringCell.TYPE);
         }
 
     }

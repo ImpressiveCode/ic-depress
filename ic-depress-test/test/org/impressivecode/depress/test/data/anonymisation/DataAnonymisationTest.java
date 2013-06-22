@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package org.impressivecode.depress.test.data.anonymisation;
 
+import java.util.ArrayList;
+
 import org.impressivecode.depress.data.anonymisation.ColumnCryptoTransformer;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +27,8 @@ import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.collection.CollectionCellFactory;
+import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.StringCell;
 import org.knime.core.data.RowKey;
@@ -73,57 +77,18 @@ public class DataAnonymisationTest {
     @Before
     public void setUp() throws Exception {
     }
-
-    @Test(expected = NullPointerException.class)
-    public void paramethersShouldThrowNullPointerExceprion1() throws Exception {
-        new ColumnCryptoTransformer(null, null) {
-            @Override
-            protected DataCell transformCell(DataCell dataCell) {
-                return null;
-            }
-        };
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void paramethersShouldThrowNullPointerExceprion2() throws Exception {
-        DataTableSpec spec = new DataTableSpec(new DataColumnSpecCreator("string cell", StringCell.TYPE).createSpec());
-
-        new ColumnCryptoTransformer(spec, null) {
-            @Override
-            protected DataCell transformCell(DataCell dataCell) {
-                return null;
-            }
-        };
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void paramethersShouldThrowNullPointerExceprion3() throws Exception {
-        String[] transforms = {};
-        new ColumnCryptoTransformer(null, transforms) {
-            @Override
-            protected DataCell transformCell(DataCell dataCell) {
-                return null;
-            }
-        };
-    }
-    
-    @Test
-    public void paramethersShouldSucceed() {
-        String[] transforms = {};
-        DataTableSpec spec = new DataTableSpec(new DataColumnSpecCreator("string cell", StringCell.TYPE).createSpec());
-
-        new ColumnCryptoTransformer(spec, transforms) {
-            @Override
-            protected DataCell transformCell(DataCell dataCell) {
-                return null;
-            }
-        };
-        
-        assertTrue(true);
-    }
     
     @Test
     public void shouldEncryptText() throws Exception {
+        ArrayList<StringCell> alist = new ArrayList<StringCell>();
+        StringCell scell = new StringCell("asd");
+        scell.getType().isCollectionType()
+        System.out.println(scell.getType().getCollectionElementType());
+        alist.add(scell);
+        ListCell list = CollectionCellFactory.createListCell(alist);
+        System.out.println(list.getType());
+        System.out.println(list.getType().getCollectionElementType().equals(StringCell.TYPE));
+        
      // given
         ExecutionContext exec = mock(ExecutionContext.class);
         BufferedDataContainer container = mock(BufferedDataContainer.class);

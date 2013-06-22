@@ -26,6 +26,7 @@ import java.util.Iterator;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.DataType;
 import org.knime.core.data.collection.CollectionCellFactory;
 import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.collection.SetCell;
@@ -55,12 +56,15 @@ public class DecryptionNodeModel extends CryptoNodeModel {
 
             @Override
             protected DataCell transformCell(final DataCell dataCell) {
-                DataCell transformedCell = null;
                 Preconditions.checkArgument(
-                    dataCell.getType().equals(StringCell.TYPE)
-                    || dataCell instanceof SetCell
-                    || dataCell instanceof ListCell,
-                    "Cell type " + dataCell.getType().toString() + " is not supported");
+                        dataCell.getType().equals(StringCell.TYPE)
+                        ||
+                        dataCell.getType().isCollectionType()
+                        && dataCell.getType().getCollectionElementType().equals(StringCell.TYPE),
+                    "Cell type " + dataCell.getType().toString() + " is not supported"
+                );
+                
+                DataCell transformedCell = null;
                 
                 if(dataCell.getType().equals(StringCell.TYPE)){
                     transformedCell = makeTransformation((StringCell)dataCell);
