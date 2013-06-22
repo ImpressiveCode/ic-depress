@@ -94,7 +94,8 @@ public class BugzillaEntriesParser {
         data.setDescription(getDescription(elem));
         data.setFixVersion(getFixVersion(elem));
         data.setPriority(getPriority(elem));
-        data.setResolved(getResolved(elem));
+        data.setResolved(getResolved(elem)); // no proper history in offline version
+        data.setUpdated(getResolved(elem));// no proper history in offline version
         data.setStatus(getStatus(elem));
         data.setSummary(getSummary(elem));
         data.setType(getType(elem));

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./svn.png" type="Source">
+    <name>SVN (Online) SCM</name>
+    
+    <shortDescription>
+       Online SVN SCM, ImpressiveCode Depress
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+         	This node can be used to load SVN log directly from git repository (online version).
+         		
+         	<p>
+                To use this plugin You should only give Svn's repository address in configuration windows.
+            </p>
+            
+            <p>
+                This node analyzes information about every class in every
+                commit from the given svn's repository and
+                returns a table with the following data: <br />
+                <ul>
+                    <li>name of class</li>
+                    <li>marker</li>
+                    <li>author of change</li>
+                    <li>action</li>
+                    <li>complete message from commit</li>
+                    <li>original path of class</li>
+                    <li>date of change</li>
+                    <li>Unique ID of record</li>
+                </ul>
+                Action could consists of following values:
+                 <ul>   <li>M - modification</li>
+                        <li>A - added</li>
+                        <li>D - deleted</li>
+                    </ul>
+            </p>
+        </intro>
+        
+        
+        <option name="Repository address">Address of remote SVN's repository which You want to analyze</option>
+        <option name="Issue marker">Marker for extraction name of class</option>
+        <option name="Package">Prefix of package</option>
+    </fullDescription>
+    
+    <ports>
+        <outPort index="0" name="Change history data">Table with data read from SVN repository</outPort>
+    </ports>    
+</knimeNode>

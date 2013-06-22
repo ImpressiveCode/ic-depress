@@ -24,6 +24,7 @@ import com.google.common.base.Strings;
  * @author Marek Majchrzak, ImpressiveCode
  */
 public class SVNParserOptions {
+	
     private Pattern markerRegexp;
     private String packageString;
 

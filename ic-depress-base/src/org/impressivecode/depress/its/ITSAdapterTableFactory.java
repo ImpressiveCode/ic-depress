@@ -64,8 +64,8 @@ public class ITSAdapterTableFactory {
         DataColumnSpec[] allColSpecs = { 
                 new DataColumnSpecCreator(ISSUE_ID, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(CREATION_DATE, DateAndTimeCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(RESOLVED_DATE, DateAndTimeCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(UPDATED_DATE, DateAndTimeCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(RESOLVED_DATE, DateAndTimeCell.TYPE).createSpec(), //should be a list or new column wit all updates
+                new DataColumnSpecCreator(UPDATED_DATE, DateAndTimeCell.TYPE).createSpec(), //should be a list or new column wit all updates
                 new DataColumnSpecCreator(STATUS, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(TYPE, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(RESOLUTION, StringCell.TYPE).createSpec(),

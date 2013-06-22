@@ -31,6 +31,7 @@ import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.collection.SetCell;
 import org.knime.core.data.date.DateAndTimeCell;
 import org.knime.core.data.def.DefaultRow;
+import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 
 /**
@@ -40,6 +41,9 @@ import org.knime.core.data.def.StringCell;
  */
 public class SCMAdapterTableFactory {
     public static final String MARKER = "Marker";
+    public static final String EXT_MARKER = "Marker(+)";
+    public static final String AM_MARKER = "Marker(a)";
+
     public static final String AUTHOR_COLNAME = "Author";
     public static final String RESOURCE_NAME = "Class";
     public final static String ACTION_COLNAME = "Action";
@@ -48,11 +52,26 @@ public class SCMAdapterTableFactory {
     public final static String DATE_COLNAME = "Date";
     public final static String UID_COLNAME = "CommitID";
 
+    public final static String EXT_CONFIDENCE_COLNAME = "Confidence(+)";
+    public final static String AM_CONFIDENCE_COLNAME = "Confidence(a)";
+
     public static final DataColumnSpec MARKER_COLSPEC = new DataColumnSpecCreator(MARKER,
             SetCell.getCollectionType(StringCell.TYPE)).createSpec();
 
-    public static final DataColumnSpec MESSAGE_COLSPEC = new DataColumnSpecCreator(MESSAGE_COLNAME,
+    public static final DataColumnSpec EXT_MARKER_COLSPEC = new DataColumnSpecCreator(EXT_MARKER,
             SetCell.getCollectionType(StringCell.TYPE)).createSpec();
+
+    public static final DataColumnSpec EXT_CONFIDENCE_COLSPEC = new DataColumnSpecCreator(EXT_CONFIDENCE_COLNAME,
+            IntCell.TYPE).createSpec();
+
+    public static final DataColumnSpec AM_MARKER_COLSPEC = new DataColumnSpecCreator(AM_MARKER,
+            StringCell.TYPE).createSpec();
+
+    public static final DataColumnSpec AM_CONFIDENCE_COLSPEC = new DataColumnSpecCreator(AM_CONFIDENCE_COLNAME,
+            IntCell.TYPE).createSpec();
+
+    public static final DataColumnSpec MESSAGE_COLSPEC = new DataColumnSpecCreator(MESSAGE_COLNAME, StringCell.TYPE)
+    .createSpec();
 
     public static DataTableSpec[] createTableSpec() {
         return new DataTableSpec[] { SCMAdapterTableFactory.createDataColumnSpec() };
@@ -62,7 +81,7 @@ public class SCMAdapterTableFactory {
         DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(MARKER, SetCell.getCollectionType(StringCell.TYPE)).createSpec(),
                 new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(), 
                 MESSAGE_COLSPEC,
                 new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(DATE_COLNAME, DateAndTimeCell.TYPE).createSpec(),
@@ -72,15 +91,10 @@ public class SCMAdapterTableFactory {
 
     public static DataRow createTableRow(final String rowId, final SCMDataType scmData) {
         assertData(scmData);
-        DataCell[] cells = { 
-                stringCell(scmData.getResourceName()), 
-                stringSetCell(scmData.getMarkers()),
-                stringCell(scmData.getAuthor()), 
-                stringCell(scmData.getOperation()),
-                stringOrMissingCell(scmData.getMessage()), 
-                stringCell(scmData.getPath()),
-                dateTimeCell(scmData.getCommitDate()), 
-                stringCell(scmData.getCommitID()), };
+        DataCell[] cells = { stringCell(scmData.getResourceName()), stringSetCell(scmData.getMarkers()),
+                stringCell(scmData.getAuthor()), stringCell(scmData.getOperation()),
+                stringOrMissingCell(scmData.getMessage()), stringCell(scmData.getPath()),
+                dateTimeCell(scmData.getCommitDate()), stringCell(scmData.getCommitID()), };
         DataRow row = new DefaultRow(rowId, cells);
         return row;
     }

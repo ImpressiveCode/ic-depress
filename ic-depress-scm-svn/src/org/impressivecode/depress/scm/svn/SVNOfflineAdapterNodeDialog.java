@@ -34,13 +34,15 @@ public class SVNOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
     protected SVNOfflineAdapterNodeDialog() {
         super();
 
-        addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_FILENAME,
-                SVNOfflineAdapterNodeModel.FILENAME_DEFAULT), SVNOfflineAdapterNodeModel.FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
+        addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(
+                SVNOfflineAdapterNodeModel.CFG_FILENAME, SVNOfflineAdapterNodeModel.FILENAME_DEFAULT),
+                SVNOfflineAdapterNodeModel.FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
 
         addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_REGEXP,
                 SVNOfflineAdapterNodeModel.REGEXP_DEFAULT), "Issue marker: "));
 
-        addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, 
-                SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT), "Package: "));
+        addDialogComponent(new DialogComponentString(new SettingsModelString(
+                SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT),
+                "Package: "));
     }
 }
