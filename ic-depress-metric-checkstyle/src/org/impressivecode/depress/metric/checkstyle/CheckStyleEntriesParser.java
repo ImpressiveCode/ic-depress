@@ -26,6 +26,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.impressivecode.depress.common.TransformationUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -38,7 +39,7 @@ import com.google.common.collect.Lists;
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ï¿½ukasz Waga
  * @author Monika Pruszkowska
  * 
  */
@@ -50,21 +51,34 @@ public class CheckStyleEntriesParser {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(path);
         NodeList nList = getSourceFileNodes(doc);
+
         int size = nList.getLength();
         List<CheckStyleEntry> checkstyleEntries = Lists.newLinkedList();
         for (int i = 0; i < size; i++) {
             Node item = nList.item(i);
-            NodeList cNodes = item.getChildNodes();
-            for (int j = 0; j < cNodes.getLength(); j++) {
-                Node item2 = cNodes.item(j);
-                if (!isError(item2)) {
-                    continue;
-                }
-	            CheckStyleEntry entry = parse(item2);
-	            checkstyleEntries.add(entry);
+            if(!isJavaFile(item)){
+                continue;
             }
+            NodeList cNodes = item.getChildNodes();
+            processEntries(checkstyleEntries, cNodes);
         }
         return checkstyleEntries;
+    }
+
+    private void processEntries(final List<CheckStyleEntry> checkstyleEntries, final NodeList cNodes) {
+        for (int j = 0; j < cNodes.getLength(); j++) {
+            Node item2 = cNodes.item(j);
+            if (!isError(item2)) {
+                continue;
+            }
+            CheckStyleEntry entry = parse(item2);
+            checkstyleEntries.add(entry);
+        }
+    }
+
+    private boolean isJavaFile(final Node item) {
+        String fileName = ((Element)item).getAttribute("name");
+        return TransformationUtils.isJavaFile(fileName);
     }
 
     private NodeList getSourceFileNodes(final Document doc) {
@@ -80,7 +94,7 @@ public class CheckStyleEntriesParser {
         checkstyle.setSeverityType(getSeverityTypeValue(node));
         checkstyle.setMessageText(getMessageTextValue(node));
         checkstyle.setSourcePlace(getSourcePlaceValue(node));
-        
+
         return checkstyle;
     }
 
@@ -93,25 +107,25 @@ public class CheckStyleEntriesParser {
         String line = String.valueOf(elem.getAttribute("line"));
         return line;
     }
-    
+
     private String getColumnNumberValue(final Node item) {
         Element elem = (Element) item;
         String column = String.valueOf(elem.getAttribute("column"));
         return column;
     }
-    
+
     private String getSeverityTypeValue(final Node item) {
         Element elem = (Element) item;
         String severity = String.valueOf(elem.getAttribute("severity"));
         return severity;
     }
-    
+
     private String getMessageTextValue(final Node item) {
         Element elem = (Element) item;
         String message = String.valueOf(elem.getAttribute("message"));
         return message;
     }
-    
+
     private String getSourcePlaceValue(final Node item) {
         Element elem = (Element) item;
         String source = String.valueOf(elem.getAttribute("source"));
@@ -119,8 +133,8 @@ public class CheckStyleEntriesParser {
     }
 
     private String getFileName(final Node sourceFile) {
-        Node packageNode = sourceFile.getParentNode();
-        String packageName = ((Element) packageNode).getAttribute("name");
-        return packageName;
+        Node fileNode = sourceFile.getParentNode();
+        String fileName = ((Element) fileNode).getAttribute("name");
+        return TransformationUtils.filePath2JavaClass(fileName);
     }
 }

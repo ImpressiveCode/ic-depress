@@ -25,19 +25,19 @@ import org.knime.core.data.def.StringCell;
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ≈Åukasz Waga
  * @author Monika Pruszkowska
  * 
  */
 public class CheckStyleAdapterTableFactory {
 
-    private static final String SOURCE_PLACE = "Source Place";
-    private static final String MESSAGE_TEXT = "Message Text";
-    private static final String SEVERITY_TYPE = "Severity Type";
-    private static final String LINE_NUMBER = "Line Number";
-    private static final String COLUMN_NUMBER = "column Number";
-    private static final String FILE_NAME = "File Name";
-    
+    private static final String SOURCE_PLACE = "SourcePlace";
+    private static final String MESSAGE_TEXT = "MessageText";
+    private static final String SEVERITY_TYPE = "SeverityType";
+    private static final String LINE_NUMBER = "LineNumber";
+    private static final String COLUMN_NUMBER = "ColumnNumber";
+    private static final String CLASS = "Class";
+
 
     private CheckStyleAdapterTableFactory() {
 
@@ -49,7 +49,7 @@ public class CheckStyleAdapterTableFactory {
 
     public static DataTableSpec createDataColumnSpec() {
         DataColumnSpec[] allColSpecs = { 
-        		new DataColumnSpecCreator(FILE_NAME, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(CLASS, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(LINE_NUMBER, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(COLUMN_NUMBER, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(SEVERITY_TYPE, StringCell.TYPE).createSpec(),

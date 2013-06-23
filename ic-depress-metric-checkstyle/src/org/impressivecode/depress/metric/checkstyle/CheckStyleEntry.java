@@ -20,7 +20,7 @@ package org.impressivecode.depress.metric.checkstyle;
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ≈Åukasz Waga
  * @author Monika Pruszkowska
  * 
  */
@@ -36,9 +36,9 @@ public class CheckStyleEntry {
     public void setLineNumber(final String lineNumberValue) {
         this.lineNumber = lineNumberValue;
     }
-    
+
     public void setColumnNumber(final String columnNumberValue) {
-    	this.columnNumber = columnNumberValue;
+        this.columnNumber = columnNumberValue;
     }
 
     public void setMessageText(final String messageTextValue) {
@@ -48,7 +48,7 @@ public class CheckStyleEntry {
     public void setSeverityType(final String severityTypeValue) {
         this.severityType = severityTypeValue;
     }
-    
+
     public void setSourcePlace(final String sourcePlaceValue) {
         this.sourcePlace = sourcePlaceValue;
     }
@@ -60,9 +60,9 @@ public class CheckStyleEntry {
     public String getLineNumber() {
         return lineNumber;
     }
-    
+
     public String getColumnNumber() {
-    	return columnNumber;
+        return columnNumber;
     }
 
     public String getFileName() {

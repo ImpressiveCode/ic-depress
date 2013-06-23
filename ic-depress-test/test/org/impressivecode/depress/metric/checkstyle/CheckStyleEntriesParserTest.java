@@ -41,12 +41,12 @@ public class CheckStyleEntriesParserTest {
     @Test
     public void shouldParseEntries() throws ParserConfigurationException, SAXException, IOException {
         List<CheckStyleEntry> results = parser.parseEntries(getClass().getResource("checkstyle-test.xml").getPath());
-        assertEntry(results.get(5));
-        assertEntry2(results.get(88));
+        assertEntry(results.get(2));
+        assertEntry2(results.get(85));
     }
 
     private void assertEntry(final CheckStyleEntry checkStyleEntry) {
-        assertThat(checkStyleEntry.getFileName()).isEqualTo("com\\virtusa\\gto\\locc\\FileParser.java");
+        assertThat(checkStyleEntry.getFileName()).isEqualTo("com.virtusa.gto.locc.FileParser");
         assertThat(checkStyleEntry.getLineNumber()).isEqualTo("40");
         assertThat(checkStyleEntry.getColumnNumber()).isEqualTo("9");
         assertThat(checkStyleEntry.getSeverityType()).isEqualTo("error");
@@ -56,7 +56,7 @@ public class CheckStyleEntriesParserTest {
     }
 
     private void assertEntry2(final CheckStyleEntry checkStyleEntry) {
-        assertThat(checkStyleEntry.getFileName()).isEqualTo("com\\virtusa\\gto\\locc\\MetricsPrinter.java");
+        assertThat(checkStyleEntry.getFileName()).isEqualTo("com.virtusa.gto.locc.MetricsPrinter");
         assertThat(checkStyleEntry.getLineNumber()).isEqualTo("33");
         assertThat(checkStyleEntry.getColumnNumber()).isEqualTo("5");
         assertThat(checkStyleEntry.getSeverityType()).isEqualTo("error");
