@@ -46,15 +46,13 @@ public class PMDEntriesParserTest {
     }
 
     private void assertEntry(final PMDEntry pMDEntry) {
-        assertThat(pMDEntry.getFileName()).isEqualTo("Yang.java");
+        assertThat(pMDEntry.getClassName()).isEqualTo("org.impressivecode.depress.metric.pmd.Yang");
         assertThat(pMDEntry.getBeginLine()).isEqualTo("2");
         assertThat(pMDEntry.getEndLine()).isEqualTo("2");
         assertThat(pMDEntry.getBeginColumn()).isEqualTo("0");
         assertThat(pMDEntry.getEndColumn()).isEqualTo("0");
         assertThat(pMDEntry.getRule()).isEqualTo("MethodArgumentCouldBeFinal");
         assertThat(pMDEntry.getRuleSet()).isEqualTo("Optimization Rules");
-        assertThat(pMDEntry.getPackageName()).isEqualTo("(default)");
-        assertThat(pMDEntry.getClassName()).isEqualTo("Yang");
         assertThat(pMDEntry.getInfoUrl()).isEqualTo(
                 "http://pmd.sourceforge.net/rules/optimizations.html#MethodArgumentCouldBeFinal");
         assertThat(pMDEntry.getPriority()).isEqualTo("3");
@@ -62,15 +60,13 @@ public class PMDEntriesParserTest {
     }
 
     private void assertEntry2(final PMDEntry pMDEntry) {
-        assertThat(pMDEntry.getFileName()).isEqualTo("Ying.java");
+        assertThat(pMDEntry.getClassName()).isEqualTo("(default).Ying");
         assertThat(pMDEntry.getBeginLine()).isEqualTo("3");
         assertThat(pMDEntry.getEndLine()).isEqualTo("3");
         assertThat(pMDEntry.getBeginColumn()).isEqualTo("0");
         assertThat(pMDEntry.getEndColumn()).isEqualTo("0");
         assertThat(pMDEntry.getRule()).isEqualTo("UnusedPrivateField");
         assertThat(pMDEntry.getRuleSet()).isEqualTo("Unused Code Rules");
-        assertThat(pMDEntry.getPackageName()).isEqualTo("(default)");
-        assertThat(pMDEntry.getClassName()).isEqualTo("Ying");
         assertThat(pMDEntry.getInfoUrl()).isEqualTo(
                 "http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField");
         assertThat(pMDEntry.getPriority()).isEqualTo("3");

@@ -52,10 +52,10 @@ public class PMDTransformerTest {
         // given
         PMDAdapterTransformer transformer = new PMDAdapterTransformer(createDataColumnSpec());
         List<PMDEntry> entries = Lists.newArrayList(
-                createPMDEntry("file1.name", "10", "4", "6", "6", "aRule", "aRuleSet", "(customPackage)",
-                        "customClass", "nonexistent.url", "8", "this is an example message1"),
-                        createPMDEntry("file2.name", "12", "6", "8", "8", "aRule2", "aRuleSet2", "(customPackage2)",
-                                "customClass2", "nonexistent2.url", "10", "this is an example message2"));
+                createPMDEntry("10", "4", "6", "6", "aRule", "aRuleSet", "customClass",
+                        "nonexistent.url", "8", "this is an example message1"),
+                        createPMDEntry("12", "6", "8", "8", "aRule2", "aRuleSet2", "customClass2",
+                                "nonexistent2.url", "10", "this is an example message2"));
         ExecutionContext exec = mock(ExecutionContext.class);
         BufferedDataContainer container = mock(BufferedDataContainer.class);
         when(exec.createDataContainer(Mockito.any(DataTableSpec.class))).thenReturn(container);
@@ -71,8 +71,8 @@ public class PMDTransformerTest {
     public void shouldTransformCheckStyleEntry() throws CanceledExecutionException {
         // given
         PMDAdapterTransformer transformer = new PMDAdapterTransformer(createDataColumnSpec());
-        List<PMDEntry> entries = Lists.newArrayList(createPMDEntry("Yang.java", "2", "2", "0", "0",
-                "MethodArgumentCouldBeFinal", "Optimization Rules", "(default)", "Yang",
+        List<PMDEntry> entries = Lists.newArrayList(createPMDEntry("2", "2", "0", "0",
+                "MethodArgumentCouldBeFinal", "Optimization Rules", "Yang",
                 "http://pmd.sourceforge.net/rules/optimizations.html#MethodArgumentCouldBeFinal", "3",
                 "Parameter 'str' is not assigned and could be declared final"));
         ExecutionContext exec = mock(ExecutionContext.class);
@@ -86,38 +86,33 @@ public class PMDTransformerTest {
         ArgumentCaptor<DataRow> captor = ArgumentCaptor.forClass(DataRow.class);
         verify(container).addRowToTable(captor.capture());
         DataRow value = captor.getValue();
-        assertThat(((StringCell) value.getCell(0)).getStringValue()).isEqualTo("Yang.java");
-        assertThat(((StringCell) value.getCell(1)).getStringValue()).isEqualTo("2");
+        assertThat(((StringCell) value.getCell(0)).getStringValue()).isEqualTo("Yang");
+        assertThat(((StringCell) value.getCell(1)).getStringValue()).isEqualTo("3");
         assertThat(((StringCell) value.getCell(2)).getStringValue()).isEqualTo("2");
-        assertThat(((StringCell) value.getCell(3)).getStringValue()).isEqualTo("0");
+        assertThat(((StringCell) value.getCell(3)).getStringValue()).isEqualTo("2");
         assertThat(((StringCell) value.getCell(4)).getStringValue()).isEqualTo("0");
-        assertThat(((StringCell) value.getCell(5)).getStringValue()).isEqualTo("sample_rule");
-        assertThat(((StringCell) value.getCell(6)).getStringValue()).isEqualTo("sample_ruleSet");
-        assertThat(((StringCell) value.getCell(7)).getStringValue()).isEqualTo("(custom)");
-        assertThat(((StringCell) value.getCell(8)).getStringValue()).isEqualTo("aClass");
-        assertThat(((StringCell) value.getCell(9)).getStringValue()).isEqualTo("a.url.test");
-        assertThat(((StringCell) value.getCell(10)).getStringValue()).isEqualTo("9");
-        assertThat(((StringCell) value.getCell(11)).getStringValue()).isEqualTo("this is an example message");
+        assertThat(((StringCell) value.getCell(5)).getStringValue()).isEqualTo("0");
+        assertThat(((StringCell) value.getCell(6)).getStringValue()).isEqualTo("MethodArgumentCouldBeFinal");
+        assertThat(((StringCell) value.getCell(7)).getStringValue()).isEqualTo("Optimization Rules");
+        assertThat(((StringCell) value.getCell(8)).getStringValue()).isEqualTo("http://pmd.sourceforge.net/rules/optimizations.html#MethodArgumentCouldBeFinal");
+        assertThat(((StringCell) value.getCell(9)).getStringValue()).isEqualTo("Parameter 'str' is not assigned and could be declared final");
 
     }
 
-    private PMDEntry createPMDEntry(final String fileName, final String d, final String e, final String f,
-            final String g, final String h, final String i, final String j, final String k, final String l,
-            final String m, final String n) {
+    private PMDEntry createPMDEntry(final String beginLine, final String endLine,
+            final String beginColumn, final String endColumn, final String rule, final String ruleSet,
+            final String className, final String infoUrl, final String priority, final String messageText) {
         PMDEntry entry = new PMDEntry();
-
-        entry.setFileName(fileName);
-        entry.setBeginLine(d);
-        entry.setEndLine(e);
-        entry.setBeginColumn(f);
-        entry.setEndColumn(g);
-        entry.setRule(h);
-        entry.setRuleSet(i);
-        entry.setPackageName(j);
-        entry.setClassName(k);
-        entry.setInfoUrl(l);
-        entry.setPriority(m);
-        entry.setMessageText(n);
+        entry.setBeginLine(beginLine);
+        entry.setEndLine(endLine);
+        entry.setBeginColumn(beginColumn);
+        entry.setEndColumn(endColumn);
+        entry.setRule(rule);
+        entry.setRuleSet(ruleSet);
+        entry.setClassName(className);
+        entry.setInfoUrl(infoUrl);
+        entry.setPriority(priority);
+        entry.setMessageText(messageText);
 
         return entry;
     }

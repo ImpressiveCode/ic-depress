@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pmd version="4.2.5" timestamp="2013-05-26T12:48:27.555">
 <file name="Yang.java">
-<violation beginline="2" endline="2" begincolumn="0" endcolumn="0" rule="MethodArgumentCouldBeFinal" ruleset="Optimization Rules" package="(default)" class="Yang" externalInfoUrl="http://pmd.sourceforge.net/rules/optimizations.html#MethodArgumentCouldBeFinal" priority="3">
+<violation beginline="2" endline="2" begincolumn="0" endcolumn="0" rule="MethodArgumentCouldBeFinal" ruleset="Optimization Rules" package="org.impressivecode.depress.metric.pmd" class="Yang" externalInfoUrl="http://pmd.sourceforge.net/rules/optimizations.html#MethodArgumentCouldBeFinal" priority="3">
 Parameter 'str' is not assigned and could be declared final
 </violation>
 <violation beginline="8" endline="8" begincolumn="0" endcolumn="0" rule="SystemPrintln" ruleset="Java Logging Rules" package="(default)" class="Yang" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#SystemPrintln" priority="2">

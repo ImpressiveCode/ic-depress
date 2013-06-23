@@ -36,7 +36,7 @@ import org.knime.core.node.NodeLogger.LEVEL;
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ≈Åukasz Waga
  * @author Monika Pruszkowska
  * 
  */
@@ -47,7 +47,7 @@ public class PMDAdapterTransformer {
     private final DataTableSpec tableSpec;
 
     private int i=0;
-    
+
     public PMDAdapterTransformer(final DataTableSpec tableSpec) {
         checkNotNull(tableSpec, "table specifikation can not be null.");
         this.tableSpec = tableSpec;
@@ -60,7 +60,7 @@ public class PMDAdapterTransformer {
             progress(exec);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Transforming metric, class: " + entry.getFileName());
+                LOGGER.debug("Transforming metric, class: " + entry.getClassName());
             }
 
             if (LOGGER.isEnabledFor(LEVEL.ALL)) {
@@ -85,17 +85,15 @@ public class PMDAdapterTransformer {
 
     private DataCell[] getPMDCells(final PMDEntry value) {
         DataCell[] cells = { 
-        		Cells.stringOrMissingCell(value.getFileName()),
+                Cells.stringOrMissingCell(value.getClassName()),
+                Cells.stringOrMissingCell(value.getPriority()),
                 Cells.stringOrMissingCell(value.getBeginLine()),
                 Cells.stringOrMissingCell(value.getEndLine()),
                 Cells.stringOrMissingCell(value.getBeginColumn()),
                 Cells.stringOrMissingCell(value.getEndColumn()),
                 Cells.stringOrMissingCell(value.getRule()),
                 Cells.stringOrMissingCell(value.getRuleSet()),
-                Cells.stringOrMissingCell(value.getPackageName()),
-                Cells.stringOrMissingCell(value.getClassName()),
                 Cells.stringOrMissingCell(value.getInfoUrl()),
-                Cells.stringOrMissingCell(value.getPriority()),
                 Cells.stringOrMissingCell(value.getMessageText())
         };
         return cells;
