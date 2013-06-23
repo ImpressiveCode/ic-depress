@@ -36,7 +36,7 @@ import org.knime.core.node.NodeLogger.LEVEL;
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ≈Åukasz Waga
  * @author Monika Pruszkowska
  * 
  */
@@ -47,7 +47,7 @@ public class CheckStyleAdapterTransformer {
     private final DataTableSpec tableSpec;
 
     private int i=0;
-    
+
     public CheckStyleAdapterTransformer(final DataTableSpec tableSpec) {
         checkNotNull(tableSpec, "table specifikation can not be null.");
         this.tableSpec = tableSpec;
@@ -84,7 +84,7 @@ public class CheckStyleAdapterTransformer {
 
     private DataCell[] getCheckSyleCells(final CheckStyleEntry value) {
         DataCell[] cells = { 
-        		Cells.stringOrMissingCell(value.getFileName()),
+                Cells.stringOrMissingCell(value.getFileName()),
                 Cells.stringOrMissingCell(value.getLineNumber()),
                 Cells.stringOrMissingCell(value.getColumnNumber()),
                 Cells.stringOrMissingCell(value.getSeverityType()),

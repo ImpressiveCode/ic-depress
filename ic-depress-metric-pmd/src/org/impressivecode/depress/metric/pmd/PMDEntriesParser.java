@@ -73,8 +73,7 @@ public class PMDEntriesParser {
 
     private PMDEntry parse(final Node node) {
         PMDEntry pmd = new PMDEntry();
-        pmd.setFileName(getFileName(node));
-
+        pmd.setClassName(getClassName(node));
         pmd.setBeginLine(getBeginLineValue(node));
         pmd.setEndLine(getEndLineValue(node));
         pmd.setBeginColumn(getBeginColumnValue(node));
@@ -82,8 +81,6 @@ public class PMDEntriesParser {
         pmd.setRule(getRuleValue(node));
         pmd.setMessageText(getMessageTextValue(node));
         pmd.setRuleSet(getRuleSetValue(node));
-        pmd.setPackageName(getPackageNameValue(node));
-        pmd.setClassName(getClassName(node));
         pmd.setInfoUrl(getInfoUrlValue(node));
         pmd.setPriority(getPriorityValue(node));
 
@@ -146,7 +143,7 @@ public class PMDEntriesParser {
     private String getClassName(final Node item) {
         Element elem = (Element) item;
         String className = String.valueOf(elem.getAttribute("class"));
-        return className;
+        return getPackageNameValue(item) + "." + className;
     }
 
     private String getInfoUrlValue(final Node item) {
@@ -159,13 +156,5 @@ public class PMDEntriesParser {
         Element elem = (Element) item;
         String priority = String.valueOf(elem.getAttribute("priority"));
         return priority;
-    }
-
-
-
-    private String getFileName(final Node sourceFile) {
-        Node packageNode = sourceFile.getParentNode();
-        String packageName = ((Element) packageNode).getAttribute("name");
-        return packageName;
     }
 }

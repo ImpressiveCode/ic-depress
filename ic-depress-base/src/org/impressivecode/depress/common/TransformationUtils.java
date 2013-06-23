@@ -1,5 +1,3 @@
-package org.impressivecode.depress.metric.checkstyle;
-
 /*
  ImpressiveCode Depress Framework
  Copyright (C) 2013  ImpressiveCode contributors
@@ -17,8 +15,23 @@ package org.impressivecode.depress.metric.checkstyle;
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package org.impressivecode.depress.common;
 
-//TODO: REMOVE ME, I'm just placeholder class
-public class PluginApp {
+import com.google.common.base.Preconditions;
 
+/**
+ * 
+ * @author Marek Majchrzak, ImpressiveCode
+ * 
+ */
+public class TransformationUtils {
+    public static boolean isJavaFile(final String fileName) {
+        Preconditions.checkNotNull(fileName, "FileName has to be set");
+        return fileName.endsWith(".java");
+    }
+
+    public static String filePath2JavaClass(final String fileName) {
+        Preconditions.checkNotNull(fileName, "FileName has to be set");
+        return fileName.replaceAll("\\\\", ".").replaceAll("/", ".").replace(".java", "");
+    }
 }

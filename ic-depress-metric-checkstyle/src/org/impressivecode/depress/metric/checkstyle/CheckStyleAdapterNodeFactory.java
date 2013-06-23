@@ -24,7 +24,7 @@ import org.knime.core.node.NodeView;
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ≈Åukasz Waga
  * @author Monika Pruszkowska
  * 
  */

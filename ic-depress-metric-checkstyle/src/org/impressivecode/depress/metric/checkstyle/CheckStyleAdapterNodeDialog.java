@@ -25,7 +25,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ≈Åukasz Waga
  * @author Monika Pruszkowska
  * 
  */

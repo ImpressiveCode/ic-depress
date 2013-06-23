@@ -29,6 +29,6 @@
     </fullDescription>
 
     <ports>
-        <outPort index="0" name="Coverage Table">Datatable just read from the PMD file.</outPort>
+        <outPort index="0" name="PMD Table">Datatable just read from the PMD file.</outPort>
     </ports>
 </knimeNode>
