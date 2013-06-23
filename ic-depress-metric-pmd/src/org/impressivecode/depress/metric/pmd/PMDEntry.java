@@ -20,7 +20,7 @@ package org.impressivecode.depress.metric.pmd;
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ï¿½ukasz Waga
  * @author Monika Pruszkowska
  * 
  */
@@ -30,11 +30,9 @@ public class PMDEntry {
     private String endLine;
     private String beginColumn;
     private String endColumn;
-    private String fileName;
     private String rule;
     private String messageText;
     private String ruleSet;
-    private String packageName;
     private String className;
     private String infoUrl;
     private String priority;
@@ -42,18 +40,18 @@ public class PMDEntry {
     public void setBeginLine(final String beginLineValue) {
         this.beginLine = beginLineValue;
     }
-    
+
     public void setEndLine(final String endLineValue) {
         this.endLine = endLineValue;
     }
-    
+
     public void setBeginColumn(final String beginColumnValue) {
-    	this.beginColumn = beginColumnValue;
+        this.beginColumn = beginColumnValue;
     }
-    
-    public void setEndColumn(String endColumnValue) {
-    	this.endColumn = endColumnValue;
-	}
+
+    public void setEndColumn(final String endColumnValue) {
+        this.endColumn = endColumnValue;
+    }
 
     public void setMessageText(final String messageTextValue) {
         this.messageText = messageTextValue;
@@ -62,27 +60,19 @@ public class PMDEntry {
     public void setRule(final String ruleValue) {
         this.rule = ruleValue;
     }
-    
+
     public void setRuleSet(final String ruleSetValue) {
         this.ruleSet = ruleSetValue;
     }
 
-    public void setFileName(final String fileName) {
-        this.fileName = fileName;
-    }
-    
-    public void setPackageName(final String packageNameValue) {
-        this.packageName = packageNameValue;
-    }
-    
     public void setClassName(final String classNameValue) {
-    	this.className = classNameValue;
+        this.className = classNameValue;
     }
-    
+
     public void setInfoUrl(final String infoUrlValue) {
         this.infoUrl = infoUrlValue;
     }
-    
+
     public void setPriority(final String priorityValue) {
         this.priority = priorityValue;
     }
@@ -90,21 +80,17 @@ public class PMDEntry {
     public String getBeginLine() {
         return beginLine;
     }
-    
+
     public String getEndLine() {
         return endLine;
     }
-    
+
     public String getBeginColumn() {
-    	return beginColumn;
-    }
-    
-    public String getEndColumn() {
-    	return endColumn;
+        return beginColumn;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getEndColumn() {
+        return endColumn;
     }
 
     public String getRule() {
@@ -118,32 +104,25 @@ public class PMDEntry {
     public String getRuleSet() {
         return ruleSet;
     }
-    
-    public String getPackageName() {
-        return packageName;
-    }
-    
+
     public String getClassName() {
-		return className;
-	}
-    
+        return className;
+    }
+
     public String getInfoUrl() {
         return infoUrl;
     }
-    
+
     public String getPriority() {
         return priority;
     }
 
-
     @Override
     public String toString() {
         return String
-                .format("PMDEntry [beginLine=%s, endLine=%s, fileName=%s, rule=%s, messageText=%s, ruleSet=%s, beginColumn=%s, endColumn=%s, packageName=%s, infoUrl=%s, priority=%s]",
-                        beginLine, endLine, fileName, rule, messageText, ruleSet, beginColumn, endColumn, packageName, infoUrl, priority);
+                .format("PMDEntry [beginLine=%s, endLine=%s, rule=%s, messageText=%s, ruleSet=%s, beginColumn=%s, endColumn=%s, infoUrl=%s, priority=%s]",
+                        beginLine, endLine, rule, messageText, ruleSet, beginColumn, endColumn, infoUrl,
+                        priority);
     }
 
-	
-
-	
 }

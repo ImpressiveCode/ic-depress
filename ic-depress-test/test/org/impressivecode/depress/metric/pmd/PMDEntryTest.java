@@ -34,11 +34,7 @@ public class PMDEntryTest {
     public void shouldReturnSetValue() {
         PMDEntry entry = new PMDEntry();
 
-        String expected = "sample.file.name.here";
-        entry.setFileName(expected);
-        assertEquals(expected, entry.getFileName());
-
-        expected = "2";
+        String expected = "2";
         entry.setBeginLine(expected);
         assertEquals(expected, entry.getBeginLine());
 
@@ -62,9 +58,6 @@ public class PMDEntryTest {
         entry.setRuleSet(expected);
         assertEquals(expected, entry.getRuleSet());
 
-        expected = "package.na.me";
-        entry.setPackageName(expected);
-        assertEquals(expected, entry.getPackageName());
 
         expected = "package.name.then.ClassName$InternalClassName";
         entry.setClassName(expected);
