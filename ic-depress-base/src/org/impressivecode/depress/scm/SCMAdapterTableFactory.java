@@ -28,6 +28,7 @@ import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.collection.SetCell;
 import org.knime.core.data.date.DateAndTimeCell;
 import org.knime.core.data.def.DefaultRow;
@@ -46,7 +47,8 @@ public class SCMAdapterTableFactory {
 
     public static final String AUTHOR_COLNAME = "Author";
     public static final String RESOURCE_NAME = "Class";
-    public static final DataColumnSpec RESOURCE_COLSPEC = new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec();
+    public static final DataColumnSpec RESOURCE_COLSPEC = new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE)
+    .createSpec();
     public final static String ACTION_COLNAME = "Action";
     public final static String MESSAGE_COLNAME = "Message";
     public final static String PATH_COLNAME = "Path";
@@ -55,6 +57,9 @@ public class SCMAdapterTableFactory {
 
     public final static String EXT_CONFIDENCE_COLNAME = "Confidence(+)";
     public final static String AM_CONFIDENCE_COLNAME = "Confidence(a)";
+
+    public static final DataColumnSpec DATE_COLSPEC = new DataColumnSpecCreator(DATE_COLNAME, DateAndTimeCell.TYPE)
+    .createSpec();
 
     public static final DataColumnSpec MARKER_COLSPEC = new DataColumnSpecCreator(MARKER,
             SetCell.getCollectionType(StringCell.TYPE)).createSpec();
@@ -65,11 +70,11 @@ public class SCMAdapterTableFactory {
     public static final DataColumnSpec EXT_CONFIDENCE_COLSPEC = new DataColumnSpecCreator(EXT_CONFIDENCE_COLNAME,
             IntCell.TYPE).createSpec();
 
-    public static final DataColumnSpec AM_MARKER_COLSPEC = new DataColumnSpecCreator(AM_MARKER,
-            StringCell.TYPE).createSpec();
+    public static final DataColumnSpec AM_MARKER_COLSPEC = new DataColumnSpecCreator(AM_MARKER, 
+            ListCell.getCollectionType(StringCell.TYPE)).createSpec();
 
-    public static final DataColumnSpec AM_CONFIDENCE_COLSPEC = new DataColumnSpecCreator(AM_CONFIDENCE_COLNAME,
-            IntCell.TYPE).createSpec();
+    public static final DataColumnSpec AM_CONFIDENCE_COLSPEC = new DataColumnSpecCreator(AM_CONFIDENCE_COLNAME, 
+            ListCell.getCollectionType(IntCell.TYPE)).createSpec();
 
     public static final DataColumnSpec MESSAGE_COLSPEC = new DataColumnSpecCreator(MESSAGE_COLNAME, StringCell.TYPE)
     .createSpec();
@@ -80,13 +85,13 @@ public class SCMAdapterTableFactory {
 
     public static DataTableSpec createDataColumnSpec() {
         DataColumnSpec[] allColSpecs = { 
-                RESOURCE_COLSPEC,
+                RESOURCE_COLSPEC, 
                 MARKER_COLSPEC,
                 new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(), 
                 MESSAGE_COLSPEC,
-                new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(DATE_COLNAME, DateAndTimeCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec(), 
+                DATE_COLSPEC,
                 new DataColumnSpecCreator(UID_COLNAME, StringCell.TYPE).createSpec() };
         return new DataTableSpec(allColSpecs);
     }
