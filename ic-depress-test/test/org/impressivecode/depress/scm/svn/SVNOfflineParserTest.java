@@ -8,8 +8,6 @@ import javax.xml.bind.JAXBException;
 
 import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.SCMOperation;
-import org.impressivecode.depress.scm.svn.SVNOfflineParser;
-import org.impressivecode.depress.scm.svn.SVNParserOptions;
 import org.junit.Test;
 
 import com.google.common.base.Predicate;
@@ -33,7 +31,7 @@ public class SVNOfflineParserTest {
     @Test
     public void shouldParseGivenEntry() throws JAXBException, CloneNotSupportedException {
         // given
-        SVNParserOptions options = SVNParserOptions.options("(MATH-[0-9]+)", "org.");
+        SVNParserOptions options = SVNParserOptions.options("org.");
         SVNOfflineParser parser = new SVNOfflineParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);

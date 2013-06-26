@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.scm.svn;
 
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.scm.svn.SVNParserOptions.options;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,18 +56,12 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
 
     public static String SVN_REPOSITORY_ADDRESS = "depress.scm.svnonline.remoteaddress";
 
-    public static String SVN_REGEXP = "org.";
-
     public static String SVN_PACKAGENAME = "depress.scm.svnonline.package";
 
-    public static String SVN_PACKAGENAME_DEFAULT = "";
-
-    public static String SVN_REGEXP_DEFAULT = "";
+    public static String SVN_PACKAGENAME_DEFAULT = "org.";
 
     private final SettingsModelString svnRepositoryAddress = new SettingsModelString(
             SVNOnlineAdapterNodeModel.SVN_REPOSITORY_ADDRESS, SVNOnlineAdapterNodeModel.SVN_REPOSITORY_DEFAULT);
-    private final SettingsModelString svnRegExp = new SettingsModelString(SVNOnlineAdapterNodeModel.SVN_REGEXP,
-            SVNOnlineAdapterNodeModel.SVN_REGEXP_DEFAULT);
     private final SettingsModelOptionalString svnPackageName = new SettingsModelOptionalString(
             SVNOnlineAdapterNodeModel.SVN_PACKAGENAME, SVNOnlineAdapterNodeModel.SVN_PACKAGENAME_DEFAULT, true);
 
@@ -83,8 +78,7 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
         logger.info("Reading logs from repository " + svnPath);
         SVNOnlineLogParser parser = new SVNOnlineLogParser();
 
-        List<SVNCommit> commits = parser.parseEntries(svnPath,
-                SVNParserOptions.options(svnRegExp.getStringValue(), svnPackageName.getStringValue()));
+        List<SVNCommit> commits = parser.parseEntries(svnPath, options(svnPackageName.getStringValue()));
 
         BufferedDataTable out = transform(commits, exec);
         logger.info("Reading git logs finished.");
@@ -110,7 +104,6 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
         scm.setAuthor(commit.getAuthor());
         scm.setCommitDate(commit.getDate());
         scm.setCommitID(commit.getId());
-        scm.setMarkers(commit.getMarkers());
         scm.setMessage(commit.getMessage());
         scm.setOperation(file.getOperation());
         scm.setPath(file.getPath());
@@ -135,21 +128,18 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         svnRepositoryAddress.saveSettingsTo(settings);
-        svnRegExp.saveSettingsTo(settings);
         svnPackageName.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         svnRepositoryAddress.loadSettingsFrom(settings);
-        svnRegExp.loadSettingsFrom(settings);
         svnPackageName.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         svnRepositoryAddress.validateSettings(settings);
-        svnRegExp.validateSettings(settings);
         svnPackageName.validateSettings(settings);
     }
 

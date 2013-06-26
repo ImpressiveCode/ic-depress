@@ -19,15 +19,12 @@ package org.impressivecode.depress.scm.svn;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static com.google.common.collect.Sets.newHashSet;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,166 +42,147 @@ import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
 public class SVNOnlineLogParser {
 
-	private final Pattern PATTERN = Pattern.compile("^(.*)");
+    private final Pattern PATTERN = Pattern.compile("^(.*)");
 
-	public List<SVNCommit> parseEntries(final String path,
-			final SVNParserOptions svnParserOptions) throws IOException,
-			ParseException, SVNException {
-		checkArgument(!isNullOrEmpty(path), "Path has to be set.");
+    public List<SVNCommit> parseEntries(final String path,
+            final SVNParserOptions svnParserOptions) throws IOException,
+            ParseException, SVNException {
+        checkArgument(!isNullOrEmpty(path), "Path has to be set.");
 
-		List<SVNCommit> commitsList = processRepo(path, svnParserOptions);
+        List<SVNCommit> commitsList = processRepo(path, svnParserOptions);
 
-		return commitsList;
-	}
+        return commitsList;
+    }
 
-	private List<SVNCommit> processRepo(final String path,
-			final SVNParserOptions svnParserOptions) throws IOException,
-			SVNException {
+    private List<SVNCommit> processRepo(final String path,
+            final SVNParserOptions svnParserOptions) throws IOException,
+            SVNException {
 
-		SVNRepository svn = initializeSvn(path);
+        SVNRepository svn = initializeSvn(path);
 
-		List<SVNCommit> analyzedCommits = new ArrayList<SVNCommit>();
+        List<SVNCommit> analyzedCommits = new ArrayList<SVNCommit>();
 
-		List<SVNLogEntry> entries = new ArrayList<SVNLogEntry>();
+        List<SVNLogEntry> entries = new ArrayList<SVNLogEntry>();
 
-		svn.log(new String[] { svnParserOptions.getPackagePrefix() }, entries,
-				1, -1, true, false);
+        svn.log(new String[] { svnParserOptions.getPackagePrefix() }, entries,
+                1, -1, true, false);
 
-		for (SVNLogEntry svnLogEntry : entries) {
+        for (SVNLogEntry svnLogEntry : entries) {
 
-			SVNCommit commit = new SVNCommit();
+            SVNCommit commit = new SVNCommit();
 
-			setHeader(commit, svnLogEntry);
-			setMessage(commit, svnLogEntry, svnParserOptions);
+            setHeader(commit, svnLogEntry);
+            setMessage(commit, svnLogEntry, svnParserOptions);
 
-			Map<String, SVNLogEntryPath> entryPaths = svnLogEntry
-					.getChangedPaths();
+            Map<String, SVNLogEntryPath> entryPaths = svnLogEntry
+                    .getChangedPaths();
 
-			for (SVNLogEntryPath logFile : entryPaths.values()) {
-				setCommitFile(commit, logFile, svnParserOptions);
-			}
+            for (SVNLogEntryPath logFile : entryPaths.values()) {
+                setCommitFile(commit, logFile, svnParserOptions);
+            }
 
-			analyzedCommits.add(commit);
-		}
+            analyzedCommits.add(commit);
+        }
 
-		return analyzedCommits;
-	}
+        return analyzedCommits;
+    }
 
-	private void setCommitFile(SVNCommit commit, SVNLogEntryPath logFile,
-			SVNParserOptions svnParserOptions) {
+    private void setCommitFile(final SVNCommit commit, final SVNLogEntryPath logFile,
+            final SVNParserOptions svnParserOptions) {
 
-		Matcher matcher = PATTERN.matcher(logFile.getPath());
+        Matcher matcher = PATTERN.matcher(logFile.getPath());
 
-		if (matcher.matches()) {
-			String transformed = logFile.getPath().replaceAll("/", ".");
-			String origin = matcher.group(1);
+        if (matcher.matches()) {
+            String transformed = logFile.getPath().replaceAll("/", ".");
+            String origin = matcher.group(1);
 
-			if (include(svnParserOptions, transformed)) {
+            if (include(svnParserOptions, transformed)) {
 
-				SVNCommitFile commitFile = new SVNCommitFile();
+                SVNCommitFile commitFile = new SVNCommitFile();
 
-				commitFile.setOperation(parseOperation(logFile));
-				commitFile.setPath(origin);
-				commitFile.setJavaClass(parseJavaClass(svnParserOptions,
-						transformed));
+                commitFile.setOperation(parseOperation(logFile));
+                commitFile.setPath(origin);
+                commitFile.setJavaClass(parseJavaClass(svnParserOptions,
+                        transformed));
 
-				commit.getFiles().add(commitFile);
-			}
-		}
-	}
+                commit.getFiles().add(commitFile);
+            }
+        }
+    }
 
-	private void setMessage(SVNCommit commit, SVNLogEntry svnLogEntry,
-			SVNParserOptions svnParserOptions) {
-		String message = getMessage(svnLogEntry);
+    private void setMessage(final SVNCommit commit, final SVNLogEntry svnLogEntry,
+            final SVNParserOptions svnParserOptions) {
+        String message = getMessage(svnLogEntry);
 
-		commit.addToMessage(message);
-		commit.setMarkers(parseMarkers(svnParserOptions, message));
-	}
+        commit.addToMessage(message);
+    }
 
-	private void setHeader(SVNCommit commit, SVNLogEntry svnLogEntry) {
-		commit.setId(Long.toString(svnLogEntry.getRevision()));
-		commit.setAuthor(svnLogEntry.getAuthor());
-		commit.setDate(svnLogEntry.getDate());
-	}
+    private void setHeader(final SVNCommit commit, final SVNLogEntry svnLogEntry) {
+        commit.setId(Long.toString(svnLogEntry.getRevision()));
+        commit.setAuthor(svnLogEntry.getAuthor());
+        commit.setDate(svnLogEntry.getDate());
+    }
 
-	private String getMessage(SVNLogEntry svnLogEntry) {
-		String message = svnLogEntry.getMessage();
+    private String getMessage(final SVNLogEntry svnLogEntry) {
+        String message = svnLogEntry.getMessage();
 
-		if (message == null) {
-			message = "";
-		} else if (message.endsWith("\n")) {
-			message = message.substring(0, message.length() - 1);
-		}
-		return message;
-	}
+        if (message == null) {
+            message = "";
+        } else if (message.endsWith("\n")) {
+            message = message.substring(0, message.length() - 1);
+        }
+        return message;
+    }
 
-	private boolean include(SVNParserOptions svnParserOptions, final String path) {
-		boolean java = path.endsWith(".java");
-		if (java) {
-			if (svnParserOptions.hasPackagePrefix()) {
-				return path.indexOf(svnParserOptions.getPackagePrefix()) != -1;
-			} else {
-				return true;
-			}
-		} else {
-			return false;
-		}
-	}
+    private boolean include(final SVNParserOptions svnParserOptions, final String path) {
+        boolean java = path.endsWith(".java");
+        if (java) {
+            if (svnParserOptions.hasPackagePrefix()) {
+                return path.indexOf(svnParserOptions.getPackagePrefix()) != -1;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
 
-	private String parseJavaClass(SVNParserOptions svnParserOptions,
-			final String path) {
-		String javaClass = path.replace(".java", "");
-		if (svnParserOptions.hasPackagePrefix()) {
-			javaClass = javaClass.substring(javaClass.indexOf(svnParserOptions
-					.getPackagePrefix()));
-		}
-		return javaClass;
-	}
+    private String parseJavaClass(final SVNParserOptions svnParserOptions,
+            final String path) {
+        String javaClass = path.replace(".java", "");
+        if (svnParserOptions.hasPackagePrefix()) {
+            javaClass = javaClass.substring(javaClass.indexOf(svnParserOptions
+                    .getPackagePrefix()));
+        }
+        return javaClass;
+    }
 
-	private Set<String> parseMarkers(SVNParserOptions svnParserOptions,
-			final String message) {
-		if (svnParserOptions.hasMarkerPattern()) {
-			Set<String> markers = newHashSet();
-			Matcher matcher = svnParserOptions.getMarkerPattern().matcher(
-					message);
-			while (matcher.find()) {
-				if (matcher.groupCount() >= 1) {
-					markers.add(matcher.group(1));
-				} else {
-					markers.add(matcher.group());
-				}
-			}
-			return markers;
-		}
-		return Collections.<String> emptySet();
-	}
+    private SCMOperation parseOperation(final SVNLogEntryPath logFile) {
 
-	private SCMOperation parseOperation(SVNLogEntryPath logFile) {
+        switch (logFile.getType()) {
+        case SVNLogEntryPath.TYPE_DELETED:
+            return SCMOperation.DELETED;
+        case SVNLogEntryPath.TYPE_MODIFIED:
+            return SCMOperation.MODIFIED;
+        case SVNLogEntryPath.TYPE_ADDED:
+            return SCMOperation.ADDED;
+        default:
+            return SCMOperation.OTHER;
+        }
+    }
 
-		switch (logFile.getType()) {
-		case SVNLogEntryPath.TYPE_DELETED:
-			return SCMOperation.DELETED;
-		case SVNLogEntryPath.TYPE_MODIFIED:
-			return SCMOperation.MODIFIED;
-		case SVNLogEntryPath.TYPE_ADDED:
-			return SCMOperation.ADDED;
-		default:
-			return SCMOperation.OTHER;
-		}
-	}
+    private SVNRepository initializeSvn(final String path) throws SVNException {
 
-	private SVNRepository initializeSvn(String path) throws SVNException {
+        DAVRepositoryFactory.setup();
+        FSRepositoryFactory.setup();
 
-		DAVRepositoryFactory.setup();
-		FSRepositoryFactory.setup();
+        SVNRepository repo = SVNRepositoryFactory.create(SVNURL
+                .parseURIEncoded(path));
 
-		SVNRepository repo = SVNRepositoryFactory.create(SVNURL
-				.parseURIEncoded(path));
+        ISVNAuthenticationManager authManager = SVNWCUtil
+                .createDefaultAuthenticationManager("", "");
+        repo.setAuthenticationManager(authManager);
 
-		ISVNAuthenticationManager authManager = SVNWCUtil
-				.createDefaultAuthenticationManager("", "");
-		repo.setAuthenticationManager(authManager);
-
-		return repo;
-	}
+        return repo;
+    }
 }
