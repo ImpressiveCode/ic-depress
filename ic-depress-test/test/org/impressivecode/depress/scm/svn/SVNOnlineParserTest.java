@@ -78,7 +78,7 @@ public class SVNOnlineParserTest {
         ZipFile zip = new ZipFile(repoZipPath);
         zip.extractAll(tempDir.getAbsolutePath());
 
-        repoPath = tempDir.getAbsolutePath() + File.separatorChar + ".git";
+        repoPath = tempDir.getAbsolutePath() + File.separatorChar + ".zip";
     }
 
     void deleteRecursive(final File f) throws IOException {

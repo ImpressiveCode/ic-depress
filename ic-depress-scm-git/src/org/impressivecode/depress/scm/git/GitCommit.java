@@ -21,7 +21,6 @@ package org.impressivecode.depress.scm.git;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Represents a parsed git commit
@@ -37,7 +36,6 @@ public class GitCommit {
     private String author;
     private StringBuilder messageBuilder;
     private List<GitCommitFile> files;
-    private Set<String> markers;
 
     public GitCommit() {
         this.messageBuilder = new StringBuilder();
@@ -78,13 +76,5 @@ public class GitCommit {
 
     public void setDate(final Date date) {
         this.date = date;
-    }
-
-    public void setMarkers(final Set<String> markers) {
-        this.markers = markers;
-    }
-
-    public Set<String> getMarkers() {
-        return this.markers;
     }
 }

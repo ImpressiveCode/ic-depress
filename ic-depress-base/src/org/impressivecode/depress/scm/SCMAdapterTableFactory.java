@@ -21,7 +21,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.impressivecode.depress.common.Cells.dateTimeCell;
 import static org.impressivecode.depress.common.Cells.stringCell;
 import static org.impressivecode.depress.common.Cells.stringOrMissingCell;
-import static org.impressivecode.depress.common.Cells.stringSetCell;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
@@ -86,7 +85,6 @@ public class SCMAdapterTableFactory {
     public static DataTableSpec createDataColumnSpec() {
         DataColumnSpec[] allColSpecs = { 
                 RESOURCE_COLSPEC, 
-                MARKER_COLSPEC,
                 new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(), 
                 MESSAGE_COLSPEC,
@@ -98,10 +96,14 @@ public class SCMAdapterTableFactory {
 
     public static DataRow createTableRow(final String rowId, final SCMDataType scmData) {
         assertData(scmData);
-        DataCell[] cells = { stringCell(scmData.getResourceName()), stringSetCell(scmData.getMarkers()),
-                stringCell(scmData.getAuthor()), stringCell(scmData.getOperation()),
-                stringOrMissingCell(scmData.getMessage()), stringCell(scmData.getPath()),
-                dateTimeCell(scmData.getCommitDate()), stringCell(scmData.getCommitID()), };
+        DataCell[] cells = { 
+                stringCell(scmData.getResourceName()),
+                stringCell(scmData.getAuthor()), 
+                stringCell(scmData.getOperation()),
+                stringOrMissingCell(scmData.getMessage()), 
+                stringCell(scmData.getPath()),
+                dateTimeCell(scmData.getCommitDate()), 
+                stringCell(scmData.getCommitID()), };
         DataRow row = new DefaultRow(rowId, cells);
         return row;
     }

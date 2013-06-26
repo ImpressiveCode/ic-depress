@@ -28,8 +28,6 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.impressivecode.depress.scm.SCMOperation;
-import org.impressivecode.depress.scm.git.GitCommit;
-import org.impressivecode.depress.scm.git.GitOfflineLogParser;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -83,11 +81,6 @@ public class GitOfflineLogParserTest {
     @Test
     public void shouldSpecificCommitMessageMatch() throws Exception {
         assertEquals("#9 base version of PO Metric introduced, #18 this is just matcher test", specificCommit().getMessage());
-    }
-
-    @Test
-    public void shouldFindMarkers() throws Exception {
-        assertThat(specificCommit().getMarkers()).containsOnly("9", "18");
     }
 
     @Test
