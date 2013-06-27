@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
-<knimeNode icon="./DataSource.png" type="Source">
+<knimeNode icon="./datasource.png" type="Source">
     <name>DataSource Adapter</name>
 
     <shortDescription>
-        Java Code reader DataSource Adapter. ImpressiveCode DePress Plugin Framework.
+        Java Code Reader DataSource Adapter. ImpressiveCode DePress Plugin Framework.
     </shortDescription>
 
     <fullDescription>
@@ -41,7 +41,10 @@
              Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
             </p>
         </intro>
-        <option name=".class file location">The example file is analyzed is at www.antil.za.pl/test.rar
+        <option name=".class files location">Enter a valid file. When you press ENTER, the file
+            is analyzed and the settings pre-set. You can also choose a
+            previously read file from the drop-down list, or select a file from
+            the "Browse..." dialog.
         </option>
     </fullDescription>
 
