@@ -17,6 +17,7 @@
  */
 
 package org.impressivecode.depress.data.source;
+
 /**
  * 
  * @author Marcin Strzeszyna
@@ -24,98 +25,117 @@ package org.impressivecode.depress.data.source;
  * 
  */
 public class DataSourceAdapterClassDataEntry {
-private String className;
-	private String methodName;
-	private Boolean isPublic;
-	private Boolean isProtected;
-	private Boolean isPrivate;
-	private Boolean isStatic;
-	private Boolean isFinal;
-	private Boolean isAbstract;
-	private Boolean isInterface;
-	private String location;
-	
-	public void setClassName(String className) {
-		this.className = className;
-	}
+    private String className;
+    private String methodName;
+    private Boolean isPublic;
+    private Boolean isProtected;
+    private Boolean isPrivate;
+    private Boolean isStatic;
+    private Boolean isFinal;
+    private Boolean isAbstract;
+    private Boolean isInterface;
+    private Boolean isEnum;
+    private String location;
+    private String expStr;
 
-	public void setMethodName(String methodName) {
-		this.methodName = methodName;
-	}
+    public void setClassName(String className) {
+        this.className = className;
+    }
 
-	public void setIsPublic(Boolean isPublic) {
-		this.isPublic = isPublic;
-	}
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
 
-	public void setIsProtected(Boolean isProtected) {
-		this.isProtected = isProtected;
-	}
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
 
-	public void setIsPrivate(Boolean isPrivate) {
-		this.isPrivate = isPrivate;
-	}
+    public void setIsProtected(Boolean isProtected) {
+        this.isProtected = isProtected;
+    }
 
-	public void setIsStatic(Boolean isStatic) {
-		this.isStatic = isStatic;
-	}
+    public void setIsPrivate(Boolean isPrivate) {
+        this.isPrivate = isPrivate;
+    }
 
-	public void setIsFinal(Boolean isFinal) {
-		this.isFinal = isFinal;
-	}
+    public void setIsStatic(Boolean isStatic) {
+        this.isStatic = isStatic;
+    }
 
-	public void setIsAbstract(Boolean isAbstract) {
-		this.isAbstract = isAbstract;
-	}
+    public void setIsFinal(Boolean isFinal) {
+        this.isFinal = isFinal;
+    }
 
-	public void setIsInterface(Boolean isInterface) {
-		this.isInterface = isInterface;
-	}
+    public void setIsAbstract(Boolean isAbstract) {
+        this.isAbstract = isAbstract;
+    }
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	
-	public String getClassName()
-	{
-		return this.className;
-	}
+    public void setIsInterface(Boolean isInterface) {
+        this.isInterface = isInterface;
+    }
 
-	public String getMethodName() {
-		return methodName;
-	}
+    public void setIsEnum(Boolean isEnum) {
+        this.isEnum = isEnum;
+    }
 
-	public Boolean getIsPublic() {
-		return isPublic;
-	}
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-	public Boolean getIsProtected() {
-		return isProtected;
-	}
+    public String getClassName() {
+        return this.className;
+    }
 
-	public Boolean getIsPrivate() {
-		return isPrivate;
-	}
+    public String getMethodName() {
+        return methodName;
+    }
 
-	public Boolean getIsStatic() {
-		return isStatic;
-	}
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
 
-	public Boolean getIsFinal() {
-		return isFinal;
-	}
+    public Boolean getIsProtected() {
+        return isProtected;
+    }
 
-	public Boolean getIsAbstract() {
-		return isAbstract;
-	}
+    public Boolean getIsPrivate() {
+        return isPrivate;
+    }
 
-	public Boolean getIsInterface() {
-		return isInterface;
-	}
+    public Boolean getIsStatic() {
+        return isStatic;
+    }
 
-	public String getLocation() {
-		return location;
-	}
-	
-	
+    public Boolean getIsFinal() {
+        return isFinal;
+    }
+
+    public Boolean getIsAbstract() {
+        return isAbstract;
+    }
+
+    public Boolean getIsInterface() {
+        return isInterface;
+    }
+
+    public Boolean getIsEnum() {
+        return isEnum;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getExpStr() {
+        return expStr;
+    }
+
+    public void setExpStr(Class<?>[] arr) {
+        String expStr = "";
+        for (Class<?> a : arr) {
+            expStr += a.getSimpleName() + ", ";
+        }
+        this.expStr = expStr;
+    }
+
 }
-

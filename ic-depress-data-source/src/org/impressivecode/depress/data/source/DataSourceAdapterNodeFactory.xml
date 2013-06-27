@@ -30,7 +30,10 @@
 			        <li>Private</li>
 			        <li>Static</li>
 			        <li>Final</li>
-			        <li>Abstract</li>			        
+			        <li>Abstract</li>	
+			        <li>Interface</li>	
+			        <li>Enum</li>
+			        <li>Exception</li>				        
                 </ul>           
             </p>
             <p>

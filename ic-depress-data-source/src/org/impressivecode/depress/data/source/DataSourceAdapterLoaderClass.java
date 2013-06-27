@@ -24,39 +24,34 @@ package org.impressivecode.depress.data.source;
  * @author Wieslaw Rybicki
  * 
  */
-import java.io.*; 
+import java.io.*;
 import org.impressivecode.depress.data.source.DataSourceAdapterFileOperation;
 import org.impressivecode.depress.data.source.DataSourceAdapterTransformer;
 import org.knime.core.node.NodeLogger;
 
-public class DataSourceAdapterLoaderClass extends ClassLoader 
-{
-	private static final NodeLogger LOGGER = NodeLogger.getLogger(DataSourceAdapterTransformer.class);
-	private String path;
-	public DataSourceAdapterLoaderClass(String pathToFile)
-	{
-		path = pathToFile;
-	}
-	
-	protected Class<?> findClass(String name) throws ClassNotFoundException
-	{
-		byte[] byteTable = null;
-		File file = new File(path);
-		try
-		{
-			byteTable = DataSourceAdapterFileOperation.getBytesFromFile(file);
-		}
-		catch(IOException e)
-		{
-				LOGGER.info("Class not found @" + path);
-				throw new ClassNotFoundException(name);
-		}
-		
-		LOGGER.info("Class found @" + path + " Number of bytes read: " + byteTable.length);
-		Class<?> loadedClass = defineClass(name,byteTable,0,byteTable.length);
-		if(loadedClass==null) throw new ClassNotFoundException(name);
-		return loadedClass;
-	}
-	
-	
+public class DataSourceAdapterLoaderClass extends ClassLoader {
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(DataSourceAdapterTransformer.class);
+    private String path;
+
+    public DataSourceAdapterLoaderClass(String pathToFile) {
+        path = pathToFile;
+    }
+
+    protected Class<?> findClass(String name) throws ClassNotFoundException {
+        byte[] byteTable = null;
+        File file = new File(path);
+        try {
+            byteTable = DataSourceAdapterFileOperation.getBytesFromFile(file);
+        } catch (IOException e) {
+            LOGGER.info("Class not found @" + path);
+            throw new ClassNotFoundException(name);
+        }
+
+        LOGGER.info("Class found @" + path + " Number of bytes read: " + byteTable.length);
+        Class<?> loadedClass = defineClass(name, byteTable, 0, byteTable.length);
+        if (loadedClass == null)
+            throw new ClassNotFoundException(name);
+        return loadedClass;
+    }
+
 }

@@ -17,8 +17,8 @@
  */
 
 package org.impressivecode.depress.data.source;
+
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import org.impressivecode.depress.data.source.DataSourceAdapterTransformer;
 import org.knime.core.node.NodeLogger;
+
 /**
  * 
  * @author Marcin Strzeszyna
@@ -36,69 +37,62 @@ import org.knime.core.node.NodeLogger;
  */
 public class DataSourceAdapterClassDataEntriesParser {
 
-	public ArrayList<DataSourceAdapterClassDataEntry> parseEntries(String path) throws IOException{
-		final NodeLogger LOGGER = NodeLogger.getLogger(DataSourceAdapterTransformer.class);
-		File chosenFile = new File(path);
-		ArrayList<File> folders = DataSourceAdapterFileOperation.getAllFolder(chosenFile);
-		ArrayList<File> classFile = DataSourceAdapterFileOperation.getAllClass(folders);
-		ArrayList<String> classFileName = DataSourceAdapterFileOperation.getFormatedClassName(classFile, chosenFile);
-		String urlPath = "file:\\".concat(chosenFile.getPath()).concat("\\");
-		
-		ArrayList<DataSourceAdapterClassDataEntry> output = new ArrayList<DataSourceAdapterClassDataEntry>();
-		
-		for(String temp : classFileName)
-		{
-			String classStr = "";
-			String addPath = "";
-			
-			try
-			{
-				String s = "\\";
-				URL url = new URL(urlPath);
-				
-				if ( temp.contains(s)){
-					classStr = temp.subSequence(temp.lastIndexOf(s) + 1, temp.length()).toString();
-					addPath = temp.subSequence(0, temp.lastIndexOf(s)).toString();
-					temp = classStr;
-					url = new URL(urlPath.concat(addPath.concat("\\")));
-				}
-				URLClassLoader pLoad = new URLClassLoader(new URL[]{url});
-				Class<?> tempClass = pLoad.loadClass(temp);	
-				AddToMethodTable(output, tempClass, url.toString());
-			}
-			catch(ClassNotFoundException e)
-			{
-				LOGGER.info("Class: " + classStr + " not found!");
-			}
-			catch(MalformedURLException m)
-			{
-				LOGGER.info("Malformed URL");
-			}
-		}
-		return output;
-	}
-	
-	private void AddToMethodTable(ArrayList<DataSourceAdapterClassDataEntry> output, Class<?> cl, String path)
-	{
-		
-		Method[] m = cl.getDeclaredMethods();
-		for(Method temp : m)
-		{
-	        int modifier = temp.getModifiers();
-			DataSourceAdapterClassDataEntry entity = new DataSourceAdapterClassDataEntry();
-			entity.setLocation(path);
-			entity.setClassName(cl.getName());
-			entity.setMethodName(temp.getName());
-			entity.setIsPublic(Modifier.isPublic(modifier));
-			entity.setIsProtected(Modifier.isProtected(modifier));
-			entity.setIsPrivate(Modifier.isPrivate(modifier));
-			entity.setIsStatic(Modifier.isStatic(modifier));
-			entity.setIsFinal(Modifier.isFinal(modifier));
-			entity.setIsAbstract(Modifier.isAbstract(modifier));
-			entity.setIsInterface(Modifier.isInterface(modifier));
-			output.add(entity);
-		}
-	}
+    public ArrayList<DataSourceAdapterClassDataEntry> parseEntries(String path) {
+        final NodeLogger LOGGER = NodeLogger.getLogger(DataSourceAdapterTransformer.class);
+        File chosenFile = new File(path);
+        ArrayList<File> folders = DataSourceAdapterFileOperation.getAllFolder(chosenFile);
+        ArrayList<File> classFile = DataSourceAdapterFileOperation.getAllClass(folders);
+        ArrayList<String> classFileName = DataSourceAdapterFileOperation.getFormatedClassName(classFile, chosenFile);
+        String urlPath = "file:\\".concat(chosenFile.getPath()).concat("\\");
 
-	
+        ArrayList<DataSourceAdapterClassDataEntry> output = new ArrayList<DataSourceAdapterClassDataEntry>();
+
+        for (String temp : classFileName) {
+            String classStr = "";
+            String addPath = "";
+
+            try {
+                String s = "\\";
+                URL url = new URL(urlPath);
+
+                if (temp.contains(s)) {
+                    classStr = temp.subSequence(temp.lastIndexOf(s) + 1, temp.length()).toString();
+                    addPath = temp.subSequence(0, temp.lastIndexOf(s)).toString();
+                    temp = classStr;
+                    url = new URL(urlPath.concat(addPath.concat("\\")));
+                }
+                URLClassLoader pLoad = new URLClassLoader(new URL[] { url });
+                Class<?> tempClass = pLoad.loadClass(temp);
+                AddToMethodTable(output, tempClass, url.toString());
+            } catch (ClassNotFoundException exCNF) {
+                LOGGER.info("Class: " + classStr + " not found!");
+            } catch (MalformedURLException exMURL) {
+                LOGGER.info("Malformed URL");
+            }
+        }
+        return output;
+    }
+
+    public void AddToMethodTable(ArrayList<DataSourceAdapterClassDataEntry> output, Class<?> cl, String path) {
+
+        Method[] m = cl.getDeclaredMethods();
+        for (Method temp : m) {
+            int modifier = temp.getModifiers();
+            DataSourceAdapterClassDataEntry entity = new DataSourceAdapterClassDataEntry();
+            entity.setLocation(path);
+            entity.setClassName(cl.getName());
+            entity.setMethodName(temp.getName());
+            entity.setIsPublic(Modifier.isPublic(modifier));
+            entity.setIsProtected(Modifier.isProtected(modifier));
+            entity.setIsPrivate(Modifier.isPrivate(modifier));
+            entity.setIsStatic(Modifier.isStatic(modifier));
+            entity.setIsFinal(Modifier.isFinal(modifier));
+            entity.setIsAbstract(Modifier.isAbstract(modifier));
+            entity.setIsInterface(cl.isInterface());
+            Class<?>[] expArr = temp.getExceptionTypes();
+            entity.setExpStr(expArr);
+            entity.setIsEnum(cl.isEnum());
+            output.add(entity);
+        }
+    }
 }

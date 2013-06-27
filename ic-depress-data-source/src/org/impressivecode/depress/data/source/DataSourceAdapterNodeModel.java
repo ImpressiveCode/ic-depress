@@ -54,9 +54,9 @@ public class DataSourceAdapterNodeModel extends NodeModel {
     private static final String CONFIG_NAME = "depress.datasource.confname";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
-    
+
     protected DataSourceAdapterNodeModel() {
-        super(0, 1);  
+        super(0, 1);
     }
 
     @Override
@@ -72,15 +72,15 @@ public class DataSourceAdapterNodeModel extends NodeModel {
         return new BufferedDataTable[] { out };
     }
 
-    private BufferedDataTable transform(final ArrayList<DataSourceAdapterClassDataEntry> entries, final ExecutionContext exec)
-            throws CanceledExecutionException {
+    private BufferedDataTable transform(final ArrayList<DataSourceAdapterClassDataEntry> entries,
+            final ExecutionContext exec) throws CanceledExecutionException {
         DataSourceAdapterTransformer transformer = new DataSourceAdapterTransformer(createDataColumnSpec());
         return transformer.transform(entries, exec);
     }
 
-    private ArrayList<DataSourceAdapterClassDataEntry> parseEntries(final String datasourceFilePath) throws ParserConfigurationException,
-    SAXException, IOException {
-    	DataSourceAdapterClassDataEntriesParser parser = new DataSourceAdapterClassDataEntriesParser();
+    private ArrayList<DataSourceAdapterClassDataEntry> parseEntries(final String datasourceFilePath)
+            throws ParserConfigurationException, SAXException, IOException {
+        DataSourceAdapterClassDataEntriesParser parser = new DataSourceAdapterClassDataEntriesParser();
         return parser.parseEntries(datasourceFilePath);
     }
 
@@ -111,18 +111,18 @@ public class DataSourceAdapterNodeModel extends NodeModel {
 
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
     static SettingsModelString createFileChooserSettings() {
         return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
-    
+
     }
 }

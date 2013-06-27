@@ -18,7 +18,9 @@
 package org.impressivecode.depress.data.source;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.common.Cells;
+
+import org.impressivecode.depress.common.Cells;
+
 import java.util.List;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
@@ -51,8 +53,8 @@ public class DataSourceAdapterTransformer {
         this.tableSpec = tableSpec;
     }
 
-    public BufferedDataTable transform(final List<DataSourceAdapterClassDataEntry> datasource_data, final ExecutionContext exec)
-            throws CanceledExecutionException {
+    public BufferedDataTable transform(final List<DataSourceAdapterClassDataEntry> datasource_data,
+            final ExecutionContext exec) throws CanceledExecutionException {
         BufferedDataContainer container = createDataContainer(exec);
         for (DataSourceAdapterClassDataEntry entry : datasource_data) {
             progress(exec);
@@ -79,25 +81,20 @@ public class DataSourceAdapterTransformer {
     }
 
     private DataCell[] getDataSourceCells(final DataSourceAdapterClassDataEntry value) {
-        DataCell[] cells = {
-        		Cells.stringOrMissingCell(value.getLocation()),
-        		Cells.stringOrMissingCell(value.getClassName()),
-        		Cells.stringOrMissingCell(value.getMethodName()),
-        		BooleanCell.get(value.getIsPublic()),
-        		BooleanCell.get(value.getIsProtected()),
-        		BooleanCell.get(value.getIsPrivate()),
-        		BooleanCell.get(value.getIsStatic()),
-        		BooleanCell.get(value.getIsFinal()),
-        		BooleanCell.get(value.getIsAbstract()),
-          BooleanCell.get(value.getIsInterface()),
-                };   
+        DataCell[] cells = { Cells.stringOrMissingCell(value.getLocation()),
+                Cells.stringOrMissingCell(value.getClassName()), Cells.stringOrMissingCell(value.getMethodName()),
+                BooleanCell.get(value.getIsPublic()), BooleanCell.get(value.getIsProtected()),
+                BooleanCell.get(value.getIsPrivate()), BooleanCell.get(value.getIsStatic()),
+                BooleanCell.get(value.getIsFinal()), BooleanCell.get(value.getIsAbstract()),
+                BooleanCell.get(value.getIsInterface()), BooleanCell.get(value.getIsEnum()),
+                Cells.stringOrMissingCell(value.getExpStr()) };
         return cells;
     }
 
     private BufferedDataContainer createDataContainer(final ExecutionContext exec) {
         return exec.createDataContainer(tableSpec);
     }
-    
+
     private void progress(final ExecutionContext exec) throws CanceledExecutionException {
         exec.checkCanceled();
     }

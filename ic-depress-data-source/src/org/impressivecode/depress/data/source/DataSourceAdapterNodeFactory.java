@@ -16,6 +16,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.data.source;
+
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
@@ -39,7 +40,8 @@ public class DataSourceAdapterNodeFactory extends NodeFactory<DataSourceAdapterN
     }
 
     @Override
-    public NodeView<DataSourceAdapterNodeModel> createNodeView(final int viewIndex, final DataSourceAdapterNodeModel nodeModel) {
+    public NodeView<DataSourceAdapterNodeModel> createNodeView(final int viewIndex,
+            final DataSourceAdapterNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 
