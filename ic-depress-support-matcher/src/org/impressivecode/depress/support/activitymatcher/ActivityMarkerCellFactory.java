@@ -45,8 +45,9 @@ public class ActivityMarkerCellFactory implements AppendedCellFactory {
     public ActivityMarkerCellFactory(final Configuration configuration, final int commitDateCellIndex,
             final int messageCellIndex) {
         this.cfg = configuration;
-        this.msgCellIndex = messageCellIndex;
         this.commitDateCellIndex = commitDateCellIndex;
+        this.msgCellIndex = messageCellIndex;
+
     }
 
     @Override

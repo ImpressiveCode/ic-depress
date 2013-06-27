@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.scm.git;
 
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.scm.git.GitParserOptions.options;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,8 +56,6 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
 
     static final String GIT_FILENAME = "depress.scm.git.filename";
     static final String GIT_FILENAME_DEFAULT = "";
-    static final String GIT_REGEXP = "depress.scm.git.regexp";
-    static final String GIT_REGEXP_DEFAULT = "";
     static final String GIT_PACKAGENAME = "depress.scm.git.package";
     static final String GIT_PACKAGENAME_DEFAULT = "org.";
 
@@ -67,8 +66,6 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
     // dialog work with "SettingsModels".
     private final SettingsModelString gitFileName = new SettingsModelString(GitOfflineAdapterNodeModel.GIT_FILENAME,
             GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT);
-    private final SettingsModelString gitRegExp = new SettingsModelString(GitOfflineAdapterNodeModel.GIT_REGEXP,
-            GitOfflineAdapterNodeModel.GIT_REGEXP_DEFAULT);
     private final SettingsModelOptionalString gitPackageName = new SettingsModelOptionalString(
             GitOfflineAdapterNodeModel.GIT_PACKAGENAME, GitOfflineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT, true);
 
@@ -84,7 +81,7 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
 
         GitOfflineLogParser parser = new GitOfflineLogParser();
         List<GitCommit> commits = parser.parseEntries(this.gitFileName.getStringValue(),
-                GitParserOptions.options(gitRegExp.getStringValue(), gitPackageName.getStringValue()));
+                options(gitPackageName.getStringValue()));
 
         BufferedDataTable out = transform(commits, exec);
         logger.info("Reading git logs finished.");
@@ -106,21 +103,18 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         gitFileName.saveSettingsTo(settings);
-        gitRegExp.saveSettingsTo(settings);
         gitPackageName.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         gitFileName.loadSettingsFrom(settings);
-        gitRegExp.loadSettingsFrom(settings);
         gitPackageName.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         gitFileName.validateSettings(settings);
-        gitRegExp.validateSettings(settings);
         gitPackageName.validateSettings(settings);
     }
 
@@ -154,7 +148,6 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
         scm.setAuthor(commit.getAuthor());
         scm.setCommitDate(commit.getDate());
         scm.setCommitID(commit.getId());
-        scm.setMarkers(commit.getMarkers());
         scm.setMessage(commit.getMessage());
         scm.setOperation(file.getOperation());
         scm.setPath(file.getPath());

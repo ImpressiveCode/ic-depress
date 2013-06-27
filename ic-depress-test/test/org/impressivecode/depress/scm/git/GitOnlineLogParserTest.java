@@ -37,8 +37,6 @@ import net.lingala.zip4j.exception.ZipException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.impressivecode.depress.scm.SCMOperation;
-import org.impressivecode.depress.scm.git.GitCommit;
-import org.impressivecode.depress.scm.git.GitOnlineLogParser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -99,8 +97,8 @@ public class GitOnlineLogParserTest {
 
     private GitCommit specificCommit() throws IOException, ParseException, NoHeadException, GitAPIException {
         this.parser = new GitOnlineLogParser();
-        this.parser.parseEntries(repoPath, options("#([0-9]+)", "org.", null));
-        for (GitCommit c : parser.parseEntries(repoPath, options("#([0-9]+)", "org.", null))) {
+        this.parser.parseEntries(repoPath, options("org.", null));
+        for (GitCommit c : parser.parseEntries(repoPath, options("org.", null))) {
             if (c.getId().equals("45a2beca9d97777733e1a472e54c003551b7d9b1")) {
                 return c;
             }
@@ -110,13 +108,13 @@ public class GitOnlineLogParserTest {
 
     @Test(expected = NoHeadException.class)
     public void shouldThrowFileNotFound() throws Exception {
-        new GitOnlineLogParser().parseEntries("fake_path", options(null, null, null));
+        new GitOnlineLogParser().parseEntries("fake_path", options(null, null));
     }
 
     @Test
     public void shouldCountCommits() throws Exception {
         GitOnlineLogParser parser = new GitOnlineLogParser();
-        assertEquals(183, parser.parseEntries(repoPath, options("#([0-9]+)", "org.", null)).size());
+        assertEquals(183, parser.parseEntries(repoPath, options("org.", null)).size());
     }
 
     @Test
@@ -132,11 +130,6 @@ public class GitOnlineLogParserTest {
     @Test
     public void shouldSpecificCommitMessageMatch() throws Exception {
         assertEquals("#9 base version of PO Metric introduced", specificCommit().getMessage());
-    }
-
-    @Test
-    public void shouldFindMarkers() throws Exception {
-        assertThat(specificCommit().getMarkers()).containsOnly("9");
     }
 
     @Test
@@ -169,24 +162,24 @@ public class GitOnlineLogParserTest {
 
     @Test
     public void shouldSpecificBranchCommitCountMatch() throws Exception {
-        assertEquals(43, new GitOnlineLogParser().parseEntries(repoPath, options("#([0-9]+)", "org.", "master")).size());
+        assertEquals(43, new GitOnlineLogParser().parseEntries(repoPath, options("org.", "master")).size());
     }
 
     @Test
     public void shouldSpecificBranchFirstCommitIdMatch() throws Exception {
         assertEquals("c10f2ad763c3c78ba267d473608253d9796542cc",
-                new GitOnlineLogParser().parseEntries(repoPath, options("#([0-9]+)", "org.", "master")).get(0).getId());
+                new GitOnlineLogParser().parseEntries(repoPath, options("org.", "master")).get(0).getId());
     }
 
     @Test
     public void shouldSpecificRemoteBranchCommitCountMatch() throws Exception {
-        assertEquals(108, new GitOnlineLogParser().parseEntries(repoPath, options("#([0-9]+)", "org.", "tomek/new-metrics")).size());
+        assertEquals(108, new GitOnlineLogParser().parseEntries(repoPath, options("org.", "tomek/new-metrics")).size());
     }
 
     @Test
     public void shouldSpecificRemoteBranchFirstCommitIdMatch() throws Exception {
         assertEquals("a99f5a83953121301a0c615ed3d78b1869423d08",
-                new GitOnlineLogParser().parseEntries(repoPath, options("#([0-9]+)", "org.", "tomek/new-metrics")).get(0).getId());
+                new GitOnlineLogParser().parseEntries(repoPath, options("org.", "tomek/new-metrics")).get(0).getId());
     }
 
     @Test

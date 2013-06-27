@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./svn.png" type="Source">
-    <name>SVN (Online) SCM</name>
+    <name>SVN (Online) SCM, Experimental</name>
     
     <shortDescription>
        Online SVN SCM, ImpressiveCode Depress
@@ -39,7 +39,6 @@
         
         
         <option name="Repository address">Address of remote SVN's repository which You want to analyze</option>
-        <option name="Issue marker">Marker for extraction name of class</option>
         <option name="Package">Prefix of package</option>
     </fullDescription>
     

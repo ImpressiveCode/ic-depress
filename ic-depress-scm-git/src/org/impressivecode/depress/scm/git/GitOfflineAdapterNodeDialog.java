@@ -36,9 +36,6 @@ public class GitOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(GitOfflineAdapterNodeModel.GIT_FILENAME,
                 GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT), GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
 
-        addDialogComponent(new DialogComponentString(new SettingsModelString(GitOfflineAdapterNodeModel.GIT_REGEXP,
-                GitOfflineAdapterNodeModel.GIT_REGEXP_DEFAULT), "Issue marker: "));
-
         addDialogComponent(new DialogComponentString(new SettingsModelString(GitOfflineAdapterNodeModel.GIT_PACKAGENAME, 
                 GitOfflineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT), "Package: "));
     }

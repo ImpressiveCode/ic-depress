@@ -22,6 +22,7 @@ import static org.impressivecode.depress.its.ITSAdapterTableFactory.RESOLVED_DAT
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.AM_CONFIDENCE_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.AM_MARKER_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.DATE_COLNAME;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.DATE_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLSPEC;
 import static org.knime.base.data.append.column.AppendedColumnTable.getTableSpec;
@@ -75,28 +76,34 @@ public class ActivityMatcherParserNodeModel extends NodeModel {
     private final SettingsModelString keywords = new SettingsModelString(CFG_KEYWORDS, KEYWORDS_DEFAULT);
     private final SettingsModelString builder = new SettingsModelString(CFG_IDBUILDER, IDBUILDER_DEFAULT);
 
-    private InputTransformer<ITSDataType> issueTransfomer;
-    private InputTransformer<SCMDataType> historyTransfomer;
+    private InputTransformer<ITSDataType> itsTransfomer;
+    private InputTransformer<SCMDataType> scmTransfomer;
 
     protected ActivityMatcherParserNodeModel() {
         super(2, 1);
-        this.issueTransfomer = new ITSInputTransformer(new DataTableSpec(ISSUE_ID_COLSPEC, RESOLVED_DATE_COLSPEC));
-        this.historyTransfomer = new SCMInputTransformer(new DataTableSpec(MESSAGE_COLSPEC));
+        this.itsTransfomer = new ITSInputTransformer(new DataTableSpec(ISSUE_ID_COLSPEC, RESOLVED_DATE_COLSPEC));
+        this.scmTransfomer = new SCMInputTransformer(new DataTableSpec(MESSAGE_COLSPEC, DATE_COLSPEC));
     }
 
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
 
-        List<ITSDataType> issues = this.issueTransfomer.transform(inData[0]);
-        AppendedColumnTable table = new AppendedColumnTable(inData[1], markerCellFactory(inData[1], issues),
-                AM_MARKER_COLSPEC, AM_CONFIDENCE_COLSPEC);
+        List<ITSDataType> issues = this.itsTransfomer.transform(inData[1]);
+        AppendedColumnTable table = new AppendedColumnTable(
+                inData[0], 
+                markerCellFactory(issues, 
+                        inData[0].getSpec().findColumnIndex(DATE_COLNAME), 
+                        inData[0].getSpec().findColumnIndex(MESSAGE_COLNAME)),
+                        AM_MARKER_COLSPEC, AM_CONFIDENCE_COLSPEC);
         return new BufferedDataTable[] { preapreTable(table, exec) };
     }
 
-    private ActivityMarkerCellFactory markerCellFactory(final BufferedDataTable inData, final List<ITSDataType> issues) {
+    private ActivityMarkerCellFactory markerCellFactory(final List<ITSDataType> issues, final int dateIndex,
+            final int messageIndex) {
+
         return new ActivityMarkerCellFactory(new Configuration(interval, regExpKeywords, keywords, builder, issues),
-                inData.getSpec().findColumnIndex(DATE_COLNAME), inData.getSpec().findColumnIndex(MESSAGE_COLNAME));
+                dateIndex, messageIndex);
     }
 
     private BufferedDataTable preapreTable(final AppendedColumnTable table, final ExecutionContext exec)
@@ -112,8 +119,8 @@ public class ActivityMatcherParserNodeModel extends NodeModel {
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         Preconditions.checkArgument(inSpecs.length == 2);
 
-        this.historyTransfomer.validate(inSpecs[0]);
-        this.issueTransfomer.validate(inSpecs[1]);
+        this.scmTransfomer.validate(inSpecs[0]);
+        this.itsTransfomer.validate(inSpecs[1]);
 
         final DataTableSpec dts = getTableSpec(inSpecs[0], AM_MARKER_COLSPEC, AM_CONFIDENCE_COLSPEC);
 

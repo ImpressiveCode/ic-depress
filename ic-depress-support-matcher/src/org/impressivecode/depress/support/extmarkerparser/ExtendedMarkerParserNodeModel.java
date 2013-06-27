@@ -26,8 +26,8 @@ import java.io.File;
 import java.io.IOException;
 
 import org.impressivecode.depress.scm.SCMAdapterTableFactory;
+import org.impressivecode.depress.scm.SCMInputTransformer;
 import org.knime.base.data.append.column.AppendedColumnTable;
-import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -110,18 +110,7 @@ public class ExtendedMarkerParserNodeModel extends NodeModel {
 
     private void validate(final DataTableSpec spec) throws InvalidSettingsException {
         checkNotNull(spec, "DataTableSpec hat to be set");
-        DataColumnSpec columnSpec = spec.getColumnSpec(MESSAGE_COLNAME);
-        if (columnSpec == null) {
-            throw new InvalidSettingsException("Missing SCM column: " + MESSAGE_COLNAME);
-        }
-
-        if (hasSameStructure(columnSpec)) {
-            throw new InvalidSettingsException("Inlvalid type of column: " + MESSAGE_COLNAME);
-        }
-    }
-
-    private boolean hasSameStructure(final DataColumnSpec columnSpec) {
-        return columnSpec.equalStructure(SCMAdapterTableFactory.MESSAGE_COLSPEC);
+        new SCMInputTransformer(new DataTableSpec(SCMAdapterTableFactory.MESSAGE_COLSPEC)).validate(spec);
     }
 
     @Override

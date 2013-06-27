@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./SVN.png" type="Source">
-    <name>SVN (Offline) SCM, Experimental</name>
+    <name>SVN (Offline) SCM</name>
 
     <shortDescription>
        Offline SVN SCM, ImpressiveCode Depress
@@ -25,7 +25,6 @@
         </intro>
 
         <option name="Selected file">File with SVN log to analyze in offline version of plugin</option>
-        <option name="Issue marker">Marker for extraction name of class</option>
         <option name="Package">Prefix of package</option>
     </fullDescription>
 
