@@ -37,9 +37,6 @@ public class SVNOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
         addDialogComponent(remoteRepoAddress);
 
-        addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOnlineAdapterNodeModel.SVN_REGEXP,
-                SVNOnlineAdapterNodeModel.SVN_REGEXP_DEFAULT), "Issue marker: "));
-
         addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOnlineAdapterNodeModel.SVN_PACKAGENAME,
                 SVNOnlineAdapterNodeModel.SVN_PACKAGENAME_DEFAULT), "Package: "));
     }

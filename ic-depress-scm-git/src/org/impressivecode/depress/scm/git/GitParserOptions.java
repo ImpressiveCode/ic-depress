@@ -17,38 +17,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.git;
 
-import java.util.regex.Pattern;
-
 import com.google.common.base.Strings;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
  */
 public class GitParserOptions {
-    private Pattern markerRegexp;
     private String packageString;
     private String branch;
 
-    public static GitParserOptions options(final String markerRegexp, final String packageString) {
-        return options(markerRegexp, packageString, null);
+    public static GitParserOptions options(final String packageString) {
+        return options(packageString, null);
     }
 
-    public static GitParserOptions options(final String markerRegexp, final String packageString, final String branch) {
+    public static GitParserOptions options(final String packageString, final String branch) {
         GitParserOptions options = new GitParserOptions();
-        if (!Strings.isNullOrEmpty(markerRegexp)) {
-            options.markerRegexp = Pattern.compile(markerRegexp);
-        }
         options.packageString = Strings.emptyToNull(packageString);
         options.branch = Strings.emptyToNull(branch);
         return options;
-    }
-
-    public boolean hasMarkerPattern() {
-        return this.markerRegexp != null;
-    }
-
-    public Pattern getMarkerPattern() {
-        return markerRegexp;
     }
 
     public boolean hasPackagePrefix() {

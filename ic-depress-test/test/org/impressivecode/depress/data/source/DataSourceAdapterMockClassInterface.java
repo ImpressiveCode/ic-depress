@@ -15,18 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package org.impressivecode.depress.data.source;
 
-package org.impressivecode.depress.test.data.anonymisation;
-
-
-/**
- * 
- * @author Andrzej Dudek, Wrocław Institute of Technology
- * 
- */
-
-public class DataAnonymisationTest {
-
-    //TODO add junit tests
-
+public interface DataSourceAdapterMockClassInterface {
+    public void Method1();
 }

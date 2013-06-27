@@ -60,8 +60,6 @@ public class GitOnlineAdapterNodeModel extends NodeModel {
     static final String GIT_REMOTE_REPOSITORY_DEFAULT = "";
     static final String GIT_BRANCH = "depress.scm.git.branch";
     static final String GIT_BRANCH_DEFAULT = "";
-    static final String GIT_REGEXP = "depress.scm.git.regexp";
-    static final String GIT_REGEXP_DEFAULT = "";
     static final String GIT_PACKAGENAME = "depress.scm.gitonline.package";
     static final String GIT_PACKAGENAME_DEFAULT = "org.";
 
@@ -74,8 +72,6 @@ public class GitOnlineAdapterNodeModel extends NodeModel {
             GitOnlineAdapterNodeModel.GIT_REPOSITORY_DEFAULT);
     private final SettingsModelOptionalString gitBranch = new SettingsModelOptionalString(GitOnlineAdapterNodeModel.GIT_BRANCH,
             GitOnlineAdapterNodeModel.GIT_BRANCH_DEFAULT, true);
-    private final SettingsModelString gitRegExp = new SettingsModelString(GitOnlineAdapterNodeModel.GIT_REGEXP,
-            GitOnlineAdapterNodeModel.GIT_REGEXP_DEFAULT);
     private final SettingsModelOptionalString gitPackageName = new SettingsModelOptionalString(
             GitOnlineAdapterNodeModel.GIT_PACKAGENAME, GitOnlineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT, true);
 
@@ -93,7 +89,7 @@ public class GitOnlineAdapterNodeModel extends NodeModel {
         GitOnlineLogParser parser = new GitOnlineLogParser();
 
         List<GitCommit> commits = parser.parseEntries(gitPath,
-                options(gitRegExp.getStringValue(), gitPackageName.getStringValue(), gitBranch.getStringValue()));
+                options(gitPackageName.getStringValue(), gitBranch.getStringValue()));
 
         BufferedDataTable out = transform(commits, exec);
         logger.info("Reading git logs finished.");
@@ -116,7 +112,6 @@ public class GitOnlineAdapterNodeModel extends NodeModel {
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         gitRepositoryAddress.saveSettingsTo(settings);
         gitBranch.saveSettingsTo(settings);
-        gitRegExp.saveSettingsTo(settings);
         gitPackageName.saveSettingsTo(settings);
     }
 
@@ -124,7 +119,6 @@ public class GitOnlineAdapterNodeModel extends NodeModel {
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         gitRepositoryAddress.loadSettingsFrom(settings);
         gitBranch.loadSettingsFrom(settings);
-        gitRegExp.loadSettingsFrom(settings);
         gitPackageName.loadSettingsFrom(settings);
     }
 
@@ -132,7 +126,6 @@ public class GitOnlineAdapterNodeModel extends NodeModel {
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         gitRepositoryAddress.validateSettings(settings);
         gitBranch.loadSettingsFrom(settings);
-        gitRegExp.validateSettings(settings);
         gitPackageName.validateSettings(settings);
     }
 
@@ -166,7 +159,6 @@ public class GitOnlineAdapterNodeModel extends NodeModel {
         scm.setAuthor(commit.getAuthor());
         scm.setCommitDate(commit.getDate());
         scm.setCommitID(commit.getId());
-        scm.setMarkers(commit.getMarkers());
         scm.setMessage(commit.getMessage());
         scm.setOperation(file.getOperation());
         scm.setPath(file.getPath());

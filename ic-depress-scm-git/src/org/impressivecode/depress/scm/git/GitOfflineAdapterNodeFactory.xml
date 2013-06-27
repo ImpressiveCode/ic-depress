@@ -48,7 +48,6 @@
         </intro>
 
         <option name="Selected file">File with Git log to analyze in offline version of plugin</option>
-        <option name="Issue marker">Marker for extraction name of class</option>
         <option name="Package">Name of package</option>
     </fullDescription>
 

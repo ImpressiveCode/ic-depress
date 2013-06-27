@@ -20,63 +20,54 @@ package org.impressivecode.depress.scm.svn;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 public class SVNCommit {
 
-	private String id;
-	private Date date;
-	private String author;
-	private StringBuilder messageBuilder;
-	private List<SVNCommitFile> files;
-	private Set<String> markers;
+    private String id;
+    private Date date;
+    private String author;
+    private StringBuilder messageBuilder;
+    private List<SVNCommitFile> files;
 
-	public SVNCommit() {
-		this.messageBuilder = new StringBuilder();
-		this.files = new ArrayList<SVNCommitFile>();
-	}
+    public SVNCommit() {
+        this.messageBuilder = new StringBuilder();
+        this.files = new ArrayList<SVNCommitFile>();
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(final String id) {
-		this.id = id;
-	}
+    public void setId(final String id) {
+        this.id = id;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public Date getDate() {
+        return date;
+    }
 
-	public String getMessage() {
-		return messageBuilder.toString();
-	}
+    public String getMessage() {
+        return messageBuilder.toString();
+    }
 
-	public void addToMessage(final String text) {
-		messageBuilder.append(text);
-	}
+    public void addToMessage(final String text) {
+        messageBuilder.append(text);
+    }
 
-	public void setAuthor(final String author) {
-		this.author = author;
-	}
+    public void setAuthor(final String author) {
+        this.author = author;
+    }
 
-	public String getAuthor() {
-		return author;
-	}
+    public String getAuthor() {
+        return author;
+    }
 
-	public List<SVNCommitFile> getFiles() {
-		return files;
-	}
+    public List<SVNCommitFile> getFiles() {
+        return files;
+    }
 
-	public void setDate(final Date date) {
-		this.date = date;
-	}
+    public void setDate(final Date date) {
+        this.date = date;
+    }
 
-	public void setMarkers(final Set<String> markers) {
-		this.markers = markers;
-	}
-
-	public Set<String> getMarkers() {
-		return this.markers;
-	}
 }

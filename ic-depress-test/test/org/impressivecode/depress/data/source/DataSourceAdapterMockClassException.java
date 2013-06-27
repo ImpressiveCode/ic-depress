@@ -15,27 +15,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm.svn;
-import com.google.common.base.Strings;
+package org.impressivecode.depress.data.source;
 
-/**
- * @author Marek Majchrzak, ImpressiveCode
- */
-public class SVNParserOptions {
+import java.io.IOException;
 
-    private String packageString;
+public abstract class DataSourceAdapterMockClassException {
+    public void Method() throws IOException {
+    };
 
-    public static SVNParserOptions options(final String packageString) {
-        SVNParserOptions options = new SVNParserOptions();
-        options.packageString = Strings.emptyToNull(packageString);
-        return options;
-    }
-
-    public boolean hasPackagePrefix() {
-        return packageString != null;
-    }
-
-    public String getPackagePrefix() {
-        return packageString;
-    }
 }
