@@ -33,37 +33,15 @@ import com.google.common.base.Strings;
 public class Configuration {
     private final Pattern idRegexp;
     private final String builderFormat;
-    private final String[] keywords;
-    private final Pattern keywordsRegexp;
-    private final Pattern onlyNumbers;
 
-    public Configuration(final SettingsModelString regExpID, final SettingsModelString regExpKeywords,
-            final SettingsModelString keywords, final SettingsModelString onlyIds, final SettingsModelString builder) {
+    public Configuration(final SettingsModelString regExpID, final SettingsModelString builder) {
         if (emptyToNull(regExpID.getStringValue()) != null) {
             this.idRegexp = Pattern.compile(regExpID.getStringValue(),  Pattern.MULTILINE);
         } else {
             this.idRegexp = null;
         }
 
-        if (emptyToNull(regExpKeywords.getStringValue()) != null) {
-            this.keywordsRegexp = Pattern.compile(regExpKeywords.getStringValue());
-        } else {
-            this.keywordsRegexp = null;
-        }
-        if (emptyToNull(keywords.getStringValue()) != null) {
-            this.keywords = keywords.getStringValue().split(",");
-        } else {
-            this.keywords = null;
-        }
-
         this.builderFormat = Strings.emptyToNull(builder.getStringValue());
-
-
-        this.onlyNumbers = Pattern.compile(onlyIds.getStringValue(), Pattern.MULTILINE);
-    }
-
-    public Pattern getOnlyNumbers() {
-        return onlyNumbers;
     }
 
     public Pattern getIdRegexp() {
@@ -72,13 +50,5 @@ public class Configuration {
 
     public String getBuilderFormat() {
         return builderFormat;
-    }
-
-    public String[] getKeywords() {
-        return keywords;
-    }
-
-    public Pattern getKeywordsRegexp() {
-        return keywordsRegexp;
     }
 }

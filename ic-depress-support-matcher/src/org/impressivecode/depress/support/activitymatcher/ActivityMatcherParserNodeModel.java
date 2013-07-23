@@ -19,11 +19,9 @@ package org.impressivecode.depress.support.activitymatcher;
 
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.ISSUE_ID_COLSPEC;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.RESOLVED_DATE_COLSPEC;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.AM_CONFIDENCE_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.AM_MARKER_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.DATE_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.DATE_COLSPEC;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLSPEC;
 import static org.knime.base.data.append.column.AppendedColumnTable.getTableSpec;
 
@@ -61,19 +59,10 @@ public class ActivityMatcherParserNodeModel extends NodeModel {
     static final String CFG_INTERVAL = "depress.support.matcher.activitymatcher.idregexp";
     static final Integer INTERVAL_DEFAULT = 15;
 
-    static final String CFG_REGEXP_KEYWORDS = "depress.support.matcher.activitymatcher.keywordsregexp";
-    static final String REGEXP_KEYWORDS_DEFAULT = "(?i)^.*\\b(bugs?|fix(e[ds])?|defects?|patch|pr)\\b.*$";
-
-    static final String CFG_KEYWORDS = "depress.support.matcher.activitymatcher.keywords";
-    static final String KEYWORDS_DEFAULT = "exception";
-
     static final String CFG_IDBUILDER = "depress.support.matcher.activitymatcher.builder";
     static final String IDBUILDER_DEFAULT = "%s";
 
     private final SettingsModelInteger interval = new SettingsModelInteger(CFG_INTERVAL, INTERVAL_DEFAULT);
-    private final SettingsModelString regExpKeywords = new SettingsModelString(CFG_REGEXP_KEYWORDS,
-            REGEXP_KEYWORDS_DEFAULT);
-    private final SettingsModelString keywords = new SettingsModelString(CFG_KEYWORDS, KEYWORDS_DEFAULT);
     private final SettingsModelString builder = new SettingsModelString(CFG_IDBUILDER, IDBUILDER_DEFAULT);
 
     private InputTransformer<ITSDataType> itsTransfomer;
@@ -93,17 +82,13 @@ public class ActivityMatcherParserNodeModel extends NodeModel {
         AppendedColumnTable table = new AppendedColumnTable(
                 inData[0], 
                 markerCellFactory(issues, 
-                        inData[0].getSpec().findColumnIndex(DATE_COLNAME), 
-                        inData[0].getSpec().findColumnIndex(MESSAGE_COLNAME)),
-                        AM_MARKER_COLSPEC, AM_CONFIDENCE_COLSPEC);
+                        inData[0].getSpec().findColumnIndex(DATE_COLNAME)),
+                        AM_MARKER_COLSPEC);
         return new BufferedDataTable[] { preapreTable(table, exec) };
     }
 
-    private ActivityMarkerCellFactory markerCellFactory(final List<ITSDataType> issues, final int dateIndex,
-            final int messageIndex) {
-
-        return new ActivityMarkerCellFactory(new Configuration(interval, regExpKeywords, keywords, builder, issues),
-                dateIndex, messageIndex);
+    private ActivityMarkerCellFactory markerCellFactory(final List<ITSDataType> issues, final int dateIndex) {
+        return new ActivityMarkerCellFactory(new Configuration(interval, builder, issues), dateIndex);
     }
 
     private BufferedDataTable preapreTable(final AppendedColumnTable table, final ExecutionContext exec)
@@ -122,7 +107,7 @@ public class ActivityMatcherParserNodeModel extends NodeModel {
         this.scmTransfomer.validate(inSpecs[0]);
         this.itsTransfomer.validate(inSpecs[1]);
 
-        final DataTableSpec dts = getTableSpec(inSpecs[0], AM_MARKER_COLSPEC, AM_CONFIDENCE_COLSPEC);
+        final DataTableSpec dts = getTableSpec(inSpecs[0], AM_MARKER_COLSPEC);
 
         return new DataTableSpec[] { dts };
     }
@@ -131,24 +116,18 @@ public class ActivityMatcherParserNodeModel extends NodeModel {
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         interval.saveSettingsTo(settings);
         builder.saveSettingsTo(settings);
-        regExpKeywords.saveSettingsTo(settings);
-        keywords.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         interval.loadSettingsFrom(settings);
         builder.loadSettingsFrom(settings);
-        regExpKeywords.loadSettingsFrom(settings);
-        keywords.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         interval.validateSettings(settings);
         builder.validateSettings(settings);
-        regExpKeywords.validateSettings(settings);
-        keywords.validateSettings(settings);
     }
 
     @Override

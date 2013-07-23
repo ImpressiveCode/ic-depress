@@ -17,15 +17,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.support.activitymatcher;
 
-import java.util.Set;
-
 import org.impressivecode.depress.common.Cells;
 import org.impressivecode.depress.its.ITSDataType;
 import org.knime.base.data.append.column.AppendedCellFactory;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.date.DateAndTimeCell;
-import org.knime.core.data.def.StringCell;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -39,33 +36,21 @@ import com.google.common.collect.Iterables;
 public class ActivityMarkerCellFactory implements AppendedCellFactory {
 
     private final Configuration cfg;
-    private final int msgCellIndex;
     private final int commitDateCellIndex;
 
-    public ActivityMarkerCellFactory(final Configuration configuration, final int commitDateCellIndex,
-            final int messageCellIndex) {
+    public ActivityMarkerCellFactory(final Configuration configuration, final int commitDateCellIndex) {
         this.cfg = configuration;
         this.commitDateCellIndex = commitDateCellIndex;
-        this.msgCellIndex = messageCellIndex;
-
     }
 
     @Override
     public DataCell[] getAppendedCell(final DataRow row) {
-        final String message = ((StringCell) row.getCell(msgCellIndex)).getStringValue();
         long commitTimeInMillis = ((DateAndTimeCell) row.getCell(commitDateCellIndex)).getUTCTimeInMillis();
 
         // naive approach
         final Iterable<ITSDataType> markers = findIssuesFromGivenInterval(commitTimeInMillis);
 
-        final Iterable<Integer> confidence = Iterables.transform(markers, new Function<ITSDataType, Integer>() {
-            @Override
-            public Integer apply(final ITSDataType issue) {
-                return 0;
-            }
-        });
-
-        return new DataCell[] { Cells.stringListCell(applyBuilder(markers)), Cells.integerListCell(confidence) };
+        return new DataCell[] { Cells.stringListCell(applyBuilder(markers))};
     }
 
     private Iterable<ITSDataType> findIssuesFromGivenInterval(final long commitTimeInMillis) {
@@ -79,30 +64,6 @@ public class ActivityMarkerCellFactory implements AppendedCellFactory {
         });
     }
 
-    private int checkConfidence(final String message, final Set<String> markers) {
-        return 0;
-    }
-
-    private boolean hasKeywords(final String message) {
-
-        if (cfg.getKeywords() != null) {
-            for (String keyword : cfg.getKeywords()) {
-                if (message.contains(keyword)) {
-                    return true;
-                }
-            }
-        }
-
-        if (cfg.getKeywordsRegexp() != null) {
-            if (cfg.getKeywordsRegexp().matcher(message).matches()) {
-                return true;
-            }
-        }
-
-        return false;
-
-    }
-
     private Iterable<String> applyBuilder(final Iterable<ITSDataType> markers) {
         return Iterables.transform(markers, new Function<ITSDataType, String>() {
             @Override
@@ -113,7 +74,6 @@ public class ActivityMarkerCellFactory implements AppendedCellFactory {
                 } else {
                     transformedId = id.getIssueId();
                 }
-
                 return transformedId;
             }
         });

@@ -15,10 +15,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.support.extmarkerparser;
+package org.impressivecode.depress.support.syntacticanalysis;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.EXT_MARKER_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.SYNTACTIC_CONFIDENCE_COLSPEC;
 
@@ -46,18 +45,24 @@ import com.google.common.base.Preconditions;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class ExtendedMarkerParserNodeModel extends NodeModel {
+public class SyntacticAnalysisNodeModel extends NodeModel {
 
-    static final String CFG_REGEXP_ID = "depress.support.matcher.extmarkerparser.idregexp";
-    static final String REGEXP_ID_DEFAULT = "([0-9]+)";
+    static final String CFG_REGEXP_KEYWORDS = "depress.support.matcher.extmarkerparser.keywordsregexp";
+    static final String REGEXP_KEYWORDS_DEFAULT = "(?i)^.*\\b(bugs?|fix(e[ds])?|defects?|patch|pr)\\b.*$";
 
-    static final String CFG_IDBUILDER = "depress.support.matcher.extmarkerparser.builder";
-    static final String IDBUILDER_DEFAULT = "%s";
+    static final String CFG_KEYWORDS = "depress.support.matcher.extmarkerparser.keywords";
+    static final String KEYWORDS_DEFAULT = "exception";
 
-    private final SettingsModelString regExpID = new SettingsModelString(CFG_REGEXP_ID, REGEXP_ID_DEFAULT);
-    private final SettingsModelString builder = new SettingsModelString(CFG_IDBUILDER, IDBUILDER_DEFAULT);
+    static final String CFG_REGEXP_ONLYIDS = "depress.support.matcher.extmarkerparser.onlyids";
+    static final String REGEXP_ONLYIDS_DEFAULT = "^[,0-9 ]+$";
 
-    protected ExtendedMarkerParserNodeModel() {
+    private final SettingsModelString regExpKeywords = new SettingsModelString(CFG_REGEXP_KEYWORDS,
+            REGEXP_KEYWORDS_DEFAULT);
+    private final SettingsModelString keywords = new SettingsModelString(CFG_KEYWORDS, KEYWORDS_DEFAULT);
+    private final SettingsModelString regExpOnlyIds = new SettingsModelString(CFG_REGEXP_ONLYIDS,
+            REGEXP_ONLYIDS_DEFAULT);
+
+    protected SyntacticAnalysisNodeModel() {
         super(1, 1);
     }
 
@@ -66,14 +71,14 @@ public class ExtendedMarkerParserNodeModel extends NodeModel {
             throws Exception {
 
         AppendedColumnTable table = new AppendedColumnTable(inData[0], markerCellFactory(inData[0]),
-                EXT_MARKER_COLSPEC);
+                SYNTACTIC_CONFIDENCE_COLSPEC);
 
         return new BufferedDataTable[] { preapreTable(table, exec) };
     }
 
-    private ExtMarkerCellFactory markerCellFactory(final BufferedDataTable inData) {
-        return new ExtMarkerCellFactory(new Configuration(regExpID, builder),
-                inData.getSpec().findColumnIndex(MESSAGE_COLNAME));
+    private SyntacticAnalysisCellFactory markerCellFactory(final BufferedDataTable inData) {
+        return new SyntacticAnalysisCellFactory(new Configuration(regExpKeywords, keywords, regExpOnlyIds), inData
+                .getSpec().findColumnIndex(MESSAGE_COLNAME));
     }
 
     private BufferedDataTable preapreTable(final AppendedColumnTable table, final ExecutionContext exec)
@@ -91,7 +96,7 @@ public class ExtendedMarkerParserNodeModel extends NodeModel {
         Preconditions.checkArgument(inSpecs.length == 1);
         validate(inSpecs[0]);
 
-        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], EXT_MARKER_COLSPEC, SYNTACTIC_CONFIDENCE_COLSPEC);
+        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], SYNTACTIC_CONFIDENCE_COLSPEC);
 
         return new DataTableSpec[] { dts };
     }
@@ -103,20 +108,23 @@ public class ExtendedMarkerParserNodeModel extends NodeModel {
 
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
-        regExpID.saveSettingsTo(settings);
-        builder.saveSettingsTo(settings);
+        regExpKeywords.saveSettingsTo(settings);
+        keywords.saveSettingsTo(settings);
+        regExpOnlyIds.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        regExpID.loadSettingsFrom(settings);
-        builder.loadSettingsFrom(settings);
+        regExpKeywords.loadSettingsFrom(settings);
+        keywords.loadSettingsFrom(settings);
+        regExpOnlyIds.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        regExpID.validateSettings(settings);
-        builder.validateSettings(settings);
+        regExpKeywords.validateSettings(settings);
+        keywords.validateSettings(settings);
+        regExpOnlyIds.validateSettings(settings);
     }
 
     @Override

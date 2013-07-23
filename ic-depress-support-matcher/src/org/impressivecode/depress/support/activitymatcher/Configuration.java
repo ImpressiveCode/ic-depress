@@ -17,10 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.support.activitymatcher;
 
-import static com.google.common.base.Strings.emptyToNull;
-
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.impressivecode.depress.its.ITSDataType;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
@@ -35,24 +32,11 @@ import com.google.common.base.Strings;
  */
 public class Configuration {
     private final String builderFormat;
-    private final String[] keywords;
-    private final Pattern keywordsRegexp;
     private final List<ITSDataType> issues;
     private final int interval;
 
-    public Configuration(final SettingsModelInteger interval, final SettingsModelString regExpKeywords, final SettingsModelString keywords,
+    public Configuration(final SettingsModelInteger interval,
             final SettingsModelString builder, final List<ITSDataType> issues) {
-
-        if (emptyToNull(regExpKeywords.getStringValue()) != null) {
-            this.keywordsRegexp = Pattern.compile(regExpKeywords.getStringValue());
-        } else {
-            this.keywordsRegexp = null;
-        }
-        if (emptyToNull(keywords.getStringValue()) != null) {
-            this.keywords = keywords.getStringValue().split(",");
-        } else {
-            this.keywords = null;
-        }
 
         this.builderFormat = Strings.emptyToNull(builder.getStringValue());
         this.issues = issues;
@@ -73,13 +57,5 @@ public class Configuration {
 
     public String getBuilderFormat() {
         return builderFormat;
-    }
-
-    public String[] getKeywords() {
-        return keywords;
-    }
-
-    public Pattern getKeywordsRegexp() {
-        return keywordsRegexp;
     }
 }

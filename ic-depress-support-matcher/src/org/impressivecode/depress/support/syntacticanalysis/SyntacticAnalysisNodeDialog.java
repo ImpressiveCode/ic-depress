@@ -15,12 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.support.activitymatcher;
+package org.impressivecode.depress.support.syntacticanalysis;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
-import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
-import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
@@ -28,17 +26,22 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class ActivityMatcherNodeDialog extends DefaultNodeSettingsPane {
+public class SyntacticAnalysisNodeDialog extends DefaultNodeSettingsPane {
 
-    protected ActivityMatcherNodeDialog() {
+    protected SyntacticAnalysisNodeDialog() {
         super();
-        createNewGroup("Matcher Settings");
-        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(ActivityMatcherParserNodeModel.CFG_INTERVAL,
-                ActivityMatcherParserNodeModel.INTERVAL_DEFAULT), 
-                "Interval(min): ", 33));
+        createNewGroup("Confidence");
+        addDialogComponent(new DialogComponentString(new SettingsModelString(SyntacticAnalysisNodeModel.CFG_REGEXP_ONLYIDS,
+                SyntacticAnalysisNodeModel.REGEXP_ONLYIDS_DEFAULT), 
+                "Only IDs regexp:", true, 33));
 
-        addDialogComponent(new DialogComponentString(new SettingsModelString(ActivityMatcherParserNodeModel.CFG_IDBUILDER,
-                ActivityMatcherParserNodeModel.IDBUILDER_DEFAULT), 
-                "ID Builder:     ", false, 33));
+        addDialogComponent(new DialogComponentString(new SettingsModelString(SyntacticAnalysisNodeModel.CFG_REGEXP_KEYWORDS,
+                SyntacticAnalysisNodeModel.REGEXP_KEYWORDS_DEFAULT), 
+                "Keywords regexp:", false, 33));
+
+        addDialogComponent(new DialogComponentString(new SettingsModelString(SyntacticAnalysisNodeModel.CFG_KEYWORDS,
+                SyntacticAnalysisNodeModel.KEYWORDS_DEFAULT), 
+                "Keywords(,):    ", false, 33));
+
     }
 }
