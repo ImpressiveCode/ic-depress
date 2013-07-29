@@ -70,8 +70,8 @@ public class ActivityMatcherParserNodeModel extends NodeModel {
 
     protected ActivityMatcherParserNodeModel() {
         super(2, 1);
-        this.itsTransfomer = new ITSInputTransformer(new DataTableSpec(ISSUE_ID_COLSPEC, RESOLVED_DATE_COLSPEC));
-        this.scmTransfomer = new SCMInputTransformer(new DataTableSpec(MESSAGE_COLSPEC, DATE_COLSPEC));
+        this.itsTransfomer = new ITSInputTransformer();
+        this.scmTransfomer = new SCMInputTransformer();
     }
 
     @Override
@@ -104,8 +104,8 @@ public class ActivityMatcherParserNodeModel extends NodeModel {
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         Preconditions.checkArgument(inSpecs.length == 2);
 
-        this.scmTransfomer.validate(inSpecs[0]);
-        this.itsTransfomer.validate(inSpecs[1]);
+        this.scmTransfomer.setMinimalSpec(new DataTableSpec(MESSAGE_COLSPEC, DATE_COLSPEC)).setInputSpec(inSpecs[0]).validate();
+        this.itsTransfomer.setMinimalSpec(new DataTableSpec(ISSUE_ID_COLSPEC, RESOLVED_DATE_COLSPEC)).setInputSpec(inSpecs[1]).validate();
 
         final DataTableSpec dts = getTableSpec(inSpecs[0], AM_MARKER_COLSPEC);
 

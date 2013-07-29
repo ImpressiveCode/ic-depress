@@ -50,7 +50,7 @@ public class ActivityMarkerCellFactory implements AppendedCellFactory {
         // naive approach
         final Iterable<ITSDataType> markers = findIssuesFromGivenInterval(commitTimeInMillis);
 
-        return new DataCell[] { Cells.stringListCell(applyBuilder(markers))};
+        return new DataCell[] { Cells.stringSetCell(applyBuilder(markers))};
     }
 
     private Iterable<ITSDataType> findIssuesFromGivenInterval(final long commitTimeInMillis) {

@@ -23,5 +23,10 @@
             factory-class="org.impressivecode.depress.support.syntacticanalysis.SyntacticAnalysisNodeFactory"
             id="org.impressivecode.depress.support.syntacticanalysis">
       </node>
+      <node
+            category-path="depress/depress.scm"
+            factory-class="org.impressivecode.depress.support.sematicanalysis.SemanticAnalysisNodeFactory"
+            id="org.impressivecode.depress.support.semanticanalysis">
+      </node>
    </extension>
 </plugin>

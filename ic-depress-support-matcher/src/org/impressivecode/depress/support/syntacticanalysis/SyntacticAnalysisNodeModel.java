@@ -47,13 +47,13 @@ import com.google.common.base.Preconditions;
  */
 public class SyntacticAnalysisNodeModel extends NodeModel {
 
-    static final String CFG_REGEXP_KEYWORDS = "depress.support.matcher.extmarkerparser.keywordsregexp";
+    static final String CFG_REGEXP_KEYWORDS = "depress.support.matcher.syntacticanalysis.keywordsregexp";
     static final String REGEXP_KEYWORDS_DEFAULT = "(?i)^.*\\b(bugs?|fix(e[ds])?|defects?|patch|pr)\\b.*$";
 
-    static final String CFG_KEYWORDS = "depress.support.matcher.extmarkerparser.keywords";
+    static final String CFG_KEYWORDS = "depress.support.matcher.syntacticanalysis.keywords";
     static final String KEYWORDS_DEFAULT = "exception";
 
-    static final String CFG_REGEXP_ONLYIDS = "depress.support.matcher.extmarkerparser.onlyids";
+    static final String CFG_REGEXP_ONLYIDS = "depress.support.matcher.syntacticanalysis.onlyids";
     static final String REGEXP_ONLYIDS_DEFAULT = "^[,0-9 ]+$";
 
     private final SettingsModelString regExpKeywords = new SettingsModelString(CFG_REGEXP_KEYWORDS,
@@ -103,7 +103,7 @@ public class SyntacticAnalysisNodeModel extends NodeModel {
 
     private void validate(final DataTableSpec spec) throws InvalidSettingsException {
         checkNotNull(spec, "DataTableSpec hat to be set");
-        new SCMInputTransformer(new DataTableSpec(SCMAdapterTableFactory.MESSAGE_COLSPEC)).validate(spec);
+        new SCMInputTransformer().setMinimalSpec(new DataTableSpec(SCMAdapterTableFactory.MESSAGE_COLSPEC)).setInputSpec(spec).validate();
     }
 
     @Override

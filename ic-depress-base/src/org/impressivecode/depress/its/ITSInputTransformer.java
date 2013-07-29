@@ -39,14 +39,17 @@ import com.google.common.collect.Iterables;
  * 
  */
 public class ITSInputTransformer implements InputTransformer<ITSDataType> {
-    private final DataTableSpec minimalRequiredTableSpec;
 
-    public ITSInputTransformer(final DataTableSpec tableSpec) {
-        this.minimalRequiredTableSpec = tableSpec;
+    private DataTableSpec minimalTableSpec;
+    private DataTableSpec inputTableSpec;
+
+    public ITSInputTransformer() {
     }
 
     @Override
     public List<ITSDataType> transform(final DataTable inTable) {
+        checkNotNull(this.minimalTableSpec, "Minimal DataTableSpec hat to be set");
+        checkNotNull(this.inputTableSpec, "Input DataTableSpec hat to be set");
         checkNotNull(inTable, "InTable has to be set");
         List<ITSDataType> issueData = newArrayListWithExpectedSize(1000);
         RowIterator iterator = inTable.iterator();
@@ -57,7 +60,7 @@ public class ITSInputTransformer implements InputTransformer<ITSDataType> {
     }
 
     private ITSDataType issue(final DataRow row) {
-        TableCellReader reader = new TableCellReader(minimalRequiredTableSpec, row);
+        TableCellReader reader = new TableCellReader(this.inputTableSpec, row);
         ITSDataType its = new ITSDataType();
         //add additional if required
         its.setIssueId(reader.stringOptional(ITSAdapterTableFactory.ISSUE_ID));
@@ -66,13 +69,27 @@ public class ITSInputTransformer implements InputTransformer<ITSDataType> {
     }
 
     @Override
-    public void validate(final DataTableSpec spec) throws InvalidSettingsException {
-        checkNotNull(spec, "DataTableSpec hat to be set");
+    public InputTransformer<ITSDataType> validate() throws InvalidSettingsException {
+        checkNotNull(this.minimalTableSpec, "Minimal DataTableSpec hat to be set");
+        checkNotNull(this.inputTableSpec, "Input DataTableSpec hat to be set");
 
-        Set<String> missing = DataTableSpecUtils.findMissingColumnSubset(spec, this.minimalRequiredTableSpec);
+        Set<String> missing = DataTableSpecUtils.findMissingColumnSubset(this.inputTableSpec, this.minimalTableSpec);
         if (!missing.isEmpty()) {
-            throw new InvalidSettingsException("Issue data table does not contain required columns. Missing: "
+            throw new InvalidSettingsException("History data table does not contain required columns. Missing: "
                     + Iterables.toString(missing));
         }
+        return this;
+    }
+
+    @Override
+    public InputTransformer<ITSDataType> setMinimalSpec(final DataTableSpec spec) {
+        this.minimalTableSpec = spec;
+        return this;
+    }
+
+    @Override
+    public InputTransformer<ITSDataType> setInputSpec(final DataTableSpec spec) {
+        this.inputTableSpec = spec;
+        return this;
     }
 }

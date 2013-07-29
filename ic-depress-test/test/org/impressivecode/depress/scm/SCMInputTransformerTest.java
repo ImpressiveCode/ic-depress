@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.scm;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MARKER_COLSPEC;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_NAME;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -25,15 +27,14 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 
 import org.impressivecode.depress.common.Cells;
-import org.impressivecode.depress.scm.SCMInputTransformer;
-import org.impressivecode.depress.scm.SCMAdapterTableFactory;
-import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.common.InputTransformer;
 import org.junit.Test;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTable;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.RowIterator;
+import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 import org.knime.core.node.InvalidSettingsException;
 import org.mockito.Mockito;
@@ -50,15 +51,16 @@ public class SCMInputTransformerTest {
     public void shouldValidateSpec() throws InvalidSettingsException {
         // given
         DataTableSpec spec = new DataTableSpec(new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec());
+        DataTableSpec minSpec = new DataTableSpec(new DataColumnSpecCreator(RESOURCE_NAME, IntCell.TYPE).createSpec());
         // when
-        new SCMInputTransformer(spec);
+        new SCMInputTransformer().setInputSpec(spec).setMinimalSpec(minSpec).validate();
     }
 
     @Test
     public void shoulTransform() throws InvalidSettingsException {
         // given
-        DataTableSpec spec = SCMAdapterTableFactory.createDataColumnSpec();
-        SCMInputTransformer transformer = new SCMInputTransformer(spec);
+        DataTableSpec spec = new DataTableSpec(RESOURCE_COLSPEC, MARKER_COLSPEC);
+        InputTransformer<SCMDataType> transformer = new SCMInputTransformer().setMinimalSpec(spec).setInputSpec(spec);;
         DataTable inTable = mock(DataTable.class);
         RowIterator iterator = mock(RowIterator.class);
         when(iterator.hasNext()).thenReturn(true, false);

@@ -101,7 +101,7 @@ public class Cells {
         return CollectionCellFactory.createListCell(coll);
     }
 
-    public static DataCell stringSetCell(final Set<String> cellSet) {
+    public static DataCell stringSetCell(final Iterable<String> cellSet) {
         Set<DataCell> coll = newHashSet(Iterables.transform(cellSet, new Function<String, DataCell>() {
             @Override
             public DataCell apply(final String value) {
