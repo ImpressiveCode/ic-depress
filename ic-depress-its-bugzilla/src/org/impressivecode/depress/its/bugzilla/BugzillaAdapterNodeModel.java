@@ -21,10 +21,7 @@ import static org.impressivecode.depress.its.bugzilla.BugzillaAdapterTableFactor
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
@@ -40,7 +37,6 @@ import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
-import org.xml.sax.SAXException;
 
 import com.google.common.base.Preconditions;
 
@@ -80,9 +76,13 @@ public class BugzillaAdapterNodeModel extends NodeModel {
         return transformer.transform(entries, exec);
     }
 
-    private List<ITSDataType> parseEntries(final String filePath) throws ParserConfigurationException, SAXException,
-    IOException, ParseException {
-        return new BugzillaEntriesParser().parseEntries(filePath);
+    private List<ITSDataType> parseEntries(final String filePath) throws Exception {
+        try {
+            return new BugzillaEntriesParser().parseEntries(filePath);
+        } catch (Exception e) {
+            LOGGER.error("Error during parsing data", e);
+            throw e;
+        }
     }
 
     @Override

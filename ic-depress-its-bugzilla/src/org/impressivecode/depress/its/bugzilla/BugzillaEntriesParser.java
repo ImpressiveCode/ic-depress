@@ -22,6 +22,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -212,7 +213,11 @@ public class BugzillaEntriesParser {
 
     private List<String> getComments(final Element elem) {
         List<String> values = extractValues(elem, "thetext");
-        return values.subList(1, values.size());
+        if(values.size() > 1){
+            return values.subList(1, values.size());
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     private String getKey(final Element elem) {
