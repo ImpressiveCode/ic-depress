@@ -18,6 +18,7 @@
 package org.impressivecode.depress.metric.im;
 
 import static com.google.common.base.Preconditions.checkState;
+import static org.impressivecode.depress.its.ITSAdapterTableFactory.ISSUE_ID_COLSPEC;
 import static org.impressivecode.depress.metric.im.IssuesMetricTableFactory.createDataColumnSpec;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MARKER_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_COLSPEC;
@@ -28,7 +29,6 @@ import java.util.List;
 
 import org.impressivecode.depress.common.InputTransformer;
 import org.impressivecode.depress.common.OutputTransformer;
-import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSInputTransformer;
 import org.impressivecode.depress.scm.SCMDataType;
@@ -58,8 +58,8 @@ public class IssuesMetricNodeModel extends NodeModel {
 
     protected IssuesMetricNodeModel() {
         super(2, 1);
-        this.historyTransfomer = new SCMInputTransformer(new DataTableSpec(RESOURCE_COLSPEC, MARKER_COLSPEC));
-        this.issueTransfomer = new ITSInputTransformer(new DataTableSpec(ITSAdapterTableFactory.ISSUE_ID_COLSPEC));
+        this.historyTransfomer = new SCMInputTransformer();
+        this.issueTransfomer = new ITSInputTransformer();
     }
 
     @Override
@@ -101,8 +101,8 @@ public class IssuesMetricNodeModel extends NodeModel {
         if (inSpecs.length != 2) {
             throw new InvalidSettingsException("Wrong number of input suorces");
         }
-        this.historyTransfomer.validate(inSpecs[0]);
-        this.issueTransfomer.validate(inSpecs[1]);
+        this.historyTransfomer.setMinimalSpec(new DataTableSpec(RESOURCE_COLSPEC, MARKER_COLSPEC)).setInputSpec(inSpecs[0]).validate();
+        this.issueTransfomer.setMinimalSpec(new DataTableSpec(ISSUE_ID_COLSPEC)).setInputSpec(inSpecs[1]).validate();
 
         return new DataTableSpec[] { createDataColumnSpec() };
     }

@@ -20,10 +20,10 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.impressivecode.depress.its.bugzilla,
  org.impressivecode.depress.data.anonymisation,
  org.impressivecode.depress.scm.svn,
- org.impressivecode.depress.scmits.matcher,
  org.impressivecode.depress.metric.checkstyle,
  org.impressivecode.depress.metric.pmd,
- org.impressivecode.depress.data.source;bundle-version="0.1.0"
+ org.impressivecode.depress.data.source,
+ org.impressivecode.depress.support.matcher
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Eclipse-RegisterBuddy: org.knime.core.node
 Bundle-ClassPath: bin/,

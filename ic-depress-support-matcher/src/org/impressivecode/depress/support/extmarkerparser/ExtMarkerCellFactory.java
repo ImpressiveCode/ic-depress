@@ -17,8 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.support.extmarkerparser;
 
-import static org.impressivecode.depress.common.Cells.integerOrMissingCell;
-
 import java.util.Set;
 import java.util.regex.Matcher;
 
@@ -63,47 +61,7 @@ public class ExtMarkerCellFactory implements AppendedCellFactory {
             }
         }
 
-        Integer confidence = null;
-        if (!markers.isEmpty()) {
-            confidence = checkConfidence(message, markers);
-        }
-
-        return new DataCell[] { Cells.stringSetCell(applyBuilder(markers)), integerOrMissingCell(confidence) };
-    }
-
-    private int checkConfidence(final String message, final Set<String> markers) {
-
-        if (hasKeywords(message)) {
-            return 2;
-        } else if (onlyNumbers(message)) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    private boolean onlyNumbers(final String message) {
-        return cfg.getOnlyNumbers().matcher(message).matches();
-    }
-
-    private boolean hasKeywords(final String message) {
-
-        if (cfg.getKeywords() != null) {
-            for (String keyword : cfg.getKeywords()) {
-                if (message.contains(keyword)) {
-                    return true;
-                }
-            }
-        }
-
-        if (cfg.getKeywordsRegexp() != null) {
-            if (cfg.getKeywordsRegexp().matcher(message).matches()) {
-                return true;
-            }
-        }
-
-        return false;
-
+        return new DataCell[] { Cells.stringSetCell(applyBuilder(markers))};
     }
 
     private Set<String> applyBuilder(final Set<String> markers) {
