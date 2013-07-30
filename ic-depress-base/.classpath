@@ -3,6 +3,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="lib/guava-14.0-rc3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/guava-14.0-rc3.jar" sourcepath="C:/Users/marek/.m2/repository/com/google/guava/guava/14.0-rc3/guava-14.0-rc3-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

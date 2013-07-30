@@ -20,6 +20,7 @@ package org.impressivecode.depress.support.markerparser;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MARKER_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLSPEC;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.impressivecode.depress.common.Cells;
-import org.impressivecode.depress.scm.SCMAdapterTableFactory;
 import org.impressivecode.depress.scm.SCMInputTransformer;
 import org.knime.base.data.append.column.AppendedCellFactory;
 import org.knime.base.data.append.column.AppendedColumnTable;
@@ -101,7 +101,7 @@ public class MarkerParserNodeModel extends NodeModel {
 
     private void validate(final DataTableSpec spec) throws InvalidSettingsException {
         checkNotNull(spec, "DataTableSpec hat to be set");
-        new SCMInputTransformer(new DataTableSpec(SCMAdapterTableFactory.MESSAGE_COLSPEC)).validate(spec);
+        new SCMInputTransformer().setMinimalSpec(new DataTableSpec(MESSAGE_COLSPEC)).setInputSpec(spec).validate();
     }
 
     @Override

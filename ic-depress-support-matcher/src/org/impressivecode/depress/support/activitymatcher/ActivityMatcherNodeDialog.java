@@ -40,15 +40,5 @@ public class ActivityMatcherNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(new DialogComponentString(new SettingsModelString(ActivityMatcherParserNodeModel.CFG_IDBUILDER,
                 ActivityMatcherParserNodeModel.IDBUILDER_DEFAULT), 
                 "ID Builder:     ", false, 33));
-
-        createNewGroup("Confidence");
-        addDialogComponent(new DialogComponentString(new SettingsModelString(ActivityMatcherParserNodeModel.CFG_REGEXP_KEYWORDS,
-                ActivityMatcherParserNodeModel.REGEXP_KEYWORDS_DEFAULT), 
-                "Keywords Regexp:", false, 33));
-
-        addDialogComponent(new DialogComponentString(new SettingsModelString(ActivityMatcherParserNodeModel.CFG_KEYWORDS,
-                ActivityMatcherParserNodeModel.KEYWORDS_DEFAULT), 
-                "Keywords(,):    ", false, 33));
-
     }
 }

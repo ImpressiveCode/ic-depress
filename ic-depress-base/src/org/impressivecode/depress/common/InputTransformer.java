@@ -31,6 +31,10 @@ public interface InputTransformer<T> {
 
     List<T> transform(final DataTable inTable);
 
-    void validate(DataTableSpec spec) throws InvalidSettingsException;
+    InputTransformer<T> validate() throws InvalidSettingsException;
+
+    InputTransformer<T> setMinimalSpec(DataTableSpec spec);
+
+    InputTransformer<T> setInputSpec(DataTableSpec dataTableSpec);
 
 }

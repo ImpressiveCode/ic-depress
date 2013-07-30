@@ -42,15 +42,16 @@ import com.google.common.collect.Lists;
  */
 public class SCMInputTransformer implements InputTransformer<SCMDataType> {
 
-    private final DataTableSpec minimalTableSpec;
+    private DataTableSpec minimalTableSpec;
+    private DataTableSpec inputTableSpec;
 
-    public SCMInputTransformer(final DataTableSpec tableSpec) {
-        checkNotNull(tableSpec, "DataTableSpec hat to be set");
-        this.minimalTableSpec = tableSpec;
+    public SCMInputTransformer() {
     }
 
     @Override
     public List<SCMDataType> transform(final DataTable inTable) {
+        checkNotNull(this.minimalTableSpec, "Minimal DataTableSpec hat to be set");
+        checkNotNull(this.inputTableSpec, "Input DataTableSpec hat to be set");
         checkNotNull(inTable, "InTable has to be set");
         List<SCMDataType> scmData = Lists.newArrayListWithExpectedSize(1000);
         RowIterator iterator = inTable.iterator();
@@ -61,7 +62,7 @@ public class SCMInputTransformer implements InputTransformer<SCMDataType> {
     }
 
     private SCMDataType scm(final DataRow row) {
-        TableCellReader reader = new TableCellReader(minimalTableSpec, row);
+        TableCellReader reader = new TableCellReader(this.inputTableSpec, row);
         SCMDataType scm = new SCMDataType();
         scm.setResourceName(reader.stringOptional(RESOURCE_NAME));
         scm.setMarkers(reader.stringSetOptional(SCMAdapterTableFactory.MARKER));
@@ -69,13 +70,27 @@ public class SCMInputTransformer implements InputTransformer<SCMDataType> {
     }
 
     @Override
-    public void validate(final DataTableSpec spec) throws InvalidSettingsException {
-        checkNotNull(spec, "DataTableSpec hat to be set");
+    public InputTransformer<SCMDataType> validate() throws InvalidSettingsException {
+        checkNotNull(this.minimalTableSpec, "Minimal DataTableSpec hat to be set");
+        checkNotNull(this.inputTableSpec, "Input DataTableSpec hat to be set");
 
-        Set<String> missing = DataTableSpecUtils.findMissingColumnSubset(spec, this.minimalTableSpec);
+        Set<String> missing = DataTableSpecUtils.findMissingColumnSubset(this.inputTableSpec, this.minimalTableSpec);
         if (!missing.isEmpty()) {
             throw new InvalidSettingsException("History data table does not contain required columns. Missing: "
                     + Iterables.toString(missing));
         }
+        return this;
+    }
+
+    @Override
+    public InputTransformer<SCMDataType> setMinimalSpec(final DataTableSpec spec) {
+        this.minimalTableSpec = spec;
+        return this;
+    }
+
+    @Override
+    public InputTransformer<SCMDataType> setInputSpec(final DataTableSpec spec) {
+        this.inputTableSpec = spec;
+        return this;
     }
 }
