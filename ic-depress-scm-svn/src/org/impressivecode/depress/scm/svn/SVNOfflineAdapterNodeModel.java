@@ -69,14 +69,19 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
+        try {
+            LOGGER.info("Reading logs from file " + this.fileName.getStringValue());
+            SVNOfflineParser parser = new SVNOfflineParser(options(packageName.getStringValue()));
+            List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
+            LOGGER.info("Reading logs finished");
+            BufferedDataTable out = transform(commits, exec);
+            LOGGER.info("Transforming logs finished.");
+            return new BufferedDataTable[] { out };
+        } catch (Exception ex) {
+            LOGGER.error("Unable to parse SVN entries", ex);
+            throw ex;
+        }
 
-        LOGGER.info("Reading logs from file " + this.fileName.getStringValue());
-        SVNOfflineParser parser = new SVNOfflineParser(options(packageName.getStringValue()));
-        List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
-        LOGGER.info("Reading logs finished");
-        BufferedDataTable out = transform(commits, exec);
-        LOGGER.info("Transforming logs finished.");
-        return new BufferedDataTable[] { out };
     }
 
     private BufferedDataTable transform(final List<SCMDataType> commits, final ExecutionContext exec)
