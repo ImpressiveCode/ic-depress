@@ -30,7 +30,6 @@ import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.jira.JiraEntriesParser;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 /**
@@ -80,5 +79,8 @@ public class JiraEntriesParserTest {
         assertThat(its.getResolution()).isEqualTo(ITSResolution.FIXED);
         assertThat(its.getUpdated()).isNotNull();
         assertThat(its.getVersion()).containsExactly("3.0");
+        assertThat(its.getAssignees()).containsOnly("garydgregory");
+        assertThat(its.getReporter()).isEqualTo("garydgregory");
+        assertThat(its.getCommentAuthors()).containsOnly("bayard","mbenson", "garydgregory");
     }
 }

@@ -30,7 +30,6 @@ import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.bugzilla.BugzillaEntriesParser;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 /**
@@ -70,5 +69,8 @@ public class BugzillaEntriesParserTest {
         assertThat(its.getResolution()).isEqualTo(ITSResolution.FIXED);
         assertThat(its.getUpdated()).isNull(); //?? last modified -> resolved 
         assertThat(its.getVersion()).containsExactly("Trunk");
+        assertThat(its.getAssignees()).containsOnly("bent.mozilla1");
+        assertThat(its.getReporter()).isEqualTo("bent.mozilla");
+        assertThat(its.getCommentAuthors()).containsOnly("bent.mozilla","jorendorff", "jst", "samuel.sidler+old","dveditz", "hskupin", "dolske");
     }
 }
