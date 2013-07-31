@@ -53,12 +53,12 @@ public class MarkerInputTransformer implements InputTransformer<MarkerDataType> 
         checkNotNull(this.minimalTableSpec, "Minimal DataTableSpec hat to be set");
         checkNotNull(this.inputTableSpec, "Input DataTableSpec hat to be set");
         checkNotNull(inTable, "InTable has to be set");
-        List<MarkerDataType> scmData = Lists.newArrayListWithExpectedSize(1000);
+        List<MarkerDataType> markerData = Lists.newArrayListWithExpectedSize(1000);
         RowIterator iterator = inTable.iterator();
         while (iterator.hasNext()) {
-            scmData.add(marker(iterator.next()));
+            markerData.add(marker(iterator.next()));
         }
-        return scmData;
+        return markerData;
     }
 
     private MarkerDataType marker(final DataRow row) {
