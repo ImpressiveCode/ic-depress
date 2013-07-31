@@ -23,14 +23,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import org.impressivecode.depress.common.OutputTransformer;
-import org.impressivecode.depress.scm.SCMAdapterTransformer;
-import org.impressivecode.depress.scm.SCMDataType;
-import org.impressivecode.depress.scm.SCMOperation;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
@@ -70,7 +66,6 @@ public class SCMAdapterTransformerTest {
         scm.setAuthor("a");
         scm.setCommitDate(new Date());
         scm.setCommitID("ID");
-        scm.setMarkers(Collections.<String> emptySet());
         scm.setMessage("m");
         scm.setOperation(SCMOperation.ADDED);
         scm.setPath(path);

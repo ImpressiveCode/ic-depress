@@ -17,9 +17,7 @@
  */
 package org.impressivecode.depress.scm;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.Set;
 
 /**
  * 
@@ -29,7 +27,6 @@ import java.util.Set;
 public class SCMDataType implements Cloneable{
 
     private String resourceName;
-    private Set<String> markers = Collections.emptySet();
     private String author;
     private SCMOperation operation;
     private String message;
@@ -89,23 +86,15 @@ public class SCMDataType implements Cloneable{
         this.resourceName = resource;
     }
 
-    public void setMarkers(final Set<String> markers) {
-        this.markers = markers;
-    }
-
     public String getResourceName() {
         return resourceName;
-    }
-
-    public Set<String> getMarkers() {
-        return markers;
     }
 
     @Override
     public String toString() {
         return String
-                .format("SCMDataType [resourceName=%s, markers=%s, author=%s, operation=%s, message=%s, path=%s, commitDate=%s, commitID=%s]",
-                        resourceName, markers, author, operation, message, path, commitDate, commitID);
+                .format("SCMDataType [resourceName=%s, author=%s, operation=%s, message=%s, path=%s, commitDate=%s, commitID=%s]",
+                        resourceName, author, operation, message, path, commitDate, commitID);
     }
 
     @Override

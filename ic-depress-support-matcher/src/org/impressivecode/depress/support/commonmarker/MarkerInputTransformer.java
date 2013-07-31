@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm;
+package org.impressivecode.depress.support.commonmarker;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_NAME;
@@ -40,36 +40,37 @@ import com.google.common.collect.Lists;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class SCMInputTransformer implements InputTransformer<SCMDataType> {
+public class MarkerInputTransformer implements InputTransformer<MarkerDataType> {
 
     private DataTableSpec minimalTableSpec;
     private DataTableSpec inputTableSpec;
 
-    public SCMInputTransformer() {
+    public MarkerInputTransformer() {
     }
 
     @Override
-    public List<SCMDataType> transform(final DataTable inTable) {
+    public List<MarkerDataType> transform(final DataTable inTable) {
         checkNotNull(this.minimalTableSpec, "Minimal DataTableSpec hat to be set");
         checkNotNull(this.inputTableSpec, "Input DataTableSpec hat to be set");
         checkNotNull(inTable, "InTable has to be set");
-        List<SCMDataType> scmData = Lists.newArrayListWithExpectedSize(1000);
+        List<MarkerDataType> scmData = Lists.newArrayListWithExpectedSize(1000);
         RowIterator iterator = inTable.iterator();
         while (iterator.hasNext()) {
-            scmData.add(scm(iterator.next()));
+            scmData.add(marker(iterator.next()));
         }
         return scmData;
     }
 
-    private SCMDataType scm(final DataRow row) {
+    private MarkerDataType marker(final DataRow row) {
         TableCellReader reader = new TableCellReader(this.inputTableSpec, row);
-        SCMDataType scm = new SCMDataType();
-        scm.setResourceName(reader.stringOptional(RESOURCE_NAME));
-        return scm;
+        MarkerDataType marker = new MarkerDataType();
+        marker.setResourceName(reader.stringOptional(RESOURCE_NAME));
+        marker.setMarkers(reader.stringSetOptional(MarkerAdapterTableFactory.MARKER));
+        return marker;
     }
 
     @Override
-    public InputTransformer<SCMDataType> validate() throws InvalidSettingsException {
+    public InputTransformer<MarkerDataType> validate() throws InvalidSettingsException {
         checkNotNull(this.minimalTableSpec, "Minimal DataTableSpec hat to be set");
         checkNotNull(this.inputTableSpec, "Input DataTableSpec hat to be set");
 
@@ -82,13 +83,13 @@ public class SCMInputTransformer implements InputTransformer<SCMDataType> {
     }
 
     @Override
-    public InputTransformer<SCMDataType> setMinimalSpec(final DataTableSpec spec) {
+    public InputTransformer<MarkerDataType> setMinimalSpec(final DataTableSpec spec) {
         this.minimalTableSpec = spec;
         return this;
     }
 
     @Override
-    public InputTransformer<SCMDataType> setInputSpec(final DataTableSpec spec) {
+    public InputTransformer<MarkerDataType> setInputSpec(final DataTableSpec spec) {
         this.inputTableSpec = spec;
         return this;
     }

@@ -23,7 +23,7 @@ import static org.impressivecode.depress.scm.SCMAdapterTableFactory.AUTHOR_COLSP
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.DATE_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLSPEC;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.SEMANTIC_CONFIDENCE_COLSPEC;
+import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.SEMANTIC_CONFIDENCE_COLSPEC;
 
 import java.io.File;
 import java.io.IOException;
