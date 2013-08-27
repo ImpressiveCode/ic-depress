@@ -19,10 +19,10 @@ package org.impressivecode.depress.support.activitymatcher;
 
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.ISSUE_ID_COLSPEC;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.RESOLVED_DATE_COLSPEC;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.AM_MARKER_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.DATE_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.DATE_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLSPEC;
+import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.AM_MARKER_COLSPEC;
 import static org.knime.base.data.append.column.AppendedColumnTable.getTableSpec;
 
 import java.io.File;
@@ -34,6 +34,7 @@ import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSInputTransformer;
 import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.SCMInputTransformer;
+import org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory;
 import org.knime.base.data.append.column.AppendedColumnTable;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
@@ -83,7 +84,7 @@ public class ActivityMatcherParserNodeModel extends NodeModel {
                 inData[0], 
                 markerCellFactory(issues, 
                         inData[0].getSpec().findColumnIndex(DATE_COLNAME)),
-                        AM_MARKER_COLSPEC);
+                        MarkerAdapterTableFactory.AM_MARKER_COLSPEC);
         return new BufferedDataTable[] { preapreTable(table, exec) };
     }
 

@@ -27,11 +27,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.impressivecode.depress.common.OutputTransformer;
-import org.impressivecode.depress.its.ITSAdapterTransformer;
-import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.ITSPriority;
-import org.impressivecode.depress.its.ITSStatus;
-import org.impressivecode.depress.its.ITSType;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
@@ -73,6 +68,7 @@ public class ITSAdapterTransformerTest {
         its.setStatus(ITSStatus.CLOSED);
         its.setType(ITSType.BUG);
         its.setVersion(Lists.newArrayList("V1", "V2"));
+        its.setReporter("reporter");
         return its;
     }
 

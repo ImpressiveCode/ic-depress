@@ -12,6 +12,10 @@ Require-Bundle: org.impressivecode.depress.base;bundle-version="0.1.0",
  org.knime.base;bundle-version="2.7.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: org.impressivecode.depress.support.extmarkerparser,
- org.impressivecode.depress.support.markerparser
+Export-Package: org.impressivecode.depress.support.activitymatcher,
+ org.impressivecode.depress.support.commonmarker,
+ org.impressivecode.depress.support.extmarkerparser,
+ org.impressivecode.depress.support.markerparser,
+ org.impressivecode.depress.support.sematicanalysis,
+ org.impressivecode.depress.support.syntacticanalysis
 Eclipse-BuddyPolicy: registered

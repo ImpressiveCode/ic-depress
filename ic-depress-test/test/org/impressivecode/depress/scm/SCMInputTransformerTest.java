@@ -18,9 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.scm;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MARKER_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_NAME;
+import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.MARKER_COLSPEC;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -74,6 +74,5 @@ public class SCMInputTransformerTest {
         // then
         assertThat(data).hasSize(1);
         assertThat(data.get(0).getResourceName()).isEqualTo("resource");
-        assertThat(data.get(0).getMarkers()).containsOnly("A", "B");
     }
 }

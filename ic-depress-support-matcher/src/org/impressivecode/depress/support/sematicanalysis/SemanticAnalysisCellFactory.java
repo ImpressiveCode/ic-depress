@@ -49,6 +49,7 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
     }
 
     private int checkConfidence(final String message) {
+
         return 0;
     }
 }

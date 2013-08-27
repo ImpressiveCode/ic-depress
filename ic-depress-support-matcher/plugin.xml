@@ -5,26 +5,26 @@
    <extension
          point="org.knime.workbench.repository.nodes">
       <node
-            category-path="depress/depress.scm"
+            category-path="depress/depress.matcher"
             factory-class="org.impressivecode.depress.support.markerparser.MarkerParserNodeFactory"
             id="org.impressivecode.depress.support.markerparser"/>
       <node
-            category-path="depress/depress.scm"
+            category-path="depress/depress.matcher"
             factory-class="org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeFactory"
             id="org.impressivecode.depress.support.extmarkerparser">
       </node>
       <node
-            category-path="depress/depress.scm"
+            category-path="depress/depress.matcher"
             factory-class="org.impressivecode.depress.support.activitymatcher.ActivityMatcherParserNodeFactory"
             id="org.impressivecode.depress.support.activitymatcher">
       </node>
       <node
-            category-path="depress/depress.scm"
+            category-path="depress/depress.matcher"
             factory-class="org.impressivecode.depress.support.syntacticanalysis.SyntacticAnalysisNodeFactory"
             id="org.impressivecode.depress.support.syntacticanalysis">
       </node>
       <node
-            category-path="depress/depress.scm"
+            category-path="depress/depress.matcher"
             factory-class="org.impressivecode.depress.support.sematicanalysis.SemanticAnalysisNodeFactory"
             id="org.impressivecode.depress.support.semanticanalysis">
       </node>
