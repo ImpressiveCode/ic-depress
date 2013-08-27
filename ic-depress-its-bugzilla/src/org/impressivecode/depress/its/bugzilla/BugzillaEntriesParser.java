@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -44,6 +45,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSet.Builder;
 import com.google.common.collect.Lists;
 
 /**
@@ -103,7 +106,32 @@ public class BugzillaEntriesParser {
         data.setUpdated(getUpdated(elem));
         data.setVersion(getVersion(elem));
         data.setResolution(getResolution(elem));
+        data.setReporter(getReporter(elem));
+        data.setAssignees(getAssinees(elem));
+        data.setCommentAuthors(getCommentAuthors(elem));
         return data;
+    }
+
+    private Set<String> getCommentAuthors(final Element elem) {
+        NodeList nodeList = elem.getElementsByTagName("long_desc");
+        Builder<String> authors = ImmutableSet.builder();
+        if(nodeList.getLength() <= 1) {
+            return authors.build();
+        }
+        for (int i = 1; i < nodeList.getLength(); i++) {
+            Node item = nodeList.item(i);
+            authors.add(extractValue((Element) item, "who"));
+        }
+        return authors.build();
+    }
+
+    private Set<String> getAssinees(final Element elem) {
+        String value = extractValue(elem, "assigned_to");
+        return value == null ? Collections.<String>emptySet() : ImmutableSet.of(value);
+    }
+
+    private String getReporter(final Element elem) {
+        return extractValue(elem, "reporter");
     }
 
     private ITSResolution getResolution(final Element elem) {

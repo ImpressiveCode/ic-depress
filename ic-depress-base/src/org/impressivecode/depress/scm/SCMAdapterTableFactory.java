@@ -27,10 +27,8 @@ import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.collection.SetCell;
 import org.knime.core.data.date.DateAndTimeCell;
 import org.knime.core.data.def.DefaultRow;
-import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 
 /**
@@ -39,9 +37,6 @@ import org.knime.core.data.def.StringCell;
  * 
  */
 public class SCMAdapterTableFactory {
-    public static final String MARKER = "Marker";
-    public static final String EXT_MARKER = "Marker(+)";
-    public static final String AM_MARKER = "Marker(a)";
 
     public static final String AUTHOR_COLNAME = "Author";
     public static final DataColumnSpec AUTHOR_COLSPEC = new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE)
@@ -57,27 +52,10 @@ public class SCMAdapterTableFactory {
     public final static String DATE_COLNAME = "Date";
     public final static String UID_COLNAME = "CommitID";
 
-    public final static String SYNTACTIC_CONFIDENCE_COLNAME = "SynConf";
 
-    public final static String SEMANTIC_CONFIDENCE_COLNAME = "SemConf";
 
     public static final DataColumnSpec DATE_COLSPEC = new DataColumnSpecCreator(DATE_COLNAME, DateAndTimeCell.TYPE)
     .createSpec();
-
-    public static final DataColumnSpec MARKER_COLSPEC = new DataColumnSpecCreator(MARKER,
-            SetCell.getCollectionType(StringCell.TYPE)).createSpec();
-
-    public static final DataColumnSpec EXT_MARKER_COLSPEC = new DataColumnSpecCreator(EXT_MARKER,
-            SetCell.getCollectionType(StringCell.TYPE)).createSpec();
-
-    public static final DataColumnSpec SYNTACTIC_CONFIDENCE_COLSPEC = new DataColumnSpecCreator(
-            SYNTACTIC_CONFIDENCE_COLNAME, IntCell.TYPE).createSpec();
-
-    public static final DataColumnSpec SEMANTIC_CONFIDENCE_COLSPEC = new DataColumnSpecCreator(
-            SEMANTIC_CONFIDENCE_COLNAME, SetCell.getCollectionType(IntCell.TYPE)).createSpec();
-
-    public static final DataColumnSpec AM_MARKER_COLSPEC = new DataColumnSpecCreator(AM_MARKER,
-            SetCell.getCollectionType(StringCell.TYPE)).createSpec();
 
     public static final DataColumnSpec MESSAGE_COLSPEC = new DataColumnSpecCreator(MESSAGE_COLNAME, StringCell.TYPE)
     .createSpec();

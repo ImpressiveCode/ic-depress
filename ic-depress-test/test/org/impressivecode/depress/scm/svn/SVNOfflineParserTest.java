@@ -53,7 +53,6 @@ public class SVNOfflineParserTest {
         assertThat(entry.getAuthor()).isEqualTo("erans");
         assertThat(entry.getCommitDate()).isNotNull();
         assertThat(entry.getCommitID()).isEqualTo("936295");
-        assertThat(entry.getMarkers()).containsOnly("MATH-365");
         assertThat(entry.getMessage()).isEqualTo("sdsd MATH-365 sdsdsd");  
         assertThat(entry.getOperation()).isEqualTo(SCMOperation.MODIFIED);
         assertThat(entry.getPath()).isEqualTo("/commons/proper/math/trunk/src/main/java/org/apache/commons/math/optimization/fitting/PolynomialFitter.java");

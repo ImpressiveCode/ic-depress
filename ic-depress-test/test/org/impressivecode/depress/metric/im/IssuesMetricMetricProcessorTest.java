@@ -23,9 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.metric.im.IssuesMetricType;
-import org.impressivecode.depress.metric.im.IssuesMetricMetricProcessor;
-import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.support.commonmarker.MarkerDataType;
 import org.junit.Test;
 
 import com.google.common.base.Predicate;
@@ -43,7 +41,7 @@ public class IssuesMetricMetricProcessorTest {
     @Test
     public void shouldComputeMetricWhenIssues() {
         // given
-        List<SCMDataType> changes = Lists.newArrayList(scm("ClassA", "i1"), scm("ClassA", "i1"), scm("ClassA", "i2"),
+        List<MarkerDataType> changes = Lists.newArrayList(scm("ClassA", "i1"), scm("ClassA", "i1"), scm("ClassA", "i2"),
                 scm("ClassB", "i1"), scm("ClassB", "i3"));
         List<ITSDataType> issues = Lists.newArrayList(its("i1"), its("i2"));
         IssuesMetricMetricProcessor noim = new IssuesMetricMetricProcessor(issues, changes);
@@ -60,7 +58,7 @@ public class IssuesMetricMetricProcessorTest {
     @Test
     public void shouldComputeMetricWhenNoIssues() {
         // given
-        List<SCMDataType> changes = Lists.newArrayList(scm("ClassA", "i1"));
+        List<MarkerDataType> changes = Lists.newArrayList(scm("ClassA", "i1"));
         IssuesMetricMetricProcessor noim = new IssuesMetricMetricProcessor(
                 Collections.<ITSDataType> emptyList(), changes);
         // when
@@ -70,8 +68,8 @@ public class IssuesMetricMetricProcessorTest {
         assertThat(results.get(0).getResourceName()).isEqualTo("ClassA");
     }
 
-    private SCMDataType scm(final String resource, final String marker) {
-        SCMDataType scm = new SCMDataType();
+    private MarkerDataType scm(final String resource, final String marker) {
+        MarkerDataType scm = new MarkerDataType();
         scm.setResourceName(resource);
         scm.setMarkers(Sets.newHashSet(marker));
         return scm;

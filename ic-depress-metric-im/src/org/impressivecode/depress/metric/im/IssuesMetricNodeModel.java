@@ -20,7 +20,6 @@ package org.impressivecode.depress.metric.im;
 import static com.google.common.base.Preconditions.checkState;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.ISSUE_ID_COLSPEC;
 import static org.impressivecode.depress.metric.im.IssuesMetricTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MARKER_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_COLSPEC;
 
 import java.io.File;
@@ -31,8 +30,9 @@ import org.impressivecode.depress.common.InputTransformer;
 import org.impressivecode.depress.common.OutputTransformer;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSInputTransformer;
-import org.impressivecode.depress.scm.SCMDataType;
-import org.impressivecode.depress.scm.SCMInputTransformer;
+import org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory;
+import org.impressivecode.depress.support.commonmarker.MarkerDataType;
+import org.impressivecode.depress.support.commonmarker.MarkerInputTransformer;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -54,11 +54,11 @@ public class IssuesMetricNodeModel extends NodeModel {
     private static final NodeLogger LOGGER = NodeLogger.getLogger(IssuesMetricNodeModel.class);
 
     private InputTransformer<ITSDataType> issueTransfomer;
-    private InputTransformer<SCMDataType> historyTransfomer;
+    private InputTransformer<MarkerDataType> markerTransfomer;
 
     protected IssuesMetricNodeModel() {
         super(2, 1);
-        this.historyTransfomer = new SCMInputTransformer();
+        this.markerTransfomer = new MarkerInputTransformer();
         this.issueTransfomer = new ITSInputTransformer();
     }
 
@@ -81,9 +81,9 @@ public class IssuesMetricNodeModel extends NodeModel {
     private List<IssuesMetricType> computeMetric(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws CanceledExecutionException {
         checkState(this.issueTransfomer != null, "IssueTransformer has to be configured first");
-        checkState(this.historyTransfomer != null, "HistoryTransformer has to be configured first");
+        checkState(this.markerTransfomer != null, "HistoryTransformer has to be configured first");
 
-        List<SCMDataType> history = historyTransfomer.transform(inData[0]);
+        List<MarkerDataType> history = markerTransfomer.transform(inData[0]);
         List<ITSDataType> issues = issueTransfomer.transform(inData[1]);
 
         IssuesMetricMetricProcessor metricProcessor = new IssuesMetricMetricProcessor(issues, history);
@@ -101,7 +101,7 @@ public class IssuesMetricNodeModel extends NodeModel {
         if (inSpecs.length != 2) {
             throw new InvalidSettingsException("Wrong number of input suorces");
         }
-        this.historyTransfomer.setMinimalSpec(new DataTableSpec(RESOURCE_COLSPEC, MARKER_COLSPEC)).setInputSpec(inSpecs[0]).validate();
+        this.markerTransfomer.setMinimalSpec(new DataTableSpec(RESOURCE_COLSPEC, MarkerAdapterTableFactory.MARKER_COLSPEC)).setInputSpec(inSpecs[0]).validate();
         this.issueTransfomer.setMinimalSpec(new DataTableSpec(ISSUE_ID_COLSPEC)).setInputSpec(inSpecs[1]).validate();
 
         return new DataTableSpec[] { createDataColumnSpec() };

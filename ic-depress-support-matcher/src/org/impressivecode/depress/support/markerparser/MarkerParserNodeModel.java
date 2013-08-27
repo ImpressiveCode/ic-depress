@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.support.markerparser;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MARKER_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLSPEC;
 
@@ -30,6 +29,7 @@ import java.util.regex.Pattern;
 
 import org.impressivecode.depress.common.Cells;
 import org.impressivecode.depress.scm.SCMInputTransformer;
+import org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory;
 import org.knime.base.data.append.column.AppendedCellFactory;
 import org.knime.base.data.append.column.AppendedColumnTable;
 import org.knime.core.data.DataCell;
@@ -70,7 +70,7 @@ public class MarkerParserNodeModel extends NodeModel {
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
 
-        AppendedColumnTable table = new AppendedColumnTable(inData[0], markerCellFactory(inData[0]), MARKER_COLSPEC);
+        AppendedColumnTable table = new AppendedColumnTable(inData[0], markerCellFactory(inData[0]), MarkerAdapterTableFactory.MARKER_COLSPEC);
 
         return new BufferedDataTable[] { preapreTable(table, exec) };
     }
@@ -94,7 +94,7 @@ public class MarkerParserNodeModel extends NodeModel {
         Preconditions.checkArgument(inSpecs.length == 1);
         validate(inSpecs[0]);
 
-        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], MARKER_COLSPEC);
+        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], MarkerAdapterTableFactory.MARKER_COLSPEC);
 
         return new DataTableSpec[] { dts };
     }

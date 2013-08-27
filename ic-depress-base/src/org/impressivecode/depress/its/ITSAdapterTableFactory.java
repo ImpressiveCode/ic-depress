@@ -23,6 +23,7 @@ import static org.impressivecode.depress.common.Cells.dateTimeOrMissingCell;
 import static org.impressivecode.depress.common.Cells.stringCell;
 import static org.impressivecode.depress.common.Cells.stringListOrMissingCell;
 import static org.impressivecode.depress.common.Cells.stringOrMissingCell;
+import static org.impressivecode.depress.common.Cells.stringSetCell;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
@@ -30,6 +31,7 @@ import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.collection.ListCell;
+import org.knime.core.data.collection.SetCell;
 import org.knime.core.data.date.DateAndTimeCell;
 import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.StringCell;
@@ -55,9 +57,15 @@ public class ITSAdapterTableFactory {
     public static final String LINK = "Link";
     public static final String DESCRIPTION = "Description";
     public static final String COMMENTS = "Comments";
+    public static final String REPORTER = "Reporter";
+    public static final String ASSIGNEES = "Assignees";
+    public static final String COMMENT_AUTHORS = "CommentAuthors";
 
     public static final DataColumnSpec ISSUE_ID_COLSPEC = new DataColumnSpecCreator(ISSUE_ID, StringCell.TYPE).createSpec();
     public static final DataColumnSpec RESOLVED_DATE_COLSPEC = new DataColumnSpecCreator(RESOLVED_DATE, DateAndTimeCell.TYPE).createSpec();
+    public static final DataColumnSpec REPORTER_COLSPEC = new DataColumnSpecCreator(REPORTER, StringCell.TYPE).createSpec();
+    public static final DataColumnSpec ASSIGNEES_COLSPEC = new DataColumnSpecCreator(ASSIGNEES, SetCell.getCollectionType(StringCell.TYPE)).createSpec();
+    public static final DataColumnSpec COMMENT_AUTHORS_COLSPEC = new DataColumnSpecCreator(COMMENT_AUTHORS, SetCell.getCollectionType(StringCell.TYPE)).createSpec();
 
     private ITSAdapterTableFactory() {
 
@@ -76,9 +84,12 @@ public class ITSAdapterTableFactory {
                 new DataColumnSpecCreator(FIX_VERSION, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
                 new DataColumnSpecCreator(PRIORITY, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(SUMMARY, StringCell.TYPE).createSpec(),
+                REPORTER_COLSPEC, 
+                ASSIGNEES_COLSPEC, 
+                COMMENT_AUTHORS_COLSPEC,
                 new DataColumnSpecCreator(LINK, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(DESCRIPTION, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(COMMENTS, ListCell.getCollectionType(StringCell.TYPE)).createSpec() };
+                new DataColumnSpecCreator(COMMENTS, ListCell.getCollectionType(StringCell.TYPE)).createSpec()};
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
         return outputSpec;
     }
@@ -97,9 +108,14 @@ public class ITSAdapterTableFactory {
                 stringListOrMissingCell(itsData.getFixVersion()),
                 stringOrMissingCell(itsData.getPriority()), 
                 stringOrMissingCell(itsData.getSummary()),
+                stringCell(itsData.getReporter()),
+                stringSetCell(itsData.getAssignees()),
+                stringSetCell(itsData.getCommentAuthors()),
                 stringOrMissingCell(itsData.getLink()), 
                 stringOrMissingCell(itsData.getDescription()),
-                stringListOrMissingCell(itsData.getComments()) };
+                stringListOrMissingCell(itsData.getComments()),
+
+        };
         DataRow row = new DefaultRow(itsData.getIssueId(), cells);
         return row;
     }

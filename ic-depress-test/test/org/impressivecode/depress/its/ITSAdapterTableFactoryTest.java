@@ -8,7 +8,7 @@ import static org.impressivecode.depress.its.ITSAdapterTableFactory.RESOLVED_DAT
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.SUMMARY;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.UPDATED_DATE;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -17,12 +17,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.impressivecode.depress.its.ITSAdapterTableFactory;
-import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.ITSPriority;
-import org.impressivecode.depress.its.ITSResolution;
-import org.impressivecode.depress.its.ITSStatus;
-import org.impressivecode.depress.its.ITSType;
+import org.impressivecode.depress.common.TableCellReader;
 import org.junit.Test;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
@@ -33,13 +28,14 @@ import org.knime.core.data.def.StringCell;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class ITSAdapterTableFactoryTest {
 
     @Test
     public void shouldCreateITSTableSpec() {
         DataTableSpec spec = createDataColumnSpec();
-        assertThat(spec.getNumColumns()).isEqualTo(14);
+        assertThat(spec.getNumColumns()).isEqualTo(17);
     }
 
     @Test
@@ -311,6 +307,41 @@ public class ITSAdapterTableFactoryTest {
         assertThat(isMissing(row, RESOLVED_DATE)).isTrue();
     }
 
+    @Test
+    public void shouldTransformReporter() {
+        // given
+        ITSDataType its = mockITSDataType();
+        // when
+        DataRow row = ITSAdapterTableFactory.createTableRow(its);
+
+        // then
+        assertThat(extractStringCellValue(row, ITSAdapterTableFactory.REPORTER)).isEqualTo("reporter");
+    }
+
+    @Test
+    public void shouldTransformAssignees() {
+        // given
+        ITSDataType its = mockITSDataType();
+        // when
+        DataRow row = ITSAdapterTableFactory.createTableRow(its);
+
+        // then
+        assertThat(new TableCellReader(createDataColumnSpec(), row).stringSet(ITSAdapterTableFactory.ASSIGNEES))
+        .containsOnly("C", "D");
+    }
+
+    @Test
+    public void shouldTransformCommentAuthors() {
+        // given
+        ITSDataType its = mockITSDataType();
+        // when
+        DataRow row = ITSAdapterTableFactory.createTableRow(its);
+
+        // then
+        assertThat(new TableCellReader(createDataColumnSpec(), row).stringSet(ITSAdapterTableFactory.COMMENT_AUTHORS))
+        .containsOnly("A", "B");
+    }
+
     private Calendar extractDateCellCalendarValue(final DataRow row, final String colName) {
         return ((DateAndTimeCell) row.getCell(createDataColumnSpec().findColumnIndex(colName))).getUTCCalendarClone();
     }
@@ -334,13 +365,16 @@ public class ITSAdapterTableFactoryTest {
     }
 
     private ITSDataType mockITSDataType() {
-        ITSDataType its = mock(ITSDataType.class, RETURNS_DEEP_STUBS);
+        ITSDataType its = mock(ITSDataType.class, CALLS_REAL_METHODS);
         when(its.getIssueId()).thenReturn("BUG-11");
         when(its.getCreated()).thenReturn(new Date(100));
         when(its.getPriority()).thenReturn(ITSPriority.BLOCKER);
         when(its.getStatus()).thenReturn(ITSStatus.CLOSED);
         when(its.getType()).thenReturn(ITSType.BUG);
         when(its.getVersion()).thenReturn(Lists.newArrayList("V1", "V2"));
+        when(its.getReporter()).thenReturn("reporter");
+        when(its.getCommentAuthors()).thenReturn(Sets.newHashSet("A", "B"));
+        when(its.getAssignees()).thenReturn(Sets.newHashSet("C", "D"));
         return its;
     }
 

@@ -22,7 +22,6 @@ import static org.impressivecode.depress.common.TableCellReader.reader;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.ACTION_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.AUTHOR_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.DATE_COLNAME;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MARKER;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.PATH_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_NAME;
@@ -34,14 +33,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.Date;
 
-import org.impressivecode.depress.scm.SCMAdapterTableFactory;
-import org.impressivecode.depress.scm.SCMDataType;
-import org.impressivecode.depress.scm.SCMOperation;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
-
-import com.google.common.collect.Sets;
 
 /**
  * 
@@ -112,17 +106,6 @@ public class SCMAdapterTableFactoryTest {
     }
 
     @Test
-    public void shouldTransformMarkers() {
-        // given
-        SCMDataType scm = mockSCMDataType();
-        // when
-        DataRow row = SCMAdapterTableFactory.createTableRow("rowId",scm);
-
-        // then
-        assertThat(reader(createDataColumnSpec(), row).stringSet(MARKER)).containsOnly("1", "2");
-    }
-
-    @Test
     public void shouldTransformMessage() {
         // given
         SCMDataType scm = mockSCMDataType();
@@ -151,7 +134,6 @@ public class SCMAdapterTableFactoryTest {
         when(scm.getAuthor()).thenReturn("author");
         when(scm.getCommitDate()).thenReturn(new Date(100));
         when(scm.getCommitID()).thenReturn("commitID");
-        when(scm.getMarkers()).thenReturn(Sets.newHashSet("1", "2"));
         when(scm.getMessage()).thenReturn("message");
         when(scm.getOperation()).thenReturn(SCMOperation.MODIFIED);
         return scm;

@@ -62,8 +62,7 @@ public final class TableCellReader {
     }
 
     public String stringOptional(final String colName) {
-        return !spec.containsName(colName) ? null : string(colName);
-
+        return optionalData(colName) ? null :  string(colName);
     }
 
     public Calendar date(final String colName) {
@@ -71,11 +70,11 @@ public final class TableCellReader {
     }
 
     public Date dateOptional(final String colName) {
-        return !spec.containsName(colName) ? null : date(colName).getTime();
+        return optionalData(colName)  ? null : date(colName).getTime();
     }
 
     public Set<String> stringSetOptional(final String colName) {
-        return !spec.containsName(colName) ? null : stringSet(colName);
+        return optionalData(colName) ? null : stringSet(colName);
     }
 
     public Set<String> stringSet(final String colName) {
@@ -86,5 +85,9 @@ public final class TableCellReader {
                 return ((StringCell) cell).getStringValue();
             }
         }));
+    }
+
+    private boolean optionalData(final String colName) {
+        return !spec.containsName(colName) || row.getCell(spec.findColumnIndex(colName)).isMissing();
     }
 }
