@@ -56,12 +56,13 @@ public class SCMInputTransformer implements InputTransformer<SCMDataType> {
         List<SCMDataType> scmData = Lists.newArrayListWithExpectedSize(1000);
         RowIterator iterator = inTable.iterator();
         while (iterator.hasNext()) {
-            scmData.add(scm(iterator.next()));
+            scmData.add(transformRow(iterator.next()));
         }
         return scmData;
     }
 
-    private SCMDataType scm(final DataRow row) {
+    @Override
+    public SCMDataType transformRow(final DataRow row) {
         TableCellReader reader = new TableCellReader(this.inputTableSpec, row);
         SCMDataType scm = new SCMDataType();
         scm.setResourceName(reader.stringOptional(RESOURCE_NAME));

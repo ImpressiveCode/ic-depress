@@ -20,19 +20,20 @@ package org.impressivecode.depress.support.sematicanalysis;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.ISSUE_ID_COLSPEC;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.RESOLVED_DATE_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.AUTHOR_COLSPEC;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.DATE_COLSPEC;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLSPEC;
+import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.AM_MARKER_COLSPEC;
+import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.EXT_MARKER_COLSPEC;
+import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.MARKER_COLSPEC;
 import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.SEMANTIC_CONFIDENCE_COLSPEC;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.impressivecode.depress.common.InputTransformer;
-import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSDataHolder;
 import org.impressivecode.depress.its.ITSInputTransformer;
 import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.SCMInputTransformer;
+import org.impressivecode.depress.support.commonmarker.MarkerInputTransformer;
 import org.knime.base.data.append.column.AppendedColumnTable;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
@@ -40,6 +41,7 @@ import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
+import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
@@ -54,6 +56,8 @@ import com.google.common.base.Preconditions;
  */
 public class SemanticAnalysisNodeModel extends NodeModel {
 
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(SemanticAnalysisNodeModel.class);
+
     private final SettingsModelInteger interval = new SettingsModelInteger(CFG_INTERVAL, INTERVAL_DEFAULT);
     static final String CFG_INTERVAL = "depress.support.matcher.sematicanalysis.interval";
     static final Integer INTERVAL_DEFAULT = 15;
@@ -62,11 +66,14 @@ public class SemanticAnalysisNodeModel extends NodeModel {
     static final String CFG_INTERVAL_WEIGHT = "depress.support.matcher.sematicanalysis.intervalweight";
     static final Integer INTERVAL_WEIGHT_DEFAULT = 15;
 
-    private InputTransformer<ITSDataType> itsTransfomer;
+    private ITSInputTransformer itsTransfomer;
     private InputTransformer<SCMDataType> scmTransfomer;
+
+    private MarkerInputTransformer markerTransformer;
 
     protected SemanticAnalysisNodeModel() {
         super(2, 1);
+        this.markerTransformer = new MarkerInputTransformer();
         this.scmTransfomer = new SCMInputTransformer();
         this.itsTransfomer = new ITSInputTransformer();
     }
@@ -74,16 +81,19 @@ public class SemanticAnalysisNodeModel extends NodeModel {
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
-
-        AppendedColumnTable table = new AppendedColumnTable(inData[0], cellFactory(inData[1]),
-                SEMANTIC_CONFIDENCE_COLSPEC);
-
-        return new BufferedDataTable[] { preapreTable(table, exec) };
+        try {
+            AppendedColumnTable table = new AppendedColumnTable(inData[0], cellFactory(inData),
+                    SEMANTIC_CONFIDENCE_COLSPEC);
+            return new BufferedDataTable[] { preapreTable(table, exec) };
+        } catch (Exception ex) {
+            LOGGER.error("Unable to perform semantic analysis.", ex);
+            throw ex;
+        }
     }
 
-    private SemanticAnalysisCellFactory cellFactory(final BufferedDataTable inData) {
-        return new SemanticAnalysisCellFactory(new Configuration(interval,intervalWeight, itsTransfomer.transform(inData)), inData
-                .getSpec().findColumnIndex(MESSAGE_COLNAME));
+    private SemanticAnalysisCellFactory cellFactory(final BufferedDataTable[] inData) {
+        ITSDataHolder itsData = itsTransfomer.transformToDataHolder(inData[1]);
+        return new SemanticAnalysisCellFactory(new Configuration(itsData), this.scmTransfomer, this.markerTransformer);
     }
 
     private BufferedDataTable preapreTable(final AppendedColumnTable table, final ExecutionContext exec)
@@ -100,9 +110,9 @@ public class SemanticAnalysisNodeModel extends NodeModel {
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         Preconditions.checkArgument(inSpecs.length == 2);
 
-        this.scmTransfomer.setMinimalSpec(new DataTableSpec(MESSAGE_COLSPEC, DATE_COLSPEC, AUTHOR_COLSPEC)).setInputSpec(inSpecs[0]).validate();
+        this.scmTransfomer.setMinimalSpec(new DataTableSpec(AUTHOR_COLSPEC)).setInputSpec(inSpecs[0]).validate();
         this.itsTransfomer.setMinimalSpec(new DataTableSpec(ISSUE_ID_COLSPEC, RESOLVED_DATE_COLSPEC)).setInputSpec(inSpecs[1]).validate();
-
+        this.markerTransformer.setMinimalOrSpec(AM_MARKER_COLSPEC, EXT_MARKER_COLSPEC, MARKER_COLSPEC).setInputSpec(inSpecs[0]).validate();
         final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], SEMANTIC_CONFIDENCE_COLSPEC);
 
         return new DataTableSpec[] { dts };

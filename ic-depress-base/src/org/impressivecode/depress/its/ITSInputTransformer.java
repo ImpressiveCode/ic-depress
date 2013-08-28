@@ -54,12 +54,17 @@ public class ITSInputTransformer implements InputTransformer<ITSDataType> {
         List<ITSDataType> issueData = newArrayListWithExpectedSize(1000);
         RowIterator iterator = inTable.iterator();
         while (iterator.hasNext()) {
-            issueData.add(issue(iterator.next()));
+            issueData.add(transformRow(iterator.next()));
         }
         return issueData;
     }
 
-    private ITSDataType issue(final DataRow row) {
+    public ITSDataHolder transformToDataHolder(final DataTable inTable) {
+        return new ITSDataHolder(transform(inTable));
+    }
+
+    @Override
+    public ITSDataType transformRow(final DataRow row) {
         TableCellReader reader = new TableCellReader(this.inputTableSpec, row);
         ITSDataType its = new ITSDataType();
         //add additional if required
