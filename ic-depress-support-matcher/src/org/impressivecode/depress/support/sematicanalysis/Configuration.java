@@ -17,12 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.support.sematicanalysis;
 
-import java.util.List;
-
-import org.impressivecode.depress.its.ITSDataType;
-import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
-
-import com.google.common.base.Optional;
+import org.impressivecode.depress.its.ITSDataHolder;
 
 /**
  * 
@@ -30,13 +25,25 @@ import com.google.common.base.Optional;
  * 
  */
 public class Configuration {
-    private final Optional<Integer> interval;
-    private final Optional<Integer> intervalWeight;
-    private List<ITSDataType> itsData;
+    private final ITSDataHolder itsData;
+    private final int authorWeight;
+    private final int resolutionWeight;
 
-    public Configuration(final SettingsModelInteger interval, final SettingsModelInteger intervalWeight,  final List<ITSDataType> itsData) {
-        this.interval = Optional.of(interval.getIntValue());
-        this.intervalWeight = Optional.of(intervalWeight.getIntValue());
+    public Configuration(final ITSDataHolder itsData, final int authorWeight, final int resolutionWeight) {
         this.itsData = itsData;
+        this.authorWeight = authorWeight;
+        this.resolutionWeight = resolutionWeight;
+    }
+
+    ITSDataHolder getITSData(){
+        return this.itsData;
+    }
+
+    public int getAuthorWeight() {
+        return authorWeight ;
+    }
+
+    public int getResolutionWeight() {
+        return this.resolutionWeight ;
     }
 }

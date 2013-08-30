@@ -21,6 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Sets.newHashSet;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 
@@ -74,7 +75,7 @@ public final class TableCellReader {
     }
 
     public Set<String> stringSetOptional(final String colName) {
-        return optionalData(colName) ? null : stringSet(colName);
+        return optionalData(colName) ? Collections.<String>emptySet() : stringSet(colName);
     }
 
     public Set<String> stringSet(final String colName) {

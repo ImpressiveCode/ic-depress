@@ -18,21 +18,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.support.sematicanalysis;
 
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.ISSUE_ID_COLSPEC;
-import static org.impressivecode.depress.its.ITSAdapterTableFactory.RESOLVED_DATE_COLSPEC;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.AUTHOR_COLSPEC;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.DATE_COLSPEC;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
-import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLSPEC;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_NAME;
+import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.AM_MARKER_COLSPEC;
+import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.EXT_MARKER_COLSPEC;
+import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.MARKER_COLSPEC;
 import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.SEMANTIC_CONFIDENCE_COLSPEC;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.impressivecode.depress.common.InputTransformer;
-import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSAdapterTableFactory;
+import org.impressivecode.depress.its.ITSDataHolder;
 import org.impressivecode.depress.its.ITSInputTransformer;
 import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.SCMInputTransformer;
+import org.impressivecode.depress.support.commonmarker.MarkerInputTransformer;
 import org.knime.base.data.append.column.AppendedColumnTable;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
@@ -40,10 +42,12 @@ import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
+import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
+import org.knime.core.node.defaultnodesettings.SettingsModelIntegerBounded;
 
 import com.google.common.base.Preconditions;
 
@@ -54,19 +58,28 @@ import com.google.common.base.Preconditions;
  */
 public class SemanticAnalysisNodeModel extends NodeModel {
 
-    private final SettingsModelInteger interval = new SettingsModelInteger(CFG_INTERVAL, INTERVAL_DEFAULT);
-    static final String CFG_INTERVAL = "depress.support.matcher.sematicanalysis.interval";
-    static final Integer INTERVAL_DEFAULT = 15;
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(SemanticAnalysisNodeModel.class);
 
-    private final SettingsModelInteger intervalWeight = new SettingsModelInteger(CFG_INTERVAL, INTERVAL_DEFAULT);
-    static final String CFG_INTERVAL_WEIGHT = "depress.support.matcher.sematicanalysis.intervalweight";
-    static final Integer INTERVAL_WEIGHT_DEFAULT = 15;
 
-    private InputTransformer<ITSDataType> itsTransfomer;
+    static final String CFG_RESOLUTION_WEIGHT = "depress.support.matcher.sematicanalysis.resolutionweight";
+    static final Integer RESOLUTION_WEIGHT_DEFAULT = 1;
+
+    static final String CFG_AUTHOR_WEIGHT = "depress.support.matcher.sematicanalysis.authorweight";
+    static final Integer AUTHOR_WEIGHT_DEFAULT = 1;
+
+    static final Integer SUM = RESOLUTION_WEIGHT_DEFAULT + AUTHOR_WEIGHT_DEFAULT;
+
+    private final SettingsModelInteger resolutionWeight = new SettingsModelIntegerBounded(CFG_RESOLUTION_WEIGHT, RESOLUTION_WEIGHT_DEFAULT, 0, SUM);
+    private final SettingsModelInteger authorWeight = new SettingsModelIntegerBounded(CFG_AUTHOR_WEIGHT, AUTHOR_WEIGHT_DEFAULT, 0, SUM);
+
+    private ITSInputTransformer itsTransfomer;
     private InputTransformer<SCMDataType> scmTransfomer;
+
+    private MarkerInputTransformer markerTransformer;
 
     protected SemanticAnalysisNodeModel() {
         super(2, 1);
+        this.markerTransformer = new MarkerInputTransformer();
         this.scmTransfomer = new SCMInputTransformer();
         this.itsTransfomer = new ITSInputTransformer();
     }
@@ -74,16 +87,21 @@ public class SemanticAnalysisNodeModel extends NodeModel {
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
+        try {
 
-        AppendedColumnTable table = new AppendedColumnTable(inData[0], cellFactory(inData[1]),
-                SEMANTIC_CONFIDENCE_COLSPEC);
-
-        return new BufferedDataTable[] { preapreTable(table, exec) };
+            AppendedColumnTable table = new AppendedColumnTable(inData[0], cellFactory(inData),
+                    SEMANTIC_CONFIDENCE_COLSPEC);
+            return new BufferedDataTable[] { preapreTable(table, exec) };
+        } catch (Exception ex) {
+            LOGGER.error("Unable to perform semantic analysis.", ex);
+            throw ex;
+        }
     }
 
-    private SemanticAnalysisCellFactory cellFactory(final BufferedDataTable inData) {
-        return new SemanticAnalysisCellFactory(new Configuration(interval,intervalWeight, itsTransfomer.transform(inData)), inData
-                .getSpec().findColumnIndex(MESSAGE_COLNAME));
+    private SemanticAnalysisCellFactory cellFactory(final BufferedDataTable[] inData) {
+        ITSDataHolder itsData = itsTransfomer.transformToDataHolder(inData[1]);
+        return new SemanticAnalysisCellFactory(new Configuration(itsData, authorWeight.getIntValue(),
+                resolutionWeight.getIntValue()), this.scmTransfomer, this.markerTransformer);
     }
 
     private BufferedDataTable preapreTable(final AppendedColumnTable table, final ExecutionContext exec)
@@ -100,9 +118,9 @@ public class SemanticAnalysisNodeModel extends NodeModel {
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         Preconditions.checkArgument(inSpecs.length == 2);
 
-        this.scmTransfomer.setMinimalSpec(new DataTableSpec(MESSAGE_COLSPEC, DATE_COLSPEC, AUTHOR_COLSPEC)).setInputSpec(inSpecs[0]).validate();
-        this.itsTransfomer.setMinimalSpec(new DataTableSpec(ISSUE_ID_COLSPEC, RESOLVED_DATE_COLSPEC)).setInputSpec(inSpecs[1]).validate();
-
+        this.scmTransfomer.setMinimalSpec(new DataTableSpec(RESOURCE_NAME, AUTHOR_COLSPEC)).setInputSpec(inSpecs[0]).validate();
+        this.itsTransfomer.setMinimalSpec(new DataTableSpec(ISSUE_ID_COLSPEC, ITSAdapterTableFactory.RESOLUTION_COLSPEC)).setInputSpec(inSpecs[1]).validate();
+        this.markerTransformer.setMinimalOrSpec(AM_MARKER_COLSPEC, EXT_MARKER_COLSPEC, MARKER_COLSPEC).setInputSpec(inSpecs[0]).validate();
         final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], SEMANTIC_CONFIDENCE_COLSPEC);
 
         return new DataTableSpec[] { dts };
@@ -110,20 +128,25 @@ public class SemanticAnalysisNodeModel extends NodeModel {
 
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
-        interval.saveSettingsTo(settings);
-        intervalWeight.saveSettingsTo(settings);
+        authorWeight.saveSettingsTo(settings);
+        resolutionWeight.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        interval.loadSettingsFrom(settings);
-        intervalWeight.loadSettingsFrom(settings);
+        authorWeight.loadSettingsFrom(settings);
+        resolutionWeight.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        interval.validateSettings(settings);
-        intervalWeight.validateSettings(settings);
+        authorWeight.validateSettings(settings);
+        resolutionWeight.validateSettings(settings);
+
+        int current = settings.getInt(CFG_RESOLUTION_WEIGHT) + settings.getInt(CFG_AUTHOR_WEIGHT);
+        if (current != SUM) {
+            throw new InvalidSettingsException("Weight sum has to be " + SUM);
+        }
     }
 
     @Override

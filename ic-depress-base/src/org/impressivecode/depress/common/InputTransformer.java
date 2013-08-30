@@ -19,6 +19,7 @@ package org.impressivecode.depress.common;
 
 import java.util.List;
 
+import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTable;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.InvalidSettingsException;
@@ -36,5 +37,7 @@ public interface InputTransformer<T> {
     InputTransformer<T> setMinimalSpec(DataTableSpec spec);
 
     InputTransformer<T> setInputSpec(DataTableSpec dataTableSpec);
+
+    T transformRow(DataRow row);
 
 }
