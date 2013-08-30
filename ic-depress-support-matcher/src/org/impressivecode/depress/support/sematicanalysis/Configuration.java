@@ -25,11 +25,14 @@ import org.impressivecode.depress.its.ITSDataHolder;
  * 
  */
 public class Configuration {
-    private ITSDataHolder itsData;
-    private int authorWeight = 1;
+    private final ITSDataHolder itsData;
+    private final int authorWeight;
+    private final int resolutionWeight;
 
-    public Configuration(final ITSDataHolder itsData) {
+    public Configuration(final ITSDataHolder itsData, final int authorWeight, final int resolutionWeight) {
         this.itsData = itsData;
+        this.authorWeight = authorWeight;
+        this.resolutionWeight = resolutionWeight;
     }
 
     ITSDataHolder getITSData(){
@@ -38,5 +41,9 @@ public class Configuration {
 
     public int getAuthorWeight() {
         return authorWeight ;
+    }
+
+    public int getResolutionWeight() {
+        return this.resolutionWeight ;
     }
 }

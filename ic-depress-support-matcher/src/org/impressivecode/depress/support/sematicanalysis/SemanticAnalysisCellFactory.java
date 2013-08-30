@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.impressivecode.depress.common.InputTransformer;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.support.commonmarker.MarkerDataType;
 import org.impressivecode.depress.support.commonmarker.MarkerInputTransformer;
@@ -67,11 +68,20 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
         if (issues.isEmpty()) {
             return 0;
         } else {
-            return checkAuthor(scm, marker, issues);
+            return checkAuthor(scm, issues) + checkResolution(issues);
         }
     }
 
-    private int checkAuthor(final SCMDataType scm, final MarkerDataType marker, final Set<ITSDataType> issues) {
+    private int checkResolution(final Set<ITSDataType> issues) {
+        for (ITSDataType its : issues) {
+            if (!ITSResolution.FIXED.equals(its.getResolution())) {
+                return 0;
+            }
+        }
+        return this.cfg.getResolutionWeight();
+    }
+
+    private int checkAuthor(final SCMDataType scm, final Set<ITSDataType> issues) {
         String author = scm.getAuthor();
         for (ITSDataType its : issues) {
             if (!its.getCommentAuthors().contains(author) && !its.getAssignees().contains(author)) {

@@ -22,5 +22,5 @@ package org.impressivecode.depress.its;
  * 
  */
 public enum ITSResolution {
-    INVALID, FIXED, WONT_FIX, DUPLICATE, UNRESOLVED, IMPLEMENTED, UNKNOWN;
+    INVALID, FIXED, WONT_FIX, DUPLICATE, UNRESOLVED, UNKNOWN;
 }

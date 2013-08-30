@@ -30,14 +30,14 @@ public class SemanticAnalysisNodeDialog extends DefaultNodeSettingsPane {
 
     protected SemanticAnalysisNodeDialog() {
         super();
-        createNewGroup("Confidence");
-        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(SemanticAnalysisNodeModel.CFG_INTERVAL,
-                SemanticAnalysisNodeModel.INTERVAL_DEFAULT), 
-                "Interval(min): ", 20));
+        createNewGroup("Weight");
+        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(SemanticAnalysisNodeModel.CFG_AUTHOR_WEIGHT,
+                SemanticAnalysisNodeModel.AUTHOR_WEIGHT_DEFAULT), 
+                "Author: ", 33));
 
-        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(SemanticAnalysisNodeModel.CFG_INTERVAL_WEIGHT,
-                SemanticAnalysisNodeModel.INTERVAL_WEIGHT_DEFAULT), 
-                "Weight: ", 13));
+        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(SemanticAnalysisNodeModel.CFG_RESOLUTION_WEIGHT,
+                SemanticAnalysisNodeModel.RESOLUTION_WEIGHT_DEFAULT), 
+                "Resolution(FIXED): ", 25));
 
     }
 }

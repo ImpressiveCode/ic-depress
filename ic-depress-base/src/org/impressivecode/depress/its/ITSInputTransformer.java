@@ -73,9 +73,19 @@ public class ITSInputTransformer implements InputTransformer<ITSDataType> {
         its.setAssignees(reader.stringSetOptional(ITSAdapterTableFactory.ASSIGNEES));
         its.setReporter(reader.stringOptional(ITSAdapterTableFactory.REPORTER));
         its.setCommentAuthors(reader.stringSetOptional(ITSAdapterTableFactory.COMMENT_AUTHORS));
+        its.setResolution(readResolution(reader));
 
         //add check if minimaldata set requires column for large data e.g. comments or description
         return its;
+    }
+
+    private ITSResolution readResolution(final TableCellReader reader) {
+        String resolution = reader.stringOptional(ITSAdapterTableFactory.RESOLUTION);
+        if(resolution == null){
+            return null;
+        }else {
+            return ITSResolution.valueOf(resolution);
+        }
     }
 
     @Override

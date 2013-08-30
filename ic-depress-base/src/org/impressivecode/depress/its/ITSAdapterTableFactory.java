@@ -66,6 +66,7 @@ public class ITSAdapterTableFactory {
     public static final DataColumnSpec REPORTER_COLSPEC = new DataColumnSpecCreator(REPORTER, StringCell.TYPE).createSpec();
     public static final DataColumnSpec ASSIGNEES_COLSPEC = new DataColumnSpecCreator(ASSIGNEES, SetCell.getCollectionType(StringCell.TYPE)).createSpec();
     public static final DataColumnSpec COMMENT_AUTHORS_COLSPEC = new DataColumnSpecCreator(COMMENT_AUTHORS, SetCell.getCollectionType(StringCell.TYPE)).createSpec();
+    public static final DataColumnSpec RESOLUTION_COLSPEC = new DataColumnSpecCreator(RESOLUTION, StringCell.TYPE).createSpec();
 
     private ITSAdapterTableFactory() {
 
@@ -79,7 +80,7 @@ public class ITSAdapterTableFactory {
                 new DataColumnSpecCreator(UPDATED_DATE, DateAndTimeCell.TYPE).createSpec(), //should be a list or new column wit all updates
                 new DataColumnSpecCreator(STATUS, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(TYPE, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(RESOLUTION, StringCell.TYPE).createSpec(),
+                RESOLUTION_COLSPEC,
                 new DataColumnSpecCreator(VERSION, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
                 new DataColumnSpecCreator(FIX_VERSION, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
                 new DataColumnSpecCreator(PRIORITY, StringCell.TYPE).createSpec(),
