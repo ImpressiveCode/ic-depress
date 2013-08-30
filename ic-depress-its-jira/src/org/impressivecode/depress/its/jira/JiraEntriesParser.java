@@ -153,7 +153,7 @@ public class JiraEntriesParser {
         case "Not A Problem":
             return ITSResolution.WONT_FIX;
         case "Implemented":
-            return ITSResolution.IMPLEMENTED;
+            return ITSResolution.FIXED;
         default:
             return ITSResolution.UNKNOWN;
         }

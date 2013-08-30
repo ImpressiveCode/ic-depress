@@ -19,6 +19,9 @@ package org.impressivecode.depress.support.commonmarker;
 
 import java.util.Collections;
 import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
+
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
@@ -28,6 +31,10 @@ public class MarkerDataType {
     private Set<String> markers = Collections.emptySet();
 
     private String resourceName;
+
+    private Set<String> amarkers = Collections.emptySet();
+
+    private Set<String> emarkers = Collections.emptySet();
 
     public void setResourceName(final String resource) {
         this.resourceName = resource;
@@ -43,5 +50,25 @@ public class MarkerDataType {
 
     public Set<String> getMarkers() {
         return markers;
+    }
+
+    public void setActivityMarkers(final Set<String> markers) {
+        this.amarkers = markers;
+    }
+
+    public Set<String> getActivityMarkers() {
+        return amarkers;
+    }
+
+    public void setExtendedMarkers(final Set<String> markers) {
+        this.emarkers = markers;
+    }
+
+    public Set<String> getExtendedMarkers() {
+        return emarkers;
+    }
+
+    public Set<String> getAllMarkers() {
+        return new ImmutableSet.Builder<String>().addAll(amarkers).addAll(emarkers).addAll(markers).build();
     }
 }

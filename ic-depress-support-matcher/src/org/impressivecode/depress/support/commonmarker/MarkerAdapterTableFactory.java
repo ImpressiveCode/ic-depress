@@ -44,7 +44,7 @@ public class MarkerAdapterTableFactory {
             SYNTACTIC_CONFIDENCE_COLNAME, IntCell.TYPE).createSpec();
 
     public static final DataColumnSpec SEMANTIC_CONFIDENCE_COLSPEC = new DataColumnSpecCreator(
-            SEMANTIC_CONFIDENCE_COLNAME, SetCell.getCollectionType(IntCell.TYPE)).createSpec();
+            SEMANTIC_CONFIDENCE_COLNAME, IntCell.TYPE).createSpec();
 
     public static final DataColumnSpec AM_MARKER_COLSPEC = new DataColumnSpecCreator(AM_MARKER,
             SetCell.getCollectionType(StringCell.TYPE)).createSpec();
