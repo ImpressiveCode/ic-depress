@@ -26,6 +26,7 @@ import java.util.Set;
 import org.impressivecode.depress.common.DataTableSpecUtils;
 import org.impressivecode.depress.common.InputTransformer;
 import org.impressivecode.depress.common.TableCellReader;
+import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTable;
 import org.knime.core.data.DataTableSpec;
@@ -93,5 +94,10 @@ public class SCMInputTransformer implements InputTransformer<SCMDataType> {
     public InputTransformer<SCMDataType> setInputSpec(final DataTableSpec spec) {
         this.inputTableSpec = spec;
         return this;
+    }
+
+    @Override
+    public InputTransformer<SCMDataType> setMinimalOrSpec(final DataColumnSpec[] orSpec) {
+        throw new IllegalStateException("Unsupported operation");
     }
 }

@@ -21,6 +21,9 @@ import static com.google.common.base.Preconditions.checkState;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.ISSUE_ID_COLSPEC;
 import static org.impressivecode.depress.metric.im.IssuesMetricTableFactory.createDataColumnSpec;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_COLSPEC;
+import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.AM_MARKER_COLSPEC;
+import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.EXT_MARKER_COLSPEC;
+import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.MARKER_COLSPEC;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +33,6 @@ import org.impressivecode.depress.common.InputTransformer;
 import org.impressivecode.depress.common.OutputTransformer;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSInputTransformer;
-import org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory;
 import org.impressivecode.depress.support.commonmarker.MarkerDataType;
 import org.impressivecode.depress.support.commonmarker.MarkerInputTransformer;
 import org.knime.core.data.DataTableSpec;
@@ -101,7 +103,9 @@ public class IssuesMetricNodeModel extends NodeModel {
         if (inSpecs.length != 2) {
             throw new InvalidSettingsException("Wrong number of input suorces");
         }
-        this.markerTransfomer.setMinimalSpec(new DataTableSpec(RESOURCE_COLSPEC, MarkerAdapterTableFactory.MARKER_COLSPEC)).setInputSpec(inSpecs[0]).validate();
+        this.markerTransfomer.setMinimalSpec(new DataTableSpec(RESOURCE_COLSPEC))
+        .setMinimalOrSpec(MARKER_COLSPEC, AM_MARKER_COLSPEC, EXT_MARKER_COLSPEC).setInputSpec(inSpecs[0])
+        .validate();
         this.issueTransfomer.setMinimalSpec(new DataTableSpec(ISSUE_ID_COLSPEC)).setInputSpec(inSpecs[1]).validate();
 
         return new DataTableSpec[] { createDataColumnSpec() };

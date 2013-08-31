@@ -104,7 +104,6 @@ public class MarkerInputTransformer implements InputTransformer<MarkerDataType> 
 
     @Override
     public InputTransformer<MarkerDataType> setMinimalSpec(final DataTableSpec spec) {
-        checkArgument(this.minimalOrTableSpec == null, "MinimalOrSet was already set. Only one constraint is allowed");
         this.minimalTableSpec = spec;
         return this;
     }
@@ -115,8 +114,8 @@ public class MarkerInputTransformer implements InputTransformer<MarkerDataType> 
         return this;
     }
 
+    @Override
     public InputTransformer<MarkerDataType> setMinimalOrSpec(final DataColumnSpec... orSpec) {
-        checkArgument(this.minimalTableSpec == null, "MinimalSet was already set. Only one constraint is allowed");
         this.minimalOrTableSpec = new DataTableSpec(orSpec);
         return this;
     }
