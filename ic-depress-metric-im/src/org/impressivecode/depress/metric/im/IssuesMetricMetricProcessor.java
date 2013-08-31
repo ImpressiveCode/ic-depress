@@ -51,14 +51,14 @@ public class IssuesMetricMetricProcessor {
     }
 
     private void processIntern() {
-        for (MarkerDataType scm : changes) {
-            IssuesMetricType noi = get(scm);
-            updateNoI(scm, noi);
+        for (MarkerDataType marker : changes) {
+            IssuesMetricType noi = get(marker);
+            updateNoI(marker, noi);
         }
     }
 
-    private void updateNoI(final MarkerDataType scm, final IssuesMetricType noi) {
-        for (String marker : scm.getMarkers()) {
+    private void updateNoI(final MarkerDataType markers, final IssuesMetricType noi) {
+        for (String marker : markers.getAllMarkers()) {
             if (issues.containsKey(marker)) {
                 noi.getIssues().add(issues.get(marker));
             }
