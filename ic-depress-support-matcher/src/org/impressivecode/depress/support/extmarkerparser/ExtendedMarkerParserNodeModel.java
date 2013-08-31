@@ -21,7 +21,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLNAME;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.MESSAGE_COLSPEC;
 import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.EXT_MARKER_COLSPEC;
-import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.SYNTACTIC_CONFIDENCE_COLSPEC;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,7 +90,7 @@ public class ExtendedMarkerParserNodeModel extends NodeModel {
         Preconditions.checkArgument(inSpecs.length == 1);
         validate(inSpecs[0]);
 
-        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], EXT_MARKER_COLSPEC, SYNTACTIC_CONFIDENCE_COLSPEC);
+        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], EXT_MARKER_COLSPEC);
 
         return new DataTableSpec[] { dts };
     }
