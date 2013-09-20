@@ -76,6 +76,9 @@ public class SVNOfflineParser {
             throws CloneNotSupportedException {
         List<SCMDataType> scmEntries = Lists.newArrayListWithCapacity(1000);
         for (Logentry entry : log.getLogentry()) {
+            if(entry.getPaths() == null){
+                continue;
+            }
             SCMDataType base = scmBase(entry);
             for (Path path : entry.getPaths().getPath()) {
                 if (include(path)) {
