@@ -74,7 +74,7 @@ public class SCMAdapterTableFactory {
 
     public static DataRow createTableRow(final String rowId, final SCMDataType scmData) {
         assertData(scmData);
-        DataCell[] cells = { stringCell(scmData.getResourceName()), stringCell(scmData.getAuthor()),
+        DataCell[] cells = { stringCell(scmData.getResourceName()), stringOrMissingCell(scmData.getAuthor()),
                 stringCell(scmData.getOperation()), stringOrMissingCell(scmData.getMessage()),
                 stringCell(scmData.getPath()), dateTimeCell(scmData.getCommitDate()),
                 stringCell(scmData.getCommitID()), };
@@ -85,7 +85,7 @@ public class SCMAdapterTableFactory {
     private static void assertData(final SCMDataType scmData) {
         checkNotNull(scmData, "Issue Tracking System data has to be set.");
         checkNotNull(scmData.getResourceName(), "Resource has to be set.");
-        checkNotNull(scmData.getAuthor(), "Author has to be set.");
+        //author could be null -> tools
         checkNotNull(scmData.getOperation(), "Operation has to be set.");
         checkNotNull(scmData.getPath(), "Path has to be set.");
         checkNotNull(scmData.getCommitDate(), "CommitDate has to be set.");
