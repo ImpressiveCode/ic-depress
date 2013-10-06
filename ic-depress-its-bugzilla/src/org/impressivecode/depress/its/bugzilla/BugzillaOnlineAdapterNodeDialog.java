@@ -17,10 +17,9 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createURLSettings;
-
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
+import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 
 /**
@@ -31,13 +30,28 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
  */
 public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
-    private static final String BUGZILLA_URL_LABEL = "Bugzilla URL:";
+	private static final String URL_LABEL = "Bugzilla URL:";
+
+	private static final String USERNAME_LABEL = "Username:";
+
+	private static final String PASSWORD_LABEL = "Password:";
 
 	protected BugzillaOnlineAdapterNodeDialog() {
-        addDialogComponent(getURLComponent());
-    }
+		addDialogComponent(getURLComponent());
+		addDialogComponent(getUsernameComponent());
+		addDialogComponent(getPasswordComponent());
+	}
 
-    private DialogComponent getURLComponent() {
-        return new DialogComponentString(createURLSettings(), BUGZILLA_URL_LABEL);
-    }
+	private DialogComponent getURLComponent() {
+		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createURLSettings(), URL_LABEL);
+	}
+
+	private DialogComponent getUsernameComponent() {
+		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createUsernameSettings(), USERNAME_LABEL);
+	}
+
+	private DialogComponent getPasswordComponent() {
+		return new DialogComponentPasswordField(BugzillaOnlineAdapterNodeModel.createPasswordSettings(), PASSWORD_LABEL);
+	}
+
 }

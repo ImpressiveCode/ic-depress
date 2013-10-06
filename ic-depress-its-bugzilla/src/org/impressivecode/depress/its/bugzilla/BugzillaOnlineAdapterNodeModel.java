@@ -39,7 +39,6 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 
 /**
  * 
@@ -49,13 +48,21 @@ import com.google.common.collect.Lists;
  */
 public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
-	private static final String DEFAULT_VALUE = "";
-
-	private static final String CONFIG_NAME = "depress.its.bugzillaonline.confname";
-
 	private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
 
+	private static final String DEFAULT_VALUE = "";
+
+	private static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
+
+	private static final String BUGZILLA_USERNAME = "depress.its.bugzillaonline.username";
+	
+	private static final String BUGZILLA_PASSWORD = "depress.its.bugzillaonline.password";
+
 	private final SettingsModelString urlSettings = createURLSettings();
+	
+	private final SettingsModelString usernameSettings = createURLSettings();
+	
+	private final SettingsModelString passwordSettings = createURLSettings();
 
 	protected BugzillaOnlineAdapterNodeModel() {
 		super(0, 1);
@@ -64,9 +71,11 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	@Override
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
 		LOGGER.info("Preparing to read bugzilla entries.");
-		// TODO implement reading bugzilla entries here
-		List<ITSDataType> entries = Lists.newArrayList();
-		LOGGER.info("Transforming to buzilla entries.");
+		String urlAddress = urlSettings.getStringValue();
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapterImpl(urlAddress);
+		LOGGER.info("Reading entries from bugzilla instance: " + urlAddress);
+		List<ITSDataType> entries = clientAdapter.listEntries();
+		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, exec);
 		LOGGER.info("Bugzilla table created.");
 		return new BufferedDataTable[] { out };
@@ -91,16 +100,22 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	@Override
 	protected void saveSettingsTo(final NodeSettingsWO settings) {
 		urlSettings.saveSettingsTo(settings);
+		usernameSettings.saveSettingsTo(settings);
+		passwordSettings.saveSettingsTo(settings);
 	}
 
 	@Override
 	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
 		urlSettings.loadSettingsFrom(settings);
+		usernameSettings.loadSettingsFrom(settings);
+		passwordSettings.loadSettingsFrom(settings);
 	}
 
 	@Override
 	protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-		urlSettings.validateSettings(settings);
+		urlSettings.validateSettings(settings); // TODO validate url, maybe test connection, bugzilla version and credentials
+		usernameSettings.validateSettings(settings);
+		passwordSettings.validateSettings(settings);
 	}
 
 	@Override
@@ -114,6 +129,15 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	static SettingsModelString createURLSettings() {
-		return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
+		return new SettingsModelString(BUGZILLA_URL, DEFAULT_VALUE);
 	}
+	
+	static SettingsModelString createUsernameSettings() {
+		return new SettingsModelString(BUGZILLA_USERNAME, DEFAULT_VALUE);
+	}
+	
+	static SettingsModelString createPasswordSettings() {
+		return new SettingsModelString(BUGZILLA_PASSWORD, DEFAULT_VALUE);
+	}
+	
 }
