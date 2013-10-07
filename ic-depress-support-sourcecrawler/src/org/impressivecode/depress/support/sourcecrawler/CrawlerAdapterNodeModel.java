@@ -15,20 +15,16 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.sourcecrawler;
+package org.impressivecode.depress.support.sourcecrawler;
 
-import static org.impressivecode.depress.sourcecrawler.table.factory.CrawlerAdapterTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.sourcecrawler.table.factory.CrawlerAdapterTableFactory.createTableRow;
-import static org.impressivecode.depress.sourcecrawler.table.factory.CrawlerAdapterTableFactory.createTableSpec;
+import static org.impressivecode.depress.support.sourcecrawler.CrawlerAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.support.sourcecrawler.CrawlerAdapterTableFactory.createTableRow;
+import static org.impressivecode.depress.support.sourcecrawler.CrawlerAdapterTableFactory.createTableSpec;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.impressivecode.depress.sourcecrawler.model.Clazz;
-import org.impressivecode.depress.sourcecrawler.model.SourceCrawlerOutput;
-import org.impressivecode.depress.sourcecrawler.model.SourceFile;
-import org.impressivecode.depress.sourcecrawler.xml.CrawlerEntriesParser;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
@@ -43,7 +39,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * 
- * @author Marek Majchrzak, modiefied by Pawel Nosal, ImpressiveCode
+ * @author Pawel Nosal, ImpressiveCode
  * 
  */
 public class CrawlerAdapterNodeModel extends NodeModel {

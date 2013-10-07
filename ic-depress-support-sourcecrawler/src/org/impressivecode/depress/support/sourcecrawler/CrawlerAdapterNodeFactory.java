@@ -15,30 +15,43 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.sourcecrawler.model;
+package org.impressivecode.depress.support.sourcecrawler;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.knime.core.node.NodeDialogPane;
+import org.knime.core.node.NodeFactory;
+import org.knime.core.node.NodeView;
 
 /**
  * 
  * @author Pawel Nosal, ImpressiveCode
  * 
  */
-@XmlRootElement(name = "root")
-public class SourceCrawlerOutput {
+public class CrawlerAdapterNodeFactory extends
+		NodeFactory<CrawlerAdapterNodeModel> {
 
-	private List<SourceFile> sourceFiles;
-
-	@XmlElement(name = "file")
-	public List<SourceFile> getSourceFiles() {
-		return sourceFiles;
+	@Override
+	public CrawlerAdapterNodeModel createNodeModel() {
+		return new CrawlerAdapterNodeModel();
 	}
 
-	public void setSourceFiles(List<SourceFile> sourceFiles) {
-		this.sourceFiles = sourceFiles;
+	@Override
+	public int getNrNodeViews() {
+		return 0;
 	}
 
+	@Override
+	public NodeView<CrawlerAdapterNodeModel> createNodeView(
+			final int viewIndex, final CrawlerAdapterNodeModel nodeModel) {
+		throw new IllegalStateException("View not supported");
+	}
+
+	@Override
+	public boolean hasDialog() {
+		return true;
+	}
+
+	@Override
+	public NodeDialogPane createNodeDialogPane() {
+		return new CrawlerAdapterNodeDialog();
+	}
 }
