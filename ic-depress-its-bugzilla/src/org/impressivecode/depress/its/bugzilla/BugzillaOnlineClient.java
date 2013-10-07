@@ -17,7 +17,7 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -26,6 +26,6 @@ import java.util.HashMap;
  */
 public interface BugzillaOnlineClient {
 	
-	Object execute(String method, HashMap<String, Object> parameters) throws BugzillaOnlineClientException;
+	Object execute(String method, Map<String, Object> parameters) throws BugzillaOnlineClientException;
 	
 }

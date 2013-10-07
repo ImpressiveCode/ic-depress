@@ -18,7 +18,7 @@
 package org.impressivecode.depress.its.bugzilla;
 
 import java.net.URL;
-import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
@@ -50,9 +50,12 @@ public class BugzillaOnlineXmlRpcClient implements BugzillaOnlineClient {
 	}
 
 	@Override
-	public Object execute(String method, HashMap<String, Object> parameters) throws BugzillaOnlineClientException {
+	public Object execute(String method, Map<String, Object> parameters) throws BugzillaOnlineClientException {
 		try {
-			return client.execute(method, new Object[] { parameters });
+			// All Bugzilla functions use named parameters and this is realized by Map object. 
+			// To execute method with Map by the client, we need to wrap it into single element array.
+			Object[] parametersWrapper = new Object[] { parameters };
+			return client.execute(method, parametersWrapper);
 		} catch (XmlRpcException e) {
 			throw new BugzillaOnlineClientException(e);
 		}
