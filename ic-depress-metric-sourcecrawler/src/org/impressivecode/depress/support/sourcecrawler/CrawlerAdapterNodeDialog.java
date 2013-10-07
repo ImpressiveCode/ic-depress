@@ -15,14 +15,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.sourcecrawler;
+package org.impressivecode.depress.support.sourcecrawler;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 
 /**
  * 
- * @author Marek Majchrzak, modiefied by Pawel Nosal, ImpressiveCode
+ * @author Pawel Nosal, ImpressiveCode
  * 
  */
 public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {

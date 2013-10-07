@@ -15,9 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.sourcecrawler.table.factory;
-
-import java.math.BigDecimal;
+package org.impressivecode.depress.support.sourcecrawler;
 
 import java.util.List;
 
@@ -26,12 +24,11 @@ import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.def.DefaultRow;
-import org.knime.core.data.def.DoubleCell;
 import org.knime.core.data.def.StringCell;
 
 /**
  * 
- * @author Marek Majchrzak, modiefied by Pawel Nosal, ImpressiveCode
+ * @author Pawel Nosal, ImpressiveCode
  * 
  */
 public class CrawlerAdapterTableFactory {
@@ -66,7 +63,7 @@ public class CrawlerAdapterTableFactory {
 	private static void prepareCells(String name, String type,
 			boolean exception, boolean inner, boolean test,
 			String sourcePackage, String path, DataCell[] cells) {
-		cells[0] = new StringCell(name);
+		cells[0] = new StringCell(sourcePackage+"."+name);
 		cells[1] = new StringCell(Boolean.toString(exception));
 		cells[2] = new StringCell(Boolean.toString(inner));
 		cells[3] = new StringCell(Boolean.toString(test));
@@ -75,15 +72,4 @@ public class CrawlerAdapterTableFactory {
 		cells[6] = new StringCell(path);
 	}
 
-	public static DataRow createTableRow(final String className,
-			final BigDecimal score) {
-		DataCell[] cells = new DataCell[1];
-		cells[0] = getScoreCell(score);
-		DataRow row = new DefaultRow(className, cells);
-		return row;
-	}
-
-	private static DataCell getScoreCell(final BigDecimal score) {
-		return new DoubleCell(score != null ? score.doubleValue() : 0);
-	}
 }
