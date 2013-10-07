@@ -69,11 +69,15 @@ public class XmlRpcTransportFactoryWithCookies extends XmlRpcSunHttpTransportFac
 		}
 
 		@Override
-		protected void initHttpHeaders(XmlRpcRequest pRequest) throws XmlRpcClientException {
-			super.initHttpHeaders(pRequest);
+		protected void initHttpHeaders(XmlRpcRequest request) throws XmlRpcClientException {
+			super.initHttpHeaders(request);
 			if (!cookies.isEmpty()) {
-				setRequestHeader(REQUEST_COOKIE_HEADER, Joiner.on(REQUEST_COOKIE_DELIMITER).join(cookies));
+				addCookiesToRequest();
 			}
+		}
+
+		private void addCookiesToRequest() {
+			setRequestHeader(REQUEST_COOKIE_HEADER, Joiner.on(REQUEST_COOKIE_DELIMITER).join(cookies));
 		}
 
 		@Override
