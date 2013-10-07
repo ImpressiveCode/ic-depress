@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.sourcecrawler.table.factory;
+package org.impressivecode.depress.support.sourcecrawler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +30,10 @@ import org.knime.core.data.def.StringCell;
  * 
  */
 public enum ColumnNames {
-	NAME("Name") {
+	RESOURCE("Resource") {
 		@Override
 		public DataColumnSpec getDataColumnCreator() {
-			return new DataColumnSpecCreator(ColumnNames.NAME.toString(),
+			return new DataColumnSpecCreator(ColumnNames.RESOURCE.toString(),
 					StringCell.TYPE).createSpec();
 		}
 	},

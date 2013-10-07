@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.sourcecrawler.xml;
+package org.impressivecode.depress.support.sourcecrawler;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.base.Preconditions.*;
@@ -25,11 +25,10 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.impressivecode.depress.sourcecrawler.model.SourceCrawlerOutput;
 
 /**
  * 
- * @author Marek Majchrzak, modiefied by Pawel Nosal, ImpressiveCode
+ * @author Pawel Nosal, ImpressiveCode
  * 
  */
 public class CrawlerEntriesParser {
