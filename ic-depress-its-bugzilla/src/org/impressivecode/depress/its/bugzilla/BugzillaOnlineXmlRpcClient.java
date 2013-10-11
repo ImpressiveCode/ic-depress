@@ -29,7 +29,7 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
  * @author Michał Negacz
  * 
  */
-public class BugzillaOnlineXmlRpcClient implements BugzillaOnlineClient {
+public class BugzillaOnlineXmlRpcClient {
 
 	private XmlRpcClient client;
 
@@ -49,7 +49,6 @@ public class BugzillaOnlineXmlRpcClient implements BugzillaOnlineClient {
 		return client;
 	}
 
-	@Override
 	public Object execute(String method, Map<String, Object> parameters) throws BugzillaOnlineClientException {
 		try {
 			// All Bugzilla functions use named parameters and this is realized by Map object. 

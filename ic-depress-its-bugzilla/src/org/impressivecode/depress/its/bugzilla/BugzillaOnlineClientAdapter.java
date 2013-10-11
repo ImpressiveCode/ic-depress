@@ -17,17 +17,40 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSDataType;
+
+import com.google.common.collect.Lists;
 
 /**
  * 
  * @author Michał Negacz
  * 
  */
-public interface BugzillaOnlineClientAdapter {
-	
-	List<ITSDataType> listEntries();
-	
+public class BugzillaOnlineClientAdapter {
+
+	private BugzillaOnlineXmlRpcClient bugzillaClient;
+
+	public BugzillaOnlineClientAdapter(String urlAddress) {
+		bugzillaClient = buildClient(urlAddress);
+	}
+
+	private BugzillaOnlineXmlRpcClient buildClient(String urlAddress) {
+		URL url = null;
+		try {
+			url = new URL(urlAddress);
+		} catch (MalformedURLException e) {
+			e.printStackTrace(); // TODO handle exception
+		}
+
+		return new BugzillaOnlineXmlRpcClient(url);
+	}
+
+	public List<ITSDataType> listEntries() {
+		return Lists.newArrayList(); // TODO implement fetching entries
+	}
+
 }
