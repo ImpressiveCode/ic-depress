@@ -19,16 +19,13 @@ package org.impressivecode.depress.scm.git;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static com.google.common.collect.Sets.newHashSet;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -88,7 +85,7 @@ public class GitOnlineLogParser {
         return branches;
     }
 
-    public static void cloneRepository(final String remoteAddress, final String localPath, ProgressMonitor monitor) throws InvalidRemoteException, TransportException, GitAPIException{
+    public static void cloneRepository(final String remoteAddress, final String localPath, final ProgressMonitor monitor) throws InvalidRemoteException, TransportException, GitAPIException{
         CloneCommand clone = Git.cloneRepository();
         clone.setBare(false);
         clone.setCloneAllBranches(true);
@@ -193,7 +190,6 @@ public class GitOnlineLogParser {
                 message = message.substring(0, message.length()-1);
             }
             this.analyzedCommit.addToMessage(message);
-            this.analyzedCommit.setMarkers(this.parseMarkers(message));
         }
 
         private void author() {
@@ -207,22 +203,6 @@ public class GitOnlineLogParser {
         private void hash() {
             String[] commitId = this.revCommit.getId().toString().split(" ");
             this.analyzedCommit.setId(commitId[1]);
-        }
-
-        private Set<String> parseMarkers(final String message) {
-            if (options.hasMarkerPattern()) {
-                Set<String> markers = newHashSet();
-                Matcher matcher = options.getMarkerPattern().matcher(message);
-                while (matcher.find()) {
-                    if (matcher.groupCount() >= 1){
-                        markers.add(matcher.group(1));
-                    } else {
-                        markers.add(matcher.group());
-                    }
-                }
-                return markers;
-            }
-            return Collections.<String> emptySet();
         }
 
         private void parsePath(final Matcher matcher) {

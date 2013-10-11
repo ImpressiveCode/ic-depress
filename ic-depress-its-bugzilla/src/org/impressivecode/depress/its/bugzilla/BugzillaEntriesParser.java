@@ -22,9 +22,11 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -43,6 +45,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSet.Builder;
 import com.google.common.collect.Lists;
 
 /**
@@ -94,14 +98,40 @@ public class BugzillaEntriesParser {
         data.setDescription(getDescription(elem));
         data.setFixVersion(getFixVersion(elem));
         data.setPriority(getPriority(elem));
-        data.setResolved(getResolved(elem));
+        data.setResolved(getResolved(elem)); // no proper history in offline version
+        data.setUpdated(getResolved(elem));// no proper history in offline version
         data.setStatus(getStatus(elem));
         data.setSummary(getSummary(elem));
         data.setType(getType(elem));
         data.setUpdated(getUpdated(elem));
         data.setVersion(getVersion(elem));
         data.setResolution(getResolution(elem));
+        data.setReporter(getReporter(elem));
+        data.setAssignees(getAssinees(elem));
+        data.setCommentAuthors(getCommentAuthors(elem));
         return data;
+    }
+
+    private Set<String> getCommentAuthors(final Element elem) {
+        NodeList nodeList = elem.getElementsByTagName("long_desc");
+        Builder<String> authors = ImmutableSet.builder();
+        if(nodeList.getLength() <= 1) {
+            return authors.build();
+        }
+        for (int i = 1; i < nodeList.getLength(); i++) {
+            Node item = nodeList.item(i);
+            authors.add(extractValue((Element) item, "who"));
+        }
+        return authors.build();
+    }
+
+    private Set<String> getAssinees(final Element elem) {
+        String value = extractValue(elem, "assigned_to");
+        return value == null ? Collections.<String>emptySet() : ImmutableSet.of(value);
+    }
+
+    private String getReporter(final Element elem) {
+        return extractValue(elem, "reporter");
     }
 
     private ITSResolution getResolution(final Element elem) {
@@ -211,7 +241,11 @@ public class BugzillaEntriesParser {
 
     private List<String> getComments(final Element elem) {
         List<String> values = extractValues(elem, "thetext");
-        return values.subList(1, values.size());
+        if(values.size() > 1){
+            return values.subList(1, values.size());
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     private String getKey(final Element elem) {

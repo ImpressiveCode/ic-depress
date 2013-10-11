@@ -16,32 +16,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.svn;
-import java.util.regex.Pattern;
-
 import com.google.common.base.Strings;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
  */
 public class SVNParserOptions {
-    private Pattern markerRegexp;
+
     private String packageString;
 
-    public static SVNParserOptions options(final String markerRegexp, final String packageString) {
+    public static SVNParserOptions options(final String packageString) {
         SVNParserOptions options = new SVNParserOptions();
-        if (!Strings.isNullOrEmpty(markerRegexp)) {
-            options.markerRegexp = Pattern.compile(markerRegexp);
-        }
         options.packageString = Strings.emptyToNull(packageString);
         return options;
-    }
-
-    public boolean hasMarkerPattern() {
-        return this.markerRegexp != null;
-    }
-
-    public Pattern getMarkerPattern() {
-        return markerRegexp;
     }
 
     public boolean hasPackagePrefix() {

@@ -50,20 +50,15 @@ import com.google.common.base.Preconditions;
  */
 public class SVNOfflineAdapterNodeModel extends NodeModel {
 
-    // the logger instance
     private static final NodeLogger LOGGER = NodeLogger.getLogger(SVNOfflineAdapterNodeModel.class);
 
     static final String CFG_FILENAME = "depress.scm.svn.filename";
     static final String FILENAME_DEFAULT = "";
-    static final String CFG_REGEXP = "depress.scm.svn.regexp";
-    static final String REGEXP_DEFAULT = "";
     static final String CFG_PACKAGENAME = "depress.scm.svn.package";
     static final String PACKAGENAME_DEFAULT = "org.";
 
     private final SettingsModelString fileName = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_FILENAME,
             SVNOfflineAdapterNodeModel.FILENAME_DEFAULT);
-    private final SettingsModelString regExp = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_REGEXP,
-            SVNOfflineAdapterNodeModel.REGEXP_DEFAULT);
     private final SettingsModelOptionalString packageName = new SettingsModelOptionalString(
             SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT, true);
 
@@ -74,15 +69,19 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
+        try {
+            LOGGER.info("Reading logs from file " + this.fileName.getStringValue());
+            SVNOfflineParser parser = new SVNOfflineParser(options(packageName.getStringValue()));
+            List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
+            LOGGER.info("Reading logs finished");
+            BufferedDataTable out = transform(commits, exec);
+            LOGGER.info("Transforming logs finished.");
+            return new BufferedDataTable[] { out };
+        } catch (Exception ex) {
+            LOGGER.error("Unable to parse SVN entries", ex);
+            throw ex;
+        }
 
-        LOGGER.info("Reading logs from file " + this.fileName.getStringValue());
-        SVNOfflineParser parser = new SVNOfflineParser(options(regExp.getStringValue(),
-                packageName.getStringValue()));
-        List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
-        LOGGER.info("Reading logs finished");
-        BufferedDataTable out = transform(commits, exec);
-        LOGGER.info("Transforming logs finished.");
-        return new BufferedDataTable[] { out };
     }
 
     private BufferedDataTable transform(final List<SCMDataType> commits, final ExecutionContext exec)
@@ -105,21 +104,18 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         fileName.saveSettingsTo(settings);
-        regExp.saveSettingsTo(settings);
         packageName.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileName.loadSettingsFrom(settings);
-        regExp.loadSettingsFrom(settings);
         packageName.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileName.validateSettings(settings);
-        regExp.validateSettings(settings);
         packageName.validateSettings(settings);
     }
 

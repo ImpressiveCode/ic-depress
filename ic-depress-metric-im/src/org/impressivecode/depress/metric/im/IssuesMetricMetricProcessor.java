@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.support.commonmarker.MarkerDataType;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -36,10 +36,10 @@ import com.google.common.collect.Maps;
  */
 public class IssuesMetricMetricProcessor {
     private Map<String, ITSDataType> issues;
-    private List<SCMDataType> changes;
+    private List<MarkerDataType> changes;
     private Map<String, IssuesMetricType> metricResult;
 
-    public IssuesMetricMetricProcessor(final List<ITSDataType> issues, final List<SCMDataType> changes) {
+    public IssuesMetricMetricProcessor(final List<ITSDataType> issues, final List<MarkerDataType> changes) {
         this.issues = convert2Map(checkNotNull(issues, "Issues has to be set"));
         this.changes = checkNotNull(changes, "Changes has to be set");
         this.metricResult = Maps.newHashMapWithExpectedSize(1500);
@@ -51,21 +51,21 @@ public class IssuesMetricMetricProcessor {
     }
 
     private void processIntern() {
-        for (SCMDataType scm : changes) {
-            IssuesMetricType noi = get(scm);
-            updateNoI(scm, noi);
+        for (MarkerDataType marker : changes) {
+            IssuesMetricType noi = get(marker);
+            updateNoI(marker, noi);
         }
     }
 
-    private void updateNoI(final SCMDataType scm, final IssuesMetricType noi) {
-        for (String marker : scm.getMarkers()) {
+    private void updateNoI(final MarkerDataType markers, final IssuesMetricType noi) {
+        for (String marker : markers.getAllMarkers()) {
             if (issues.containsKey(marker)) {
                 noi.getIssues().add(issues.get(marker));
             }
         }
     }
 
-    private IssuesMetricType get(final SCMDataType scm) {
+    private IssuesMetricType get(final MarkerDataType scm) {
         IssuesMetricType noi = metricResult.get(scm.getResourceName());
         if (noi == null) {
             noi = new IssuesMetricType();

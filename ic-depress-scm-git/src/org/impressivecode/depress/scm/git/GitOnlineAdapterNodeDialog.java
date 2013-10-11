@@ -67,7 +67,7 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
         cloneButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
 
                 new SwingWorker<Void, String>() {
                     Boolean cloneResult;
@@ -109,7 +109,7 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         button.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 getBranchesList();
             }
         });
@@ -127,8 +127,6 @@ public class GitOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         setHorizontalPlacement(false);
 
         createNewGroup("Other settings");
-        addDialogComponent(new DialogComponentString(new SettingsModelString(GitOnlineAdapterNodeModel.GIT_REGEXP,
-                GitOnlineAdapterNodeModel.GIT_REGEXP_DEFAULT), "Issue marker: "));
 
         addDialogComponent(new DialogComponentString(new SettingsModelString(GitOnlineAdapterNodeModel.GIT_PACKAGENAME,
                 GitOnlineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT), "Package: "));

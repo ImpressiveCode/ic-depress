@@ -22,9 +22,11 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -43,6 +45,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSet.Builder;
 import com.google.common.collect.Lists;
 
 /**
@@ -90,12 +94,43 @@ public class JiraEntriesParser {
         data.setUpdated(getUpdated(elem));
         data.setVersion(getVersion(elem));
         data.setResolution(getResolution(elem));
+        data.setReporter(getReporter(elem));
+        data.setAssignees(getAssinees(elem));
+        data.setCommentAuthors(getCommentAuthors(elem));
         return data;
+    }
+
+    private Set<String> getCommentAuthors(final Element elem) {
+        NodeList nodeList = elem.getElementsByTagName("comment");
+        Builder<String> authors = ImmutableSet.builder();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node item = nodeList.item(i);
+            authors.add(item.getAttributes().getNamedItem("author").getTextContent());
+        }
+        return authors.build();
+    }
+
+    private Set<String> getAssinees(final Element elem) {
+        NodeList nodeList = elem.getElementsByTagName("assignee");
+        Preconditions.checkArgument(nodeList.getLength() == 1, "Reporter has to be set");
+        String username = nodeList.item(0).getAttributes().getNamedItem("username").getTextContent();
+        if ("-1".equals(username)) {
+            return Collections.emptySet();
+        } else {
+            return ImmutableSet.of(username);
+        }
+    }
+
+    private String getReporter(final Element elem) {
+        NodeList nodeList = elem.getElementsByTagName("reporter");
+        Preconditions.checkArgument(nodeList.getLength() == 1, "Reporter has to be set");
+        String username = nodeList.item(0).getAttributes().getNamedItem("username").getTextContent();
+        return username;
     }
 
     private ITSResolution getResolution(final Element elem) {
         String resolution = extractValue(elem, "resolution");
-        if(resolution == null){
+        if (resolution == null) {
             return ITSResolution.UNKNOWN;
         }
         switch (resolution) {
@@ -118,7 +153,7 @@ public class JiraEntriesParser {
         case "Not A Problem":
             return ITSResolution.WONT_FIX;
         case "Implemented":
-            return ITSResolution.IMPLEMENTED;
+            return ITSResolution.FIXED;
         default:
             return ITSResolution.UNKNOWN;
         }
@@ -134,7 +169,7 @@ public class JiraEntriesParser {
 
     private ITSType getType(final Element elem) {
         String type = extractValue(elem, "type");
-        if(type == null){
+        if (type == null) {
             return ITSType.UNKNOWN;
         }
         switch (type) {
@@ -158,7 +193,7 @@ public class JiraEntriesParser {
 
     private ITSStatus getStatus(final Element elem) {
         String status = extractValue(elem, "status");
-        if(status == null) {
+        if (status == null) {
             return ITSStatus.UNKNOWN;
         }
         switch (status) {
@@ -183,7 +218,7 @@ public class JiraEntriesParser {
 
     private ITSPriority getPriority(final Element elem) {
         String priority = extractValue(elem, "priority");
-        if(priority == null){
+        if (priority == null) {
             return ITSPriority.UNKNOWN;
         }
         switch (priority) {
@@ -248,7 +283,7 @@ public class JiraEntriesParser {
 
     private Date parseDate(final String nodeValue) throws ParseException {
         // Mon, 16 Feb 2004 00:29:19 +0000
-        //FIXME majchmar: fix time parsing, timezone
+        // FIXME majchmar: fix time parsing, timezone
         SimpleDateFormat sdf = new SimpleDateFormat(JIRA_DATE_FORMAT, Locale.US);
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+000"));
         sdf.setLenient(true);
