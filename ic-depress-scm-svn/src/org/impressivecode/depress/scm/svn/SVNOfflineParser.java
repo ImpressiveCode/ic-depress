@@ -20,15 +20,11 @@ package org.impressivecode.depress.scm.svn;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static com.google.common.collect.Sets.newHashSet;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Matcher;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -76,9 +72,13 @@ public class SVNOfflineParser {
         return convertToSCMType(log, parserOptions);
     }
 
-    private List<SCMDataType> convertToSCMType(final SVNLog log, final SVNParserOptions parserOptions) throws CloneNotSupportedException {
+    private List<SCMDataType> convertToSCMType(final SVNLog log, final SVNParserOptions parserOptions)
+            throws CloneNotSupportedException {
         List<SCMDataType> scmEntries = Lists.newArrayListWithCapacity(1000);
         for (Logentry entry : log.getLogentry()) {
+            if(entry.getPaths() == null){
+                continue;
+            }
             SCMDataType base = scmBase(entry);
             for (Path path : entry.getPaths().getPath()) {
                 if (include(path)) {
@@ -128,7 +128,6 @@ public class SVNOfflineParser {
         scm.setCommitID(parseCommitID(entry));
         scm.setAuthor(parseAuthor(entry));
         scm.setCommitDate(parseCommitDate(entry));
-        scm.setMarkers(parseMarkers(entry));
         scm.setMessage(parseMessage(entry));
         return scm;
     }
@@ -150,22 +149,6 @@ public class SVNOfflineParser {
 
     private String parseMessage(final Logentry entry) {
         return entry.getMsg();
-    }
-
-    private Set<String> parseMarkers(final Logentry entry) {
-        if (this.parserOptions.hasMarkerPattern()) {
-            Set<String> markers = newHashSet();
-            Matcher matcher = this.parserOptions.getMarkerPattern().matcher(entry.getMsg());
-            while (matcher.find()) {
-                if (matcher.groupCount() >= 1) {
-                    markers.add(matcher.group(1));
-                } else {
-                    markers.add(matcher.group());
-                }
-            }
-            return markers;
-        }
-        return Collections.<String> emptySet();
     }
 
     private Date parseCommitDate(final Logentry entry) {

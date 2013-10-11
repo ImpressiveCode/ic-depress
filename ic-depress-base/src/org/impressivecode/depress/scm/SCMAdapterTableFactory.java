@@ -21,14 +21,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.impressivecode.depress.common.Cells.dateTimeCell;
 import static org.impressivecode.depress.common.Cells.stringCell;
 import static org.impressivecode.depress.common.Cells.stringOrMissingCell;
-import static org.impressivecode.depress.common.Cells.stringSetCell;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.collection.SetCell;
 import org.knime.core.data.date.DateAndTimeCell;
 import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.StringCell;
@@ -39,47 +37,46 @@ import org.knime.core.data.def.StringCell;
  * 
  */
 public class SCMAdapterTableFactory {
-    public static final String MARKER = "Marker";
+
     public static final String AUTHOR_COLNAME = "Author";
+    public static final DataColumnSpec AUTHOR_COLSPEC = new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE)
+    .createSpec();
+
     public static final String RESOURCE_NAME = "Class";
+    public static final DataColumnSpec RESOURCE_COLSPEC = new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE)
+    .createSpec();
+
     public final static String ACTION_COLNAME = "Action";
     public final static String MESSAGE_COLNAME = "Message";
     public final static String PATH_COLNAME = "Path";
     public final static String DATE_COLNAME = "Date";
     public final static String UID_COLNAME = "CommitID";
 
-    public static final DataColumnSpec MARKER_COLSPEC = new DataColumnSpecCreator(MARKER,
-            SetCell.getCollectionType(StringCell.TYPE)).createSpec();
 
-    public static final DataColumnSpec MESSAGE_COLSPEC = new DataColumnSpecCreator(MESSAGE_COLNAME,
-            SetCell.getCollectionType(StringCell.TYPE)).createSpec();
+
+    public static final DataColumnSpec DATE_COLSPEC = new DataColumnSpecCreator(DATE_COLNAME, DateAndTimeCell.TYPE)
+    .createSpec();
+
+    public static final DataColumnSpec MESSAGE_COLSPEC = new DataColumnSpecCreator(MESSAGE_COLNAME, StringCell.TYPE)
+    .createSpec();
 
     public static DataTableSpec[] createTableSpec() {
         return new DataTableSpec[] { SCMAdapterTableFactory.createDataColumnSpec() };
     }
 
     public static DataTableSpec createDataColumnSpec() {
-        DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(RESOURCE_NAME, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(MARKER, SetCell.getCollectionType(StringCell.TYPE)).createSpec(),
-                new DataColumnSpecCreator(AUTHOR_COLNAME, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(),
-                MESSAGE_COLSPEC,
-                new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(DATE_COLNAME, DateAndTimeCell.TYPE).createSpec(),
+        DataColumnSpec[] allColSpecs = { RESOURCE_COLSPEC, AUTHOR_COLSPEC,
+                new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(), MESSAGE_COLSPEC,
+                new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec(), DATE_COLSPEC,
                 new DataColumnSpecCreator(UID_COLNAME, StringCell.TYPE).createSpec() };
         return new DataTableSpec(allColSpecs);
     }
 
     public static DataRow createTableRow(final String rowId, final SCMDataType scmData) {
         assertData(scmData);
-        DataCell[] cells = { 
-                stringCell(scmData.getResourceName()), 
-                stringSetCell(scmData.getMarkers()),
-                stringCell(scmData.getAuthor()), 
-                stringCell(scmData.getOperation()),
-                stringOrMissingCell(scmData.getMessage()), 
-                stringCell(scmData.getPath()),
-                dateTimeCell(scmData.getCommitDate()), 
+        DataCell[] cells = { stringCell(scmData.getResourceName()), stringOrMissingCell(scmData.getAuthor()),
+                stringCell(scmData.getOperation()), stringOrMissingCell(scmData.getMessage()),
+                stringCell(scmData.getPath()), dateTimeCell(scmData.getCommitDate()),
                 stringCell(scmData.getCommitID()), };
         DataRow row = new DefaultRow(rowId, cells);
         return row;
@@ -88,7 +85,7 @@ public class SCMAdapterTableFactory {
     private static void assertData(final SCMDataType scmData) {
         checkNotNull(scmData, "Issue Tracking System data has to be set.");
         checkNotNull(scmData.getResourceName(), "Resource has to be set.");
-        checkNotNull(scmData.getAuthor(), "Author has to be set.");
+        //author could be null -> tools
         checkNotNull(scmData.getOperation(), "Operation has to be set.");
         checkNotNull(scmData.getPath(), "Path has to be set.");
         checkNotNull(scmData.getCommitDate(), "CommitDate has to be set.");

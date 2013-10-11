@@ -29,6 +29,12 @@
              name="Data"
              path="depress/">
        </category>
+       <category
+             description="DePress SCM Plugins"
+             level-id="depress.matcher"
+             name="Matcher"
+             path="depress/">
+       </category>
    </extension>
     
 </plugin>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./extmarker.png" type="Manipulator">
+    <name>Marker Parser(+)</name>
+
+    <shortDescription>
+       Marker Parser(+), ImpressiveCode Depress
+    </shortDescription>
+
+    <fullDescription>
+        <intro>
+            This node allows to extract issue marker from SCM message.
+              <p>
+             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-support-matcher/examples">here</a> or inside plugin jar. 
+             <br/> 
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
+        </intro>
+
+    </fullDescription>
+
+    <ports>
+        <inPort index="0" name="Change history data">Arbitrary input SCM data.</inPort>
+        <outPort index="0" name="Change history data and markers">SCM data with extracted markers.</outPort>
+    </ports>
+</knimeNode>

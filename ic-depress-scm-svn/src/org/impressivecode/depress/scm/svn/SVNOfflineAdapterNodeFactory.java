@@ -21,7 +21,6 @@ import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 
-
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
@@ -40,7 +39,8 @@ public class SVNOfflineAdapterNodeFactory extends NodeFactory<SVNOfflineAdapterN
     }
 
     @Override
-    public NodeView<SVNOfflineAdapterNodeModel> createNodeView(final int viewIndex, final SVNOfflineAdapterNodeModel nodeModel) {
+    public NodeView<SVNOfflineAdapterNodeModel> createNodeView(final int viewIndex,
+            final SVNOfflineAdapterNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 

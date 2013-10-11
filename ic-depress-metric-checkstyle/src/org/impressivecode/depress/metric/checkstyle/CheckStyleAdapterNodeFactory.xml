@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./checkstyle.png" type="Source">
+    <name>Checkstyle Adapter</name>
+
+    <shortDescription> Checkstyle Adapter. ImpressiveCode DePress Plugin Framework.</shortDescription>
+
+    <fullDescription>
+        <intro>
+            <p>
+            This node can be used to read data from  Checkstyle report(XML format). Only <u>file</u> are retrieved. 
+            </p>
+            <p>
+            For further information about report generation please refer to Checkstyle documentation.<br/> 
+            Checkstyle home page:
+            <a href="http://checkstyle.sourceforge.net/">http://checkstyle.sourceforge.net/</a>
+            </p>
+            <p>
+             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-metric-checkstyle/examples">here</a> or inside plugin jar. 
+             <br/> 
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
+        </intro>
+        <option name="Checkstyle file location">Enter a valid file. When you press ENTER, the file is analyzed and the settings pre-set.
+            You
+            can also choose a previously read file from the drop-down list, or select a file from the "Browse..."
+            dialog.
+        </option>
+    </fullDescription>
+
+    <ports>
+        <outPort index="0" name="Checkstyle Table">Datatable just read from the checkstyle file.</outPort>
+    </ports>
+</knimeNode>

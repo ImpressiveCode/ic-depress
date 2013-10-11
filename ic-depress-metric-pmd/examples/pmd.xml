@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="4.3" timestamp="2013-06-23T09:42:03.309">
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\analysis\differentiation\DSCompiler.java">
+<violation beginline="564" endline="565" begincolumn="24" endcolumn="91" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.apache.commons.math3.analysis.differentiation" class="DSCompiler" method="getPartialDerivativeIndex" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
+Avoid unused private methods such as 'getPartialDerivativeIndex(int,int,int,int...)'.
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\distribution\UniformRealDistribution.java">
+<violation beginline="80" endline="83" begincolumn="12" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.apache.commons.math3.distribution" class="UniformRealDistribution" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused constructor parameters such as 'inverseCumAccuracy'.
+</violation>
+<violation beginline="99" endline="104" begincolumn="12" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.apache.commons.math3.distribution" class="UniformRealDistribution" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused constructor parameters such as 'inverseCumAccuracy'.
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\geometry\euclidean\twod\NestedLoops.java">
+<violation beginline="168" endline="168" begincolumn="18" endcolumn="54" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.apache.commons.math3.geometry.euclidean.twod" class="NestedLoops" method="setClockWise" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
+Avoid unused private methods such as 'setClockWise(boolean)'.
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\linear\EigenDecomposition.java">
+<violation beginline="142" endline="146" begincolumn="12" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.apache.commons.math3.linear" class="EigenDecomposition" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused constructor parameters such as 'splitTolerance'.
+</violation>
+<violation beginline="182" endline="185" begincolumn="12" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.apache.commons.math3.linear" class="EigenDecomposition" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused constructor parameters such as 'splitTolerance'.
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\ode\ExpandableStatefulODE.java">
+<violation beginline="306" endline="306" begincolumn="42" endcolumn="49" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.apache.commons.math3.ode" class="ExpandableStatefulODE$SecondaryComponent" variable="equation" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'equation'.
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optim\BaseMultivariateOptimizer.java">
+<violation beginline="64" endline="67" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="org.apache.commons.math3.optim" class="BaseMultivariateOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optim\linear\LinearOptimizer.java">
+<violation beginline="92" endline="96" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="org.apache.commons.math3.optim.linear" class="LinearOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optim\nonlinear\scalar\GradientMultivariateOptimizer.java">
+<violation beginline="71" endline="75" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="org.apache.commons.math3.optim.nonlinear.scalar" class="GradientMultivariateOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optim\nonlinear\scalar\MultivariateOptimizer.java">
+<violation beginline="61" endline="65" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="org.apache.commons.math3.optim.nonlinear.scalar" class="MultivariateOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optim\nonlinear\scalar\gradient\NonLinearConjugateGradientOptimizer.java">
+<violation beginline="184" endline="188" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="org.apache.commons.math3.optim.nonlinear.scalar.gradient" class="NonLinearConjugateGradientOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optim\nonlinear\scalar\noderiv\BOBYQAOptimizer.java">
+<violation beginline="2437" endline="2439" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.apache.commons.math3.optim.nonlinear.scalar.noderiv" class="BOBYQAOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused method parameters such as 's'.
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optim\nonlinear\scalar\noderiv\CMAESOptimizer.java">
+<violation beginline="359" endline="364" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="org.apache.commons.math3.optim.nonlinear.scalar.noderiv" class="CMAESOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optim\nonlinear\scalar\noderiv\SimplexOptimizer.java">
+<violation beginline="120" endline="123" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="org.apache.commons.math3.optim.nonlinear.scalar.noderiv" class="SimplexOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optim\nonlinear\vector\JacobianMultivariateVectorOptimizer.java">
+<violation beginline="79" endline="84" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="org.apache.commons.math3.optim.nonlinear.vector" class="JacobianMultivariateVectorOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optim\nonlinear\vector\MultivariateVectorOptimizer.java">
+<violation beginline="83" endline="88" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="org.apache.commons.math3.optim.nonlinear.vector" class="MultivariateVectorOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optim\nonlinear\vector\jacobian\AbstractLeastSquaresOptimizer.java">
+<violation beginline="194" endline="198" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="org.apache.commons.math3.optim.nonlinear.vector.jacobian" class="AbstractLeastSquaresOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optim\univariate\UnivariateOptimizer.java">
+<violation beginline="67" endline="71" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="org.apache.commons.math3.optim.univariate" class="UnivariateOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optimization\direct\BOBYQAOptimizer.java">
+<violation beginline="2442" endline="2444" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.apache.commons.math3.optimization.direct" class="BOBYQAOptimizer" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused method parameters such as 's'.
+</violation>
+</file>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\exception\util\LocalizedFormats.java" suppressiontype="nopmd" msg="Avoid empty catch blocks" usermsg="
+"/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\fitting\GaussianFitter.java" suppressiontype="nopmd" msg="Avoid empty catch blocks" usermsg="
+"/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\fitting\GaussianFitter.java" suppressiontype="nopmd" msg="Avoid empty catch blocks" usermsg="
+"/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optimization\fitting\GaussianFitter.java" suppressiontype="nopmd" msg="Avoid empty catch blocks" usermsg="
+"/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\optimization\fitting\GaussianFitter.java" suppressiontype="nopmd" msg="Avoid empty catch blocks" usermsg="
+"/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\random\EmpiricalDistribution.java" suppressiontype="nopmd" msg="Avoid empty catch blocks" usermsg="
+"/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\random\EmpiricalDistribution.java" suppressiontype="nopmd" msg="Avoid empty catch blocks" usermsg="
+"/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\random\ValueServer.java" suppressiontype="nopmd" msg="Avoid empty catch blocks" usermsg="
+"/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\stat\Frequency.java" suppressiontype="nopmd" msg="Avoid empty catch blocks" usermsg="
+"/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\stat\regression\RegressionResults.java" suppressiontype="annotation" msg="Avoid unused private fields such as 'rank'." usermsg=""/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\util\FastMathCalc.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'buildSinCosTables(double,double,double,double,int,double,double)'." usermsg=""/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\util\OpenIntToDoubleHashMap.java" suppressiontype="nopmd" msg="Avoid empty catch blocks" usermsg="
+"/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\util\OpenIntToDoubleHashMap.java" suppressiontype="nopmd" msg="Avoid empty while statements" usermsg="
+"/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\util\OpenIntToFieldHashMap.java" suppressiontype="nopmd" msg="Avoid empty catch blocks" usermsg="
+"/>
+<suppressedviolation filename="E:\GitHub\commons-math\src\main\java\org\apache\commons\math3\util\OpenIntToFieldHashMap.java" suppressiontype="nopmd" msg="Avoid empty while statements" usermsg="
+"/>
+</pmd>

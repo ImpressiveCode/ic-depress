@@ -20,15 +20,12 @@ package org.impressivecode.depress.scm.git;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static com.google.common.collect.Sets.newHashSet;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -134,7 +131,6 @@ public class GitOfflineLogParser {
         private void message(final String line) {
             if (this.commit.getId().equals(line)) {
                 this.nextStep = LEXER.FILES;
-                this.commit.setMarkers(parseMarkers(this.commit.getMessage()));
             } else if (!Strings.isNullOrEmpty(line)) {
                 this.commit.addToMessage(line);
             }
@@ -155,22 +151,6 @@ public class GitOfflineLogParser {
             this.commit.setId(line);
             this.builder.add(commit);
             this.nextStep = LEXER.DATE;
-        }
-
-        private Set<String> parseMarkers(final String message) {
-            if (options.hasMarkerPattern()) {
-                Set<String> markers = newHashSet();
-                Matcher matcher = options.getMarkerPattern().matcher(message);
-                while (matcher.find()) {
-                    if (matcher.groupCount() >= 1){
-                        markers.add(matcher.group(1));
-                    } else {
-                        markers.add(matcher.group());
-                    }
-                }
-                return markers;
-            }
-            return Collections.<String> emptySet();
         }
 
         private void parsePath(final Matcher matcher) {
