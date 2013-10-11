@@ -19,7 +19,7 @@ package org.impressivecode.depress.its.bugzilla;
 
 /**
  * 
- * @author Micha≥ Negacz
+ * @author Micha≈Ç Negacz
  * 
  */
 public class BugzillaOnlineClientException extends Exception {

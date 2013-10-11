@@ -24,7 +24,7 @@ import org.knime.core.node.NodeView;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
- * @author Micha≥ Negacz
+ * @author Micha≈Ç Negacz
  * 
  */
 public class BugzillaOnlineAdapterNodeFactory extends NodeFactory<BugzillaOnlineAdapterNodeModel> {

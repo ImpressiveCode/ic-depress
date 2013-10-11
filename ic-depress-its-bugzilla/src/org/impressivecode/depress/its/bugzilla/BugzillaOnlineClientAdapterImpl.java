@@ -27,7 +27,7 @@ import com.google.common.collect.Lists;
 
 /**
  * 
- * @author Micha≥ Negacz
+ * @author Micha≈Ç Negacz
  * 
  */
 public class BugzillaOnlineClientAdapterImpl implements BugzillaOnlineClientAdapter {

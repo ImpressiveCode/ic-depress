@@ -25,7 +25,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
- * @author Micha≥ Negacz
+ * @author Micha≈Ç Negacz
  * 
  */
 public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {

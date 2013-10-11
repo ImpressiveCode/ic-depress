@@ -32,7 +32,7 @@ import com.google.common.collect.Maps;
 
 /**
  * 
- * @author Micha≥ Negacz
+ * @author Micha≈Ç Negacz
  * 
  */
 public class BugzillaOnlineXmlRpcClientIntegrationTest {

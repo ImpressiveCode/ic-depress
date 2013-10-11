@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * 
- * @author Micha≥ Negacz
+ * @author Micha≈Ç Negacz
  * 
  */
 public interface BugzillaOnlineClient {

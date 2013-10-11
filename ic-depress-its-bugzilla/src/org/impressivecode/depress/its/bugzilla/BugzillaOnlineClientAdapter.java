@@ -23,7 +23,7 @@ import org.impressivecode.depress.its.ITSDataType;
 
 /**
  * 
- * @author Micha≥ Negacz
+ * @author Micha≈Ç Negacz
  * 
  */
 public interface BugzillaOnlineClientAdapter {

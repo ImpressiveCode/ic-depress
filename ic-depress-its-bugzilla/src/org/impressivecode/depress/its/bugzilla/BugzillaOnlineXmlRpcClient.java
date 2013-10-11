@@ -26,7 +26,7 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 
 /**
  * 
- * @author Micha≥ Negacz
+ * @author Micha≈Ç Negacz
  * 
  */
 public class BugzillaOnlineXmlRpcClient implements BugzillaOnlineClient {
