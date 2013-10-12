@@ -43,7 +43,7 @@ import com.google.common.base.Preconditions;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
- * @author Micha� Negacz
+ * @author Michał Negacz, Wrocław University of Technology
  * 
  */
 public class BugzillaOnlineAdapterNodeModel extends NodeModel {
@@ -55,13 +55,13 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	private static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
 
 	private static final String BUGZILLA_USERNAME = "depress.its.bugzillaonline.username";
-	
+
 	private static final String BUGZILLA_PASSWORD = "depress.its.bugzillaonline.password";
 
 	private final SettingsModelString urlSettings = createURLSettings();
-	
+
 	private final SettingsModelString usernameSettings = createURLSettings();
-	
+
 	private final SettingsModelString passwordSettings = createURLSettings();
 
 	protected BugzillaOnlineAdapterNodeModel() {
@@ -72,7 +72,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
 		LOGGER.info("Preparing to read bugzilla entries.");
 		String urlAddress = urlSettings.getStringValue();
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapterImpl(urlAddress);
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(urlAddress);
 		LOGGER.info("Reading entries from bugzilla instance: " + urlAddress);
 		List<ITSDataType> entries = clientAdapter.listEntries();
 		LOGGER.info("Transforming to bugzilla entries.");
@@ -131,13 +131,13 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	static SettingsModelString createURLSettings() {
 		return new SettingsModelString(BUGZILLA_URL, DEFAULT_VALUE);
 	}
-	
+
 	static SettingsModelString createUsernameSettings() {
 		return new SettingsModelString(BUGZILLA_USERNAME, DEFAULT_VALUE);
 	}
-	
+
 	static SettingsModelString createPasswordSettings() {
 		return new SettingsModelString(BUGZILLA_PASSWORD, DEFAULT_VALUE);
 	}
-	
+
 }

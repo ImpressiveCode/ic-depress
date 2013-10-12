@@ -26,10 +26,10 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 
 /**
  * 
- * @author Micha� Negacz
+ * @author Michał Negacz, Wrocław University of Technology
  * 
  */
-public class BugzillaOnlineXmlRpcClient implements BugzillaOnlineClient {
+public class BugzillaOnlineXmlRpcClient {
 
 	private XmlRpcClient client;
 
@@ -49,16 +49,11 @@ public class BugzillaOnlineXmlRpcClient implements BugzillaOnlineClient {
 		return client;
 	}
 
-	@Override
-	public Object execute(String method, Map<String, Object> parameters) throws BugzillaOnlineClientException {
-		try {
-			// All Bugzilla functions use named parameters and this is realized by Map object. 
-			// To execute method with Map by the client, we need to wrap it into single element array.
-			Object[] parametersWrapper = new Object[] { parameters };
-			return client.execute(method, parametersWrapper);
-		} catch (XmlRpcException e) {
-			throw new BugzillaOnlineClientException(e);
-		}
+	public Object execute(String method, Map<String, Object> parameters) throws XmlRpcException {
+		// All Bugzilla functions use named parameters and this is realized by Map object. 
+		// To execute method with Map by the client, we need to wrap it into single element array.
+		Object[] parametersWrapper = new Object[] { parameters };
+		return client.execute(method, parametersWrapper);
 	}
 
 }

@@ -25,10 +25,12 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
- * @author Micha� Negacz
+ * @author Michał Negacz, Wrocław University of Technology
  * 
  */
 public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
+
+	private static final String AUTHENTICATION_TAB_TITILE = "Authentication";
 
 	private static final String URL_LABEL = "Bugzilla URL:";
 
@@ -38,6 +40,7 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
 	protected BugzillaOnlineAdapterNodeDialog() {
 		addDialogComponent(getURLComponent());
+		createNewTab(AUTHENTICATION_TAB_TITILE);
 		addDialogComponent(getUsernameComponent());
 		addDialogComponent(getPasswordComponent());
 	}
