@@ -35,19 +35,12 @@ public class BugzillaOnlineClientAdapter {
 
 	private BugzillaOnlineXmlRpcClient bugzillaClient;
 
-	public BugzillaOnlineClientAdapter(String urlAddress) {
+	public BugzillaOnlineClientAdapter(String urlAddress) throws MalformedURLException {
 		bugzillaClient = buildClient(urlAddress);
 	}
 
-	private BugzillaOnlineXmlRpcClient buildClient(String urlAddress) {
-		URL url = null;
-		try {
-			url = new URL(urlAddress);
-		} catch (MalformedURLException e) {
-			e.printStackTrace(); // TODO handle exception
-		}
-
-		return new BugzillaOnlineXmlRpcClient(url);
+	private BugzillaOnlineXmlRpcClient buildClient(String urlAddress) throws MalformedURLException {
+		return new BugzillaOnlineXmlRpcClient(new URL(urlAddress));
 	}
 
 	public List<ITSDataType> listEntries() throws XmlRpcException {
