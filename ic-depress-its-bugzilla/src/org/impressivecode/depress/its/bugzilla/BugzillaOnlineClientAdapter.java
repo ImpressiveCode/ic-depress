@@ -21,6 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import org.apache.xmlrpc.XmlRpcException;
 import org.impressivecode.depress.its.ITSDataType;
 
 import com.google.common.collect.Lists;
@@ -49,7 +50,7 @@ public class BugzillaOnlineClientAdapter {
 		return new BugzillaOnlineXmlRpcClient(url);
 	}
 
-	public List<ITSDataType> listEntries() {
+	public List<ITSDataType> listEntries() throws XmlRpcException {
 		return Lists.newArrayList(); // TODO implement fetching entries
 	}
 

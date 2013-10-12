@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.xmlrpc.XmlRpcException;
 import org.junit.Test;
 
 import com.google.common.collect.Maps;
@@ -37,7 +38,7 @@ import com.google.common.collect.Maps;
  */
 public class BugzillaOnlineXmlRpcClientIntegrationTest {
 
-	@Test(expected = BugzillaOnlineClientException.class)
+	@Test(expected = XmlRpcException.class)
 	public void shouldNotConnectToNotExistingInstallation() throws Exception {
 		// given
 		BugzillaOnlineXmlRpcClient client = new BugzillaOnlineXmlRpcClient(new URL("http://fakebugzilla/xmlrpc.cgi"));
