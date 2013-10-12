@@ -37,7 +37,7 @@ import com.google.common.collect.Sets;
 
 /**
  * 
- * @author Michał Negacz
+ * @author Michał Negacz, Wrocław University of Technology
  * 
  */
 public class XmlRpcTransportFactoryWithCookies extends XmlRpcSunHttpTransportFactory {

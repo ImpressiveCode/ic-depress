@@ -43,7 +43,7 @@ import com.google.common.base.Preconditions;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
- * @author Michał Negacz
+ * @author Michał Negacz, Wrocław University of Technology
  * 
  */
 public class BugzillaOnlineAdapterNodeModel extends NodeModel {

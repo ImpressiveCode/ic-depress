@@ -27,7 +27,7 @@ import com.google.common.collect.Lists;
 
 /**
  * 
- * @author Michał Negacz
+ * @author Michał Negacz, Wrocław University of Technology
  * 
  */
 public class BugzillaOnlineClientAdapter {
