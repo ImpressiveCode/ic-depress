@@ -45,7 +45,17 @@ public class BugzillaOnlineClientAdapter {
 		return BugzillaOnlineXmlRpcClient.buildAndConfigureClient(new URL(urlAddress));
 	}
 
+	//test get method on host: https://landfill.bugzilla.org/bugzilla-tip/ and bug-id=60
 	public List<ITSDataType> listEntries() throws XmlRpcException {
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("ids", "60");
+		Object sessionId=bugzillaClient.execute("Bug.get", params);
+		Map<String,Object> test=(Map<String,Object>)sessionId;
+		Object[] ob=(Object[])test.get("bugs");
+		Map<String,Object> test2=(Map<String,Object>)ob[0];
+		Map<String,Object> creator=(Map<String,Object>)test2.get("creator_detail");
+		System.out.println(creator.get("email"));
+		System.out.println(test2.get("version"));
 		return Lists.newArrayList(); // TODO implement fetching entries
 	}
 	
