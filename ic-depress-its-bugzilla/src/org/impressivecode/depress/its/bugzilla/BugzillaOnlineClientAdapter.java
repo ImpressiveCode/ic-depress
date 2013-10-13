@@ -19,7 +19,9 @@ package org.impressivecode.depress.its.bugzilla;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.impressivecode.depress.its.ITSDataType;
@@ -40,11 +42,18 @@ public class BugzillaOnlineClientAdapter {
 	}
 
 	private BugzillaOnlineXmlRpcClient buildClient(String urlAddress) throws MalformedURLException {
-		return new BugzillaOnlineXmlRpcClient(new URL(urlAddress));
+		return BugzillaOnlineXmlRpcClient.buildAndConfigureClient(new URL(urlAddress));
 	}
 
 	public List<ITSDataType> listEntries() throws XmlRpcException {
 		return Lists.newArrayList(); // TODO implement fetching entries
+	}
+	
+	public void login() throws XmlRpcException{
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("login", "test");
+		params.put("password", "test");
+		bugzillaClient.execute("User.login", params);
 	}
 
 }

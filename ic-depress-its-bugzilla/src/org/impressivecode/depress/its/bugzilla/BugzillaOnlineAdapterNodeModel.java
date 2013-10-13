@@ -75,6 +75,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(urlAddress);
 		LOGGER.info("Reading entries from bugzilla instance: " + urlAddress);
 		List<ITSDataType> entries = clientAdapter.listEntries();
+		clientAdapter.login();
 		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, exec);
 		LOGGER.info("Bugzilla table created.");
