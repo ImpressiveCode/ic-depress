@@ -60,9 +60,9 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	private final SettingsModelString urlSettings = createURLSettings();
 
-	private final SettingsModelString usernameSettings = createURLSettings();
+	private final SettingsModelString usernameSettings = createUsernameSettings();
 
-	private final SettingsModelString passwordSettings = createURLSettings();
+	private final SettingsModelString passwordSettings = createPasswordSettings();
 
 	protected BugzillaOnlineAdapterNodeModel() {
 		super(0, 1);
@@ -75,7 +75,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(urlAddress);
 		LOGGER.info("Reading entries from bugzilla instance: " + urlAddress);
 		List<ITSDataType> entries = clientAdapter.listEntries();
-		clientAdapter.login();
+		clientAdapter.login(usernameSettings.getStringValue(),passwordSettings.getStringValue());
 		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, exec);
 		LOGGER.info("Bugzilla table created.");

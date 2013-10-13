@@ -49,11 +49,12 @@ public class BugzillaOnlineClientAdapter {
 		return Lists.newArrayList(); // TODO implement fetching entries
 	}
 	
-	public void login() throws XmlRpcException{
+	public void login(String login, String password) throws XmlRpcException{
 		Map<String,Object> params=new HashMap<String,Object>();
-		params.put("login", "test");
-		params.put("password", "test");
-		bugzillaClient.execute("User.login", params);
+		params.put("login", login);
+		params.put("password", password);
+		Object sessionId=bugzillaClient.execute("User.login", params);
+		System.out.println(sessionId);
 	}
 
 }
