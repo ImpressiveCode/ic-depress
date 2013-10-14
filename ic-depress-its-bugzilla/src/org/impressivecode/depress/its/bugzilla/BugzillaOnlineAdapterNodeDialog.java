@@ -34,12 +34,16 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
 	private static final String URL_LABEL = "Bugzilla URL:";
 
+	private static final String PRODUCT_LABEL = "Product:";
+
 	private static final String USERNAME_LABEL = "Username:";
 
 	private static final String PASSWORD_LABEL = "Password:";
 
+
 	protected BugzillaOnlineAdapterNodeDialog() {
 		addDialogComponent(getURLComponent());
+		addDialogComponent(getProductComponent());
 		createNewTab(AUTHENTICATION_TAB_TITILE);
 		addDialogComponent(getUsernameComponent());
 		addDialogComponent(getPasswordComponent());
@@ -47,6 +51,10 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
 	private DialogComponent getURLComponent() {
 		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createURLSettings(), URL_LABEL);
+	}
+	
+	private DialogComponent getProductComponent() {
+		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createProductSettings(), PRODUCT_LABEL);
 	}
 
 	private DialogComponent getUsernameComponent() {
@@ -56,5 +64,5 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	private DialogComponent getPasswordComponent() {
 		return new DialogComponentPasswordField(BugzillaOnlineAdapterNodeModel.createPasswordSettings(), PASSWORD_LABEL);
 	}
-
+	
 }

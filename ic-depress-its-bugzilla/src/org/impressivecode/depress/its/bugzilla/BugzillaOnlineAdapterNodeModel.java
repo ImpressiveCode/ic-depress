@@ -48,6 +48,10 @@ import com.google.common.base.Preconditions;
  */
 public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
+	private static final int NUMBER_OF_INPUT_PORTS = 0;
+
+	private static final int NUMBER_OF_OUTPUT_PORTS = 1;
+
 	private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
 
 	private static final String DEFAULT_VALUE = "";
@@ -58,14 +62,18 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	private static final String BUGZILLA_PASSWORD = "depress.its.bugzillaonline.password";
 
+	private static final String BUGZILLA_PRODUCT = "depress.its.bugzillaonline.product";
+
 	private final SettingsModelString urlSettings = createURLSettings();
 
 	private final SettingsModelString usernameSettings = createUsernameSettings();
 
 	private final SettingsModelString passwordSettings = createPasswordSettings();
 
+	private final SettingsModelString productSettings = createProductSettings();
+
 	protected BugzillaOnlineAdapterNodeModel() {
-		super(0, 1);
+		super(NUMBER_OF_INPUT_PORTS, NUMBER_OF_OUTPUT_PORTS);
 	}
 
 	@Override
@@ -75,7 +83,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(urlAddress);
 		LOGGER.info("Reading entries from bugzilla instance: " + urlAddress);
 		List<ITSDataType> entries = clientAdapter.listEntries();
-		clientAdapter.login(usernameSettings.getStringValue(),passwordSettings.getStringValue());
+		clientAdapter.login(usernameSettings.getStringValue(), passwordSettings.getStringValue());
 		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, exec);
 		LOGGER.info("Bugzilla table created.");
@@ -103,6 +111,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		urlSettings.saveSettingsTo(settings);
 		usernameSettings.saveSettingsTo(settings);
 		passwordSettings.saveSettingsTo(settings);
+		productSettings.saveSettingsTo(settings);
 	}
 
 	@Override
@@ -110,6 +119,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		urlSettings.loadSettingsFrom(settings);
 		usernameSettings.loadSettingsFrom(settings);
 		passwordSettings.loadSettingsFrom(settings);
+		productSettings.loadSettingsFrom(settings);
 	}
 
 	@Override
@@ -117,6 +127,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		urlSettings.validateSettings(settings); // TODO validate url, maybe test connection, bugzilla version and credentials
 		usernameSettings.validateSettings(settings);
 		passwordSettings.validateSettings(settings);
+		productSettings.validateSettings(settings);
 	}
 
 	@Override
@@ -139,6 +150,10 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	static SettingsModelString createPasswordSettings() {
 		return new SettingsModelString(BUGZILLA_PASSWORD, DEFAULT_VALUE);
+	}
+
+	static SettingsModelString createProductSettings() {
+		return new SettingsModelString(BUGZILLA_PRODUCT, DEFAULT_VALUE);
 	}
 
 }
