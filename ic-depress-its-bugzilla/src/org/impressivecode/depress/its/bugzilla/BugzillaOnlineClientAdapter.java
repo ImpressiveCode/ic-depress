@@ -17,16 +17,19 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
+
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.impressivecode.depress.its.ITSDataType;
 
-import com.google.common.collect.Lists;
+import com.google.common.base.Preconditions;
 
 /**
  * 
@@ -35,9 +38,12 @@ import com.google.common.collect.Lists;
  */
 public class BugzillaOnlineClientAdapter {
 
+	private static final int BUGS_FETCH_LIMIT = 10;
+
 	private BugzillaOnlineXmlRpcClient bugzillaClient;
 
 	public BugzillaOnlineClientAdapter(String urlAddress) throws MalformedURLException {
+		Preconditions.checkNotNull(urlAddress);
 		bugzillaClient = buildClient(urlAddress);
 	}
 
@@ -45,26 +51,44 @@ public class BugzillaOnlineClientAdapter {
 		return new BugzillaOnlineXmlRpcClient(new URL(urlAddress));
 	}
 
-	//test get method on host: https://landfill.bugzilla.org/bugzilla-tip/ and bug-id=60
-	public List<ITSDataType> listEntries() throws XmlRpcException {
-		Map<String,Object> params=new HashMap<String,Object>();
+	public List<ITSDataType> listEntries(String productName) throws XmlRpcException {
+		Preconditions.checkNotNull(productName);
+		ArrayList<ITSDataType> entriesList = newArrayList();
+
+		Object[] bugs = getBugsFromProduct(productName, 0, BUGS_FETCH_LIMIT); // TODO in one worker fetch part of bugs and in other worker transform they into entries (producer consumer pattern)
+
+		return entriesList;
+	}
+
+	Object[] getBugsFromProduct(String productName, int offset, int limit) throws XmlRpcException {
+		Map<String, Object> parameters = newHashMap();
+		parameters.put("product", productName);
+		parameters.put("offset", offset);
+		parameters.put("limit", limit);
+
+		Map<String, Object> result = bugzillaClient.execute("Bug.search", parameters);
+
+		return (Object[]) result.get("bugs");
+	}
+
+	public void login(String username, String password) throws XmlRpcException {
+		Map<String, Object> params = newHashMap();
+		params.put("login", username);
+		params.put("password", password);
+
+		bugzillaClient.execute("User.login", params);
+	}
+
+	private void getBugTest() throws XmlRpcException {
+		Map<String, Object> params = newHashMap();
 		params.put("ids", "60");
-		Object sessionId=bugzillaClient.execute("Bug.get", params);
-		Map<String,Object> test=(Map<String,Object>)sessionId;
-		Object[] ob=(Object[])test.get("bugs");
-		Map<String,Object> test2=(Map<String,Object>)ob[0];
-		Map<String,Object> creator=(Map<String,Object>)test2.get("creator_detail");
+		Object sessionId = bugzillaClient.execute("Bug.get", params);
+		Map<String, Object> test = (Map<String, Object>) sessionId;
+		Object[] ob = (Object[]) test.get("bugs");
+		Map<String, Object> test2 = (Map<String, Object>) ob[0];
+		Map<String, Object> creator = (Map<String, Object>) test2.get("creator_detail");
 		System.out.println(creator.get("email"));
 		System.out.println(test2.get("version"));
-		return Lists.newArrayList(); // TODO implement fetching entries
-	}
-	
-	public void login(String login, String password) throws XmlRpcException{
-		Map<String,Object> params=new HashMap<String,Object>();
-		params.put("login", login);
-		params.put("password", password);
-		Object sessionId=bugzillaClient.execute("User.login", params);
-		System.out.println(sessionId);
 	}
 
 }

@@ -39,6 +39,7 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 /**
  * 
@@ -80,14 +81,28 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
 		LOGGER.info("Preparing to read bugzilla entries.");
 		String urlAddress = urlSettings.getStringValue();
+		String productName = productSettings.getStringValue();
+		String username = usernameSettings.getStringValue();
+		String password = passwordSettings.getStringValue();
+
 		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(urlAddress);
-		LOGGER.info("Reading entries from bugzilla instance: " + urlAddress);
-		List<ITSDataType> entries = clientAdapter.listEntries();
-		clientAdapter.login(usernameSettings.getStringValue(), passwordSettings.getStringValue());
+		if (isUsernameProvided(username)) {
+			LOGGER.info("Logging to bugzilla as: " + username);
+			clientAdapter.login(username, password);
+		}
+
+		LOGGER.info("Reading entries from bugzilla instance: " + urlAddress + " and product: " + productName);
+		List<ITSDataType> entries = clientAdapter.listEntries(productName);
+
 		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, exec);
+
 		LOGGER.info("Bugzilla table created.");
 		return new BufferedDataTable[] { out };
+	}
+
+	private boolean isUsernameProvided(String username) {
+		return !Strings.isNullOrEmpty(username);
 	}
 
 	private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
