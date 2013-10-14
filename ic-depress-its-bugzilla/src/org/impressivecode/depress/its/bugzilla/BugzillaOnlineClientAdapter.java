@@ -42,7 +42,7 @@ public class BugzillaOnlineClientAdapter {
 	}
 
 	private BugzillaOnlineXmlRpcClient buildClient(String urlAddress) throws MalformedURLException {
-		return BugzillaOnlineXmlRpcClient.buildAndConfigureClient(new URL(urlAddress));
+		return new BugzillaOnlineXmlRpcClient(new URL(urlAddress));
 	}
 
 	//test get method on host: https://landfill.bugzilla.org/bugzilla-tip/ and bug-id=60
