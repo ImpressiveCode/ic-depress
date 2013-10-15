@@ -33,43 +33,39 @@ import org.knime.core.data.def.StringCell;
  */
 public class CrawlerAdapterTableFactory {
 
-	private CrawlerAdapterTableFactory() {
+    private CrawlerAdapterTableFactory() {
 
-	}
+    }
 
-	public static DataTableSpec[] createTableSpec() {
-		return new DataTableSpec[] { createDataColumnSpec() };
-	}
+    public static DataTableSpec[] createTableSpec() {
+        return new DataTableSpec[] { createDataColumnSpec() };
+    }
 
-	public static DataTableSpec createDataColumnSpec() {
-		List<DataColumnSpec> allSpec = ColumnNames.getAllSpec();
-		DataColumnSpec[] dataColumnSpecs = new DataColumnSpec[ColumnNames
-				.getAllSpec().size()];
-		dataColumnSpecs = allSpec.toArray(dataColumnSpecs);
-		DataTableSpec outputSpec = new DataTableSpec(dataColumnSpecs);
-		return outputSpec;
-	}
+    public static DataTableSpec createDataColumnSpec() {
+        List<DataColumnSpec> allSpec = ColumnNames.getAllSpec();
+        DataColumnSpec[] dataColumnSpecs = new DataColumnSpec[ColumnNames.getAllSpec().size()];
+        dataColumnSpecs = allSpec.toArray(dataColumnSpecs);
+        DataTableSpec outputSpec = new DataTableSpec(dataColumnSpecs);
+        return outputSpec;
+    }
 
-	public static DataRow createTableRow(String id, String name, String type,
-			boolean exception, boolean inner, boolean test,
-			String sourcePackage, String path) {
-		DataCell[] cells = new DataCell[7];
-		prepareCells(name, type, exception, inner, test, sourcePackage, path,
-				cells);
-		DataRow row = new DefaultRow(id, cells);
-		return row;
-	}
+    public static DataRow createTableRow(final String id, final String name, final String type, final boolean exception, final boolean inner,
+            final boolean test, final String sourcePackage, final String path) {
+        DataCell[] cells = new DataCell[7];
+        prepareCells(name, type, exception, inner, test, sourcePackage, path, cells);
+        DataRow row = new DefaultRow(id, cells);
+        return row;
+    }
 
-	private static void prepareCells(String name, String type,
-			boolean exception, boolean inner, boolean test,
-			String sourcePackage, String path, DataCell[] cells) {
-		cells[0] = new StringCell(sourcePackage+"."+name);
-		cells[1] = new StringCell(Boolean.toString(exception));
-		cells[2] = new StringCell(Boolean.toString(inner));
-		cells[3] = new StringCell(Boolean.toString(test));
-		cells[4] = new StringCell(type);
-		cells[5] = new StringCell(sourcePackage);
-		cells[6] = new StringCell(path);
-	}
+    private static void prepareCells(final String name, final String type, final boolean exception, final boolean inner, final boolean test,
+            final String sourcePackage, final String path, final DataCell[] cells) {
+        cells[0] = new StringCell(sourcePackage + "." + name);
+        cells[1] = new StringCell(Boolean.toString(exception));
+        cells[2] = new StringCell(Boolean.toString(inner));
+        cells[3] = new StringCell(Boolean.toString(test));
+        cells[4] = new StringCell(type);
+        cells[5] = new StringCell(sourcePackage);
+        cells[6] = new StringCell(path);
+    }
 
 }

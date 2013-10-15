@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ic-depress-metric-judy
+Bundle-Name: ic-depress-support-sourcecrawler
 Bundle-SymbolicName: org.impressivecode.depress.sourcecrawler;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: ImpressiveCode
@@ -8,7 +8,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.knime.workbench.core,
  org.knime.workbench.repository,
  org.knime.base,
- org.impressivecode.depress.base;bundle-version="0.1.0"
+ org.impressivecode.depress.base
 Bundle-ClassPath: plugin.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.impressivecode.depress.support.sourcecrawler
