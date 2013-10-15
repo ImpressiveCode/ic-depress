@@ -30,35 +30,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "file")
 public class SourceFile {
-	private String path;
-	private String sourcePackage;
-	private List<Clazz> classes = new ArrayList<Clazz>();
+    private String path;
+    private String sourcePackage;
+    private List<Clazz> classes = new ArrayList<Clazz>();
 
-	@XmlElement(name = "class")
-	public List<Clazz> getClasses() {
-		return classes;
-	}
+    @XmlElement(name = "class")
+    public List<Clazz> getClasses() {
+        return classes;
+    }
 
-	public void setClasses(List<Clazz> classes) {
-		this.classes = classes;
-	}
+    public void setClasses(final List<Clazz> classes) {
+        this.classes = classes;
+    }
 
-	@XmlElement(name = "path")
-	public String getPath() {
-		return path;
-	}
+    @XmlElement(name = "path")
+    public String getPath() {
+        return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public void setPath(final String path) {
+        this.path = path;
+    }
 
-	@XmlElement(name = "package")
-	public String getSourcePackage() {
-		return sourcePackage;
-	}
+    @XmlElement(name = "package")
+    public String getSourcePackage() {
+        return sourcePackage;
+    }
 
-	public void setSourcePackage(String sourcePackage) {
-		this.sourcePackage = sourcePackage;
-	}
+    public void setSourcePackage(final String sourcePackage) {
+        this.sourcePackage = sourcePackage;
+    }
 
 }
