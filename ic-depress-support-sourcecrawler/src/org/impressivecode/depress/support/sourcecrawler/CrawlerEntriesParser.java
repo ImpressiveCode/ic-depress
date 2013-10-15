@@ -17,14 +17,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.support.sourcecrawler;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static com.google.common.base.Preconditions.*;
+
 import java.io.File;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-
 
 /**
  * 
@@ -33,15 +33,12 @@ import javax.xml.bind.Unmarshaller;
  */
 public class CrawlerEntriesParser {
 
-	public SourceCrawlerOutput parseSourceCrawlerResult(final String path)
-			throws JAXBException {
-		checkArgument(!isNullOrEmpty(path), "Path has to be set.");
-		JAXBContext jaxbContext = JAXBContext
-				.newInstance(SourceCrawlerOutput.class);
-		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-		SourceCrawlerOutput result = (SourceCrawlerOutput) unmarshaller
-				.unmarshal(new File(path));
-		return result;
-	}
+    public SourceCrawlerOutput parseSourceCrawlerResult(final String path) throws JAXBException {
+        checkArgument(!isNullOrEmpty(path), "Path has to be set.");
+        JAXBContext jaxbContext = JAXBContext.newInstance(SourceCrawlerOutput.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        SourceCrawlerOutput result = (SourceCrawlerOutput) unmarshaller.unmarshal(new File(path));
+        return result;
+    }
 
 }

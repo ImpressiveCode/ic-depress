@@ -27,16 +27,15 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
  */
 public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
 
-	private static final String FILE_EXTENSION = ".xml";
-	private static final String HISTORY_ID = "depress.sourcecrawler.historyid";
+    private static final String FILE_EXTENSION = ".xml";
+    private static final String HISTORY_ID = "depress.sourcecrawler.historyid";
 
-	protected CrawlerAdapterNodeDialog() {
-		addDialogComponent(getFileChooserComponent());
-	}
+    protected CrawlerAdapterNodeDialog() {
+        addDialogComponent(getFileChooserComponent());
+    }
 
-	private DialogComponentFileChooser getFileChooserComponent() {
-		CrawlerAdapterNodeModel nodeModel = new CrawlerAdapterNodeModel();
-		return new DialogComponentFileChooser(nodeModel.createFileSettings(),
-				HISTORY_ID, FILE_EXTENSION);
-	}
+    private DialogComponentFileChooser getFileChooserComponent() {
+        CrawlerAdapterNodeModel nodeModel = new CrawlerAdapterNodeModel();
+        return new DialogComponentFileChooser(nodeModel.createFileSettings(), HISTORY_ID, FILE_EXTENSION);
+    }
 }
