@@ -27,55 +27,55 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "class")
 public class Clazz {
-	private String type;
-	private String name;
-	private boolean isException;
-	private boolean isInner;
-	private boolean isTest;
+    private String type;
+    private String name;
+    private boolean isException;
+    private boolean isInner;
+    private boolean isTest;
 
-	@XmlElement
-	public String getType() {
-		return type;
-	}
+    @XmlElement
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(final String type) {
+        this.type = type;
+    }
 
-	@XmlElement
-	public String getName() {
-		return name;
-	}
+    @XmlElement
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-	@XmlElement(name = "exception")
-	public boolean isException() {
-		return isException;
-	}
+    @XmlElement(name = "exception")
+    public boolean isException() {
+        return isException;
+    }
 
-	public void setException(boolean isException) {
-		this.isException = isException;
-	}
+    public void setException(final boolean isException) {
+        this.isException = isException;
+    }
 
-	@XmlElement(name = "inner")
-	public boolean isInner() {
-		return isInner;
-	}
+    @XmlElement(name = "inner")
+    public boolean isInner() {
+        return isInner;
+    }
 
-	public void setInner(boolean isInner) {
-		this.isInner = isInner;
-	}
+    public void setInner(final boolean isInner) {
+        this.isInner = isInner;
+    }
 
-	@XmlElement(name = "test")
-	public boolean isTest() {
-		return isTest;
-	}
+    @XmlElement(name = "test")
+    public boolean isTest() {
+        return isTest;
+    }
 
-	public void setTest(boolean isTest) {
-		this.isTest = isTest;
-	}
+    public void setTest(final boolean isTest) {
+        this.isTest = isTest;
+    }
 
 }
