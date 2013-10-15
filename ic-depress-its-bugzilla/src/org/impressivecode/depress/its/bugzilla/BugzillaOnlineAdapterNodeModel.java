@@ -21,6 +21,9 @@ import static org.impressivecode.depress.its.bugzilla.BugzillaAdapterTableFactor
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
@@ -45,6 +48,7 @@ import com.google.common.base.Strings;
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Michał Negacz, Wrocław University of Technology
+ * @author Piotr Wróblewski
  * 
  */
 public class BugzillaOnlineAdapterNodeModel extends NodeModel {
@@ -92,7 +96,11 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		}
 
 		LOGGER.info("Reading entries from bugzilla instance: " + urlAddress + " and product: " + productName);
-		List<ITSDataType> entries = clientAdapter.listEntries(productName);
+		Date test=new Date();
+		GregorianCalendar greg=new GregorianCalendar();
+		greg.setTime(test);
+		greg.add(Calendar.MONTH, -2);
+		List<ITSDataType> entries = clientAdapter.listEntries(productName,greg.getTime());
 
 		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, exec);

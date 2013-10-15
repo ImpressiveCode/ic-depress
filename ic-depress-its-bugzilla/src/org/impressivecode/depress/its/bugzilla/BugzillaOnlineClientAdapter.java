@@ -23,6 +23,7 @@ import static com.google.common.collect.Maps.newHashMap;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -51,20 +52,21 @@ public class BugzillaOnlineClientAdapter {
 		return new BugzillaOnlineXmlRpcClient(new URL(urlAddress));
 	}
 
-	public List<ITSDataType> listEntries(String productName) throws XmlRpcException {
+	public List<ITSDataType> listEntries(String productName, Date creation_time) throws XmlRpcException {
 		Preconditions.checkNotNull(productName);
-		ArrayList<ITSDataType> entriesList = newArrayList();
-
-		Object[] bugs = getBugsFromProduct(productName, 0, BUGS_FETCH_LIMIT); // TODO in one worker fetch part of bugs and in other worker transform they into entries (producer consumer pattern)
-
-		return entriesList;
+		Object[] bugs = getBugsFromProduct(productName,creation_time, 0, BUGS_FETCH_LIMIT); // TODO in one worker fetch part of bugs and in other worker transform they into entries (producer consumer pattern)
+		BugzillaOnlineAdapterEntriesParser parser=new BugzillaOnlineAdapterEntriesParser();
+		return parser.parseEntries(bugs);
 	}
 
-	Object[] getBugsFromProduct(String productName, int offset, int limit) throws XmlRpcException {
+	private Object[] getBugsFromProduct(String productName,Date creation_time, int offset, int limit) throws XmlRpcException {
 		Map<String, Object> parameters = newHashMap();
 		parameters.put("product", productName);
 		parameters.put("offset", offset);
 		parameters.put("limit", limit);
+		if(creation_time!=null){
+			parameters.put("cration_time", creation_time);
+		}
 
 		Map<String, Object> result = bugzillaClient.execute("Bug.search", parameters);
 
