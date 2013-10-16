@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./jira.png" type="Source">
+	<name>Jira Online Adapter</name>
+
+	<shortDescription>
+		Jira Online Adapter, ImpressiveCode DePress Plugin Framework.
+	</shortDescription>
+
+	<fullDescription>
+		<intro>
+			This node can be used to read data from Jira entries file.
+
+			<p>
+			Help will be available soon...
+			</p>
+            <p>
+             Workflow examples will be added soon...
+             <br/> 
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
+		</intro>
+		<option name="Jira file location">Soon...</option>
+	</fullDescription>
+
+	<ports>
+		<outPort index="0" name="Issue Tracking System Data Table">Datatable read from Jira</outPort>
+	</ports>
+</knimeNode>
