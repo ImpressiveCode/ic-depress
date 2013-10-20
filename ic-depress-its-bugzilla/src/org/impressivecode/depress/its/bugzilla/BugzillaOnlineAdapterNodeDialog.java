@@ -26,6 +26,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Michał Negacz, Wrocław University of Technology
+ * @author Piotr Wróblewski
  * 
  */
 public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
@@ -35,6 +36,8 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	private static final String URL_LABEL = "Bugzilla URL:";
 
 	private static final String PRODUCT_LABEL = "Product:";
+	
+	private static final String DATE_FROM_LABEL = "Date from:";
 
 	private static final String USERNAME_LABEL = "Username:";
 
@@ -44,6 +47,7 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	protected BugzillaOnlineAdapterNodeDialog() {
 		addDialogComponent(getURLComponent());
 		addDialogComponent(getProductComponent());
+		addDialogComponent(getDateComponent());
 		createNewTab(AUTHENTICATION_TAB_TITILE);
 		addDialogComponent(getUsernameComponent());
 		addDialogComponent(getPasswordComponent());
@@ -55,6 +59,10 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	
 	private DialogComponent getProductComponent() {
 		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createProductSettings(), PRODUCT_LABEL);
+	}
+	
+	private DialogComponent getDateComponent() {
+		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createDateSettings(), DATE_FROM_LABEL);
 	}
 
 	private DialogComponent getUsernameComponent() {

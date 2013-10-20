@@ -17,12 +17,11 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
-import static com.google.common.collect.Lists.newArrayList;
+
 import static com.google.common.collect.Maps.newHashMap;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +64,7 @@ public class BugzillaOnlineClientAdapter {
 		parameters.put("offset", offset);
 		parameters.put("limit", limit);
 		if(creation_time!=null){
-			parameters.put("cration_time", creation_time);
+			parameters.put("creation_time", creation_time);
 		}
 
 		Map<String, Object> result = bugzillaClient.execute("Bug.search", parameters);
@@ -79,18 +78,6 @@ public class BugzillaOnlineClientAdapter {
 		params.put("password", password);
 
 		bugzillaClient.execute("User.login", params);
-	}
-
-	private void getBugTest() throws XmlRpcException {
-		Map<String, Object> params = newHashMap();
-		params.put("ids", "60");
-		Object sessionId = bugzillaClient.execute("Bug.get", params);
-		Map<String, Object> test = (Map<String, Object>) sessionId;
-		Object[] ob = (Object[]) test.get("bugs");
-		Map<String, Object> test2 = (Map<String, Object>) ob[0];
-		Map<String, Object> creator = (Map<String, Object>) test2.get("creator_detail");
-		System.out.println(creator.get("email"));
-		System.out.println(test2.get("version"));
 	}
 
 }

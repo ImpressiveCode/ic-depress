@@ -19,12 +19,13 @@ package org.impressivecode.depress.its.bugzilla;
 
 import static org.impressivecode.depress.its.bugzilla.BugzillaAdapterTableFactory.createTableSpec;
 
+
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
@@ -57,9 +58,12 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	private static final int NUMBER_OF_OUTPUT_PORTS = 1;
 
-	private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
+	private static final NodeLogger LOGGER = NodeLogger
+			.getLogger(BugzillaOnlineAdapterNodeModel.class);
 
 	private static final String DEFAULT_VALUE = "";
+
+	private static final String DATE_DEFAULT_VALUE = "dd-mm-rrrr";
 
 	private static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
 
@@ -69,7 +73,11 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	private static final String BUGZILLA_PRODUCT = "depress.its.bugzillaonline.product";
 
+	private static final String BUGZILLA_DATE = "depress.its.bugzillaonline.date";
+
 	private final SettingsModelString urlSettings = createURLSettings();
+
+	private final SettingsModelString dateFromSettings = createDateSettings();
 
 	private final SettingsModelString usernameSettings = createUsernameSettings();
 
@@ -82,25 +90,31 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
+	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
+			final ExecutionContext exec) throws Exception {
 		LOGGER.info("Preparing to read bugzilla entries.");
 		String urlAddress = urlSettings.getStringValue();
+		String dateFrom = dateFromSettings.getStringValue();
 		String productName = productSettings.getStringValue();
 		String username = usernameSettings.getStringValue();
 		String password = passwordSettings.getStringValue();
 
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(urlAddress);
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(
+				urlAddress);
 		if (isUsernameProvided(username)) {
 			LOGGER.info("Logging to bugzilla as: " + username);
 			clientAdapter.login(username, password);
 		}
 
-		LOGGER.info("Reading entries from bugzilla instance: " + urlAddress + " and product: " + productName);
-		Date test=new Date();
-		GregorianCalendar greg=new GregorianCalendar();
-		greg.setTime(test);
-		greg.add(Calendar.MONTH, -2);
-		List<ITSDataType> entries = clientAdapter.listEntries(productName,greg.getTime());
+		LOGGER.info("Reading entries from bugzilla instance: " + urlAddress
+				+ " and product: " + productName);
+		Date date = null;
+		if (dateFrom.matches("\\d{2}-\\d{2}-\\d{4}")) {
+			date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+					.parse(dateFrom);
+		}
+		List<ITSDataType> entries = clientAdapter
+				.listEntries(productName, date);
 
 		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, exec);
@@ -113,8 +127,10 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		return !Strings.isNullOrEmpty(username);
 	}
 
-	private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
-		ITSAdapterTransformer transformer = new ITSAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
+	private BufferedDataTable transform(final List<ITSDataType> entries,
+			final ExecutionContext exec) throws CanceledExecutionException {
+		ITSAdapterTransformer transformer = new ITSAdapterTransformer(
+				ITSAdapterTableFactory.createDataColumnSpec());
 		return transformer.transform(entries, exec);
 	}
 
@@ -124,7 +140,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	@Override
-	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
+	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
+			throws InvalidSettingsException {
 		Preconditions.checkArgument(inSpecs.length == 0);
 		return createTableSpec();
 	}
@@ -135,31 +152,42 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		usernameSettings.saveSettingsTo(settings);
 		passwordSettings.saveSettingsTo(settings);
 		productSettings.saveSettingsTo(settings);
+		dateFromSettings.saveSettingsTo(settings);
 	}
 
 	@Override
-	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
+			throws InvalidSettingsException {
 		urlSettings.loadSettingsFrom(settings);
 		usernameSettings.loadSettingsFrom(settings);
 		passwordSettings.loadSettingsFrom(settings);
 		productSettings.loadSettingsFrom(settings);
+		dateFromSettings.loadSettingsFrom(settings);
 	}
 
 	@Override
-	protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-		urlSettings.validateSettings(settings); // TODO validate url, maybe test connection, bugzilla version and credentials
+	protected void validateSettings(final NodeSettingsRO settings)
+			throws InvalidSettingsException {
+		urlSettings.validateSettings(settings); // TODO validate url, maybe test
+												// connection, bugzilla version
+												// and credentials
 		usernameSettings.validateSettings(settings);
 		passwordSettings.validateSettings(settings);
 		productSettings.validateSettings(settings);
+		dateFromSettings.validateSettings(settings);
 	}
 
 	@Override
-	protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException, CanceledExecutionException {
+	protected void loadInternals(final File internDir,
+			final ExecutionMonitor exec) throws IOException,
+			CanceledExecutionException {
 		// NOOP
 	}
 
 	@Override
-	protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException, CanceledExecutionException {
+	protected void saveInternals(final File internDir,
+			final ExecutionMonitor exec) throws IOException,
+			CanceledExecutionException {
 		// NOOP
 	}
 
@@ -177,6 +205,10 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	static SettingsModelString createProductSettings() {
 		return new SettingsModelString(BUGZILLA_PRODUCT, DEFAULT_VALUE);
+	}
+
+	static SettingsModelString createDateSettings() {
+		return new SettingsModelString(BUGZILLA_DATE, DATE_DEFAULT_VALUE);
 	}
 
 }
