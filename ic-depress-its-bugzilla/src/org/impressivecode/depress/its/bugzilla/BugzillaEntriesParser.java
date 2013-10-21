@@ -136,27 +136,7 @@ public class BugzillaEntriesParser {
 
     private ITSResolution getResolution(final Element elem) {
         String resolution = extractValue(elem, "resolution");
-        if(resolution == null){
-            return ITSResolution.UNKNOWN;
-        }
-        switch (resolution) {
-        case "---":
-            return ITSResolution.UNRESOLVED;
-        case "FIXED":
-            return ITSResolution.FIXED;
-        case "WONTFIX":
-            return ITSResolution.WONT_FIX;
-        case "DUPLICATE":
-            return ITSResolution.DUPLICATE;
-        case "INVALID":
-            return ITSResolution.INVALID;
-        case "INCOMPLETE":
-            return ITSResolution.INVALID;
-        case "WORKSFORME":
-            return ITSResolution.INVALID;
-        default:
-            return ITSResolution.UNKNOWN;
-        }
+        return BugzillaCommonUtils.getResolution(resolution);
     }
 
     private List<String> getVersion(final Element elem) {
@@ -177,27 +157,7 @@ public class BugzillaEntriesParser {
 
     private ITSStatus getStatus(final Element elem) {
         String status = extractValue(elem, "bug_status");
-        if(status == null) {
-            return ITSStatus.UNKNOWN;
-        }
-        switch (status) {
-        case "UNCONFIRMED":
-            return ITSStatus.OPEN;
-        case "NEW":
-            return ITSStatus.OPEN;
-        case "REOPENED":
-            return ITSStatus.REOPEN;
-        case "ASSIGN":
-            return ITSStatus.IN_PROGRESS;
-        case "RESOLVED":
-            return ITSStatus.RESOLVED;
-        case "VERIFIED":
-            return ITSStatus.RESOLVED;
-        case "CLOSED":
-            return ITSStatus.CLOSED;
-        default:
-            return ITSStatus.UNKNOWN;
-        }
+        return BugzillaCommonUtils.getStatus(status);
     }
 
     private Date getResolved(final Element elem) throws ParseException {
@@ -206,25 +166,7 @@ public class BugzillaEntriesParser {
 
     private ITSPriority getPriority(final Element elem) {
         String priority = extractValue(elem, "bug_severity");
-        if(priority == null){
-            return ITSPriority.UNKNOWN;
-        }
-        switch (priority) {
-        case "trivial":
-            return ITSPriority.TRIVIAL;
-        case "normal":
-            return ITSPriority.MINOR;
-        case "minor":
-            return ITSPriority.MINOR;
-        case "major":
-            return ITSPriority.MAJOR;
-        case "critical":
-            return ITSPriority.CRITICAL;
-        case "blocker":
-            return ITSPriority.BLOCKER;
-        default:
-            return ITSPriority.UNKNOWN;
-        }
+        return BugzillaCommonUtils.getPriority(priority);
     }
 
     private List<String> getFixVersion(final Element elem) {

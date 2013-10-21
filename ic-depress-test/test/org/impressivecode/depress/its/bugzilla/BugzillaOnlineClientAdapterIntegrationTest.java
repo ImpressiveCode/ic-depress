@@ -23,6 +23,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.Map;
 
 import org.junit.Test;
@@ -45,6 +47,10 @@ public class BugzillaOnlineClientAdapterIntegrationTest {
 
 		// when
 		Object[] result = clientAdapter.getBugs(parameters, offset, limit);
+		
+		FileOutputStream fout = new FileOutputStream(BugzillaOnlineParserTest.class.getResource("mozillaOnline.dat").getPath());
+		ObjectOutputStream oos = new ObjectOutputStream(fout);
+		oos.writeObject(result);
 
 		// then
 		assertNotNull(result);

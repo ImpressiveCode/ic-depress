@@ -1,136 +1,75 @@
+/*
+ ImpressiveCode Depress Framework
+ Copyright (C) 2013  ImpressiveCode contributors
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.impressivecode.depress.its.bugzilla;
 
-import java.util.ArrayList;
+import static com.google.common.collect.Lists.newLinkedList;
+import static org.impressivecode.depress.its.bugzilla.BugzillaCommonUtils.getPriority;
+import static org.impressivecode.depress.its.bugzilla.BugzillaCommonUtils.getResolution;
+import static org.impressivecode.depress.its.bugzilla.BugzillaCommonUtils.getStatus;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.ITSPriority;
-import org.impressivecode.depress.its.ITSResolution;
-import org.impressivecode.depress.its.ITSStatus;
-
-import com.google.common.collect.Lists;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
- * @author Piotr Wr�blewski
+ * @author Piotr Wróblewski
+ * @author Michał Negacz, Wrocław University of Technology
  * 
  */
 public class BugzillaOnlineParser {
 
-	public final List<ITSDataType> parseEntries(final Object[] elements) {
-		List<ITSDataType> entries = Lists.newLinkedList();
-		for (Object element : elements) {
-			entries.add(extract(element));
+	public final List<ITSDataType> parseEntries(final Object[] bugs) {
+		List<ITSDataType> entries = newLinkedList();
+		for (Object element : bugs) {
+			entries.add(parse(element));
 		}
 		return entries;
 	}
 
 	@SuppressWarnings("unchecked")
-	protected ITSDataType extract(Object element) {
-		ITSDataType itsElement = new ITSDataType();
-		Map<String, Object> paramMap = (Map<String, Object>) element;
-		try {
-			setSpecificField(itsElement, paramMap);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return itsElement;
+	ITSDataType parse(Object bug) {
+		ITSDataType entry = new ITSDataType();
+		Map<String, Object> parametersMap = (Map<String, Object>) bug;
+
+		entry.setIssueId(parametersMap.get("id").toString());
+		entry.setCreated((Date) parametersMap.get("creation_time"));
+		entry.setPriority(getPriority(parametersMap.get("priority").toString()));
+		entry.setStatus(getStatus(parametersMap.get("status").toString()));
+		entry.setSummary(parametersMap.get("summary").toString());
+		entry.setUpdated((Date) parametersMap.get("last_change_time"));
+		entry.setResolution(getResolution(parametersMap.get("resolution").toString()));
+		entry.setReporter(parametersMap.get("assigned_to").toString());
+		entry.setLink(parametersMap.get("url").toString());
+		entry.setVersion(getVersion(parametersMap));
+		entry.setComments(new ArrayList<String>()); // Bugzilla::Webservice::Bug  comments method
+		
+		return entry;
 	}
 
-	protected void setSpecificField(ITSDataType itsElement,
-			Map<String, Object> paramMap) {
-		itsElement.setIssueId(paramMap.get("id").toString());
-		itsElement.setCreated((Date) paramMap.get("creation_time"));
-		itsElement
-				.setPriority(getPriority(paramMap.get("priority").toString()));
-		itsElement.setStatus(getStatus(paramMap.get("status").toString()));
-		itsElement.setSummary(paramMap.get("summary").toString());
-		itsElement.setUpdated((Date) paramMap.get("last_change_time"));
-		itsElement.setResolution(getResolution(paramMap.get("resolution")
-				.toString()));
-		itsElement.setReporter(paramMap.get("assigned_to").toString());
-		itsElement.setLink(paramMap.get("url").toString());
+	private List<String> getVersion(Map<String, Object> parametersMap) {
 		List<String> version = new ArrayList<String>();
-		version.add(paramMap.get("version").toString());
-		itsElement.setVersion(version);
-
-		itsElement.setComments(new ArrayList<String>()); // Bugzilla::Webservice::Bug
-															// comments method
-
-	}
-
-	private ITSResolution getResolution(String resolution) {
-		if (resolution == null) {
-			return ITSResolution.UNKNOWN;
-		}
-		switch (resolution) {
-		case "---":
-			return ITSResolution.UNRESOLVED;
-		case "FIXED":
-			return ITSResolution.FIXED;
-		case "WONTFIX":
-			return ITSResolution.WONT_FIX;
-		case "DUPLICATE":
-			return ITSResolution.DUPLICATE;
-		case "INVALID":
-			return ITSResolution.INVALID;
-		case "INCOMPLETE":
-			return ITSResolution.INVALID;
-		case "WORKSFORME":
-			return ITSResolution.INVALID;
-		default:
-			return ITSResolution.UNKNOWN;
-		}
-	}
-
-	private ITSStatus getStatus(String status) {
-		if (status == null) {
-			return ITSStatus.UNKNOWN;
-		}
-		switch (status) {
-		case "UNCONFIRMED":
-			return ITSStatus.OPEN;
-		case "NEW":
-			return ITSStatus.OPEN;
-		case "REOPENED":
-			return ITSStatus.REOPEN;
-		case "ASSIGN":
-			return ITSStatus.IN_PROGRESS;
-		case "RESOLVED":
-			return ITSStatus.RESOLVED;
-		case "VERIFIED":
-			return ITSStatus.RESOLVED;
-		case "CLOSED":
-			return ITSStatus.CLOSED;
-		default:
-			return ITSStatus.UNKNOWN;
-		}
-	}
-
-	private ITSPriority getPriority(String priority) {
-		if (priority == null) {
-			return ITSPriority.UNKNOWN;
-		}
-		switch (priority) {
-		case "trivial":
-			return ITSPriority.TRIVIAL;
-		case "normal":
-			return ITSPriority.MINOR;
-		case "minor":
-			return ITSPriority.MINOR;
-		case "major":
-			return ITSPriority.MAJOR;
-		case "critical":
-			return ITSPriority.CRITICAL;
-		case "blocker":
-			return ITSPriority.BLOCKER;
-		default:
-			return ITSPriority.UNKNOWN;
-		}
+		version.add(parametersMap.get("version").toString());
+		return version;
 	}
 
 }
