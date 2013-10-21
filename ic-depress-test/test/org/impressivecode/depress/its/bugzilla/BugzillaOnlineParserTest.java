@@ -27,7 +27,7 @@ import org.junit.Test;
 
 /**
  * 
- * @author Micha≥ Negacz, Wroc≥aw University of Technology
+ * @author Micha≈Ç Negacz, Wroc≈Çaw University of Technology
  * 
  */
 public class BugzillaOnlineParserTest {
