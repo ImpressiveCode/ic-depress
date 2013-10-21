@@ -19,7 +19,7 @@ import com.google.common.collect.Lists;
  * @author Piotr Wr�blewski
  * 
  */
-public class BugzillaOnlineAdapterEntriesParser {
+public class BugzillaOnlineParser {
 
 	public final List<ITSDataType> parseEntries(final Object[] elements) {
 		List<ITSDataType> entries = Lists.newLinkedList();

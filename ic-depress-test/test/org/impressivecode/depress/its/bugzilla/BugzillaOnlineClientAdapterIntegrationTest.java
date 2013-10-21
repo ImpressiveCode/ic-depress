@@ -17,10 +17,13 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import static com.google.common.collect.Maps.newHashMap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -35,12 +38,13 @@ public class BugzillaOnlineClientAdapterIntegrationTest {
 	public void shouldFetchBugsFromFirefoxProduct() throws Exception {
 		// given
 		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi");
-		String productName = "Firefox";
+		Map<String, Object> parameters = newHashMap();
+		parameters.put(BugzillaOnlineClientAdapter.PRODUCT_NAME, "Firefox");
 		Integer offset = 0;
 		Integer limit = 10;
 
 		// when
-		Object[] result = clientAdapter.getBugsFromProduct(productName, offset, limit);
+		Object[] result = clientAdapter.getBugs(parameters, offset, limit);
 
 		// then
 		assertNotNull(result);

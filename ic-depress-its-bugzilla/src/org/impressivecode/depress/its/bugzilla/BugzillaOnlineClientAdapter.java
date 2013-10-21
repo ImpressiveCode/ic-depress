@@ -17,12 +17,10 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
-
 import static com.google.common.collect.Maps.newHashMap;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -38,46 +36,79 @@ import com.google.common.base.Preconditions;
  */
 public class BugzillaOnlineClientAdapter {
 
-	private static final int BUGS_FETCH_LIMIT = 10;
+	public static final String USER_LOGIN_METHOD = "User.login";
+
+	public static final String BUG_SEARCH_METHOD = "Bug.search";
+
+	public static final String LIMIT = "limit";
+
+	public static final String OFFSET = "offset";
+
+	public static final String PRODUCT_NAME = "product";
+
+	public static final String DATE_FROM = "creation_time";
+
+	public static final String PASSWORD = "password";
+
+	public static final String LOGIN = "login";
+
+	public static final String BUGS = "bugs";
+
+	public static final int BUGS_FETCH_LIMIT = 10;
 
 	private BugzillaOnlineXmlRpcClient bugzillaClient;
+
+	private BugzillaOnlineParser parser;
 
 	public BugzillaOnlineClientAdapter(String urlAddress) throws MalformedURLException {
 		Preconditions.checkNotNull(urlAddress);
 		bugzillaClient = buildClient(urlAddress);
+		parser = buildParser();
 	}
 
 	private BugzillaOnlineXmlRpcClient buildClient(String urlAddress) throws MalformedURLException {
 		return new BugzillaOnlineXmlRpcClient(new URL(urlAddress));
 	}
 
-	public List<ITSDataType> listEntries(String productName, Date creation_time) throws XmlRpcException {
-		Preconditions.checkNotNull(productName);
-		Object[] bugs = getBugsFromProduct(productName,creation_time, 0, BUGS_FETCH_LIMIT); // TODO in one worker fetch part of bugs and in other worker transform they into entries (producer consumer pattern)
-		BugzillaOnlineAdapterEntriesParser parser=new BugzillaOnlineAdapterEntriesParser();
+	private BugzillaOnlineParser buildParser() {
+		return new BugzillaOnlineParser();
+	}
+
+	public List<ITSDataType> listEntries(BugzillaOnlineFilter filter) throws XmlRpcException {
+		Preconditions.checkNotNull(filter.getProductName());
+		// TODO in one worker fetch part of bugs and in other worker transform they into entries (producer consumer pattern)
+		Object[] bugs = getBugs(getParametersMap(filter), 0, BUGS_FETCH_LIMIT);
 		return parser.parseEntries(bugs);
 	}
 
-	private Object[] getBugsFromProduct(String productName,Date creation_time, int offset, int limit) throws XmlRpcException {
+	Object[] getBugs(Map<String, Object> parameters, int offset, int limit) throws XmlRpcException {
+		parameters.put(OFFSET, offset);
+		parameters.put(LIMIT, limit);
+
+		Map<String, Object> result = bugzillaClient.execute(BUG_SEARCH_METHOD, parameters);
+
+		return (Object[]) result.get(BUGS);
+	}
+
+	private Map<String, Object> getParametersMap(BugzillaOnlineFilter filter) {
 		Map<String, Object> parameters = newHashMap();
-		parameters.put("product", productName);
-		parameters.put("offset", offset);
-		parameters.put("limit", limit);
-		if(creation_time!=null){
-			parameters.put("creation_time", creation_time);
+		parameters.put(PRODUCT_NAME, filter.getProductName());
+		if (creationTimeIsProvided(filter)) {
+			parameters.put(DATE_FROM, filter.getDateFrom());
 		}
+		return parameters;
+	}
 
-		Map<String, Object> result = bugzillaClient.execute("Bug.search", parameters);
-
-		return (Object[]) result.get("bugs");
+	private boolean creationTimeIsProvided(BugzillaOnlineFilter filter) {
+		return filter.getDateFrom() != null;
 	}
 
 	public void login(String username, String password) throws XmlRpcException {
 		Map<String, Object> params = newHashMap();
-		params.put("login", username);
-		params.put("password", password);
+		params.put(LOGIN, username);
+		params.put(PASSWORD, password);
 
-		bugzillaClient.execute("User.login", params);
+		bugzillaClient.execute(USER_LOGIN_METHOD, params);
 	}
 
 }

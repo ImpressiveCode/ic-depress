@@ -19,6 +19,7 @@ package org.impressivecode.depress.its.bugzilla;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
+import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 
@@ -62,7 +63,7 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	}
 	
 	private DialogComponent getDateComponent() {
-		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createDateSettings(), DATE_FROM_LABEL);
+		return new DialogComponentDate(BugzillaOnlineAdapterNodeModel.createDateSettings(), DATE_FROM_LABEL);
 	}
 
 	private DialogComponent getUsernameComponent() {

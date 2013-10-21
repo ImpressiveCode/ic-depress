@@ -19,13 +19,10 @@ package org.impressivecode.depress.its.bugzilla;
 
 import static org.impressivecode.depress.its.bugzilla.BugzillaAdapterTableFactory.createTableSpec;
 
-
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
@@ -40,6 +37,7 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Preconditions;
@@ -54,30 +52,27 @@ import com.google.common.base.Strings;
  */
 public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
-	private static final int NUMBER_OF_INPUT_PORTS = 0;
+	public static final int NUMBER_OF_INPUT_PORTS = 0;
 
-	private static final int NUMBER_OF_OUTPUT_PORTS = 1;
+	public static final int NUMBER_OF_OUTPUT_PORTS = 1;
 
-	private static final NodeLogger LOGGER = NodeLogger
-			.getLogger(BugzillaOnlineAdapterNodeModel.class);
+	public static final String DEFAULT_VALUE = "";
 
-	private static final String DEFAULT_VALUE = "";
+	public static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
 
-	private static final String DATE_DEFAULT_VALUE = "dd-mm-rrrr";
+	public static final String BUGZILLA_USERNAME = "depress.its.bugzillaonline.username";
 
-	private static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
+	public static final String BUGZILLA_PASSWORD = "depress.its.bugzillaonline.password";
 
-	private static final String BUGZILLA_USERNAME = "depress.its.bugzillaonline.username";
+	public static final String BUGZILLA_PRODUCT = "depress.its.bugzillaonline.product";
 
-	private static final String BUGZILLA_PASSWORD = "depress.its.bugzillaonline.password";
+	public static final String BUGZILLA_DATE = "depress.its.bugzillaonline.date";
 
-	private static final String BUGZILLA_PRODUCT = "depress.its.bugzillaonline.product";
-
-	private static final String BUGZILLA_DATE = "depress.its.bugzillaonline.date";
+	private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
 
 	private final SettingsModelString urlSettings = createURLSettings();
 
-	private final SettingsModelString dateFromSettings = createDateSettings();
+	private final SettingsModelDate dateFromSettings = createDateSettings();
 
 	private final SettingsModelString usernameSettings = createUsernameSettings();
 
@@ -90,31 +85,17 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
-			final ExecutionContext exec) throws Exception {
+	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
 		LOGGER.info("Preparing to read bugzilla entries.");
-		String urlAddress = urlSettings.getStringValue();
-		String dateFrom = dateFromSettings.getStringValue();
-		String productName = productSettings.getStringValue();
-		String username = usernameSettings.getStringValue();
-		String password = passwordSettings.getStringValue();
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(getURL());
 
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(
-				urlAddress);
-		if (isUsernameProvided(username)) {
-			LOGGER.info("Logging to bugzilla as: " + username);
-			clientAdapter.login(username, password);
+		if (isUsernameProvided(getUsername())) {
+			LOGGER.info("Logging to bugzilla as: " + getUsername());
+			clientAdapter.login(getUsername(), getPassword());
 		}
 
-		LOGGER.info("Reading entries from bugzilla instance: " + urlAddress
-				+ " and product: " + productName);
-		Date date = null;
-		if (dateFrom.matches("\\d{2}-\\d{2}-\\d{4}")) {
-			date = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
-					.parse(dateFrom);
-		}
-		List<ITSDataType> entries = clientAdapter
-				.listEntries(productName, date);
+		LOGGER.info("Reading entries from bugzilla instance: " + getURL() + " and product: " + getProductName());
+		List<ITSDataType> entries = clientAdapter.listEntries(getBugFilter());
 
 		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, exec);
@@ -127,10 +108,35 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		return !Strings.isNullOrEmpty(username);
 	}
 
-	private BufferedDataTable transform(final List<ITSDataType> entries,
-			final ExecutionContext exec) throws CanceledExecutionException {
-		ITSAdapterTransformer transformer = new ITSAdapterTransformer(
-				ITSAdapterTableFactory.createDataColumnSpec());
+	private String getPassword() {
+		return passwordSettings.getStringValue();
+	}
+
+	private String getUsername() {
+		return usernameSettings.getStringValue();
+	}
+
+	private String getProductName() {
+		return productSettings.getStringValue();
+	}
+
+	private Date getDateFrom() {
+		return dateFromSettings.getDate();
+	}
+
+	private String getURL() {
+		return urlSettings.getStringValue();
+	}
+
+	private BugzillaOnlineFilter getBugFilter() {
+		BugzillaOnlineFilter bugFilter = new BugzillaOnlineFilter();
+		bugFilter.setProductName(getProductName());
+		bugFilter.setDateFrom(getDateFrom());
+		return bugFilter;
+	}
+
+	private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
+		ITSAdapterTransformer transformer = new ITSAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
 		return transformer.transform(entries, exec);
 	}
 
@@ -140,8 +146,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	@Override
-	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
-			throws InvalidSettingsException {
+	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
 		Preconditions.checkArgument(inSpecs.length == 0);
 		return createTableSpec();
 	}
@@ -156,8 +161,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	@Override
-	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
+	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
 		urlSettings.loadSettingsFrom(settings);
 		usernameSettings.loadSettingsFrom(settings);
 		passwordSettings.loadSettingsFrom(settings);
@@ -166,11 +170,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	@Override
-	protected void validateSettings(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		urlSettings.validateSettings(settings); // TODO validate url, maybe test
-												// connection, bugzilla version
-												// and credentials
+	protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+		urlSettings.validateSettings(settings); // TODO validate url, maybe test connection, bugzilla version and credentials
 		usernameSettings.validateSettings(settings);
 		passwordSettings.validateSettings(settings);
 		productSettings.validateSettings(settings);
@@ -178,16 +179,12 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	@Override
-	protected void loadInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
+	protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException, CanceledExecutionException {
 		// NOOP
 	}
 
 	@Override
-	protected void saveInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
+	protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException, CanceledExecutionException {
 		// NOOP
 	}
 
@@ -207,8 +204,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		return new SettingsModelString(BUGZILLA_PRODUCT, DEFAULT_VALUE);
 	}
 
-	static SettingsModelString createDateSettings() {
-		return new SettingsModelString(BUGZILLA_DATE, DATE_DEFAULT_VALUE);
+	static SettingsModelDate createDateSettings() {
+		return new SettingsModelDate(BUGZILLA_DATE);
 	}
 
 }
