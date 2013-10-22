@@ -53,7 +53,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     private static final String DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.its.jira.confname";
+    private static final String CONFIG_NAME = "depress.its.jiraonline.confname";
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraOnlineAdapterNodeModel.class);
 
