@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.judy;
+package org.impressivecode.depress.mr.judy;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,7 +23,7 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import org.impressivecode.depress.metric.judy.JudyXmlResult.Classes.Class;
+import org.impressivecode.depress.mr.judy.JudyXmlResult.Classes.Class;
 import org.junit.Test;
 
 /**

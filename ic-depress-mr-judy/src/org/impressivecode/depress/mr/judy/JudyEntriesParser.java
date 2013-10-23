@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.judy;
+package org.impressivecode.depress.mr.judy;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 
@@ -26,7 +26,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.impressivecode.depress.metric.judy.JudyXmlResult.Classes.Class;
+import org.impressivecode.depress.mr.judy.JudyXmlResult.Classes.Class;
 
 import com.google.common.base.Preconditions;
 /**

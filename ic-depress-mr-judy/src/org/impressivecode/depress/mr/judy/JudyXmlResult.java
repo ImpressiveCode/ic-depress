@@ -16,7 +16,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.impressivecode.depress.metric.judy;
+package org.impressivecode.depress.mr.judy;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

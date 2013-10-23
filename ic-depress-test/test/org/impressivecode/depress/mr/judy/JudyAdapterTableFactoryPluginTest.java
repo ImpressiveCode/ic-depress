@@ -15,14 +15,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.judy;
+package org.impressivecode.depress.mr.judy;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
-import org.impressivecode.depress.metric.judy.JudyAdapterTableFactory;
+import org.impressivecode.depress.mr.judy.JudyAdapterTableFactory;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.def.DoubleCell;

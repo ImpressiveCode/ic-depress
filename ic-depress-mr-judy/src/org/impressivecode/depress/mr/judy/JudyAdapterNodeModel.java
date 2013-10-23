@@ -15,19 +15,19 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.judy;
+package org.impressivecode.depress.mr.judy;
 
-import static org.impressivecode.depress.metric.judy.JudyAdapterTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.metric.judy.JudyAdapterTableFactory.createTableRow;
-import static org.impressivecode.depress.metric.judy.JudyAdapterTableFactory.createTableSpec;
-import static org.impressivecode.depress.metric.judy.JudyEntriesParser.unmarshalResults;
+import static org.impressivecode.depress.mr.judy.JudyAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mr.judy.JudyAdapterTableFactory.createTableRow;
+import static org.impressivecode.depress.mr.judy.JudyAdapterTableFactory.createTableSpec;
+import static org.impressivecode.depress.mr.judy.JudyEntriesParser.unmarshalResults;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.impressivecode.depress.metric.judy.JudyXmlResult.Classes.Class;
+import org.impressivecode.depress.mr.judy.JudyXmlResult.Classes.Class;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;

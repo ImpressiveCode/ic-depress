@@ -15,9 +15,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.judy;
+package org.impressivecode.depress.mr.judy;
 
-import static org.impressivecode.depress.metric.judy.JudyAdapterNodeModel.createFileChooserSettings;
+import static org.impressivecode.depress.mr.judy.JudyAdapterNodeModel.createFileChooserSettings;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
