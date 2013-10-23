@@ -15,10 +15,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.eclipsemetrics;
+package org.impressivecode.depress.mr.eclipsemetrics;
 
-import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsNodeDialog;
-import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsNodeModel;
+import org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsNodeDialog;
+import org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsNodeModel;
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;

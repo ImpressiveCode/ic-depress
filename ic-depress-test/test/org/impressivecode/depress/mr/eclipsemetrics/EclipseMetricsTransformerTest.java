@@ -15,11 +15,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.eclipsemetrics;
+package org.impressivecode.depress.mr.eclipsemetrics;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpecMethodLevel;
+import static org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpecMethodLevel;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -27,9 +27,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsEntryClassLevel;
-import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsEntryMethodLevel;
-import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTransformer;
+import org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsEntryClassLevel;
+import org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsEntryMethodLevel;
+import org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsTransformer;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;

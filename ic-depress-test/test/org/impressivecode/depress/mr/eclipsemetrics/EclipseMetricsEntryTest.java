@@ -15,12 +15,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.eclipsemetrics;
+package org.impressivecode.depress.mr.eclipsemetrics;
 
 import static org.junit.Assert.*;
 
-import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsEntryClassLevel;
-import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsEntryMethodLevel;
+import org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsEntryClassLevel;
+import org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsEntryMethodLevel;
 import org.junit.Test;
 
 /**

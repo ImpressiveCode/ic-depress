@@ -15,12 +15,12 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.eclipsemetrics;
+package org.impressivecode.depress.mr.eclipsemetrics;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpecMethodLevel;
-import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsTableFactory.createTableSpec;
+import static org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsTableFactory.createDataColumnSpecMethodLevel;
+import static org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsTableFactory.createTableSpec;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class EclipseMetricsNodeModel extends NodeModel {
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(EclipseMetricsNodeModel.class);
     private static final String DEFAULT_VALUE = "";
-    private static final String CONFIG_NAME = "depress.metric.eclipsemetrics.confname";
+    private static final String CONFIG_NAME = "depress.mr.eclipsemetrics.confname";
     private final SettingsModelString fileSettings = createFileChooserSettings();
 
     protected EclipseMetricsNodeModel() {
@@ -128,13 +128,13 @@ public class EclipseMetricsNodeModel extends NodeModel {
 
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
+    CanceledExecutionException {
         // NOOP
     }
 
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
+    CanceledExecutionException {
         // NOOP
     }
 

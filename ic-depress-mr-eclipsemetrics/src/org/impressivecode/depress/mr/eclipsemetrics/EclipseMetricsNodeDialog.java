@@ -15,9 +15,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.eclipsemetrics;
+package org.impressivecode.depress.mr.eclipsemetrics;
 
-import static org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsNodeModel.createFileChooserSettings;
+import static org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsNodeModel.createFileChooserSettings;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
@@ -28,7 +28,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 public class EclipseMetricsNodeDialog extends DefaultNodeSettingsPane {
 
     private static final String FILE_EXTENSION = ".xml";
-    private static final String HISTORY_ID = "depress.metric.eclipsemetrics.historyid";
+    private static final String HISTORY_ID = "depress.mr.eclipsemetrics.historyid";
 
     protected EclipseMetricsNodeDialog() {
         addDialogComponent(getFileChooserComponent());

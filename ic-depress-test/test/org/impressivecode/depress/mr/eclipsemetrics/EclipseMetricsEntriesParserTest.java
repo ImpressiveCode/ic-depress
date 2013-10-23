@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.eclipsemetrics;
+package org.impressivecode.depress.mr.eclipsemetrics;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -24,9 +24,9 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsEntriesParser;
-import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsEntryClassLevel;
-import org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsEntryMethodLevel;
+import org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsEntriesParser;
+import org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsEntryClassLevel;
+import org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsEntryMethodLevel;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 

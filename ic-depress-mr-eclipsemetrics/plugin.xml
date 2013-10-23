@@ -4,8 +4,8 @@
    <extension
          point="org.knime.workbench.repository.nodes">
       <node
-            category-path="depress"
-            factory-class="org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsNodeFactory"
+            category-path="depress.mr"
+            factory-class="org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsNodeFactory"
             id="org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsNodeFactory"/>
    </extension>
    
