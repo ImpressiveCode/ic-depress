@@ -4,9 +4,9 @@
 <plugin>
    <extension point="org.knime.workbench.repository.nodes">
       <node
-            category-path="depress"
+            category-path="depress.mg"
             expert-flag="false"
-            factory-class="org.impressivecode.depress.metric.im.IssuesMetricNodeFactory"
+            factory-class="org.impressivecode.depress.mg.noipa.IssuesMetricNodeFactory"
             id="org.impressivecode.depress.metric.im">
       </node>
 </extension>

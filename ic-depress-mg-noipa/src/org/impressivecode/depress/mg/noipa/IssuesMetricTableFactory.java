@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.im;
+package org.impressivecode.depress.mg.noipa;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static org.impressivecode.depress.common.Cells.integerCell;

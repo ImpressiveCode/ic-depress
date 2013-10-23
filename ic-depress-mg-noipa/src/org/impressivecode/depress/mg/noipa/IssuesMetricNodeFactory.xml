@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./im.png" type="Manipulator">
-    <name>Issues Metric</name>
+    <name>Number of Issues per Artifact</name>
 
     <shortDescription>
-        Issues Metric, ImpressiveCode DePress Plugin Framework.
+        Number Of Issues per Artifact Metric, ImpressiveCode DePress Plugin Framework.
     </shortDescription>
 
     <fullDescription>
         <intro>
             <p>
-                Issues Metric in particular links issue reports with modification (commit message) reports. As a linking
+                Number Of Issues per Artifact Metric in particular links issue reports with modification (commit message) reports. As a linking
                 algorithm we use simple matching approach. Additionally we compute number of issues
                 and number of unique
                 issues. The plugin itself is simple but using KNIME we are easily able to extend its functionality.
-                For instance using native row flter plugin we can
+                For instance using native row filter plugin we can
                 include only bug issues and thus we can compute
                 <u>number
                     of post release bugs</u>

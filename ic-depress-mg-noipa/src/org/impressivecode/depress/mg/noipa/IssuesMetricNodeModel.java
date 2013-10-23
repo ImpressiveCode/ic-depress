@@ -15,11 +15,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.im;
+package org.impressivecode.depress.mg.noipa;
 
 import static com.google.common.base.Preconditions.checkState;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.ISSUE_ID_COLSPEC;
-import static org.impressivecode.depress.metric.im.IssuesMetricTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mg.noipa.IssuesMetricTableFactory.createDataColumnSpec;
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.RESOURCE_COLSPEC;
 import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.AM_MARKER_COLSPEC;
 import static org.impressivecode.depress.support.commonmarker.MarkerAdapterTableFactory.EXT_MARKER_COLSPEC;
