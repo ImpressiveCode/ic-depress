@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.im;
+package org.impressivecode.depress.mg.noipa;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -27,9 +27,9 @@ import java.util.List;
 
 import org.impressivecode.depress.common.OutputTransformer;
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.metric.im.IssuesMetricType;
-import org.impressivecode.depress.metric.im.IssuesMetricOutputTransformer;
-import org.impressivecode.depress.metric.im.IssuesMetricTableFactory;
+import org.impressivecode.depress.mg.noipa.IssuesMetricOutputTransformer;
+import org.impressivecode.depress.mg.noipa.IssuesMetricTableFactory;
+import org.impressivecode.depress.mg.noipa.IssuesMetricType;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
