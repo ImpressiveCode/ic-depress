@@ -15,10 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.pmd;
+package org.impressivecode.depress.mr.pmd;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.impressivecode.depress.metric.pmd.PMDAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mr.pmd.PMDAdapterTableFactory.createDataColumnSpec;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

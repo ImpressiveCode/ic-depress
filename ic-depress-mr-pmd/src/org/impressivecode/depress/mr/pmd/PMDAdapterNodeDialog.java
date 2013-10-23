@@ -15,9 +15,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.pmd;
+package org.impressivecode.depress.mr.pmd;
 
-import static org.impressivecode.depress.metric.pmd.PMDAdapterNodeModel.createFileChooserSettings;
+import static org.impressivecode.depress.mr.pmd.PMDAdapterNodeModel.createFileChooserSettings;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
@@ -25,7 +25,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ï¿½ukasz Waga
  * @author Monika Pruszkowska
  * 
  */

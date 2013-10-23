@@ -1,4 +1,4 @@
-package org.impressivecode.depress.metric.pmd;
+package org.impressivecode.depress.mr.pmd;
 
 /*
  ImpressiveCode Depress Framework

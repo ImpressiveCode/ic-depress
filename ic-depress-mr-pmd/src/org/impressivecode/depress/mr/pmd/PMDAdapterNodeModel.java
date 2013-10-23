@@ -15,10 +15,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.pmd;
+package org.impressivecode.depress.mr.pmd;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static org.impressivecode.depress.metric.pmd.PMDAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mr.pmd.PMDAdapterTableFactory.createDataColumnSpec;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +42,7 @@ import org.xml.sax.SAXException;
 /**
  * 
  * @author Tomasz Banach
- * @author £ukasz Waga
+ * @author ï¿½ukasz Waga
  * @author Monika Pruszkowska
  * 
  */
