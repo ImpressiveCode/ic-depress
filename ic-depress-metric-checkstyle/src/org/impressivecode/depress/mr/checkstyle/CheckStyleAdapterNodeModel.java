@@ -15,10 +15,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.checkstyle;
+package org.impressivecode.depress.mr.checkstyle;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static org.impressivecode.depress.metric.checkstyle.CheckStyleAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mr.checkstyle.CheckStyleAdapterTableFactory.createDataColumnSpec;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,7 +52,7 @@ public class CheckStyleAdapterNodeModel extends NodeModel {
 
     private static final String DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.metric.checkstyle.confname";
+    private static final String CONFIG_NAME = "depress.mr.checkstyle.confname";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
 

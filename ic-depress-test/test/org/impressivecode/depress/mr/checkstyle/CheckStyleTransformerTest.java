@@ -15,10 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.checkstyle;
+package org.impressivecode.depress.mr.checkstyle;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.impressivecode.depress.metric.checkstyle.CheckStyleAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mr.checkstyle.CheckStyleAdapterTableFactory.createDataColumnSpec;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

@@ -4,8 +4,8 @@
 <plugin>
    <extension point="org.knime.workbench.repository.nodes">
       <node
-            category-path="depress"
-            factory-class="org.impressivecode.depress.metric.checkstyle.CheckStyleAdapterNodeFactory"
+            category-path="depress.mr"
+            factory-class="org.impressivecode.depress.mr.checkstyle.CheckStyleAdapterNodeFactory"
             id="org.impressivecode.depress.metric.checkstyle">
       </node>
 </extension>
