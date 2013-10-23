@@ -15,12 +15,12 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.po;
+package org.impressivecode.depress.mg.po;
 
 import static org.impressivecode.depress.common.DataTableSpecUtils.findMissingColumnSubset;
-import static org.impressivecode.depress.metric.po.PeopleOrganizationMetricTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.metric.po.PeopleOrganizationMetricTableFactory.createDevDataColumnSpec;
-import static org.impressivecode.depress.metric.po.PeopleOrganizationMetricTableFactory.createHistoryColumnSpec;
+import static org.impressivecode.depress.mg.po.PeopleOrganizationMetricTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mg.po.PeopleOrganizationMetricTableFactory.createDevDataColumnSpec;
+import static org.impressivecode.depress.mg.po.PeopleOrganizationMetricTableFactory.createHistoryColumnSpec;
 
 import java.io.File;
 import java.io.IOException;

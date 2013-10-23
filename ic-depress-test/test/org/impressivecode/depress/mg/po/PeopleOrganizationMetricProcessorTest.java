@@ -1,4 +1,4 @@
-package org.impressivecode.depress.metric.po;
+package org.impressivecode.depress.mg.po;
 
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.impressivecode.depress.metric.po.ChangeData;
-import org.impressivecode.depress.metric.po.PeopleOrganizationMetric;
-import org.impressivecode.depress.metric.po.PeopleOrganizationMetricProcessor;
-import org.impressivecode.depress.metric.po.TeamMemberData;
+import org.impressivecode.depress.mg.po.ChangeData;
+import org.impressivecode.depress.mg.po.PeopleOrganizationMetric;
+import org.impressivecode.depress.mg.po.PeopleOrganizationMetricProcessor;
+import org.impressivecode.depress.mg.po.TeamMemberData;
 import org.junit.Before;
 import org.junit.Test;
 
