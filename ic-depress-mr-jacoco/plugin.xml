@@ -5,7 +5,7 @@
    <extension point="org.knime.workbench.repository.nodes">
       <node
             category-path="depress"
-            factory-class="org.impressivecode.depress.metric.jacoco.JaCoCoAdapterNodeFactory"
+            factory-class="org.impressivecode.depress.mr.jacoco.JaCoCoAdapterNodeFactory"
             id="org.impressivecode.depress.metric.judy">
       </node>
 </extension>

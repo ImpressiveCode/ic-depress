@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.metric.jacoco;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.impressivecode.depress.metric.jacoco.JaCoCoAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mr.jacoco.JaCoCoAdapterTableFactory.createDataColumnSpec;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -26,8 +26,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.impressivecode.depress.metric.jacoco.JaCoCoAdapterTransformer;
-import org.impressivecode.depress.metric.jacoco.JaCoCoEntry;
+import org.impressivecode.depress.mr.jacoco.JaCoCoAdapterTransformer;
+import org.impressivecode.depress.mr.jacoco.JaCoCoEntry;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;

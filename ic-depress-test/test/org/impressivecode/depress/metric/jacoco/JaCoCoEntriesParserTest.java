@@ -24,8 +24,8 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.impressivecode.depress.metric.jacoco.JaCoCoEntriesParser;
-import org.impressivecode.depress.metric.jacoco.JaCoCoEntry;
+import org.impressivecode.depress.mr.jacoco.JaCoCoEntriesParser;
+import org.impressivecode.depress.mr.jacoco.JaCoCoEntry;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 /**

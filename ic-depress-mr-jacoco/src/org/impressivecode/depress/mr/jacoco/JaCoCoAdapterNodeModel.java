@@ -15,10 +15,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.metric.jacoco;
+package org.impressivecode.depress.mr.jacoco;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static org.impressivecode.depress.metric.jacoco.JaCoCoAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mr.jacoco.JaCoCoAdapterTableFactory.createDataColumnSpec;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class JaCoCoAdapterNodeModel extends NodeModel {
 
     private static final String DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.metric.jacoco.confname";
+    private static final String CONFIG_NAME = "depress.mr.jacoco.confname";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
 
