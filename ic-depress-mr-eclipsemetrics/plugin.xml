@@ -6,7 +6,7 @@
       <node
             category-path="depress.mr"
             factory-class="org.impressivecode.depress.mr.eclipsemetrics.EclipseMetricsNodeFactory"
-            id="org.impressivecode.depress.metric.eclipsemetrics.EclipseMetricsNodeFactory"/>
+            id="org.impressivecode.depress.mr.eclipsemetrics"/>
    </extension>
    
 </plugin>

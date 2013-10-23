@@ -50,7 +50,7 @@ public class JudyAdapterNodeModel extends NodeModel {
 
     private static final String DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.metric.judy.confname";
+    private static final String CONFIG_NAME = "depress.mr.judy.confname";
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JudyAdapterNodeModel.class);
 
@@ -101,13 +101,13 @@ public class JudyAdapterNodeModel extends NodeModel {
 
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
+    CanceledExecutionException {
         // NOOP
     }
 
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
+    CanceledExecutionException {
         // NOOP
     }
 

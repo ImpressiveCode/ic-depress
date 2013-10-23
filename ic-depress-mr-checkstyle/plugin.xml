@@ -6,7 +6,7 @@
       <node
             category-path="depress.mr"
             factory-class="org.impressivecode.depress.mr.checkstyle.CheckStyleAdapterNodeFactory"
-            id="org.impressivecode.depress.metric.checkstyle">
+            id="org.impressivecode.depress.mr.checkstyle">
       </node>
 </extension>
 </plugin>

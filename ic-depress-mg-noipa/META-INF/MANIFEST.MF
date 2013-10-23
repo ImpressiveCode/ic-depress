@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ic-depress-noipa
+Bundle-Name: ic-depress-mg-noipa
 Bundle-SymbolicName: org.impressivecode.depress.mg.noipa;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Vendor: ImpressiveCode

@@ -6,7 +6,7 @@
       <node
             category-path="depress"
             factory-class="org.impressivecode.depress.mr.jacoco.JaCoCoAdapterNodeFactory"
-            id="org.impressivecode.depress.metric.judy">
+            id="org.impressivecode.depress.mr.jacoco">
       </node>
 </extension>
 </plugin>

@@ -7,7 +7,7 @@
             category-path="depress.mg"
             expert-flag="false"
             factory-class="org.impressivecode.depress.mg.noipa.IssuesMetricNodeFactory"
-            id="org.impressivecode.depress.metric.im">
+            id="org.impressivecode.depress.mg.noipa">
       </node>
 </extension>
 </plugin>

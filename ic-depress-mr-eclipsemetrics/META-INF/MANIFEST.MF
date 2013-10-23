@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ic-depress-metric-eclipsemetrics
+Bundle-Name: ic-depress-mr-eclipsemetrics
 Bundle-SymbolicName: org.impressivecode.depress.mr.eclipsemetrics;singleton:=true
 Bundle-Version: 1.0.0
 Export-Package: org.impressivecode.depress.mr.eclipsemetrics
