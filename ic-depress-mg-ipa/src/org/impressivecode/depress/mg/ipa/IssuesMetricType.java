@@ -15,41 +15,42 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.mg.noipa;
+package org.impressivecode.depress.mg.ipa;
 
-import org.knime.core.node.NodeDialogPane;
-import org.knime.core.node.NodeFactory;
-import org.knime.core.node.NodeView;
+import java.util.Collections;
+import java.util.List;
+
+import org.impressivecode.depress.its.ITSDataType;
+
+import com.google.common.collect.Iterables;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class IssuesMetricNodeFactory extends NodeFactory<IssuesMetricNodeModel> {
+public class IssuesMetricType {
+    private String className;
+    private List<ITSDataType> issues = Collections.emptyList();
 
-    @Override
-    public IssuesMetricNodeModel createNodeModel() {
-        return new IssuesMetricNodeModel();
+    public String getResourceName() {
+        return className;
+    }
+
+    public void setResourceName(final String className) {
+        this.className = className;
+    }
+
+    public List<ITSDataType> getIssues() {
+        return issues;
+    }
+
+    public void setIssues(final List<ITSDataType> issues) {
+        this.issues = issues;
     }
 
     @Override
-    public int getNrNodeViews() {
-        return 0;
-    }
-
-    @Override
-    public NodeView<IssuesMetricNodeModel> createNodeView(final int viewIndex, final IssuesMetricNodeModel nodeModel) {
-        throw new IllegalStateException("View not supported");
-    }
-
-    @Override
-    public boolean hasDialog() {
-        return true;
-    }
-
-    @Override
-    public NodeDialogPane createNodeDialogPane() {
-        return new IssuesMetricNodeDialog();
+    public String toString() {
+        return String.format("NoIDataType [className=%s, issues=%s]", className, Iterables.toString(issues));
     }
 }

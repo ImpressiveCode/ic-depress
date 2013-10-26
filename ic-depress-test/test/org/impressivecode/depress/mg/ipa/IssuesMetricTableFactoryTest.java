@@ -15,13 +15,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.mg.noipa;
+package org.impressivecode.depress.mg.ipa;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.mg.noipa.IssuesMetricTableFactory;
-import org.impressivecode.depress.mg.noipa.IssuesMetricType;
+import org.impressivecode.depress.mg.ipa.IssuesMetricTableFactory;
+import org.impressivecode.depress.mg.ipa.IssuesMetricType;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;

@@ -15,10 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.mg.noipa;
+package org.impressivecode.depress.mg.ipa;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.impressivecode.depress.mg.noipa.IssuesMetricTableFactory.createTableRow;
+import static org.impressivecode.depress.mg.ipa.IssuesMetricTableFactory.createTableRow;
 
 import java.util.List;
 
