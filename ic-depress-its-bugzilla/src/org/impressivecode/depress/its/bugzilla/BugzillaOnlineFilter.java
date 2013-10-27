@@ -29,6 +29,36 @@ public class BugzillaOnlineFilter {
 	private String productName;
 
 	private Date dateFrom;
+	
+	private boolean historyOfChanges;
+	
+	private boolean comments;
+	
+	private boolean attachments;
+
+	public boolean isComments() {
+		return comments;
+	}
+
+	public void setComments(boolean comments) {
+		this.comments = comments;
+	}
+
+	public boolean isAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(boolean attachments) {
+		this.attachments = attachments;
+	}
+
+	public boolean isHistoryOfChanges() {
+		return historyOfChanges;
+	}
+
+	public void setHistoryOfChanges(boolean historyOfChanges) {
+		this.historyOfChanges = historyOfChanges;
+	}
 
 	public String getProductName() {
 		return productName;

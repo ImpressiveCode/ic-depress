@@ -18,12 +18,8 @@
 package org.impressivecode.depress.its.bugzilla;
 
 import static com.google.common.collect.Lists.newLinkedList;
-import static org.impressivecode.depress.its.bugzilla.BugzillaCommonUtils.getPriority;
-import static org.impressivecode.depress.its.bugzilla.BugzillaCommonUtils.getResolution;
-import static org.impressivecode.depress.its.bugzilla.BugzillaCommonUtils.getStatus;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -38,38 +34,60 @@ import org.impressivecode.depress.its.ITSDataType;
  */
 public class BugzillaOnlineParser {
 
+	private BugzillaOnlineBuilder builder;
+
+	public BugzillaOnlineParser(BugzillaOnlineBuilder builder) {
+		this.builder = builder;
+	}
+
 	public final List<ITSDataType> parseEntries(final Object[] bugs) {
 		List<ITSDataType> entries = newLinkedList();
 		for (Object element : bugs) {
-			entries.add(parse(element));
+			entries.add(builder.parse(element));
+		}
+		return entries;
+	}
+
+	public final List<ITSDataType> parseEntries(final Object[] bugs,
+			final Object[] history, final Map<String, Object> comments,
+			final Map<String, Object> attachments) {
+		List<ITSDataType> entries = newLinkedList();
+		for (int i = 0; i < bugs.length; i++) {
+			// i made internal test and the order of bugs history and bugs is
+			// the
+			// same, but there is no information about returned history order in
+			// bugzilla api, so this is risky solution
+			ITSDataType entry = builder.parse(bugs[i]);
+			
+			if (history != null) {
+				builder.buildHistory(entry, history[i]);
+			}
+			if (comments != null) {
+				builder.buildComments(entry, comments.get(entry.getIssueId()));
+			}
+			if (attachments != null) {
+				builder.buildAttachments(entry, attachments.get(entry.getIssueId()));
+			}
+			entries.add(entry);
 		}
 		return entries;
 	}
 
 	@SuppressWarnings("unchecked")
-	ITSDataType parse(Object bug) {
-		ITSDataType entry = new ITSDataType();
-		Map<String, Object> parametersMap = (Map<String, Object>) bug;
-
-		entry.setIssueId(parametersMap.get("id").toString());
-		entry.setCreated((Date) parametersMap.get("creation_time"));
-		entry.setPriority(getPriority(parametersMap.get("priority").toString()));
-		entry.setStatus(getStatus(parametersMap.get("status").toString()));
-		entry.setSummary(parametersMap.get("summary").toString());
-		entry.setUpdated((Date) parametersMap.get("last_change_time"));
-		entry.setResolution(getResolution(parametersMap.get("resolution").toString()));
-		entry.setReporter(parametersMap.get("assigned_to").toString());
-		entry.setLink(parametersMap.get("url").toString());
-		entry.setVersion(getVersion(parametersMap));
-		entry.setComments(new ArrayList<String>()); // Bugzilla::Webservice::Bug  comments method
-		
-		return entry;
+	public List<String> extractIds(final Object[] bugs) {
+		List<String> entries = new ArrayList<String>();
+		for (Object element : bugs) {
+			Map<String, Object> parametersMap = (Map<String, Object>) element;
+			entries.add(parametersMap.get("id").toString());
+		}
+		return entries;
 	}
 
-	private List<String> getVersion(Map<String, Object> parametersMap) {
-		List<String> version = new ArrayList<String>();
-		version.add(parametersMap.get("version").toString());
-		return version;
+	public void setBuilder(BugzillaOnlineBuilder builder) {
+		if (builder == null) {
+			return;
+		}
+		this.builder = builder;
 	}
 
 }

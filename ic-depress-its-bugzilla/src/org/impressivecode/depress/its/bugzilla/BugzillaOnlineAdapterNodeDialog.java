@@ -19,9 +19,12 @@ package org.impressivecode.depress.its.bugzilla;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
+import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
+import org.knime.core.node.defaultnodesettings.DialogComponentOptionalString;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
+import org.knime.core.node.defaultnodesettings.SettingsModelOptionalString;
 
 /**
  * 
@@ -37,17 +40,25 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	private static final String URL_LABEL = "Bugzilla URL:";
 
 	private static final String PRODUCT_LABEL = "Product:";
-	
+
 	private static final String DATE_FROM_LABEL = "Date from:";
 
 	private static final String USERNAME_LABEL = "Username:";
 
 	private static final String PASSWORD_LABEL = "Password:";
 
+	private static final String HISTORY_LABEL = "History of changes";
+	
+	private static final String ATTACHMENTS_LABEL = "Data about attachments";
+	
+	private static final String COMMENTS_LABEL = "Comments";
 
 	protected BugzillaOnlineAdapterNodeDialog() {
 		addDialogComponent(getURLComponent());
 		addDialogComponent(getProductComponent());
+		addDialogComponent(getHistoryComponent());
+		addDialogComponent(getAttachmentComponent());
+		addDialogComponent(getCommentComponent());
 		addDialogComponent(getDateComponent());
 		createNewTab(AUTHENTICATION_TAB_TITILE);
 		addDialogComponent(getUsernameComponent());
@@ -55,23 +66,44 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	}
 
 	private DialogComponent getURLComponent() {
-		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createURLSettings(), URL_LABEL);
+		return new DialogComponentString(
+				BugzillaOnlineAdapterNodeModel.createURLSettings(), URL_LABEL);
 	}
-	
+
 	private DialogComponent getProductComponent() {
-		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createProductSettings(), PRODUCT_LABEL);
+		return new DialogComponentString(
+				BugzillaOnlineAdapterNodeModel.createProductSettings(),
+				PRODUCT_LABEL);
+	}
+
+	private DialogComponent getDateComponent() {
+		return new DialogComponentDate(
+				BugzillaOnlineAdapterNodeModel.createDateSettings(),
+				DATE_FROM_LABEL);
 	}
 	
-	private DialogComponent getDateComponent() {
-		return new DialogComponentDate(BugzillaOnlineAdapterNodeModel.createDateSettings(), DATE_FROM_LABEL);
+	private DialogComponent getHistoryComponent(){
+		return new DialogComponentBoolean(BugzillaOnlineAdapterNodeModel.createHistorySettings(), HISTORY_LABEL);
+	}
+	
+	private DialogComponent getCommentComponent(){
+		return new DialogComponentBoolean(BugzillaOnlineAdapterNodeModel.createCommentSettings(), COMMENTS_LABEL);
+	}
+	
+	private DialogComponent getAttachmentComponent(){
+		return new DialogComponentBoolean(BugzillaOnlineAdapterNodeModel.createAttachmentSetting(), ATTACHMENTS_LABEL);
 	}
 
 	private DialogComponent getUsernameComponent() {
-		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createUsernameSettings(), USERNAME_LABEL);
+		return new DialogComponentString(
+				BugzillaOnlineAdapterNodeModel.createUsernameSettings(),
+				USERNAME_LABEL);
 	}
 
 	private DialogComponent getPasswordComponent() {
-		return new DialogComponentPasswordField(BugzillaOnlineAdapterNodeModel.createPasswordSettings(), PASSWORD_LABEL);
+		return new DialogComponentPasswordField(
+				BugzillaOnlineAdapterNodeModel.createPasswordSettings(),
+				PASSWORD_LABEL);
 	}
-	
+
 }
