@@ -62,6 +62,12 @@ public class BugzillaOnlineClientAdapter {
 
 	public static final String BUGS = "bugs";
 
+	private static final String IDS = "ids";
+
+	private static final String ID = "id";
+
+	private static final String INCLUDE_FIELDS = "include_fields";
+
 	public static final int BUGS_FETCH_LIMIT = 10;
 
 	private BugzillaOnlineXmlRpcClient bugzillaClient;
@@ -79,30 +85,24 @@ public class BugzillaOnlineClientAdapter {
 	}
 
 	private BugzillaOnlineParser buildParser() {
-		return new BugzillaOnlineParser(new BugzillaOnlineSearch());
+		return new BugzillaOnlineParser();
 	}
 
 	public List<ITSDataType> listEntries(BugzillaOnlineFilter filter) throws XmlRpcException {
 		Preconditions.checkNotNull(filter.getProductName());
 		// TODO in one worker fetch part of bugs and in other worker transform
 		// they into entries (producer consumer pattern)
-		Object[] bugs = searchBugs(getParametersMap(filter), 0, BUGS_FETCH_LIMIT);
+		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameterMap(filter), 0, BUGS_FETCH_LIMIT);
+		List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
 
-		Object[] history = null;
-		Map<String, Object> comments = null;
-		List<String> ids = parser.extractBugsIds(bugs);
+		Object[] bugs = getBugs(prepareBugsIdsParameterMap(bugsIds));
+		Object[] bugHistories = getBugsHistory(prepareBugsIdsParameterMap(bugsIds));
+		Map<String, Object> bugComments = getBugsComments(prepareBugsIdsParameterMap(bugsIds));
 
-		if (filter.isHistoryOfChanges()) {
-			history = getHistoryOfBugs(ids);
-		}
-
-		if (filter.isComments()) {
-			comments = comments(ids);
-		}
-		return parser.parseEntries(bugs, history, comments);
+		return parser.parseEntries(bugs, bugHistories, bugComments);
 	}
 
-	private Object[] searchBugs(Map<String, Object> parameters, int offset, int limit) throws XmlRpcException {
+	Object[] searchBugs(Map<String, Object> parameters, int offset, int limit) throws XmlRpcException {
 		parameters.put(OFFSET, offset);
 		parameters.put(LIMIT, limit);
 
@@ -111,46 +111,38 @@ public class BugzillaOnlineClientAdapter {
 		return (Object[]) result.get(BUGS);
 	}
 
-	private Object[] getBugs(List<String> ids) throws XmlRpcException {
-		Map<String, Object> parameters = newHashMap();
-		parameters.put("ids", ids);
+	Object[] getBugs(Map<String, Object> parameters) throws XmlRpcException {
 		Map<String, Object> result = bugzillaClient.execute(BUG_GET_METHOD, parameters);
 
 		return (Object[]) result.get(BUGS);
 	}
 
-	private Object[] getHistoryOfBugs(List<String> ids) throws XmlRpcException {
-		Map<String, Object> parameters = newHashMap();
-		parameters.put("ids", ids);
+	Object[] getBugsHistory(Map<String, Object> parameters) throws XmlRpcException {
 		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD, parameters);
 
 		return (Object[]) result.get(BUGS);
 	}
 
 	@SuppressWarnings("unchecked")
-	private Map<String, Object> comments(List<String> ids) throws XmlRpcException {
-		Map<String, Object> parameters = newHashMap();
-		parameters.put("ids", ids);
-		Map<String, Object> result = (Map<String, Object>) bugzillaClient.execute(BUG_COMMENT_METHOD, parameters).get(BUGS);
+	Map<String, Object> getBugsComments(Map<String, Object> parameters) throws XmlRpcException {
+		Map<String, Object> result = bugzillaClient.execute(BUG_COMMENT_METHOD, parameters);
 
-		return result;
+		return (Map<String, Object>) result.get(BUGS);
 	}
 
-	@SuppressWarnings("unchecked")
-	private Map<String, Object> attachments(List<String> ids) throws XmlRpcException {
-		Map<String, Object> param = newHashMap();
-		param.put("ids", ids);
-		Map<String, Object> result = (Map<String, Object>) bugzillaClient.execute(BUG_ATTACHMENT_METHOD, param).get(BUGS);
-
-		return result;
-	}
-
-	private Map<String, Object> getParametersMap(BugzillaOnlineFilter filter) {
+	private Map<String, Object> prepareSearchBugsParameterMap(BugzillaOnlineFilter filter) {
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(PRODUCT_NAME, filter.getProductName());
+		parameters.put(INCLUDE_FIELDS, new String[] { ID });
 		if (creationTimeIsProvided(filter)) {
 			parameters.put(DATE_FROM, filter.getDateFrom());
 		}
+		return parameters;
+	}
+
+	private Map<String, Object> prepareBugsIdsParameterMap(List<String> ids) {
+		Map<String, Object> parameters = newHashMap();
+		parameters.put(IDS, ids);
 		return parameters;
 	}
 

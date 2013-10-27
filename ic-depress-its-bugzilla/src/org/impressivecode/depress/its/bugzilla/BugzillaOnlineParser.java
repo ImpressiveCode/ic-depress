@@ -17,13 +17,24 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.newLinkedList;
+import static com.google.common.collect.Lists.newArrayListWithCapacity;
+import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Sets.newHashSet;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSPriority;
+import org.impressivecode.depress.its.ITSResolution;
+import org.impressivecode.depress.its.ITSStatus;
+import org.impressivecode.depress.its.ITSType;
+
+import com.google.common.base.Strings;
 
 /**
  * 
@@ -34,39 +45,169 @@ import org.impressivecode.depress.its.ITSDataType;
  */
 public class BugzillaOnlineParser {
 
-	private BugzillaOnlineBuilder builder;
+	public List<ITSDataType> parseEntries(final Object[] bugs, final Object[] bugHistories, final Map<String, Object> bugComments) {
+		List<ITSDataType> entries = newArrayListWithCapacity(bugs.length);
 
-	public BugzillaOnlineParser(BugzillaOnlineBuilder builder) {
-		this.builder = builder;
-	}
-
-	public final List<ITSDataType> parseEntries(final Object[] bugs) {
-		List<ITSDataType> entries = newLinkedList();
-		for (Object element : bugs) {
-			entries.add(builder.parse(element));
-		}
-		return entries;
-	}
-
-	public final List<ITSDataType> parseEntries(final Object[] bugs, final Object[] history, final Map<String, Object> comments) {
-		List<ITSDataType> entries = newLinkedList();
-		for (int i = 0; i < bugs.length; i++) {
-			// i made internal test and the order of bugs history and bugs is
-			// the
-			// same, but there is no information about returned history order in
-			// bugzilla api, so this is risky solution
-			ITSDataType entry = builder.parse(bugs[i]);
-
-			if (history != null) {
-				builder.buildHistory(entry, history[i]);
-			}
-			if (comments != null) {
-				builder.buildComments(entry, comments.get(entry.getIssueId()));
-			}
-
+		for (Object bug : bugs) {
+			ITSDataType entry = parse(bug);
+			fillHistoryData(entry, findBugHistory(bugHistories, entry.getIssueId()));
+			fillCommentsData(entry, getBugsComments(bugComments, entry.getIssueId()));
 			entries.add(entry);
 		}
+
 		return entries;
+	}
+
+	@SuppressWarnings("unchecked")
+	ITSDataType parse(Object bug) {
+		ITSDataType entry = new ITSDataType();
+		Map<String, Object> map = (Map<String, Object>) bug;
+
+		entry.setIssueId(getId(map));
+		entry.setCreated(getCreated(map));
+		entry.setUpdated(getUpdated(map));
+		// TODO resolved
+		entry.setStatus(getStatus(map));
+		entry.setType(getType());
+		// TODO version list
+		// TODO fix version list
+		entry.setPriority(getPriority(map));
+		entry.setSummary(getSummary(map));
+		entry.setLink(getLink(map));
+		// TODO description
+		entry.setResolution(getResolution(map));
+		entry.setReporter(getReporter(map));
+		// TODO get assigness
+
+		return entry;
+	}
+
+	private String getId(Map<String, Object> map) {
+		return map.get("id").toString();
+	}
+
+	private Date getCreated(Map<String, Object> map) {
+		return (Date) map.get("creation_time");
+	}
+
+	private Date getUpdated(Map<String, Object> map) {
+		return (Date) map.get("last_change_time");
+	}
+
+	private ITSStatus getStatus(Map<String, Object> map) {
+		return BugzillaCommonUtils.getStatus(map.get("status").toString());
+	}
+
+	private ITSType getType() {
+		return ITSType.BUG;
+	}
+
+	private ITSPriority getPriority(Map<String, Object> map) {
+		return BugzillaCommonUtils.getPriority(map.get("priority").toString());
+	}
+
+	private String getSummary(Map<String, Object> map) {
+		return map.get("summary").toString();
+	}
+
+	private String getLink(Map<String, Object> map) {
+		return map.get("url").toString();
+	}
+
+	private ITSResolution getResolution(Map<String, Object> map) {
+		return BugzillaCommonUtils.getResolution(map.get("resolution").toString());
+	}
+
+	private String getReporter(Map<String, Object> map) {
+		return map.get("assigned_to").toString();
+	}
+
+	@SuppressWarnings("unchecked")
+	private Map<String, Object> findBugHistory(Object[] bugHistories, String issueId) {
+		for (Object bugHistory : bugHistories) {
+			Map<String, Object> map = (Map<String, Object>) bugHistory;
+			if (issueId.equals(map.get("id").toString())) {
+				return map;
+			}
+		}
+		return newHashMap();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void fillHistoryData(ITSDataType entry, Map<String, Object> bugHistory) {
+		Object[] history = (Object[]) bugHistory.get("history");
+
+		if (notEmpty(bugHistory)) {
+			for (Object event : history) {
+				Map<String, Object> map = (Map<String, Object>) event;
+				Object[] changes = (Object[]) map.get("changes");
+				for (Object change : changes) {
+					Map<String, Object> changeMap = (Map<String, Object>) change;
+
+					if (isEntryResolved(entry) && isFieldStatus(changeMap) && isValueAdded(changeMap) && isValueChangeToResolved(changeMap) && isAfterPreviouslyResolvedDate(entry, map)) {
+						entry.setResolved((Date) map.get("when"));
+					}
+				}
+			}
+		}
+	}
+
+	private boolean notEmpty(Map<String, Object> bugHistory) {
+		return !bugHistory.isEmpty();
+	}
+
+	private boolean isEntryResolved(ITSDataType entry) {
+		return ITSStatus.RESOLVED.equals(entry.getStatus());
+	}
+	
+	private boolean isFieldStatus(Map<String, Object> changeMap) {
+		return "status".equals(changeMap.get("field_name"));
+	}
+	
+
+	private boolean isValueAdded(Map<String, Object> changeMap) {
+		return !isNullOrEmpty((String) changeMap.get("added"));
+	}
+
+	private boolean isValueChangeToResolved(Map<String, Object> changeMap) {
+		return ITSStatus.RESOLVED.equals(BugzillaCommonUtils.getStatus((String) changeMap.get("added")));
+	}
+
+	private boolean isAfterPreviouslyResolvedDate(ITSDataType entry, Map<String, Object> map) {
+		return entry.getResolved() == null || ((Date) map.get("when")).after(entry.getResolved());
+	}
+
+	@SuppressWarnings("unchecked")
+	private Object[] getBugsComments(final Map<String, Object> bugComments, String id) {
+		Object[] comments = new Object[0];
+		if (bugComments.containsKey(id)) {
+			Map<String, Object> map = (Map<String, Object>) bugComments.get(id);
+			comments = (Object[]) map.get("comments");
+		}
+		return comments;
+	}
+
+	@SuppressWarnings("unchecked")
+	private void fillCommentsData(ITSDataType entry, Object[] comments) {
+		List<String> contents = newArrayList();
+		Set<String> authors = newHashSet();
+
+		for (Object comment : comments) {
+			Map<String, Object> map = (Map<String, Object>) comment;
+			contents.add(getComment(map));
+			authors.add(getCommentAuthor(map));
+		}
+
+		entry.setComments(contents);
+		entry.setCommentAuthors(authors);
+	}
+
+	private String getCommentAuthor(Map<String, Object> map) {
+		return (String) map.get("creator");
+	}
+
+	private String getComment(Map<String, Object> map) {
+		return (String) map.get("text");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -75,14 +216,10 @@ public class BugzillaOnlineParser {
 
 		for (Object bug : bugs) {
 			Map<String, Object> map = (Map<String, Object>) bug;
-			bugsIds.add(map.get("id").toString());
+			bugsIds.add(getId(map));
 		}
 
 		return bugsIds;
-	}
-
-	public void setBuilder(BugzillaOnlineBuilder builder) {
-		this.builder = builder;
 	}
 
 }
