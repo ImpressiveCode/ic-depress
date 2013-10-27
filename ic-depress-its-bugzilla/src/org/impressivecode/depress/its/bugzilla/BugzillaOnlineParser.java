@@ -17,9 +17,9 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.newLinkedList;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +48,7 @@ public class BugzillaOnlineParser {
 		return entries;
 	}
 
-	public final List<ITSDataType> parseEntries(final Object[] bugs, final Object[] history, final Map<String, Object> comments, final Map<String, Object> attachments) {
+	public final List<ITSDataType> parseEntries(final Object[] bugs, final Object[] history, final Map<String, Object> comments) {
 		List<ITSDataType> entries = newLinkedList();
 		for (int i = 0; i < bugs.length; i++) {
 			// i made internal test and the order of bugs history and bugs is
@@ -63,22 +63,22 @@ public class BugzillaOnlineParser {
 			if (comments != null) {
 				builder.buildComments(entry, comments.get(entry.getIssueId()));
 			}
-			if (attachments != null) {
-				builder.buildAttachments(entry, attachments.get(entry.getIssueId()));
-			}
+
 			entries.add(entry);
 		}
 		return entries;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<String> extractIds(final Object[] bugs) {
-		List<String> entries = new ArrayList<String>();
-		for (Object element : bugs) {
-			Map<String, Object> parametersMap = (Map<String, Object>) element;
-			entries.add(parametersMap.get("id").toString());
+	public List<String> extractBugsIds(final Object[] bugs) {
+		List<String> bugsIds = newArrayList();
+
+		for (Object bug : bugs) {
+			Map<String, Object> map = (Map<String, Object>) bug;
+			bugsIds.add(map.get("id").toString());
 		}
-		return entries;
+
+		return bugsIds;
 	}
 
 	public void setBuilder(BugzillaOnlineBuilder builder) {

@@ -68,24 +68,20 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	public static final String BUGZILLA_PRODUCT = "depress.its.bugzillaonline.product";
 
 	public static final String BUGZILLA_DATE = "depress.its.bugzillaonline.date";
-	
+
 	public static final String BUGZILLA_HISTORY = "depress.its.bugzillaonline.history";
-	
+
 	public static final String BUGZILLA_COMMENT = "depress.its.bugzillaonline.comment";
-	
-	public static final String BUGZILLA_ATTACHMENT = "depress.its.bugzillaonline.attachment";
 
 	private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
 
 	private final SettingsModelString urlSettings = createURLSettings();
 
 	private final SettingsModelDate dateFromSettings = createDateSettings();
-	
-	private final SettingsModelBoolean historyFromSettings= createHistorySettings();
-	
-	private final SettingsModelBoolean commentFromSettings= createCommentSettings();
-	
-	private final SettingsModelBoolean attachmentFromSettings= createAttachmentSetting();
+
+	private final SettingsModelBoolean historyFromSettings = createHistorySettings();
+
+	private final SettingsModelBoolean commentFromSettings = createCommentSettings();
 
 	private final SettingsModelString usernameSettings = createUsernameSettings();
 
@@ -136,17 +132,13 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	private Date getDateFrom() {
 		return dateFromSettings.getDate();
 	}
-	
-	private boolean isHistoryEnable(){
+
+	private boolean isHistoryEnable() {
 		return historyFromSettings.getBooleanValue();
 	}
-	
-	private boolean isCommentEnable(){
+
+	private boolean isCommentEnable() {
 		return commentFromSettings.getBooleanValue();
-	}
-	
-	private boolean isAttachmentEnable(){
-		return attachmentFromSettings.getBooleanValue();
 	}
 
 	private String getURL() {
@@ -159,7 +151,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		bugFilter.setDateFrom(getDateFrom());
 		bugFilter.setHistoryOfChanges(isHistoryEnable());
 		bugFilter.setComments(isCommentEnable());
-		bugFilter.setAttachments(isAttachmentEnable());
 		return bugFilter;
 	}
 
@@ -235,17 +226,13 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	static SettingsModelDate createDateSettings() {
 		return new SettingsModelDate(BUGZILLA_DATE);
 	}
-	
+
 	static SettingsModelBoolean createHistorySettings() {
 		return new SettingsModelBoolean(BUGZILLA_HISTORY, false);
 	}
-	
+
 	static SettingsModelBoolean createCommentSettings() {
 		return new SettingsModelBoolean(BUGZILLA_COMMENT, false);
-	}
-	
-	static SettingsModelBoolean createAttachmentSetting() {
-		return new SettingsModelBoolean(BUGZILLA_ATTACHMENT, false);
 	}
 
 }

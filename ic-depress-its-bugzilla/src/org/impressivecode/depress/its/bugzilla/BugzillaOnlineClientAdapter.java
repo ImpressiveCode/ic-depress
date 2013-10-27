@@ -21,7 +21,6 @@ import static com.google.common.collect.Maps.newHashMap;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -88,24 +87,21 @@ public class BugzillaOnlineClientAdapter {
 		// TODO in one worker fetch part of bugs and in other worker transform
 		// they into entries (producer consumer pattern)
 		Object[] bugs = searchBugs(getParametersMap(filter), 0, BUGS_FETCH_LIMIT);
+
 		Object[] history = null;
 		Map<String, Object> comments = null;
-		Map<String, Object> attachments = null;
-		List<String> ids = parser.extractIds(bugs);
+		List<String> ids = parser.extractBugsIds(bugs);
+
 		if (filter.isHistoryOfChanges()) {
-			history = historyOfBugs(ids);
+			history = getHistoryOfBugs(ids);
 		}
-		if (filter.isAttachments()) {
+
+		if (filter.isComments()) {
 			comments = comments(ids);
 		}
-		if (filter.isComments()) {
-			attachments = attachments(ids);
-		}
-		return parser.parseEntries(bugs, history, comments, attachments);
+		return parser.parseEntries(bugs, history, comments);
 	}
 
-	// this method is marked as unstable in bugzilla api, we can by default use
-	// get method and leave user final decision which method he wants use
 	private Object[] searchBugs(Map<String, Object> parameters, int offset, int limit) throws XmlRpcException {
 		parameters.put(OFFSET, offset);
 		parameters.put(LIMIT, limit);
@@ -115,35 +111,34 @@ public class BugzillaOnlineClientAdapter {
 		return (Object[]) result.get(BUGS);
 	}
 
-	@SuppressWarnings("unused")
 	private Object[] getBugs(List<String> ids) throws XmlRpcException {
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("ids", ids);
-		Map<String, Object> result = bugzillaClient.execute(BUG_GET_METHOD, param);
+		Map<String, Object> parameters = newHashMap();
+		parameters.put("ids", ids);
+		Map<String, Object> result = bugzillaClient.execute(BUG_GET_METHOD, parameters);
 
 		return (Object[]) result.get(BUGS);
 	}
 
-	private Object[] historyOfBugs(List<String> ids) throws XmlRpcException {
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("ids", ids);
-		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD, param);
+	private Object[] getHistoryOfBugs(List<String> ids) throws XmlRpcException {
+		Map<String, Object> parameters = newHashMap();
+		parameters.put("ids", ids);
+		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD, parameters);
 
 		return (Object[]) result.get(BUGS);
 	}
 
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> comments(List<String> ids) throws XmlRpcException {
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("ids", ids);
-		Map<String, Object> result = (Map<String, Object>) bugzillaClient.execute(BUG_COMMENT_METHOD, param).get(BUGS);
+		Map<String, Object> parameters = newHashMap();
+		parameters.put("ids", ids);
+		Map<String, Object> result = (Map<String, Object>) bugzillaClient.execute(BUG_COMMENT_METHOD, parameters).get(BUGS);
 
 		return result;
 	}
 
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> attachments(List<String> ids) throws XmlRpcException {
-		Map<String, Object> param = new HashMap<String, Object>();
+		Map<String, Object> param = newHashMap();
 		param.put("ids", ids);
 		Map<String, Object> result = (Map<String, Object>) bugzillaClient.execute(BUG_ATTACHMENT_METHOD, param).get(BUGS);
 

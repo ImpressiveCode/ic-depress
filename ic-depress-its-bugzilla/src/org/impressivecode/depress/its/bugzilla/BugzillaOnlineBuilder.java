@@ -45,11 +45,6 @@ public abstract class BugzillaOnlineBuilder {
 		//http://www.bugzilla.org/docs/3.6/en/html/api/Bugzilla/WebService/Bug.html -> history
 	}
 
-	public void buildAttachments(ITSDataType entry, Object bug) {
-		//TODO
-		//http://www.bugzilla.org/docs/3.6/en/html/api/Bugzilla/WebService/Bug.html -> history
-	}
-	
 	public abstract ITSDataType parse(Object bug);
 
 	public void buildBasicField(ITSDataType entry, Map<String, Object> parametersMap) {

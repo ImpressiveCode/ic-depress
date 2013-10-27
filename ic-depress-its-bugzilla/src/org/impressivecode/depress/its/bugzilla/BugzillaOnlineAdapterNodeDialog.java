@@ -46,16 +46,13 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	private static final String PASSWORD_LABEL = "Password:";
 
 	private static final String HISTORY_LABEL = "History of changes";
-
-	private static final String ATTACHMENTS_LABEL = "Data about attachments";
-
+	
 	private static final String COMMENTS_LABEL = "Comments";
 
 	protected BugzillaOnlineAdapterNodeDialog() {
 		addDialogComponent(getURLComponent());
 		addDialogComponent(getProductComponent());
 		addDialogComponent(getHistoryComponent());
-		addDialogComponent(getAttachmentComponent());
 		addDialogComponent(getCommentComponent());
 		addDialogComponent(getDateComponent());
 		createNewTab(AUTHENTICATION_TAB_TITILE);
@@ -81,10 +78,6 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
 	private DialogComponent getCommentComponent() {
 		return new DialogComponentBoolean(BugzillaOnlineAdapterNodeModel.createCommentSettings(), COMMENTS_LABEL);
-	}
-
-	private DialogComponent getAttachmentComponent() {
-		return new DialogComponentBoolean(BugzillaOnlineAdapterNodeModel.createAttachmentSetting(), ATTACHMENTS_LABEL);
 	}
 
 	private DialogComponent getUsernameComponent() {
