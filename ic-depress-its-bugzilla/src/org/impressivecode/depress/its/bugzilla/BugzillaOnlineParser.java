@@ -23,6 +23,7 @@ import static com.google.common.collect.Lists.newArrayListWithCapacity;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -70,8 +71,8 @@ public class BugzillaOnlineParser {
 		entry.setUpdated(getUpdated(map));
 		entry.setStatus(getStatus(map));
 		entry.setType(getType());
-		// TODO version list
-		// TODO fix version list
+		entry.setVersion(getVersion(map));
+		entry.setFixVersion(getFixVersion(map));
 		entry.setPriority(getPriority(map));
 		entry.setSummary(getSummary(map));
 		entry.setLink(getLink(map));
@@ -100,6 +101,14 @@ public class BugzillaOnlineParser {
 
 	private ITSType getType() {
 		return ITSType.BUG;
+	}
+
+	private ArrayList<String> getFixVersion(Map<String, Object> map) {
+		return newArrayList((String) map.get("target_milestone"));
+	}
+
+	private ArrayList<String> getVersion(Map<String, Object> map) {
+		return newArrayList((String) map.get("version"));
 	}
 
 	private ITSPriority getPriority(Map<String, Object> map) {
