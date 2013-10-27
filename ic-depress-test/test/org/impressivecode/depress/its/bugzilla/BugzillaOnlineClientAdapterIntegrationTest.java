@@ -18,10 +18,8 @@
 package org.impressivecode.depress.its.bugzilla;
 
 import static com.google.common.collect.Maps.newHashMap;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
+import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 
 import java.util.Map;
 
@@ -44,11 +42,56 @@ public class BugzillaOnlineClientAdapterIntegrationTest {
 		Integer limit = 10;
 
 		// when
-		Object[] result = clientAdapter.getBugs(parameters, offset, limit);
+		Object[] result = clientAdapter.searchBugs(parameters, offset, limit);
 
 		// then
 		assertNotNull(result);
-		assertThat(0, is(not(result.length)));
+		assertThat(result).isNotEmpty();
 	}
 
+	@Test
+	public void shouldFetchBugsDetailFromFirefoxWithBugId820167() throws Exception {
+		// given
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi");
+		Map<String, Object> parameters = newHashMap();
+		parameters.put(BugzillaOnlineClientAdapter.IDS, new String[] {"820167"});
+
+		// when
+		Object[] result = clientAdapter.getBugs(parameters);
+
+		// then
+		assertNotNull(result);
+		assertThat(result).isNotEmpty();
+	}
+	
+	@Test
+	public void shouldFetchBugsCommentFromFirefoxWithBugId820167() throws Exception {
+		// given
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi");
+		Map<String, Object> parameters = newHashMap();
+		parameters.put(BugzillaOnlineClientAdapter.IDS, new String[] {"820167"});
+
+		// when
+		Map<String, Object> result = clientAdapter.getBugsComments(parameters);
+
+		// then
+		assertNotNull(result);
+		assertThat(result.get("820167")).isNotNull();
+	}
+
+	@Test
+	public void shouldFetchBugsHistoryFromFirefoxWithBugId820167() throws Exception {
+		// given
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi");
+		Map<String, Object> parameters = newHashMap();
+		parameters.put(BugzillaOnlineClientAdapter.IDS, new String[] {"820167"});
+
+		// when
+		Object[] result = clientAdapter.getBugsHistory(parameters);
+
+		// then
+		assertNotNull(result);
+		assertThat(result).isNotEmpty();
+	}
+	
 }

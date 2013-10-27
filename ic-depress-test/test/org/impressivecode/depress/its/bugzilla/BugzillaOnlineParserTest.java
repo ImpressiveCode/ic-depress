@@ -23,6 +23,10 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSPriority;
+import org.impressivecode.depress.its.ITSResolution;
+import org.impressivecode.depress.its.ITSStatus;
+import org.impressivecode.depress.its.ITSType;
 import org.junit.Test;
 
 /**
@@ -41,7 +45,7 @@ public class BugzillaOnlineParserTest {
 	}
 
 	@Test
-	public void shouldParseEntry() throws Exception {
+	public void shouldParseBugInformation() throws Exception {
 		// given
 		Object bug = getBugsSample()[0];
 		BugzillaOnlineParser parser = new BugzillaOnlineParser();
@@ -51,5 +55,18 @@ public class BugzillaOnlineParserTest {
 
 		// then
 		assertThat(its.getIssueId()).isEqualTo("820167");
+		assertThat(its.getCreated().toString()).isEqualTo("Mon Dec 10 23:18:00 CET 2012");
+		assertThat(its.getUpdated().toString()).isEqualTo("Mon Jul 01 12:56:51 CEST 2013");
+		assertThat(its.getStatus()).isEqualTo(ITSStatus.RESOLVED);
+		assertThat(its.getType()).isEqualTo(ITSType.BUG);
+		assertThat(its.getVersion()).containsOnly("unspecified");
+		assertThat(its.getFixVersion()).containsOnly("Firefox 20");
+		assertThat(its.getPriority()).isEqualTo(ITSPriority.MINOR);
+		assertThat(its.getSummary()).isEqualTo("Enable performance measurement of tab animation");
+		assertThat(its.getLink()).isEqualTo("");
+		assertThat(its.getResolution()).isEqualTo(ITSResolution.FIXED);
+		assertThat(its.getReporter()).isEqualTo("Avi Halachmi (:avih)");
+		assertThat(its.getAssignees()).containsOnly("Avi Halachmi (:avih)");
 	}
+	
 }
