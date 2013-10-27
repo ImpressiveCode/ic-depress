@@ -17,7 +17,6 @@
  */
 package org.impressivecode.depress.its.jira;
 
-
 /**
  * 
  * @author Marcin Kunert, Krzysztof Kwoka, Dawid Rutowicz

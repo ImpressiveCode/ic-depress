@@ -17,18 +17,21 @@
  */
 package org.impressivecode.depress.its.jira;
 
-import static org.impressivecode.depress.its.jira.JiraAdapterTableFactory.createTableSpec;
+import static org.impressivecode.depress.its.jira.JiraOnlineAdapterTableFactory.createTableSpec;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.Response;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
-import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
+import org.impressivecode.depress.its.ITSDataType;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -39,6 +42,7 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.xml.sax.SAXException;
 
@@ -51,78 +55,163 @@ import com.google.common.base.Preconditions;
  */
 public class JiraOnlineAdapterNodeModel extends NodeModel {
 
-    private static final String DEFAULT_VALUE = "";
+	private static final String DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.its.jiraonline.confname";
+	private static final String JIRA_URL = "depress.its.jiraonline.url";
+	private static final String JIRA_LOGIN = "depress.its.jiraonline.login";
+	private static final String JIRA_PASS = "depress.its.jiraonline.password";
+	private static final String JIRA_START_DATE = "depress.its.jiraonline.startDate";
+	private static final String JIRA_END_DATE = "depress.its.jiraonline.endDate";
+	private static final String JIRA_JQL = "depress.its.jiraonline.jql";
+	
+	private final SettingsModelString jiraSettingsURL = createSettingsURL();
+	private final SettingsModelString jiraSettingsLogin = createSettingsLogin();
+	private final SettingsModelString jiraSettingsPass = createSettingsPass();
+	private final SettingsModelDate jiraSettingsDateStart = createSettingsDateStart();
+	private final SettingsModelDate jiraSettingsDateEnd = createSettingsDateEnd();
+	private final SettingsModelString jiraSettingsJQL = createSettingsJQL();
 
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraOnlineAdapterNodeModel.class);
+	private static final NodeLogger LOGGER = NodeLogger
+			.getLogger(JiraOnlineAdapterNodeModel.class);
 
-    private final SettingsModelString fileSettings = createFileChooserSettings();
+	protected JiraOnlineAdapterNodeModel() {
+		super(0, 1);
+	}
 
-    protected JiraOnlineAdapterNodeModel() {
-        super(0, 1);
-    }
+	@Override
+	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
+			final ExecutionContext exec) throws Exception {
+		LOGGER.info("Preparing to download jira entries.");
+		String hostname = jiraSettingsURL.getStringValue();
+		String jql = jiraSettingsJQL.getStringValue();
+		String login = jiraSettingsLogin.getStringValue();
+		String pass = jiraSettingsPass.getStringValue();
+		//TODO check if datefields are enabled, as default getDate() gives unix era date
+		Date dateStart = jiraSettingsDateStart.getDate();
+		Date dateEnd = jiraSettingsDateEnd.getDate();
+		//TODO use proper functions based on arguments given
+		Response r = getResource(hostname, jql, login, pass, dateStart, dateEnd);
+		//TODO response parser
+//		List<ITSDataType> entries = parseEntries(hostname);
+		LOGGER.info("Transforming jira entries.");
+//		BufferedDataTable out = transform(entries, exec);
+		LOGGER.info(r.getMediaType());
+//		return new BufferedDataTable[] { out };
+		return new BufferedDataTable[]{};
+	}
 
-    @Override
-    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
-            throws Exception {
-        LOGGER.info("Preparing to read jira entries.");
-        String filePath = fileSettings.getStringValue();
-        List<ITSDataType> entries = parseEntries(filePath);
-        LOGGER.info("Transforming to jira entries.");
-        BufferedDataTable out = transform(entries, exec);
-        LOGGER.info("Jira table created.");
-        return new BufferedDataTable[] { out };
-    }
+	private Response getResource(String hostname, String jql, String login, String pass,
+			Date dateStart, Date dateEnd) {
+//		String dateStartString = new SimpleDateFormat("yyyy-MM-dd").format(dateStart);
+//		String dateEndString = new SimpleDateFormat("yyyy-MM-dd").format(dateEnd);
+		//TODO repair uri - cos tu robie zle i sie sypie generacja uri
+		String uri = JiraOnlineAdapterUriFactory.createJiraUriByJql(hostname, jql);
+		//TODO login with login/pass if given
+		Client client = JiraOnlineAdapterClientFactory.createClient();
+		Response r = null;
+		//TODO proper try-catch
+		try {
+			r = JiraOnlineAdapterResourceDownloader.getResource(client, uri);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return r;
+	}
 
-    private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
-        ITSAdapterTransformer transformer = new ITSAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
-        return transformer.transform(entries, exec);
-    }
+	private BufferedDataTable transform(final List<ITSDataType> entries,
+			final ExecutionContext exec) throws CanceledExecutionException {
+		ITSAdapterTransformer transformer = new ITSAdapterTransformer(
+				ITSAdapterTableFactory.createDataColumnSpec());
+		return transformer.transform(entries, exec);
+	}
 
-    private List<ITSDataType> parseEntries(final String filePath) throws ParserConfigurationException, SAXException,
-    IOException, ParseException {
-        return new JiraEntriesParser().parseEntries(filePath);
-    }
+	private List<ITSDataType> parseEntries(final String filePath)
+			throws ParserConfigurationException, SAXException, IOException,
+			ParseException {
+		return new JiraEntriesParser().parseEntries(filePath);
+	}
 
-    @Override
-    protected void reset() {
-    }
+	@Override
+	protected void reset() {
+		//NOOP
+	}
 
-    @Override
-    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
-        Preconditions.checkArgument(inSpecs.length == 0);
-        return createTableSpec();
-    }
+	@Override
+	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
+			throws InvalidSettingsException {
+		Preconditions.checkArgument(inSpecs.length == 0);
+		return createTableSpec();
+	}
 
-    @Override
-    protected void saveSettingsTo(final NodeSettingsWO settings) {
-        fileSettings.saveSettingsTo(settings);
-    }
+	@Override
+	protected void saveSettingsTo(final NodeSettingsWO settings) {
+		jiraSettingsURL.saveSettingsTo(settings);
+		jiraSettingsLogin.saveSettingsTo(settings);
+		jiraSettingsPass.saveSettingsTo(settings);
+		jiraSettingsDateStart.saveSettingsTo(settings);
+		jiraSettingsDateEnd.saveSettingsTo(settings);
+		jiraSettingsJQL.saveSettingsTo(settings);
+	}
 
-    @Override
-    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.loadSettingsFrom(settings);
-    }
+	@Override
+	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
+			throws InvalidSettingsException {
+		jiraSettingsURL.loadSettingsFrom(settings);
+		jiraSettingsLogin.loadSettingsFrom(settings);
+		jiraSettingsPass.loadSettingsFrom(settings);
+		jiraSettingsDateStart.loadSettingsFrom(settings);
+		jiraSettingsDateEnd.loadSettingsFrom(settings);
+		jiraSettingsJQL.loadSettingsFrom(settings);
+	}
 
-    @Override
-    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.validateSettings(settings);
-    }
+	@Override
+	protected void validateSettings(final NodeSettingsRO settings)
+			throws InvalidSettingsException {
+		jiraSettingsURL.validateSettings(settings);
+		jiraSettingsLogin.validateSettings(settings);
+		jiraSettingsPass.validateSettings(settings);
+		jiraSettingsDateStart.validateSettings(settings);
+		jiraSettingsDateEnd.validateSettings(settings);
+		jiraSettingsJQL.validateSettings(settings);
+	}
 
-    @Override
-    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
-        // NOOP
-    }
+	@Override
+	protected void loadInternals(final File internDir,
+			final ExecutionMonitor exec) throws IOException,
+			CanceledExecutionException {
+		// NOOP
+	}
 
-    @Override
-    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
-        // NOOP
-    }
+	@Override
+	protected void saveInternals(final File internDir,
+			final ExecutionMonitor exec) throws IOException,
+			CanceledExecutionException {
+		// NOOP
+	}
 
-    static SettingsModelString createFileChooserSettings() {
-        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
-    }
+	static SettingsModelString createSettingsURL() {
+		return new SettingsModelString(JIRA_URL, DEFAULT_VALUE);
+	}
+	
+	static SettingsModelString createSettingsLogin() {
+		return new SettingsModelString(JIRA_LOGIN, DEFAULT_VALUE);
+	}
+	
+	static SettingsModelString createSettingsPass() {
+		return new SettingsModelString(JIRA_PASS, DEFAULT_VALUE);
+	}
+	
+	static SettingsModelDate createSettingsDateStart() {
+		return new SettingsModelDate(JIRA_START_DATE);
+	}
+	
+	static SettingsModelDate createSettingsDateEnd() {
+		return new SettingsModelDate(JIRA_END_DATE);
+	}
+	
+	static SettingsModelString createSettingsJQL() {
+		return new SettingsModelString(JIRA_JQL, DEFAULT_VALUE);
+	}
+	
 }

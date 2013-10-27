@@ -4,6 +4,11 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import org.glassfish.jersey.client.filter.HttpBasicAuthFilter;
 
+/**
+ * 
+ * @author Marcin Kunert, Krzysztof Kwoka, Dawid Rutowicz
+ * 
+ */
 public class JiraOnlineAdapterClientFactory {
 
 	public static Client createClient() {

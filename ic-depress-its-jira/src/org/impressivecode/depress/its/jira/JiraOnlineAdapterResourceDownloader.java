@@ -6,6 +6,11 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ * 
+ * @author Marcin Kunert, Krzysztof Kwoka, Dawid Rutowicz
+ * 
+ */
 public class JiraOnlineAdapterResourceDownloader {
 
 	public static Response getResource(Client client, String uri) throws Exception {

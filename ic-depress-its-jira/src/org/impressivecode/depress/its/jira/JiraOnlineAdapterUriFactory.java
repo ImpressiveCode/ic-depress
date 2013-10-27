@@ -1,7 +1,13 @@
 package org.impressivecode.depress.its.jira;
 
 import javax.ws.rs.core.UriBuilder;
+import static com.google.common.base.Strings.isNullOrEmpty;
 
+/**
+ * 
+ * @author Marcin Kunert, Krzysztof Kwoka, Dawid Rutowicz
+ * 
+ */
 public class JiraOnlineAdapterUriFactory {
 
 	public static String createJiraUriByJql(String hostname, String jql) {
@@ -23,8 +29,13 @@ public class JiraOnlineAdapterUriFactory {
 	}
 
 	private static UriBuilder setUriHostnameAndJql(String hostname, String jql) {
+		if (isNullOrEmpty(jql)) {
+			jql = " ";
+		}
+		
 		return UriBuilder
-				.fromUri("{http}://{host}/rest/api/2/search?jql={jira-query}")
+				.fromUri(
+						"http://{host}/rest/api/latest/search?jql={jira-query}")
 				.resolveTemplate("host", hostname)
 				.resolveTemplate("jira-query", jql);
 	}
@@ -34,8 +45,8 @@ public class JiraOnlineAdapterUriFactory {
 	}
 
 	private static String createDateJql(String startDate, String endDate) {
-		// FIXME prepare JQL date filter
-		return "";
+		//allowed date formats: YYYY/mm/dd or YYYY-mm-dd
+		return "created >= " + startDate + " AND created <= " + endDate;
 	}
 
 }
