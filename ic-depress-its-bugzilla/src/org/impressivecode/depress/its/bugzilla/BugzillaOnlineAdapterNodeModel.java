@@ -88,14 +88,10 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	private final SettingsModelString passwordSettings = createPasswordSettings();
 
 	private final SettingsModelString productSettings = createProductSettings();
-	
-	private static final String EMAIL_PATTERN = 
-			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	
-	private static final String URL_PATTERN = 
-			"^(https?|ftp|file)://" +
-			"[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+
+	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+	private static final String URL_PATTERN = "^(https?|ftp|file)://" + "[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
 	protected BugzillaOnlineAdapterNodeModel() {
 		super(NUMBER_OF_INPUT_PORTS, NUMBER_OF_OUTPUT_PORTS);
@@ -203,22 +199,22 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		passwordSettings.validateSettings(settings);
 		productSettings.validateSettings(settings);
 		dateFromSettings.validateSettings(settings);
-		
+
 		SettingsModelString url_test = urlSettings.createCloneWithValidatedValue(settings);
-		if(url_test.getStringValue().length()>0 && !url_test.getStringValue().matches(URL_PATTERN)){
+		if (url_test.getStringValue().length() > 0 && !url_test.getStringValue().matches(URL_PATTERN)) {
 			throw new InvalidSettingsException("Invalid URL address");
 		}
-		
+
 		SettingsModelString email_test = usernameSettings.createCloneWithValidatedValue(settings);
-		if(email_test.getStringValue().length()>0 && !email_test.getStringValue().matches(EMAIL_PATTERN)){
+		if (email_test.getStringValue().length() > 0 && !email_test.getStringValue().matches(EMAIL_PATTERN)) {
 			throw new InvalidSettingsException("Invalid email address");
 		}
-		
+
 		SettingsModelString password_test = passwordSettings.createCloneWithValidatedValue(settings);
-		if(!password_test.getStringValue().isEmpty() && password_test.getStringValue().length()<6){
+		if (!password_test.getStringValue().isEmpty() && password_test.getStringValue().length() < 6) {
 			throw new InvalidSettingsException("The password must be at least 6 characters long.");
 		}
-		
+
 	}
 
 	@Override

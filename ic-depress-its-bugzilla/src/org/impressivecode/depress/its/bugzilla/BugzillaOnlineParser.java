@@ -24,6 +24,7 @@ import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,7 +35,7 @@ import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
 
-import com.google.common.base.Strings;
+import com.google.common.collect.Sets;
 
 /**
  * 
@@ -52,6 +53,7 @@ public class BugzillaOnlineParser {
 			ITSDataType entry = parse(bug);
 			fillHistoryData(entry, findBugHistory(bugHistories, entry.getIssueId()));
 			fillCommentsData(entry, getBugsComments(bugComments, entry.getIssueId()));
+			fillDescription(entry);
 			entries.add(entry);
 		}
 
@@ -66,7 +68,6 @@ public class BugzillaOnlineParser {
 		entry.setIssueId(getId(map));
 		entry.setCreated(getCreated(map));
 		entry.setUpdated(getUpdated(map));
-		// TODO resolved
 		entry.setStatus(getStatus(map));
 		entry.setType(getType());
 		// TODO version list
@@ -74,10 +75,9 @@ public class BugzillaOnlineParser {
 		entry.setPriority(getPriority(map));
 		entry.setSummary(getSummary(map));
 		entry.setLink(getLink(map));
-		// TODO description
 		entry.setResolution(getResolution(map));
 		entry.setReporter(getReporter(map));
-		// TODO get assigness
+		entry.setAssignees(getAssignee(map));
 
 		return entry;
 	}
@@ -122,6 +122,10 @@ public class BugzillaOnlineParser {
 		return map.get("assigned_to").toString();
 	}
 
+	private HashSet<String> getAssignee(Map<String, Object> map) {
+		return Sets.newHashSet((String) map.get("assigned_to"));
+	}
+
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> findBugHistory(Object[] bugHistories, String issueId) {
 		for (Object bugHistory : bugHistories) {
@@ -159,11 +163,10 @@ public class BugzillaOnlineParser {
 	private boolean isEntryResolved(ITSDataType entry) {
 		return ITSStatus.RESOLVED.equals(entry.getStatus());
 	}
-	
+
 	private boolean isFieldStatus(Map<String, Object> changeMap) {
 		return "status".equals(changeMap.get("field_name"));
 	}
-	
 
 	private boolean isValueAdded(Map<String, Object> changeMap) {
 		return !isNullOrEmpty((String) changeMap.get("added"));
@@ -208,6 +211,16 @@ public class BugzillaOnlineParser {
 
 	private String getComment(Map<String, Object> map) {
 		return (String) map.get("text");
+	}
+
+	private void fillDescription(ITSDataType entry) {
+		if (notEmpty(entry.getComments())) {
+			entry.setDescription(entry.getComments().get(0)); // first comment is a description
+		}
+	}
+
+	private boolean notEmpty(List<?> list) {
+		return !list.isEmpty();
 	}
 
 	@SuppressWarnings("unchecked")
