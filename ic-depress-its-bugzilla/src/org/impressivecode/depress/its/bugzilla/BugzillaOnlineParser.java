@@ -48,9 +48,7 @@ public class BugzillaOnlineParser {
 		return entries;
 	}
 
-	public final List<ITSDataType> parseEntries(final Object[] bugs,
-			final Object[] history, final Map<String, Object> comments,
-			final Map<String, Object> attachments) {
+	public final List<ITSDataType> parseEntries(final Object[] bugs, final Object[] history, final Map<String, Object> comments, final Map<String, Object> attachments) {
 		List<ITSDataType> entries = newLinkedList();
 		for (int i = 0; i < bugs.length; i++) {
 			// i made internal test and the order of bugs history and bugs is
@@ -58,7 +56,7 @@ public class BugzillaOnlineParser {
 			// same, but there is no information about returned history order in
 			// bugzilla api, so this is risky solution
 			ITSDataType entry = builder.parse(bugs[i]);
-			
+
 			if (history != null) {
 				builder.buildHistory(entry, history[i]);
 			}
@@ -84,9 +82,6 @@ public class BugzillaOnlineParser {
 	}
 
 	public void setBuilder(BugzillaOnlineBuilder builder) {
-		if (builder == null) {
-			return;
-		}
 		this.builder = builder;
 	}
 

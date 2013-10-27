@@ -62,22 +62,20 @@ public class BugzillaOnlineClientAdapter {
 	public static final String LOGIN = "login";
 
 	public static final String BUGS = "bugs";
-	
+
 	public static final int BUGS_FETCH_LIMIT = 10;
 
 	private BugzillaOnlineXmlRpcClient bugzillaClient;
 
 	private BugzillaOnlineParser parser;
 
-	public BugzillaOnlineClientAdapter(String urlAddress)
-			throws MalformedURLException {
+	public BugzillaOnlineClientAdapter(String urlAddress) throws MalformedURLException {
 		Preconditions.checkNotNull(urlAddress);
 		bugzillaClient = buildClient(urlAddress);
 		parser = buildParser();
 	}
 
-	private BugzillaOnlineXmlRpcClient buildClient(String urlAddress)
-			throws MalformedURLException {
+	private BugzillaOnlineXmlRpcClient buildClient(String urlAddress) throws MalformedURLException {
 		return new BugzillaOnlineXmlRpcClient(new URL(urlAddress));
 	}
 
@@ -85,13 +83,11 @@ public class BugzillaOnlineClientAdapter {
 		return new BugzillaOnlineParser(new BugzillaOnlineSearch());
 	}
 
-	public List<ITSDataType> listEntries(BugzillaOnlineFilter filter)
-			throws XmlRpcException {
+	public List<ITSDataType> listEntries(BugzillaOnlineFilter filter) throws XmlRpcException {
 		Preconditions.checkNotNull(filter.getProductName());
 		// TODO in one worker fetch part of bugs and in other worker transform
 		// they into entries (producer consumer pattern)
-		Object[] bugs = searchBugs(getParametersMap(filter), 0,
-				BUGS_FETCH_LIMIT);
+		Object[] bugs = searchBugs(getParametersMap(filter), 0, BUGS_FETCH_LIMIT);
 		Object[] history = null;
 		Map<String, Object> comments = null;
 		Map<String, Object> attachments = null;
@@ -110,13 +106,11 @@ public class BugzillaOnlineClientAdapter {
 
 	// this method is marked as unstable in bugzilla api, we can by default use
 	// get method and leave user final decision which method he wants use
-	private Object[] searchBugs(Map<String, Object> parameters, int offset,
-			int limit) throws XmlRpcException {
+	private Object[] searchBugs(Map<String, Object> parameters, int offset, int limit) throws XmlRpcException {
 		parameters.put(OFFSET, offset);
 		parameters.put(LIMIT, limit);
 
-		Map<String, Object> result = bugzillaClient.execute(BUG_SEARCH_METHOD,
-				parameters);
+		Map<String, Object> result = bugzillaClient.execute(BUG_SEARCH_METHOD, parameters);
 
 		return (Object[]) result.get(BUGS);
 	}
@@ -125,8 +119,7 @@ public class BugzillaOnlineClientAdapter {
 	private Object[] getBugs(List<String> ids) throws XmlRpcException {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("ids", ids);
-		Map<String, Object> result = bugzillaClient.execute(BUG_GET_METHOD,
-				param);
+		Map<String, Object> result = bugzillaClient.execute(BUG_GET_METHOD, param);
 
 		return (Object[]) result.get(BUGS);
 	}
@@ -134,8 +127,7 @@ public class BugzillaOnlineClientAdapter {
 	private Object[] historyOfBugs(List<String> ids) throws XmlRpcException {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("ids", ids);
-		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD,
-				param);
+		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD, param);
 
 		return (Object[]) result.get(BUGS);
 	}
@@ -144,8 +136,7 @@ public class BugzillaOnlineClientAdapter {
 	private Map<String, Object> comments(List<String> ids) throws XmlRpcException {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("ids", ids);
-		Map<String, Object> result = (Map<String, Object>) bugzillaClient.execute(BUG_COMMENT_METHOD,
-				param).get(BUGS);
+		Map<String, Object> result = (Map<String, Object>) bugzillaClient.execute(BUG_COMMENT_METHOD, param).get(BUGS);
 
 		return result;
 	}
@@ -154,8 +145,7 @@ public class BugzillaOnlineClientAdapter {
 	private Map<String, Object> attachments(List<String> ids) throws XmlRpcException {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("ids", ids);
-		Map<String, Object> result = (Map<String, Object>) bugzillaClient.execute(
-				BUG_ATTACHMENT_METHOD, param).get(BUGS);
+		Map<String, Object> result = (Map<String, Object>) bugzillaClient.execute(BUG_ATTACHMENT_METHOD, param).get(BUGS);
 
 		return result;
 	}
