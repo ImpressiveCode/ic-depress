@@ -65,8 +65,8 @@ public class BugzillaOnlineParserTest {
 		assertThat(its.getSummary()).isEqualTo("Enable performance measurement of tab animation");
 		assertThat(its.getLink()).isEqualTo("");
 		assertThat(its.getResolution()).isEqualTo(ITSResolution.FIXED);
-		assertThat(its.getReporter()).isEqualTo("Avi Halachmi (:avih)");
-		assertThat(its.getAssignees()).containsOnly("Avi Halachmi (:avih)");
+		assertThat(its.getReporter()).isEqualTo("avihpit@yahoo.com");
+		assertThat(its.getAssignees()).containsOnly("avihpit@yahoo.com");
 	}
 	
 }

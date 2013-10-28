@@ -129,7 +129,7 @@ public class BugzillaOnlineParser {
 	}
 
 	private String getReporter(Map<String, Object> map) {
-		return map.get("assigned_to").toString();
+		return map.get("creator").toString();
 	}
 
 	private HashSet<String> getAssignee(Map<String, Object> map) {

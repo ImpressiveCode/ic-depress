@@ -62,11 +62,11 @@ public class BugzillaOnlineClientAdapter {
 
 	public static final String BUGS = "bugs";
 
-	private static final String IDS = "ids";
+	public static final String IDS = "ids";
 
-	private static final String ID = "id";
+	public static final String ID = "id";
 
-	private static final String INCLUDE_FIELDS = "include_fields";
+	public static final String INCLUDE_FIELDS = "include_fields";
 
 	public static final int BUGS_FETCH_LIMIT = 10;
 
