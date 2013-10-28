@@ -112,7 +112,8 @@ public class BugzillaOnlineParser {
 	}
 
 	private ITSPriority getPriority(Map<String, Object> map) {
-		return BugzillaCommonUtils.getPriority(map.get("priority").toString());
+		// in Bugzilla bug severity contains appropriate values
+		return BugzillaCommonUtils.getPriority(map.get("severity").toString());
 	}
 
 	private String getSummary(Map<String, Object> map) {
