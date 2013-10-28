@@ -1,8 +1,7 @@
 package org.impressivecode.depress.its.jira;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import org.glassfish.jersey.client.filter.HttpBasicAuthFilter;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 /**
  * 
@@ -12,15 +11,15 @@ import org.glassfish.jersey.client.filter.HttpBasicAuthFilter;
 public class JiraOnlineAdapterClientFactory {
 
 	public static Client createClient() {
-		return ClientBuilder.newClient();
+		ClientConfig config = new DefaultClientConfig();
+		
+		return Client.create(config);
 	}
 
-	public static Client createClient(String username, String password) {
-		Client client = createClient();
-
-		client.register(new HttpBasicAuthFilter(username, password));
-
-		return client;
+	public static Client createClient(String username, String password) throws Exception {
+		// TODO: implementation
+		
+		throw new Exception("not implemented");
 	}
 
-}	
+}

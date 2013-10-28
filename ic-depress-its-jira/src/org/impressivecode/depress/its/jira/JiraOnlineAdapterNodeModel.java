@@ -25,8 +25,6 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.core.Response;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
@@ -47,6 +45,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Preconditions;
+import com.sun.jersey.api.client.Client;
 
 /**
  * 
@@ -89,18 +88,17 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 		//TODO check if datefields are enabled, as default getDate() gives unix era date
 		Date dateStart = jiraSettingsDateStart.getDate();
 		Date dateEnd = jiraSettingsDateEnd.getDate();
-		//TODO use proper functions based on arguments given
-		Response r = getResource(hostname, jql, login, pass, dateStart, dateEnd);
-		//TODO response parser
-//		List<ITSDataType> entries = parseEntries(hostname);
+		// TODO use proper functions based on arguments given
+		String response = getResource(hostname, jql, login, pass, dateStart, dateEnd);
+		// TODO response parser
+		// List<ITSDataType> entries = parseEntries(hostname);
 		LOGGER.info("Transforming jira entries.");
-//		BufferedDataTable out = transform(entries, exec);
-		LOGGER.info(r.getMediaType());
-//		return new BufferedDataTable[] { out };
-		return new BufferedDataTable[]{};
+		// BufferedDataTable out = transform(entries, exec);
+		// return new BufferedDataTable[] { out };
+		return new BufferedDataTable[] {};
 	}
 
-	private Response getResource(String hostname, String jql, String login, String pass,
+	private String getResource(String hostname, String jql, String login, String pass,
 			Date dateStart, Date dateEnd) {
 //		String dateStartString = new SimpleDateFormat("yyyy-MM-dd").format(dateStart);
 //		String dateEndString = new SimpleDateFormat("yyyy-MM-dd").format(dateEnd);
@@ -108,15 +106,15 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 		String uri = JiraOnlineAdapterUriFactory.createJiraUriByJql(hostname, jql);
 		//TODO login with login/pass if given
 		Client client = JiraOnlineAdapterClientFactory.createClient();
-		Response r = null;
 		//TODO proper try-catch
+		String response = null;
 		try {
-			r = JiraOnlineAdapterResourceDownloader.getResource(client, uri);
+			response = JiraOnlineAdapterResourceDownloader.getResource(client, uri);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return r;
+		return response;
 	}
 
 	private BufferedDataTable transform(final List<ITSDataType> entries,
