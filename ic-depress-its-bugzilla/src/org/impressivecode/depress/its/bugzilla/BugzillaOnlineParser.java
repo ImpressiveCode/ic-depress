@@ -104,11 +104,11 @@ public class BugzillaOnlineParser {
 	}
 
 	private ArrayList<String> getFixVersion(Map<String, Object> map) {
-		return newArrayList((String) map.get("target_milestone"));
+		return newArrayList(map.get("target_milestone").toString());
 	}
 
 	private ArrayList<String> getVersion(Map<String, Object> map) {
-		return newArrayList((String) map.get("version"));
+		return newArrayList(map.get("version").toString());
 	}
 
 	private ITSPriority getPriority(Map<String, Object> map) {
@@ -133,7 +133,7 @@ public class BugzillaOnlineParser {
 	}
 
 	private HashSet<String> getAssignee(Map<String, Object> map) {
-		return Sets.newHashSet((String) map.get("assigned_to"));
+		return Sets.newHashSet(map.get("assigned_to").toString());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -179,11 +179,11 @@ public class BugzillaOnlineParser {
 	}
 
 	private boolean isValueAdded(Map<String, Object> changeMap) {
-		return !isNullOrEmpty((String) changeMap.get("added"));
+		return !isNullOrEmpty(changeMap.get("added").toString());
 	}
 
 	private boolean isValueChangeToResolved(Map<String, Object> changeMap) {
-		return ITSStatus.RESOLVED.equals(BugzillaCommonUtils.getStatus((String) changeMap.get("added")));
+		return ITSStatus.RESOLVED.equals(BugzillaCommonUtils.getStatus(changeMap.get("added").toString()));
 	}
 
 	private boolean isAfterPreviouslyResolvedDate(ITSDataType entry, Map<String, Object> map) {
@@ -216,11 +216,11 @@ public class BugzillaOnlineParser {
 	}
 
 	private String getCommentAuthor(Map<String, Object> map) {
-		return (String) map.get("creator");
+		return map.get("creator").toString();
 	}
 
 	private String getComment(Map<String, Object> map) {
-		return (String) map.get("text");
+		return map.get("text").toString();
 	}
 
 	private void fillDescription(ITSDataType entry) {
