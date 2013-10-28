@@ -148,7 +148,7 @@ public class BugzillaOnlineParser {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void fillHistoryData(ITSDataType entry, Map<String, Object> bugHistory) {
+	void fillHistoryData(ITSDataType entry, Map<String, Object> bugHistory) {
 		Object[] history = (Object[]) bugHistory.get("history");
 
 		if (notEmpty(bugHistory)) {
@@ -201,7 +201,7 @@ public class BugzillaOnlineParser {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void fillCommentsData(ITSDataType entry, Object[] comments) {
+	void fillCommentsData(ITSDataType entry, Object[] comments) {
 		List<String> contents = newArrayList();
 		Set<String> authors = newHashSet();
 
@@ -223,7 +223,7 @@ public class BugzillaOnlineParser {
 		return map.get("text").toString();
 	}
 
-	private void fillDescription(ITSDataType entry) {
+	void fillDescription(ITSDataType entry) {
 		if (notEmpty(entry.getComments())) {
 			entry.setDescription(entry.getComments().get(0)); // first comment is a description
 		}

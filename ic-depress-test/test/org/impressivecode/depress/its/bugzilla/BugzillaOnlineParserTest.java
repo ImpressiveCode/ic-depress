@@ -21,6 +21,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.util.Map;
 
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSPriority;
@@ -36,18 +37,18 @@ import org.junit.Test;
  */
 public class BugzillaOnlineParserTest {
 
-	public Object[] getBugsSample() throws Exception {
-		FileInputStream fin = new FileInputStream(BugzillaOnlineParserTest.class.getResource("mozillaOnline820167.dat").getPath());
+	public Object getBugSample(String sample) throws Exception {
+		FileInputStream fin = new FileInputStream(BugzillaOnlineParserTest.class.getResource(sample).getPath());
 		ObjectInputStream ois = new ObjectInputStream(fin);
-		Object[] bugs = (Object[]) ois.readObject();
+		Object object = ois.readObject();
 		ois.close();
-		return bugs;
+		return object;
 	}
 
 	@Test
 	public void shouldParseBugInformation() throws Exception {
 		// given
-		Object bug = getBugsSample()[0];
+		Object bug = ((Object[]) getBugSample("mozillaOnline820167.dat"))[0];
 		BugzillaOnlineParser parser = new BugzillaOnlineParser();
 
 		// when
@@ -68,5 +69,39 @@ public class BugzillaOnlineParserTest {
 		assertThat(its.getReporter()).isEqualTo("avihpit@yahoo.com");
 		assertThat(its.getAssignees()).containsOnly("avihpit@yahoo.com");
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldParseBugComments() throws Exception {
+		// given
+		Map<String, Object> allBugCommentsMap = (Map<String, Object>) getBugSample("mozillaOnlineComments820167.dat");
+		Map<String, Object> oneBugCommentsMap = (Map<String, Object>) allBugCommentsMap.get("820167");
+		Object[] comments = (Object[]) oneBugCommentsMap.get("comments");
+		BugzillaOnlineParser parser = new BugzillaOnlineParser();
+		ITSDataType its = new ITSDataType();
+
+		// when
+		parser.fillCommentsData(its, comments);
+
+		// then
+		assertThat(its.getCommentAuthors()).hasSize(7);
+		assertThat(its.getComments()).hasSize(23);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldParseBugHistory() throws Exception {
+		// given
+		Map<String, Object> history = (Map<String, Object>) ((Object[]) getBugSample("mozillaOnlineHistory820167.dat"))[0];
+		BugzillaOnlineParser parser = new BugzillaOnlineParser();
+		ITSDataType its = new ITSDataType();
+		its.setStatus(ITSStatus.RESOLVED);
+
+		// when
+		parser.fillHistoryData(its, history);
+
+		// then
+		assertThat(its.getResolved().toString()).isEqualTo("Fri Jan 04 17:51:50 CET 2013");
+	}
+
 }
