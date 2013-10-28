@@ -37,7 +37,7 @@ import org.junit.Test;
 public class BugzillaOnlineParserTest {
 
 	public Object[] getBugsSample() throws Exception {
-		FileInputStream fin = new FileInputStream(BugzillaOnlineParserTest.class.getResource("mozillaOnline.dat").getPath());
+		FileInputStream fin = new FileInputStream(BugzillaOnlineParserTest.class.getResource("mozillaOnline820167.dat").getPath());
 		ObjectInputStream ois = new ObjectInputStream(fin);
 		Object[] bugs = (Object[]) ois.readObject();
 		ois.close();
