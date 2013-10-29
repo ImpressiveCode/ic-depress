@@ -12,7 +12,7 @@
       <node
             category-path="depress/depress.its"
             expert-flag="false"
-            factory-class="org.impressivecode.depress.its.jira.JiraOnlineAdapterNodeFactory"
+            factory-class="org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeFactory"
             id="org.impressivecode.depress.its.jiraonline">
       </node>
    </extension>

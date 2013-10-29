@@ -1,4 +1,4 @@
-package org.impressivecode.depress.its.jira;
+package org.impressivecode.depress.its.jiraonline;
 
 import javax.ws.rs.core.UriBuilder;
 import static com.google.common.base.Strings.isNullOrEmpty;
@@ -14,10 +14,12 @@ public class JiraOnlineAdapterUriFactory {
 		// FIXME consider https?
 		boolean https = false;
 
-		UriBuilder builder = setUriHostnameAndJql(hostname, jql);
-		setUriProtocol(https, builder);
-
-		return builder.build().toString();
+//		UriBuilder builder = setUriHostnameAndJql(hostname, jql);
+//		setUriProtocol(https, builder);
+//
+//		return builder.build().toString();
+		
+		return null;
 	}
 
 	// TODO what types are dates?
@@ -28,21 +30,21 @@ public class JiraOnlineAdapterUriFactory {
 		return createJiraUriByJql(hostname, jql);
 	}
 
-	private static UriBuilder setUriHostnameAndJql(String hostname, String jql) {
-		if (isNullOrEmpty(jql)) {
-			jql = " ";
-		}
-		
-		return UriBuilder
-				.fromUri(
-						"http://{host}/rest/api/latest/search?jql={jira-query}")
-				.resolveTemplate("host", hostname)
-				.resolveTemplate("jira-query", jql);
-	}
-
-	private static void setUriProtocol(boolean secure, UriBuilder builder) {
-		builder.resolveTemplate("http", (secure ? "https" : "http"));
-	}
+//	private static UriBuilder setUriHostnameAndJql(String hostname, String jql) {
+//		if (isNullOrEmpty(jql)) {
+//			jql = " ";
+//		}
+//		
+//		return UriBuilder
+//				.fromUri(
+//						"http://{host}/rest/api/latest/search?jql={jira-query}")
+//				.resolveTemplate("host", hostname)
+//				.resolveTemplate("jira-query", jql);
+//	}
+//
+//	private static void setUriProtocol(boolean secure, UriBuilder builder) {
+//		builder.resolveTemplate("http", (secure ? "https" : "http"));
+//	}
 
 	private static String createDateJql(String startDate, String endDate) {
 		//allowed date formats: YYYY/mm/dd or YYYY-mm-dd

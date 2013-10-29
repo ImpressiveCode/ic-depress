@@ -15,14 +15,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jira;
+package org.impressivecode.depress.its.jiraonline;
 
-import static org.impressivecode.depress.its.jira.JiraOnlineAdapterNodeModel.createSettingsDateEnd;
-import static org.impressivecode.depress.its.jira.JiraOnlineAdapterNodeModel.createSettingsDateStart;
-import static org.impressivecode.depress.its.jira.JiraOnlineAdapterNodeModel.createSettingsJQL;
-import static org.impressivecode.depress.its.jira.JiraOnlineAdapterNodeModel.createSettingsLogin;
-import static org.impressivecode.depress.its.jira.JiraOnlineAdapterNodeModel.createSettingsPass;
-import static org.impressivecode.depress.its.jira.JiraOnlineAdapterNodeModel.createSettingsURL;
+import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsDateEnd;
+import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsDateStart;
+import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsJQL;
+import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsLogin;
+import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsPass;
+import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsURL;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,7 +39,9 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
 
 /**
  * 
+ * @author Krzysztof Kwoka
  * @author Marcin Kunert
+ * @author Dawid Rutowicz
  * 
  */
 public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {

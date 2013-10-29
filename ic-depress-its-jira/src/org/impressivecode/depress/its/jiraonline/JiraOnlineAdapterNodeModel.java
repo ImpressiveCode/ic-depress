@@ -15,9 +15,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jira;
+package org.impressivecode.depress.its.jiraonline;
 
-import static org.impressivecode.depress.its.jira.JiraOnlineAdapterTableFactory.createTableSpec;
+import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterTableFactory.createTableSpec;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +30,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.jira.JiraEntriesParser;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;

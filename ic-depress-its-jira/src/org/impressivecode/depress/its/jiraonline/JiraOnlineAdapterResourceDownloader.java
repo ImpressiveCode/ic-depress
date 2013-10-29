@@ -1,4 +1,4 @@
-package org.impressivecode.depress.its.jira;
+package org.impressivecode.depress.its.jiraonline;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
