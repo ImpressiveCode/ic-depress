@@ -64,8 +64,6 @@ public class BugzillaOnlineClientAdapter {
 
 	public static final String IDS = "ids";
 
-	public static final String ID = "id";
-
 	public static final String INCLUDE_FIELDS = "include_fields";
 
 	private BugzillaOnlineXmlRpcClient bugzillaClient;
@@ -90,14 +88,14 @@ public class BugzillaOnlineClientAdapter {
 		Preconditions.checkNotNull(filter.getProductName());
 		// TODO in one worker fetch part of bugs and in other worker transform
 		// they into entries (producer consumer pattern)
-		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameterMap(filter), 0, filter.getLimit());
+		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(filter), 0, filter.getLimit());
 		List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
 
-		Object[] bugs = getBugs(prepareBugsIdsParameterMap(bugsIds));
-		Object[] bugHistories = getBugsHistory(prepareBugsIdsParameterMap(bugsIds));
-		Map<String, Object> bugComments = getBugsComments(prepareBugsIdsParameterMap(bugsIds));
+		Object[] bugs = getBugs(prepareGetBugsParameters(bugsIds));
+		Object[] histories = getBugsHistory(prepareBugsIdsParameters(bugsIds));
+		Map<String, Object> comments = getBugsComments(prepareBugsIdsParameters(bugsIds));
 
-		return parser.parseEntries(bugs, bugHistories, bugComments);
+		return parser.parseEntries(bugs, histories, comments);
 	}
 
 	Object[] searchBugs(Map<String, Object> parameters, int offset, int limit) throws XmlRpcException {
@@ -128,17 +126,25 @@ public class BugzillaOnlineClientAdapter {
 		return (Map<String, Object>) result.get(BUGS);
 	}
 
-	private Map<String, Object> prepareSearchBugsParameterMap(BugzillaOnlineFilter filter) {
+	private Map<String, Object> prepareSearchBugsParameters(BugzillaOnlineFilter filter) {
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(PRODUCT_NAME, filter.getProductName());
-		parameters.put(INCLUDE_FIELDS, new String[] { ID });
+		parameters.put(INCLUDE_FIELDS, new String[] { BugzillaOnlineParser.ID });
 		if (creationTimeIsProvided(filter)) {
 			parameters.put(DATE_FROM, filter.getDateFrom());
 		}
 		return parameters;
 	}
 
-	private Map<String, Object> prepareBugsIdsParameterMap(List<String> ids) {
+	private Map<String, Object> prepareGetBugsParameters(List<String> ids) {
+		Map<String, Object> parameters = prepareBugsIdsParameters(ids);
+		parameters.put(INCLUDE_FIELDS, new String[] { BugzillaOnlineParser.ID, BugzillaOnlineParser.CREATED, BugzillaOnlineParser.UPDATED, BugzillaOnlineParser.STATUS, BugzillaOnlineParser.ASSIGNEE,
+				BugzillaOnlineParser.FIX_VERSION, BugzillaOnlineParser.VERSION, BugzillaOnlineParser.REPORTER, BugzillaOnlineParser.PRIORITY, BugzillaOnlineParser.SUMMARY, BugzillaOnlineParser.LINK,
+				BugzillaOnlineParser.RESOLUTION });
+		return parameters;
+	}
+
+	private Map<String, Object> prepareBugsIdsParameters(List<String> ids) {
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(IDS, ids);
 		return parameters;
