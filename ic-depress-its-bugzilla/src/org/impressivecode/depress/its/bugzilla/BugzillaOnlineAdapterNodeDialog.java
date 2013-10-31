@@ -17,10 +17,20 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createCommentSettings;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createDateSettings;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createHistorySettings;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createLimitSettings;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createPasswordSettings;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createProductSettings;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createURLSettings;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createUsernameSettings;
+
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
+import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 
@@ -48,6 +58,8 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	private static final String HISTORY_LABEL = "History of changes";
 	
 	private static final String COMMENTS_LABEL = "Comments";
+	
+	private static final String LIMIT_LABEL = "Limit:";
 
 	protected BugzillaOnlineAdapterNodeDialog() {
 		addDialogComponent(getURLComponent());
@@ -55,37 +67,42 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 		addDialogComponent(getHistoryComponent());
 		addDialogComponent(getCommentComponent());
 		addDialogComponent(getDateComponent());
+		addDialogComponent(getLimitComponent());
 		createNewTab(AUTHENTICATION_TAB_TITILE);
 		addDialogComponent(getUsernameComponent());
 		addDialogComponent(getPasswordComponent());
 	}
 
 	private DialogComponent getURLComponent() {
-		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createURLSettings(), URL_LABEL);
+		return new DialogComponentString(createURLSettings(), URL_LABEL);
 	}
 
 	private DialogComponent getProductComponent() {
-		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createProductSettings(), PRODUCT_LABEL);
+		return new DialogComponentString(createProductSettings(), PRODUCT_LABEL);
 	}
 
 	private DialogComponent getDateComponent() {
-		return new DialogComponentDate(BugzillaOnlineAdapterNodeModel.createDateSettings(), DATE_FROM_LABEL);
+		return new DialogComponentDate(createDateSettings(), DATE_FROM_LABEL);
 	}
 
 	private DialogComponent getHistoryComponent() {
-		return new DialogComponentBoolean(BugzillaOnlineAdapterNodeModel.createHistorySettings(), HISTORY_LABEL);
+		return new DialogComponentBoolean(createHistorySettings(), HISTORY_LABEL);
 	}
 
 	private DialogComponent getCommentComponent() {
-		return new DialogComponentBoolean(BugzillaOnlineAdapterNodeModel.createCommentSettings(), COMMENTS_LABEL);
+		return new DialogComponentBoolean(createCommentSettings(), COMMENTS_LABEL);
 	}
 
 	private DialogComponent getUsernameComponent() {
-		return new DialogComponentString(BugzillaOnlineAdapterNodeModel.createUsernameSettings(), USERNAME_LABEL);
+		return new DialogComponentString(createUsernameSettings(), USERNAME_LABEL);
 	}
 
 	private DialogComponent getPasswordComponent() {
-		return new DialogComponentPasswordField(BugzillaOnlineAdapterNodeModel.createPasswordSettings(), PASSWORD_LABEL);
+		return new DialogComponentPasswordField(createPasswordSettings(), PASSWORD_LABEL);
+	}
+
+	private DialogComponent getLimitComponent() {
+		return new DialogComponentNumberEdit(createLimitSettings(), LIMIT_LABEL);
 	}
 
 }

@@ -39,6 +39,7 @@ import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
+import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Preconditions;
@@ -57,7 +58,11 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	public static final int NUMBER_OF_OUTPUT_PORTS = 1;
 
-	public static final String DEFAULT_VALUE = "";
+	public static final String DEFAULT_STRING_VALUE = "";
+
+	private static final int DEFAULT_LIMIT_VALUE = 1000;
+
+	private static final boolean DEFAULT_BOOLEAN_VALUE = false;
 
 	public static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
 
@@ -72,6 +77,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	public static final String BUGZILLA_HISTORY = "depress.its.bugzillaonline.history";
 
 	public static final String BUGZILLA_COMMENT = "depress.its.bugzillaonline.comment";
+
+	public static final String BUGZILLA_LIMIT = "depress.its.bugzillaonline.limit";
 
 	private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
 
@@ -88,6 +95,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	private final SettingsModelString passwordSettings = createPasswordSettings();
 
 	private final SettingsModelString productSettings = createProductSettings();
+
+	private final SettingsModelInteger limitSettings = createLimitSettings();
 
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -149,12 +158,17 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		return urlSettings.getStringValue();
 	}
 
+	private Integer getLimit() {
+		return limitSettings.getIntValue();
+	}
+
 	private BugzillaOnlineFilter getBugFilter() {
 		BugzillaOnlineFilter bugFilter = new BugzillaOnlineFilter();
 		bugFilter.setProductName(getProductName());
 		bugFilter.setDateFrom(getDateFrom());
 		bugFilter.setHistoryOfChanges(isHistoryEnable());
 		bugFilter.setComments(isCommentEnable());
+		bugFilter.setLimit(getLimit());
 		return bugFilter;
 	}
 
@@ -181,6 +195,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		passwordSettings.saveSettingsTo(settings);
 		productSettings.saveSettingsTo(settings);
 		dateFromSettings.saveSettingsTo(settings);
+		limitSettings.saveSettingsTo(settings);
 	}
 
 	@Override
@@ -190,6 +205,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		passwordSettings.loadSettingsFrom(settings);
 		productSettings.loadSettingsFrom(settings);
 		dateFromSettings.loadSettingsFrom(settings);
+		limitSettings.loadSettingsFrom(settings);
 	}
 
 	@Override
@@ -199,6 +215,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		passwordSettings.validateSettings(settings);
 		productSettings.validateSettings(settings);
 		dateFromSettings.validateSettings(settings);
+		limitSettings.validateSettings(settings);
 
 		SettingsModelString url_test = urlSettings.createCloneWithValidatedValue(settings);
 		if (url_test.getStringValue().length() > 0 && !url_test.getStringValue().matches(URL_PATTERN)) {
@@ -228,19 +245,19 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	static SettingsModelString createURLSettings() {
-		return new SettingsModelString(BUGZILLA_URL, DEFAULT_VALUE);
+		return new SettingsModelString(BUGZILLA_URL, DEFAULT_STRING_VALUE);
 	}
 
 	static SettingsModelString createUsernameSettings() {
-		return new SettingsModelString(BUGZILLA_USERNAME, DEFAULT_VALUE);
+		return new SettingsModelString(BUGZILLA_USERNAME, DEFAULT_STRING_VALUE);
 	}
 
 	static SettingsModelString createPasswordSettings() {
-		return new SettingsModelString(BUGZILLA_PASSWORD, DEFAULT_VALUE);
+		return new SettingsModelString(BUGZILLA_PASSWORD, DEFAULT_STRING_VALUE);
 	}
 
 	static SettingsModelString createProductSettings() {
-		return new SettingsModelString(BUGZILLA_PRODUCT, DEFAULT_VALUE);
+		return new SettingsModelString(BUGZILLA_PRODUCT, DEFAULT_STRING_VALUE);
 	}
 
 	static SettingsModelDate createDateSettings() {
@@ -248,11 +265,15 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	static SettingsModelBoolean createHistorySettings() {
-		return new SettingsModelBoolean(BUGZILLA_HISTORY, false);
+		return new SettingsModelBoolean(BUGZILLA_HISTORY, DEFAULT_BOOLEAN_VALUE);
 	}
 
 	static SettingsModelBoolean createCommentSettings() {
-		return new SettingsModelBoolean(BUGZILLA_COMMENT, false);
+		return new SettingsModelBoolean(BUGZILLA_COMMENT, DEFAULT_BOOLEAN_VALUE);
+	}
+
+	static SettingsModelInteger createLimitSettings() {
+		return new SettingsModelInteger(BUGZILLA_LIMIT, DEFAULT_LIMIT_VALUE);
 	}
 
 }

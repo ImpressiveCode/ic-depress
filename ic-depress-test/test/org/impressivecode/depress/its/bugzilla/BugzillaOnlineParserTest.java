@@ -21,6 +21,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.util.List;
 import java.util.Map;
 
 import org.impressivecode.depress.its.ITSDataType;
@@ -46,7 +47,7 @@ public class BugzillaOnlineParserTest {
 	}
 
 	@Test
-	public void shouldParseBugInformation() throws Exception {
+	public void shouldParseOneBugInformation() throws Exception {
 		// given
 		Object bug = ((Object[]) getBugSample("mozillaOnline820167.dat"))[0];
 		BugzillaOnlineParser parser = new BugzillaOnlineParser();
@@ -72,7 +73,7 @@ public class BugzillaOnlineParserTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void shouldParseBugComments() throws Exception {
+	public void shouldParseOneBugComments() throws Exception {
 		// given
 		Map<String, Object> allBugCommentsMap = (Map<String, Object>) getBugSample("mozillaOnlineComments820167.dat");
 		Map<String, Object> oneBugCommentsMap = (Map<String, Object>) allBugCommentsMap.get("820167");
@@ -90,7 +91,7 @@ public class BugzillaOnlineParserTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void shouldParseBugHistory() throws Exception {
+	public void shouldParseOneBugHistory() throws Exception {
 		// given
 		Map<String, Object> history = (Map<String, Object>) ((Object[]) getBugSample("mozillaOnlineHistory820167.dat"))[0];
 		BugzillaOnlineParser parser = new BugzillaOnlineParser();
@@ -104,4 +105,60 @@ public class BugzillaOnlineParserTest {
 		assertThat(its.getResolved().toString()).isEqualTo("Fri Jan 04 17:51:50 CET 2013");
 	}
 
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldParseManyBugs() throws Exception {
+		// given
+		Object[] details = (Object[]) getBugSample("mozillaOnline545454and115450.dat");
+		Map<String, Object> comments = (Map<String, Object>) getBugSample("mozillaOnlineComments545454and115450.dat");
+		Object[] histories = (Object[]) getBugSample("mozillaOnlineHistory545454and115450.dat");
+		BugzillaOnlineParser parser = new BugzillaOnlineParser();
+
+		// when
+		List<ITSDataType> entries = parser.parseEntries(details, histories, comments);
+
+		// then
+		assertThat(entries).hasSize(2);
+		
+		ITSDataType firstEntry = entries.get(0);
+		assertThat(firstEntry.getIssueId()).isEqualTo("545454");
+		assertThat(firstEntry.getCreated().toString()).isEqualTo("Wed Feb 10 19:20:00 CET 2010");
+		assertThat(firstEntry.getUpdated().toString()).isEqualTo("Wed Dec 28 18:40:11 CET 2011");
+		assertThat(firstEntry.getStatus()).isEqualTo(ITSStatus.RESOLVED);
+		assertThat(firstEntry.getType()).isEqualTo(ITSType.BUG);
+		assertThat(firstEntry.getVersion()).containsOnly("Trunk");
+		assertThat(firstEntry.getFixVersion()).containsOnly("1.8");
+		assertThat(firstEntry.getPriority()).isEqualTo(ITSPriority.MINOR);
+		assertThat(firstEntry.getSummary()).isEqualTo("\"More Versions\" topcrash page doesn't load (connection reset after timing out)");
+		assertThat(firstEntry.getLink()).isEqualTo("http://crash-stats.mozilla.com/topcrasher/");
+		assertThat(firstEntry.getResolution()).isEqualTo(ITSResolution.WONT_FIX);
+		assertThat(firstEntry.getReporter()).isEqualTo("dbaron@dbaron.org");
+		assertThat(firstEntry.getAssignees()).containsOnly("laura@mozilla.com");
+		assertThat(firstEntry.getCommentAuthors()).hasSize(5);
+		assertThat(firstEntry.getComments()).hasSize(6);
+		assertThat(firstEntry.getResolved().toString()).isEqualTo("Wed Aug 04 18:11:09 CEST 2010");
+		assertThat(firstEntry.getDescription()).startsWith("If I go to http://crash-stats.mozilla.com/ , hover the \"Firefox\" menu at the top of the page");
+		assertThat(firstEntry.getDescription()).endsWith("it seems like something timed out before the page could actually be displayed.");
+		
+		ITSDataType secondEntry = entries.get(1);
+		assertThat(secondEntry.getIssueId()).isEqualTo("115450");
+		assertThat(secondEntry.getCreated().toString()).isEqualTo("Sat Dec 15 23:20:00 CET 2001");
+		assertThat(secondEntry.getUpdated().toString()).isEqualTo("Mon Mar 15 14:36:01 CET 2010");
+		assertThat(secondEntry.getStatus()).isEqualTo(ITSStatus.RESOLVED);
+		assertThat(secondEntry.getType()).isEqualTo(ITSType.BUG);
+		assertThat(secondEntry.getVersion()).containsOnly("Trunk");
+		assertThat(secondEntry.getFixVersion()).containsOnly("---");
+		assertThat(secondEntry.getPriority()).isEqualTo(ITSPriority.MINOR);
+		assertThat(secondEntry.getSummary()).isEqualTo("XPCom Plugins should be unloaded when not in use");
+		assertThat(secondEntry.getLink()).isEqualTo("http://www.pall.com/investor");
+		assertThat(secondEntry.getResolution()).isEqualTo(ITSResolution.INVALID);
+		assertThat(secondEntry.getReporter()).isEqualTo("carl@fink.to");
+		assertThat(secondEntry.getAssignees()).containsOnly("nobody@mozilla.org");
+		assertThat(secondEntry.getCommentAuthors()).hasSize(18);
+		assertThat(secondEntry.getComments()).hasSize(25);
+		assertThat(secondEntry.getResolved().toString()).isEqualTo("Mon Mar 15 14:36:01 CET 2010");
+		assertThat(secondEntry.getDescription()).startsWith("From Bugzilla Helper:");
+		assertThat(secondEntry.getDescription()).endsWith("Expected Results:  They should.");
+	}
+	
 }

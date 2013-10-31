@@ -92,7 +92,7 @@ public class BugzillaOnlineClientAdapter {
 		Preconditions.checkNotNull(filter.getProductName());
 		// TODO in one worker fetch part of bugs and in other worker transform
 		// they into entries (producer consumer pattern)
-		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameterMap(filter), 0, BUGS_FETCH_LIMIT);
+		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameterMap(filter), 0, filter.getLimit());
 		List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
 
 		Object[] bugs = getBugs(prepareBugsIdsParameterMap(bugsIds));

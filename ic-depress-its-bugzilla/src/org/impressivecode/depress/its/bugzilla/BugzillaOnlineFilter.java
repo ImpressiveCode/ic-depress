@@ -30,6 +30,8 @@ public class BugzillaOnlineFilter {
 
 	private Date dateFrom;
 
+	private Integer limit;
+
 	private boolean historyOfChanges;
 
 	private boolean comments;
@@ -64,6 +66,14 @@ public class BugzillaOnlineFilter {
 
 	public void setDateFrom(Date dateFrom) {
 		this.dateFrom = dateFrom;
+	}
+
+	public Integer getLimit() {
+		return limit;
+	}
+
+	public void setLimit(Integer limit) {
+		this.limit = limit;
 	}
 
 }
