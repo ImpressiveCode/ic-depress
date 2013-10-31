@@ -17,41 +17,43 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
-import org.knime.core.node.NodeDialogPane;
-import org.knime.core.node.NodeFactory;
-import org.knime.core.node.NodeView;
+import java.util.Date;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
  * @author Michał Negacz, Wrocław University of Technology
  * 
  */
-public class BugzillaOnlineAdapterNodeFactory extends NodeFactory<BugzillaOnlineAdapterNodeModel> {
+public class BugzillaOnlineFilter {
 
-	@Override
-	public BugzillaOnlineAdapterNodeModel createNodeModel() {
-		return new BugzillaOnlineAdapterNodeModel();
+	private String productName;
+
+	private Date dateFrom;
+
+	private Integer limit;
+
+	public String getProductName() {
+		return productName;
 	}
 
-	@Override
-	public int getNrNodeViews() {
-		return 0;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
-	@Override
-	public NodeView<BugzillaOnlineAdapterNodeModel> createNodeView(final int viewIndex, final BugzillaOnlineAdapterNodeModel nodeModel) {
-		throw new IllegalStateException("View not supported");
+	public Date getDateFrom() {
+		return dateFrom;
 	}
 
-	@Override
-	public boolean hasDialog() {
-		return true;
+	public void setDateFrom(Date dateFrom) {
+		this.dateFrom = dateFrom;
 	}
 
-	@Override
-	public NodeDialogPane createNodeDialogPane() {
-		return new BugzillaOnlineAdapterNodeDialog();
+	public Integer getLimit() {
+		return limit;
 	}
-	
+
+	public void setLimit(Integer limit) {
+		this.limit = limit;
+	}
+
 }

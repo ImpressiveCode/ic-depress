@@ -17,9 +17,9 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
-import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 import java.net.URL;
@@ -90,5 +90,5 @@ public class BugzillaOnlineXmlRpcClientIntegrationTest {
 		assertNotNull(resultMap.get("id"));
 		assertNotNull(resultMap.get("token"));
 	}
-
+	
 }

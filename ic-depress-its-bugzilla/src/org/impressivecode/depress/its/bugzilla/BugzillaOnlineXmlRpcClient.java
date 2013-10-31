@@ -49,11 +49,12 @@ public class BugzillaOnlineXmlRpcClient {
 		return client;
 	}
 
-	public Object execute(String method, Map<String, Object> parameters) throws XmlRpcException {
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> execute(String method, Map<String, Object> parameters) throws XmlRpcException {
 		// All Bugzilla functions use named parameters and this is realized by Map object. 
 		// To execute method with Map by the client, we need to wrap it into single element array.
 		Object[] parametersWrapper = new Object[] { parameters };
-		return client.execute(method, parametersWrapper);
+		return (Map<String, Object>) client.execute(method, parametersWrapper);
 	}
 
 }
