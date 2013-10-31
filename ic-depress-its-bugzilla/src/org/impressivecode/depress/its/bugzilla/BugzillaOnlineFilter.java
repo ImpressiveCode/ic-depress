@@ -32,26 +32,6 @@ public class BugzillaOnlineFilter {
 
 	private Integer limit;
 
-	private boolean historyOfChanges;
-
-	private boolean comments;
-
-	public boolean isComments() {
-		return comments;
-	}
-
-	public void setComments(boolean comments) {
-		this.comments = comments;
-	}
-
-	public boolean isHistoryOfChanges() {
-		return historyOfChanges;
-	}
-
-	public void setHistoryOfChanges(boolean historyOfChanges) {
-		this.historyOfChanges = historyOfChanges;
-	}
-
 	public String getProductName() {
 		return productName;
 	}

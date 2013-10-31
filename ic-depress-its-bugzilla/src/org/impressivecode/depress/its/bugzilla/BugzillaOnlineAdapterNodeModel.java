@@ -37,7 +37,6 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
-import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
@@ -62,8 +61,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	private static final int DEFAULT_LIMIT_VALUE = 1000;
 
-	private static final boolean DEFAULT_BOOLEAN_VALUE = false;
-
 	public static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
 
 	public static final String BUGZILLA_USERNAME = "depress.its.bugzillaonline.username";
@@ -85,10 +82,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	private final SettingsModelString urlSettings = createURLSettings();
 
 	private final SettingsModelDate dateFromSettings = createDateSettings();
-
-	private final SettingsModelBoolean historyFromSettings = createHistorySettings();
-
-	private final SettingsModelBoolean commentFromSettings = createCommentSettings();
 
 	private final SettingsModelString usernameSettings = createUsernameSettings();
 
@@ -146,14 +139,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		return dateFromSettings.getDate();
 	}
 
-	private boolean isHistoryEnable() {
-		return historyFromSettings.getBooleanValue();
-	}
-
-	private boolean isCommentEnable() {
-		return commentFromSettings.getBooleanValue();
-	}
-
 	private String getURL() {
 		return urlSettings.getStringValue();
 	}
@@ -166,8 +151,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		BugzillaOnlineFilter bugFilter = new BugzillaOnlineFilter();
 		bugFilter.setProductName(getProductName());
 		bugFilter.setDateFrom(getDateFrom());
-		bugFilter.setHistoryOfChanges(isHistoryEnable());
-		bugFilter.setComments(isCommentEnable());
 		bugFilter.setLimit(getLimit());
 		return bugFilter;
 	}
@@ -262,14 +245,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	static SettingsModelDate createDateSettings() {
 		return new SettingsModelDate(BUGZILLA_DATE);
-	}
-
-	static SettingsModelBoolean createHistorySettings() {
-		return new SettingsModelBoolean(BUGZILLA_HISTORY, DEFAULT_BOOLEAN_VALUE);
-	}
-
-	static SettingsModelBoolean createCommentSettings() {
-		return new SettingsModelBoolean(BUGZILLA_COMMENT, DEFAULT_BOOLEAN_VALUE);
 	}
 
 	static SettingsModelInteger createLimitSettings() {

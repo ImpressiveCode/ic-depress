@@ -17,9 +17,7 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createCommentSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createDateSettings;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createHistorySettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createLimitSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createPasswordSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createProductSettings;
@@ -28,7 +26,6 @@ import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeM
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
-import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
@@ -55,17 +52,11 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
 	private static final String PASSWORD_LABEL = "Password:";
 
-	private static final String HISTORY_LABEL = "History of changes";
-	
-	private static final String COMMENTS_LABEL = "Comments";
-	
 	private static final String LIMIT_LABEL = "Limit:";
 
 	protected BugzillaOnlineAdapterNodeDialog() {
 		addDialogComponent(getURLComponent());
 		addDialogComponent(getProductComponent());
-		addDialogComponent(getHistoryComponent());
-		addDialogComponent(getCommentComponent());
 		addDialogComponent(getDateComponent());
 		addDialogComponent(getLimitComponent());
 		createNewTab(AUTHENTICATION_TAB_TITILE);
@@ -83,14 +74,6 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
 	private DialogComponent getDateComponent() {
 		return new DialogComponentDate(createDateSettings(), DATE_FROM_LABEL);
-	}
-
-	private DialogComponent getHistoryComponent() {
-		return new DialogComponentBoolean(createHistorySettings(), HISTORY_LABEL);
-	}
-
-	private DialogComponent getCommentComponent() {
-		return new DialogComponentBoolean(createCommentSettings(), COMMENTS_LABEL);
 	}
 
 	private DialogComponent getUsernameComponent() {
