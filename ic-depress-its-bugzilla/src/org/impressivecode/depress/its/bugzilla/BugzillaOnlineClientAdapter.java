@@ -68,8 +68,6 @@ public class BugzillaOnlineClientAdapter {
 
 	public static final String INCLUDE_FIELDS = "include_fields";
 
-	public static final int BUGS_FETCH_LIMIT = 10;
-
 	private BugzillaOnlineXmlRpcClient bugzillaClient;
 
 	private BugzillaOnlineParser parser;

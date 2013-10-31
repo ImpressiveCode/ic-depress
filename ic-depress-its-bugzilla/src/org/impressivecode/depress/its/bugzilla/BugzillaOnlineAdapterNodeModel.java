@@ -17,6 +17,7 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.impressivecode.depress.its.bugzilla.BugzillaAdapterTableFactory.createTableSpec;
 
 import java.io.File;
@@ -91,9 +92,9 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	private final SettingsModelInteger limitSettings = createLimitSettings();
 
-	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-	private static final String URL_PATTERN = "^(https?|ftp|file)://" + "[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+	private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
 	protected BugzillaOnlineAdapterNodeModel() {
 		super(NUMBER_OF_INPUT_PORTS, NUMBER_OF_OUTPUT_PORTS);
@@ -148,11 +149,11 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	private BugzillaOnlineFilter getBugFilter() {
-		BugzillaOnlineFilter bugFilter = new BugzillaOnlineFilter();
-		bugFilter.setProductName(getProductName());
-		bugFilter.setDateFrom(getDateFrom());
-		bugFilter.setLimit(getLimit());
-		return bugFilter;
+		BugzillaOnlineFilter filter = new BugzillaOnlineFilter();
+		filter.setProductName(getProductName());
+		filter.setDateFrom(getDateFrom());
+		filter.setLimit(getLimit());
+		return filter;
 	}
 
 	private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
@@ -200,21 +201,15 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		dateFromSettings.validateSettings(settings);
 		limitSettings.validateSettings(settings);
 
-		SettingsModelString url_test = urlSettings.createCloneWithValidatedValue(settings);
-		if (url_test.getStringValue().length() > 0 && !url_test.getStringValue().matches(URL_PATTERN)) {
+		SettingsModelString url = urlSettings.createCloneWithValidatedValue(settings);
+		if (!isNullOrEmpty(url.getStringValue()) && !url.getStringValue().matches(URL_PATTERN)) {
 			throw new InvalidSettingsException("Invalid URL address");
 		}
 
-		SettingsModelString email_test = usernameSettings.createCloneWithValidatedValue(settings);
-		if (email_test.getStringValue().length() > 0 && !email_test.getStringValue().matches(EMAIL_PATTERN)) {
+		SettingsModelString email = usernameSettings.createCloneWithValidatedValue(settings);
+		if (!isNullOrEmpty(email.getStringValue()) && !email.getStringValue().matches(EMAIL_PATTERN)) {
 			throw new InvalidSettingsException("Invalid email address");
 		}
-
-		SettingsModelString password_test = passwordSettings.createCloneWithValidatedValue(settings);
-		if (!password_test.getStringValue().isEmpty() && password_test.getStringValue().length() < 6) {
-			throw new InvalidSettingsException("The password must be at least 6 characters long.");
-		}
-
 	}
 
 	@Override
