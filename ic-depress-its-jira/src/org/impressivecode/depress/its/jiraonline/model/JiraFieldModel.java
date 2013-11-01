@@ -1,50 +1,39 @@
 package org.impressivecode.depress.its.jiraonline.model;
 
+import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JiraFieldModel {
-	
-	
-	/**
-	 *     private String issueId;
-    private Date created;
-    private Date updated;
-    private Date resolved;
-    private ITSStatus status;
-    private ITSType type;
-    private List<String> version = Collections.emptyList();
-    private List<String> fixVersion = Collections.emptyList();
-    private ITSPriority priority;
-    private String summary;
-    private String link;
-    private String description;
-    private List<String> comments = Collections.emptyList();
-    private ITSResolution resolution;
-    private String reporter;
-    private Set<String> assignees = Collections.emptySet();
-    private Set<String> commentAuthors = Collections.emptySet();
-	 */
-	
-	private String created;
-	private String updated;
-	private Status status;
 
-	public String getCreated() {
+	private Date created;
+	private Date updated;
+	private Status status;
+	private Type issueType;
+	private List<IssueVersion> versions;
+	private List<IssueVersion> fixVersions;
+	private Priority priority;
+	private String summary;
+	private String description;
+	private Resolution resolution;
+	private JiraUser reporter;
+	private JiraUser assignee;
+
+	public Date getCreated() {
 		return created;
 	}
 
-	public void setCreated(String created) {
+	public void setCreated(Date created) {
 		this.created = created;
 	}
-	
-	
-	
-	public String getUpdated() {
+
+	public Date getUpdated() {
 		return updated;
 	}
 
-	public void setUpdated(String updated) {
+	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
 
@@ -56,7 +45,77 @@ public class JiraFieldModel {
 		this.status = status;
 	}
 
+	public Type getIssueType() {
+		return issueType;
+	}
 
+	public void setIssueType(Type issuetype) {
+		this.issueType = issuetype;
+	}
+
+	public List<IssueVersion> getVersions() {
+		return versions;
+	}
+
+	public void setVersions(List<IssueVersion> versions) {
+		this.versions = versions;
+	}
+
+	public List<IssueVersion> getFixVersions() {
+		return fixVersions;
+	}
+
+	public void setFixVersions(List<IssueVersion> fixVersions) {
+		this.fixVersions = fixVersions;
+	}
+
+	public Priority getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Priority priority) {
+		this.priority = priority;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Resolution getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(Resolution resolution) {
+		this.resolution = resolution;
+	}
+
+	public JiraUser getReporter() {
+		return reporter;
+	}
+
+	public void setReporter(JiraUser reporter) {
+		this.reporter = reporter;
+	}
+
+	public JiraUser getAssignee() {
+		return assignee;
+	}
+
+	public void setAssignee(JiraUser assignee) {
+		this.assignee = assignee;
+	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	public class Status {
@@ -86,6 +145,80 @@ public class JiraFieldModel {
 
 		public void setId(int id) {
 			this.id = id;
+		}
+	}
+
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public class JiraUser {
+		private String name;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+		
+	}
+
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public class Priority {
+
+		private String name;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+	}
+
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public class Type {
+		private String name;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+	}
+
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public class Resolution {
+
+		private int id;
+		private String name;
+		private String description;
+
+		public int getId() {
+			return id;
+		}
+
+		public void setId(int id) {
+			this.id = id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
 		}
 	}
 }

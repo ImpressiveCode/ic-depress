@@ -25,6 +25,8 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
@@ -87,20 +89,32 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 		String login = jiraSettingsLogin.getStringValue();
 		String pass = jiraSettingsPass.getStringValue();
 		//TODO check if datefields are enabled, as default getDate() gives unix era date
-		Date dateStart = jiraSettingsDateStart.getDate();
-		Date dateEnd = jiraSettingsDateEnd.getDate();
-		// TODO use proper functions based on arguments given
-		String response = getResource(hostname, jql, login, pass, dateStart, dateEnd);
-		// TODO response parser
-		// List<ITSDataType> entries = parseEntries(hostname);
-		LOGGER.info("Transforming jira entries.");
+		
+		if(jiraSettingsDateStart.isEnabled()) {
+			System.out.println(jiraSettingsDateStart.getSelectedFields());
+			System.out.println(jiraSettingsDateStart.getDate());
+			System.out.println("start endabled");
+		}
+		
+		if(jiraSettingsDateEnd.isEnabled()) {
+			System.out.println("end endabled");
+		}
+		//Date dateStart = jiraSettingsDateStart.getDate();
+		//Date dateEnd = jiraSettingsDateEnd.getDate();
+		
+		String rawData = JiraOnlineConnector.getData();
+		List<ITSDataType> parsedData = JiraOnlineParser.parse(rawData);
+		BufferedDataTable out = transform(parsedData, exec);
+		
+		//LOGGER.info("Transforming jira entries.");
 		// BufferedDataTable out = transform(entries, exec);
 		// return new BufferedDataTable[] { out };
-		return new BufferedDataTable[] {};
+		return new BufferedDataTable[] { out };
 	}
 
 	private String getResource(String hostname, String jql, String login, String pass,
 			Date dateStart, Date dateEnd) {
+		
 //		String dateStartString = new SimpleDateFormat("yyyy-MM-dd").format(dateStart);
 //		String dateEndString = new SimpleDateFormat("yyyy-MM-dd").format(dateEnd);
 		//TODO repair uri - cos tu robie zle i sie sypie generacja uri
@@ -112,23 +126,14 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 		try {
 			response = JiraOnlineAdapterResourceDownloader.getResource(client, uri);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return response;
 	}
 
-	private BufferedDataTable transform(final List<ITSDataType> entries,
-			final ExecutionContext exec) throws CanceledExecutionException {
-		ITSAdapterTransformer transformer = new ITSAdapterTransformer(
-				ITSAdapterTableFactory.createDataColumnSpec());
-		return transformer.transform(entries, exec);
-	}
-
-	private List<ITSDataType> parseEntries(final String filePath)
-			throws ParserConfigurationException, SAXException, IOException,
-			ParseException {
-		return new JiraEntriesParser().parseEntries(filePath);
+	private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
+	    ITSAdapterTransformer transformer = new ITSAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
+	    return transformer.transform(entries, exec);
 	}
 
 	@Override

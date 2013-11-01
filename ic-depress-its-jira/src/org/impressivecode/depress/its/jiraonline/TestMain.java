@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 
@@ -25,14 +26,17 @@ public class TestMain {
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 		
+		
+		JiraOnlineConnector connector = new JiraOnlineConnector();
+		
 		//JiraOnlineAdapterUriFactory.createJiraUriByJql("hibernate.atlassian.net", "");
 		
-//		String jiraExampleUri = "https://hibernate.atlassian.net/rest/api/latest/search?jql=";
-//		WebResource service = client.resource(jiraExampleUri);
-//		String pageContent = service.get(String.class);
-		//System.out.println(pageContent);
+		String jiraExampleUri = "https://hibernate.atlassian.net/rest/api/latest/search?jql=";
+		WebResource service = client.resource(jiraExampleUri);
+		String pageContent = service.get(String.class);
+		System.out.println(pageContent);
 		
-		String pageContent = readFileAsString("exampleJiraAnswer.txt");
+		//String pageContent = readFileAsString("exampleJiraAnswer.txt");
 		
 		
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -53,19 +57,4 @@ public class TestMain {
 		System.out.println(issueList);
 		
 	}
-	
-	private static String readFileAsString(String filePath) throws IOException {
-        StringBuffer fileData = new StringBuffer();
-        BufferedReader reader = new BufferedReader(
-                new FileReader(filePath));
-        char[] buf = new char[1024];
-        int numRead=0;
-        while((numRead=reader.read(buf)) != -1){
-            String readData = String.valueOf(buf, 0, numRead);
-            fileData.append(readData);
-        }
-        reader.close();
-        return fileData.toString();
-    }
-
 }

@@ -11,5 +11,10 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.impressivecode.depress.base
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.impressivecode.depress.its.jira
-Bundle-ClassPath: plugin.jar
+Bundle-ClassPath: plugin.jar,
+ lib/jackson-annotations-2.0.6.jar,
+ lib/jackson-core-2.0.6.jar,
+ lib/jackson-databind-2.0.6.jar,
+ lib/jersey-bundle-1.17.1.jar,
+ lib/jersey-client-2.3.jar
 Eclipse-BuddyPolicy: registered
