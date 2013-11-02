@@ -19,7 +19,9 @@ package org.impressivecode.depress.support.sematicanalysis;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
+import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
+import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * 
@@ -38,6 +40,10 @@ public class SemanticAnalysisNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(SemanticAnalysisNodeModel.CFG_RESOLUTION_WEIGHT,
                 SemanticAnalysisNodeModel.RESOLUTION_WEIGHT_DEFAULT), 
                 "Resolution(FIXED): ", 26));
+        
+        addDialogComponent(new DialogComponentStringSelection(new SettingsModelString(SemanticAnalysisNodeModel.CFG_MSC_COMPARSION_OBJECT,
+        		SemanticAnalysisNodeModel.MSC_COMPARSION_OBJECT_DEFAULT),
+        		"Compare MSC to: ", Configuration.MSC_DATA_TYPE));
         
         addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(SemanticAnalysisNodeModel.CFG_COMPARSION_LIMIT,
         		SemanticAnalysisNodeModel.COMPARSION_LIMIT_DEFAULT),

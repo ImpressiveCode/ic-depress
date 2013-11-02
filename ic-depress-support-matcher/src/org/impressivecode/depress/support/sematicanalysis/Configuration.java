@@ -25,16 +25,25 @@ import org.impressivecode.depress.its.ITSDataHolder;
  * 
  */
 public class Configuration {
+	
+	public static final String MSC_DT_SUMMARY = "SUMMARY";
+	public static final String MSC_DT_DESCRIPTION = "DESCRIPTION";
+	public static final String MSC_DT_COMMENTS = "COMMENTS";
+	
+	public static final String[] MSC_DATA_TYPE = { MSC_DT_SUMMARY, MSC_DT_DESCRIPTION, MSC_DT_COMMENTS };
+	
     private final ITSDataHolder itsData;
     private final int authorWeight;
     private final int resolutionWeight;
     private final int comparsionsLimit;
+    private final String mscComparsionObject;
     
-    public Configuration(final ITSDataHolder itsData, final int authorWeight, final int resolutionWeight, final int comparsionLimit) {
+    public Configuration(final ITSDataHolder itsData, final int authorWeight, final int resolutionWeight, final int comparsionLimit, final String mscComparsionObject) {
         this.itsData = itsData;
         this.authorWeight = authorWeight;
         this.resolutionWeight = resolutionWeight;
         this.comparsionsLimit = comparsionLimit;
+        this.mscComparsionObject = mscComparsionObject;
     }
 
     ITSDataHolder getITSData() {
@@ -52,4 +61,9 @@ public class Configuration {
     public int getComparsionLimit() {
     	return this.comparsionsLimit;
     }
+    
+    public String getMcComparsionObject() {
+    	return this.mscComparsionObject;
+    }
+    
 }

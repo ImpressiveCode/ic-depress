@@ -48,6 +48,7 @@ import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelIntegerBounded;
+import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Preconditions;
 
@@ -72,9 +73,13 @@ public class SemanticAnalysisNodeModel extends NodeModel {
     static final String CFG_COMPARSION_LIMIT = "depress.support.matcher.sematicanalysis.comparsionlimit";
     static final Integer COMPARSION_LIMIT_DEFAULT = 60;
     
+    static final String CFG_MSC_COMPARSION_OBJECT = "depress.support.matcher.sematicanalysis.msccomparsionobject";
+    static final String MSC_COMPARSION_OBJECT_DEFAULT = Configuration.MSC_DT_SUMMARY;
+    
     private final SettingsModelInteger resolutionWeight = new SettingsModelIntegerBounded(CFG_RESOLUTION_WEIGHT, RESOLUTION_WEIGHT_DEFAULT, 0, SUM);
     private final SettingsModelInteger authorWeight = new SettingsModelIntegerBounded(CFG_AUTHOR_WEIGHT, AUTHOR_WEIGHT_DEFAULT, 0, SUM);
     private final SettingsModelInteger comparsionLimit = new SettingsModelIntegerBounded(CFG_COMPARSION_LIMIT, COMPARSION_LIMIT_DEFAULT, 0, 100);
+    private final SettingsModelString mscComparsionObject = new SettingsModelString(CFG_MSC_COMPARSION_OBJECT, Configuration.MSC_DT_SUMMARY );
     
     private ITSInputTransformer itsTransfomer;
     private InputTransformer<SCMDataType> scmTransfomer;
@@ -105,7 +110,7 @@ public class SemanticAnalysisNodeModel extends NodeModel {
     private SemanticAnalysisCellFactory cellFactory(final BufferedDataTable[] inData) {
         ITSDataHolder itsData = itsTransfomer.transformToDataHolder(inData[1]);
         return new SemanticAnalysisCellFactory(new Configuration(itsData, authorWeight.getIntValue(),
-                resolutionWeight.getIntValue(), comparsionLimit.getIntValue()), this.scmTransfomer, this.markerTransformer);
+                resolutionWeight.getIntValue(), comparsionLimit.getIntValue(), mscComparsionObject.getStringValue()), this.scmTransfomer, this.markerTransformer);
     }
 
     private BufferedDataTable preapreTable(final AppendedColumnTable table, final ExecutionContext exec)
@@ -135,6 +140,7 @@ public class SemanticAnalysisNodeModel extends NodeModel {
         authorWeight.saveSettingsTo(settings);
         resolutionWeight.saveSettingsTo(settings);
         comparsionLimit.saveSettingsTo(settings);
+        mscComparsionObject.saveSettingsTo(settings);
     }
 
     @Override
@@ -142,6 +148,7 @@ public class SemanticAnalysisNodeModel extends NodeModel {
         authorWeight.loadSettingsFrom(settings);
         resolutionWeight.loadSettingsFrom(settings);
         comparsionLimit.loadSettingsFrom(settings);
+        mscComparsionObject.loadSettingsFrom(settings);
     }
 
     @Override
@@ -149,7 +156,8 @@ public class SemanticAnalysisNodeModel extends NodeModel {
         authorWeight.validateSettings(settings);
         resolutionWeight.validateSettings(settings);
         comparsionLimit.validateSettings(settings);
-
+        mscComparsionObject.validateSettings(settings);
+        
         int current = settings.getInt(CFG_RESOLUTION_WEIGHT) + settings.getInt(CFG_AUTHOR_WEIGHT);
         if (current != SUM) {
             throw new InvalidSettingsException("Weight sum has to be " + SUM);
