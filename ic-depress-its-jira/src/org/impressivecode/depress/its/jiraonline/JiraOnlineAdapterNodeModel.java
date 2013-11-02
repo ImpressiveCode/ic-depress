@@ -84,25 +84,18 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
 			final ExecutionContext exec) throws Exception {
 		LOGGER.info("Preparing to download jira entries.");
-		String hostname = jiraSettingsURL.getStringValue();
-		String jql = jiraSettingsJQL.getStringValue();
-		String login = jiraSettingsLogin.getStringValue();
-		String pass = jiraSettingsPass.getStringValue();
-		//TODO check if datefields are enabled, as default getDate() gives unix era date
+
+		JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder(jiraSettingsURL.getStringValue());
 		
-		if(jiraSettingsDateStart.isEnabled()) {
-			System.out.println(jiraSettingsDateStart.getSelectedFields());
-			System.out.println(jiraSettingsDateStart.getDate());
-			System.out.println("start endabled");
+		if(jiraSettingsDateStart.getSelectedFields() > 0) {
+			builder.setDateFrom(jiraSettingsDateStart.getDate());
 		}
 		
-		if(jiraSettingsDateEnd.isEnabled()) {
-			System.out.println("end endabled");
+		if(jiraSettingsDateEnd.getSelectedFields() > 0) {
+			builder.setDateFrom(jiraSettingsDateEnd.getDate());
 		}
-		//Date dateStart = jiraSettingsDateStart.getDate();
-		//Date dateEnd = jiraSettingsDateEnd.getDate();
 		
-		String rawData = JiraOnlineConnector.getData();
+		String rawData = JiraOnlineConnector.getData(builder.build());
 		List<ITSDataType> parsedData = JiraOnlineParser.parse(rawData);
 		BufferedDataTable out = transform(parsedData, exec);
 		
@@ -112,24 +105,6 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 		return new BufferedDataTable[] { out };
 	}
 
-	private String getResource(String hostname, String jql, String login, String pass,
-			Date dateStart, Date dateEnd) {
-		
-//		String dateStartString = new SimpleDateFormat("yyyy-MM-dd").format(dateStart);
-//		String dateEndString = new SimpleDateFormat("yyyy-MM-dd").format(dateEnd);
-		//TODO repair uri - cos tu robie zle i sie sypie generacja uri
-		String uri = JiraOnlineAdapterUriFactory.createJiraUriByJql(hostname, jql);
-		//TODO login with login/pass if given
-		Client client = JiraOnlineAdapterClientFactory.createClient();
-		//TODO proper try-catch
-		String response = null;
-		try {
-			response = JiraOnlineAdapterResourceDownloader.getResource(client, uri);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return response;
-	}
 
 	private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
 	    ITSAdapterTransformer transformer = new ITSAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
