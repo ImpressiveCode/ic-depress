@@ -28,22 +28,28 @@ public class Configuration {
     private final ITSDataHolder itsData;
     private final int authorWeight;
     private final int resolutionWeight;
-
-    public Configuration(final ITSDataHolder itsData, final int authorWeight, final int resolutionWeight) {
+    private final int comparsionsLimit;
+    
+    public Configuration(final ITSDataHolder itsData, final int authorWeight, final int resolutionWeight, final int comparsionLimit) {
         this.itsData = itsData;
         this.authorWeight = authorWeight;
         this.resolutionWeight = resolutionWeight;
+        this.comparsionsLimit = comparsionLimit;
     }
 
-    ITSDataHolder getITSData(){
+    ITSDataHolder getITSData() {
         return this.itsData;
     }
 
     public int getAuthorWeight() {
-        return authorWeight ;
+        return authorWeight;
     }
 
     public int getResolutionWeight() {
-        return this.resolutionWeight ;
+        return this.resolutionWeight;
+    }
+    
+    public int getComparsionLimit() {
+    	return this.comparsionsLimit;
     }
 }

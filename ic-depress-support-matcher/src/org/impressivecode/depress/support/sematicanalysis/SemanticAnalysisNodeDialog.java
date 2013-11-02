@@ -37,7 +37,11 @@ public class SemanticAnalysisNodeDialog extends DefaultNodeSettingsPane {
 
         addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(SemanticAnalysisNodeModel.CFG_RESOLUTION_WEIGHT,
                 SemanticAnalysisNodeModel.RESOLUTION_WEIGHT_DEFAULT), 
-                "Resolution(FIXED): ", 25));
+                "Resolution(FIXED): ", 26));
+        
+        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(SemanticAnalysisNodeModel.CFG_COMPARSION_LIMIT,
+        		SemanticAnalysisNodeModel.COMPARSION_LIMIT_DEFAULT),
+        		"Comparsion limit (0-100%): ", 21));
 
     }
 }
