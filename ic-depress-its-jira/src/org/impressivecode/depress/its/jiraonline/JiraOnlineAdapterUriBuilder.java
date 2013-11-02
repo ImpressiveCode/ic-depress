@@ -32,6 +32,7 @@ public class JiraOnlineAdapterUriBuilder {
 	
 	private static final String URI_PATH = "{hostname}/rest/api/latest/search";
 	private static final String QUERY_PARAM = "jql";
+	private static final String CONJUNCTION = " AND ";
 	
 	private SimpleDateFormat dateFormatter;
 	private String hostname;
@@ -50,7 +51,6 @@ public class JiraOnlineAdapterUriBuilder {
 	}
 	
 	public JiraOnlineAdapterUriBuilder setJQL(String jql) {
-		resetAllData();
 		this.jql = jql;
 		return this;
 	}
@@ -66,34 +66,36 @@ public class JiraOnlineAdapterUriBuilder {
 	}
 	
 	
-	private void resetAllData() {
-		dateFrom = null;
-		dateTo = null;
-	}
-	
-	
 	public String build() {
 		
 		StringBuilder jqlBuilder = new StringBuilder();
 		
 		if(jql != null) {
 			jqlBuilder.append(jql);
-			jqlBuilder.append(" AND ");
+			jqlBuilder.append(CONJUNCTION);
 		}
 		
 		if(dateFrom != null) {
 			jqlBuilder.append("created >= " + dateFormatter.format(dateFrom));
-			jqlBuilder.append(" AND ");
+			jqlBuilder.append(CONJUNCTION);
 		}
 		
 		if(dateTo != null) {
 			jqlBuilder.append("created <= " + dateFormatter.format(dateTo));
-			jqlBuilder.append(" AND ");
+			jqlBuilder.append(CONJUNCTION);
 		}
 		
-		//trim last " AND "
-		String uriJQL = jqlBuilder.substring(0, jqlBuilder.length()-5);
+		String uriJQL = null;
+		if(jqlBuilder.toString().endsWith(CONJUNCTION)) {
+			uriJQL = jqlBuilder.substring(0, jqlBuilder.length()-5);
+		} else {
+			uriJQL = jqlBuilder.toString();
+		}
 		
-		return UriBuilder.fromPath(URI_PATH).queryParam(QUERY_PARAM, uriJQL).build(hostname).toString();
+		String result = UriBuilder.fromPath(URI_PATH).queryParam(QUERY_PARAM, uriJQL).build(hostname).toString();
+		//TODO setting issue limit, see issue#15 for more details
+		//result += "&maxResults=300";
+		System.out.println(result);
+		return result;
 	}
 }

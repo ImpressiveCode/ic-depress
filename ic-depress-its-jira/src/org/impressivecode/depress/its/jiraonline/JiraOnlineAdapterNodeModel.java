@@ -87,6 +87,10 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
 		JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder(jiraSettingsURL.getStringValue());
 		
+		if(jiraSettingsJQL.getStringValue() != null) {
+			builder.setJQL(jiraSettingsJQL.getStringValue());
+		}
+		
 		if(jiraSettingsDateStart.getSelectedFields() > 0) {
 			builder.setDateFrom(jiraSettingsDateStart.getDate());
 		}

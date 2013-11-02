@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Model class for Jira JSON parsing. Contains issue fields
@@ -32,7 +33,10 @@ public class JiraFieldModel {
 
 	private Date created;
 	private Date updated;
+	@JsonProperty("resolutiondate")
+	private Date resolved;
 	private Status status;
+	@JsonProperty("issuetype")
 	private Type issueType;
 	private List<IssueVersion> versions;
 	private List<IssueVersion> fixVersions;
@@ -57,6 +61,14 @@ public class JiraFieldModel {
 
 	public void setUpdated(Date updated) {
 		this.updated = updated;
+	}
+
+	public Date getResolved() {
+		return resolved;
+	}
+
+	public void setResolved(Date resolved) {
+		this.resolved = resolved;
 	}
 
 	public Status getStatus() {

@@ -93,6 +93,7 @@ public class JiraOnlineParser {
 
 			data.setCreated(issue.getFields().getCreated());
 			data.setUpdated(issue.getFields().getUpdated());
+			data.setResolved(issue.getFields().getResolved());
 
 			data.setResolution(parseResolution(issue.getFields().getResolution()));
 
@@ -109,6 +110,9 @@ public class JiraOnlineParser {
 			data.setFixVersion(fixVersions);
 
 			data.setReporter(issue.getFields().getReporter().getName());
+			
+			data.setSummary(issue.getFields().getSummary());
+			data.setDescription(issue.getFields().getDescription());
 
 			resultList.add(data);
 		}

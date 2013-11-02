@@ -24,7 +24,9 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 /**
  * 
- * @author Marcin Kunert, Krzysztof Kwoka, Dawid Rutowicz
+ * @author Marcin Kunert
+ * @author Krzysztof Kwoka
+ * @author Dawid Rutowicz
  * 
  */
 public class JiraOnlineConnector {
@@ -33,8 +35,8 @@ public class JiraOnlineConnector {
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 
-		//String jiraExampleUri = "https://hibernate.atlassian.net/rest/api/latest/search?jql=";
 		WebResource service = client.resource(uri);
+		
 		return service.get(String.class);
 	}
 
