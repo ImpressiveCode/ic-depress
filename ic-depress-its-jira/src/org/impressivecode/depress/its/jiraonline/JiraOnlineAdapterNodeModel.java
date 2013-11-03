@@ -21,18 +21,11 @@ import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterTableFa
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
-
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.jira.JiraEntriesParser;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -45,10 +38,8 @@ import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
-import org.xml.sax.SAXException;
 
 import com.google.common.base.Preconditions;
-import com.sun.jersey.api.client.Client;
 
 /**
  * 

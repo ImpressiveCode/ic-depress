@@ -17,11 +17,6 @@
  */
 package org.impressivecode.depress.its.jiraonline;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-
 /**
  * 
  * @author Marcin Kunert
@@ -31,14 +26,12 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
  */
 public class JiraOnlineConnector {
 
+	@Deprecated
 	public static String getData(String uri) {
-		ClientConfig config = new DefaultClientConfig();
-		Client client = Client.create(config);
-
-		WebResource service = client.resource(uri);
+		JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient();
+		// FIXME: this method needs to be deleted due to usage of proper API (@see: org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterRsClient)
 		
-		return service.get(String.class);
+		return client.getClient().target(uri).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get().readEntity(String.class);
 	}
 
-	
 }
