@@ -12,6 +12,7 @@ import javax.ws.rs.core.UriBuilder;
 import org.glassfish.jersey.client.filter.HttpBasicAuthFilter;
 
 public class JiraOnlineAdapterRsClient {
+
 	private Client client;
 	private String hostname;
 	private boolean securedConnection;

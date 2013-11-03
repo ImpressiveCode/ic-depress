@@ -78,19 +78,19 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
 		JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder(jiraSettingsURL.getStringValue());
 		
+		JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient();
+		client.setSecuredConnection(true);
+		client.setHostname(jiraSettingsURL.getStringValue());
+		String rawData = null;
+		
 		if(jiraSettingsJQL.getStringValue() != null) {
-			builder.setJQL(jiraSettingsJQL.getStringValue());
+			rawData = client.getIssuesByJql(jiraSettingsJQL.getStringValue());
 		}
 		
-		if(jiraSettingsDateStart.getSelectedFields() > 0) {
-			builder.setDateFrom(jiraSettingsDateStart.getDate());
+		if(jiraSettingsDateStart.getSelectedFields() > 0 || jiraSettingsDateEnd.getSelectedFields() > 0) {
+			rawData = client.getIssueByDates(jiraSettingsDateStart.getDate(), jiraSettingsDateEnd.getDate());
 		}
-		
-		if(jiraSettingsDateEnd.getSelectedFields() > 0) {
-			builder.setDateFrom(jiraSettingsDateEnd.getDate());
-		}
-		
-		String rawData = JiraOnlineConnector.getData(builder.build());
+				
 		List<ITSDataType> parsedData = JiraOnlineParser.parse(rawData);
 		BufferedDataTable out = transform(parsedData, exec);
 		
