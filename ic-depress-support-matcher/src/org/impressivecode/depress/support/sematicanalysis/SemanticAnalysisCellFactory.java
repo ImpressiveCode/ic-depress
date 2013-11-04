@@ -19,6 +19,8 @@ package org.impressivecode.depress.support.sematicanalysis;
 
 import static org.impressivecode.depress.common.Cells.integerOrMissingCell;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.impressivecode.depress.common.InputTransformer;
@@ -30,6 +32,9 @@ import org.impressivecode.depress.support.commonmarker.MarkerInputTransformer;
 import org.knime.base.data.append.column.AppendedCellFactory;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
+
+import uk.ac.shef.wit.simmetrics.similaritymetrics.JaroWinkler;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein;
 
 import com.google.common.base.Preconditions;
 
@@ -57,7 +62,7 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
 
         SCMDataType scm = scmTransfomer.transformRow(row);
         MarkerDataType marker = markerTransformer.transformRow(row);
-
+        
         Integer confidence = checkConfidence(scm, marker);
 
         return new DataCell[] { integerOrMissingCell(confidence) };
@@ -68,11 +73,48 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
         if (issues.isEmpty()) {
             return 0;
         } else {
-            return checkAuthor(scm, issues) + checkResolution(issues);
+        	Set<ITSDataType> similarIssues = checkSimilarity(issues, scm);
+        	
+            return checkAuthor(scm, similarIssues) + checkResolution(similarIssues);
         }
     }
+    
+    private Set<ITSDataType> checkSimilarity(final Set<ITSDataType> issues, final SCMDataType scm)
+    {
+    	String selectedAlgorithm = this.cfg.getSelectedAlgorithm();
+    	
+    	Iterator<ITSDataType> issuesIterator = issues.iterator();
+    	ITSDataType issue;
+    	Set<ITSDataType> similarIssues = new HashSet<ITSDataType>();
+    	
+    	double threshold = this.cfg.getComparsionLimit();
+    	double similarity = -1;
+    	while((issue = issuesIterator.next())!=null)
+    	{
+    		if(selectedAlgorithm.equals(Configuration.LEVENSTHEIN_ALGHORITM)){
+        		similarity = DoLevenstheinTest(issue.getDescription(),scm.getMessage());
+        	} else if(selectedAlgorithm.equals(Configuration.JARO_WINKLER_ALGHORITM)){
+        		similarity = DoJaroWinklerTest(issue.getDescription(),scm.getMessage());
+        	} 
+    		if(similarity > threshold){
+    			similarIssues.add(issue);
+    		}
+    	}
+    	return similarIssues;
+    }
+    
+    private double DoLevenstheinTest(String string1, String string2) {
+    	Levenshtein levenstheinTest = new Levenshtein();
+		return levenstheinTest.getSimilarity(string1, string2);
+	}
 
-    private int checkResolution(final Set<ITSDataType> issues) {
+	private double DoJaroWinklerTest(String string1, String string2) {
+		// TODO Auto-generated method stub
+		JaroWinkler jaroWinklerTest = new JaroWinkler();
+		return jaroWinklerTest.getSimilarity(string1, string2);
+	}
+
+	private int checkResolution(final Set<ITSDataType> issues) {
         for (ITSDataType its : issues) {
             if (!ITSResolution.FIXED.equals(its.getResolution())) {
                 return 0;

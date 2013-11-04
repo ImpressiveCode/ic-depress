@@ -48,6 +48,10 @@ public class SemanticAnalysisNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(SemanticAnalysisNodeModel.CFG_COMPARSION_LIMIT,
         		SemanticAnalysisNodeModel.COMPARSION_LIMIT_DEFAULT),
         		"Comparsion limit (0-100%): ", 21));
+        
+        addDialogComponent(new DialogComponentStringSelection(new SettingsModelString(SemanticAnalysisNodeModel.CFG_SELECTED_ALGORITHM,
+        		SemanticAnalysisNodeModel.CFG_SELECTED_ALGORITHM_DEFAULT),
+        		"Select algorithm: ", Configuration.ALGORITHMS));
 
     }
 }

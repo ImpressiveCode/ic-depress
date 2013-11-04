@@ -32,18 +32,25 @@ public class Configuration {
 	
 	public static final String[] MSC_DATA_TYPE = { MSC_DT_SUMMARY, MSC_DT_DESCRIPTION, MSC_DT_COMMENTS };
 	
+	public static final String LEVENSTHEIN_ALGHORITM = "Levensthein Algorithm";
+	public static final String JARO_WINKLER_ALGHORITM = "Jaro Winkler Algorithm";
+	
+	public static final String[] ALGORITHMS = {LEVENSTHEIN_ALGHORITM, JARO_WINKLER_ALGHORITM};
+	
     private final ITSDataHolder itsData;
     private final int authorWeight;
     private final int resolutionWeight;
     private final int comparsionsLimit;
     private final String mscComparsionObject;
+    private final String selectedAlgorithm;
     
-    public Configuration(final ITSDataHolder itsData, final int authorWeight, final int resolutionWeight, final int comparsionLimit, final String mscComparsionObject) {
+    public Configuration(final ITSDataHolder itsData, final int authorWeight, final int resolutionWeight, final int comparsionLimit, final String mscComparsionObject, final String selectedAlgorithm) {
         this.itsData = itsData;
         this.authorWeight = authorWeight;
         this.resolutionWeight = resolutionWeight;
         this.comparsionsLimit = comparsionLimit;
         this.mscComparsionObject = mscComparsionObject;
+        this.selectedAlgorithm = selectedAlgorithm;
     }
 
     ITSDataHolder getITSData() {
@@ -66,4 +73,7 @@ public class Configuration {
     	return this.mscComparsionObject;
     }
     
+    public String getSelectedAlgorithm(){
+    	return this.selectedAlgorithm;
+    }
 }
