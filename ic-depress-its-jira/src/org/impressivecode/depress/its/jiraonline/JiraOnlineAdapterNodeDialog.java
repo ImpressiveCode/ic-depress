@@ -18,6 +18,7 @@
 package org.impressivecode.depress.its.jiraonline;
 
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsDateEnd;
+import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsDateFilterStatusChooser;
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsDateStart;
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsJQL;
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsLogin;
@@ -36,6 +37,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
 import org.knime.core.node.defaultnodesettings.DialogComponentMultiLineString;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
+import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
 
 /**
  * 
@@ -59,6 +61,7 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	// "depress.its.jiraonline.history.enddate";
 
 	private DialogComponentLabel mConnectionTestLabel;
+	private final String[] DATE_FILTER_STATUSES = new String[] { "Created", "Resolution" };
 
 	protected JiraOnlineAdapterNodeDialog() {
 		initConnectionTab();
@@ -101,19 +104,20 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 		});
 
 		addDialogComponent(checkButton);
-
 		mConnectionTestLabel = new DialogComponentLabel("Not tested yet...");
 		addDialogComponent(mConnectionTestLabel);
 
 		createNewGroup("Filters");
+		addDialogComponent(new DialogComponentStringSelection(
+				createSettingsDateFilterStatusChooser(), "Status:", DATE_FILTER_STATUSES));
 		addDialogComponent(new DialogComponentDate(createSettingsDateStart(),
 				"Date from:", true));
-
 		addDialogComponent(new DialogComponentDate(createSettingsDateEnd(),
 				"Date to:", true));
-		
+
 		createNewGroup("Advanced");
-		addDialogComponent(new DialogComponentMultiLineString(createSettingsJQL(), "JQL:", false, 100, 10));
+		addDialogComponent(new DialogComponentMultiLineString(
+				createSettingsJQL(), "JQL:", false, 100, 10));
 
 	}
 

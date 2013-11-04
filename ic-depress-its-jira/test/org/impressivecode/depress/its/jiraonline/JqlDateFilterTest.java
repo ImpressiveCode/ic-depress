@@ -13,13 +13,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class JqlDateFilterTest {
-	private JqlDatesFilter filter;
+	private JqlDateFilter filter;
 	private Date startDate;
 	private Date endDate;
 
 	@Before
 	public void setUp() throws ParseException {
-		filter = new JqlDatesFilter();
+		filter = new JqlDateFilter();
 		startDate = new SimpleDateFormat("yyyy-MM-dd").parse("2008-12-01");
 		endDate = new SimpleDateFormat("yyyy-MM-dd").parse("2008-12-31");
 	}
