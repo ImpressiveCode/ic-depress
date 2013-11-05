@@ -40,7 +40,7 @@ public class JiraOnlineAdapterRsClientTest {
 	}
 
 	@Test
-	public void should_not_throw_exception_when_get_issue_by_id_no_secure_protocol()
+	public void should_not_throw_exception_when_get_issues_by_default_no_secure_protocol()
 			throws Exception {
 		jiraOnlineClient.setSecuredConnection(false);
 		
@@ -50,7 +50,7 @@ public class JiraOnlineAdapterRsClientTest {
 	}
 
 	@Test(expected = Exception.class)
-	public void should_throw_exception_when_get_issue_by_id_no_secure_protocol()
+	public void should_throw_exception_when_get_issues_by_default_no_secure_protocol()
 			throws Exception {
 		jiraOnlineClient.setSecuredConnection(false);
 
@@ -60,7 +60,7 @@ public class JiraOnlineAdapterRsClientTest {
 	}
 
 	@Test
-	public void should_not_throw_exception_when_get_issue_by_id_with_secure_protocol()
+	public void should_not_throw_exception_when_get_issues_by_default_with_secure_protocol()
 			throws Exception {
 		jiraOnlineClient.setSecuredConnection(true);
 
@@ -70,7 +70,7 @@ public class JiraOnlineAdapterRsClientTest {
 	}
 
 	@Test(expected = Exception.class)
-	public void should_throw_exception_when_get_issue_by_id_with_secure_protocol()
+	public void should_throw_exception_when_get_get_issues_by_default_with_secure_protocol()
 			throws Exception {
 		jiraOnlineClient.setSecuredConnection(true);
 

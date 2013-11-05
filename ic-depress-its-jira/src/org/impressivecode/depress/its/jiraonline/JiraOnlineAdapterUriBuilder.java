@@ -48,11 +48,6 @@ public class JiraOnlineAdapterUriBuilder {
 		dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 	}
 
-	// public JiraOnlineAdapterUriBuilder(String hostname) {
-	// dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-	// this.hostname = hostname;
-	// }
-
 	public JiraOnlineAdapterUriBuilder setHostname(String hostname) {
 		this.hostname = hostname;
 		return this;
@@ -117,7 +112,7 @@ public class JiraOnlineAdapterUriBuilder {
 	}
 
 	public URI testHost() {
-		// todo
+		// TODO
 		return null;
 	}
 }

@@ -31,7 +31,6 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
 	@Before
 	public void setUp() {
 		client = new JiraOnlineAdapterRsClient();
-		client.setHostname(HOSTNAME);
 		client.setSecuredConnection(true);
 	}
 
