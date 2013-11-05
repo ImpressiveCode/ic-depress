@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension
+		point="org.knime.workbench.repository.nodes">
+		<node
+			category-path="depress/depress.its"
+			expert-flag="false"
+			factory-class="org.impressivecode.depress.its.clearquest.ClearQuestReaderNodeFactory"
+			id="org.impressivecode.depress.its.clearquest">
+		</node>
+	</extension>
+	<extension point="org.knime.workbench.repository.registeredFileExtensions">
+        <FileExtensionMapping NodeFactory="org.impressivecode.depress.its.clearquest.ClearQuestReaderNodeFactory">
+           <FileExtension extension=".xls">
+           </FileExtension>
+        </FileExtensionMapping>
+    </extension>   
+</plugin>

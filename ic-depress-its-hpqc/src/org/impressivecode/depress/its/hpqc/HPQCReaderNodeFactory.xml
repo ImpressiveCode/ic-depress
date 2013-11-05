@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode type="Source" icon="./HPQC.png">
+	<name>HP Quality Center Adapter</name>
+
+	<shortDescription>
+		Reads a data table from a spread sheet.
+	</shortDescription>
+
+	<fullDescription>
+		<intro>
+			This node reads a spread sheet and provides it at its output port.<br />
+			It reads only data from one sheet at the moment. It can read only 
+			numeric data (or strings) but, of course, no diagrams, pictures, or other items.<br />
+			Currently supported KNIME types are String, Double, and Int. (Time or date in the
+			spread sheet is represented as String and can be translated into the appropriate
+			TimeAndDateCells with the corresponding nodes.)<br />
+			It reads in the data from the sheet and sets a type for all columns that
+			is compatible with the data in that column (in the worst case &quot;String&quot; covers all).<br />
+			The performance of the reader node is limited (due to the underlying library
+			of the Apache POI project). Reading large files takes a very long time and uses a
+			lot of memory (especially files in xlsx format).   		
+		</intro>
+		<option name="File to read">
+			Enter a valid file name. You can also choose a previously
+			selected file from the drop-down list, or select a file from
+			the &quot;Browse...&quot; dialog. Supported are xls and xlsx file 
+			formats. (Note: reading large xlsx files is very slow and memory consuming.)
+		</option>
+		<option name="Sheet to Read">
+            After selecting a file, you can select the sheet from the
+            available sheets in the file.
+        </option>
+		<option name="Column Names">
+		    If you want to use column names from the spread sheet, check 
+		    &quot;Table contains column names&quot; and enter the number 
+		    of the row that contains the column names (enter the number 
+		    (starting at one), not the index). <br />
+		    If this option is not checked, default names are generated 
+		    (&quot;Col0&quot;, &quot;Col1&quot;, etc.).
+		</option>
+        <option name="Row IDs">
+            If you want to use row IDs from the spread sheet, check 
+            &quot;Table contains row IDs&quot; and provide the column that
+            contains the row ids. Enter the label of the column (&quot;A&quot;,
+            &quot;B&quot;, etc.) or the number (starting at one) of the column.<br />
+            The rowIDs in the sheet must be unique, otherwise the execution fails.
+            If you check &quot;Make row IDs unique&quot;, the node will append
+            a suffix to duplicates, ensuring row ID uniqueness.
+            For very large data sets this could cause memory problems.
+        </option>
+        <option name="Area of Interest">
+            Specify the region of the data sheet that should be read in. If you
+            check &quot;Read entire data sheet&quot; the region provided by the
+            data sheet file will be read in. This includes areas where diagrams,
+            borders, coloring, etc. are placed and could create quite some empty
+            rows or columns (see skip empty rows and columns options below). <br />
+            If you want to read in a fixed area, remove the check mark and enter
+            the first and last column, and first and last row to read. (Last 
+            row and column is optional, causing it to read to the last row or 
+            column provided by the sheet). For columns
+            you need to enter the label (&quot;A&quot;, &quot;B&quot;, etc.),
+            for rows enter the number (one-based).
+        </option>
+        <option name="Skip Empty Rows or Columns">
+            If empty rows or columns should be removed from the result Data Table,
+            check the appropriate option. 
+        </option>
+        <option name="Evaluation Error Handling">
+            Specify the data that is inserted in a cell with an error. Not all 
+            formulas supported by all spreadsheet applications are supported by
+            the XLS Reader Node. If an error occurs during formula evaluation 
+            (or if the spreadsheet contains an error cell), the selected data is
+            inserted. You can either choose to insert a cell representing a 
+            missing value, or to insert a certain string pattern. A pattern 
+            causes the entire column to become a string column in case an 
+            error occurs. A missing value is type innocent, but also unobtrusive.
+        </option>
+        <option name="Preview">
+            The &quot;Preview&quot; tab shows you the output table with the current
+            settings in the dialog. If the settings are invalid an
+            error message will be displayed in this tab. The table updates only
+            when the &quot;refresh&quot; button is clicked. A warning is shown,
+            if the table content is out of sync with the current settings.
+        </option>
+        <option name="File Content">
+            The &quot;File Content&quot; table shows you the content of the
+            currently selected sheet. It shows the entire content (no settings
+            are applied there). The column names and row numbers here are the ones 
+            that need to be specified in the corresponding setting fields.
+        </option>
+	</fullDescription>
+
+	<ports>
+		<outPort index="0" name="Output table">
+			The data table read in.
+		</outPort>
+	</ports>
+</knimeNode>
+
+
