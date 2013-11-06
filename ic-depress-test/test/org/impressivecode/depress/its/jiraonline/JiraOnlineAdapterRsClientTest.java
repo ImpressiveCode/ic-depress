@@ -46,7 +46,7 @@ public class JiraOnlineAdapterRsClientTest {
 		
 		when(mockedResponse.getStatus()).thenReturn(HTTP_OK);
 		
-		jiraOnlineClient.getIssueById("dummy_issue_id");
+		jiraOnlineClient.getIssues();
 	}
 
 	@Test(expected = Exception.class)
@@ -56,7 +56,7 @@ public class JiraOnlineAdapterRsClientTest {
 
 		when(mockedResponse.getStatus()).thenReturn(HTTP_NO_CONNECTION);
 
-		jiraOnlineClient.getIssueById("dummy_issue_id");
+		jiraOnlineClient.getIssues();
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class JiraOnlineAdapterRsClientTest {
 
 		when(mockedResponse.getStatus()).thenReturn(HTTP_OK);
 
-		jiraOnlineClient.getIssueById("dummy_issue_id");
+		jiraOnlineClient.getIssues();
 	}
 
 	@Test(expected = Exception.class)
@@ -76,47 +76,7 @@ public class JiraOnlineAdapterRsClientTest {
 
 		when(mockedResponse.getStatus()).thenReturn(HTTP_NO_CONNECTION);
 
-		jiraOnlineClient.getIssueById("dummy_issue_id");
-	}
-
-	@Test
-	public void should_not_throw_exception_when_get_issue_by_dates_no_secure_protocol()
-			throws Exception {
-		jiraOnlineClient.setSecuredConnection(false);
-
-		when(mockedResponse.getStatus()).thenReturn(HTTP_OK);
-
-		jiraOnlineClient.getIssueByDates(null, null);
-	}
-
-	@Test(expected = Exception.class)
-	public void should_throw_exception_when_get_issue_by_dates_no_secure_protocol()
-			throws Exception {
-		jiraOnlineClient.setSecuredConnection(false);
-
-		when(mockedResponse.getStatus()).thenReturn(HTTP_NO_CONNECTION);
-
-		jiraOnlineClient.getIssueByDates(null, null);
-	}
-
-	@Test
-	public void should_not_throw_exception_when_get_issue_by_dates_with_secure_protocol()
-			throws Exception {
-		jiraOnlineClient.setSecuredConnection(true);
-
-		when(mockedResponse.getStatus()).thenReturn(HTTP_OK);
-
-		jiraOnlineClient.getIssueByDates(null, null);
-	}
-
-	@Test(expected = Exception.class)
-	public void should_throw_exception_when_get_issue_by_dates_with_secure_protocol()
-			throws Exception {
-		jiraOnlineClient.setSecuredConnection(true);
-
-		when(mockedResponse.getStatus()).thenReturn(HTTP_NO_CONNECTION);
-
-		jiraOnlineClient.getIssueByDates(null, null);
+		jiraOnlineClient.getIssues();
 	}
 
 	private void prepareMocks() {
@@ -133,7 +93,7 @@ public class JiraOnlineAdapterRsClientTest {
 
 	private void prepareJiraTestClient() {
 		jiraOnlineClient = new JiraOnlineAdapterRsClient();
-		jiraOnlineClient.setHostname("dummy_hostname");
+		jiraOnlineClient.getUriBuilder().setHostname("dummy_hostname");
 		jiraOnlineClient.setClient(mockedRsClient);
 	}
 

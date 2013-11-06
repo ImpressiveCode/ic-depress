@@ -27,6 +27,7 @@ import javax.ws.rs.core.UriBuilder;
  * Builder for Jira Uri
  * 
  * @author Marcin Kunert
+ * @author Krzysztof Kwoka
  * 
  */
 public class JiraOnlineAdapterUriBuilder {
@@ -83,16 +84,18 @@ public class JiraOnlineAdapterUriBuilder {
 			jqlBuilder.append(CONJUNCTION);
 		}
 
-		if (dateFrom != null) {
-			jqlBuilder.append(dateFilterStatus);
-			jqlBuilder.append(" >= " + dateFormatter.format(dateFrom));
-			jqlBuilder.append(CONJUNCTION);
-		}
+		if (dateFilterStatus != null) {
+			if (dateFrom != null) {
+				jqlBuilder.append(dateFilterStatus);
+				jqlBuilder.append(" >= " + dateFormatter.format(dateFrom));
+				jqlBuilder.append(CONJUNCTION);
+			}
 
-		if (dateTo != null) {
-			jqlBuilder.append(dateFilterStatus);
-			jqlBuilder.append(" <= " + dateFormatter.format(dateTo));
-			jqlBuilder.append(CONJUNCTION);
+			if (dateTo != null) {
+				jqlBuilder.append(dateFilterStatus);
+				jqlBuilder.append(" <= " + dateFormatter.format(dateTo));
+				jqlBuilder.append(CONJUNCTION);
+			}
 		}
 
 		String uriJQL = null;
@@ -109,6 +112,10 @@ public class JiraOnlineAdapterUriBuilder {
 		// result += "&maxResults=300";
 		System.out.println(result.toString());
 		return result;
+	}
+
+	public SimpleDateFormat getDateFormatter() {
+		return (SimpleDateFormat) dateFormatter.clone();
 	}
 
 	public URI testHost() {
