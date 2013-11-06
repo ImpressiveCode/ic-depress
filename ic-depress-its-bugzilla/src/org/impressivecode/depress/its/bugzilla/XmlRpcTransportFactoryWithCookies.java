@@ -17,6 +17,8 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import static com.google.common.collect.Sets.newHashSet;
+
 import java.io.IOException;
 import java.net.HttpCookie;
 import java.net.URL;
@@ -33,7 +35,6 @@ import org.apache.xmlrpc.client.XmlRpcSunHttpTransportFactory;
 import org.apache.xmlrpc.client.XmlRpcTransport;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Sets;
 
 /**
  * 
@@ -46,7 +47,7 @@ public class XmlRpcTransportFactoryWithCookies extends XmlRpcSunHttpTransportFac
 
 	public XmlRpcTransportFactoryWithCookies(XmlRpcClient client) {
 		super(client);
-		cookies = Sets.newHashSet();
+		cookies = newHashSet();
 	}
 
 	@Override
