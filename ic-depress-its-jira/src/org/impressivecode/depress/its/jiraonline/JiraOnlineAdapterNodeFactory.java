@@ -23,7 +23,9 @@ import org.knime.core.node.NodeView;
 
 /**
  * 
- * @author Marcin Kunert, Krzysztof Kwoka, Dawid Rutowicz
+ * @author Marcin Kunert, Wroclaw University of Technology
+ * @author Krzysztof Kwoka, Wroclaw University of Technology
+ * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
  */
 public class JiraOnlineAdapterNodeFactory extends NodeFactory<JiraOnlineAdapterNodeModel> {

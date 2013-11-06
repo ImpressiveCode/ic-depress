@@ -38,27 +38,17 @@ import org.knime.core.node.defaultnodesettings.DialogComponentMultiLineString;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
+import org.knime.core.node.defaultnodesettings.SettingsModel;
+import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * 
- * @author Krzysztof Kwoka
- * @author Marcin Kunert
- * @author Dawid Rutowicz
+ * @author Marcin Kunert, Wroclaw University of Technology
+ * @author Krzysztof Kwoka, Wroclaw University of Technology
+ * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
  */
 public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
-
-	// private static final String HISTORY_ID_URL =
-	// "depress.its.jiraonline.history.url";
-	// private static final String HISTORY_ID_USERNAME =
-	// "depress.its.jiraonline.history.username";
-	// private static final String HISTORY_ID_PASSWORD =
-	// "depress.its.jiraonline.history.password";
-
-	// private static final String HISTORY_ID_START_DATE =
-	// "depress.its.jiraonline.history.startdate";
-	// private static final String HISTORY_ID_END_DATE =
-	// "depress.its.jiraonline.history.enddate";
 
 	private DialogComponentLabel mConnectionTestLabel;
 	private final String[] DATE_FILTER_STATUSES = new String[] { "Created", "Resolution" };
@@ -70,9 +60,10 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
 	private void initConnectionTab() {
 		createNewGroup("Connection");
-		addDialogComponent(new DialogComponentString(createSettingsURL(),
+		final SettingsModelString hostnameComponent = createSettingsURL();
+		addDialogComponent(new DialogComponentString(hostnameComponent,
 				"Jira URL: ", true, 32));
-
+		
 		final DialogComponentButton checkButton = new DialogComponentButton(
 				"Check");
 		checkButton.addActionListener(new ActionListener() {
@@ -81,22 +72,31 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 			public void actionPerformed(ActionEvent e) {
 
 				mConnectionTestLabel.setText("Testing connection...");
-				checkButton.getModel().setEnabled(false);
+				//FIXME fix this deprecation somehow
+				checkButton.setEnabled(false);
 
-				// TODO Symulate Jira connection test. Change this to a real
-				// test!
 				new SwingWorker<Void, Void>() {
+					
+					private boolean connectionOk = false;
 
 					@Override
 					protected Void doInBackground() throws Exception {
-						Thread.sleep(1000);
+						JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+						builder.setHostname(hostnameComponent.getStringValue()).setIsTest(true);
+						connectionOk = new JiraOnlineAdapterRsClient(builder).testConnection();
 						return null;
 					}
 
 					@Override
 					public void done() {
-						mConnectionTestLabel.setText("Connection ok!");
-						checkButton.getModel().setEnabled(true);
+						if(connectionOk) {
+							mConnectionTestLabel.setText("Connection ok");
+						}
+						else {
+							mConnectionTestLabel.setText("Connection failed");
+						}
+						//FIXME fix this deprecation somehow
+						checkButton.setEnabled(true);
 					}
 
 				}.execute();

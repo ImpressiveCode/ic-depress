@@ -24,17 +24,19 @@ import java.util.Date;
 import javax.ws.rs.core.UriBuilder;
 
 /**
- * Builder for Jira Uri
+ * Builder for JIRA REST API
  * 
- * @author Marcin Kunert
- * @author Krzysztof Kwoka
+ * @author Marcin Kunert, Wroclaw University of Technology
+ * @author Krzysztof Kwoka, Wroclaw University of Technology
  * 
  */
 public class JiraOnlineAdapterUriBuilder {
 
-	private static final String URI_PATH = "https://{hostname}/rest/api/latest/search";
+	private static final String TEST_URI_PATH = "https://{hostname}/rest/api/2/serverInfo";
+	private static final String QUERY_URI_PATH = "https://{hostname}/rest/api/latest/search";
 	private static final String QUERY_PARAM = "jql";
 	private static final String CONJUNCTION = " AND ";
+	private static final String JIRA_DATE_FORMAT = "yyyy-MM-dd";
 	public static final String CREATED = "created";
 	public static final String RESOLUTION_DATE = "resolutiondate";
 
@@ -44,9 +46,10 @@ public class JiraOnlineAdapterUriBuilder {
 	private Date dateFrom;
 	private Date dateTo;
 	private String dateFilterStatus;
+	private boolean isTest;
 
 	public JiraOnlineAdapterUriBuilder() {
-		dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+		dateFormatter = new SimpleDateFormat(JIRA_DATE_FORMAT);
 	}
 
 	public JiraOnlineAdapterUriBuilder setHostname(String hostname) {
@@ -74,8 +77,17 @@ public class JiraOnlineAdapterUriBuilder {
 		this.dateFilterStatus = dateFilterStatus;
 		return this;
 	}
+	
+	public JiraOnlineAdapterUriBuilder setIsTest(boolean isTest) {
+		this.isTest = isTest;
+		return this;
+	}
 
 	public URI build() {
+		
+		if(isTest) {
+			return testHost();
+		}
 
 		StringBuilder jqlBuilder = new StringBuilder();
 
@@ -105,12 +117,11 @@ public class JiraOnlineAdapterUriBuilder {
 			uriJQL = jqlBuilder.toString();
 		}
 
-		URI result = UriBuilder.fromPath(URI_PATH)
+		URI result = UriBuilder.fromPath(QUERY_URI_PATH)
 				.resolveTemplate("hostname", hostname)
 				.queryParam(QUERY_PARAM, uriJQL).build();
 		// TODO setting issue limit, see issue#15 for more details
 		// result += "&maxResults=300";
-		System.out.println(result.toString());
 		return result;
 	}
 
@@ -119,7 +130,7 @@ public class JiraOnlineAdapterUriBuilder {
 	}
 
 	public URI testHost() {
-		// TODO
-		return null;
+		return UriBuilder.fromPath(TEST_URI_PATH)
+				.resolveTemplate("hostname", hostname).build();
 	}
 }

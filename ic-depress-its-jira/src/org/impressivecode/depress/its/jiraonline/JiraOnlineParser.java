@@ -28,13 +28,13 @@ import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.jiraonline.model.IssueVersion;
-import org.impressivecode.depress.its.jiraonline.model.JiraFieldModel.Priority;
-import org.impressivecode.depress.its.jiraonline.model.JiraFieldModel.Resolution;
-import org.impressivecode.depress.its.jiraonline.model.JiraFieldModel.Status;
-import org.impressivecode.depress.its.jiraonline.model.JiraFieldModel.Type;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueModel;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssuesListModel;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueVersion;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Priority;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Resolution;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Status;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Type;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssue;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssuesList;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -45,7 +45,7 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 /**
  * Parser from Jira JSON answer to {@link ITSDataType}
- * @author Marcin Kunert
+ * @author Marcin Kunert, Wroclaw University of Technology
  *
  */
 public class JiraOnlineParser {
@@ -54,12 +54,12 @@ public class JiraOnlineParser {
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonFactory jsonFactory = new JsonFactory();
 		JsonParser jp = null;
-		JiraOnlineIssuesListModel issueList = null;
+		JiraOnlineIssuesList issueList = null;
 
 		try {
 			jp = jsonFactory.createJsonParser(source);
 			issueList = objectMapper.readValue(jp,
-					new TypeReference<JiraOnlineIssuesListModel>() {
+					new TypeReference<JiraOnlineIssuesList>() {
 					});
 		} catch (JsonParseException e) {
 		} catch (UnrecognizedPropertyException e) {
@@ -72,10 +72,10 @@ public class JiraOnlineParser {
 	}
 
 	private static List<ITSDataType> parseData(
-			JiraOnlineIssuesListModel issueList) {
+			JiraOnlineIssuesList issueList) {
 		List<ITSDataType> resultList = new ArrayList<ITSDataType>();
 
-		for (JiraOnlineIssueModel issue : issueList.getIssues()) {
+		for (JiraOnlineIssue issue : issueList.getIssues()) {
 			ITSDataType data = new ITSDataType();
 			data.setIssueId(Integer.toString(issue.getId()));
 			data.setLink(issue.getLink());
@@ -98,13 +98,13 @@ public class JiraOnlineParser {
 			data.setResolution(parseResolution(issue.getFields().getResolution()));
 
 			List<String> versions = new ArrayList<>();
-			for (IssueVersion version : issue.getFields().getVersions()) {
+			for (JiraOnlineIssueVersion version : issue.getFields().getVersions()) {
 				versions.add(version.getName());
 			}
 			data.setVersion(versions);
 
 			List<String> fixVersions = new ArrayList<>();
-			for (IssueVersion version : issue.getFields().getFixVersions()) {
+			for (JiraOnlineIssueVersion version : issue.getFields().getFixVersions()) {
 				fixVersions.add(version.getName());
 			}
 			data.setFixVersion(fixVersions);

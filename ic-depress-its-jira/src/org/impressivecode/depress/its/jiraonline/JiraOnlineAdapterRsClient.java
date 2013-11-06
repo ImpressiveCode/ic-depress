@@ -25,6 +25,11 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.filter.HttpBasicAuthFilter;
 
+/**
+ * 
+ * @author Dawid Rutowicz, Wroclaw University of Technology
+ *
+ */
 public class JiraOnlineAdapterRsClient {
 
 	private Client client;
@@ -51,6 +56,16 @@ public class JiraOnlineAdapterRsClient {
 		return reponseToString(response);
 	}
 
+	public boolean testConnection() {
+		Response response = getReponse();
+		try {
+			isDataFetchSuccessful(response);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
 	public boolean isSecuredConnection() {
 		return securedConnection;
 	}

@@ -22,15 +22,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
- * Model class for Jira JSON parsing. Contains issue id, link and field list
- * @author Marcin Kunert
+ * Model class used by Jackson for Jira JSON parsing. Contains issue id, link and field list
+ * @author Marcin Kunert, Wroclaw University of Technology
  *
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineIssueModel {
+public class JiraOnlineIssue {
 	
 	private int id;
-	private JiraFieldModel fields;
+	private JiraOnlineField fields;
 	
 	@JsonProperty("self")
 	private String link;
@@ -43,11 +43,11 @@ public class JiraOnlineIssueModel {
 		this.id = id;
 	}
 
-	public JiraFieldModel getFields() {
+	public JiraOnlineField getFields() {
 		return fields;
 	}
 
-	public void setFields(JiraFieldModel fields) {
+	public void setFields(JiraOnlineField fields) {
 		this.fields = fields;
 	}
 

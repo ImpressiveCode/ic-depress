@@ -24,12 +24,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Model class for Jira JSON parsing. Contains issue fields
- * @author Marcin Kunert
+ * Model class used by Jackson for Jira JSON parsing. Contains issue fields
+ * @author Marcin Kunert, Wroclaw University of Technology
  *
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraFieldModel {
+public class JiraOnlineField {
 
 	private Date created;
 	private Date updated;
@@ -38,8 +38,8 @@ public class JiraFieldModel {
 	private Status status;
 	@JsonProperty("issuetype")
 	private Type issueType;
-	private List<IssueVersion> versions;
-	private List<IssueVersion> fixVersions;
+	private List<JiraOnlineIssueVersion> versions;
+	private List<JiraOnlineIssueVersion> fixVersions;
 	private Priority priority;
 	private String summary;
 	private String description;
@@ -87,19 +87,19 @@ public class JiraFieldModel {
 		this.issueType = issuetype;
 	}
 
-	public List<IssueVersion> getVersions() {
+	public List<JiraOnlineIssueVersion> getVersions() {
 		return versions;
 	}
 
-	public void setVersions(List<IssueVersion> versions) {
+	public void setVersions(List<JiraOnlineIssueVersion> versions) {
 		this.versions = versions;
 	}
 
-	public List<IssueVersion> getFixVersions() {
+	public List<JiraOnlineIssueVersion> getFixVersions() {
 		return fixVersions;
 	}
 
-	public void setFixVersions(List<IssueVersion> fixVersions) {
+	public void setFixVersions(List<JiraOnlineIssueVersion> fixVersions) {
 		this.fixVersions = fixVersions;
 	}
 

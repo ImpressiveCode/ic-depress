@@ -17,7 +17,7 @@
  */
 package org.impressivecode.depress.its.jiraonline;
 
-import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterTableFactory.createTableSpec;
+import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +43,9 @@ import com.google.common.base.Preconditions;
 
 /**
  * 
- * @author Marcin Kunert, Krzysztof Kwoka, Dawid Rutowicz
+ * @author Marcin Kunert, Wroclaw University of Technology
+ * @author Krzysztof Kwoka, Wroclaw University of Technology
+ * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
  */
 public class JiraOnlineAdapterNodeModel extends NodeModel {
@@ -131,7 +133,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
 			throws InvalidSettingsException {
 		Preconditions.checkArgument(inSpecs.length == 0);
-		return createTableSpec();
+		return new DataTableSpec[] { createDataColumnSpec() };
 	}
 
 	@Override

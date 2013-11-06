@@ -17,25 +17,25 @@
  */
 package org.impressivecode.depress.its.jiraonline.model;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Model class for Jira JSON parsing. Contains issue list
- * @author Marcin Kunert
- *
+ * Model class used by Jackson for Jira JSON parsing. Contains issue version. It has to be in
+ * another class because Jackson can't handle inner classes if they are used as
+ * a List type
+ * 
+ * @author Marcin Kunert, Wroclaw University of Technology
+ * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineIssuesListModel {
-	
-	private List<JiraOnlineIssueModel> issues;
+public class JiraOnlineIssueVersion {
+	private String name;
 
-	public List<JiraOnlineIssueModel> getIssues() {
-		return issues;
+	public String getName() {
+		return name;
 	}
 
-	public void setIssues(List<JiraOnlineIssueModel> issues) {
-		this.issues = issues;
+	public void setName(String name) {
+		this.name = name;
 	}
 }
