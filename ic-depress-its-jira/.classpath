@@ -25,6 +25,5 @@
 	<classpathentry kind="lib" path="lib/osgi-resource-locator-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/tiger-types-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/jersey-client-2.3.1.jar"/>
-	<classpathentry kind="lib" path="lib/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

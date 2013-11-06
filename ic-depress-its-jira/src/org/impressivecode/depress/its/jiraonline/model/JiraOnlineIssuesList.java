@@ -23,19 +23,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Model class used by Jackson for Jira JSON parsing. Contains issue list
+ * 
  * @author Marcin Kunert, Wroclaw University of Technology
- *
+ * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JiraOnlineIssuesList {
-	
-	private List<JiraOnlineIssue> issues;
 
-	public List<JiraOnlineIssue> getIssues() {
-		return issues;
-	}
+    private List<JiraOnlineIssue> issues;
 
-	public void setIssues(List<JiraOnlineIssue> issues) {
-		this.issues = issues;
-	}
+    public List<JiraOnlineIssue> getIssues() {
+        return issues;
+    }
+
+    public void setIssues(List<JiraOnlineIssue> issues) {
+        this.issues = issues;
+    }
 }

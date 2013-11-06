@@ -52,7 +52,7 @@ public class JiraOnlineAdapterUriBuilder {
 		dateFormatter = new SimpleDateFormat(JIRA_DATE_FORMAT);
 	}
 
-	public JiraOnlineAdapterUriBuilder setHostname(String hostname) {
+    public JiraOnlineAdapterUriBuilder setHostname(String hostname) {
 		this.hostname = hostname;
 		return this;
 	}

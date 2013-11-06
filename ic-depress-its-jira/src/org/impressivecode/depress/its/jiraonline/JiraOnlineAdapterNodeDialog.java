@@ -50,84 +50,76 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  */
 public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
-	private DialogComponentLabel mConnectionTestLabel;
-	private final String[] DATE_FILTER_STATUSES = new String[] { "Created", "Resolution" };
+    private DialogComponentLabel mConnectionTestLabel;
+    private final String[] DATE_FILTER_STATUSES = new String[] { "Created", "Resolution" };
 
-	protected JiraOnlineAdapterNodeDialog() {
-		initConnectionTab();
-		initLoginDataTab();
-	}
+    protected JiraOnlineAdapterNodeDialog() {
+        initConnectionTab();
+        initLoginDataTab();
+    }
 
-	private void initConnectionTab() {
-		createNewGroup("Connection");
-		final SettingsModelString hostnameComponent = createSettingsURL();
-		addDialogComponent(new DialogComponentString(hostnameComponent,
-				"Jira URL: ", true, 32));
-		
-		final DialogComponentButton checkButton = new DialogComponentButton(
-				"Check");
-		checkButton.addActionListener(new ActionListener() {
+    private void initConnectionTab() {
+        createNewGroup("Connection");
+        final SettingsModelString hostnameComponent = createSettingsURL();
+        addDialogComponent(new DialogComponentString(hostnameComponent, "Jira URL: ", true, 32));
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
+        final DialogComponentButton checkButton = new DialogComponentButton("Check");
+        checkButton.addActionListener(new ActionListener() {
 
-				mConnectionTestLabel.setText("Testing connection...");
-				//FIXME fix this deprecation somehow
-				checkButton.setEnabled(false);
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-				new SwingWorker<Void, Void>() {
-					
-					private boolean connectionOk = false;
+                mConnectionTestLabel.setText("Testing connection...");
+                // FIXME fix this deprecation somehow
+                checkButton.setEnabled(false);
 
-					@Override
-					protected Void doInBackground() throws Exception {
-						JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
-						builder.setHostname(hostnameComponent.getStringValue()).setIsTest(true);
-						connectionOk = new JiraOnlineAdapterRsClient(builder).testConnection();
-						return null;
-					}
+                new SwingWorker<Void, Void>() {
 
-					@Override
-					public void done() {
-						if(connectionOk) {
-							mConnectionTestLabel.setText("Connection ok");
-						}
-						else {
-							mConnectionTestLabel.setText("Connection failed");
-						}
-						//FIXME fix this deprecation somehow
-						checkButton.setEnabled(true);
-					}
+                    private boolean connectionOk = false;
 
-				}.execute();
-			}
-		});
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+                        builder.setHostname(hostnameComponent.getStringValue()).setIsTest(true);
+                        connectionOk = new JiraOnlineAdapterRsClient(builder).testConnection();
+                        return null;
+                    }
 
-		addDialogComponent(checkButton);
-		mConnectionTestLabel = new DialogComponentLabel("Not tested yet...");
-		addDialogComponent(mConnectionTestLabel);
+                    @Override
+                    public void done() {
+                        if (connectionOk) {
+                            mConnectionTestLabel.setText("Connection ok");
+                        } else {
+                            mConnectionTestLabel.setText("Connection failed");
+                        }
+                        // FIXME fix this deprecation somehow
+                        checkButton.setEnabled(true);
+                    }
 
-		createNewGroup("Filters");
-		addDialogComponent(new DialogComponentStringSelection(
-				createSettingsDateFilterStatusChooser(), "Status:", DATE_FILTER_STATUSES));
-		addDialogComponent(new DialogComponentDate(createSettingsDateStart(),
-				"Date from:", true));
-		addDialogComponent(new DialogComponentDate(createSettingsDateEnd(),
-				"Date to:", true));
+                }.execute();
+            }
+        });
 
-		createNewGroup("Advanced");
-		addDialogComponent(new DialogComponentMultiLineString(
-				createSettingsJQL(), "JQL:", false, 100, 10));
+        addDialogComponent(checkButton);
+        mConnectionTestLabel = new DialogComponentLabel("Not tested yet...");
+        addDialogComponent(mConnectionTestLabel);
 
-	}
+        createNewGroup("Filters");
+        addDialogComponent(new DialogComponentStringSelection(createSettingsDateFilterStatusChooser(), "Status:",
+                DATE_FILTER_STATUSES));
+        addDialogComponent(new DialogComponentDate(createSettingsDateStart(), "Date from:", true));
+        addDialogComponent(new DialogComponentDate(createSettingsDateEnd(), "Date to:", true));
 
-	private void initLoginDataTab() {
-		createNewTab("Login data");
-		createNewGroup("Login data");
-		addDialogComponent(new DialogComponentString(createSettingsLogin(),
-				"Login: ", false, 32));
-		addDialogComponent(new DialogComponentPasswordField(
-				createSettingsPass(), "Password: ", 32));
-	}
+        createNewGroup("Advanced");
+        addDialogComponent(new DialogComponentMultiLineString(createSettingsJQL(), "JQL:", false, 100, 10));
+
+    }
+
+    private void initLoginDataTab() {
+        createNewTab("Login data");
+        createNewGroup("Login data");
+        addDialogComponent(new DialogComponentString(createSettingsLogin(), "Login: ", false, 32));
+        addDialogComponent(new DialogComponentPasswordField(createSettingsPass(), "Password: ", 32));
+    }
 
 }

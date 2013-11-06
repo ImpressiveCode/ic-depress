@@ -25,234 +25,234 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Model class used by Jackson for Jira JSON parsing. Contains issue fields
+ * 
  * @author Marcin Kunert, Wroclaw University of Technology
- *
+ * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JiraOnlineField {
 
-	private Date created;
-	private Date updated;
-	@JsonProperty("resolutiondate")
-	private Date resolved;
-	private Status status;
-	@JsonProperty("issuetype")
-	private Type issueType;
-	private List<JiraOnlineIssueVersion> versions;
-	private List<JiraOnlineIssueVersion> fixVersions;
-	private Priority priority;
-	private String summary;
-	private String description;
-	private Resolution resolution;
-	private User reporter;
-	private User assignee;
+    private Date created;
+    private Date updated;
+    @JsonProperty("resolutiondate")
+    private Date resolved;
+    private Status status;
+    @JsonProperty("issuetype")
+    private Type issueType;
+    private List<JiraOnlineIssueVersion> versions;
+    private List<JiraOnlineIssueVersion> fixVersions;
+    private Priority priority;
+    private String summary;
+    private String description;
+    private Resolution resolution;
+    private User reporter;
+    private User assignee;
 
-	public Date getCreated() {
-		return created;
-	}
+    public Date getCreated() {
+        return created;
+    }
 
-	public void setCreated(Date created) {
-		this.created = created;
-	}
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
-	public Date getUpdated() {
-		return updated;
-	}
+    public Date getUpdated() {
+        return updated;
+    }
 
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
 
-	public Date getResolved() {
-		return resolved;
-	}
+    public Date getResolved() {
+        return resolved;
+    }
 
-	public void setResolved(Date resolved) {
-		this.resolved = resolved;
-	}
+    public void setResolved(Date resolved) {
+        this.resolved = resolved;
+    }
 
-	public Status getStatus() {
-		return status;
-	}
+    public Status getStatus() {
+        return status;
+    }
 
-	public void setStatus(Status status) {
-		this.status = status;
-	}
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
-	public Type getIssueType() {
-		return issueType;
-	}
+    public Type getIssueType() {
+        return issueType;
+    }
 
-	public void setIssueType(Type issuetype) {
-		this.issueType = issuetype;
-	}
+    public void setIssueType(Type issuetype) {
+        this.issueType = issuetype;
+    }
 
-	public List<JiraOnlineIssueVersion> getVersions() {
-		return versions;
-	}
+    public List<JiraOnlineIssueVersion> getVersions() {
+        return versions;
+    }
 
-	public void setVersions(List<JiraOnlineIssueVersion> versions) {
-		this.versions = versions;
-	}
+    public void setVersions(List<JiraOnlineIssueVersion> versions) {
+        this.versions = versions;
+    }
 
-	public List<JiraOnlineIssueVersion> getFixVersions() {
-		return fixVersions;
-	}
+    public List<JiraOnlineIssueVersion> getFixVersions() {
+        return fixVersions;
+    }
 
-	public void setFixVersions(List<JiraOnlineIssueVersion> fixVersions) {
-		this.fixVersions = fixVersions;
-	}
+    public void setFixVersions(List<JiraOnlineIssueVersion> fixVersions) {
+        this.fixVersions = fixVersions;
+    }
 
-	public Priority getPriority() {
-		return priority;
-	}
+    public Priority getPriority() {
+        return priority;
+    }
 
-	public void setPriority(Priority priority) {
-		this.priority = priority;
-	}
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
 
-	public String getSummary() {
-		return summary;
-	}
+    public String getSummary() {
+        return summary;
+    }
 
-	public void setSummary(String summary) {
-		this.summary = summary;
-	}
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Resolution getResolution() {
-		return resolution;
-	}
+    public Resolution getResolution() {
+        return resolution;
+    }
 
-	public void setResolution(Resolution resolution) {
-		this.resolution = resolution;
-	}
+    public void setResolution(Resolution resolution) {
+        this.resolution = resolution;
+    }
 
-	public User getReporter() {
-		return reporter;
-	}
+    public User getReporter() {
+        return reporter;
+    }
 
-	public void setReporter(User reporter) {
-		this.reporter = reporter;
-	}
+    public void setReporter(User reporter) {
+        this.reporter = reporter;
+    }
 
-	public User getAssignee() {
-		return assignee;
-	}
+    public User getAssignee() {
+        return assignee;
+    }
 
-	public void setAssignee(User assignee) {
-		this.assignee = assignee;
-	}
+    public void setAssignee(User assignee) {
+        this.assignee = assignee;
+    }
 
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	public class Status {
-		private String description;
-		private String name;
-		private int id;
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class Status {
+        private String description;
+        private String name;
+        private int id;
 
-		public String getDescription() {
-			return description;
-		}
+        public String getDescription() {
+            return description;
+        }
 
-		public void setDescription(String description) {
-			this.description = description;
-		}
+        public void setDescription(String description) {
+            this.description = description;
+        }
 
-		public String getName() {
-			return name;
-		}
+        public String getName() {
+            return name;
+        }
 
-		public void setName(String name) {
-			this.name = name;
-		}
+        public void setName(String name) {
+            this.name = name;
+        }
 
-		public int getId() {
-			return id;
-		}
+        public int getId() {
+            return id;
+        }
 
-		public void setId(int id) {
-			this.id = id;
-		}
-	}
+        public void setId(int id) {
+            this.id = id;
+        }
+    }
 
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	public class User {
-		private String name;
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class User {
+        private String name;
 
-		public String getName() {
-			return name;
-		}
+        public String getName() {
+            return name;
+        }
 
-		public void setName(String name) {
-			this.name = name;
-		}
-		
-		
-	}
+        public void setName(String name) {
+            this.name = name;
+        }
 
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	public class Priority {
+    }
 
-		private String name;
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class Priority {
 
-		public String getName() {
-			return name;
-		}
+        private String name;
 
-		public void setName(String name) {
-			this.name = name;
-		}
-	}
+        public String getName() {
+            return name;
+        }
 
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	public class Type {
-		private String name;
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
 
-		public String getName() {
-			return name;
-		}
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class Type {
+        private String name;
 
-		public void setName(String name) {
-			this.name = name;
-		}
-	}
+        public String getName() {
+            return name;
+        }
 
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	public class Resolution {
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
 
-		private int id;
-		private String name;
-		private String description;
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class Resolution {
 
-		public int getId() {
-			return id;
-		}
+        private int id;
+        private String name;
+        private String description;
 
-		public void setId(int id) {
-			this.id = id;
-		}
+        public int getId() {
+            return id;
+        }
 
-		public String getName() {
-			return name;
-		}
+        public void setId(int id) {
+            this.id = id;
+        }
 
-		public void setName(String name) {
-			this.name = name;
-		}
+        public String getName() {
+            return name;
+        }
 
-		public String getDescription() {
-			return description;
-		}
+        public void setName(String name) {
+            this.name = name;
+        }
 
-		public void setDescription(String description) {
-			this.description = description;
-		}
-	}
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+    }
 }

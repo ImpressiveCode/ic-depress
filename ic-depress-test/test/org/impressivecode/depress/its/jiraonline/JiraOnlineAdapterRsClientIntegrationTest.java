@@ -39,42 +39,42 @@ import org.junit.Test;
  */
 public class JiraOnlineAdapterRsClientIntegrationTest {
 
-	private final String HOSTNAME = "hibernate.atlassian.net";
+    private final String HOSTNAME = "hibernate.atlassian.net";
 
-	private JiraOnlineAdapterRsClient client;
+    private JiraOnlineAdapterRsClient client;
 
-	@Before
-	public void setUp() {
-		client = new JiraOnlineAdapterRsClient();
-		client.setSecuredConnection(true);
-		client.getUriBuilder().setHostname(HOSTNAME);
-	}
+    @Before
+    public void setUp() {
+        client = new JiraOnlineAdapterRsClient();
+        client.setSecuredConnection(true);
+        client.getUriBuilder().setHostname(HOSTNAME);
+    }
 
-	@Test
-	public void should_download_and_parse_one_jira_issues() throws Exception {
-		String jiraEntry = client.getIssues();
+    @Test
+    public void should_download_and_parse_one_jira_issues() throws Exception {
+        String jiraEntry = client.getIssues();
 
-		List<ITSDataType> entries = JiraOnlineParser.parse(jiraEntry);
+        List<ITSDataType> entries = JiraOnlineParser.parse(jiraEntry);
 
-		assertThat(entries, is(notNullValue()));
-		assertThat(entries.size(), is(equalTo(50)));
+        assertThat(entries, is(notNullValue()));
+        assertThat(entries.size(), is(equalTo(50)));
 
-		for (ITSDataType entry : entries) {
-			assertThat(entry, is(notNullValue()));
-			
-			assertThat(entry.getSummary(), is(notNullValue()));
+        for (ITSDataType entry : entries) {
+            assertThat(entry, is(notNullValue()));
 
-			assertThat(entry.getPriority(), is(notNullValue()));
+            assertThat(entry.getSummary(), is(notNullValue()));
 
-			assertThat(entry.getType(), is(notNullValue()));
-			
-			assertThat(entry.getReporter(), is(notNullValue()));
+            assertThat(entry.getPriority(), is(notNullValue()));
 
-			assertTrue(entry.getLink().startsWith("https://hibernate.atlassian.net/rest/api/"));
-			
-			assertThat(entry.getResolution(), is(notNullValue()));
-		}
+            assertThat(entry.getType(), is(notNullValue()));
 
-	}
+            assertThat(entry.getReporter(), is(notNullValue()));
+
+            assertTrue(entry.getLink().startsWith("https://hibernate.atlassian.net/rest/api/"));
+
+            assertThat(entry.getResolution(), is(notNullValue()));
+        }
+
+    }
 
 }

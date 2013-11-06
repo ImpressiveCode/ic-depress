@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.data.source;
+package org.impressivecode.depress.its.bugzilla;
 
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
@@ -23,35 +23,35 @@ import org.knime.core.node.NodeView;
 
 /**
  * 
- * @author Marcin Strzeszyna
- * @author Wieslaw Rybicki
+ * @author Marek Majchrzak, ImpressiveCode
+ * @author Michał Negacz, Wrocław University of Technology
  * 
  */
-public class DataSourceAdapterNodeFactory extends NodeFactory<DataSourceAdapterNodeModel> {
+public class BugzillaOnlineAdapterNodeFactory extends NodeFactory<BugzillaOnlineAdapterNodeModel> {
 
-    @Override
-    public DataSourceAdapterNodeModel createNodeModel() {
-        return new DataSourceAdapterNodeModel();
-    }
+	@Override
+	public BugzillaOnlineAdapterNodeModel createNodeModel() {
+		return new BugzillaOnlineAdapterNodeModel();
+	}
 
-    @Override
-    public int getNrNodeViews() {
-        return 0;
-    }
+	@Override
+	public int getNrNodeViews() {
+		return 0;
+	}
 
-    @Override
-    public NodeView<DataSourceAdapterNodeModel> createNodeView(final int viewIndex,
-            final DataSourceAdapterNodeModel nodeModel) {
-        throw new IllegalStateException("View not supported");
-    }
+	@Override
+	public NodeView<BugzillaOnlineAdapterNodeModel> createNodeView(final int viewIndex, final BugzillaOnlineAdapterNodeModel nodeModel) {
+		throw new IllegalStateException("View not supported");
+	}
 
-    @Override
-    public boolean hasDialog() {
-        return true;
-    }
+	@Override
+	public boolean hasDialog() {
+		return true;
+	}
 
-    @Override
-    public NodeDialogPane createNodeDialogPane() {
-        return new DataSourceAdapterNodeDialog();
-    }
+	@Override
+	public NodeDialogPane createNodeDialogPane() {
+		return new BugzillaOnlineAdapterNodeDialog();
+	}
+	
 }

@@ -41,7 +41,8 @@ public class JiraOnlineAdapterNodeFactory extends NodeFactory<JiraOnlineAdapterN
     }
 
     @Override
-    public NodeView<JiraOnlineAdapterNodeModel> createNodeView(final int viewIndex, final JiraOnlineAdapterNodeModel nodeModel) {
+    public NodeView<JiraOnlineAdapterNodeModel> createNodeView(final int viewIndex,
+            final JiraOnlineAdapterNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 

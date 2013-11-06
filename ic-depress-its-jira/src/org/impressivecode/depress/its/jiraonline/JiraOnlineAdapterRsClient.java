@@ -28,88 +28,87 @@ import org.glassfish.jersey.client.filter.HttpBasicAuthFilter;
 /**
  * 
  * @author Dawid Rutowicz, Wroclaw University of Technology
- *
+ * 
  */
 public class JiraOnlineAdapterRsClient {
 
-	private Client client;
-	private boolean securedConnection;
-	private JiraOnlineAdapterUriBuilder uriBuilder;
+    private Client client;
+    private boolean securedConnection;
+    private JiraOnlineAdapterUriBuilder uriBuilder;
 
-	public JiraOnlineAdapterRsClient() {
-		this(new JiraOnlineAdapterUriBuilder());
-	}
+    public JiraOnlineAdapterRsClient() {
+        this(new JiraOnlineAdapterUriBuilder());
+    }
 
-	public JiraOnlineAdapterRsClient(JiraOnlineAdapterUriBuilder uriBuilder) {
-		createClient();
-		this.uriBuilder = uriBuilder;
-	}
+    public JiraOnlineAdapterRsClient(JiraOnlineAdapterUriBuilder uriBuilder) {
+        createClient();
+        this.uriBuilder = uriBuilder;
+    }
 
-	public void registerCredentials(String username, String password) {
-		client.register(new HttpBasicAuthFilter(username, password));
-	}
+    public void registerCredentials(String username, String password) {
+        client.register(new HttpBasicAuthFilter(username, password));
+    }
 
-	public String getIssues() throws Exception {
-		Response response = getReponse();
-		isDataFetchSuccessful(response);
+    public String getIssues() throws Exception {
+        Response response = getReponse();
+        isDataFetchSuccessful(response);
 
-		return reponseToString(response);
-	}
+        return reponseToString(response);
+    }
 
-	public boolean testConnection() {
-		Response response = getReponse();
-		try {
-			isDataFetchSuccessful(response);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-	
-	public boolean isSecuredConnection() {
-		return securedConnection;
-	}
+    public boolean testConnection() {
+        Response response = getReponse();
+        try {
+            isDataFetchSuccessful(response);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setSecuredConnection(boolean securedConnection) {
-		this.securedConnection = securedConnection;
-	}
+    public boolean isSecuredConnection() {
+        return securedConnection;
+    }
 
-	private void createClient() {
-		client = ClientBuilder.newClient();
-	}
+    public void setSecuredConnection(boolean securedConnection) {
+        this.securedConnection = securedConnection;
+    }
 
-	private void isDataFetchSuccessful(Response response) throws Exception {
-		if (response.getStatus() != 200) {
-			throw new Exception("Failed to fetch data.");
-		}
-	}
+    private void createClient() {
+        client = ClientBuilder.newClient();
+    }
 
-	private String reponseToString(Response response) {
-		return response.readEntity(String.class);
-	}
+    private void isDataFetchSuccessful(Response response) throws Exception {
+        if (response.getStatus() != 200) {
+            throw new Exception("Failed to fetch data.");
+        }
+    }
 
-	private Response getReponse() {
-		final URI uri = uriBuilder.build();
+    private String reponseToString(Response response) {
+        return response.readEntity(String.class);
+    }
 
-		return client.target(uri)
-				.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get();
+    private Response getReponse() {
+        final URI uri = uriBuilder.build();
 
-	}
+        return client.target(uri).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get();
 
-	public JiraOnlineAdapterUriBuilder getUriBuilder() {
-		return uriBuilder;
-	}
+    }
 
-	public void setUriBuilder(JiraOnlineAdapterUriBuilder uriBuilder) {
-		this.uriBuilder = uriBuilder;
-	}
+    public JiraOnlineAdapterUriBuilder getUriBuilder() {
+        return uriBuilder;
+    }
 
-	public Client getClient() {
-		return client;
-	}
+    public void setUriBuilder(JiraOnlineAdapterUriBuilder uriBuilder) {
+        this.uriBuilder = uriBuilder;
+    }
 
-	public void setClient(Client client) {
-		this.client = client;
-	}
-	
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
 }

@@ -15,27 +15,45 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline.model;
+package org.impressivecode.depress.its.bugzilla;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Date;
 
 /**
- * Model class used by Jackson for Jira JSON parsing. Contains issue version. It
- * has to be in another class because Jackson can't handle inner classes if they
- * are used as a List type
  * 
- * @author Marcin Kunert, Wroclaw University of Technology
+ * @author Michał Negacz, Wrocław University of Technology
  * 
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineIssueVersion {
-    private String name;
+public class BugzillaOnlineFilter {
 
-    public String getName() {
-        return name;
-    }
+	private String productName;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	private Date dateFrom;
+
+	private Integer limit;
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public Date getDateFrom() {
+		return dateFrom;
+	}
+
+	public void setDateFrom(Date dateFrom) {
+		this.dateFrom = dateFrom;
+	}
+
+	public Integer getLimit() {
+		return limit;
+	}
+
+	public void setLimit(Integer limit) {
+		this.limit = limit;
+	}
+
 }

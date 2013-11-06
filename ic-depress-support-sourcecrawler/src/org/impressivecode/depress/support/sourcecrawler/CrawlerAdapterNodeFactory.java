@@ -26,32 +26,30 @@ import org.knime.core.node.NodeView;
  * @author Pawel Nosal, ImpressiveCode
  * 
  */
-public class CrawlerAdapterNodeFactory extends
-		NodeFactory<CrawlerAdapterNodeModel> {
+public class CrawlerAdapterNodeFactory extends NodeFactory<CrawlerAdapterNodeModel> {
 
-	@Override
-	public CrawlerAdapterNodeModel createNodeModel() {
-		return new CrawlerAdapterNodeModel();
-	}
+    @Override
+    public CrawlerAdapterNodeModel createNodeModel() {
+        return new CrawlerAdapterNodeModel();
+    }
 
-	@Override
-	public int getNrNodeViews() {
-		return 0;
-	}
+    @Override
+    public int getNrNodeViews() {
+        return 0;
+    }
 
-	@Override
-	public NodeView<CrawlerAdapterNodeModel> createNodeView(
-			final int viewIndex, final CrawlerAdapterNodeModel nodeModel) {
-		throw new IllegalStateException("View not supported");
-	}
+    @Override
+    public NodeView<CrawlerAdapterNodeModel> createNodeView(final int viewIndex, final CrawlerAdapterNodeModel nodeModel) {
+        throw new IllegalStateException("View not supported");
+    }
 
-	@Override
-	public boolean hasDialog() {
-		return true;
-	}
+    @Override
+    public boolean hasDialog() {
+        return true;
+    }
 
-	@Override
-	public NodeDialogPane createNodeDialogPane() {
-		return new CrawlerAdapterNodeDialog();
-	}
+    @Override
+    public NodeDialogPane createNodeDialogPane() {
+        return new CrawlerAdapterNodeDialog();
+    }
 }
