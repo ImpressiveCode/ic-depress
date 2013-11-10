@@ -33,8 +33,10 @@ import org.knime.base.data.append.column.AppendedCellFactory;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
 
+import uk.ac.shef.wit.simmetrics.similaritymetrics.ChapmanLengthDeviation;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.JaroWinkler;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.OverlapCoefficient;
 
 import com.google.common.base.Preconditions;
 
@@ -62,13 +64,16 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
 
         SCMDataType scm = scmTransfomer.transformRow(row);
         MarkerDataType marker = markerTransformer.transformRow(row);
+        try{
+        	Integer confidence = checkConfidence(scm, marker);
+        	return new DataCell[] { integerOrMissingCell(confidence) };
+        } catch(Exception e){
+        	return null;
+        }
         
-        Integer confidence = checkConfidence(scm, marker);
-
-        return new DataCell[] { integerOrMissingCell(confidence) };
     }
 
-    private int checkConfidence(final SCMDataType scm, final MarkerDataType marker) {
+    private int checkConfidence(final SCMDataType scm, final MarkerDataType marker) throws Exception {
         Set<ITSDataType> issues = this.cfg.getITSData().issues(marker.getAllMarkers());
         if (issues.isEmpty()) {
             return 0;
@@ -79,9 +84,11 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
         }
     }
     
-    private Set<ITSDataType> checkSimilarity(final Set<ITSDataType> issues, final SCMDataType scm)
+    private Set<ITSDataType> checkSimilarity(final Set<ITSDataType> issues, final SCMDataType scm) throws Exception
     {
     	String selectedAlgorithm = this.cfg.getSelectedAlgorithm();
+    	String comparisionObject = this.cfg.getMcComparsionObject();
+    	String message = scm.getMessage();
     	
     	Iterator<ITSDataType> issuesIterator = issues.iterator();
     	ITSDataType issue;
@@ -91,16 +98,47 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
     	double similarity = -1;
     	while((issue = issuesIterator.next())!=null)
     	{
-    		if(selectedAlgorithm.equals(Configuration.LEVENSTHEIN_ALGHORITM)){
-        		similarity = DoLevenstheinTest(issue.getDescription(),scm.getMessage());
-        	} else if(selectedAlgorithm.equals(Configuration.JARO_WINKLER_ALGHORITM)){
-        		similarity = DoJaroWinklerTest(issue.getDescription(),scm.getMessage());
-        	} 
+    		if(comparisionObject.equals(Configuration.MSC_DT_COMMENTS)){
+    			int numberOfComments = issue.getComments().size();
+    			if(numberOfComments > 0){
+	    		   for(int i = 0; i<numberOfComments; i++){
+    				  String comment = issue.getComments().get(i);
+    				  similarity = DoSimilarityTest(message, comment, selectedAlgorithm);
+    				  if(similarity > threshold){
+    					break;
+	    			   }
+	    			}
+    			} else {
+    				throw new Exception("There is no comments!");
+    			}
+    		} else if(comparisionObject.equals(Configuration.MSC_DT_DESCRIPTION)){
+    			String description = issue.getDescription();
+    			similarity = DoSimilarityTest(message, description, selectedAlgorithm);
+    		}
+    		else if(comparisionObject.equals(Configuration.MSC_DT_SUMMARY)){
+    			String summary = issue.getSummary();
+    			similarity = DoSimilarityTest(message, summary, selectedAlgorithm);
+    		}
     		if(similarity > threshold){
     			similarIssues.add(issue);
     		}
     	}
     	return similarIssues;
+    }
+    
+    private double DoSimilarityTest(String string1, String string2, String selectedAlgorithm) throws Exception
+    {
+    	if(selectedAlgorithm.equals(Configuration.JARO_WINKLER_ALGHORITM)){
+    		return DoJaroWinklerTest(string1, string2);
+    	} else if(selectedAlgorithm.equals(Configuration.LEVENSTHEIN_ALGHORITM)){
+    		return DoLevenstheinTest(string1, string2);
+    	} else if(selectedAlgorithm.equals(Configuration.CHAPMAN_ALGHORITM)){
+    		return DoChapmanTest(string1, string2);
+    	} else if(selectedAlgorithm.equals(Configuration.OVERLAP_ALGOHORITM)){
+    		return DoOverlapTest(string1, string2);
+    	} else{
+    		throw new Exception("Unsupported Algorithm!");
+    	}
     }
     
     private double DoLevenstheinTest(String string1, String string2) {
@@ -109,11 +147,19 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
 	}
 
 	private double DoJaroWinklerTest(String string1, String string2) {
-		// TODO Auto-generated method stub
 		JaroWinkler jaroWinklerTest = new JaroWinkler();
 		return jaroWinklerTest.getSimilarity(string1, string2);
 	}
+	
+	private double DoChapmanTest(String string1, String string2) {
+		ChapmanLengthDeviation chapmanTest = new ChapmanLengthDeviation();
+		return chapmanTest.getSimilarity(string1, string2);
+	}
 
+	private double DoOverlapTest(String string1, String string2) {
+		OverlapCoefficient overlapTest = new OverlapCoefficient();
+		return overlapTest.getSimilarity(string1, string2);
+	}
 	private int checkResolution(final Set<ITSDataType> issues) {
         for (ITSDataType its : issues) {
             if (!ITSResolution.FIXED.equals(its.getResolution())) {
