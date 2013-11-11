@@ -34,8 +34,10 @@ public class Configuration {
 	
 	public static final String LEVENSTHEIN_ALGHORITM = "Levensthein Algorithm";
 	public static final String JARO_WINKLER_ALGHORITM = "Jaro Winkler Algorithm";
+	public static final String CHAPMAN_ALGHORITM = "Chapman Length Deviation Algorithm";
+	public static final String OVERLAP_ALGOHORITM = "Overlap Coefficient Algorithm";
 	
-	public static final String[] ALGORITHMS = {LEVENSTHEIN_ALGHORITM, JARO_WINKLER_ALGHORITM};
+	public static final String[] ALGORITHMS = {LEVENSTHEIN_ALGHORITM, JARO_WINKLER_ALGHORITM, CHAPMAN_ALGHORITM, OVERLAP_ALGOHORITM};
 	
     private final ITSDataHolder itsData;
     private final int authorWeight;
