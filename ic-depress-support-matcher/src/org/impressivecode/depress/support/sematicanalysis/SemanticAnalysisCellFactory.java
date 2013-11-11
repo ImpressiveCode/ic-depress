@@ -134,7 +134,7 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
     		return DoLevenstheinTest(string1, string2);
     	} else if(selectedAlgorithm.equals(Configuration.CHAPMAN_ALGHORITM)){
     		return DoChapmanTest(string1, string2);
-    	} else if(selectedAlgorithm.equals(Configuration.OVERLAP_ALGOHORITM)){
+    	} else if(selectedAlgorithm.equals(Configuration.OVERLAP_ALGHORITM)){
     		return DoOverlapTest(string1, string2);
     	} else{
     		throw new Exception("Unsupported Algorithm!");
