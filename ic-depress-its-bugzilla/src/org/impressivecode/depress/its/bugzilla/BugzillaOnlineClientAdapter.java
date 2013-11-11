@@ -20,7 +20,6 @@ package org.impressivecode.depress.its.bugzilla;
 import static com.google.common.collect.Maps.newHashMap;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -70,14 +69,14 @@ public class BugzillaOnlineClientAdapter {
 
 	private BugzillaOnlineParser parser;
 
-	public BugzillaOnlineClientAdapter(String urlAddress) throws MalformedURLException {
-		Preconditions.checkNotNull(urlAddress);
-		bugzillaClient = buildClient(urlAddress);
+	public BugzillaOnlineClientAdapter(String url) throws MalformedURLException {
+		Preconditions.checkNotNull(url);
+		bugzillaClient = buildClient(url);
 		parser = buildParser();
 	}
 
-	private BugzillaOnlineXmlRpcClient buildClient(String urlAddress) throws MalformedURLException {
-		return new BugzillaOnlineXmlRpcClient(new URL(urlAddress));
+	private BugzillaOnlineXmlRpcClient buildClient(String url) throws MalformedURLException {
+		return new BugzillaOnlineXmlRpcClient(url);
 	}
 
 	private BugzillaOnlineParser buildParser() {

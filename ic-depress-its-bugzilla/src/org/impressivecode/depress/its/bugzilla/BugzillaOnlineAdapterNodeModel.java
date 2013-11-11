@@ -49,7 +49,7 @@ import com.google.common.base.Strings;
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Michał Negacz, Wrocław University of Technology
- * @author Piotr Wróblewski
+ * @author Piotr Wróblewski, Wrocław University of Technology
  * 
  */
 public class BugzillaOnlineAdapterNodeModel extends NodeModel {

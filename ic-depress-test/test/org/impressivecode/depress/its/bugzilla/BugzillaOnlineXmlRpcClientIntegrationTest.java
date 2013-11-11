@@ -22,7 +22,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
 
@@ -41,7 +40,7 @@ public class BugzillaOnlineXmlRpcClientIntegrationTest {
 	@Test(expected = XmlRpcException.class)
 	public void shouldNotConnectToNotExistingInstallation() throws Exception {
 		// given
-		BugzillaOnlineXmlRpcClient client = new BugzillaOnlineXmlRpcClient(new URL("http://fakebugzilla/xmlrpc.cgi"));
+		BugzillaOnlineXmlRpcClient client = new BugzillaOnlineXmlRpcClient("http://fakebugzilla/xmlrpc.cgi");
 		Map<String, Object> parameters = Collections.<String, Object> emptyMap();
 
 		// when
@@ -55,7 +54,7 @@ public class BugzillaOnlineXmlRpcClientIntegrationTest {
 	@Test
 	public void shouldConnectToMozillaOfficialInstallationWithoutLoginAndFetchVersion() throws Exception {
 		// given
-		BugzillaOnlineXmlRpcClient client = new BugzillaOnlineXmlRpcClient(new URL("https://bugzilla.mozilla.org/xmlrpc.cgi"));
+		BugzillaOnlineXmlRpcClient client = new BugzillaOnlineXmlRpcClient("https://bugzilla.mozilla.org/xmlrpc.cgi");
 		Map<String, Object> parameters = Collections.<String, Object> emptyMap();
 
 		// when
@@ -73,7 +72,7 @@ public class BugzillaOnlineXmlRpcClientIntegrationTest {
 	@Test
 	public void shouldConnectToBugzillaDemoInstallationAndLogin() throws Exception {
 		// given
-		BugzillaOnlineXmlRpcClient client = new BugzillaOnlineXmlRpcClient(new URL("https://landfill.bugzilla.org/bugzilla-tip/xmlrpc.cgi"));
+		BugzillaOnlineXmlRpcClient client = new BugzillaOnlineXmlRpcClient("https://landfill.bugzilla.org/bugzilla-tip/xmlrpc.cgi");
 		Map<String, Object> parameters = Maps.newHashMap();
 		// login and password comes from http://bugmenot.com/view/landfill.bugzilla.org
 		parameters.put("login", "partner55581521@aravensoft.com");
@@ -89,6 +88,42 @@ public class BugzillaOnlineXmlRpcClientIntegrationTest {
 		assertFalse(resultMap.isEmpty());
 		assertNotNull(resultMap.get("id"));
 		assertNotNull(resultMap.get("token"));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldConnectToMozillaWithoutEndpointInLinkSpecified() throws Exception {
+		// given
+		BugzillaOnlineXmlRpcClient client = new BugzillaOnlineXmlRpcClient("https://bugzilla.mozilla.org/");
+		Map<String, Object> parameters = Collections.<String, Object> emptyMap();
+
+		// when
+		Object result = client.execute("Bugzilla.version", parameters);
+
+		// then
+		assertNotNull(result);
+		assertThat(result, instanceOf(Map.class));
+		Map<String, Object> resultMap = (Map<String, Object>) result;
+		assertFalse(resultMap.isEmpty());
+		assertNotNull(resultMap.get("version"));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldConnectToMozillaWithoutLastSlashAndEndpointInLinkSpecified() throws Exception {
+		// given
+		BugzillaOnlineXmlRpcClient client = new BugzillaOnlineXmlRpcClient("https://bugzilla.mozilla.org");
+		Map<String, Object> parameters = Collections.<String, Object> emptyMap();
+
+		// when
+		Object result = client.execute("Bugzilla.version", parameters);
+
+		// then
+		assertNotNull(result);
+		assertThat(result, instanceOf(Map.class));
+		Map<String, Object> resultMap = (Map<String, Object>) result;
+		assertFalse(resultMap.isEmpty());
+		assertNotNull(resultMap.get("version"));
 	}
 	
 }
