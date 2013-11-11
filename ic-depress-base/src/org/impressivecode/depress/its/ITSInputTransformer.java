@@ -20,6 +20,7 @@ package org.impressivecode.depress.its;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.newArrayListWithExpectedSize;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -77,7 +78,7 @@ public class ITSInputTransformer implements InputTransformer<ITSDataType> {
         its.setResolution(readResolution(reader));
         its.setDescription(reader.stringOptional(ITSAdapterTableFactory.DESCRIPTION));
         its.setSummary(reader.stringOptional(ITSAdapterTableFactory.SUMMARY));
-        //its.setComments(reader.stringSetOptional(ITSAdapterTableFactory.COMMENTS));
+        its.setComments(reader.stringListOptional(ITSAdapterTableFactory.COMMENTS));
 
         //add check if minimaldata set requires column for large data e.g. comments or description
         return its;

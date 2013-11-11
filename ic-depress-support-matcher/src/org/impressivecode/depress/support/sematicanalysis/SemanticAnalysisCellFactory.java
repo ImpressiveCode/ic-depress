@@ -89,17 +89,15 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
     	String selectedAlgorithm = this.cfg.getSelectedAlgorithm();
     	String comparisionObject = this.cfg.getMcComparsionObject();
     	String message = scm.getMessage();
-    	if(message != null){
-    		message = message;
-    	}
+    	
     	Iterator<ITSDataType> issuesIterator = issues.iterator();
-    	ITSDataType issue;
     	Set<ITSDataType> similarIssues = new HashSet<ITSDataType>();
     	
     	double threshold = this.cfg.getComparsionLimit();
     	double similarity = -1;
     	while(issuesIterator.hasNext())
     	{
+    		ITSDataType issue;
     		issue = issuesIterator.next();
     		if(comparisionObject.equals(Configuration.MSC_DT_COMMENTS)){
     			int numberOfComments = issue.getComments().size();
