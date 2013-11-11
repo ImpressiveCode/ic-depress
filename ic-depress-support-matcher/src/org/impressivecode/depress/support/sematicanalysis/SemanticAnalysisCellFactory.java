@@ -103,6 +103,7 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
     			if(numberOfComments > 0){
 	    		   for(int i = 0; i<numberOfComments; i++){
     				  String comment = issue.getComments().get(i);
+    				  if(comment == null || message ==null) continue;
     				  similarity = DoSimilarityTest(message, comment, selectedAlgorithm);
     				  if(similarity > threshold){
     					break;
@@ -113,11 +114,15 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
     			}
     		} else if(comparisionObject.equals(Configuration.MSC_DT_DESCRIPTION)){
     			String description = issue.getDescription();
-    			similarity = DoSimilarityTest(message, description, selectedAlgorithm);
+    			if(message != null && description != null){
+    				similarity = DoSimilarityTest(message, description, selectedAlgorithm);
+    			}
     		}
     		else if(comparisionObject.equals(Configuration.MSC_DT_SUMMARY)){
     			String summary = issue.getSummary();
-    			similarity = DoSimilarityTest(message, summary, selectedAlgorithm);
+    			if(message != null && summary != null){
+    				similarity = DoSimilarityTest(message, summary, selectedAlgorithm);
+    			}
     		}
     		if(similarity > threshold){
     			similarIssues.add(issue);
