@@ -89,15 +89,18 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
     	String selectedAlgorithm = this.cfg.getSelectedAlgorithm();
     	String comparisionObject = this.cfg.getMcComparsionObject();
     	String message = scm.getMessage();
-    	
+    	if(message != null){
+    		message = message;
+    	}
     	Iterator<ITSDataType> issuesIterator = issues.iterator();
     	ITSDataType issue;
     	Set<ITSDataType> similarIssues = new HashSet<ITSDataType>();
     	
     	double threshold = this.cfg.getComparsionLimit();
     	double similarity = -1;
-    	while((issue = issuesIterator.next())!=null)
+    	while(issuesIterator.hasNext())
     	{
+    		issue = issuesIterator.next();
     		if(comparisionObject.equals(Configuration.MSC_DT_COMMENTS)){
     			int numberOfComments = issue.getComments().size();
     			if(numberOfComments > 0){
@@ -109,9 +112,7 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
     					break;
 	    			   }
 	    			}
-    			} else {
-    				throw new Exception("There is no comments!");
-    			}
+    			} 
     		} else if(comparisionObject.equals(Configuration.MSC_DT_DESCRIPTION)){
     			String description = issue.getDescription();
     			if(message != null && description != null){
