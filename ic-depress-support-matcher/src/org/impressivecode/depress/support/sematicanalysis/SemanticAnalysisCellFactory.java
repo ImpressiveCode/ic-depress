@@ -123,6 +123,7 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
     				similarity = DoSimilarityTest(message, summary, selectedAlgorithm);
     			}
     		}
+    		similarity = similarity * 100;
     		if(similarity > threshold){
     			similarIssues.add(issue);
     		}

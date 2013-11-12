@@ -12,11 +12,11 @@
             This node allows to analyze syntactic confidence from SCM message.
             <br />
             <p>
-	            In configure menu user can decide what part of ITS data he wont to compare with SCM message.
-	          	User can also decide about limit of similarity that is required to examine semantic confidence from SCM message.
-	          	If similarity result is less then set limit semantic confidence is equal to 0.
+	            In configure menu user can decide what part of ITS data he want to compare with SCM message.
+	          	User can also decide about value of similarity that is required to examine semantic confidence from SCM message.
+	          	If similarity value is less than set limit semantic confidence is equal to 0.
 	          	<br />
-	          	User can chose 1 of 4 text similarity algorithms 
+	          	User can choose 1 of 4 text similarity algorithms 
 	          	<ul>
 	          		<li>Levensthein algorithm</li>
 	          		<li>Jaro Winkler algorithm</li>
