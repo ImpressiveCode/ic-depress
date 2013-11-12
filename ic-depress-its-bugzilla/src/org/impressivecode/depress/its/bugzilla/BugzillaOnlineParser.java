@@ -39,7 +39,7 @@ import org.impressivecode.depress.its.ITSType;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
- * @author Piotr Wróblewski
+ * @author Piotr Wróblewski, Wrocław University of Technology
  * @author Michał Negacz, Wrocław University of Technology
  * 
  */
