@@ -68,6 +68,7 @@ public class SCMInputTransformer implements InputTransformer<SCMDataType> {
         SCMDataType scm = new SCMDataType();
         scm.setResourceName(reader.stringOptional(RESOURCE_NAME));
         scm.setAuthor(reader.stringOptional(SCMAdapterTableFactory.AUTHOR_COLNAME));
+        scm.setMessage(reader.stringOptional(SCMAdapterTableFactory.MESSAGE_COLNAME));
         return scm;
     }
 
