@@ -35,10 +35,12 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Michał Negacz, Wrocław University of Technology
- * @author Piotr Wróblewski
+ * @author Piotr Wróblewski, Wrocław University of Technology
  * 
  */
 public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
+
+	private static final int STRING_FIELD_WIDTH = 32;
 
 	private static final String AUTHENTICATION_TAB_TITILE = "Authentication";
 
@@ -65,11 +67,11 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	}
 
 	private DialogComponent getURLComponent() {
-		return new DialogComponentString(createURLSettings(), URL_LABEL);
+		return new DialogComponentString(createURLSettings(), URL_LABEL, true, STRING_FIELD_WIDTH);
 	}
 
 	private DialogComponent getProductComponent() {
-		return new DialogComponentString(createProductSettings(), PRODUCT_LABEL);
+		return new DialogComponentString(createProductSettings(), PRODUCT_LABEL, true, STRING_FIELD_WIDTH);
 	}
 
 	private DialogComponent getDateComponent() {
@@ -77,11 +79,11 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	}
 
 	private DialogComponent getUsernameComponent() {
-		return new DialogComponentString(createUsernameSettings(), USERNAME_LABEL);
+		return new DialogComponentString(createUsernameSettings(), USERNAME_LABEL, false, STRING_FIELD_WIDTH);
 	}
 
 	private DialogComponent getPasswordComponent() {
-		return new DialogComponentPasswordField(createPasswordSettings(), PASSWORD_LABEL);
+		return new DialogComponentPasswordField(createPasswordSettings(), PASSWORD_LABEL, STRING_FIELD_WIDTH);
 	}
 
 	private DialogComponent getLimitComponent() {
