@@ -12,27 +12,39 @@
             path="/">
       </category>
       <category
-            description="DePress SCM Plugins"
+            description="Source Code Management"
             level-id="depress.scm"
             name="SCM"
             path="depress/">
       </category>
        <category
-            description="DePress ITS Plugins"
+            description="Issue Tracking Systems"
             level-id="depress.its"
             name="ITS"
             path="depress/">
       </category>
        <category
-             description="DePress Data Plugins"
-             level-id="depress.data"
-             name="Data"
+             description="Metric Readers"
+             level-id="depress.mr"
+             name="MR"
              path="depress/">
        </category>
        <category
-             description="DePress SCM Plugins"
+             description="Metric Generators"
+             level-id="depress.mg"
+             name="MG"
+             path="depress/">
+       </category>
+       <category
+             description="Issue Matchers"
              level-id="depress.matcher"
              name="Matcher"
+             path="depress/">
+       </category>
+       <category
+             description="Data Transformation"
+             level-id="depress.data"
+             name="Data"
              path="depress/">
        </category>
    </extension>
