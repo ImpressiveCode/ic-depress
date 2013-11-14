@@ -44,6 +44,6 @@
         <inPort index="1" name="ITS Data">Issue Tracking System data, could be retrieved from any ITS extension, should
             consists at least from IssueId column.
         </inPort>
-        <outPort index="0" name="Metric results">Data table with computed Number Of Issues Metric.</outPort>
+        <outPort index="0" name="Metric results">Data table with computed Issues Per Artefact.</outPort>
     </ports>
 </knimeNode>

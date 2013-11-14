@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.mg.ipa;
 
 import static com.google.common.collect.Sets.newHashSet;
+import static org.impressivecode.depress.common.Cells.booleanCell;
 import static org.impressivecode.depress.common.Cells.integerCell;
 import static org.impressivecode.depress.common.Cells.stringListOrMissingCell;
 
@@ -30,6 +31,7 @@ import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.collection.ListCell;
+import org.knime.core.data.def.BooleanCell;
 import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
@@ -47,6 +49,7 @@ public final class IssuesMetricTableFactory {
     private static final String ISSUES = "Issues";
     private static final String NUMBER_OF_ISSUES = "NumberOfIssues";
     private static final String NUMBER_OF_UNIQUE_ISSUES = "NumberOfUniqueIssues";
+    private static final String FOUND_ANY = "HasIssues";
 
     private IssuesMetricTableFactory() {
 
@@ -60,7 +63,8 @@ public final class IssuesMetricTableFactory {
         DataColumnSpec[] allColSpecs = {
                 new DataColumnSpecCreator(ISSUES, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
                 new DataColumnSpecCreator(NUMBER_OF_ISSUES, IntCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(NUMBER_OF_UNIQUE_ISSUES, IntCell.TYPE).createSpec() };
+                new DataColumnSpecCreator(NUMBER_OF_UNIQUE_ISSUES, IntCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(FOUND_ANY, BooleanCell.TYPE).createSpec()};
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
         return outputSpec;
     }
@@ -70,7 +74,8 @@ public final class IssuesMetricTableFactory {
         DataCell[] cells = { 
                 stringListOrMissingCell(ids), 
                 integerCell(ids.size()),
-                integerCell(newHashSet(ids).size()) };
+                integerCell(newHashSet(ids).size()),
+                booleanCell(!ids.isEmpty()) };
         DataRow row = new DefaultRow(noi.getResourceName(), cells);
         return row;
     }
