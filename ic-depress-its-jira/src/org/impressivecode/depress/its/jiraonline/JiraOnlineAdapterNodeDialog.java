@@ -69,10 +69,12 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
     private DialogComponentButton checkConnectionButton;
     private SettingsModelString hostnameComponent;
     private ActionListener checkConnectionButtonListener;
+    private JiraOnlineAdapterUriBuilder builder;
 
     protected JiraOnlineAdapterNodeDialog() {
         initConnectionTab();
         initLoginDataTab();
+        initBuilder();
     }
 
     private void initConnectionTab() {
@@ -86,6 +88,10 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         createNewGroup(LOGIN_DATA);
         addDialogComponent(new DialogComponentString(createSettingsLogin(), LOGIN, false, 32));
         addDialogComponent(new DialogComponentPasswordField(createSettingsPass(), PASSWORD, 32));
+    }
+
+    private void initBuilder() {
+        builder = new JiraOnlineAdapterUriBuilder();
     }
 
     private void createConnectionGroup() {
@@ -109,7 +115,7 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         checkConnectionButton = new DialogComponentButton(BUTTON_CEHCK);
         checkConnectionButtonListener = new CheckConnectionButtonListener();
         checkConnectionButton.addActionListener(checkConnectionButtonListener);
-        
+
         addDialogComponent(checkConnectionButton);
     }
 
@@ -148,12 +154,6 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         private static final String CONNECTION_FAILED = "Connection failed";
         private static final String CONNECTION_OK = "Connection ok";
 
-        private JiraOnlineAdapterUriBuilder builder;
-
-        public ConnectionTestWorker() {
-            builder = new JiraOnlineAdapterUriBuilder();
-        }
-
         @Override
         protected Boolean doInBackground() throws Exception {
             JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient(builder);
@@ -165,7 +165,7 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         @Override
         public void done() {
             try {
-                get();                
+                get();
                 connectionTestLabel.setText(CONNECTION_OK);
             } catch (Exception e) {
                 connectionTestLabel.setText(CONNECTION_FAILED);
