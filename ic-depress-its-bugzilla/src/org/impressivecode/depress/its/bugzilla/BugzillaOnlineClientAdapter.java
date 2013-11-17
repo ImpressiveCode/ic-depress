@@ -20,11 +20,14 @@ package org.impressivecode.depress.its.bugzilla;
 import static com.google.common.collect.Maps.newHashMap;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.impressivecode.depress.its.ITSDataType;
+import org.knime.core.node.CanceledExecutionException;
+import org.knime.core.node.ExecutionContext;
 
 import com.google.common.base.Preconditions;
 
@@ -75,7 +78,8 @@ public class BugzillaOnlineClientAdapter {
 		parser = buildParser();
 	}
 
-	private BugzillaOnlineXmlRpcClient buildClient(String url) throws MalformedURLException {
+	private BugzillaOnlineXmlRpcClient buildClient(String url)
+			throws MalformedURLException {
 		return new BugzillaOnlineXmlRpcClient(url);
 	}
 
@@ -83,52 +87,82 @@ public class BugzillaOnlineClientAdapter {
 		return new BugzillaOnlineParser();
 	}
 
-	public List<ITSDataType> listEntries(BugzillaOnlineFilter filter) throws XmlRpcException {
+	public List<ITSDataType> listEntries(BugzillaOnlineFilter filter,
+			ExecutionContext exec) throws XmlRpcException {
 		Preconditions.checkNotNull(filter.getProductName());
-		// TODO in one worker fetch part of bugs and in other worker transform
-		// they into entries (producer consumer pattern)
-		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(filter), 0, filter.getLimit());
-		List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
 
+		Object[] simpleBugsInformation = searchBugs(
+				prepareSearchBugsParameters(filter), 0, filter.getLimit());
+		if (checkCanceled(exec)) {
+			return new ArrayList<ITSDataType>();
+		}
+		List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
 		Object[] bugs = getBugs(prepareGetBugsParameters(bugsIds));
+		if (checkCanceled(exec)) {
+			return new ArrayList<ITSDataType>();
+		}
 		Object[] histories = getBugsHistory(prepareBugsIdsParameters(bugsIds));
+		if (checkCanceled(exec)) {
+			return new ArrayList<ITSDataType>();
+		}
 		Map<String, Object> comments = getBugsComments(prepareBugsIdsParameters(bugsIds));
+		if (checkCanceled(exec)) {
+			return new ArrayList<ITSDataType>();
+		}
 
 		return parser.parseEntries(bugs, histories, comments);
 	}
 
-	Object[] searchBugs(Map<String, Object> parameters, int offset, int limit) throws XmlRpcException {
+	private boolean checkCanceled(ExecutionContext exec) {
+		try {
+			exec.checkCanceled();
+		} catch (CanceledExecutionException e) {
+			return true;
+		}
+		return false;
+	}
+
+	Object[] searchBugs(Map<String, Object> parameters, int offset, int limit)
+			throws XmlRpcException {
 		parameters.put(OFFSET, offset);
 		parameters.put(LIMIT, limit);
 
-		Map<String, Object> result = bugzillaClient.execute(BUG_SEARCH_METHOD, parameters);
+		Map<String, Object> result = bugzillaClient.execute(BUG_SEARCH_METHOD,
+				parameters);
 
 		return (Object[]) result.get(BUGS);
 	}
 
 	Object[] getBugs(Map<String, Object> parameters) throws XmlRpcException {
-		Map<String, Object> result = bugzillaClient.execute(BUG_GET_METHOD, parameters);
+		Map<String, Object> result = bugzillaClient.execute(BUG_GET_METHOD,
+				parameters);
 
 		return (Object[]) result.get(BUGS);
 	}
 
-	Object[] getBugsHistory(Map<String, Object> parameters) throws XmlRpcException {
-		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD, parameters);
+	Object[] getBugsHistory(Map<String, Object> parameters)
+			throws XmlRpcException {
+		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD,
+				parameters);
 
 		return (Object[]) result.get(BUGS);
 	}
 
 	@SuppressWarnings("unchecked")
-	Map<String, Object> getBugsComments(Map<String, Object> parameters) throws XmlRpcException {
-		Map<String, Object> result = bugzillaClient.execute(BUG_COMMENT_METHOD, parameters);
+	Map<String, Object> getBugsComments(Map<String, Object> parameters)
+			throws XmlRpcException {
+		Map<String, Object> result = bugzillaClient.execute(BUG_COMMENT_METHOD,
+				parameters);
 
 		return (Map<String, Object>) result.get(BUGS);
 	}
 
-	private Map<String, Object> prepareSearchBugsParameters(BugzillaOnlineFilter filter) {
+	private Map<String, Object> prepareSearchBugsParameters(
+			BugzillaOnlineFilter filter) {
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(PRODUCT_NAME, filter.getProductName());
-		parameters.put(INCLUDE_FIELDS, new String[] { BugzillaOnlineParser.ID });
+		parameters
+				.put(INCLUDE_FIELDS, new String[] { BugzillaOnlineParser.ID });
 		if (creationTimeIsProvided(filter)) {
 			parameters.put(DATE_FROM, filter.getDateFrom());
 		}
@@ -137,8 +171,12 @@ public class BugzillaOnlineClientAdapter {
 
 	private Map<String, Object> prepareGetBugsParameters(List<String> ids) {
 		Map<String, Object> parameters = prepareBugsIdsParameters(ids);
-		parameters.put(INCLUDE_FIELDS, new String[] { BugzillaOnlineParser.ID, BugzillaOnlineParser.CREATED, BugzillaOnlineParser.UPDATED, BugzillaOnlineParser.STATUS, BugzillaOnlineParser.ASSIGNEE,
-				BugzillaOnlineParser.FIX_VERSION, BugzillaOnlineParser.VERSION, BugzillaOnlineParser.REPORTER, BugzillaOnlineParser.PRIORITY, BugzillaOnlineParser.SUMMARY, BugzillaOnlineParser.LINK,
+		parameters.put(INCLUDE_FIELDS, new String[] { BugzillaOnlineParser.ID,
+				BugzillaOnlineParser.CREATED, BugzillaOnlineParser.UPDATED,
+				BugzillaOnlineParser.STATUS, BugzillaOnlineParser.ASSIGNEE,
+				BugzillaOnlineParser.FIX_VERSION, BugzillaOnlineParser.VERSION,
+				BugzillaOnlineParser.REPORTER, BugzillaOnlineParser.PRIORITY,
+				BugzillaOnlineParser.SUMMARY, BugzillaOnlineParser.LINK,
 				BugzillaOnlineParser.RESOLUTION });
 		return parameters;
 	}

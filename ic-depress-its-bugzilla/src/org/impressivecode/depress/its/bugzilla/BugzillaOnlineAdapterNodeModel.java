@@ -111,7 +111,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		}
 
 		LOGGER.info("Reading entries from bugzilla instance: " + getURL() + " and product: " + getProductName());
-		List<ITSDataType> entries = clientAdapter.listEntries(getBugFilter());
+		List<ITSDataType> entries = clientAdapter.listEntries(getBugFilter(), exec);
 
 		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, exec);
@@ -165,6 +165,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	protected void reset() {
 		// NOOP
 	}
+	
 
 	@Override
 	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
@@ -203,7 +204,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 		SettingsModelString url = urlSettings.createCloneWithValidatedValue(settings);
 		if (!isNullOrEmpty(url.getStringValue()) && !url.getStringValue().matches(URL_PATTERN)) {
-			throw new InvalidSettingsException("Invalid URL address");
+			throw new InvalidSettingsException("Invalid URL address. Valid example: 'https://website.org'");
 		}
 
 		SettingsModelString email = usernameSettings.createCloneWithValidatedValue(settings);
