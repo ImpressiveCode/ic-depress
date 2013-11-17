@@ -33,16 +33,12 @@ import org.knime.base.data.append.column.AppendedCellFactory;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
 
-import uk.ac.shef.wit.simmetrics.similaritymetrics.ChapmanLengthDeviation;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.JaroWinkler;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.OverlapCoefficient;
-
 import com.google.common.base.Preconditions;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Marek Majchrzak, Micha≥ Jawulski, Piotr Lewicki, Maciej Luüniak,
+ *         ImpressiveCode
  * 
  */
 public class SemanticAnalysisCellFactory implements AppendedCellFactory {
@@ -50,13 +46,18 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
     private final Configuration cfg;
     private final InputTransformer<SCMDataType> scmTransfomer;
     private MarkerInputTransformer markerTransformer;
+    private String selectedAlgorithm;
+    private String comparisionObject;
+    private double threshold;
 
     public SemanticAnalysisCellFactory(final Configuration configuration,
             final InputTransformer<SCMDataType> scmTransfomer, final MarkerInputTransformer markerTransformer) {
         this.cfg = configuration;
         this.scmTransfomer = Preconditions.checkNotNull(scmTransfomer, "ScmTransfomer has to be set");
         this.markerTransformer = Preconditions.checkNotNull(markerTransformer, "MarkerTransformer has to be set");
-        ;
+        this.comparisionObject = this.cfg.getMcComparsionObject();
+        this.selectedAlgorithm = this.cfg.getSelectedAlgorithm();
+        this.threshold = this.cfg.getComparsionLimit();
     }
 
     @Override
@@ -64,13 +65,13 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
 
         SCMDataType scm = scmTransfomer.transformRow(row);
         MarkerDataType marker = markerTransformer.transformRow(row);
-        try{
-        	Integer confidence = checkConfidence(scm, marker);
-        	return new DataCell[] { integerOrMissingCell(confidence) };
-        } catch(Exception e){
-        	return null;
+        try {
+            Integer confidence = checkConfidence(scm, marker);
+            return new DataCell[] { integerOrMissingCell(confidence) };
+        } catch (Exception e) {
+            return null;
         }
-        
+
     }
 
     private int checkConfidence(final SCMDataType scm, final MarkerDataType marker) throws Exception {
@@ -78,94 +79,74 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
         if (issues.isEmpty()) {
             return 0;
         } else {
-        	Set<ITSDataType> similarIssues = checkSimilarity(issues, scm);
-        	
+            Set<ITSDataType> similarIssues = checkSimilarity(issues, scm);
+
             return checkAuthor(scm, similarIssues) + checkResolution(similarIssues);
         }
     }
-    
-    private Set<ITSDataType> checkSimilarity(final Set<ITSDataType> issues, final SCMDataType scm) throws Exception
-    {
-    	String selectedAlgorithm = this.cfg.getSelectedAlgorithm();
-    	String comparisionObject = this.cfg.getMcComparsionObject();
-    	String message = scm.getMessage();
-    	
-    	Iterator<ITSDataType> issuesIterator = issues.iterator();
-    	Set<ITSDataType> similarIssues = new HashSet<ITSDataType>();
-    	
-    	double threshold = this.cfg.getComparsionLimit();
-    	double similarity = -1;
-    	while(issuesIterator.hasNext())
-    	{
-    		ITSDataType issue;
-    		issue = issuesIterator.next();
-    		if(comparisionObject.equals(Configuration.MSC_DT_COMMENTS)){
-    			int numberOfComments = issue.getComments().size();
-    			if(numberOfComments > 0){
-	    		   for(int i = 0; i<numberOfComments; i++){
-    				  String comment = issue.getComments().get(i);
-    				  if(comment == null || message ==null) continue;
-    				  similarity = DoSimilarityTest(message, comment, selectedAlgorithm);
-    				  if(similarity > threshold){
-    					break;
-	    			   }
-	    			}
-    			} 
-    		} else if(comparisionObject.equals(Configuration.MSC_DT_DESCRIPTION)){
-    			String description = issue.getDescription();
-    			if(message != null && description != null){
-    				similarity = DoSimilarityTest(message, description, selectedAlgorithm);
-    			}
-    		}
-    		else if(comparisionObject.equals(Configuration.MSC_DT_SUMMARY)){
-    			String summary = issue.getSummary();
-    			if(message != null && summary != null){
-    				similarity = DoSimilarityTest(message, summary, selectedAlgorithm);
-    			}
-    		}
-    		similarity = similarity * 100;
-    		if(similarity > threshold){
-    			similarIssues.add(issue);
-    		}
-    	}
-    	return similarIssues;
-    }
-    
-    private double DoSimilarityTest(String string1, String string2, String selectedAlgorithm) throws Exception
-    {
-    	if(selectedAlgorithm.equals(Configuration.JARO_WINKLER_ALGHORITM)){
-    		return DoJaroWinklerTest(string1, string2);
-    	} else if(selectedAlgorithm.equals(Configuration.LEVENSTHEIN_ALGHORITM)){
-    		return DoLevenstheinTest(string1, string2);
-    	} else if(selectedAlgorithm.equals(Configuration.CHAPMAN_ALGHORITM)){
-    		return DoChapmanTest(string1, string2);
-    	} else if(selectedAlgorithm.equals(Configuration.OVERLAP_ALGHORITM)){
-    		return DoOverlapTest(string1, string2);
-    	} else{
-    		throw new Exception("Unsupported Algorithm!");
-    	}
-    }
-    
-    private double DoLevenstheinTest(String string1, String string2) {
-    	Levenshtein levenstheinTest = new Levenshtein();
-		return levenstheinTest.getSimilarity(string1, string2);
-	}
 
-	private double DoJaroWinklerTest(String string1, String string2) {
-		JaroWinkler jaroWinklerTest = new JaroWinkler();
-		return jaroWinklerTest.getSimilarity(string1, string2);
-	}
-	
-	private double DoChapmanTest(String string1, String string2) {
-		ChapmanLengthDeviation chapmanTest = new ChapmanLengthDeviation();
-		return chapmanTest.getSimilarity(string1, string2);
-	}
+    private Set<ITSDataType> checkSimilarity(final Set<ITSDataType> issues, final SCMDataType scm) throws Exception {
 
-	private double DoOverlapTest(String string1, String string2) {
-		OverlapCoefficient overlapTest = new OverlapCoefficient();
-		return overlapTest.getSimilarity(string1, string2);
-	}
-	private int checkResolution(final Set<ITSDataType> issues) {
+        String message = scm.getMessage();
+
+        Iterator<ITSDataType> issuesIterator = issues.iterator();
+        Set<ITSDataType> similarIssues = new HashSet<ITSDataType>();
+
+        double similarity = -1;
+        while (issuesIterator.hasNext()) {
+            ITSDataType issue;
+            issue = issuesIterator.next();
+            if (comparisionObject.equals(Configuration.MSC_DT_COMMENTS)) {
+                similarity = processComments(issue, message);
+            } else if (comparisionObject.equals(Configuration.MSC_DT_DESCRIPTION)) {
+                similarity = processDescription(issue, message);
+            } else if (comparisionObject.equals(Configuration.MSC_DT_SUMMARY)) {
+                similarity = processSummary(issue, message);
+            }
+            similarity = similarity * 100;
+            if (similarity > threshold) {
+                similarIssues.add(issue);
+            }
+        }
+        return similarIssues;
+    }
+
+    private double processComments(ITSDataType issue, String message) throws Exception {
+        int numberOfComments = issue.getComments().size();
+        double similarity = 0;
+        if (numberOfComments > 0) {
+            for (int i = 0; i < numberOfComments; i++) {
+                String comment = issue.getComments().get(i);
+                if (comment == null || message == null)
+                    continue;
+                similarity = SimilarityMatcher.doSimilarityTest(message, comment, selectedAlgorithm);
+                if (similarity > threshold) {
+                    break;
+                }
+            }
+        }
+        return similarity;
+    }
+
+    private double processDescription(ITSDataType issue, String message) throws Exception {
+        String description = issue.getDescription();
+        double similarity = 0;
+        if (message != null && description != null) {
+            similarity = SimilarityMatcher.doSimilarityTest(message, description, selectedAlgorithm);
+        }
+        return similarity;
+    }
+
+    private double processSummary(ITSDataType issue, String message) throws Exception {
+        String summary = issue.getSummary();
+        double similarity = 0;
+        if (message != null && summary != null) {
+            similarity = SimilarityMatcher.doSimilarityTest(message, summary, selectedAlgorithm);
+        }
+        return similarity;
+    }
+
+    private int checkResolution(final Set<ITSDataType> issues) {
         for (ITSDataType its : issues) {
             if (!ITSResolution.FIXED.equals(its.getResolution())) {
                 return 0;

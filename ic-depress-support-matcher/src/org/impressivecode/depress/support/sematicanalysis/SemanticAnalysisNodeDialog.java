@@ -25,7 +25,8 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Marek Majchrzak, Micha≥ Jawulski, Piotr Lewicki, Maciej Luüniak,
+ *         ImpressiveCode
  * 
  */
 public class SemanticAnalysisNodeDialog extends DefaultNodeSettingsPane {
@@ -33,25 +34,27 @@ public class SemanticAnalysisNodeDialog extends DefaultNodeSettingsPane {
     protected SemanticAnalysisNodeDialog() {
         super();
         createNewGroup("Weight");
-        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(SemanticAnalysisNodeModel.CFG_AUTHOR_WEIGHT,
-                SemanticAnalysisNodeModel.AUTHOR_WEIGHT_DEFAULT), 
+        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(
+                SemanticAnalysisNodeModel.CFG_AUTHOR_WEIGHT, SemanticAnalysisNodeModel.AUTHOR_WEIGHT_DEFAULT),
                 "Author: ", 33));
 
-        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(SemanticAnalysisNodeModel.CFG_RESOLUTION_WEIGHT,
-                SemanticAnalysisNodeModel.RESOLUTION_WEIGHT_DEFAULT), 
+        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(
+                SemanticAnalysisNodeModel.CFG_RESOLUTION_WEIGHT, SemanticAnalysisNodeModel.RESOLUTION_WEIGHT_DEFAULT),
                 "Resolution(FIXED): ", 26));
-        
-        addDialogComponent(new DialogComponentStringSelection(new SettingsModelString(SemanticAnalysisNodeModel.CFG_MSC_COMPARSION_OBJECT,
-        		SemanticAnalysisNodeModel.MSC_COMPARSION_OBJECT_DEFAULT),
-        		"Compare MSC to: ", Configuration.MSC_DATA_TYPE));
-        
-        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(SemanticAnalysisNodeModel.CFG_COMPARSION_LIMIT,
-        		SemanticAnalysisNodeModel.COMPARSION_LIMIT_DEFAULT),
-        		"Comparsion limit (0-100%): ", 21));
-        
-        addDialogComponent(new DialogComponentStringSelection(new SettingsModelString(SemanticAnalysisNodeModel.CFG_SELECTED_ALGORITHM,
-        		SemanticAnalysisNodeModel.CFG_SELECTED_ALGORITHM_DEFAULT),
-        		"Select algorithm: ", Configuration.ALGORITHMS));
+
+        addDialogComponent(new DialogComponentStringSelection(new SettingsModelString(
+                SemanticAnalysisNodeModel.CFG_MSC_COMPARSION_OBJECT,
+                SemanticAnalysisNodeModel.MSC_COMPARSION_OBJECT_DEFAULT), "Compare MSC to: ",
+                Configuration.MSC_DATA_TYPE));
+
+        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(
+                SemanticAnalysisNodeModel.CFG_COMPARSION_LIMIT, SemanticAnalysisNodeModel.COMPARSION_LIMIT_DEFAULT),
+                "Comparsion limit (0-100%): ", 21));
+
+        addDialogComponent(new DialogComponentStringSelection(new SettingsModelString(
+                SemanticAnalysisNodeModel.CFG_SELECTED_ALGORITHM,
+                SemanticAnalysisNodeModel.CFG_SELECTED_ALGORITHM_DEFAULT), "Select algorithm: ",
+                Configuration.ALGORITHMS));
 
     }
 }
