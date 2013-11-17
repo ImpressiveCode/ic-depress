@@ -84,7 +84,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         LOGGER.info("Downloading JIRA entries.");
         String rawData = client.getIssues();
         LOGGER.info("Transforming JIRA entries.");
-        List<ITSDataType> parsedData = JiraOnlineParser.parse(rawData);
+        List<ITSDataType> parsedData = JiraOnlineParser.parse(rawData, client.getUriBuilder().getHostname());
         BufferedDataTable out = transform(parsedData, exec);
 
         return new BufferedDataTable[] { out };
@@ -103,12 +103,13 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         if (jiraSettingsDateEnd.getSelectedFields() > 0) {
             builder.setDateTo(jiraSettingsDateEnd.getDate());
         }
+        
         switch (jiraSettingsStatus.getStringValue().toLowerCase()) {
-        case JiraOnlineAdapterUriBuilder.CREATED:
-            builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.CREATED);
+        case "created":
+            builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED);
             break;
-        case JiraOnlineAdapterUriBuilder.RESOLUTION_DATE:
-            builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.RESOLUTION_DATE);
+        case "resolutiondate":
+            builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.RESOLUTION_DATE);
             break;
         }
         return builder;

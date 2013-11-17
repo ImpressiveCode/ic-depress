@@ -28,12 +28,13 @@ import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueVersion;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineComment;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Priority;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Resolution;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Status;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Type;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssue;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueVersion;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssuesList;
 
 import com.fasterxml.jackson.core.JsonFactory;
@@ -50,7 +51,10 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
  * 
  */
 public class JiraOnlineParser {
-    public static List<ITSDataType> parse(String source) {
+
+    private static final String LINK_PATH = "browse/";
+
+    public static List<ITSDataType> parse(String source, String hostname) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
@@ -68,16 +72,18 @@ public class JiraOnlineParser {
             e.printStackTrace();
         }
 
-        return parseData(issueList);
+        return parseData(issueList, hostname);
     }
 
-    private static List<ITSDataType> parseData(JiraOnlineIssuesList issueList) {
+    private static List<ITSDataType> parseData(JiraOnlineIssuesList issueList, String hostname) {
         List<ITSDataType> resultList = new ArrayList<ITSDataType>();
 
         for (JiraOnlineIssue issue : issueList.getIssues()) {
             ITSDataType data = new ITSDataType();
-            data.setIssueId(Integer.toString(issue.getId()));
-            data.setLink(issue.getLink());
+            data.setIssueId(issue.getKey());
+
+            String link = hostname + LINK_PATH + issue.getKey();
+            data.setLink(link);
 
             Set<String> assignees = new HashSet<>();
             if (issue.getFields().getAssignee() != null) {
@@ -113,6 +119,16 @@ public class JiraOnlineParser {
             data.setSummary(issue.getFields().getSummary());
             data.setDescription(issue.getFields().getDescription());
 
+            List<String> comments = new ArrayList<>();
+            Set<String> commentAuthors = new HashSet<>();
+            for (JiraOnlineComment comment : issue.getFields().getComment().getComments()) {
+                comments.add(comment.getBody());
+                commentAuthors.add(comment.getAuthor().getName());
+            }
+
+            data.setComments(comments);
+            data.setCommentAuthors(commentAuthors);
+
             resultList.add(data);
         }
 
@@ -143,6 +159,8 @@ public class JiraOnlineParser {
         case "Not A Problem":
             return ITSResolution.WONT_FIX;
         case "Implemented":
+            return ITSResolution.FIXED;
+        case "Complete" :
             return ITSResolution.FIXED;
         default:
             return ITSResolution.UNKNOWN;

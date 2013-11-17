@@ -32,13 +32,28 @@ import javax.ws.rs.core.UriBuilder;
  */
 public class JiraOnlineAdapterUriBuilder {
 
+    private static final String SIMPLE_URI_PATH = "{protocol}://{hostname}/";
     private static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/2/serverInfo";
     private static final String QUERY_URI_PATH = "{protocol}://{hostname}/rest/api/latest/search";
     private static final String QUERY_PARAM = "jql";
+    private static final String FIELDS_PARAM = "fields";
     private static final String CONJUNCTION = " AND ";
     private static final String JIRA_DATE_FORMAT = "yyyy-MM-dd";
-    public static final String CREATED = "created";
-    public static final String RESOLUTION_DATE = "resolutiondate";
+    
+    public static enum DateFilterType {
+        
+        CREATED("created"), RESOLUTION_DATE("resolutiondate");
+
+        public final String value;
+                
+        private DateFilterType(String value) {
+            this.value = value;
+        }
+        
+        public String toString() {
+            return value;
+        }
+    }
 
     private SimpleDateFormat dateFormatter;
     private String hostname;
@@ -46,7 +61,7 @@ public class JiraOnlineAdapterUriBuilder {
     private String protocol;
     private Date dateFrom;
     private Date dateTo;
-    private String dateFilterStatus;
+    private JiraOnlineAdapterUriBuilder.DateFilterType dateFilterStatus;
     private boolean isTest;
 
     public JiraOnlineAdapterUriBuilder() {
@@ -75,7 +90,7 @@ public class JiraOnlineAdapterUriBuilder {
         return this;
     }
 
-    public JiraOnlineAdapterUriBuilder setDateFilterStatus(String dateFilterStatus) {
+    public JiraOnlineAdapterUriBuilder setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType dateFilterStatus) {
         this.dateFilterStatus = dateFilterStatus;
         return this;
     }
@@ -120,7 +135,7 @@ public class JiraOnlineAdapterUriBuilder {
         }
 
         URI result = UriBuilder.fromPath(QUERY_URI_PATH).resolveTemplate("protocol", protocol)
-                .resolveTemplate("hostname", hostname).queryParam(QUERY_PARAM, uriJQL).build();
+                .resolveTemplate("hostname", hostname).queryParam(FIELDS_PARAM, "*all").queryParam(QUERY_PARAM, uriJQL).build();
         // TODO setting issue limit, see issue#15 for more details
         // result += "&maxResults=300";
         return result;
@@ -131,7 +146,6 @@ public class JiraOnlineAdapterUriBuilder {
     }
 
     public URI testHost() {
-        System.out.println(getProtocol());
         return UriBuilder.fromPath(TEST_URI_PATH).resolveTemplate("protocol", getProtocol())
                 .resolveTemplate("hostname", hostname).build();
     }
@@ -160,5 +174,10 @@ public class JiraOnlineAdapterUriBuilder {
         if (hostname.endsWith("/")) {
             hostname = hostname.substring(0, hostname.length() - 1);
         }
+    }
+
+    public String getHostname() {
+        return UriBuilder.fromPath(SIMPLE_URI_PATH).resolveTemplate("protocol", getProtocol())
+                .resolveTemplate("hostname", hostname).build().toASCIIString();
     }
 }
