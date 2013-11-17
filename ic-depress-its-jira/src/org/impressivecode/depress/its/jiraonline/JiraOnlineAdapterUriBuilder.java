@@ -119,7 +119,7 @@ public class JiraOnlineAdapterUriBuilder {
             uriJQL = jqlBuilder.toString();
         }
 
-        URI result = UriBuilder.fromPath(QUERY_URI_PATH).resolveTemplate("protocol", "https")
+        URI result = UriBuilder.fromPath(QUERY_URI_PATH).resolveTemplate("protocol", protocol)
                 .resolveTemplate("hostname", hostname).queryParam(QUERY_PARAM, uriJQL).build();
         // TODO setting issue limit, see issue#15 for more details
         // result += "&maxResults=300";

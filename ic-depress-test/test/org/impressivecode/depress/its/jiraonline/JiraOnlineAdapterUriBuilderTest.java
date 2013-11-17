@@ -29,10 +29,12 @@ import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.internal.matchers.EndsWith;
 
 /**
- * @author Dawid Rutowicz, Wroclaw University of Technology
+ * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
+ * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
  */
 
@@ -143,6 +145,58 @@ public class JiraOnlineAdapterUriBuilderTest {
 
         assertThat(actual, is(notNullValue()));
         assertThat(actual, is(equalTo(expected)));
+    }
+
+    @Test
+    public void should_create_valid_url_with_ending_slash_given() {
+        // given
+        JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+        builder.setHostname("dummyhostname.com/");
+
+        // when
+        String result = builder.build().toString();
+
+        // then
+        assertThat(result, is(equalTo("https://dummyhostname.com/rest/api/latest/search?jql=")));
+    }
+
+    @Test
+    public void should_create_valid_url_without_ending_slash_given() {
+        // given
+        JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+        builder.setHostname("dummyhostname.com");
+
+        // when
+        String result = builder.build().toString();
+
+        // then
+        assertThat(result, is(equalTo("https://dummyhostname.com/rest/api/latest/search?jql=")));
+    }
+
+    @Test
+    public void should_detect_unsecured_connection_protocol() {
+        // given
+        JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+        builder.setHostname("http://dummyhostname.com/");
+
+        // when
+        String result = builder.build().toString();
+
+        // then
+        assertThat(result, is(equalTo("http://dummyhostname.com/rest/api/latest/search?jql=")));
+    }
+
+    @Test
+    public void should_detect_secured_connection_protocol() {
+        // given
+        JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+        builder.setHostname("https://dummyhostname.com/");
+
+        // when
+        String result = builder.build().toString();
+
+        // then
+        assertThat(result, is(equalTo("https://dummyhostname.com/rest/api/latest/search?jql=")));
     }
 
     private String createBothDatesStatusCreatedExpectedFilterResult() {
