@@ -48,6 +48,7 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
  * Parser from Jira JSON answer to {@link ITSDataType}
  * 
  * @author Marcin Kunert, Wroclaw University of Technology
+ * @author Krzysztof Kwoka, Wroclaw University of Technology
  * 
  */
 public class JiraOnlineParser {
@@ -74,9 +75,19 @@ public class JiraOnlineParser {
 
         return parseData(issueList, hostname);
     }
+    
+    public static List<ITSDataType> parseMultipleIssueBatches(List<String> sources, String hostname) {
+    	List<ITSDataType> combinedIssues = new ArrayList<>();
+    	
+        for (String source : sources) {
+			combinedIssues.addAll(parse(source, hostname));
+		}
+        
+        return combinedIssues;
+    }
 
     private static List<ITSDataType> parseData(JiraOnlineIssuesList issueList, String hostname) {
-        List<ITSDataType> resultList = new ArrayList<ITSDataType>();
+        List<ITSDataType> resultList = new ArrayList<>();
 
         for (JiraOnlineIssue issue : issueList.getIssues()) {
             ITSDataType data = new ITSDataType();
@@ -226,4 +237,26 @@ public class JiraOnlineParser {
             return ITSPriority.UNKNOWN;
         }
     }
+    
+    public static int getTotalIssuesNumber(String source) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonFactory jsonFactory = new JsonFactory();
+        JsonParser jp = null;
+        JiraOnlineIssuesList issueList = null;
+
+        try {
+            jp = jsonFactory.createJsonParser(source);
+            issueList = objectMapper.readValue(jp, new TypeReference<JiraOnlineIssuesList>() {
+            });
+        } catch (JsonParseException e) {
+        } catch (UnrecognizedPropertyException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return issueList.getTotal();
+    }
+    
 }
