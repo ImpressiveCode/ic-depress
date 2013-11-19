@@ -54,7 +54,7 @@ import com.google.common.base.Preconditions;
 
 /**
  * 
- * @author Marek Majchrzak, Micha≥ Jawulski, Piotr Lewicki, Maciej Luüniak,
+ * @author Marek Majchrzak, Michal Jawulski, Piotr Lewicki, Maciej Luzniak,
  *         ImpressiveCode
  * 
  */

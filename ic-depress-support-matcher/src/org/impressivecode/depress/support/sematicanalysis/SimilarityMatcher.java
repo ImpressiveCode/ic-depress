@@ -24,7 +24,7 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.OverlapCoefficient;
 
 /**
  * 
- * @author Micha≥ Jawulski, Piotr Lewicki, Maciej Luüniak, ImpressiveCode
+ * @author Michal Jawulski, Piotr Lewicki, Maciej Luzniak, ImpressiveCode
  * 
  */
 public class SimilarityMatcher {

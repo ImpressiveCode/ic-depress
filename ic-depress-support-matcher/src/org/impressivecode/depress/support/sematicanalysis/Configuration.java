@@ -21,7 +21,7 @@ import org.impressivecode.depress.its.ITSDataHolder;
 
 /**
  * 
- * @author Marek Majchrzak, Micha≥ Jawulski, Piotr Lewicki, Maciej Luüniak,
+ * @author Marek Majchrzak, Michal Jawulski, Piotr Lewicki, Maciej Luzniak,
  *         ImpressiveCode
  * 
  */

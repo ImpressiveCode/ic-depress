@@ -25,7 +25,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * 
- * @author Marek Majchrzak, Micha≥ Jawulski, Piotr Lewicki, Maciej Luüniak,
+ * @author Marek Majchrzak, Michal Jawulski, Piotr Lewicki, Maciej Luzniak,
  *         ImpressiveCode
  * 
  */

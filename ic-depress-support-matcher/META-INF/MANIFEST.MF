@@ -18,5 +18,6 @@ Export-Package: org.impressivecode.depress.support.activitymatcher,
  org.impressivecode.depress.support.extmarkerparser,
  org.impressivecode.depress.support.markerparser,
  org.impressivecode.depress.support.sematicanalysis,
- org.impressivecode.depress.support.syntacticanalysis
+ org.impressivecode.depress.support.syntacticanalysis,
+ uk.ac.shef.wit.simmetrics.similaritymetrics
 Eclipse-BuddyPolicy: registered
