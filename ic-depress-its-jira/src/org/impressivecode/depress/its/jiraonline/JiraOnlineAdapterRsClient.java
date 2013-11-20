@@ -58,7 +58,7 @@ public class JiraOnlineAdapterRsClient {
 
     public boolean testConnection() throws Exception {
         Response response = getReponse();
-        
+
         return isDataFetchSuccessful(response);
     }
 
@@ -78,7 +78,7 @@ public class JiraOnlineAdapterRsClient {
         if (response.getStatus() != 200) {
             throw new Exception("Failed to fetch data.");
         }
-        
+
         return true;
     }
 

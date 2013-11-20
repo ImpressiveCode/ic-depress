@@ -75,14 +75,14 @@ public class JiraOnlineParser {
 
         return parseData(issueList, hostname);
     }
-    
+
     public static List<ITSDataType> parseMultipleIssueBatches(List<String> sources, String hostname) {
-    	List<ITSDataType> combinedIssues = new ArrayList<>();
-    	
+        List<ITSDataType> combinedIssues = new ArrayList<>();
+
         for (String source : sources) {
-			combinedIssues.addAll(parse(source, hostname));
-		}
-        
+            combinedIssues.addAll(parse(source, hostname));
+        }
+
         return combinedIssues;
     }
 
@@ -171,7 +171,7 @@ public class JiraOnlineParser {
             return ITSResolution.WONT_FIX;
         case "Implemented":
             return ITSResolution.FIXED;
-        case "Complete" :
+        case "Complete":
             return ITSResolution.FIXED;
         default:
             return ITSResolution.UNKNOWN;
@@ -237,7 +237,7 @@ public class JiraOnlineParser {
             return ITSPriority.UNKNOWN;
         }
     }
-    
+
     public static int getTotalIssuesNumber(String source) {
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -258,5 +258,5 @@ public class JiraOnlineParser {
 
         return issueList.getTotal();
     }
-    
+
 }

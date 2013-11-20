@@ -32,184 +32,177 @@ import javax.ws.rs.core.UriBuilder;
  */
 public class JiraOnlineAdapterUriBuilder {
 
-	private static final String SIMPLE_URI_PATH = "{protocol}://{hostname}/";
-	private static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/2/serverInfo";
-	private static final String QUERY_URI_PATH = "{protocol}://{hostname}/rest/api/latest/search";
-	private static final String QUERY_PARAM = "jql";
-	private static final String FIELDS_PARAM = "fields";
-	private static final String CONJUNCTION = " AND ";
-	private static final String GREATER_EQUAL = " >= ";
-	private static final String LESS_EQUAL = " <= ";
-	private static final String JIRA_DATE_FORMAT = "yyyy-MM-dd";
-	private static final String MAX_RESULTS = "maxResults";
-	private static final String START_AT = "startAt";
-	private static final int MAX_RESULTS_VALUE = 100;
-	private int startingIndex = 0;
+    private static final String SIMPLE_URI_PATH = "{protocol}://{hostname}/";
+    private static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/2/serverInfo";
+    private static final String QUERY_URI_PATH = "{protocol}://{hostname}/rest/api/latest/search";
+    private static final String QUERY_PARAM = "jql";
+    private static final String FIELDS_PARAM = "fields";
+    private static final String CONJUNCTION = " AND ";
+    private static final String GREATER_EQUAL = " >= ";
+    private static final String LESS_EQUAL = " <= ";
+    private static final String JIRA_DATE_FORMAT = "yyyy-MM-dd";
+    private static final String MAX_RESULTS = "maxResults";
+    private static final String START_AT = "startAt";
+    private static final int MAX_RESULTS_VALUE = 100;
+    private int startingIndex = 0;
 
-	public static enum DateFilterType {
+    public static enum DateFilterType {
 
-		CREATED("created"), RESOLUTION_DATE("resolutiondate");
+        CREATED("created"), RESOLUTION_DATE("resolutiondate");
 
-		public final String value;
+        public final String value;
 
-		private DateFilterType(String value) {
-			this.value = value;
-		}
+        private DateFilterType(String value) {
+            this.value = value;
+        }
 
-		public String toString() {
-			return value;
-		}
-	}
+        public String toString() {
+            return value;
+        }
+    }
 
-	private SimpleDateFormat dateFormatter;
-	private String hostname;
-	private String jql;
-	private String protocol;
-	private Date dateFrom;
-	private Date dateTo;
-	private JiraOnlineAdapterUriBuilder.DateFilterType dateFilterStatus;
-	private boolean isTest;
+    private SimpleDateFormat dateFormatter;
+    private String hostname;
+    private String jql;
+    private String protocol;
+    private Date dateFrom;
+    private Date dateTo;
+    private JiraOnlineAdapterUriBuilder.DateFilterType dateFilterStatus;
+    private boolean isTest;
 
-	public JiraOnlineAdapterUriBuilder() {
-		dateFormatter = new SimpleDateFormat(JIRA_DATE_FORMAT);
-	}
+    public JiraOnlineAdapterUriBuilder() {
+        dateFormatter = new SimpleDateFormat(JIRA_DATE_FORMAT);
+    }
 
-	public JiraOnlineAdapterUriBuilder setHostname(String hostname) {
-		this.hostname = hostname;
-		filterInputedHostname();
+    public JiraOnlineAdapterUriBuilder setHostname(String hostname) {
+        this.hostname = hostname;
+        filterInputedHostname();
 
-		return this;
-	}
+        return this;
+    }
 
-	public JiraOnlineAdapterUriBuilder setJQL(String jql) {
-		this.jql = jql;
-		return this;
-	}
+    public JiraOnlineAdapterUriBuilder setJQL(String jql) {
+        this.jql = jql;
+        return this;
+    }
 
-	public JiraOnlineAdapterUriBuilder setDateFrom(Date dateFrom) {
-		this.dateFrom = dateFrom;
-		return this;
-	}
+    public JiraOnlineAdapterUriBuilder setDateFrom(Date dateFrom) {
+        this.dateFrom = dateFrom;
+        return this;
+    }
 
-	public JiraOnlineAdapterUriBuilder setDateTo(Date dateTo) {
-		this.dateTo = dateTo;
-		return this;
-	}
+    public JiraOnlineAdapterUriBuilder setDateTo(Date dateTo) {
+        this.dateTo = dateTo;
+        return this;
+    }
 
-	public JiraOnlineAdapterUriBuilder setDateFilterStatus(
-			JiraOnlineAdapterUriBuilder.DateFilterType dateFilterStatus) {
-		this.dateFilterStatus = dateFilterStatus;
-		return this;
-	}
+    public JiraOnlineAdapterUriBuilder setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType dateFilterStatus) {
+        this.dateFilterStatus = dateFilterStatus;
+        return this;
+    }
 
-	public JiraOnlineAdapterUriBuilder setIsTest(boolean isTest) {
-		this.isTest = isTest;
-		return this;
-	}
+    public JiraOnlineAdapterUriBuilder setIsTest(boolean isTest) {
+        this.isTest = isTest;
+        return this;
+    }
 
-	public JiraOnlineAdapterUriBuilder prepareForNextBatch() {
-		this.startingIndex += JiraOnlineAdapterUriBuilder.MAX_RESULTS_VALUE;
-		return this;
-	}
+    public JiraOnlineAdapterUriBuilder prepareForNextBatch() {
+        this.startingIndex += JiraOnlineAdapterUriBuilder.MAX_RESULTS_VALUE;
+        return this;
+    }
 
-	public URI build() {
+    public URI build() {
 
-		if (isTest) {
-			return testHost();
-		}
+        if (isTest) {
+            return testHost();
+        }
 
-		StringBuilder jqlBuilder = new StringBuilder();
+        StringBuilder jqlBuilder = new StringBuilder();
 
-		if (jql != null) {
-			jqlBuilder.append(jql);
-			jqlBuilder.append(CONJUNCTION);
-		}
+        if (jql != null) {
+            jqlBuilder.append(jql);
+            jqlBuilder.append(CONJUNCTION);
+        }
 
-		if (dateFilterStatus != null) {
-			if (dateFrom != null) {
-				jqlBuilder.append(dateFilterStatus);
-				jqlBuilder.append(GREATER_EQUAL
-						+ dateFormatter.format(dateFrom));
-				jqlBuilder.append(CONJUNCTION);
-			}
+        if (dateFilterStatus != null) {
+            if (dateFrom != null) {
+                jqlBuilder.append(dateFilterStatus);
+                jqlBuilder.append(GREATER_EQUAL + dateFormatter.format(dateFrom));
+                jqlBuilder.append(CONJUNCTION);
+            }
 
-			if (dateTo != null) {
-				jqlBuilder.append(dateFilterStatus);
-				jqlBuilder.append(LESS_EQUAL + dateFormatter.format(dateTo));
-				jqlBuilder.append(CONJUNCTION);
-			}
-		}
+            if (dateTo != null) {
+                jqlBuilder.append(dateFilterStatus);
+                jqlBuilder.append(LESS_EQUAL + dateFormatter.format(dateTo));
+                jqlBuilder.append(CONJUNCTION);
+            }
+        }
 
-		String uriJQL = null;
-		if (jqlBuilder.toString().endsWith(CONJUNCTION)) {
-			uriJQL = jqlBuilder.substring(0, jqlBuilder.length() - 5);
-		} else {
-			uriJQL = jqlBuilder.toString();
-		}
+        String uriJQL = null;
+        if (jqlBuilder.toString().endsWith(CONJUNCTION)) {
+            uriJQL = jqlBuilder.substring(0, jqlBuilder.length() - 5);
+        } else {
+            uriJQL = jqlBuilder.toString();
+        }
 
-		URI result = UriBuilder.fromPath(QUERY_URI_PATH)
-				.resolveTemplate("protocol", protocol)
-				.resolveTemplate("hostname", hostname)
-				.queryParam(QUERY_PARAM, uriJQL)
-				.queryParam(START_AT, startingIndex)
-				.queryParam(FIELDS_PARAM, "*all")
-				.queryParam(MAX_RESULTS, MAX_RESULTS_VALUE).build();
+        URI result = UriBuilder.fromPath(QUERY_URI_PATH).resolveTemplate("protocol", protocol)
+                .resolveTemplate("hostname", hostname).queryParam(QUERY_PARAM, uriJQL)
+                .queryParam(START_AT, startingIndex).queryParam(FIELDS_PARAM, "*all")
+                .queryParam(MAX_RESULTS, MAX_RESULTS_VALUE).build();
 
-		return result;
-	}
+        return result;
+    }
 
-	public SimpleDateFormat getDateFormatter() {
-		return (SimpleDateFormat) dateFormatter.clone();
-	}
+    public SimpleDateFormat getDateFormatter() {
+        return (SimpleDateFormat) dateFormatter.clone();
+    }
 
-	public URI testHost() {
-		return UriBuilder.fromPath(TEST_URI_PATH)
-				.resolveTemplate("protocol", getProtocol())
-				.resolveTemplate("hostname", hostname).build();
-	}
+    public URI testHost() {
+        return UriBuilder.fromPath(TEST_URI_PATH).resolveTemplate("protocol", getProtocol())
+                .resolveTemplate("hostname", hostname).build();
+    }
 
-	private String getProtocol() {
-		return protocol;
-	}
+    private String getProtocol() {
+        return protocol;
+    }
 
-	private void filterInputedHostname() {
-		checkForProtocol();
-		removeLastSlash();
-	}
+    private void filterInputedHostname() {
+        checkForProtocol();
+        removeLastSlash();
+    }
 
-	private void checkForProtocol() {
-		int index = hostname.indexOf("://");
+    private void checkForProtocol() {
+        int index = hostname.indexOf("://");
 
-		if (index != -1) {
-			protocol = hostname.substring(0, index);
-			hostname = hostname.substring(index + 3);
-		} else {
-			protocol = "https";
-		}
-	}
+        if (index != -1) {
+            protocol = hostname.substring(0, index);
+            hostname = hostname.substring(index + 3);
+        } else {
+            protocol = "https";
+        }
+    }
 
-	private void removeLastSlash() {
-		if (hostname.endsWith("/")) {
-			hostname = hostname.substring(0, hostname.length() - 1);
-		}
-	}
+    private void removeLastSlash() {
+        if (hostname.endsWith("/")) {
+            hostname = hostname.substring(0, hostname.length() - 1);
+        }
+    }
 
-	public String getHostname() {
-		return UriBuilder.fromPath(SIMPLE_URI_PATH)
-				.resolveTemplate("protocol", getProtocol())
-				.resolveTemplate("hostname", hostname).build().toASCIIString();
-	}
+    public String getHostname() {
+        return UriBuilder.fromPath(SIMPLE_URI_PATH).resolveTemplate("protocol", getProtocol())
+                .resolveTemplate("hostname", hostname).build().toASCIIString();
+    }
 
-	public int getStartingIndex() {
-		return startingIndex;
-	}
+    public int getStartingIndex() {
+        return startingIndex;
+    }
 
-	public void setStartingIndex(int startingIndex) {
-		this.startingIndex = startingIndex;
-	}
-	
-	public int getNextStartingIndex() {
-		return startingIndex + JiraOnlineAdapterUriBuilder.MAX_RESULTS_VALUE;
-	}
+    public void setStartingIndex(int startingIndex) {
+        this.startingIndex = startingIndex;
+    }
+
+    public int getNextStartingIndex() {
+        return startingIndex + JiraOnlineAdapterUriBuilder.MAX_RESULTS_VALUE;
+    }
 
 }
