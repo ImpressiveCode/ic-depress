@@ -10,10 +10,4 @@
 			id="org.impressivecode.depress.its.clearquest">
 		</node>
 	</extension>
-	<extension point="org.knime.workbench.repository.registeredFileExtensions">
-        <FileExtensionMapping NodeFactory="org.impressivecode.depress.its.clearquest.ClearQuestReaderNodeFactory">
-           <FileExtension extension=".xls">
-           </FileExtension>
-        </FileExtensionMapping>
-    </extension>   
 </plugin>

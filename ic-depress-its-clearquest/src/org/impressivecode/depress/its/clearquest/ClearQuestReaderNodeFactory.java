@@ -50,30 +50,30 @@
  */
 package org.impressivecode.depress.its.clearquest;
 
-import org.knime.core.node.ContextAwareNodeFactory;
 import org.knime.core.node.NodeCreationContext;
 import org.knime.core.node.NodeDialogPane;
-import org.knime.core.node.NodeView;
+import org.knime.ext.poi.node.read2.XLSReaderNodeFactory;
+import org.knime.ext.poi.node.read2.XLSReaderNodeModel;
 
 /**
  *
- * @author Peter Ohl, KNIME.com, Zurich, Switzerland
+ * @author £ukasz Leœniczek, Wroc³aw, Poland
  */
-public class ClearQuestReaderNodeFactory extends ContextAwareNodeFactory<ClearQuestReaderNodeModel> {
-
-    /**
+public class ClearQuestReaderNodeFactory extends XLSReaderNodeFactory {
+	
+	/**
      * {@inheritDoc}
      */
     @Override
     protected NodeDialogPane createNodeDialogPane() {
         return new ClearQuestReaderNodeDialog();
     }
-
-    /**
+	
+	/**
      * {@inheritDoc}
      */
     @Override
-    public ClearQuestReaderNodeModel createNodeModel() {
+    public XLSReaderNodeModel createNodeModel() {
         return new ClearQuestReaderNodeModel();
     }
 
@@ -81,32 +81,9 @@ public class ClearQuestReaderNodeFactory extends ContextAwareNodeFactory<ClearQu
      * {@inheritDoc}
      */
     @Override
-    public NodeView<ClearQuestReaderNodeModel> createNodeView(final int viewIndex,
-            final ClearQuestReaderNodeModel nodeModel) {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected int getNrNodeViews() {
-        return 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected boolean hasDialog() {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ClearQuestReaderNodeModel createNodeModel(final NodeCreationContext context) {
+    public XLSReaderNodeModel createNodeModel(final NodeCreationContext context) {
         return new ClearQuestReaderNodeModel(context);
     }
+
+	
 }

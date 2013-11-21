@@ -50,30 +50,30 @@
  */
 package org.impressivecode.depress.its.hpqc;
 
-import org.knime.core.node.ContextAwareNodeFactory;
 import org.knime.core.node.NodeCreationContext;
 import org.knime.core.node.NodeDialogPane;
-import org.knime.core.node.NodeView;
+import org.knime.ext.poi.node.read2.XLSReaderNodeFactory;
+import org.knime.ext.poi.node.read2.XLSReaderNodeModel;
 
 /**
  *
- * @author Peter Ohl, KNIME.com, Zurich, Switzerland
+ * @author £ukasz Leœniczek, Wroc³aw, Poland
  */
-public class HPQCReaderNodeFactory extends ContextAwareNodeFactory<HPQCReaderNodeModel> {
+public class HPQCReaderNodeFactory extends XLSReaderNodeFactory {
 
-    /**
+	/**
      * {@inheritDoc}
      */
     @Override
     protected NodeDialogPane createNodeDialogPane() {
         return new HPQCReaderNodeDialog();
     }
-
-    /**
+	
+	/**
      * {@inheritDoc}
      */
     @Override
-    public HPQCReaderNodeModel createNodeModel() {
+    public XLSReaderNodeModel createNodeModel() {
         return new HPQCReaderNodeModel();
     }
 
@@ -81,32 +81,7 @@ public class HPQCReaderNodeFactory extends ContextAwareNodeFactory<HPQCReaderNod
      * {@inheritDoc}
      */
     @Override
-    public NodeView<HPQCReaderNodeModel> createNodeView(final int viewIndex,
-            final HPQCReaderNodeModel nodeModel) {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected int getNrNodeViews() {
-        return 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected boolean hasDialog() {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public HPQCReaderNodeModel createNodeModel(final NodeCreationContext context) {
+    public XLSReaderNodeModel createNodeModel(final NodeCreationContext context) {
         return new HPQCReaderNodeModel(context);
     }
 }

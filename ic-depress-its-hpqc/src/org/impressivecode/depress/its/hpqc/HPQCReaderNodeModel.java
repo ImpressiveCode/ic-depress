@@ -50,206 +50,126 @@
  */
 package org.impressivecode.depress.its.hpqc;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import org.apache.poi.ss.usermodel.Workbook;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.knime.core.data.DataColumnSpec;
+import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
-import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
-import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeCreationContext;
-import org.knime.core.node.NodeLogger;
-import org.knime.core.node.NodeModel;
-import org.knime.core.node.NodeSettingsRO;
-import org.knime.core.node.NodeSettingsWO;
+import org.knime.ext.poi.node.read2.XLSReaderNodeModel;
+import org.knime.ext.poi.node.read2.XLSUserSettings;
 
 /**
  *
- * @author Peter Ohl, KNIME.com, Zurich, Switzerland
+ * @author £ukasz Leœniczek, Wroc³aw, Poland
+ * @author Mariusz Mulka, Wroc³aw, Poland
  */
-public class HPQCReaderNodeModel extends NodeModel {
+public class HPQCReaderNodeModel extends XLSReaderNodeModel {
 
-    private static final NodeLogger LOGGER = NodeLogger
-            .getLogger(HPQCReaderNodeModel.class);
-
-    private HPQCUserSettings m_settings = new HPQCUserSettings();
-
-    private DataTableSpec m_dts = null;
-
-    private String m_dtsSettingsID = null;
+	private XLSUserSettings m_settings = new XLSUserSettings();
 
     /**
      *
      */
     public HPQCReaderNodeModel() {
-        super(0, 1);
+    	super();
     }
 
     HPQCReaderNodeModel(final NodeCreationContext context) {
         this();
         m_settings.setFileLocation(context.getUrl().toString());
     }
+    
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void loadInternals(final File nodeInternDir,
-            final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
-        /*
-         * This is a special "deal" for the reader: The reader, if previously
-         * executed, has data at it's output - even if the file that was read
-         * doesn't exist anymore. In order to warn the user that the data cannot
-         * be recreated we check here if the file exists and set a warning
-         * message if it doesn't.
-         */
-        String fName = m_settings.getFileLocation();
-        if (fName == null || fName.isEmpty()) {
-            return;
-        }
-
-        try {
-            new URL(fName);
-            // don't check URLs - don't open a stream.
-            return;
-        } catch (MalformedURLException mue) {
-            // continue on a file
-        }
-        File location = new File(fName);
-
-        if (!location.canRead() || location.isDirectory()) {
-            setWarningMessage("The file '" + location.getAbsolutePath()
-                    + "' can't be accessed anymore!");
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
-            throws InvalidSettingsException {
-        m_settings = HPQCUserSettings.load(settings);
-        try {
-            String settingsID = settings.getString(
-            		HPQCReaderNodeDialog.HPQC_CFG_ID_FOR_TABLESPEC);
-            if (!m_settings.getID().equals(settingsID)) {
-                throw new InvalidSettingsException("IDs don't match");
-            }
-            NodeSettingsRO dtsConfig =
-                    settings.getNodeSettings(HPQCReaderNodeDialog.HPQC_CFG_TABLESPEC);
-            m_dts = DataTableSpec.load(dtsConfig);
-            m_dtsSettingsID = settingsID;
-        } catch (InvalidSettingsException ise) {
-            LOGGER.debug("No DTS saved in settings");
-            // it's optional - if it's not saved we create it later
-            m_dts = null;
-            m_dtsSettingsID = null;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void reset() {
-        // empty
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void saveInternals(final File nodeInternDir,
-            final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
-        // empty
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void saveSettingsTo(final NodeSettingsWO settings) {
-        if (m_settings != null) {
-            m_settings.save(settings);
-            if (m_dts != null) {
-                settings.addString(HPQCReaderNodeDialog.HPQC_CFG_ID_FOR_TABLESPEC,
-                        m_dtsSettingsID);
-                m_dts.save(settings
-                        .addConfig(HPQCReaderNodeDialog.HPQC_CFG_TABLESPEC));
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void validateSettings(final NodeSettingsRO settings)
-            throws InvalidSettingsException {
-    	HPQCUserSettings.load(settings);
-    }
-
-    /**
+	/**
      * {@inheritDoc}
      */
     @Override
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
             throws InvalidSettingsException {
-
-        if (m_settings == null) {
-            throw new InvalidSettingsException("Node not configured.");
-        }
-
-        String errMsg = m_settings.getStatus(true);
-        if (errMsg != null) {
-            throw new InvalidSettingsException(errMsg);
-        }
-
-        // make sure the DTS still fits the settings
-        if (!m_settings.getID().equals(m_dtsSettingsID)) {
-            m_dts = null;
-        }
-        if (m_dts == null) {
-            // this could take a while.
-            LOGGER.debug("Building DTS during configure...");
-            HPQCTableSettings s;
-            try {
-                // Configure is an isolated call so do not keep the workbook in memory
-                Workbook wb = HPQCTableSettings.getWorkbook(m_settings.getFileLocation());
-                s = new HPQCTableSettings(m_settings, wb);
-            } catch (Exception e) {
-                String execMsg = e.getMessage();
-                if (execMsg == null) {
-                    execMsg = e.getClass().getSimpleName();
-                }
-                throw new InvalidSettingsException(execMsg);
-            }
-            m_dts = s.getDataTableSpec();
-            m_dtsSettingsID = m_settings.getID();
-        }
-        return new DataTableSpec[]{m_dts};
+    	DataTableSpec[] oldSpec = super.configure(inSpecs);
+    	return new DataTableSpec[] {getNewSpec(oldSpec[0])};
+        
     }
+    
+    private DataTableSpec getNewSpec(final DataTableSpec in)
+            throws InvalidSettingsException {
+            Pattern searchPattern = Pattern.compile("^[Cc]{1}[Qq]{1}[ ]{0,1}[Ii]{1}[Dd]{1}$");
+            final String rawReplace = "ID";
+            DataColumnSpec[] cols = new DataColumnSpec[in.getNumColumns()];
+            boolean hasConflicts = false;
+            Set<String> nameHash = new HashSet<String>();
+           
+            for (int i = 0; i < cols.length; i++) {
+                String replace = getReplaceStringWithIndex(rawReplace, i);
+                final DataColumnSpec oldCol = in.getColumnSpec(i);
+                final String oldName = oldCol.getName();
+                DataColumnSpecCreator creator = new DataColumnSpecCreator(oldCol);
+                Matcher m = searchPattern.matcher(oldName);
+                StringBuffer sb = new StringBuffer();
+                while (m.find()) {
+                    try {
+                        m.appendReplacement(sb, replace);
+                    } catch (IndexOutOfBoundsException ex) {
+                        throw new InvalidSettingsException(
+                                "Error in replacement string: " + ex.getMessage(),
+                                ex);
+                    }
+                }
+                m.appendTail(sb);
+                final String newName = sb.toString();
 
+                if (newName.length() == 0) {
+                    throw new InvalidSettingsException("Replacement in column '"
+                            + oldName + "' leads to an empty column name.");
+                }
+                String newNameUnique = newName;
+                int unifier = 1;
+                while (!nameHash.add(newNameUnique)) {
+                    hasConflicts = true;
+                    newNameUnique = newName + " (#" + (unifier++) + ")";
+                }
+                creator.setName(newNameUnique);
+                cols[i] = creator.createSpec();
+            }
+            if (cols.length == 0) {
+                // don't bother if input is empty
+            } else if (hasConflicts) {
+                setWarningMessage("Pattern replace resulted in duplicate column "
+                        + "names; resolved conflicts using \"(#index)\" suffix");
+            }
+            return new DataTableSpec(in.getName(), cols);
+        }
+    
+    private static String getReplaceStringWithIndex(
+            final String replace, final int index) {
+        if (!replace.contains("$i")) {
+            return replace;
+        }
+        /* replace every $i by index .. unless it is escaped */
+        // check starts with $i
+        String result = replace.replaceAll("^\\$i", Integer.toString(index));
+        // any subsequent occurrence, which is not escaped
+        return result.replaceAll("([^\\\\])\\$i", "$1" + index);
+    }
+    
     /**
      * {@inheritDoc}
      */
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
             final ExecutionContext exec) throws Exception {
-        // Execute is an isolated call so do not keep the workbook in memory
-        Workbook wb = HPQCTableSettings.getWorkbook(m_settings.getFileLocation());
-        HPQCTable table = new HPQCTable(m_settings, wb);
-        return new BufferedDataTable[]{exec
-                .createBufferedDataTable(table, exec)};
-
+        BufferedDataTable in = super.execute(inData, exec)[0];
+        DataTableSpec oldSpec = in.getDataTableSpec();
+        DataTableSpec newSpec = getNewSpec(oldSpec);
+        BufferedDataTable result = exec.createSpecReplacerTable(in, newSpec);
+        return new BufferedDataTable[] {result};
     }
+    
 
 }

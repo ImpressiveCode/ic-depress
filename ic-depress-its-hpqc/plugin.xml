@@ -10,10 +10,4 @@
 			id="org.impressivecode.depress.its.hpqc">
 		</node>
 	</extension>
-	<extension point="org.knime.workbench.repository.registeredFileExtensions">
-        <FileExtensionMapping NodeFactory="org.impressivecode.depress.its.hpqc.HPQCReaderNodeFactory">
-           <FileExtension extension=".xls">
-           </FileExtension>
-        </FileExtensionMapping>
-    </extension>   
 </plugin>
