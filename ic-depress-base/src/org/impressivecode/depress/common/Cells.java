@@ -30,6 +30,7 @@ import org.knime.core.data.DataCell;
 import org.knime.core.data.DataType;
 import org.knime.core.data.collection.CollectionCellFactory;
 import org.knime.core.data.date.DateAndTimeCell;
+import org.knime.core.data.def.BooleanCell;
 import org.knime.core.data.def.DoubleCell;
 import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
@@ -123,5 +124,9 @@ public class Cells {
         return new DateAndTimeCell(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
                 calendar.get(Calendar.SECOND), calendar.get(Calendar.MILLISECOND));
+    }
+
+    public static DataCell booleanCell(final boolean value) {
+        return BooleanCell.get(value);
     }
 }

@@ -17,10 +17,12 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.impressivecode.depress.its.bugzilla.BugzillaAdapterTableFactory.createTableSpec;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
@@ -36,49 +38,122 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.SettingsModelDate;
+import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Michał Negacz, Wrocław University of Technology
+ * @author Piotr Wróblewski, Wrocław University of Technology
  * 
  */
 public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
+	public static final int NUMBER_OF_INPUT_PORTS = 0;
+
+	public static final int NUMBER_OF_OUTPUT_PORTS = 1;
+
+	public static final String DEFAULT_STRING_VALUE = "";
+
+	private static final int DEFAULT_LIMIT_VALUE = 1000;
+
+	public static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
+
+	public static final String BUGZILLA_USERNAME = "depress.its.bugzillaonline.username";
+
+	public static final String BUGZILLA_PASSWORD = "depress.its.bugzillaonline.password";
+
+	public static final String BUGZILLA_PRODUCT = "depress.its.bugzillaonline.product";
+
+	public static final String BUGZILLA_DATE = "depress.its.bugzillaonline.date";
+
+	public static final String BUGZILLA_HISTORY = "depress.its.bugzillaonline.history";
+
+	public static final String BUGZILLA_COMMENT = "depress.its.bugzillaonline.comment";
+
+	public static final String BUGZILLA_LIMIT = "depress.its.bugzillaonline.limit";
+
 	private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
-
-	private static final String DEFAULT_VALUE = "";
-
-	private static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
-
-	private static final String BUGZILLA_USERNAME = "depress.its.bugzillaonline.username";
-
-	private static final String BUGZILLA_PASSWORD = "depress.its.bugzillaonline.password";
 
 	private final SettingsModelString urlSettings = createURLSettings();
 
-	private final SettingsModelString usernameSettings = createURLSettings();
+	private final SettingsModelDate dateFromSettings = createDateSettings();
 
-	private final SettingsModelString passwordSettings = createURLSettings();
+	private final SettingsModelString usernameSettings = createUsernameSettings();
+
+	private final SettingsModelString passwordSettings = createPasswordSettings();
+
+	private final SettingsModelString productSettings = createProductSettings();
+
+	private final SettingsModelInteger limitSettings = createLimitSettings();
+
+	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+	private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
 	protected BugzillaOnlineAdapterNodeModel() {
-		super(0, 1);
+		super(NUMBER_OF_INPUT_PORTS, NUMBER_OF_OUTPUT_PORTS);
 	}
 
 	@Override
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
 		LOGGER.info("Preparing to read bugzilla entries.");
-		String urlAddress = urlSettings.getStringValue();
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(urlAddress);
-		LOGGER.info("Reading entries from bugzilla instance: " + urlAddress);
-		List<ITSDataType> entries = clientAdapter.listEntries();
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(getURL());
+
+		if (isUsernameProvided(getUsername())) {
+			LOGGER.info("Logging to bugzilla as: " + getUsername());
+			clientAdapter.login(getUsername(), getPassword());
+		}
+
+		LOGGER.info("Reading entries from bugzilla instance: " + getURL() + " and product: " + getProductName());
+		List<ITSDataType> entries = clientAdapter.listEntries(getBugFilter());
+
 		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, exec);
+
 		LOGGER.info("Bugzilla table created.");
 		return new BufferedDataTable[] { out };
+	}
+
+	private boolean isUsernameProvided(String username) {
+		return !Strings.isNullOrEmpty(username);
+	}
+
+	private String getPassword() {
+		return passwordSettings.getStringValue();
+	}
+
+	private String getUsername() {
+		return usernameSettings.getStringValue();
+	}
+
+	private String getProductName() {
+		return productSettings.getStringValue();
+	}
+
+	private Date getDateFrom() {
+		return dateFromSettings.getDate();
+	}
+
+	private String getURL() {
+		return urlSettings.getStringValue();
+	}
+
+	private Integer getLimit() {
+		return limitSettings.getIntValue();
+	}
+
+	private BugzillaOnlineFilter getBugFilter() {
+		BugzillaOnlineFilter filter = new BugzillaOnlineFilter();
+		filter.setProductName(getProductName());
+		filter.setDateFrom(getDateFrom());
+		filter.setLimit(getLimit());
+		return filter;
 	}
 
 	private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
@@ -102,6 +177,9 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		urlSettings.saveSettingsTo(settings);
 		usernameSettings.saveSettingsTo(settings);
 		passwordSettings.saveSettingsTo(settings);
+		productSettings.saveSettingsTo(settings);
+		dateFromSettings.saveSettingsTo(settings);
+		limitSettings.saveSettingsTo(settings);
 	}
 
 	@Override
@@ -109,6 +187,9 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		urlSettings.loadSettingsFrom(settings);
 		usernameSettings.loadSettingsFrom(settings);
 		passwordSettings.loadSettingsFrom(settings);
+		productSettings.loadSettingsFrom(settings);
+		dateFromSettings.loadSettingsFrom(settings);
+		limitSettings.loadSettingsFrom(settings);
 	}
 
 	@Override
@@ -116,6 +197,19 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		urlSettings.validateSettings(settings); // TODO validate url, maybe test connection, bugzilla version and credentials
 		usernameSettings.validateSettings(settings);
 		passwordSettings.validateSettings(settings);
+		productSettings.validateSettings(settings);
+		dateFromSettings.validateSettings(settings);
+		limitSettings.validateSettings(settings);
+
+		SettingsModelString url = urlSettings.createCloneWithValidatedValue(settings);
+		if (!isNullOrEmpty(url.getStringValue()) && !url.getStringValue().matches(URL_PATTERN)) {
+			throw new InvalidSettingsException("Invalid URL address");
+		}
+
+		SettingsModelString email = usernameSettings.createCloneWithValidatedValue(settings);
+		if (!isNullOrEmpty(email.getStringValue()) && !email.getStringValue().matches(EMAIL_PATTERN)) {
+			throw new InvalidSettingsException("Invalid email address");
+		}
 	}
 
 	@Override
@@ -129,15 +223,27 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	static SettingsModelString createURLSettings() {
-		return new SettingsModelString(BUGZILLA_URL, DEFAULT_VALUE);
+		return new SettingsModelString(BUGZILLA_URL, DEFAULT_STRING_VALUE);
 	}
 
 	static SettingsModelString createUsernameSettings() {
-		return new SettingsModelString(BUGZILLA_USERNAME, DEFAULT_VALUE);
+		return new SettingsModelString(BUGZILLA_USERNAME, DEFAULT_STRING_VALUE);
 	}
 
 	static SettingsModelString createPasswordSettings() {
-		return new SettingsModelString(BUGZILLA_PASSWORD, DEFAULT_VALUE);
+		return new SettingsModelString(BUGZILLA_PASSWORD, DEFAULT_STRING_VALUE);
+	}
+
+	static SettingsModelString createProductSettings() {
+		return new SettingsModelString(BUGZILLA_PRODUCT, DEFAULT_STRING_VALUE);
+	}
+
+	static SettingsModelDate createDateSettings() {
+		return new SettingsModelDate(BUGZILLA_DATE);
+	}
+
+	static SettingsModelInteger createLimitSettings() {
+		return new SettingsModelInteger(BUGZILLA_LIMIT, DEFAULT_LIMIT_VALUE);
 	}
 
 }

@@ -48,6 +48,7 @@ import com.google.common.collect.Lists;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
+ * @author Krystian Dabrowski, Capgemini Poland
  */
 public class SVNOfflineParser {
     final SVNParserOptions parserOptions;
@@ -91,18 +92,32 @@ public class SVNOfflineParser {
 
     private boolean include(final Path path) {
         String transformedPath = path.getValue().replaceAll("/", ".");
-        boolean java = transformedPath.endsWith(".java");
-        if (java) {
-            if (parserOptions.hasPackagePrefix()) {
-                return transformedPath.indexOf(parserOptions.getPackagePrefix()) != -1;
-            } else {
-                return true;
-            }
+        return isCorrectAccordingToFilterRules(transformedPath);
+    }
+    
+    private boolean isCorrectAccordingToFilterRules(String path) {
+    	boolean isCorrect = false;
+    	isCorrect |= (hasCorrectExtension(path) && hasCorrectPackagePrefix(path));
+    	return isCorrect;
+    }
+    
+    private boolean hasCorrectExtension(String path) {
+    	ArrayList<String> extensionNamesToFilter = parserOptions.getExtensionsNamesToFilter();
+    	if (extensionNamesToFilter.isEmpty()) return true;
+    	for (String extensionName : extensionNamesToFilter) {
+    		if (path.endsWith(extensionName)) return true;
+    	}
+    	return false;
+    }
+    
+    private boolean hasCorrectPackagePrefix(String path) {
+    	if (parserOptions.hasPackagePrefix()) {
+            return path.indexOf(parserOptions.getPackagePrefix()) != -1;
         } else {
-            return false;
+            return true;
         }
     }
-
+    
     private SCMDataType scm(final SCMDataType scm, final Path path) {
         scm.setOperation(parseOperation(path));
         scm.setResourceName(parseJavaClass(path));

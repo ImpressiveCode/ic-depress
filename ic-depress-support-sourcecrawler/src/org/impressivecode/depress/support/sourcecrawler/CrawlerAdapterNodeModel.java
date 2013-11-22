@@ -44,124 +44,111 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  */
 public class CrawlerAdapterNodeModel extends NodeModel {
 
-	private static final String DEFAULT_VALUE = "";
+    private static final String DEFAULT_VALUE = "";
 
-	private static final String CONFIG_NAME = "depress.sourcecrawler.confname";
+    private static final String CONFIG_NAME = "depress.sourcecrawler.confname";
 
-	private final SettingsModelString fileSettings = createFileSettings();
+    private final SettingsModelString fileSettings = createFileSettings();
 
-	protected CrawlerAdapterNodeModel() {
-		super(0, 1);
-	}
+    protected CrawlerAdapterNodeModel() {
+        super(0, 1);
+    }
 
-	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
-			final ExecutionContext exec) throws Exception {
-		CrawlerEntriesParser entriesParser = new CrawlerEntriesParser();
-		BufferedDataContainer container = createDataContainer(exec);
-		SourceCrawlerOutput result = entriesParser
-				.parseSourceCrawlerResult(fileSettings.getStringValue());
-		BufferedDataTable out = transform(container, result, exec);
+    @Override
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
+            throws Exception {
+        CrawlerEntriesParser entriesParser = new CrawlerEntriesParser();
+        BufferedDataContainer container = createDataContainer(exec);
+        SourceCrawlerOutput result = entriesParser.parseSourceCrawlerResult(fileSettings.getStringValue());
+        BufferedDataTable out = transform(container, result, exec);
 
-		return new BufferedDataTable[] { out };
-	}
+        return new BufferedDataTable[] { out };
+    }
 
-	@Override
-	protected void reset() {
-	}
+    @Override
+    protected void reset() {
+    }
 
-	@Override
-	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
-			throws InvalidSettingsException {
-		return createTableSpec();
-	}
+    @Override
+    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
+        return createTableSpec();
+    }
 
-	@Override
-	protected void saveSettingsTo(final NodeSettingsWO settings) {
-		fileSettings.saveSettingsTo(settings);
-	}
+    @Override
+    protected void saveSettingsTo(final NodeSettingsWO settings) {
+        fileSettings.saveSettingsTo(settings);
+    }
 
-	@Override
-	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		fileSettings.loadSettingsFrom(settings);
-	}
+    @Override
+    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+        fileSettings.loadSettingsFrom(settings);
+    }
 
-	@Override
-	protected void validateSettings(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		fileSettings.validateSettings(settings);
-	}
+    @Override
+    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+        fileSettings.validateSettings(settings);
+    }
 
-	@Override
-	protected void loadInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
-		// NOOP
-	}
+    @Override
+    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+    CanceledExecutionException {
+        // NOOP
+    }
 
-	@Override
-	protected void saveInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
-		// NOOP
-	}
+    @Override
+    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+    CanceledExecutionException {
+        // NOOP
+    }
 
-	private BufferedDataTable transform(final BufferedDataContainer container,
-			final SourceCrawlerOutput classes, final ExecutionContext exec)
-			throws CanceledExecutionException {
-		List<SourceFile> sourceFiles = classes.getSourceFiles();
-		int size = sourceFiles.size();
-		fillTable(container, exec, sourceFiles, size);
-		container.close();
-		BufferedDataTable out = container.getTable();
-		return out;
-	}
+    private BufferedDataTable transform(final BufferedDataContainer container, final SourceCrawlerOutput classes,
+            final ExecutionContext exec) throws CanceledExecutionException {
+        List<SourceFile> sourceFiles = classes.getSourceFiles();
+        int size = sourceFiles.size();
+        fillTable(container, exec, sourceFiles, size);
+        container.close();
+        BufferedDataTable out = container.getTable();
+        return out;
+    }
 
-	private void fillTable(final BufferedDataContainer container,
-			final ExecutionContext exec, List<SourceFile> sourceFiles, int size)
-			throws CanceledExecutionException {
-		for (int i = 0; i < size; i++) {
-			progress(exec, size, i);
-			SourceFile sourceFile = sourceFiles.get(i);
-			List<Clazz> classesInSource = sourceFile.getClasses();
-			addClassesToDatatable(container, sourceFile, classesInSource);
+    private void fillTable(final BufferedDataContainer container, final ExecutionContext exec,
+            final List<SourceFile> sourceFiles, final int size) throws CanceledExecutionException {
+        for (int i = 0; i < size; i++) {
+            progress(exec, size, i);
+            SourceFile sourceFile = sourceFiles.get(i);
+            List<Clazz> classesInSource = sourceFile.getClasses();
+            addClassesToDatatable(container, sourceFile, classesInSource);
 
-		}
-	}
+        }
+    }
 
-	private void addClassesToDatatable(final BufferedDataContainer container,
-			SourceFile sourceFile, List<Clazz> classesInSource) {
-		for (Clazz clazz : classesInSource) {
+    private void addClassesToDatatable(final BufferedDataContainer container, final SourceFile sourceFile,
+            final List<Clazz> classesInSource) {
+        for (Clazz clazz : classesInSource) {
 
-			addRowToTable(container, sourceFile.getSourcePackage() + "."
-					+ clazz.getName(), clazz.getName(), clazz.getType(),
-					clazz.isException(), clazz.isInner(), clazz.isTest(),
-					sourceFile.getSourcePackage(), sourceFile.getPath());
-		}
-	}
+            addRowToTable(container, sourceFile.getSourcePackage() + "." + clazz.getName(), clazz.getName(),
+                    clazz.getType(), clazz.isException(), clazz.isInner(), clazz.isTest(),
+                    sourceFile.getSourcePackage(), sourceFile.getPath());
+        }
+    }
 
-	private void addRowToTable(BufferedDataContainer container, String id,
-			String name, String type, boolean exception, boolean inner,
-			boolean test, String sourcePackage, String path) {
-		container.addRowToTable(createTableRow(id, name, type, exception,
-				inner, test, sourcePackage, path));
-	}
+    private void addRowToTable(final BufferedDataContainer container, final String id, final String name, final String type, final boolean exception,
+            final boolean inner, final boolean test, final String sourcePackage, final String path) {
+        container.addRowToTable(createTableRow(id, name, type, exception, inner, test, sourcePackage, path));
+    }
 
-	private void progress(final ExecutionContext exec, final int size,
-			final int i) throws CanceledExecutionException {
-		exec.checkCanceled();
-		exec.setProgress(i / size);
-	}
+    private void progress(final ExecutionContext exec, final int size, final int i) throws CanceledExecutionException {
+        exec.checkCanceled();
+        exec.setProgress(i / size);
+    }
 
-	private BufferedDataContainer createDataContainer(
-			final ExecutionContext exec) {
-		DataTableSpec outputSpec = createDataColumnSpec();
-		BufferedDataContainer container = exec.createDataContainer(outputSpec);
-		return container;
-	}
+    private BufferedDataContainer createDataContainer(final ExecutionContext exec) {
+        DataTableSpec outputSpec = createDataColumnSpec();
+        BufferedDataContainer container = exec.createDataContainer(outputSpec);
+        return container;
+    }
 
-	public SettingsModelString createFileSettings() {
-		return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
-	}
+    public SettingsModelString createFileSettings() {
+        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
+    }
 }

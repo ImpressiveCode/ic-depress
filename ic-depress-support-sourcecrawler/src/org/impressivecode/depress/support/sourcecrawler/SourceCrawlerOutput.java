@@ -30,15 +30,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "root")
 public class SourceCrawlerOutput {
 
-	private List<SourceFile> sourceFiles;
+    private List<SourceFile> sourceFiles;
 
-	@XmlElement(name = "file")
-	public List<SourceFile> getSourceFiles() {
-		return sourceFiles;
-	}
+    @XmlElement(name = "file")
+    public List<SourceFile> getSourceFiles() {
+        return sourceFiles;
+    }
 
-	public void setSourceFiles(List<SourceFile> sourceFiles) {
-		this.sourceFiles = sourceFiles;
-	}
+    public void setSourceFiles(final List<SourceFile> sourceFiles) {
+        this.sourceFiles = sourceFiles;
+    }
 
 }

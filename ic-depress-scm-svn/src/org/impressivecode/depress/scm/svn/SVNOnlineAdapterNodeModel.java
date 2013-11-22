@@ -23,6 +23,7 @@ import static org.impressivecode.depress.scm.svn.SVNParserOptions.options;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.impressivecode.depress.common.OutputTransformer;
@@ -69,6 +70,9 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
         super(0, 1);
     }
 
+    
+    /* TODO: following methods should be adjusted to offline model methods */
+    
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
@@ -78,7 +82,7 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
         logger.info("Reading logs from repository " + svnPath);
         SVNOnlineLogParser parser = new SVNOnlineLogParser();
 
-        List<SVNCommit> commits = parser.parseEntries(svnPath, options(svnPackageName.getStringValue()));
+        List<SVNCommit> commits = parser.parseEntries(svnPath, options(svnPackageName.getStringValue(), new  ArrayList<String>()));
 
         BufferedDataTable out = transform(commits, exec);
         logger.info("Reading git logs finished.");
