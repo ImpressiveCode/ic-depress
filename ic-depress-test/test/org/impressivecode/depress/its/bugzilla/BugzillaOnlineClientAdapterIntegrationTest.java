@@ -20,6 +20,7 @@ package org.impressivecode.depress.its.bugzilla;
 import static com.google.common.collect.Maps.newHashMap;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -31,6 +32,7 @@ import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
 import org.junit.Test;
+import org.knime.core.node.ExecutionMonitor;
 
 /**
  * 
@@ -42,7 +44,8 @@ public class BugzillaOnlineClientAdapterIntegrationTest {
 	@Test
 	public void shouldFetchBugsFromFirefoxProduct() throws Exception {
 		// given
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi");
+		ExecutionMonitor monitor = mock(ExecutionMonitor.class);
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi", monitor);
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(BugzillaOnlineClientAdapter.PRODUCT_NAME, "Firefox");
 		Integer offset = 0;
@@ -59,7 +62,8 @@ public class BugzillaOnlineClientAdapterIntegrationTest {
 	@Test
 	public void shouldFetchBugsDetailFromFirefoxWithBugId820167() throws Exception {
 		// given
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi");
+		ExecutionMonitor monitor = mock(ExecutionMonitor.class);
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi", monitor);
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(BugzillaOnlineClientAdapter.IDS, new String[] {"820167"});
 
@@ -74,7 +78,8 @@ public class BugzillaOnlineClientAdapterIntegrationTest {
 	@Test
 	public void shouldFetchBugsCommentFromFirefoxWithBugId820167() throws Exception {
 		// given
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi");
+		ExecutionMonitor monitor = mock(ExecutionMonitor.class);
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi", monitor);
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(BugzillaOnlineClientAdapter.IDS, new String[] {"820167"});
 
@@ -89,7 +94,8 @@ public class BugzillaOnlineClientAdapterIntegrationTest {
 	@Test
 	public void shouldFetchBugsHistoryFromFirefoxWithBugId820167() throws Exception {
 		// given
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi");
+		ExecutionMonitor monitor = mock(ExecutionMonitor.class);
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi", monitor);
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(BugzillaOnlineClientAdapter.IDS, new String[] {"820167"});
 
@@ -104,7 +110,8 @@ public class BugzillaOnlineClientAdapterIntegrationTest {
 	@Test
 	public void shouldFetchAndParseBugFromFirefoxWithBugCreationDateFilter() throws Exception {
 		// given
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi");
+		ExecutionMonitor monitor = mock(ExecutionMonitor.class);
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi", monitor);
 		BugzillaOnlineFilter filter = new BugzillaOnlineFilter();
 		filter.setProductName("Socorro");
 		filter.setDateFrom(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("10-02-2010 19:19:59"));
@@ -117,7 +124,7 @@ public class BugzillaOnlineClientAdapterIntegrationTest {
 		assertThat(entries).isNotEmpty();
 		ITSDataType firstEntry = entries.get(0);
 		assertThat(firstEntry.getIssueId()).isEqualTo("545454");
-		assertThat(firstEntry.getCreated().toString()).isEqualTo("Wed Feb 10 19:20:00 CET 2010");
+		assertThat(firstEntry.getCreated().toString()).isEqualTo("Wed Feb 10 19:20:56 CET 2010");
 		assertThat(firstEntry.getUpdated().toString()).isEqualTo("Wed Dec 28 18:40:11 CET 2011");
 		assertThat(firstEntry.getStatus()).isEqualTo(ITSStatus.RESOLVED);
 		assertThat(firstEntry.getType()).isEqualTo(ITSType.BUG);

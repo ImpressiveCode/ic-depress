@@ -101,9 +101,9 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
+	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext context) throws Exception {
 		LOGGER.info("Preparing to read bugzilla entries.");
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(getURL());
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(getURL(), context);
 
 		if (isUsernameProvided(getUsername())) {
 			LOGGER.info("Logging to bugzilla as: " + getUsername());
@@ -111,10 +111,10 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		}
 
 		LOGGER.info("Reading entries from bugzilla instance: " + getURL() + " and product: " + getProductName());
-		List<ITSDataType> entries = clientAdapter.listEntries(getBugFilter(), exec);
+		List<ITSDataType> entries = clientAdapter.listEntries(getBugFilter());
 
 		LOGGER.info("Transforming to bugzilla entries.");
-		BufferedDataTable out = transform(entries, exec);
+		BufferedDataTable out = transform(entries, context);
 
 		LOGGER.info("Bugzilla table created.");
 		return new BufferedDataTable[] { out };
@@ -165,7 +165,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	protected void reset() {
 		// NOOP
 	}
-	
 
 	@Override
 	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
