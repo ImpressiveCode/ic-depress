@@ -43,7 +43,7 @@ public class JiraOnlineAdapterUriBuilder {
     private static final String JIRA_DATE_FORMAT = "yyyy-MM-dd";
     private static final String MAX_RESULTS = "maxResults";
     private static final String START_AT = "startAt";
-    private static final int MAX_RESULTS_VALUE = 100;
+    public static final int MAX_RESULTS_VALUE = 100;
     private int startingIndex = 0;
 
     public static enum DateFilterType {
@@ -145,10 +145,16 @@ public class JiraOnlineAdapterUriBuilder {
             uriJQL = jqlBuilder.toString();
         }
 
-        URI result = UriBuilder.fromPath(QUERY_URI_PATH).resolveTemplate("protocol", protocol)
-                .resolveTemplate("hostname", hostname).queryParam(QUERY_PARAM, uriJQL)
-                .queryParam(START_AT, startingIndex).queryParam(FIELDS_PARAM, "*all")
-                .queryParam(MAX_RESULTS, MAX_RESULTS_VALUE).build();
+        // @formatter:off
+        URI result = UriBuilder.fromPath(QUERY_URI_PATH)
+                .resolveTemplate("protocol", protocol)
+                .resolveTemplate("hostname", hostname)
+                .queryParam(FIELDS_PARAM, "*all")
+                .queryParam(START_AT, startingIndex)
+                .queryParam(MAX_RESULTS, MAX_RESULTS_VALUE)
+                .queryParam(QUERY_PARAM, uriJQL)
+                .build();
+        // @formatter:on
 
         return result;
     }

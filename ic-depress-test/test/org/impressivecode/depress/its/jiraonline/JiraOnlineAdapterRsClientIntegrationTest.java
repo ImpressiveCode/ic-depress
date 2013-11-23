@@ -65,7 +65,7 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
         List<ITSDataType> entries = JiraOnlineParser.parse(jiraEntry, client.getUriBuilder().getHostname());
 
         assertThat(entries, is(notNullValue()));
-        assertThat(entries.size(), is(equalTo(50)));
+        assertThat(entries.size(), is(equalTo(100)));
 
         for (ITSDataType entry : entries) {
             assertThat(entry, is(notNullValue()));
