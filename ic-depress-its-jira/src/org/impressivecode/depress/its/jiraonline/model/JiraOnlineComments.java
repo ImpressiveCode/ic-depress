@@ -17,48 +17,26 @@
  */
 package org.impressivecode.depress.its.jiraonline.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Model class used by Jackson for Jira JSON parsing. Contains issue id, link
- * and field list
+ * Model class used by Jackson for Jira JSON parsing.
  * 
  * @author Marcin Kunert, Wroclaw University of Technology
  * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineIssue {
+public class JiraOnlineComments {
 
-    private String key;
-    private JiraOnlineField fields;
+    private List<JiraOnlineComment> comments;
 
-    @JsonProperty("self")
-    private String link;
-
-
-    public String getKey() {
-        return key;
+    public List<JiraOnlineComment> getComments() {
+        return comments;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setComments(List<JiraOnlineComment> comments) {
+        this.comments = comments;
     }
-
-    public JiraOnlineField getFields() {
-        return fields;
-    }
-
-    public void setFields(JiraOnlineField fields) {
-        this.fields = fields;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
 }

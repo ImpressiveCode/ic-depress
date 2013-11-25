@@ -21,6 +21,7 @@ import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataCo
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
@@ -82,9 +83,20 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient(builder);
         client.setSecuredConnection(true);
         LOGGER.info("Downloading JIRA entries.");
+        ArrayList<String> rawSources = new ArrayList<>();
         String rawData = client.getIssues();
+        rawSources.add(rawData);
+        final int totalIssues = JiraOnlineParser.getTotalIssuesNumber(rawData);
+        while (totalIssues > builder.getNextStartingIndex()) {
+            LOGGER.info("Downloaded " + builder.getNextStartingIndex() + " out of " + totalIssues + " JIRA entries.");
+            builder.prepareForNextBatch();
+            rawSources.add(client.getIssues());
+        }
+        LOGGER.info("Downloaded " + totalIssues + " out of " + totalIssues + " JIRA entries.");
+
         LOGGER.info("Transforming JIRA entries.");
-        List<ITSDataType> parsedData = JiraOnlineParser.parse(rawData);
+        List<ITSDataType> parsedData = JiraOnlineParser.parseMultipleIssueBatches(rawSources, client.getUriBuilder()
+                .getHostname());
         BufferedDataTable out = transform(parsedData, exec);
 
         return new BufferedDataTable[] { out };
@@ -103,12 +115,13 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         if (jiraSettingsDateEnd.getSelectedFields() > 0) {
             builder.setDateTo(jiraSettingsDateEnd.getDate());
         }
+
         switch (jiraSettingsStatus.getStringValue().toLowerCase()) {
-        case JiraOnlineAdapterUriBuilder.CREATED:
-            builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.CREATED);
+        case "created":
+            builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED);
             break;
-        case JiraOnlineAdapterUriBuilder.RESOLUTION_DATE:
-            builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.RESOLUTION_DATE);
+        case "resolutiondate":
+            builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.RESOLUTION_DATE);
             break;
         }
         return builder;

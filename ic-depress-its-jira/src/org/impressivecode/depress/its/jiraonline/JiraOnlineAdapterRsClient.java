@@ -56,14 +56,10 @@ public class JiraOnlineAdapterRsClient {
         return reponseToString(response);
     }
 
-    public boolean testConnection() {
+    public boolean testConnection() throws Exception {
         Response response = getReponse();
-        try {
-            isDataFetchSuccessful(response);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+
+        return isDataFetchSuccessful(response);
     }
 
     public boolean isSecuredConnection() {
@@ -78,10 +74,12 @@ public class JiraOnlineAdapterRsClient {
         client = ClientBuilder.newClient();
     }
 
-    private void isDataFetchSuccessful(Response response) throws Exception {
+    private boolean isDataFetchSuccessful(Response response) throws Exception {
         if (response.getStatus() != 200) {
             throw new Exception("Failed to fetch data.");
         }
+
+        return true;
     }
 
     private String reponseToString(Response response) {

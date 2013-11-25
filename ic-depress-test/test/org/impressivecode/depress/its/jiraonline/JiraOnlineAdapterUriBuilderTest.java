@@ -31,8 +31,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Dawid Rutowicz, Wroclaw University of Technology
+ * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
+ * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
  */
 
@@ -41,6 +42,9 @@ public class JiraOnlineAdapterUriBuilderTest {
     private Date startDate;
     private Date endDate;
     private final String HOSTNAME = "hostname";
+    private final String FIELDS = "fields=*all";
+    private final String START_AT = "startAt=0";
+    private final String MAX_RESULTS = "maxResults=";
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Before
@@ -63,7 +67,7 @@ public class JiraOnlineAdapterUriBuilderTest {
     @Test
     public void should_have_default_link_pattern() {
         String actualPattern = builder.build().toString();
-        String expectedPattern = "https://" + HOSTNAME + "/rest/api/latest/search?jql=";
+        String expectedPattern = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql=";
 
         assertThat(actualPattern, is(notNullValue()));
         assertThat(actualPattern, is(equalTo(expectedPattern)));
@@ -73,7 +77,8 @@ public class JiraOnlineAdapterUriBuilderTest {
     public void should_create_link_with_JQL_filter() throws UnsupportedEncodingException {
         String jql = "labels=metamodel";
         String actual = builder.setJQL(jql).build().toString();
-        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?jql=labels%3Dmetamodel";
+        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart()
+                + "&jql=labels%3Dmetamodel";
 
         assertThat(actual, is(notNullValue()));
         assertThat(actual, is(equalTo(expected)));
@@ -82,8 +87,8 @@ public class JiraOnlineAdapterUriBuilderTest {
     @Test
     public void should_create_start_and_end_dates_with_status_created_filter() {
         String actual = builder.setDateFrom(startDate).setDateTo(endDate)
-                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.CREATED).build().toString();
-        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?jql="
+                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED).build().toString();
+        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql="
                 + createBothDatesStatusCreatedExpectedFilterResult();
 
         assertThat(actual, is(notNullValue()));
@@ -93,8 +98,8 @@ public class JiraOnlineAdapterUriBuilderTest {
     @Test
     public void should_create_start_and_end_dates_with_status_resolution_filter() {
         String actual = builder.setDateFrom(startDate).setDateTo(endDate)
-                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.RESOLUTION_DATE).build().toString();
-        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?jql="
+                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.RESOLUTION_DATE).build().toString();
+        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql="
                 + createBothDatesStatusResolutionExpectedFilterResult();
 
         assertThat(actual, is(notNullValue()));
@@ -103,9 +108,9 @@ public class JiraOnlineAdapterUriBuilderTest {
 
     @Test
     public void should_create_start_only_date_with_status_created_filter() {
-        String actual = builder.setDateFrom(startDate).setDateFilterStatus(JiraOnlineAdapterUriBuilder.CREATED).build()
-                .toString();
-        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?jql="
+        String actual = builder.setDateFrom(startDate)
+                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED).build().toString();
+        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql="
                 + createStartDateOnlyStatusCreatedExpectedFilterResult();
 
         assertThat(actual, is(notNullValue()));
@@ -114,9 +119,9 @@ public class JiraOnlineAdapterUriBuilderTest {
 
     @Test
     public void should_create_start_only_date_with_status_resolution_filter() {
-        String actual = builder.setDateFrom(startDate).setDateFilterStatus(JiraOnlineAdapterUriBuilder.RESOLUTION_DATE)
-                .build().toString();
-        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?jql="
+        String actual = builder.setDateFrom(startDate)
+                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.RESOLUTION_DATE).build().toString();
+        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql="
                 + createStartDateOnlyStatusResolutionExpectedFilterResult();
 
         assertThat(actual, is(notNullValue()));
@@ -125,9 +130,9 @@ public class JiraOnlineAdapterUriBuilderTest {
 
     @Test
     public void should_create_end_only_date_with_status_created_filter() {
-        String actual = builder.setDateTo(endDate).setDateFilterStatus(JiraOnlineAdapterUriBuilder.CREATED).build()
-                .toString();
-        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?jql="
+        String actual = builder.setDateTo(endDate)
+                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED).build().toString();
+        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql="
                 + createEndDateOnlyStatusCreatedExpectedFilterResult();
 
         assertThat(actual, is(notNullValue()));
@@ -136,13 +141,72 @@ public class JiraOnlineAdapterUriBuilderTest {
 
     @Test
     public void should_create_end_only_date_with_status_resolution_filter() {
-        String actual = builder.setDateTo(endDate).setDateFilterStatus(JiraOnlineAdapterUriBuilder.RESOLUTION_DATE)
-                .build().toString();
-        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?jql="
+        String actual = builder.setDateTo(endDate)
+                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.RESOLUTION_DATE).build().toString();
+        String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql="
                 + createEndDateOnlyStatusResolutionExpectedFilterResult();
 
         assertThat(actual, is(notNullValue()));
         assertThat(actual, is(equalTo(expected)));
+    }
+
+    @Test
+    public void should_create_valid_url_with_ending_slash_given() {
+        // given
+        JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+        builder.setHostname("dummyhostname.com/");
+
+        // when
+        String result = builder.build().toString();
+
+        // then
+        assertThat(result,
+                is(equalTo("https://dummyhostname.com/rest/api/latest/search?" + createLinkPart() + "&jql=")));
+    }
+
+    @Test
+    public void should_create_valid_url_without_ending_slash_given() {
+        // given
+        JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+        builder.setHostname("dummyhostname.com");
+
+        // when
+        String result = builder.build().toString();
+
+        // then
+        assertThat(result,
+                is(equalTo("https://dummyhostname.com/rest/api/latest/search?" + createLinkPart() + "&jql=")));
+    }
+
+    @Test
+    public void should_detect_unsecured_connection_protocol() {
+        // given
+        JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+        builder.setHostname("http://dummyhostname.com/");
+
+        // when
+        String result = builder.build().toString();
+
+        // then
+        assertThat(result, is(equalTo("http://dummyhostname.com/rest/api/latest/search?" + createLinkPart() + "&jql=")));
+    }
+
+    @Test
+    public void should_detect_secured_connection_protocol() {
+        // given
+        JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+        builder.setHostname("https://dummyhostname.com/");
+
+        // when
+        String result = builder.build().toString();
+
+        // then
+        assertThat(result,
+                is(equalTo("https://dummyhostname.com/rest/api/latest/search?" + createLinkPart() + "&jql=")));
+    }
+
+    private String createLinkPart() {
+        return FIELDS + "&" + START_AT + "&" + MAX_RESULTS + JiraOnlineAdapterUriBuilder.MAX_RESULTS_VALUE;
     }
 
     private String createBothDatesStatusCreatedExpectedFilterResult() {
