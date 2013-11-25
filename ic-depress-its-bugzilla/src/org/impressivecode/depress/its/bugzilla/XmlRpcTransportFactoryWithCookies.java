@@ -19,7 +19,9 @@ package org.impressivecode.depress.its.bugzilla;
 
 import static com.google.common.collect.Sets.newHashSet;
 
+import java.io.FilterInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpCookie;
 import java.net.URL;
 import java.net.URLConnection;
@@ -27,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.XmlRpcRequest;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientException;
@@ -91,6 +94,24 @@ public class XmlRpcTransportFactoryWithCookies extends XmlRpcSunHttpTransportFac
 		protected void close() throws XmlRpcClientException {
 			retrieveAndStoreCookiesFromConnection();
 			super.close();
+		}
+
+		@Override
+		protected InputStream getInputStream() throws XmlRpcException {
+			return new FilterInputStream(super.getInputStream()) {
+
+				@Override
+				public int read(byte[] b, int off, int len) throws IOException {
+					int result = super.read(b, off, len);
+					for (int i = 0; i < b.length; i++) {
+						if (b[i] == 0xC) {
+							b[i] = 0x20;
+						}
+					}
+					return result;
+				}
+				
+			};
 		}
 
 		private void retrieveAndStoreCookiesFromConnection() {
