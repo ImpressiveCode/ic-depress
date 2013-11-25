@@ -45,8 +45,9 @@ public class JiraOnlineField {
     private String summary;
     private String description;
     private Resolution resolution;
-    private User reporter;
-    private User assignee;
+    private JiraOnlineUser reporter;
+    private JiraOnlineUser assignee;
+    private JiraOnlineComments comment;
 
     public Date getCreated() {
         return created;
@@ -136,21 +137,31 @@ public class JiraOnlineField {
         this.resolution = resolution;
     }
 
-    public User getReporter() {
+    public JiraOnlineUser getReporter() {
         return reporter;
     }
 
-    public void setReporter(User reporter) {
+    public void setReporter(JiraOnlineUser reporter) {
         this.reporter = reporter;
     }
 
-    public User getAssignee() {
+    public JiraOnlineUser getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(User assignee) {
+    public void setAssignee(JiraOnlineUser assignee) {
         this.assignee = assignee;
     }
+
+
+    public JiraOnlineComments getComment() {
+        return comment;
+    }
+
+    public void setComment(JiraOnlineComments comment) {
+        this.comment = comment;
+    }
+
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public class Status {
@@ -181,20 +192,6 @@ public class JiraOnlineField {
         public void setId(int id) {
             this.id = id;
         }
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public class User {
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
