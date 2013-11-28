@@ -18,6 +18,7 @@
 package org.impressivecode.depress.its.bugzilla;
 
 import static com.google.common.collect.Sets.newHashSet;
+import static org.apache.xmlbeans.impl.common.XMLChar.isInvalid;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -96,24 +97,6 @@ public class XmlRpcTransportFactoryWithCookies extends XmlRpcSunHttpTransportFac
 			super.close();
 		}
 
-		@Override
-		protected InputStream getInputStream() throws XmlRpcException {
-			return new FilterInputStream(super.getInputStream()) {
-
-				@Override
-				public int read(byte[] b, int off, int len) throws IOException {
-					int result = super.read(b, off, len);
-					for (int i = 0; i < b.length; i++) {
-						if (b[i] == 0xC) {
-							b[i] = 0x20;
-						}
-					}
-					return result;
-				}
-				
-			};
-		}
-
 		private void retrieveAndStoreCookiesFromConnection() {
 			Map<String, List<String>> headers = connection.getHeaderFields();
 
@@ -126,6 +109,46 @@ public class XmlRpcTransportFactoryWithCookies extends XmlRpcSunHttpTransportFac
 			}
 		}
 
+		@Override
+		protected InputStream getInputStream() throws XmlRpcException {
+			return new XmlInvalidCharacterFilterInputStream(super.getInputStream());
+		}
+
+	}
+
+	private class XmlInvalidCharacterFilterInputStream extends FilterInputStream {
+
+		private static final int BYTE_MASK = 0xFF;
+
+		private static final byte SPACE = ' ';
+
+		protected XmlInvalidCharacterFilterInputStream(InputStream inputStream) {
+			super(inputStream);
+		}
+
+		@Override
+		public int read(byte[] buffer, int offset, int length) throws IOException {
+			int numberOfBytesRead = super.read(buffer, offset, length);
+			filterInvalidCharacterOutOfTheBuffer(buffer, numberOfBytesRead);
+			return numberOfBytesRead;
+		}
+
+		private void filterInvalidCharacterOutOfTheBuffer(byte[] buffer, int numberOfBytes) {
+			for (int byteNo = 0; byteNo < numberOfBytes; byteNo++) {
+				if (isAnInvalidCharacterInXML(buffer[byteNo])) {
+					buffer[byteNo] = SPACE;
+				}
+			}
+		}
+
+		private boolean isAnInvalidCharacterInXML(byte value) {
+			return isInvalid(convertByteToInt(value));
+		}
+
+		private int convertByteToInt(byte value) {
+			return value & BYTE_MASK;
+		}
+		
 	}
 
 }
