@@ -1,76 +1,62 @@
 /*
- * ------------------------------------------------------------------------
- *
- *  Copyright (C) 2003 - 2013
- *  University of Konstanz, Germany and
- *  KNIME GmbH, Konstanz, Germany
- *  Website: http://www.knime.org; Email: contact@knime.org
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License, Version 3, as
- *  published by the Free Software Foundation.
- *
- *  This program is distributed in the hope that it will be useful, but
- *  WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, see <http://www.gnu.org/licenses>.
- *
- *  Additional permission under GNU GPL version 3 section 7:
- *
- *  KNIME interoperates with ECLIPSE solely via ECLIPSE's plug-in APIs.
- *  Hence, KNIME and ECLIPSE are both independent programs and are not
- *  derived from each other. Should, however, the interpretation of the
- *  GNU GPL Version 3 ("License") under any applicable laws result in
- *  KNIME and ECLIPSE being a combined program, KNIME GMBH herewith grants
- *  you the additional permission to use and propagate KNIME together with
- *  ECLIPSE with only the license terms in place for ECLIPSE applying to
- *  ECLIPSE and the GNU GPL Version 3 applying for KNIME, provided the
- *  license terms of ECLIPSE themselves allow for the respective use and
- *  propagation of ECLIPSE together with KNIME.
- *
- *  Additional permission relating to nodes for KNIME that extend the Node
- *  Extension (and in particular that are based on subclasses of NodeModel,
- *  NodeDialog, and NodeView) and that only interoperate with KNIME through
- *  standard APIs ("Nodes"):
- *  Nodes are deemed to be separate and independent programs and to not be
- *  covered works.  Notwithstanding anything to the contrary in the
- *  License, the License does not apply to Nodes, you are not required to
- *  license Nodes under the License, and you are granted a license to
- *  prepare and propagate Nodes, in each case even if such Nodes are
- *  propagated with or for interoperation with KNIME.  The owner of a Node
- *  may freely choose the license terms applicable to such Node, including
- *  when such Node is propagated with or for interoperation with KNIME.
- * -------------------------------------------------------------------
- *
- * History
- *   Apr 8, 2009 (ohl): created
+ImpressiveCode Depress Framework
+Copyright (C) 2013  ImpressiveCode contributors
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.its.hpqc;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.impressivecode.depress.its.ITSAdapterTableFactory;
+import org.impressivecode.depress.its.ITSAdapterTransformer;
+import org.impressivecode.depress.its.ITSDataType;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
+import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeCreationContext;
+import org.knime.core.node.NodeLogger;
+import org.knime.core.node.NodeSettingsRO;
 import org.knime.ext.poi.node.read2.XLSReaderNodeModel;
 import org.knime.ext.poi.node.read2.XLSUserSettings;
+import org.xml.sax.SAXException;
+
+import com.google.common.base.Preconditions;
 
 /**
  *
- * @author £ukasz Leúniczek, Wroc≥aw, Poland
- * @author Mariusz Mulka, Wroc≥aw, Poland
+ * @author ≈Åukasz Le≈õniczek, Wroc≈Çaw, Poland
+ * @author Mariusz Mulka, Wroc≈Çaw, Poland
  */
 public class HPQCReaderNodeModel extends XLSReaderNodeModel {
 
+
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(HPQCReaderNodeModel.class);
+
+	
 	private XLSUserSettings m_settings = new XLSUserSettings();
 
     /**
@@ -85,6 +71,15 @@ public class HPQCReaderNodeModel extends XLSReaderNodeModel {
         m_settings.setFileLocation(context.getUrl().toString());
     }
     
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
+			throws InvalidSettingsException {
+		super.loadValidatedSettingsFrom(settings);
+		m_settings = XLSUserSettings.load(settings);
+	}
 
 	/**
      * {@inheritDoc}
@@ -92,8 +87,9 @@ public class HPQCReaderNodeModel extends XLSReaderNodeModel {
     @Override
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
             throws InvalidSettingsException {
-    	DataTableSpec[] oldSpec = super.configure(inSpecs);
-    	return new DataTableSpec[] {getNewSpec(oldSpec[0])};
+    	Preconditions.checkArgument(inSpecs.length == 0);
+    	return new DataTableSpec[] { ITSAdapterTableFactory
+				.createDataColumnSpec() };
         
     }
     
@@ -102,7 +98,6 @@ public class HPQCReaderNodeModel extends XLSReaderNodeModel {
             Pattern searchPattern = Pattern.compile("^[Cc]{1}[Qq]{1}[ ]{0,1}[Ii]{1}[Dd]{1}$");
             final String rawReplace = "ID";
             DataColumnSpec[] cols = new DataColumnSpec[in.getNumColumns()];
-            boolean hasConflicts = false;
             Set<String> nameHash = new HashSet<String>();
            
             for (int i = 0; i < cols.length; i++) {
@@ -130,18 +125,11 @@ public class HPQCReaderNodeModel extends XLSReaderNodeModel {
                 }
                 String newNameUnique = newName;
                 int unifier = 1;
-                while (!nameHash.add(newNameUnique)) {
-                    hasConflicts = true;
+                while (!nameHash.add(newNameUnique)) 
                     newNameUnique = newName + " (#" + (unifier++) + ")";
-                }
+                
                 creator.setName(newNameUnique);
                 cols[i] = creator.createSpec();
-            }
-            if (cols.length == 0) {
-                // don't bother if input is empty
-            } else if (hasConflicts) {
-                setWarningMessage("Pattern replace resulted in duplicate column "
-                        + "names; resolved conflicts using \"(#index)\" suffix");
             }
             return new DataTableSpec(in.getName(), cols);
         }
@@ -158,6 +146,15 @@ public class HPQCReaderNodeModel extends XLSReaderNodeModel {
         return result.replaceAll("([^\\\\])\\$i", "$1" + index);
     }
     
+    private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
+        ITSAdapterTransformer transformer = new ITSAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
+        return transformer.transform(entries, exec);
+    }
+    private List<ITSDataType> parseEntries(final BufferedDataTable outData) throws ParserConfigurationException, SAXException,
+    IOException, ParseException {
+        return new HPQCEntriesParser().parseEntries(outData);
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -168,8 +165,13 @@ public class HPQCReaderNodeModel extends XLSReaderNodeModel {
         DataTableSpec oldSpec = in.getDataTableSpec();
         DataTableSpec newSpec = getNewSpec(oldSpec);
         BufferedDataTable result = exec.createSpecReplacerTable(in, newSpec);
-        return new BufferedDataTable[] {result};
+        
+        LOGGER.info("Preparing to read hpqc entries."); 
+        List<ITSDataType> entries = parseEntries(result);
+        LOGGER.info("Transforming to hpqc entries.");
+        BufferedDataTable out = transform(entries, exec);
+        LOGGER.info("HPQC table created.");
+        return new BufferedDataTable[] { out };
+       
     }
-    
-
 }
