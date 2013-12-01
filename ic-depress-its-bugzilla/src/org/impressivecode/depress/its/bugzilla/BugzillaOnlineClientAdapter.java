@@ -18,12 +18,8 @@
 package org.impressivecode.depress.its.bugzilla;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
 import static com.google.common.collect.Maps.newHashMap;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineClientAdapter.Progress.GET_BUGS;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineClientAdapter.Progress.GET_BUGS_COMMENTS;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineClientAdapter.Progress.GET_BUGS_HISTORY;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineClientAdapter.Progress.PARSE_ENTRIES;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineClientAdapter.Progress.SEARCH_BUGS;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -41,7 +37,7 @@ import org.knime.core.node.ExecutionMonitor;
 /**
  * 
  * @author Michał Negacz, Wrocław University of Technology
- * 
+ * @author Piotr Wróblewski
  */
 public class BugzillaOnlineClientAdapter {
 
@@ -79,38 +75,19 @@ public class BugzillaOnlineClientAdapter {
 
 	private final int maxThreadsNumber = 20;
 
+	private volatile double stage = 0.0;
+
+	private volatile double progress_unit = 1;
+
+	private int step_number = 4;
+
 	private volatile List<ITSDataType> result = new ArrayList<ITSDataType>();
-
-	public enum Progress {
-		SEARCH_BUGS(0.0, "Searching bugs"), GET_BUGS(0.2,
-				"Getting bugs details"), GET_BUGS_HISTORY(0.4,
-				"Getting bugs history"), GET_BUGS_COMMENTS(0.6,
-				"Getting bugs comments"), PARSE_ENTRIES(0.8, "Parsing bugs");
-
-		private double value;
-
-		private String message;
-
-		private Progress(double value, String message) {
-			this.value = value;
-			this.message = message;
-		}
-
-		public double getValue() {
-			return value;
-		}
-
-		public String getMessage() {
-			return message;
-		}
-
-	}
 
 	private BugzillaOnlineXmlRpcClient bugzillaClient;
 
 	private BugzillaOnlineParser parser;
 
-	private ExecutionMonitor monitor;
+	private volatile ExecutionMonitor monitor;
 
 	public BugzillaOnlineClientAdapter(String url, ExecutionMonitor monitor)
 			throws MalformedURLException {
@@ -135,7 +112,7 @@ public class BugzillaOnlineClientAdapter {
 			CanceledExecutionException {
 		checkNotNull(filter.getProductName());
 
-		checkIfIsCanceledAndMarkProgress(SEARCH_BUGS);
+		checkIfIsCanceledAndMarkProgress(0.0,"search Bugs...");
 		Object[] simpleBugsInformation = searchBugs(
 				prepareSearchBugsParameters(filter), 0, filter.getLimit());
 
@@ -151,6 +128,9 @@ public class BugzillaOnlineClientAdapter {
 		int iterNumber = bLength.divide(bchunk, 2, RoundingMode.CEILING)
 				.intValue();
 		Thread[] threads = new Thread[iterNumber];
+		progress_unit = BigDecimal.ONE.divide(
+				new BigDecimal(iterNumber * step_number), 3,
+				RoundingMode.HALF_DOWN).doubleValue();
 		for (int i = 0; i < iterNumber; i++) {
 			int from = i * chunkSize;
 			int to = from + chunkSize;
@@ -199,10 +179,17 @@ public class BugzillaOnlineClientAdapter {
 		return worker;
 	}
 
-	private void checkIfIsCanceledAndMarkProgress(Progress progress)
+	private void checkIfIsCanceledAndMarkProgress(double value, String message)
 			throws CanceledExecutionException {
 		monitor.checkCanceled();
-		monitor.setProgress(progress.getValue(), progress.getMessage());
+		monitor.setProgress(value, message);
+	}
+
+	private void checkIfIsCanceledAndMarkProgress()
+			throws CanceledExecutionException {
+		monitor.checkCanceled();
+		stage += progress_unit;
+		monitor.setProgress(stage, "");
 	}
 
 	Object[] searchBugs(Map<String, Object> parameters, int offset, int limit)
@@ -306,13 +293,13 @@ public class BugzillaOnlineClientAdapter {
 				CanceledExecutionException {
 
 			List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
-
+			checkIfIsCanceledAndMarkProgress();
 			Object[] bugs = getBugs(prepareGetBugsParameters(bugsIds));
-
+			checkIfIsCanceledAndMarkProgress();
 			Object[] histories = getBugsHistory(prepareBugsIdsParameters(bugsIds));
-
+			checkIfIsCanceledAndMarkProgress();
 			Map<String, Object> comments = getBugsComments(prepareBugsIdsParameters(bugsIds));
-
+			checkIfIsCanceledAndMarkProgress();
 			return parser.parseEntries(bugs, histories, comments);
 		}
 
