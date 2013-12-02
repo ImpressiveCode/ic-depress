@@ -5,11 +5,10 @@ Bundle-SymbolicName: org.impressivecode.depress.its.jira;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: ImpressiveCode
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
- org.knime.workbench.core,
- org.knime.workbench.repository,
- org.knime.base;bundle-version="2.8.2",
- org.impressivecode.depress.base,
- org.junit
+ org.knime.workbench.core;bundle-version="2.8.0",
+ org.knime.workbench.repository;bundle-version="2.8.1",
+ org.knime.base;bundle-version="2.8.1",
+ org.impressivecode.depress.base;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.impressivecode.depress.its.jira,
  org.impressivecode.depress.its.jiraonline
