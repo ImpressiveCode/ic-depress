@@ -25,19 +25,17 @@ import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeM
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createUsernameSettings;
 
 import org.impressivecode.depress.its.ITSAuthenticationPane;
-import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
-import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
- * @author Micha³‚ Negacz, Wroc³aw University of Technology
- * @author Piotr Wróblewski, Wroc³aw University of Technology
- * @author Bartosz Skuza, Wroc³aw University of Technology
+ * @author MichaÅ‚ Negacz, WrocÅ‚aw University of Technology
+ * @author Piotr WrÃ³blewski, WrocÅ‚aw University of Technology
+ * @author Bartosz Skuza, WrocÅ‚aw University of Technology
  * 
  */
 public class BugzillaOnlineAdapterNodeDialog extends ITSAuthenticationPane {

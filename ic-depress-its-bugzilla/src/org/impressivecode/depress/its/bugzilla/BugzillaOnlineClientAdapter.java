@@ -37,7 +37,7 @@ import org.knime.core.node.ExecutionMonitor;
 /**
  * 
  * @author Michał Negacz, Wrocław University of Technology
- * @author Piotr Wróblewski
+ * @author Piotr Wróblewski, Wrocław University of Technology
  */
 public class BugzillaOnlineClientAdapter {
 
