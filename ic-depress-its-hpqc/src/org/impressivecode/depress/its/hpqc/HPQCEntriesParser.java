@@ -28,9 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
@@ -41,7 +39,6 @@ import org.knime.core.data.DataRow;
 import org.knime.core.data.container.CloseableRowIterator;
 import org.knime.core.node.BufferedDataTable;
 import org.xml.sax.SAXException;
-
 import com.google.common.collect.Lists;
 
 /**
@@ -59,17 +56,18 @@ public class HPQCEntriesParser {
     	 CloseableRowIterator itr = table.iterator();
     	 
     	 columnIds = new HashMap<String, Integer>();
-         for (int i = 0; i < table.getSpec().getNumColumns(); i++) 
+         for (int i = 0; i < table.getSpec().getNumColumns(); i++){
         	 columnIds.put(table.getSpec().getColumnSpec(i).getName(), i);
-    	 
-         while(itr.hasNext()) 
+         }
+         while(itr.hasNext()){
         	 entries.add(parse(itr.next()));
+         }
         return entries;
     }
 
     private ITSDataType parse(final DataRow row) throws ParseException {
         ITSDataType data = new ITSDataType();
-        data.setIssueId(getStringValue(getDataCell(row, "ID")));
+        data.setIssueId(getStringValue(getDataCell(row, "CQ ID")));
         String[] comments = new String[3];
         comments[0] = getStringValue(getDataCell(row, "Comments"));
         comments[1] = getStringValue(getDataCell(row, "Design Comments"));

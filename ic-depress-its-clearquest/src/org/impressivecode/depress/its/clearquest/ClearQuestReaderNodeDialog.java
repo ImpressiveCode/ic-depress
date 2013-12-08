@@ -34,34 +34,34 @@ import org.knime.ext.poi.node.read2.XLSUserSettings;
  * @author Mariusz Mulka, Wrocław, Poland
  */
 public class ClearQuestReaderNodeDialog extends XLSReaderNodeDialog {
-	private static final String TAB_NAME = "ClearQuest Reader Settings";
+    private static final String TAB_NAME = "ClearQuest Reader Settings";
 
-	public ClearQuestReaderNodeDialog() {
-		super();
-		super.renameTab("XLS Reader Settings", TAB_NAME);
-		Container hpTab = (Container) this.getTab(TAB_NAME);
-		Container secondContainer = (Container) ((Container) ((Container) hpTab
-				.getComponent(0)).getComponent(0)).getComponent(1);
-		// hide component: Column names
-		secondContainer.getComponent(1).setVisible(false);
-		secondContainer.getComponent(2).setVisible(false);
-	}
+    public ClearQuestReaderNodeDialog() {
+        super();
+        super.renameTab("XLS Reader Settings", TAB_NAME);
+        Container hpTab = (Container) this.getTab(TAB_NAME);
+        Container secondContainer = (Container) ((Container) ((Container) hpTab.getComponent(0)).getComponent(0))
+                .getComponent(1);
+        // hide component: Column names
+        secondContainer.getComponent(1).setVisible(false);
+        secondContainer.getComponent(2).setVisible(false);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void loadSettingsFrom(final NodeSettingsRO settings,
-			final DataTableSpec[] specs) throws NotConfigurableException {
-		XLSUserSettings s;
-		try {
-			s = XLSUserSettings.load(settings);
-		} catch (InvalidSettingsException e) {
-			s = new XLSUserSettings();
-		}
-		s.setHasColHeaders(true);
-		NodeSettings clone = new NodeSettings("clone");
-		s.save(clone);
-		super.loadSettingsFrom(clone, specs);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void loadSettingsFrom(final NodeSettingsRO settings, final DataTableSpec[] specs)
+            throws NotConfigurableException {
+        XLSUserSettings s;
+        try {
+            s = XLSUserSettings.load(settings);
+        } catch (InvalidSettingsException e) {
+            s = new XLSUserSettings();
+        }
+        s.setHasColHeaders(true);
+        NodeSettings clone = new NodeSettings("clone");
+        s.save(clone);
+        super.loadSettingsFrom(clone, specs);
+    }
 }

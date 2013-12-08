@@ -23,20 +23,20 @@ import org.knime.ext.poi.node.read2.XLSReaderNodeFactory;
 import org.knime.ext.poi.node.read2.XLSReaderNodeModel;
 
 /**
- *
+ * 
  * @author Łukasz Leśniczek, Wrocław, Poland
  */
 public class ClearQuestReaderNodeFactory extends XLSReaderNodeFactory {
-	
-	/**
+
+    /**
      * {@inheritDoc}
      */
     @Override
     protected NodeDialogPane createNodeDialogPane() {
         return new ClearQuestReaderNodeDialog();
     }
-	
-	/**
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -52,5 +52,4 @@ public class ClearQuestReaderNodeFactory extends XLSReaderNodeFactory {
         return new ClearQuestReaderNodeModel(context);
     }
 
-	
 }

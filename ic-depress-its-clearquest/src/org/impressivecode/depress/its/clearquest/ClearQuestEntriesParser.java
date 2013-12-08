@@ -51,214 +51,225 @@ import com.google.common.collect.Lists;
  * 
  */
 public class ClearQuestEntriesParser {
-	private static final String ClearQuest_DATE_FORMAT = "dd MMMM yyyy HH:mm:ss z";
-	private static final Integer NOSUFFIX = new Integer(0);
+    private static final String ClearQuest_DATE_FORMAT = "dd MMMM yyyy HH:mm:ss z";
+    private static final Integer NOSUFFIX = new Integer(0);
 
-	private final Hashtable<String, Number> m_rowIDhash = new Hashtable<String, Number>();
+    private final Hashtable<String, Number> m_rowIDhash = new Hashtable<String, Number>();
 
-	private HashMap<String, Integer> columnIds;
+    private HashMap<String, Integer> columnIds;
 
-	public List<ITSDataType> parseEntries(BufferedDataTable table)
-			throws ParserConfigurationException, SAXException, IOException,
-			ParseException {
-		List<ITSDataType> entries = Lists.newLinkedList();
-		CloseableRowIterator itr = table.iterator();
+    public List<ITSDataType> parseEntries(BufferedDataTable table) throws ParserConfigurationException, SAXException,
+            IOException, ParseException {
+        List<ITSDataType> entries = Lists.newLinkedList();
+        CloseableRowIterator itr = table.iterator();
 
-		columnIds = new HashMap<String, Integer>();
-		for (int i = 0; i < table.getSpec().getNumColumns(); i++)
-			columnIds.put(table.getSpec().getColumnSpec(i).getName(), i);
+        columnIds = new HashMap<String, Integer>();
+        for (int i = 0; i < table.getSpec().getNumColumns(); i++) {
+            columnIds.put(table.getSpec().getColumnSpec(i).getName(), i);
+        }
 
-		while (itr.hasNext())
-			entries.add(parse(itr.next()));
-		return entries;
-	}
+        while (itr.hasNext()) {
+            entries.add(parse(itr.next()));
+        }
+        return entries;
+    }
 
-	private ITSDataType parse(final DataRow row) throws ParseException {
-		ITSDataType data = new ITSDataType();
-		data.setIssueId(getUniqueId(row, "ID"));
-		data.setComments(getListValues(row, "Title"));
-		data.setCreated(getDateValue(row, "SubmissionDate"));
-		data.setDescription(getStringValue(getDataCell(row, "Description")));
-		data.setFixVersion(getListValues(row, "CorrectedInBuild"));
-		data.setLink("");
-		data.setPriority(getPriority(row));
-		data.setResolved(getDateValue(row, ""));
-		data.setStatus(getStatus(row));
-		data.setSummary("");
-		data.setType(getType(row));
-		data.setUpdated(getDateValue(row, ""));
-		data.setVersion(getListValues(row, "FoundInBuild"));
-		data.setResolution(getResolution(row));
-		data.setReporter(getStringValue(getDataCell(row, "Submitter")));
-		data.setAssignees(getSetValues(row, ""));
-		data.setCommentAuthors(getSetValues(row, ""));
-		return data;
-	}
+    private ITSDataType parse(final DataRow row) throws ParseException {
+        ITSDataType data = new ITSDataType();
+        data.setIssueId(getUniqueId(row, "id"));
+        data.setComments(getListValues(row, "Title"));
+        data.setCreated(getDateValue(row, "SubmissionDate"));
+        data.setDescription(getStringValue(getDataCell(row, "Description")));
+        data.setFixVersion(getListValues(row, "CorrectedInBuild"));
+        data.setLink("");
+        data.setPriority(getPriority(row));
+        data.setResolved(getDateValue(row, ""));
+        data.setStatus(getStatus(row));
+        data.setSummary("");
+        data.setType(getType(row));
+        data.setUpdated(getDateValue(row, ""));
+        data.setVersion(getListValues(row, "FoundInBuild"));
+        data.setResolution(getResolution(row));
+        data.setReporter(getStringValue(getDataCell(row, "Submitter")));
+        data.setAssignees(getSetValues(row, ""));
+        data.setCommentAuthors(getSetValues(row, ""));
+        return data;
+    }
 
-	private DataCell getDataCell(final DataRow row, String name) {
-		Integer columnId = columnIds.get(name);
-		return columnId != null ? row.getCell(columnId) : null;
-	}
+    private DataCell getDataCell(final DataRow row, String name) {
+        Integer columnId = columnIds.get(name);
+        return columnId != null ? row.getCell(columnId) : null;
+    }
 
-	private String getStringValue(final DataCell cell) {
-		return cell != null ? cell.toString() : "";
-	}
+    private String getStringValue(final DataCell cell) {
+        return cell != null ? cell.toString() : "";
+    }
 
-	private String getUniqueId(final DataRow row, String name) {
-		DataCell cell = getDataCell(row, name);
-		String value = getStringValue(cell);
-		String uniqueId = uniquifyRowId(value);
+    private String getUniqueId(final DataRow row, String name) {
+        DataCell cell = getDataCell(row, name);
+        String value = getStringValue(cell);
+        String uniqueId = uniquifyRowId(value);
 
-		return uniqueId;
-	}
+        return uniqueId;
+    }
 
-	private String uniquifyRowId(final String newRowHeader) {
+    private String uniquifyRowId(final String newRowHeader) {
 
-		Number oldSuffix = m_rowIDhash.put(newRowHeader, NOSUFFIX);
+        Number oldSuffix = m_rowIDhash.put(newRowHeader, NOSUFFIX);
 
-		if (oldSuffix == null) {
-			// haven't seen the rowID so far.
-			return newRowHeader;
-		}
+        if (oldSuffix == null) {
+            // haven't seen the rowID so far.
+            return newRowHeader;
+        }
 
-		String result = newRowHeader;
-		while (oldSuffix != null) {
+        String result = newRowHeader;
+        while (oldSuffix != null) {
 
-			// we have seen this rowID before!
-			int idx = oldSuffix.intValue();
+            // we have seen this rowID before!
+            int idx = oldSuffix.intValue();
 
-			assert idx >= NOSUFFIX.intValue();
+            assert idx >= NOSUFFIX.intValue();
 
-			idx++;
+            idx++;
 
-			if (oldSuffix == NOSUFFIX) {
-				// until now the NOSUFFIX placeholder was in the hash
-				assert idx - 1 == NOSUFFIX.intValue();
-				m_rowIDhash.put(result, new MutableInteger(idx));
-			} else {
-				assert oldSuffix instanceof MutableInteger;
-				((MutableInteger) oldSuffix).inc();
-				assert idx == oldSuffix.intValue();
-				// put back the old (incr.) suffix (overridden with NOSUFFIX).
-				m_rowIDhash.put(result, oldSuffix);
-			}
+            if (oldSuffix == NOSUFFIX) {
+                // until now the NOSUFFIX placeholder was in the hash
+                assert idx - 1 == NOSUFFIX.intValue();
+                m_rowIDhash.put(result, new MutableInteger(idx));
+            } else {
+                assert oldSuffix instanceof MutableInteger;
+                ((MutableInteger) oldSuffix).inc();
+                assert idx == oldSuffix.intValue();
+                // put back the old (incr.) suffix (overridden with NOSUFFIX).
+                m_rowIDhash.put(result, oldSuffix);
+            }
 
-			result = result + "_" + idx;
-			oldSuffix = m_rowIDhash.put(result, NOSUFFIX);
+            result = result + "_" + idx;
+            oldSuffix = m_rowIDhash.put(result, NOSUFFIX);
 
-		}
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private List<String> getListValues(final DataRow row, String name) {
-		DataCell value = getDataCell(row, name);
-		return value == null ? new LinkedList<String>() : Arrays.asList(name
-				.split(","));
-	}
+    private List<String> getListValues(final DataRow row, String name) {
+        DataCell value = getDataCell(row, name);
+        return value == null ? new LinkedList<String>() : Arrays.asList(name.split(","));
+    }
 
-	private Set<String> getSetValues(final DataRow row, String name) {
-		DataCell value = getDataCell(row, name);
-		return value == null ? new HashSet<String>() : new HashSet<String>(
-				Arrays.asList(name.split(",")));
-	}
+    private Set<String> getSetValues(final DataRow row, String name) {
+        DataCell value = getDataCell(row, name);
+        return value == null ? new HashSet<String>() : new HashSet<String>(Arrays.asList(name.split(",")));
+    }
 
-	private Date getDateValue(final DataRow row, String name)
-			throws ParseException {
-		DataCell value = getDataCell(row, name);
-		return value == null ? new Date() : parseDate(value.toString());
-	}
+    private Date getDateValue(final DataRow row, String name) throws ParseException {
+        DataCell value = getDataCell(row, name);
+        return value == null ? new Date() : parseDate(value.toString());
+    }
 
-	private Date parseDate(final String nodeValue) throws ParseException {
-		// 29 october 2013 07:35:03 GMT+01:00
-		SimpleDateFormat sdf = new SimpleDateFormat(ClearQuest_DATE_FORMAT,
-				Locale.US);
-		sdf.setLenient(true);
-		Date date = sdf.parse(nodeValue);
-		return date;
-	}
+    private Date parseDate(final String nodeValue) throws ParseException {
+        // 29 october 2013 07:35:03 GMT+01:00
+        SimpleDateFormat sdf = new SimpleDateFormat(ClearQuest_DATE_FORMAT, Locale.US);
+        sdf.setLenient(true);
+        Date date = sdf.parse(nodeValue);
+        return date;
+    }
 
-	private ITSResolution getResolution(final DataRow row) {
-		DataCell resolution = getDataCell(row, "State2");
-		if (resolution == null) {
-			return ITSResolution.UNKNOWN;
-		}
-		switch (resolution.toString()) {
-		case "Unresolved":
-			return ITSResolution.UNRESOLVED;
-		case "Fixed":
-			return ITSResolution.FIXED;
-		case "Wont't Fix":
-			return ITSResolution.WONT_FIX;
-		case "Duplicate":
-			return ITSResolution.DUPLICATE;
-		case "Invalid":
-			return ITSResolution.INVALID;
-		case "Incomplete":
-			return ITSResolution.INVALID;
-		case "Cannot Reproduce":
-			return ITSResolution.WONT_FIX;
-		case "Later":
-			return ITSResolution.WONT_FIX;
-		case "Not A Problem":
-			return ITSResolution.WONT_FIX;
-		case "Implemented":
-			return ITSResolution.FIXED;
-		default:
-			return ITSResolution.UNKNOWN;
-		}
-	}
+    private ITSResolution getResolution(final DataRow row) {
+        DataCell resolution = getDataCell(row, "action_name");
+        if (resolution == null) {
+            return ITSResolution.UNKNOWN;
+        }
+        switch (resolution.toString()) {
+        case "Start_Correction":
+        case "Submit":
+        case "Modify":
+        case "Assign":
+        case "Resubmit":
+        case "Prep_For_Acceptance_Test":
+        case "Prepare_For_System_Test":
+        case "Set_Priority":
+            return ITSResolution.UNRESOLVED;
+        case "System_Test_Failed":
+            return ITSResolution.WONT_FIX;
+        case "To_Duplicate":
+        case "Duplicate":
+        case "Confirm_Duplicate":
+            return ITSResolution.DUPLICATE;
+        case "Reject":
+        case "Change_By_Admin":
+            return ITSResolution.INVALID;
+        case "Solution_Implemented":
+        case "System_Test_Passed":
+        case "Finish_Correction":
+            return ITSResolution.FIXED;
+        default:
+            return ITSResolution.UNKNOWN;
+        }
+    }
 
-	private ITSType getType(final DataRow row) {
-		DataCell type = getDataCell(row, "type");
-		if (type == null) {
-			return ITSType.UNKNOWN;
-		}
-		switch (type.toString()) {
-		case "BugReport":
-			return ITSType.BUG;
-		default:
-			return ITSType.UNKNOWN;
-		}
-	}
+    private ITSType getType(final DataRow row) {
+        DataCell type = getDataCell(row, "record_type");
+        if (type == null) {
+            return ITSType.UNKNOWN;
+        }
+        switch (type.toString()) {
+        case "BugReport":
+            return ITSType.BUG;
+        default:
+            return ITSType.UNKNOWN;
+        }
+    }
 
-	private ITSStatus getStatus(final DataRow row) {
-		DataCell status = getDataCell(row, "State");
-		if (status == null) {
-			return ITSStatus.UNKNOWN;
-		}
-		switch (status.toString()) {
-		case "New":
-			return ITSStatus.OPEN;
-		case "Reopen":
-			return ITSStatus.REOPEN;
-		case "In Progress":
-			return ITSStatus.IN_PROGRESS;
-		case "Resolved":
-			return ITSStatus.RESOLVED;
-		case "Closed":
-			return ITSStatus.CLOSED;
-		default:
-			return ITSStatus.UNKNOWN;
-		}
-	}
+    private ITSStatus getStatus(final DataRow row) {
+        DataCell status = getDataCell(row, "action_name");
+        if (status == null) {
+            return ITSStatus.UNKNOWN;
+        }
+        switch (status.toString()) {
+        case "Submit":
+            return ITSStatus.OPEN;
+        case "Resubmit":
+            return ITSStatus.REOPEN;
+        case "Start_Correction":
+        case "Set_Priority":
+        case "Assign":
+        case "Modify":
+        case "Change_By_Admin":
+        case "System_Test_Failed":
+            return ITSStatus.IN_PROGRESS;
+        case "Prep_For_Acceptance_Test":
+        case "Prepare_For_System_Test":
+        case "Finish_Correction":
+            return ITSStatus.RESOLVED;
+        case "Solution_Implemented":
+        case "System_Test_Passed":
+        case "Reject":
+        case "To_Duplicate":
+        case "Duplicate":
+        case "Confirm_Duplicate":
+            return ITSStatus.CLOSED;
+        default:
+            return ITSStatus.UNKNOWN;
+        }
+    }
 
-	private ITSPriority getPriority(final DataRow row) {
-		DataCell priority = getDataCell(row, "Severity");
-		if (priority == null) {
-			return ITSPriority.UNKNOWN;
-		}
-		switch (priority.toString()) {
-		case "4 - Minor":
-			return ITSPriority.TRIVIAL;
-		case "3 - Average":
-			return ITSPriority.MINOR;
-		case "2 - Major":
-			return ITSPriority.MAJOR;
-		case "1 - Critical":
-			return ITSPriority.CRITICAL;
-		default:
-			return ITSPriority.UNKNOWN;
-		}
-	}
+    private ITSPriority getPriority(final DataRow row) {
+        DataCell priority = getDataCell(row, "Severity");
+        if (priority == null) {
+            return ITSPriority.UNKNOWN;
+        }
+        switch (priority.toString()) {
+        case "4 - Minor":
+            return ITSPriority.TRIVIAL;
+        case "3 - Average":
+            return ITSPriority.MINOR;
+        case "2 - Major":
+            return ITSPriority.MAJOR;
+        case "1 - Critical":
+            return ITSPriority.CRITICAL;
+        default:
+            return ITSPriority.UNKNOWN;
+        }
+    }
 }
