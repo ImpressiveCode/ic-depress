@@ -18,16 +18,30 @@
 package org.impressivecode.depress.its.bugzilla;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-
+import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
+import static java.lang.Math.ceil;
+import static java.util.concurrent.Executors.newFixedThreadPool;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.ASSIGNEE;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.CREATED;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.FIX_VERSION;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.ID;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.LINK;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.PRIORITY;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.REPORTER;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.RESOLUTION;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.STATUS;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.SUMMARY;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.UPDATED;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.VERSION;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.impressivecode.depress.its.ITSDataType;
@@ -71,26 +85,17 @@ public class BugzillaOnlineClientAdapter {
 
 	public static final String INCLUDE_FIELDS = "include_fields";
 
-	private final int minChunkSize = 200;
+	private static final int CHUNK_SIZE = 200;
 
-	private final int maxThreadsNumber = 20;
-
-	private volatile double stage = 0.0;
-
-	private volatile double progress_unit = 1;
-
-	private int step_number = 4;
-
-	private volatile List<ITSDataType> result = new ArrayList<ITSDataType>();
+	private static final int STEPS_NUMBER = 4;
 
 	private BugzillaOnlineXmlRpcClient bugzillaClient;
 
 	private BugzillaOnlineParser parser;
 
-	private volatile ExecutionMonitor monitor;
+	private ExecutionMonitor monitor;
 
-	public BugzillaOnlineClientAdapter(String url, ExecutionMonitor monitor)
-			throws MalformedURLException {
+	public BugzillaOnlineClientAdapter(String url, ExecutionMonitor monitor) throws MalformedURLException {
 		checkNotNull(url);
 		checkNotNull(monitor);
 		this.monitor = monitor;
@@ -98,8 +103,7 @@ public class BugzillaOnlineClientAdapter {
 		parser = buildParser();
 	}
 
-	private BugzillaOnlineXmlRpcClient buildClient(String url)
-			throws MalformedURLException {
+	private BugzillaOnlineXmlRpcClient buildClient(String url) throws MalformedURLException {
 		return new BugzillaOnlineXmlRpcClient(url);
 	}
 
@@ -107,132 +111,99 @@ public class BugzillaOnlineClientAdapter {
 		return new BugzillaOnlineParser();
 	}
 
-	public List<ITSDataType> listEntries(BugzillaOnlineFilter filter,
-			boolean parallel) throws XmlRpcException,
-			CanceledExecutionException {
+	private int getThreadsLimit() {
+		return Runtime.getRuntime().availableProcessors() + 1;
+	}
+
+	public List<ITSDataType> listEntries(BugzillaOnlineFilter filter) throws XmlRpcException, CanceledExecutionException, InterruptedException, ExecutionException {
 		checkNotNull(filter.getProductName());
+		checkIfIsCanceledAndMarkProgress(0);
 
-		checkIfIsCanceledAndMarkProgress(0.0,"search Bugs...");
-		Object[] simpleBugsInformation = searchBugs(
-				prepareSearchBugsParameters(filter), 0, filter.getLimit());
+		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(filter), 0, filter.getLimit());
+		List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
 
-		int chunkSize;
-		if (parallel) {
-			chunkSize = getChunkSize(simpleBugsInformation.length);
-		} else {
-			chunkSize = simpleBugsInformation.length;
+		List<Callable<List<ITSDataType>>> tasks = partitionTasks(bugsIds);
+
+		ExecutorService executorService = newFixedThreadPool(getThreadsLimit());
+		List<Future<List<ITSDataType>>> partialResults = executorService.invokeAll(tasks);
+		executorService.shutdown();
+
+		return combinePartialResults(partialResults);
+	}
+
+	private List<Callable<List<ITSDataType>>> partitionTasks(List<String> bugsIds) {
+		List<Callable<List<ITSDataType>>> tasks = newArrayList();
+
+		int taskCount = (int) ceil((double) bugsIds.size() / CHUNK_SIZE);
+
+		for (int taskNo = 0; taskNo < taskCount; taskNo++) {
+			int chunkLowerIndex = taskNo * CHUNK_SIZE;
+			int chunkUpperIndex = (taskNo + 1) * CHUNK_SIZE;
+			if (chunkUpperIndex > bugsIds.size()) {
+				chunkUpperIndex = bugsIds.size();
+			}
+
+			tasks.add(new Worker(bugsIds.subList(chunkLowerIndex, chunkUpperIndex)));
 		}
 
-		BigDecimal bLength = new BigDecimal(simpleBugsInformation.length);
-		BigDecimal bchunk = new BigDecimal(chunkSize);
-		int iterNumber = bLength.divide(bchunk, 2, RoundingMode.CEILING)
-				.intValue();
-		Thread[] threads = new Thread[iterNumber];
-		progress_unit = BigDecimal.ONE.divide(
-				new BigDecimal(iterNumber * step_number), 3,
-				RoundingMode.HALF_DOWN).doubleValue();
-		for (int i = 0; i < iterNumber; i++) {
-			int from = i * chunkSize;
-			int to = from + chunkSize;
-			if (to > simpleBugsInformation.length) {
-				to = simpleBugsInformation.length;
-			}
-			threads[i] = runSingleThread(Arrays.copyOfRange(
-					simpleBugsInformation, from, to));
-		}
+		return tasks;
+	}
 
-		for (Thread t : threads) {
-			try {
-				t.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+	private List<ITSDataType> combinePartialResults(List<Future<List<ITSDataType>>> partialResults) throws InterruptedException, ExecutionException {
+		List<ITSDataType> result = newArrayList();
+
+		for (Future<List<ITSDataType>> partialResult : partialResults) {
+			result.addAll(partialResult.get());
 		}
 
 		return result;
 	}
 
-	private int getChunkSize(int length) {
-		if (length < minChunkSize) {
-			return length;
-		} else {
-			BigDecimal bLength = new BigDecimal(length);
-			BigDecimal threadsNumber = new BigDecimal(maxThreadsNumber);
-			threadsNumber.setScale(0);
-			BigDecimal minChunkS = new BigDecimal(minChunkSize);
-			BigDecimal threads = bLength.divide(minChunkS, 0,
-					RoundingMode.CEILING);
-			if (threads.compareTo(threadsNumber) == 1) {
-				BigDecimal scope = bLength.divide(threadsNumber, 0,
-						RoundingMode.CEILING);
-				return scope.intValue();
-			} else {
-				return minChunkSize;
-			}
+	private void checkIfIsCanceledAndMarkProgress(double value) throws CanceledExecutionException {
+		monitor.checkCanceled();
+		monitor.setProgress(value);
+	}
+
+	private void checkIfIsCanceledAndMarkProgress() throws CanceledExecutionException {
+		synchronized (monitor) {
+			double progress = monitor.getProgressMonitor().getProgress();
+			// TODO calculate next progress value
+			checkIfIsCanceledAndMarkProgress(progress);
 		}
 	}
 
-	private Thread runSingleThread(Object[] chunk) {
-		BugInfoGetter getter = new BugInfoGetter(chunk);
-		Thread worker = new Thread(getter);
-		worker.start();
-		return worker;
-	}
-
-	private void checkIfIsCanceledAndMarkProgress(double value, String message)
-			throws CanceledExecutionException {
-		monitor.checkCanceled();
-		monitor.setProgress(value, message);
-	}
-
-	private void checkIfIsCanceledAndMarkProgress()
-			throws CanceledExecutionException {
-		monitor.checkCanceled();
-		stage += progress_unit;
-		monitor.setProgress(stage, "");
-	}
-
-	Object[] searchBugs(Map<String, Object> parameters, int offset, int limit)
-			throws XmlRpcException {
+	Object[] searchBugs(Map<String, Object> parameters, int offset, int limit) throws XmlRpcException {
 		parameters.put(OFFSET, offset);
 		parameters.put(LIMIT, limit);
 
-		Map<String, Object> result = bugzillaClient.execute(BUG_SEARCH_METHOD,
-				parameters);
+		Map<String, Object> result = bugzillaClient.execute(BUG_SEARCH_METHOD, parameters);
 
 		return (Object[]) result.get(BUGS);
 	}
 
 	Object[] getBugs(Map<String, Object> parameters) throws XmlRpcException {
-		Map<String, Object> result = bugzillaClient.execute(BUG_GET_METHOD,
-				parameters);
+		Map<String, Object> result = bugzillaClient.execute(BUG_GET_METHOD, parameters);
 
 		return (Object[]) result.get(BUGS);
 	}
 
-	Object[] getBugsHistory(Map<String, Object> parameters)
-			throws XmlRpcException {
-		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD,
-				parameters);
+	Object[] getBugsHistory(Map<String, Object> parameters) throws XmlRpcException {
+		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD, parameters);
 
 		return (Object[]) result.get(BUGS);
 	}
 
 	@SuppressWarnings("unchecked")
-	Map<String, Object> getBugsComments(Map<String, Object> parameters)
-			throws XmlRpcException {
-		Map<String, Object> result = bugzillaClient.execute(BUG_COMMENT_METHOD,
-				parameters);
+	Map<String, Object> getBugsComments(Map<String, Object> parameters) throws XmlRpcException {
+		Map<String, Object> result = bugzillaClient.execute(BUG_COMMENT_METHOD, parameters);
 
 		return (Map<String, Object>) result.get(BUGS);
 	}
 
-	private Map<String, Object> prepareSearchBugsParameters(
-			BugzillaOnlineFilter filter) {
+	private Map<String, Object> prepareSearchBugsParameters(BugzillaOnlineFilter filter) {
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(PRODUCT_NAME, filter.getProductName());
-		parameters
-				.put(INCLUDE_FIELDS, new String[] { BugzillaOnlineParser.ID });
+		parameters.put(INCLUDE_FIELDS, new String[] { ID });
 		if (creationTimeIsProvided(filter)) {
 			parameters.put(DATE_FROM, filter.getDateFrom());
 		}
@@ -241,13 +212,7 @@ public class BugzillaOnlineClientAdapter {
 
 	private Map<String, Object> prepareGetBugsParameters(List<String> ids) {
 		Map<String, Object> parameters = prepareBugsIdsParameters(ids);
-		parameters.put(INCLUDE_FIELDS, new String[] { BugzillaOnlineParser.ID,
-				BugzillaOnlineParser.CREATED, BugzillaOnlineParser.UPDATED,
-				BugzillaOnlineParser.STATUS, BugzillaOnlineParser.ASSIGNEE,
-				BugzillaOnlineParser.FIX_VERSION, BugzillaOnlineParser.VERSION,
-				BugzillaOnlineParser.REPORTER, BugzillaOnlineParser.PRIORITY,
-				BugzillaOnlineParser.SUMMARY, BugzillaOnlineParser.LINK,
-				BugzillaOnlineParser.RESOLUTION });
+		parameters.put(INCLUDE_FIELDS, new String[] { ID, CREATED, UPDATED, STATUS, ASSIGNEE, FIX_VERSION, VERSION, REPORTER, PRIORITY, SUMMARY, LINK, RESOLUTION });
 		return parameters;
 	}
 
@@ -269,31 +234,16 @@ public class BugzillaOnlineClientAdapter {
 		bugzillaClient.execute(USER_LOGIN_METHOD, params);
 	}
 
-	private class BugInfoGetter implements Runnable {
+	private class Worker implements Callable<List<ITSDataType>> {
 
-		private Object[] simpleBugsInformation;
+		private List<String> bugsIds;
 
-		public BugInfoGetter(Object[] simpleBugsInformation) {
-			this.simpleBugsInformation = simpleBugsInformation;
+		public Worker(List<String> bugsIds) {
+			this.bugsIds = bugsIds;
 		}
 
 		@Override
-		public void run() {
-			try {
-				List<ITSDataType> tab = getBugsInformation();
-				result.addAll(tab);
-			} catch (XmlRpcException e) {
-				e.printStackTrace();
-			} catch (CanceledExecutionException e) {
-				e.printStackTrace();
-			}
-		}
-
-		private List<ITSDataType> getBugsInformation() throws XmlRpcException,
-				CanceledExecutionException {
-
-			List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
-			checkIfIsCanceledAndMarkProgress();
+		public List<ITSDataType> call() throws Exception {
 			Object[] bugs = getBugs(prepareGetBugsParameters(bugsIds));
 			checkIfIsCanceledAndMarkProgress();
 			Object[] histories = getBugsHistory(prepareBugsIdsParameters(bugsIds));

@@ -111,7 +111,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		}
 
 		LOGGER.info("Reading entries from bugzilla instance: " + getURL() + " and product: " + getProductName());
-		List<ITSDataType> entries = clientAdapter.listEntries(getBugFilter(),true);
+		List<ITSDataType> entries = clientAdapter.listEntries(getBugFilter());
 
 		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, context);
