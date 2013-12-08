@@ -24,6 +24,7 @@ import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeM
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createURLSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createUsernameSettings;
 
+import org.impressivecode.depress.its.ITSAuthenticationPane;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
@@ -34,25 +35,20 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
- * @author MichaÅ‚ Negacz, WrocÅ‚aw University of Technology
- * @author Piotr WrÃ³blewski, WrocÅ‚aw University of Technology
+ * @author Micha³‚ Negacz, Wroc³aw University of Technology
+ * @author Piotr Wróblewski, Wroc³aw University of Technology
+ * @author Bartosz Skuza, Wroc³aw University of Technology
  * 
  */
-public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
+public class BugzillaOnlineAdapterNodeDialog extends ITSAuthenticationPane {
 
 	private static final int STRING_FIELD_WIDTH = 32;
-
-	private static final String AUTHENTICATION_TAB_TITILE = "Authentication";
 
 	private static final String URL_LABEL = "Bugzilla URL:";
 
 	private static final String PRODUCT_LABEL = "Product:";
 
 	private static final String DATE_FROM_LABEL = "Date from:";
-
-	private static final String USERNAME_LABEL = "Username:";
-
-	private static final String PASSWORD_LABEL = "Password:";
 
 	private static final String LIMIT_LABEL = "Limit:";
 
@@ -61,9 +57,7 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 		addDialogComponent(getProductComponent());
 		addDialogComponent(getDateComponent());
 		addDialogComponent(getLimitComponent());
-		createNewTab(AUTHENTICATION_TAB_TITILE);
-		addDialogComponent(getUsernameComponent());
-		addDialogComponent(getPasswordComponent());
+		this.addAuthTab(createUsernameSettings(), createPasswordSettings());
 	}
 
 	private DialogComponent getURLComponent() {
@@ -76,14 +70,6 @@ public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
 	private DialogComponent getDateComponent() {
 		return new DialogComponentDate(createDateSettings(), DATE_FROM_LABEL);
-	}
-
-	private DialogComponent getUsernameComponent() {
-		return new DialogComponentString(createUsernameSettings(), USERNAME_LABEL, false, STRING_FIELD_WIDTH);
-	}
-
-	private DialogComponent getPasswordComponent() {
-		return new DialogComponentPasswordField(createPasswordSettings(), PASSWORD_LABEL, STRING_FIELD_WIDTH);
 	}
 
 	private DialogComponent getLimitComponent() {
