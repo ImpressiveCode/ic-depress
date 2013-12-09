@@ -41,6 +41,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
  */
 public class BugzillaOnlineAdapterNodeDialog extends ITSAuthenticationPane {
 
+	
 	public static final String PRODUCT_LABEL = "Product:";
 
 	public static final String LIMIT_LABEL = "Limit:";
