@@ -85,8 +85,6 @@ public class BugzillaOnlineClientAdapter {
 
 	public static final String INCLUDE_FIELDS = "include_fields";
 
-	private static final int TASK_CHUNK_SIZE = 200;
-
 	private static final int TASK_STEPS_COUNT = 4;
 
 	private BugzillaOnlineXmlRpcClient bugzillaClient;
@@ -113,20 +111,20 @@ public class BugzillaOnlineClientAdapter {
 		return new BugzillaOnlineParser();
 	}
 
-	private int getThreadsLimit() {
-		return Runtime.getRuntime().availableProcessors() + 1;
-	}
-
-	public List<ITSDataType> listEntries(BugzillaOnlineFilter filter) throws XmlRpcException, CanceledExecutionException, InterruptedException, ExecutionException {
-		checkNotNull(filter.getProductName());
+	public List<ITSDataType> listEntries(BugzillaOnlineOptions options) throws XmlRpcException, CanceledExecutionException, InterruptedException, ExecutionException {
+		checkNotNull(options.getProductName());
+		checkNotNull(options.getLimit());
+		checkNotNull(options.getThreadsCount());
+		checkNotNull(options.getBugsPerTask());
+		
 		checkIfIsCanceledAndMarkProgress(0);
 
-		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(filter), 0, filter.getLimit());
+		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options), 0, options.getLimit());
 		List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
 
-		List<Callable<List<ITSDataType>>> tasks = partitionTasks(bugsIds);
+		List<Callable<List<ITSDataType>>> tasks = partitionTasks(bugsIds, options.getBugsPerTask());
 		setProgressStep(tasks.size());
-		List<Future<List<ITSDataType>>> partialResults = executeTasks(tasks);
+		List<Future<List<ITSDataType>>> partialResults = executeTasks(tasks, options.getThreadsCount());
 		return combinePartialResults(partialResults);
 	}
 
@@ -134,21 +132,21 @@ public class BugzillaOnlineClientAdapter {
 		progressStep = (1.0 / tasksCount / TASK_STEPS_COUNT);
 	}
 
-	private List<Future<List<ITSDataType>>> executeTasks(List<Callable<List<ITSDataType>>> tasks) throws InterruptedException {
-		ExecutorService executorService = newFixedThreadPool(getThreadsLimit());
+	private List<Future<List<ITSDataType>>> executeTasks(List<Callable<List<ITSDataType>>> tasks, int threadsCount) throws InterruptedException {
+		ExecutorService executorService = newFixedThreadPool(threadsCount);
 		List<Future<List<ITSDataType>>> partialResults = executorService.invokeAll(tasks);
 		executorService.shutdown();
 		return partialResults;
 	}
 
-	private List<Callable<List<ITSDataType>>> partitionTasks(List<String> bugsIds) {
+	private List<Callable<List<ITSDataType>>> partitionTasks(List<String> bugsIds, int bugsPerTask) {
 		List<Callable<List<ITSDataType>>> tasks = newArrayList();
 
-		int taskCount = (int) ceil((double) bugsIds.size() / TASK_CHUNK_SIZE);
+		int taskCount = (int) ceil((double) bugsIds.size() / bugsPerTask);
 
 		for (int taskNo = 0; taskNo < taskCount; taskNo++) {
-			int chunkLowerIndex = taskNo * TASK_CHUNK_SIZE;
-			int chunkUpperIndex = (taskNo + 1) * TASK_CHUNK_SIZE;
+			int chunkLowerIndex = taskNo * bugsPerTask;
+			int chunkUpperIndex = (taskNo + 1) * bugsPerTask;
 			if (chunkUpperIndex > bugsIds.size()) {
 				chunkUpperIndex = bugsIds.size();
 			}
@@ -210,7 +208,7 @@ public class BugzillaOnlineClientAdapter {
 		return (Map<String, Object>) result.get(BUGS);
 	}
 
-	private Map<String, Object> prepareSearchBugsParameters(BugzillaOnlineFilter filter) {
+	private Map<String, Object> prepareSearchBugsParameters(BugzillaOnlineOptions filter) {
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(PRODUCT_NAME, filter.getProductName());
 		parameters.put(INCLUDE_FIELDS, new String[] { ID });
@@ -232,7 +230,7 @@ public class BugzillaOnlineClientAdapter {
 		return parameters;
 	}
 
-	private boolean creationTimeIsProvided(BugzillaOnlineFilter filter) {
+	private boolean creationTimeIsProvided(BugzillaOnlineOptions filter) {
 		return filter.getDateFrom() != null;
 	}
 

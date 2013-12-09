@@ -17,16 +17,17 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createBugsPerTaskSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createDateSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createLimitSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createPasswordSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createProductSettings;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createThreadsCountSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createURLSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createUsernameSettings;
 
 import org.impressivecode.depress.its.ITSAuthenticationPane;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
-import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 
@@ -40,38 +41,44 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
  */
 public class BugzillaOnlineAdapterNodeDialog extends ITSAuthenticationPane {
 
-	private static final int STRING_FIELD_WIDTH = 32;
+	public static final String PRODUCT_LABEL = "Product:";
 
-	private static final String URL_LABEL = "Bugzilla URL:";
-
-	private static final String PRODUCT_LABEL = "Product:";
-
-	private static final String DATE_FROM_LABEL = "Date from:";
-
-	private static final String LIMIT_LABEL = "Limit:";
+	public static final String LIMIT_LABEL = "Limit:";
+	
+	public static final String ADVANCED_TAB_TITILE = "Advanced";
+	
+	public static final String THREADS_COUNT_LABEL = "Threads count:";
+	
+	public static final String BUGS_PER_TASK_LABEL = "Bugs per thread:";
 
 	protected BugzillaOnlineAdapterNodeDialog() {
-		addDialogComponent(getURLComponent());
+		addUrlComponent(createURLSettings());
 		addDialogComponent(getProductComponent());
-		addDialogComponent(getDateComponent());
+		addDateFromFilter(createDateSettings());
 		addDialogComponent(getLimitComponent());
-		this.addAuthTab(createUsernameSettings(), createPasswordSettings());
+		
+		addAuthTab(createUsernameSettings(), createPasswordSettings());
+		
+		createNewTab(ADVANCED_TAB_TITILE);
+		addDialogComponent(getThreadsCountComponent());
+		addDialogComponent(getBugsPerTaskComponent());
 	}
-
-	private DialogComponent getURLComponent() {
-		return new DialogComponentString(createURLSettings(), URL_LABEL, true, STRING_FIELD_WIDTH);
-	}
-
+	
 	private DialogComponent getProductComponent() {
 		return new DialogComponentString(createProductSettings(), PRODUCT_LABEL, true, STRING_FIELD_WIDTH);
 	}
 
-	private DialogComponent getDateComponent() {
-		return new DialogComponentDate(createDateSettings(), DATE_FROM_LABEL);
-	}
 
 	private DialogComponent getLimitComponent() {
 		return new DialogComponentNumberEdit(createLimitSettings(), LIMIT_LABEL);
 	}
 
+	private DialogComponent getThreadsCountComponent() {
+		return new DialogComponentNumberEdit(createThreadsCountSettings(), THREADS_COUNT_LABEL, STRING_FIELD_WIDTH);
+	}
+	
+	private DialogComponent getBugsPerTaskComponent() {
+		return new DialogComponentNumberEdit(createBugsPerTaskSettings(), BUGS_PER_TASK_LABEL, STRING_FIELD_WIDTH);
+	}
+	
 }
