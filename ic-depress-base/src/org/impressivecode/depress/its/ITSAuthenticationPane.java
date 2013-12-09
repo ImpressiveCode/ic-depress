@@ -15,13 +15,13 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  */
 public class ITSAuthenticationPane extends DefaultNodeSettingsPane {
 	
-	private static final int STRING_FIELD_WIDTH = 32;
+	public static final int STRING_FIELD_WIDTH = 32;
 
-	private static final String AUTHENTICATION_TAB_TITILE = "Authentication";
+	public static final String AUTHENTICATION_TAB_TITILE = "Authentication";
 
-	private static final String USERNAME_LABEL = "Username:";
+	public static final String USERNAME_LABEL = "Username:";
 
-	private static final String PASSWORD_LABEL = "Password:";
+	public static final String PASSWORD_LABEL = "Password:";
 
 	public void addAuthTab(SettingsModelString username, SettingsModelString password) {
 		createNewTab(AUTHENTICATION_TAB_TITILE);

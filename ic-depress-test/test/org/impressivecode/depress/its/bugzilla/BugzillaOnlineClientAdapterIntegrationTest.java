@@ -33,6 +33,7 @@ import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
 import org.junit.Test;
 import org.knime.core.node.ExecutionMonitor;
+import org.knime.core.node.NodeProgressMonitor;
 
 /**
  * 
@@ -110,15 +111,18 @@ public class BugzillaOnlineClientAdapterIntegrationTest {
 	@Test
 	public void shouldFetchAndParseBugFromFirefoxWithBugCreationDateFilter() throws Exception {
 		// given
-		ExecutionMonitor monitor = mock(ExecutionMonitor.class);
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi", monitor);
-		BugzillaOnlineFilter filter = new BugzillaOnlineFilter();
-		filter.setProductName("Socorro");
-		filter.setDateFrom(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("10-02-2010 19:19:59"));
-		filter.setLimit(1);
+		NodeProgressMonitor nodeProgressMonitor = mock(NodeProgressMonitor.class);
+		ExecutionMonitor executionMonitor = new ExecutionMonitor(nodeProgressMonitor);
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi", executionMonitor);
+		BugzillaOnlineOptions options = new BugzillaOnlineOptions();
+		options.setProductName("Socorro");
+		options.setDateFrom(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("10-02-2010 19:19:59"));
+		options.setLimit(1);
+		options.setThreadsCount(1);
+		options.setBugsPerTask(1);
 
 		// when
-		List<ITSDataType> entries = clientAdapter.listEntries(filter);
+		List<ITSDataType> entries = clientAdapter.listEntries(options);
 
 		// then
 		assertThat(entries).isNotEmpty();

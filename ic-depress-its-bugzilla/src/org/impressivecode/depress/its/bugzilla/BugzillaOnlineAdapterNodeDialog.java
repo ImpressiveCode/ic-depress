@@ -17,10 +17,12 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createBugsPerTaskSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createDateSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createLimitSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createPasswordSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createProductSettings;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createThreadsCountSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createURLSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createUsernameSettings;
 
@@ -40,22 +42,31 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
  */
 public class BugzillaOnlineAdapterNodeDialog extends ITSAuthenticationPane {
 
-	private static final int STRING_FIELD_WIDTH = 32;
+	public static final String URL_LABEL = "Bugzilla URL:";
 
-	private static final String URL_LABEL = "Bugzilla URL:";
+	public static final String PRODUCT_LABEL = "Product:";
 
-	private static final String PRODUCT_LABEL = "Product:";
+	public static final String DATE_FROM_LABEL = "Date from:";
 
-	private static final String DATE_FROM_LABEL = "Date from:";
-
-	private static final String LIMIT_LABEL = "Limit:";
+	public static final String LIMIT_LABEL = "Limit:";
+	
+	public static final String ADVANCED_TAB_TITILE = "Advanced";
+	
+	public static final String THREADS_COUNT_LABEL = "Threads count:";
+	
+	public static final String BUGS_PER_TASK_LABEL = "Bugs per thread:";
 
 	protected BugzillaOnlineAdapterNodeDialog() {
 		addDialogComponent(getURLComponent());
 		addDialogComponent(getProductComponent());
 		addDialogComponent(getDateComponent());
 		addDialogComponent(getLimitComponent());
-		this.addAuthTab(createUsernameSettings(), createPasswordSettings());
+		
+		addAuthTab(createUsernameSettings(), createPasswordSettings());
+		
+		createNewTab(ADVANCED_TAB_TITILE);
+		addDialogComponent(getThreadsCountComponent());
+		addDialogComponent(getBugsPerTaskComponent());
 	}
 
 	private DialogComponent getURLComponent() {
@@ -74,4 +85,12 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSAuthenticationPane {
 		return new DialogComponentNumberEdit(createLimitSettings(), LIMIT_LABEL);
 	}
 
+	private DialogComponent getThreadsCountComponent() {
+		return new DialogComponentNumberEdit(createThreadsCountSettings(), THREADS_COUNT_LABEL, STRING_FIELD_WIDTH);
+	}
+	
+	private DialogComponent getBugsPerTaskComponent() {
+		return new DialogComponentNumberEdit(createBugsPerTaskSettings(), BUGS_PER_TASK_LABEL, STRING_FIELD_WIDTH);
+	}
+	
 }

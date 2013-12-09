@@ -61,6 +61,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	public static final String DEFAULT_STRING_VALUE = "";
 
 	private static final int DEFAULT_LIMIT_VALUE = 1000;
+	
+	private static final int DEFAULT_BUGS_PER_TASK_VALUE = 1000;
 
 	public static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
 
@@ -78,6 +80,10 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	public static final String BUGZILLA_LIMIT = "depress.its.bugzillaonline.limit";
 
+	public static final String BUGZILLA_THREADS_COUNT = "depress.its.bugzillaonline.threadsCount";
+	
+	public static final String BUGZILLA_BUGS_PER_TASK = "depress.its.bugzillaonline.bugsPerTask";
+
 	private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
 
 	private final SettingsModelString urlSettings = createURLSettings();
@@ -91,6 +97,10 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	private final SettingsModelString productSettings = createProductSettings();
 
 	private final SettingsModelInteger limitSettings = createLimitSettings();
+	
+	private final SettingsModelInteger threadsCountSettings = createThreadsCountSettings();
+	
+	private final SettingsModelInteger bugsPerTaskSettings = createBugsPerTaskSettings();
 
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -111,7 +121,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		}
 
 		LOGGER.info("Reading entries from bugzilla instance: " + getURL() + " and product: " + getProductName());
-		List<ITSDataType> entries = clientAdapter.listEntries(getBugFilter());
+		List<ITSDataType> entries = clientAdapter.listEntries(getBugzillaOptions());
 
 		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, context);
@@ -147,13 +157,23 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	private Integer getLimit() {
 		return limitSettings.getIntValue();
 	}
+	
+	private Integer getThreadsCount() {
+		return threadsCountSettings.getIntValue();
+	}
+	
+	private Integer getBugsPerTask() {
+		return bugsPerTaskSettings.getIntValue();
+	}
 
-	private BugzillaOnlineFilter getBugFilter() {
-		BugzillaOnlineFilter filter = new BugzillaOnlineFilter();
-		filter.setProductName(getProductName());
-		filter.setDateFrom(getDateFrom());
-		filter.setLimit(getLimit());
-		return filter;
+	private BugzillaOnlineOptions getBugzillaOptions() {
+		BugzillaOnlineOptions options = new BugzillaOnlineOptions();
+		options.setProductName(getProductName());
+		options.setDateFrom(getDateFrom());
+		options.setLimit(getLimit());
+		options.setThreadsCount(getThreadsCount());
+		options.setBugsPerTask(getBugsPerTask());
+		return options;
 	}
 
 	private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
@@ -180,6 +200,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		productSettings.saveSettingsTo(settings);
 		dateFromSettings.saveSettingsTo(settings);
 		limitSettings.saveSettingsTo(settings);
+		threadsCountSettings.saveSettingsTo(settings);
+		bugsPerTaskSettings.saveSettingsTo(settings);
 	}
 
 	@Override
@@ -190,6 +212,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		productSettings.loadSettingsFrom(settings);
 		dateFromSettings.loadSettingsFrom(settings);
 		limitSettings.loadSettingsFrom(settings);
+		threadsCountSettings.loadSettingsFrom(settings);
+		bugsPerTaskSettings.loadSettingsFrom(settings);
 	}
 
 	@Override
@@ -200,6 +224,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		productSettings.validateSettings(settings);
 		dateFromSettings.validateSettings(settings);
 		limitSettings.validateSettings(settings);
+		threadsCountSettings.validateSettings(settings);
+		bugsPerTaskSettings.validateSettings(settings);
 
 		SettingsModelString url = urlSettings.createCloneWithValidatedValue(settings);
 		if (!isNullOrEmpty(url.getStringValue()) && !url.getStringValue().matches(URL_PATTERN)) {
@@ -246,4 +272,16 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		return new SettingsModelInteger(BUGZILLA_LIMIT, DEFAULT_LIMIT_VALUE);
 	}
 
+	static SettingsModelInteger createThreadsCountSettings() {
+		return new SettingsModelInteger(BUGZILLA_THREADS_COUNT, getOptimalThreadsCount());
+	}
+	
+	static SettingsModelInteger createBugsPerTaskSettings() {
+		return new SettingsModelInteger(BUGZILLA_BUGS_PER_TASK, DEFAULT_BUGS_PER_TASK_VALUE);
+	}
+	
+	static private int getOptimalThreadsCount() {
+		return Runtime.getRuntime().availableProcessors() + 1;
+	}
+	
 }
