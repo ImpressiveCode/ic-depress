@@ -85,15 +85,17 @@ public class BugzillaOnlineClientAdapter {
 
 	public static final String INCLUDE_FIELDS = "include_fields";
 
-	private static final int CHUNK_SIZE = 200;
+	private static final int TASK_CHUNK_SIZE = 200;
 
-	private static final int STEPS_NUMBER = 4;
+	private static final int TASK_STEPS_COUNT = 4;
 
 	private BugzillaOnlineXmlRpcClient bugzillaClient;
 
 	private BugzillaOnlineParser parser;
 
 	private ExecutionMonitor monitor;
+	
+	private double progressStep;
 
 	public BugzillaOnlineClientAdapter(String url, ExecutionMonitor monitor) throws MalformedURLException {
 		checkNotNull(url);
@@ -123,27 +125,35 @@ public class BugzillaOnlineClientAdapter {
 		List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
 
 		List<Callable<List<ITSDataType>>> tasks = partitionTasks(bugsIds);
+		setProgressStep(tasks.size());
+		List<Future<List<ITSDataType>>> partialResults = executeTasks(tasks);
+		return combinePartialResults(partialResults);
+	}
 
+	private void setProgressStep(int tasksCount) {
+		progressStep = (1.0 / tasksCount / TASK_STEPS_COUNT);
+	}
+
+	private List<Future<List<ITSDataType>>> executeTasks(List<Callable<List<ITSDataType>>> tasks) throws InterruptedException {
 		ExecutorService executorService = newFixedThreadPool(getThreadsLimit());
 		List<Future<List<ITSDataType>>> partialResults = executorService.invokeAll(tasks);
 		executorService.shutdown();
-
-		return combinePartialResults(partialResults);
+		return partialResults;
 	}
 
 	private List<Callable<List<ITSDataType>>> partitionTasks(List<String> bugsIds) {
 		List<Callable<List<ITSDataType>>> tasks = newArrayList();
 
-		int taskCount = (int) ceil((double) bugsIds.size() / CHUNK_SIZE);
+		int taskCount = (int) ceil((double) bugsIds.size() / TASK_CHUNK_SIZE);
 
 		for (int taskNo = 0; taskNo < taskCount; taskNo++) {
-			int chunkLowerIndex = taskNo * CHUNK_SIZE;
-			int chunkUpperIndex = (taskNo + 1) * CHUNK_SIZE;
+			int chunkLowerIndex = taskNo * TASK_CHUNK_SIZE;
+			int chunkUpperIndex = (taskNo + 1) * TASK_CHUNK_SIZE;
 			if (chunkUpperIndex > bugsIds.size()) {
 				chunkUpperIndex = bugsIds.size();
 			}
 
-			tasks.add(new Worker(bugsIds.subList(chunkLowerIndex, chunkUpperIndex)));
+			tasks.add(new Task(bugsIds.subList(chunkLowerIndex, chunkUpperIndex)));
 		}
 
 		return tasks;
@@ -167,7 +177,7 @@ public class BugzillaOnlineClientAdapter {
 	private void checkIfIsCanceledAndMarkProgress() throws CanceledExecutionException {
 		synchronized (monitor) {
 			double progress = monitor.getProgressMonitor().getProgress();
-			// TODO calculate next progress value
+			progress += progressStep;
 			checkIfIsCanceledAndMarkProgress(progress);
 		}
 	}
@@ -234,21 +244,25 @@ public class BugzillaOnlineClientAdapter {
 		bugzillaClient.execute(USER_LOGIN_METHOD, params);
 	}
 
-	private class Worker implements Callable<List<ITSDataType>> {
+	private class Task implements Callable<List<ITSDataType>> {
 
 		private List<String> bugsIds;
 
-		public Worker(List<String> bugsIds) {
+		public Task(List<String> bugsIds) {
 			this.bugsIds = bugsIds;
 		}
 
 		@Override
 		public List<ITSDataType> call() throws Exception {
+			checkIfIsCanceledAndMarkProgress();
 			Object[] bugs = getBugs(prepareGetBugsParameters(bugsIds));
+			
 			checkIfIsCanceledAndMarkProgress();
 			Object[] histories = getBugsHistory(prepareBugsIdsParameters(bugsIds));
+			
 			checkIfIsCanceledAndMarkProgress();
 			Map<String, Object> comments = getBugsComments(prepareBugsIdsParameters(bugsIds));
+			
 			checkIfIsCanceledAndMarkProgress();
 			return parser.parseEntries(bugs, histories, comments);
 		}
