@@ -20,6 +20,7 @@ package org.impressivecode.depress.its.jiraonline;
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsDateEnd;
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsDateFilterStatusChooser;
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsDateStart;
+import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsHistory;
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsJQL;
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsLogin;
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsPass;
@@ -31,6 +32,7 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
@@ -62,6 +64,7 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
     private static final String DATE_FROM = "Date from:";
     private static final String STATUS = "Status:";
     private static final String NOT_TESTED_YET = "Not tested yet...";
+    private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
 
     private final String[] DATE_FILTER_STATUSES = new String[] { "Created", "Resolution" };
 
@@ -103,6 +106,7 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
     private void createAdvancedGroup() {
         createNewGroup(ADVANCED);
+        addDialogComponent(new DialogComponentBoolean(createSettingsHistory(), DOWNLOAD_HISTORY));
         addDialogComponent(new DialogComponentMultiLineString(createSettingsJQL(), JQL, false, 100, 10));
     }
 
@@ -141,10 +145,10 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
             worker = new ConnectionTestWorker();
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public void actionPerformed(ActionEvent e) {
             connectionTestLabel.setText(TESTING_CONNECTION);
-            // FIXME fix this deprecation somehow
             checkConnectionButton.setEnabled(false);
             worker.execute();
         }
@@ -162,6 +166,7 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
             return client.testConnection();
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public void done() {
             try {
@@ -171,7 +176,6 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
                 connectionTestLabel.setText(CONNECTION_FAILED);
             }
 
-            // FIXME fix this deprecation somehow
             checkConnectionButton.setEnabled(true);
         }
 

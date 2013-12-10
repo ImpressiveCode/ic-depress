@@ -27,6 +27,7 @@ import java.util.List;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -37,6 +38,7 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
@@ -60,6 +62,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private static final String JIRA_END_DATE = "depress.its.jiraonline.endDate";
     private static final String JIRA_JQL = "depress.its.jiraonline.jql";
     private static final String JIRA_STATUS = "depress.its.jiraonline.status";
+    private static final String JIRA_HISTORY = "depress.its.jiraonline.historz";
 
     private final SettingsModelString jiraSettingsURL = createSettingsURL();
     private final SettingsModelString jiraSettingsLogin = createSettingsLogin();
@@ -68,38 +71,97 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private final SettingsModelDate jiraSettingsDateEnd = createSettingsDateEnd();
     private final SettingsModelString jiraSettingsJQL = createSettingsJQL();
     private final SettingsModelString jiraSettingsStatus = createSettingsDateFilterStatusChooser();
+    private final SettingsModelBoolean jiraSettingsHistory = createSettingsHistory();
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraOnlineAdapterNodeModel.class);
 
+    private JiraOnlineAdapterUriBuilder builder;
+    private JiraOnlineAdapterRsClient client;
+
     protected JiraOnlineAdapterNodeModel() {
-        super(0, 1);
+        super(0, 2);
     }
 
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
         LOGGER.info("Preparing to download JIRA entries.");
-        JiraOnlineAdapterUriBuilder builder = prepareBuilder();
-        JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient(builder);
+        
+        builder = prepareBuilder();
+        client = new JiraOnlineAdapterRsClient(builder);
         client.setSecuredConnection(true);
+
+        if (shouldDownloadHistory()) {
+            return executeWithHistory(exec);
+        } else {
+            return executeWithoutHistory(exec);
+        }
+    }
+
+    private BufferedDataTable[] executeWithoutHistory(final ExecutionContext exec) throws Exception {
         LOGGER.info("Downloading JIRA entries.");
+
         ArrayList<String> rawSources = new ArrayList<>();
         String rawData = client.getIssues();
         rawSources.add(rawData);
-        final int totalIssues = JiraOnlineParser.getTotalIssuesNumber(rawData);
+        final int totalIssues = JiraOnlineAdapterParser.getTotalIssuesNumber(rawData);
+        while (totalIssues > builder.getNextStartingIndex()) {
+            LOGGER.info("Downloaded " + builder.getNextStartingIndex() + " out of " + totalIssues + " JIRA entries.");
+            exec.setProgress((builder.getNextStartingIndex() + 0.0) / (totalIssues + 0.0));
+            builder.prepareForNextBatch();
+            rawSources.add(client.getIssues());
+        }
+        LOGGER.info("Downloaded " + totalIssues + " out of " + totalIssues + " JIRA entries.");
+        exec.setProgress(1);
+        LOGGER.info("Transforming JIRA entries.");
+
+        List<ITSDataType> parsedData = JiraOnlineAdapterParser.parseMultipleIssueBatches(rawSources, client
+                .getUriBuilder().getHostname());
+        BufferedDataTable out = transform(parsedData, exec);
+
+        BufferedDataTable outHistory = transformHistory(new ArrayList<JiraOnlineIssueChangeRowItem>(), exec);
+
+        return new BufferedDataTable[] { out, outHistory };
+    }
+
+    private BufferedDataTable[] executeWithHistory(final ExecutionContext exec) throws Exception {
+        LOGGER.info("Downloading JIRA entries with history.");
+
+        ArrayList<String> rawSources = new ArrayList<>();
+        String rawData = client.getIssues();
+        rawSources.add(rawData);
+        final int totalIssues = JiraOnlineAdapterParser.getTotalIssuesNumber(rawData);
         while (totalIssues > builder.getNextStartingIndex()) {
             LOGGER.info("Downloaded " + builder.getNextStartingIndex() + " out of " + totalIssues + " JIRA entries.");
             builder.prepareForNextBatch();
             rawSources.add(client.getIssues());
         }
         LOGGER.info("Downloaded " + totalIssues + " out of " + totalIssues + " JIRA entries.");
-
         LOGGER.info("Transforming JIRA entries.");
-        List<ITSDataType> parsedData = JiraOnlineParser.parseMultipleIssueBatches(rawSources, client.getUriBuilder()
-                .getHostname());
-        BufferedDataTable out = transform(parsedData, exec);
 
-        return new BufferedDataTable[] { out };
+        List<ITSDataType> parsedData = JiraOnlineAdapterParser.parseMultipleIssueBatches(rawSources, client
+                .getUriBuilder().getHostname());
+
+        List<JiraOnlineIssueChangeRowItem> history = new ArrayList<JiraOnlineIssueChangeRowItem>();
+
+        for (ITSDataType issue : parsedData) {
+            history.addAll(downloadAndParseIssueHistory(issue));
+        }
+
+        BufferedDataTable out = transform(parsedData, exec);
+        BufferedDataTable outHistory = transformHistory(history, exec);
+
+        return new BufferedDataTable[] { out, outHistory };
+    }
+
+    private List<JiraOnlineIssueChangeRowItem> downloadAndParseIssueHistory(ITSDataType issue) throws Exception {
+        builder.setIssueKey(issue.getIssueId());
+        String rawIssue = client.getIssueHistory();
+        return JiraOnlineAdapterParser.parseSingleIssue(rawIssue);
+    }
+
+    private boolean shouldDownloadHistory() {
+        return jiraSettingsHistory.getBooleanValue();
     }
 
     private JiraOnlineAdapterUriBuilder prepareBuilder() {
@@ -133,6 +195,13 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         return transformer.transform(entries, exec);
     }
 
+    private BufferedDataTable transformHistory(final List<JiraOnlineIssueChangeRowItem> entries,
+            final ExecutionContext exec) throws CanceledExecutionException {
+        JiraOnlineAdapterHistoryTransformer transformer = new JiraOnlineAdapterHistoryTransformer(
+                JiraOnlineAdapterHistoryTableFactory.createDataColumnSpec());
+        return transformer.transform(entries, exec);
+    }
+
     @Override
     protected void reset() {
         // NOOP
@@ -153,6 +222,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsDateEnd.saveSettingsTo(settings);
         jiraSettingsJQL.saveSettingsTo(settings);
         jiraSettingsStatus.saveSettingsTo(settings);
+        jiraSettingsHistory.saveSettingsTo(settings);
     }
 
     @Override
@@ -164,6 +234,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsDateEnd.loadSettingsFrom(settings);
         jiraSettingsJQL.loadSettingsFrom(settings);
         jiraSettingsStatus.loadSettingsFrom(settings);
+        jiraSettingsHistory.loadSettingsFrom(settings);
     }
 
     @Override
@@ -175,6 +246,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsDateEnd.validateSettings(settings);
         jiraSettingsJQL.validateSettings(settings);
         jiraSettingsStatus.validateSettings(settings);
+        jiraSettingsHistory.validateSettings(settings);
     }
 
     @Override
@@ -215,5 +287,9 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     static SettingsModelString createSettingsDateFilterStatusChooser() {
         return new SettingsModelString(JIRA_STATUS, DEFAULT_VALUE);
+    }
+
+    static SettingsModelBoolean createSettingsHistory() {
+        return new SettingsModelBoolean(JIRA_HISTORY, false);
     }
 }

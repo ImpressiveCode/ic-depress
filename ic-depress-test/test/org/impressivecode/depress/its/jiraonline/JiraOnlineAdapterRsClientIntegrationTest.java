@@ -62,7 +62,7 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
     public void should_download_and_parse_one_jira_issues() throws Exception {
         String jiraEntry = client.getIssues();
 
-        List<ITSDataType> entries = JiraOnlineParser.parse(jiraEntry, client.getUriBuilder().getHostname());
+        List<ITSDataType> entries = JiraOnlineAdapterParser.parse(jiraEntry, client.getUriBuilder().getHostname());
 
         assertThat(entries, is(notNullValue()));
         assertThat(entries.size(), is(equalTo(100)));
@@ -98,7 +98,7 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
         client.setUriBuilder(builder);
 
         // when
-        List<ITSDataType> entries = JiraOnlineParser.parse(client.getIssues(), builder.getHostname());
+        List<ITSDataType> entries = JiraOnlineAdapterParser.parse(client.getIssues(), builder.getHostname());
 
         // then
         assertThat(entries.size(), is(2));

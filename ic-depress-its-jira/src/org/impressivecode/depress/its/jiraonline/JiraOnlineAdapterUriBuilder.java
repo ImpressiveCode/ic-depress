@@ -32,19 +32,25 @@ import javax.ws.rs.core.UriBuilder;
  */
 public class JiraOnlineAdapterUriBuilder {
 
+    public static final int MAX_RESULTS_VALUE = 100;
+
     private static final String SIMPLE_URI_PATH = "{protocol}://{hostname}/";
     private static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/2/serverInfo";
     private static final String QUERY_URI_PATH = "{protocol}://{hostname}/rest/api/latest/search";
+    private static final String ISSUE_HISTORY_URI_PATH = "{protocol}://{hostname}/rest/api/latest/issue/{issueKey}";
     private static final String QUERY_PARAM = "jql";
     private static final String FIELDS_PARAM = "fields";
+    private static final String EXPAND_PARAM = "expand";
     private static final String CONJUNCTION = " AND ";
     private static final String GREATER_EQUAL = " >= ";
     private static final String LESS_EQUAL = " <= ";
     private static final String JIRA_DATE_FORMAT = "yyyy-MM-dd";
     private static final String MAX_RESULTS = "maxResults";
     private static final String START_AT = "startAt";
-    public static final int MAX_RESULTS_VALUE = 100;
+
+    private Mode mode = Mode.MULTI;
     private int startingIndex = 0;
+    private String issueKey;
 
     public static enum DateFilterType {
 
@@ -117,6 +123,18 @@ public class JiraOnlineAdapterUriBuilder {
             return testHost();
         }
 
+        if (mode == Mode.MULTI) {
+            return buildMultiIssuesURI();
+        }
+
+        if (mode == Mode.HISTORY) {
+            return buildIssueHistoryURI();
+        }
+
+        throw new RuntimeException("This should never happen. URI builder failed");
+    }
+
+    private URI buildMultiIssuesURI() {
         StringBuilder jqlBuilder = new StringBuilder();
 
         if (jql != null) {
@@ -156,6 +174,21 @@ public class JiraOnlineAdapterUriBuilder {
                 .build();
         // @formatter:on
 
+        return result;
+    }
+
+    private URI buildIssueHistoryURI() {
+        
+        // @formatter:off
+        URI result = UriBuilder.fromPath(ISSUE_HISTORY_URI_PATH)
+                .resolveTemplate("protocol", protocol)
+                .resolveTemplate("hostname", hostname)
+                .resolveTemplate("issueKey", issueKey)
+                .queryParam(FIELDS_PARAM, "changelog")
+                .queryParam(EXPAND_PARAM, "changelog")
+                .build();
+        // @formatter:on
+        
         return result;
     }
 
@@ -211,4 +244,15 @@ public class JiraOnlineAdapterUriBuilder {
         return startingIndex + JiraOnlineAdapterUriBuilder.MAX_RESULTS_VALUE;
     }
 
+    public void setIssueKey(String issueKey) {
+        this.issueKey = issueKey;
+    }
+
+    public void setMode(Mode mode) {
+        this.mode = mode;
+    }
+
+    public enum Mode {
+        HISTORY, MULTI;
+    }
 }

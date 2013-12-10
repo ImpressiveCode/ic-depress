@@ -50,12 +50,21 @@ public class JiraOnlineAdapterRsClient {
     }
 
     public String getIssues() throws Exception {
+        uriBuilder.setMode(JiraOnlineAdapterUriBuilder.Mode.MULTI);
         Response response = getReponse();
         isDataFetchSuccessful(response);
 
         return reponseToString(response);
     }
+    
+    public String getIssueHistory() throws Exception {
+        uriBuilder.setMode(JiraOnlineAdapterUriBuilder.Mode.HISTORY);
+        Response response = getReponse();
+        isDataFetchSuccessful(response);
 
+        return reponseToString(response);
+    }
+    
     public boolean testConnection() throws Exception {
         Response response = getReponse();
 
@@ -90,7 +99,6 @@ public class JiraOnlineAdapterRsClient {
         final URI uri = uriBuilder.build();
 
         return client.target(uri).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get();
-
     }
 
     public JiraOnlineAdapterUriBuilder getUriBuilder() {
@@ -108,5 +116,4 @@ public class JiraOnlineAdapterRsClient {
     public void setClient(Client client) {
         this.client = client;
     }
-
 }
