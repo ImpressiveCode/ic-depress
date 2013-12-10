@@ -17,18 +17,18 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createBugsPerTaskSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createDateSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createLimitSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createPasswordSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createProductSettings;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createThreadsCountSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createURLSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createUsernameSettings;
 
-import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.impressivecode.depress.its.ITSAuthenticationPane;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
-import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
-import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 
 /**
@@ -36,58 +36,50 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
  * @author Marek Majchrzak, ImpressiveCode
  * @author Michał Negacz, Wrocław University of Technology
  * @author Piotr Wróblewski, Wrocław University of Technology
+ * @author Bartosz Skuza, Wrocław University of Technology
  * 
  */
-public class BugzillaOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
+public class BugzillaOnlineAdapterNodeDialog extends ITSAuthenticationPane {
 
-	private static final int STRING_FIELD_WIDTH = 32;
+	
+	public static final String PRODUCT_LABEL = "Product:";
 
-	private static final String AUTHENTICATION_TAB_TITILE = "Authentication";
-
-	private static final String URL_LABEL = "Bugzilla URL:";
-
-	private static final String PRODUCT_LABEL = "Product:";
-
-	private static final String DATE_FROM_LABEL = "Date from:";
-
-	private static final String USERNAME_LABEL = "Username:";
-
-	private static final String PASSWORD_LABEL = "Password:";
-
-	private static final String LIMIT_LABEL = "Limit:";
+	public static final String LIMIT_LABEL = "Limit:";
+	
+	public static final String ADVANCED_TAB_TITILE = "Advanced";
+	
+	public static final String THREADS_COUNT_LABEL = "Threads count:";
+	
+	public static final String BUGS_PER_TASK_LABEL = "Bugs per thread:";
 
 	protected BugzillaOnlineAdapterNodeDialog() {
-		addDialogComponent(getURLComponent());
+		addUrlComponent(createURLSettings());
 		addDialogComponent(getProductComponent());
-		addDialogComponent(getDateComponent());
+		addDateFromFilter(createDateSettings());
 		addDialogComponent(getLimitComponent());
-		createNewTab(AUTHENTICATION_TAB_TITILE);
-		addDialogComponent(getUsernameComponent());
-		addDialogComponent(getPasswordComponent());
+		
+		addAuthTab(createUsernameSettings(), createPasswordSettings());
+		
+		createNewTab(ADVANCED_TAB_TITILE);
+		addDialogComponent(getThreadsCountComponent());
+		addDialogComponent(getBugsPerTaskComponent());
 	}
-
-	private DialogComponent getURLComponent() {
-		return new DialogComponentString(createURLSettings(), URL_LABEL, true, STRING_FIELD_WIDTH);
-	}
-
+	
 	private DialogComponent getProductComponent() {
 		return new DialogComponentString(createProductSettings(), PRODUCT_LABEL, true, STRING_FIELD_WIDTH);
 	}
 
-	private DialogComponent getDateComponent() {
-		return new DialogComponentDate(createDateSettings(), DATE_FROM_LABEL);
-	}
-
-	private DialogComponent getUsernameComponent() {
-		return new DialogComponentString(createUsernameSettings(), USERNAME_LABEL, false, STRING_FIELD_WIDTH);
-	}
-
-	private DialogComponent getPasswordComponent() {
-		return new DialogComponentPasswordField(createPasswordSettings(), PASSWORD_LABEL, STRING_FIELD_WIDTH);
-	}
 
 	private DialogComponent getLimitComponent() {
 		return new DialogComponentNumberEdit(createLimitSettings(), LIMIT_LABEL);
 	}
 
+	private DialogComponent getThreadsCountComponent() {
+		return new DialogComponentNumberEdit(createThreadsCountSettings(), THREADS_COUNT_LABEL, STRING_FIELD_WIDTH);
+	}
+	
+	private DialogComponent getBugsPerTaskComponent() {
+		return new DialogComponentNumberEdit(createBugsPerTaskSettings(), BUGS_PER_TASK_LABEL, STRING_FIELD_WIDTH);
+	}
+	
 }
