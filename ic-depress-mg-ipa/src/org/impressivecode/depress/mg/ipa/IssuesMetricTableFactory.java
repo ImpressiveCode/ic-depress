@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.mg.ipa;
 
 import static com.google.common.collect.Sets.newHashSet;
-import static org.impressivecode.depress.common.Cells.booleanCell;
 import static org.impressivecode.depress.common.Cells.integerCell;
 import static org.impressivecode.depress.common.Cells.stringListOrMissingCell;
 
@@ -31,7 +30,6 @@ import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.collection.ListCell;
-import org.knime.core.data.def.BooleanCell;
 import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
@@ -64,7 +62,7 @@ public final class IssuesMetricTableFactory {
                 new DataColumnSpecCreator(ISSUES, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
                 new DataColumnSpecCreator(NUMBER_OF_ISSUES, IntCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(NUMBER_OF_UNIQUE_ISSUES, IntCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(FOUND_ANY, BooleanCell.TYPE).createSpec()};
+                new DataColumnSpecCreator(FOUND_ANY, IntCell.TYPE).createSpec()};
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
         return outputSpec;
     }
@@ -75,7 +73,7 @@ public final class IssuesMetricTableFactory {
                 stringListOrMissingCell(ids), 
                 integerCell(ids.size()),
                 integerCell(newHashSet(ids).size()),
-                booleanCell(!ids.isEmpty()) };
+                integerCell(!ids.isEmpty()) };
         DataRow row = new DefaultRow(noi.getResourceName(), cells);
         return row;
     }

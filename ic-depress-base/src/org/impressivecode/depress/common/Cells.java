@@ -54,6 +54,10 @@ public class Cells {
         return new IntCell(value);
     }
 
+    public static DataCell integerCell(final boolean b) {
+        return integerCell(b ? 1 : 0);
+    }
+
     public static DataCell doubleOrMissingCell(final Double value) {
         return value == null ? DataType.getMissingCell() : new DoubleCell(value);
     }
