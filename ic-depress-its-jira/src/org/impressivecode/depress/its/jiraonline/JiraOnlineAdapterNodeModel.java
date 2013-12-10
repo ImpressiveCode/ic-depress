@@ -41,6 +41,7 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
+import org.knime.core.node.port.PortObjectSpec;
 
 import com.google.common.base.Preconditions;
 
@@ -80,6 +81,11 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     protected JiraOnlineAdapterNodeModel() {
         super(0, 2);
+    }
+    
+    @Override
+    protected PortObjectSpec[] configure(PortObjectSpec[] inSpecs) throws InvalidSettingsException {
+        return new PortObjectSpec[2];
     }
 
     @Override
