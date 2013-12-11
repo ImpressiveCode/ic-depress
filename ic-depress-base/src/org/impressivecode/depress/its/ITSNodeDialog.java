@@ -1,4 +1,4 @@
-package org.impressivecode.depress.its.common;
+package org.impressivecode.depress.its;
 
 import java.awt.event.ActionListener;
 
