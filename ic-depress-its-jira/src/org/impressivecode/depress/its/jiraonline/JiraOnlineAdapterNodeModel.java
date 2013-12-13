@@ -65,6 +65,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private static final int INPUT_NODE_COUNT = 0;
     private static final int OUTPUT_NODE_COUNT = 2;
     private static final int THREAD_COUNT = 45;
+    private static final int STEPS_PER_TASK = 2;
 
     private static final String JIRA_URL = "depress.its.jiraonline.url";
     private static final String JIRA_LOGIN = "depress.its.jiraonline.login";
@@ -89,6 +90,18 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private JiraOnlineAdapterUriBuilder builder;
     private JiraOnlineAdapterRsClient client;
 
+    private ExecutionContext exec;
+    private ExecutionMonitor issueCountMonitor;
+    private ExecutionMonitor issueListMonitor;
+    private ExecutionMonitor issueHistoryMonitor;
+
+    private ExecutorService executorService;
+
+    private int issueTaskStepsSum;
+    private int historyTaskStepsSum;
+    private int issueTaskStepsCompleted;
+    private int historyTaskStepsCompleted;
+
     protected JiraOnlineAdapterNodeModel() {
         super(INPUT_NODE_COUNT, OUTPUT_NODE_COUNT);
     }
@@ -102,46 +115,21 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
         long startTime = System.currentTimeMillis();
+        this.exec = exec;
+        prepareProgressMonitors();
 
         builder = prepareBuilder();
         client = new JiraOnlineAdapterRsClient(builder);
+        executorService = Executors.newFixedThreadPool(THREAD_COUNT);
 
-        String rawData = client.getIssues();
-        final int totalIssues = JiraOnlineAdapterParser.getTotalIssuesNumber(rawData);
+        List<URI> issueBatchLinks = prepareIssueBatchesLinks();
 
-        List<URI> issueBatchLinks = new ArrayList<>();
+        issueListMonitor.setProgress(0);
+        issueTaskStepsSum = issueBatchLinks.size() * STEPS_PER_TASK;
 
-        while (totalIssues > builder.getNextStartingIndex()) {
-            builder.prepareForNextBatch();
-            issueBatchLinks.add(builder.build());
-        }
+        List<ITSDataType> issues = executeIssueTasks(issueBatchLinks);
+        List<JiraOnlineIssueChangeRowItem> issuesHistory = executeHistoryTasks(issues);
 
-        List<Callable<List<ITSDataType>>> tasks = newArrayList();
-
-        LOGGER.warn("Created "+issueBatchLinks.size()+ " tasks");
-        for (URI uri : issueBatchLinks) {
-            tasks.add(new DownloadAndParseIssuesTask(uri));
-        }
-
-        ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
-        List<Future<List<ITSDataType>>> partialResults = executorService.invokeAll(tasks);
-        
-        
-        List<ITSDataType> issues = combinePartialIssueResults(partialResults);
-        List<JiraOnlineIssueChangeRowItem> issuesHistory;
-        
-        List<Callable<List<JiraOnlineIssueChangeRowItem>>> historyTasks = newArrayList();
-        if(shouldDownloadHistory()) {
-            for(ITSDataType issue : issues) {
-                builder.setIssueKey(issue.getIssueId());
-                historyTasks.add(new DownloadAndParseIssueHistoryTask(builder.buildIssueHistoryURI()));
-            }
-            List<Future<List<JiraOnlineIssueChangeRowItem>>> partialHistoryResults = executorService.invokeAll(historyTasks);
-            issuesHistory = combinePartialIssueHistoryResults(partialHistoryResults);
-        } else {
-            issuesHistory = newArrayList();
-        }
-        
         executorService.shutdown();
 
         BufferedDataTable out = transform(issues, exec);
@@ -150,6 +138,76 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         long endTime = System.currentTimeMillis();
         LOGGER.warn("Finished in " + ((endTime - startTime) / 1000) + " seconds.");
         return new BufferedDataTable[] { out, outHistory };
+    }
+
+    private List<URI> prepareIssueBatchesLinks() throws Exception {
+        issueCountMonitor.setProgress(0);
+        final int totalIssues = getIssuesCount();
+        issueCountMonitor.setProgress(0.5);
+        List<URI> issueBatchLinks = new ArrayList<>();
+
+        while (totalIssues > builder.getNextStartingIndex()) {
+            builder.prepareForNextBatch();
+            issueBatchLinks.add(builder.build());
+        }
+        issueCountMonitor.setProgress(1);
+        return issueBatchLinks;
+    }
+
+    private int getIssuesCount() throws Exception {
+        String rawData = client.getIssues();
+        return JiraOnlineAdapterParser.getTotalIssuesCount(rawData);
+    }
+
+    private List<ITSDataType> executeIssueTasks(List<URI> issueBatchLinks) throws InterruptedException,
+            ExecutionException {
+        List<Callable<List<ITSDataType>>> tasks = newArrayList();
+
+        for (URI uri : issueBatchLinks) {
+            tasks.add(new DownloadAndParseIssuesTask(uri));
+        }
+        List<Future<List<ITSDataType>>> partialResults = executorService.invokeAll(tasks);
+        List<ITSDataType> issues = combinePartialIssueResults(partialResults);
+        return issues;
+    }
+
+    private List<JiraOnlineIssueChangeRowItem> executeHistoryTasks(List<ITSDataType> issues)
+            throws InterruptedException, ExecutionException {
+        List<JiraOnlineIssueChangeRowItem> issuesHistory;
+        List<Callable<List<JiraOnlineIssueChangeRowItem>>> historyTasks = newArrayList();
+        if (shouldDownloadHistory()) {
+            historyTaskStepsSum = issues.size() * STEPS_PER_TASK;
+            issueHistoryMonitor.setProgress(0);
+            for (ITSDataType issue : issues) {
+                builder.setIssueKey(issue.getIssueId());
+                historyTasks.add(new DownloadAndParseIssueHistoryTask(builder.buildIssueHistoryURI()));
+            }
+            List<Future<List<JiraOnlineIssueChangeRowItem>>> partialHistoryResults = executorService
+                    .invokeAll(historyTasks);
+            issuesHistory = combinePartialIssueHistoryResults(partialHistoryResults);
+        } else {
+            issuesHistory = newArrayList();
+        }
+        return issuesHistory;
+    }
+
+    private void prepareProgressMonitors() {
+        double issueListProgressPart = 0.9;
+        double issueHistoryProgressPart = 0;
+
+        if (shouldDownloadHistory()) {
+            issueListProgressPart = 0.2;
+            issueHistoryProgressPart = 0.7;
+        }
+
+        issueCountMonitor = exec.createSubProgress(0.1);
+
+        issueListMonitor = exec.createSubProgress(issueListProgressPart);
+        issueHistoryMonitor = exec.createSubProgress(issueHistoryProgressPart);
+
+        issueTaskStepsCompleted = 0;
+        historyTaskStepsCompleted = 0;
+
     }
 
     private List<ITSDataType> combinePartialIssueResults(List<Future<List<ITSDataType>>> partialResults)
@@ -162,9 +220,10 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
         return result;
     }
-    
-    private List<JiraOnlineIssueChangeRowItem> combinePartialIssueHistoryResults(List<Future<List<JiraOnlineIssueChangeRowItem>>> partialResults)
-            throws InterruptedException, ExecutionException {
+
+    private List<JiraOnlineIssueChangeRowItem> combinePartialIssueHistoryResults(
+            List<Future<List<JiraOnlineIssueChangeRowItem>>> partialResults) throws InterruptedException,
+            ExecutionException {
         List<JiraOnlineIssueChangeRowItem> result = newArrayList();
 
         for (Future<List<JiraOnlineIssueChangeRowItem>> partialResult : partialResults) {
@@ -173,14 +232,21 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
         return result;
     }
-    
+
     private boolean shouldDownloadHistory() {
         return jiraSettingsHistory.getBooleanValue();
     }
-    
-    public void checkIfIsCanceledAndMarkProgress() {
-        // TODO Auto-generated method stub
 
+    private void markProgressForIssue() {
+        issueListMonitor.setProgress((double) ++issueTaskStepsCompleted / (double) issueTaskStepsSum);
+    }
+
+    private void markProgressForHistory() {
+        issueHistoryMonitor.setProgress((double) ++historyTaskStepsCompleted / (double) historyTaskStepsSum);
+    }
+
+    private void checkForCancel() throws CanceledExecutionException {
+        exec.checkCanceled();
     }
 
     private JiraOnlineAdapterUriBuilder prepareBuilder() {
@@ -322,38 +388,42 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
         @Override
         public List<ITSDataType> call() throws Exception {
-            checkIfIsCanceledAndMarkProgress();
+            checkForCancel();
 
             String rawData = client.getJSON(uri);
             String hostname = client.getUriBuilder().getHostname();
-            
-            checkIfIsCanceledAndMarkProgress();
-            
-            return JiraOnlineAdapterParser.parseSingleIssueBatch(rawData, hostname);
+
+            markProgressForIssue();
+            checkForCancel();
+
+            List<ITSDataType> list = JiraOnlineAdapterParser.parseSingleIssueBatch(rawData, hostname);
+            markProgressForIssue();
+
+            return list;
         }
     }
-    
-    private class DownloadAndParseIssueHistoryTask  implements Callable<List<JiraOnlineIssueChangeRowItem>> {
-        
+
+    private class DownloadAndParseIssueHistoryTask implements Callable<List<JiraOnlineIssueChangeRowItem>> {
+
         private URI uri;
-        
+
         public DownloadAndParseIssueHistoryTask(URI uri) {
             this.uri = uri;
         }
-        
+
         @Override
         public List<JiraOnlineIssueChangeRowItem> call() throws Exception {
-            checkIfIsCanceledAndMarkProgress();
-            
+            checkForCancel();
+
             String rawIssue = client.getJSON(uri);
-            
-            checkIfIsCanceledAndMarkProgress();
-            
-            return JiraOnlineAdapterParser.parseSingleIssue(rawIssue);
+
+            markProgressForHistory();
+            checkForCancel();
+
+            List<JiraOnlineIssueChangeRowItem> list = JiraOnlineAdapterParser.parseSingleIssue(rawIssue);
+            markProgressForHistory();
+
+            return list;
         }
     }
-
-
-
-
 }

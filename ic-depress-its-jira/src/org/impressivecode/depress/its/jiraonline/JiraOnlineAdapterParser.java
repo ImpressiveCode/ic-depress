@@ -111,7 +111,7 @@ public class JiraOnlineAdapterParser {
         return combinedIssues;
     }
 
-    public static int getTotalIssuesNumber(String source) {
+    public static int getTotalIssuesCount(String source) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();

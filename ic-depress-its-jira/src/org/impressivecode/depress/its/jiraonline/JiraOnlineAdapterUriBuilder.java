@@ -32,7 +32,7 @@ import javax.ws.rs.core.UriBuilder;
  */
 public class JiraOnlineAdapterUriBuilder {
 
-    public static final int MAX_RESULTS_VALUE = 100;
+    public static final int ISSUES_PER_BATCH = 100;
 
     private static final String SIMPLE_URI_PATH = "{protocol}://{hostname}/";
     private static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/2/serverInfo";
@@ -113,7 +113,7 @@ public class JiraOnlineAdapterUriBuilder {
     }
 
     public JiraOnlineAdapterUriBuilder prepareForNextBatch() {
-        this.startingIndex += JiraOnlineAdapterUriBuilder.MAX_RESULTS_VALUE;
+        this.startingIndex += JiraOnlineAdapterUriBuilder.ISSUES_PER_BATCH;
         return this;
     }
 
@@ -169,7 +169,7 @@ public class JiraOnlineAdapterUriBuilder {
                 .resolveTemplate("hostname", hostname)
                 .queryParam(FIELDS_PARAM, "*all")
                 .queryParam(START_AT, startingIndex)
-                .queryParam(MAX_RESULTS, MAX_RESULTS_VALUE)
+                .queryParam(MAX_RESULTS, ISSUES_PER_BATCH)
                 .queryParam(QUERY_PARAM, uriJQL)
                 .build();
         // @formatter:on
@@ -241,7 +241,7 @@ public class JiraOnlineAdapterUriBuilder {
     }
 
     public int getNextStartingIndex() {
-        return startingIndex + JiraOnlineAdapterUriBuilder.MAX_RESULTS_VALUE;
+        return startingIndex + JiraOnlineAdapterUriBuilder.ISSUES_PER_BATCH;
     }
 
     public void setIssueKey(String issueKey) {
