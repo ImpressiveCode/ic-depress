@@ -26,14 +26,13 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.client.filter.HttpBasicAuthFilter;
 
 /**
- * 
+ * @author Marcin Kunert, Wroclaw University of Technology
  * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
  */
 public class JiraOnlineAdapterRsClient {
 
     private Client client;
-    private boolean securedConnection;
     private JiraOnlineAdapterUriBuilder uriBuilder;
 
     public JiraOnlineAdapterRsClient() {
@@ -57,6 +56,14 @@ public class JiraOnlineAdapterRsClient {
         return reponseToString(response);
     }
     
+    public String getJSON(URI uri) throws Exception {
+        uriBuilder.setMode(JiraOnlineAdapterUriBuilder.Mode.MULTI);
+        Response response = client.target(uri).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get();
+        isDataFetchSuccessful(response);
+
+        return reponseToString(response);
+    }
+    
     public String getIssueHistory() throws Exception {
         uriBuilder.setMode(JiraOnlineAdapterUriBuilder.Mode.HISTORY);
         Response response = getReponse();
@@ -69,14 +76,6 @@ public class JiraOnlineAdapterRsClient {
         Response response = getReponse();
 
         return isDataFetchSuccessful(response);
-    }
-
-    public boolean isSecuredConnection() {
-        return securedConnection;
-    }
-
-    public void setSecuredConnection(boolean securedConnection) {
-        this.securedConnection = securedConnection;
     }
 
     private void createClient() {

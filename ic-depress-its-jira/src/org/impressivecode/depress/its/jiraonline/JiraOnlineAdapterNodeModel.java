@@ -17,12 +17,19 @@
  */
 package org.impressivecode.depress.its.jiraonline;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
@@ -55,6 +62,9 @@ import com.google.common.base.Preconditions;
 public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     private static final String DEFAULT_VALUE = "";
+    private static final int INPUT_NODE_COUNT = 0;
+    private static final int OUTPUT_NODE_COUNT = 2;
+    private static final int THREAD_COUNT = 45;
 
     private static final String JIRA_URL = "depress.its.jiraonline.url";
     private static final String JIRA_LOGIN = "depress.its.jiraonline.login";
@@ -63,7 +73,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private static final String JIRA_END_DATE = "depress.its.jiraonline.endDate";
     private static final String JIRA_JQL = "depress.its.jiraonline.jql";
     private static final String JIRA_STATUS = "depress.its.jiraonline.status";
-    private static final String JIRA_HISTORY = "depress.its.jiraonline.historz";
+    private static final String JIRA_HISTORY = "depress.its.jiraonline.history";
 
     private final SettingsModelString jiraSettingsURL = createSettingsURL();
     private final SettingsModelString jiraSettingsLogin = createSettingsLogin();
@@ -80,94 +90,97 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private JiraOnlineAdapterRsClient client;
 
     protected JiraOnlineAdapterNodeModel() {
-        super(0, 2);
+        super(INPUT_NODE_COUNT, OUTPUT_NODE_COUNT);
     }
-    
+
     @Override
     protected PortObjectSpec[] configure(PortObjectSpec[] inSpecs) throws InvalidSettingsException {
-        return new PortObjectSpec[2];
+        return new PortObjectSpec[OUTPUT_NODE_COUNT];
     }
 
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
-        LOGGER.info("Preparing to download JIRA entries.");
-        
+        long startTime = System.currentTimeMillis();
+
         builder = prepareBuilder();
         client = new JiraOnlineAdapterRsClient(builder);
-        client.setSecuredConnection(true);
 
-        if (shouldDownloadHistory()) {
-            return executeWithHistory(exec);
+        String rawData = client.getIssues();
+        final int totalIssues = JiraOnlineAdapterParser.getTotalIssuesNumber(rawData);
+
+        List<URI> issueBatchLinks = new ArrayList<>();
+
+        while (totalIssues > builder.getNextStartingIndex()) {
+            builder.prepareForNextBatch();
+            issueBatchLinks.add(builder.build());
+        }
+
+        List<Callable<List<ITSDataType>>> tasks = newArrayList();
+
+        LOGGER.warn("Created "+issueBatchLinks.size()+ " tasks");
+        for (URI uri : issueBatchLinks) {
+            tasks.add(new DownloadAndParseIssuesTask(uri));
+        }
+
+        ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
+        List<Future<List<ITSDataType>>> partialResults = executorService.invokeAll(tasks);
+        
+        
+        List<ITSDataType> issues = combinePartialIssueResults(partialResults);
+        List<JiraOnlineIssueChangeRowItem> issuesHistory;
+        
+        List<Callable<List<JiraOnlineIssueChangeRowItem>>> historyTasks = newArrayList();
+        if(shouldDownloadHistory()) {
+            for(ITSDataType issue : issues) {
+                builder.setIssueKey(issue.getIssueId());
+                historyTasks.add(new DownloadAndParseIssueHistoryTask(builder.buildIssueHistoryURI()));
+            }
+            List<Future<List<JiraOnlineIssueChangeRowItem>>> partialHistoryResults = executorService.invokeAll(historyTasks);
+            issuesHistory = combinePartialIssueHistoryResults(partialHistoryResults);
         } else {
-            return executeWithoutHistory(exec);
+            issuesHistory = newArrayList();
         }
-    }
+        
+        executorService.shutdown();
 
-    private BufferedDataTable[] executeWithoutHistory(final ExecutionContext exec) throws Exception {
-        LOGGER.info("Downloading JIRA entries.");
+        BufferedDataTable out = transform(issues, exec);
+        BufferedDataTable outHistory = transformHistory(issuesHistory, exec);
 
-        ArrayList<String> rawSources = new ArrayList<>();
-        String rawData = client.getIssues();
-        rawSources.add(rawData);
-        final int totalIssues = JiraOnlineAdapterParser.getTotalIssuesNumber(rawData);
-        while (totalIssues > builder.getNextStartingIndex()) {
-            LOGGER.info("Downloaded " + builder.getNextStartingIndex() + " out of " + totalIssues + " JIRA entries.");
-            exec.setProgress((builder.getNextStartingIndex() + 0.0) / (totalIssues + 0.0));
-            builder.prepareForNextBatch();
-            rawSources.add(client.getIssues());
-        }
-        LOGGER.info("Downloaded " + totalIssues + " out of " + totalIssues + " JIRA entries.");
-        exec.setProgress(1);
-        LOGGER.info("Transforming JIRA entries.");
-
-        List<ITSDataType> parsedData = JiraOnlineAdapterParser.parseMultipleIssueBatches(rawSources, client
-                .getUriBuilder().getHostname());
-        BufferedDataTable out = transform(parsedData, exec);
-
-        BufferedDataTable outHistory = transformHistory(new ArrayList<JiraOnlineIssueChangeRowItem>(), exec);
-
+        long endTime = System.currentTimeMillis();
+        LOGGER.warn("Finished in " + ((endTime - startTime) / 1000) + " seconds.");
         return new BufferedDataTable[] { out, outHistory };
     }
 
-    private BufferedDataTable[] executeWithHistory(final ExecutionContext exec) throws Exception {
-        LOGGER.info("Downloading JIRA entries with history.");
+    private List<ITSDataType> combinePartialIssueResults(List<Future<List<ITSDataType>>> partialResults)
+            throws InterruptedException, ExecutionException {
+        List<ITSDataType> result = newArrayList();
 
-        ArrayList<String> rawSources = new ArrayList<>();
-        String rawData = client.getIssues();
-        rawSources.add(rawData);
-        final int totalIssues = JiraOnlineAdapterParser.getTotalIssuesNumber(rawData);
-        while (totalIssues > builder.getNextStartingIndex()) {
-            LOGGER.info("Downloaded " + builder.getNextStartingIndex() + " out of " + totalIssues + " JIRA entries.");
-            builder.prepareForNextBatch();
-            rawSources.add(client.getIssues());
-        }
-        LOGGER.info("Downloaded " + totalIssues + " out of " + totalIssues + " JIRA entries.");
-        LOGGER.info("Transforming JIRA entries.");
-
-        List<ITSDataType> parsedData = JiraOnlineAdapterParser.parseMultipleIssueBatches(rawSources, client
-                .getUriBuilder().getHostname());
-
-        List<JiraOnlineIssueChangeRowItem> history = new ArrayList<JiraOnlineIssueChangeRowItem>();
-
-        for (ITSDataType issue : parsedData) {
-            history.addAll(downloadAndParseIssueHistory(issue));
+        for (Future<List<ITSDataType>> partialResult : partialResults) {
+            result.addAll(partialResult.get());
         }
 
-        BufferedDataTable out = transform(parsedData, exec);
-        BufferedDataTable outHistory = transformHistory(history, exec);
-
-        return new BufferedDataTable[] { out, outHistory };
+        return result;
     }
+    
+    private List<JiraOnlineIssueChangeRowItem> combinePartialIssueHistoryResults(List<Future<List<JiraOnlineIssueChangeRowItem>>> partialResults)
+            throws InterruptedException, ExecutionException {
+        List<JiraOnlineIssueChangeRowItem> result = newArrayList();
 
-    private List<JiraOnlineIssueChangeRowItem> downloadAndParseIssueHistory(ITSDataType issue) throws Exception {
-        builder.setIssueKey(issue.getIssueId());
-        String rawIssue = client.getIssueHistory();
-        return JiraOnlineAdapterParser.parseSingleIssue(rawIssue);
+        for (Future<List<JiraOnlineIssueChangeRowItem>> partialResult : partialResults) {
+            result.addAll(partialResult.get());
+        }
+
+        return result;
     }
-
+    
     private boolean shouldDownloadHistory() {
         return jiraSettingsHistory.getBooleanValue();
+    }
+    
+    public void checkIfIsCanceledAndMarkProgress() {
+        // TODO Auto-generated method stub
+
     }
 
     private JiraOnlineAdapterUriBuilder prepareBuilder() {
@@ -298,4 +311,49 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     static SettingsModelBoolean createSettingsHistory() {
         return new SettingsModelBoolean(JIRA_HISTORY, false);
     }
+
+    private class DownloadAndParseIssuesTask implements Callable<List<ITSDataType>> {
+
+        private URI uri;
+
+        public DownloadAndParseIssuesTask(URI uri) {
+            this.uri = uri;
+        }
+
+        @Override
+        public List<ITSDataType> call() throws Exception {
+            checkIfIsCanceledAndMarkProgress();
+
+            String rawData = client.getJSON(uri);
+            String hostname = client.getUriBuilder().getHostname();
+            
+            checkIfIsCanceledAndMarkProgress();
+            
+            return JiraOnlineAdapterParser.parseSingleIssueBatch(rawData, hostname);
+        }
+    }
+    
+    private class DownloadAndParseIssueHistoryTask  implements Callable<List<JiraOnlineIssueChangeRowItem>> {
+        
+        private URI uri;
+        
+        public DownloadAndParseIssueHistoryTask(URI uri) {
+            this.uri = uri;
+        }
+        
+        @Override
+        public List<JiraOnlineIssueChangeRowItem> call() throws Exception {
+            checkIfIsCanceledAndMarkProgress();
+            
+            String rawIssue = client.getJSON(uri);
+            
+            checkIfIsCanceledAndMarkProgress();
+            
+            return JiraOnlineAdapterParser.parseSingleIssue(rawIssue);
+        }
+    }
+
+
+
+
 }

@@ -177,7 +177,7 @@ public class JiraOnlineAdapterUriBuilder {
         return result;
     }
 
-    private URI buildIssueHistoryURI() {
+    public URI buildIssueHistoryURI() {
         
         // @formatter:off
         URI result = UriBuilder.fromPath(ISSUE_HISTORY_URI_PATH)
