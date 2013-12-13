@@ -72,12 +72,10 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
     private DialogComponentButton checkConnectionButton;
     private SettingsModelString hostnameComponent;
     private ActionListener checkConnectionButtonListener;
-    private JiraOnlineAdapterUriBuilder builder;
 
     protected JiraOnlineAdapterNodeDialog() {
         initConnectionTab();
         initLoginDataTab();
-        initBuilder();
     }
 
     private void initConnectionTab() {
@@ -91,10 +89,6 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         createNewGroup(LOGIN_DATA);
         addDialogComponent(new DialogComponentString(createSettingsLogin(), LOGIN, false, 32));
         addDialogComponent(new DialogComponentPasswordField(createSettingsPass(), PASSWORD, 32));
-    }
-
-    private void initBuilder() {
-        builder = new JiraOnlineAdapterUriBuilder();
     }
 
     private void createConnectionGroup() {
@@ -160,10 +154,12 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
         @Override
         protected Boolean doInBackground() throws Exception {
-            JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient(builder);
-            builder.setHostname(hostnameComponent.getStringValue()).setIsTest(true);
+            JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient();
 
-            return client.testConnection();
+            JiraOnlineAdapterUriBuilder testBuilder = new JiraOnlineAdapterUriBuilder();
+            testBuilder.setHostname(hostnameComponent.getStringValue()).setIsTest(true);
+
+            return client.testConnection(testBuilder.build());
         }
 
         @SuppressWarnings("deprecation")

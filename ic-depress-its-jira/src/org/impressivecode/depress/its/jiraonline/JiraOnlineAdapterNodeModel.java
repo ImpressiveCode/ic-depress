@@ -64,7 +64,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private static final String DEFAULT_VALUE = "";
     private static final int INPUT_NODE_COUNT = 0;
     private static final int OUTPUT_NODE_COUNT = 2;
-    private static final int THREAD_COUNT = 45;
+    private static final int THREAD_COUNT = 50;
     private static final int STEPS_PER_TASK = 2;
 
     private static final String JIRA_URL = "depress.its.jiraonline.url";
@@ -119,7 +119,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         prepareProgressMonitors();
 
         builder = prepareBuilder();
-        client = new JiraOnlineAdapterRsClient(builder);
+        client = new JiraOnlineAdapterRsClient();
         executorService = Executors.newFixedThreadPool(THREAD_COUNT);
 
         List<URI> issueBatchLinks = prepareIssueBatchesLinks();
@@ -155,7 +155,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     }
 
     private int getIssuesCount() throws Exception {
-        String rawData = client.getIssues();
+        String rawData = client.getJSON(builder.build());
         return JiraOnlineAdapterParser.getTotalIssuesCount(rawData);
     }
 
@@ -391,7 +391,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
             checkForCancel();
 
             String rawData = client.getJSON(uri);
-            String hostname = client.getUriBuilder().getHostname();
+            String hostname = builder.getHostname();
 
             markProgressForIssue();
             checkForCancel();
