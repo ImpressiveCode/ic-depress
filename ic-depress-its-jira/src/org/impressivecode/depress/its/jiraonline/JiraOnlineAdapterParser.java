@@ -58,8 +58,8 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 public class JiraOnlineAdapterParser {
 
     private static final String LINK_PATH = "browse/";
-
-    public static List<ITSDataType> parse(String source, String hostname) {
+    
+    public static List<ITSDataType> parseSingleIssueBatch(String source, String hostname) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
@@ -80,15 +80,59 @@ public class JiraOnlineAdapterParser {
         return parseData(issueList, hostname);
     }
 
+    public static List<JiraOnlineIssueChangeRowItem> parseSingleIssue(String json) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonFactory jsonFactory = new JsonFactory();
+        JsonParser jp = null;
+        JiraOnlineIssueHistory issue = null;
+
+        try {
+            jp = jsonFactory.createJsonParser(json);
+            issue = objectMapper.readValue(jp, new TypeReference<JiraOnlineIssueHistory>() {
+            });
+        } catch (JsonParseException e) {
+        } catch (UnrecognizedPropertyException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return parseIssueHistory(issue);
+    }
+
     public static List<ITSDataType> parseMultipleIssueBatches(List<String> sources, String hostname) {
         List<ITSDataType> combinedIssues = new ArrayList<>();
 
         for (String source : sources) {
-            combinedIssues.addAll(parse(source, hostname));
+            combinedIssues.addAll(parseSingleIssueBatch(source, hostname));
         }
 
         return combinedIssues;
     }
+
+    public static int getTotalIssuesCount(String source) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonFactory jsonFactory = new JsonFactory();
+        JsonParser jp = null;
+        JiraOnlineIssuesList issueList = null;
+
+        try {
+            jp = jsonFactory.createJsonParser(source);
+            issueList = objectMapper.readValue(jp, new TypeReference<JiraOnlineIssuesList>() {
+            });
+        } catch (JsonParseException e) {
+        } catch (UnrecognizedPropertyException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return issueList.getTotal();
+    }
+
+
 
     private static List<ITSDataType> parseData(JiraOnlineIssuesList issueList, String hostname) {
         List<ITSDataType> resultList = new ArrayList<>();
@@ -242,57 +286,15 @@ public class JiraOnlineAdapterParser {
         }
     }
 
-    public static int getTotalIssuesNumber(String source) {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonFactory jsonFactory = new JsonFactory();
-        JsonParser jp = null;
-        JiraOnlineIssuesList issueList = null;
-
-        try {
-            jp = jsonFactory.createJsonParser(source);
-            issueList = objectMapper.readValue(jp, new TypeReference<JiraOnlineIssuesList>() {
-            });
-        } catch (JsonParseException e) {
-        } catch (UnrecognizedPropertyException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return issueList.getTotal();
-    }
-
-    public static List<JiraOnlineIssueChangeRowItem> parseSingleIssue(String json) {
-        
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonFactory jsonFactory = new JsonFactory();
-        JsonParser jp = null;
-        JiraOnlineIssueHistory issue = null;
-
-        try {
-            jp = jsonFactory.createJsonParser(json);
-            issue = objectMapper.readValue(jp, new TypeReference<JiraOnlineIssueHistory>() {
-            });
-        } catch (JsonParseException e) {
-        } catch (UnrecognizedPropertyException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        return parseIssueHistory(issue);
-    }
-
     private static List<JiraOnlineIssueChangeRowItem> parseIssueHistory(JiraOnlineIssueHistory issue) {
-        
+
         List<JiraOnlineIssueChangeRowItem> issueList = new ArrayList<>();
-        
-        for(int i=0; i<issue.getChangelog().getHistories().size(); i++) {
+
+        for (int i = 0; i < issue.getChangelog().getHistories().size(); i++) {
             JiraOnlineIssueChanges changes = issue.getChangelog().getHistories().get(i);
-            for(int j=0; j<changes.getItems().size();j++) {
+            for (int j = 0; j < changes.getItems().size(); j++) {
                 JiraOnlineIssueChange change = changes.getItems().get(j);
-                
+
                 JiraOnlineIssueChangeRowItem parsedIssue = new JiraOnlineIssueChangeRowItem();
                 parsedIssue.setKey(issue.getKey());
                 parsedIssue.setAuthor(changes.getAuthor().getName());
@@ -300,12 +302,11 @@ public class JiraOnlineAdapterParser {
                 parsedIssue.setField(change.getFieldName());
                 parsedIssue.setChangedFrom(change.getFrom());
                 parsedIssue.setChangedTo(change.getTo());
-                
+
                 issueList.add(parsedIssue);
             }
         }
-        
+
         return issueList;
     }
-
 }
