@@ -18,12 +18,10 @@
 package org.impressivecode.depress.its.jiraonline;
 
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
+import java.net.URISyntaxException;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -47,58 +45,34 @@ import org.junit.Test;
 public class JiraOnlineAdapterRsClientIntegrationTest {
 
     private final String HOSTNAME_HIBERNATE = "hibernate.atlassian.net";
-    private final String HOSTNAME_JIRA = "jira.springsource.org";
+    private final String HOSTNAME_SPRING = "jira.springsource.org";
 
     private JiraOnlineAdapterRsClient client;
+    private JiraOnlineAdapterUriBuilder hibernateUriBuilder;
+    private JiraOnlineAdapterUriBuilder springUriBuilder;
 
     @Before
-    public void setUp() {
-        client = new JiraOnlineAdapterRsClient();
-        client.setSecuredConnection(true);
-        client.getUriBuilder().setHostname(HOSTNAME_HIBERNATE);
-    }
-
-    @Test
-    public void should_download_and_parse_one_jira_issues() throws Exception {
-        String jiraEntry = client.getIssues();
-
-        List<ITSDataType> entries = JiraOnlineAdapterParser.parse(jiraEntry, client.getUriBuilder().getHostname());
-
-        assertThat(entries, is(notNullValue()));
-        assertThat(entries.size(), is(equalTo(100)));
-
-        for (ITSDataType entry : entries) {
-            assertThat(entry, is(notNullValue()));
-            assertThat(entry.getSummary(), is(notNullValue()));
-            assertThat(entry.getPriority(), is(notNullValue()));
-            assertThat(entry.getType(), is(notNullValue()));
-            assertThat(entry.getReporter(), is(notNullValue()));
-            assertTrue("Starts with: " + entry.getLink(),
-                    entry.getLink().startsWith("https://hibernate.atlassian.net/browse/"));
-            assertThat(entry.getResolution(), is(notNullValue()));
-        }
-
+    public void setUp() throws URISyntaxException {
+        setupClient();
+        setupBuilders();
     }
 
     @Test
     public void should_download_parse_and_check_specific_issues() throws Exception {
         // given
-        JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
-        builder.setHostname(HOSTNAME_JIRA);
-        builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED);
+        springUriBuilder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED);
 
         GregorianCalendar dateFrom = new GregorianCalendar();
         dateFrom.set(2012, 0, 1);
-        builder.setDateFrom(dateFrom.getTime());
+        springUriBuilder.setDateFrom(dateFrom.getTime());
 
         GregorianCalendar dateTo = new GregorianCalendar();
         dateTo.set(2012, 0, 2);
-        builder.setDateTo(dateTo.getTime());
-
-        client.setUriBuilder(builder);
+        springUriBuilder.setDateTo(dateTo.getTime());
 
         // when
-        List<ITSDataType> entries = JiraOnlineAdapterParser.parse(client.getIssues(), builder.getHostname());
+        List<ITSDataType> entries = JiraOnlineAdapterParser.parseSingleIssueBatch(
+                client.getJSON(springUriBuilder.build()), springUriBuilder.getHostname());
 
         // then
         assertThat(entries.size(), is(2));
@@ -140,6 +114,18 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
         assertThat(entry.getAssignees().size(), is(1));
         assertThat(entry.getAssignees().contains("david_syer"), is(true));
         assertThat(entry.getComments().size(), is(0));
+    }
+
+    private void setupClient() {
+        client = new JiraOnlineAdapterRsClient();
+    }
+
+    private void setupBuilders() {
+        hibernateUriBuilder = new JiraOnlineAdapterUriBuilder();
+        springUriBuilder = new JiraOnlineAdapterUriBuilder();
+    
+        hibernateUriBuilder.setHostname(HOSTNAME_HIBERNATE);
+        springUriBuilder.setHostname(HOSTNAME_SPRING);
     }
 
 }

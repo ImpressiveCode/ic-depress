@@ -26,13 +26,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Calendar;
+import java.util.List;
 
-import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueHistory;
+import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChangeRowItem;
 import org.junit.Test;
 
 /**
  * 
  * @author Marcin Kunert, Wroclaw University of Technology
+ * 
  */
 public class JiraOnlineAdapterParserTest {
 
@@ -48,7 +50,7 @@ public class JiraOnlineAdapterParserTest {
 
     @Test
     public void shouldParseSingleIssueHistory() throws Exception {
-        
+
         // given
         Calendar calendar = Calendar.getInstance();
         String path = getClass().getResource("single_issue_with_history.txt").getPath();
@@ -57,46 +59,54 @@ public class JiraOnlineAdapterParserTest {
         String json = reader.readLine();
 
         // when
-        JiraOnlineIssueHistory issue = JiraOnlineAdapterParser.parseSingleIssue(json);
+        List<JiraOnlineIssueChangeRowItem> history = JiraOnlineAdapterParser.parseSingleIssue(json);
 
         // then
-        assertThat(issue.getKey(), is("SECOAUTH-179"));
-        
-        assertThat(issue.getChangelog().getHistories().size(), is(2));
-        
-        assertThat(issue.getChangelog().getHistories().get(0).getAuthor().getName(), is("david_syer"));
-        assertThat(issue.getChangelog().getHistories().get(0).getItems().size(), is(2));
-        
-        //TODO timestamp check
+        assertThat(history.get(0).getKey(), is("SECOAUTH-179"));
+
+        assertThat(history.size(), is(4));
+
+        assertThat(history.get(0).getAuthor(), is("david_syer"));
+
         calendar.set(Calendar.YEAR, 2012);
         calendar.set(Calendar.MONTH, Calendar.JANUARY);
         calendar.set(Calendar.DAY_OF_MONTH, 17);
-        assertThat(issue.getChangelog().getHistories().get(1).getTimestamp(), is(calendar.getTime()));
-        
-        assertThat(issue.getChangelog().getHistories().get(0).getItems().get(0).getFieldName(), is("timeoriginalestimate"));
-        assertThat(issue.getChangelog().getHistories().get(0).getItems().get(0).getFrom(), is(nullValue()));
-        assertThat(issue.getChangelog().getHistories().get(0).getItems().get(0).getTo(), is("0"));
+        calendar.set(Calendar.HOUR_OF_DAY, 13);
+        calendar.set(Calendar.MINUTE, 55);
+        calendar.set(Calendar.SECOND, 34);
+        calendar.set(Calendar.MILLISECOND, 738);
 
-        assertThat(issue.getChangelog().getHistories().get(0).getItems().get(1).getFieldName(), is("timeestimate"));
-        assertThat(issue.getChangelog().getHistories().get(0).getItems().get(1).getFrom(), is(nullValue()));
-        assertThat(issue.getChangelog().getHistories().get(0).getItems().get(1).getTo(), is("0"));
-        
-        assertThat(issue.getChangelog().getHistories().get(1).getAuthor().getName(), is("david_syer"));
-        assertThat(issue.getChangelog().getHistories().get(1).getItems().size(), is(2));
-        
+        assertThat(history.get(0).getTimestamp(), is(calendar.getTime()));
+        assertThat(history.get(0).getAuthor(), is("david_syer"));
+        assertThat(history.get(0).getField(), is("timeoriginalestimate"));
+        assertThat(history.get(0).getChangedFrom(), is(nullValue()));
+        assertThat(history.get(0).getChangedTo(), is("0"));
+
+        assertThat(history.get(1).getTimestamp(), is(calendar.getTime()));
+        assertThat(history.get(1).getAuthor(), is("david_syer"));
+        assertThat(history.get(1).getField(), is("timeestimate"));
+        assertThat(history.get(1).getChangedFrom(), is(nullValue()));
+        assertThat(history.get(1).getChangedTo(), is("0"));
+
         calendar.set(Calendar.YEAR, 2012);
         calendar.set(Calendar.MONTH, Calendar.JANUARY);
         calendar.set(Calendar.DAY_OF_MONTH, 17);
-        assertThat(issue.getChangelog().getHistories().get(1).getTimestamp(), is(calendar.getTime()));
-        
-        assertThat(issue.getChangelog().getHistories().get(1).getItems().get(0).getFieldName(), is("resolution"));
-        assertThat(issue.getChangelog().getHistories().get(1).getItems().get(0).getFrom(), is(nullValue()));
-        assertThat(issue.getChangelog().getHistories().get(1).getItems().get(0).getTo(), is("Complete"));
+        calendar.set(Calendar.HOUR_OF_DAY, 13);
+        calendar.set(Calendar.MINUTE, 56);
+        calendar.set(Calendar.SECOND, 55);
+        calendar.set(Calendar.MILLISECOND, 639);
 
-        assertThat(issue.getChangelog().getHistories().get(1).getItems().get(1).getFieldName(), is("status"));
-        assertThat(issue.getChangelog().getHistories().get(1).getItems().get(1).getFrom(), is("Open"));
-        assertThat(issue.getChangelog().getHistories().get(1).getItems().get(1).getTo(), is("Resolved"));
-        
-        
+        assertThat(history.get(2).getTimestamp(), is(calendar.getTime()));
+        assertThat(history.get(2).getAuthor(), is("david_syer"));
+        assertThat(history.get(2).getField(), is("resolution"));
+        assertThat(history.get(2).getChangedFrom(), is(nullValue()));
+        assertThat(history.get(2).getChangedTo(), is("Complete"));
+
+        assertThat(history.get(3).getTimestamp(), is(calendar.getTime()));
+        assertThat(history.get(3).getAuthor(), is("david_syer"));
+        assertThat(history.get(3).getField(), is("status"));
+        assertThat(history.get(3).getChangedFrom(), is("Open"));
+        assertThat(history.get(3).getChangedTo(), is("Resolved"));
+
     }
 }
