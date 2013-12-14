@@ -47,6 +47,7 @@ import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
+import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
 
@@ -64,7 +65,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private static final String DEFAULT_VALUE = "";
     private static final int INPUT_NODE_COUNT = 0;
     private static final int OUTPUT_NODE_COUNT = 2;
-    private static final int THREAD_COUNT = 50;
+    private static final int DEFAULT_THREAD_COUNT = 50;
     private static final int STEPS_PER_TASK = 2;
 
     private static final String JIRA_URL = "depress.its.jiraonline.url";
@@ -75,6 +76,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private static final String JIRA_JQL = "depress.its.jiraonline.jql";
     private static final String JIRA_STATUS = "depress.its.jiraonline.status";
     private static final String JIRA_HISTORY = "depress.its.jiraonline.history";
+    private static final String THREAD_COUNT_SETTING = "depress.its.jiraonline.threadcount";
 
     private final SettingsModelString jiraSettingsURL = createSettingsURL();
     private final SettingsModelString jiraSettingsLogin = createSettingsLogin();
@@ -84,6 +86,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private final SettingsModelString jiraSettingsJQL = createSettingsJQL();
     private final SettingsModelString jiraSettingsStatus = createSettingsDateFilterStatusChooser();
     private final SettingsModelBoolean jiraSettingsHistory = createSettingsHistory();
+    private final SettingsModelInteger jiraSettingsThreadCount = createSettingsThreadCount();
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraOnlineAdapterNodeModel.class);
 
@@ -120,7 +123,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
         builder = prepareBuilder();
         client = new JiraOnlineAdapterRsClient();
-        executorService = Executors.newFixedThreadPool(THREAD_COUNT);
+        executorService = Executors.newFixedThreadPool(getThreadCount());
 
         List<URI> issueBatchLinks = prepareIssueBatchesLinks();
 
@@ -138,6 +141,10 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         long endTime = System.currentTimeMillis();
         LOGGER.warn("Finished in " + ((endTime - startTime) / 1000) + " seconds.");
         return new BufferedDataTable[] { out, outHistory };
+    }
+
+    private int getThreadCount() {
+        return jiraSettingsThreadCount.getIntValue();
     }
 
     private List<URI> prepareIssueBatchesLinks() throws Exception {
@@ -376,6 +383,10 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     static SettingsModelBoolean createSettingsHistory() {
         return new SettingsModelBoolean(JIRA_HISTORY, false);
+    }
+    
+    static SettingsModelInteger createSettingsThreadCount() {
+        return new SettingsModelInteger(THREAD_COUNT_SETTING, DEFAULT_THREAD_COUNT);
     }
 
     private class DownloadAndParseIssuesTask implements Callable<List<ITSDataType>> {

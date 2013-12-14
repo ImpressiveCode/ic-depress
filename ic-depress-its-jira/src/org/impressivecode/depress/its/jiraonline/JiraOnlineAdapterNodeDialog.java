@@ -24,6 +24,7 @@ import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeMod
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsJQL;
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsLogin;
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsPass;
+import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsThreadCount;
 import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsURL;
 
 import java.awt.event.ActionEvent;
@@ -31,12 +32,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingWorker;
 
+import org.knime.core.node.FlowVariableModel;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
 import org.knime.core.node.defaultnodesettings.DialogComponentMultiLineString;
+import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
@@ -64,7 +67,9 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
     private static final String DATE_FROM = "Date from:";
     private static final String STATUS = "Status:";
     private static final String NOT_TESTED_YET = "Not tested yet...";
+    private static final String THREAD_COUNT_LABEL = "Thread count";
     private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
+    private static final int DEFAULT_FIELD_WIDTH = 32;
 
     private final String[] DATE_FILTER_STATUSES = new String[] { "Created", "Resolution" };
 
@@ -100,6 +105,7 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
     private void createAdvancedGroup() {
         createNewGroup(ADVANCED);
+        addDialogComponent(new DialogComponentNumberEdit(createSettingsThreadCount(), THREAD_COUNT_LABEL, DEFAULT_FIELD_WIDTH));
         addDialogComponent(new DialogComponentBoolean(createSettingsHistory(), DOWNLOAD_HISTORY));
         addDialogComponent(new DialogComponentMultiLineString(createSettingsJQL(), JQL, false, 100, 10));
     }
