@@ -2,14 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ic-depress-support-matcher
 Bundle-SymbolicName: org.impressivecode.depress.support.matcher;singleton:=true
-Bundle-Version: 0.1.0.qualifier
-Bundle-ClassPath: plugin.jar
+Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: plugin.jar,
+ lib/simmetrics_jar_v1_6_2_d07_02_07.jar
 Bundle-Vendor: ImpressiveCode
-Require-Bundle: org.impressivecode.depress.base;bundle-version="0.1.0",
- org.eclipse.core.runtime,
- org.knime.workbench.core,
- org.knime.workbench.repository,
- org.knime.base;bundle-version="2.7.1"
+Require-Bundle: org.impressivecode.depress.base;bundle-version="1.0.0",
+ org.eclipse.core.runtime;bundle-version="3.7.0",
+ org.knime.workbench.core;bundle-version="2.8.0",
+ org.knime.workbench.repository;bundle-version="2.8.0",
+ org.knime.base;bundle-version="2.8.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.impressivecode.depress.support.activitymatcher,
@@ -17,5 +18,6 @@ Export-Package: org.impressivecode.depress.support.activitymatcher,
  org.impressivecode.depress.support.extmarkerparser,
  org.impressivecode.depress.support.markerparser,
  org.impressivecode.depress.support.sematicanalysis,
- org.impressivecode.depress.support.syntacticanalysis
+ org.impressivecode.depress.support.syntacticanalysis,
+ uk.ac.shef.wit.simmetrics.similaritymetrics
 Eclipse-BuddyPolicy: registered
