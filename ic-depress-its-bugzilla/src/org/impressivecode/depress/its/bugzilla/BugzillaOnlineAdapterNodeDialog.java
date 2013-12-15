@@ -26,7 +26,7 @@ import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeM
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createURLSettings;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createUsernameSettings;
 
-import org.impressivecode.depress.its.ITSAuthenticationPane;
+import org.impressivecode.depress.its.ITSCommonDialog;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
@@ -39,7 +39,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
  * @author Bartosz Skuza, Wrocław University of Technology
  * 
  */
-public class BugzillaOnlineAdapterNodeDialog extends ITSAuthenticationPane {
+public class BugzillaOnlineAdapterNodeDialog extends ITSCommonDialog {
 
 	
 	public static final String PRODUCT_LABEL = "Product:";
