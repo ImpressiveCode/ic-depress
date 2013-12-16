@@ -24,13 +24,17 @@ import java.util.Date;
  * @author Michał Negacz, Wrocław University of Technology
  * 
  */
-public class BugzillaOnlineFilter {
+public class BugzillaOnlineOptions {
 
 	private String productName;
 
 	private Date dateFrom;
 
 	private Integer limit;
+
+	private Integer threadsCount;
+
+	private Integer bugsPerTask;
 
 	public String getProductName() {
 		return productName;
@@ -54,6 +58,22 @@ public class BugzillaOnlineFilter {
 
 	public void setLimit(Integer limit) {
 		this.limit = limit;
+	}
+
+	public Integer getThreadsCount() {
+		return threadsCount;
+	}
+
+	public void setThreadsCount(Integer threadsCount) {
+		this.threadsCount = threadsCount;
+	}
+
+	public Integer getBugsPerTask() {
+		return bugsPerTask;
+	}
+
+	public void setBugsPerTask(Integer bugsPerTask) {
+		this.bugsPerTask = bugsPerTask;
 	}
 
 }

@@ -17,16 +17,21 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
-import static com.google.common.collect.Sets.newHashSet;
+import static com.google.common.collect.Sets.newSetFromMap;
+import static org.apache.xmlbeans.impl.common.XMLChar.isInvalid;
 
+import java.io.FilterInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpCookie;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.XmlRpcRequest;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientException;
@@ -47,7 +52,7 @@ public class XmlRpcTransportFactoryWithCookies extends XmlRpcSunHttpTransportFac
 
 	public XmlRpcTransportFactoryWithCookies(XmlRpcClient client) {
 		super(client);
-		cookies = newHashSet();
+		cookies = newSetFromMap(new ConcurrentHashMap<HttpCookie, Boolean>());
 	}
 
 	@Override
@@ -105,6 +110,46 @@ public class XmlRpcTransportFactoryWithCookies extends XmlRpcSunHttpTransportFac
 			}
 		}
 
+		@Override
+		protected InputStream getInputStream() throws XmlRpcException {
+			return new XmlInvalidCharacterFilterInputStream(super.getInputStream());
+		}
+
+	}
+
+	private class XmlInvalidCharacterFilterInputStream extends FilterInputStream {
+
+		private static final int BYTE_MASK = 0xFF;
+
+		private static final byte SPACE = ' ';
+
+		protected XmlInvalidCharacterFilterInputStream(InputStream inputStream) {
+			super(inputStream);
+		}
+
+		@Override
+		public int read(byte[] buffer, int offset, int length) throws IOException {
+			int numberOfBytesRead = super.read(buffer, offset, length);
+			filterInvalidCharacterOutOfTheBuffer(buffer, numberOfBytesRead);
+			return numberOfBytesRead;
+		}
+
+		private void filterInvalidCharacterOutOfTheBuffer(byte[] buffer, int numberOfBytes) {
+			for (int byteNo = 0; byteNo < numberOfBytes; byteNo++) {
+				if (isAnInvalidCharacterInXML(buffer[byteNo])) {
+					buffer[byteNo] = SPACE;
+				}
+			}
+		}
+
+		private boolean isAnInvalidCharacterInXML(byte value) {
+			return isInvalid(convertByteToInt(value));
+		}
+
+		private int convertByteToInt(byte value) {
+			return value & BYTE_MASK;
+		}
+		
 	}
 
 }
