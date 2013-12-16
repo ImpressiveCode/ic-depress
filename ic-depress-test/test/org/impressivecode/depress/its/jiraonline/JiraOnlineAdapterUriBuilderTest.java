@@ -206,7 +206,7 @@ public class JiraOnlineAdapterUriBuilderTest {
     }
 
     private String createLinkPart() {
-        return FIELDS + "&" + START_AT + "&" + MAX_RESULTS + JiraOnlineAdapterUriBuilder.MAX_RESULTS_VALUE;
+        return FIELDS + "&" + START_AT + "&" + MAX_RESULTS + JiraOnlineAdapterUriBuilder.ISSUES_PER_BATCH;
     }
 
     private String createBothDatesStatusCreatedExpectedFilterResult() {

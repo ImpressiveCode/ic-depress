@@ -15,38 +15,53 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline.model;
-
-import java.util.List;
+package org.impressivecode.depress.its.jiraonline.historymodel;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 /**
- * Model class used by Jackson for Jira JSON parsing. Contains issue list
+ * Model class used by Jackson for Jira JSON parsing.
  * 
  * @author Marcin Kunert, Wroclaw University of Technology
- * @author Krzysztof Kwoka, Wroclaw University of Technology
  * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineIssuesList {
+public class JiraOnlineIssueChange {
+    
+    @JsonProperty("field")
+    private String fieldName;
 
-    private List<JiraOnlineIssue> issues;
-    private int total;
+    @JsonProperty("fromString")
+    private String from;
+    
+    @JsonProperty("toString")
+    private String to;
 
-    public List<JiraOnlineIssue> getIssues() {
-        return issues; 
+    public String getFieldName() {
+        return fieldName;
     }
 
-    public void setIssues(List<JiraOnlineIssue> issues) {
-        this.issues = issues;
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 
-	public int getTotal() {
-		return total;
-	}
+    public String getFrom() {
+        return from;
+    }
 
-	public void setTotal(int total) {
-		this.total = total;
-	}
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+    
+    
 }

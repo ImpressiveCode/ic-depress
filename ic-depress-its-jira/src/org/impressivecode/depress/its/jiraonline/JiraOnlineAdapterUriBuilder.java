@@ -32,19 +32,25 @@ import javax.ws.rs.core.UriBuilder;
  */
 public class JiraOnlineAdapterUriBuilder {
 
+    public static final int ISSUES_PER_BATCH = 100;
+
     private static final String SIMPLE_URI_PATH = "{protocol}://{hostname}/";
     private static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/2/serverInfo";
     private static final String QUERY_URI_PATH = "{protocol}://{hostname}/rest/api/latest/search";
+    private static final String ISSUE_HISTORY_URI_PATH = "{protocol}://{hostname}/rest/api/latest/issue/{issueKey}";
     private static final String QUERY_PARAM = "jql";
     private static final String FIELDS_PARAM = "fields";
+    private static final String EXPAND_PARAM = "expand";
     private static final String CONJUNCTION = " AND ";
     private static final String GREATER_EQUAL = " >= ";
     private static final String LESS_EQUAL = " <= ";
     private static final String JIRA_DATE_FORMAT = "yyyy-MM-dd";
     private static final String MAX_RESULTS = "maxResults";
     private static final String START_AT = "startAt";
-    public static final int MAX_RESULTS_VALUE = 100;
+
+    private Mode mode = Mode.MULTI;
     private int startingIndex = 0;
+    private String issueKey;
 
     public static enum DateFilterType {
 
@@ -107,7 +113,7 @@ public class JiraOnlineAdapterUriBuilder {
     }
 
     public JiraOnlineAdapterUriBuilder prepareForNextBatch() {
-        this.startingIndex += JiraOnlineAdapterUriBuilder.MAX_RESULTS_VALUE;
+        this.startingIndex += JiraOnlineAdapterUriBuilder.ISSUES_PER_BATCH;
         return this;
     }
 
@@ -117,6 +123,18 @@ public class JiraOnlineAdapterUriBuilder {
             return testHost();
         }
 
+        if (mode == Mode.MULTI) {
+            return buildMultiIssuesURI();
+        }
+
+        if (mode == Mode.HISTORY) {
+            return buildIssueHistoryURI();
+        }
+
+        throw new RuntimeException("This should never happen. URI builder failed");
+    }
+
+    private URI buildMultiIssuesURI() {
         StringBuilder jqlBuilder = new StringBuilder();
 
         if (jql != null) {
@@ -151,11 +169,26 @@ public class JiraOnlineAdapterUriBuilder {
                 .resolveTemplate("hostname", hostname)
                 .queryParam(FIELDS_PARAM, "*all")
                 .queryParam(START_AT, startingIndex)
-                .queryParam(MAX_RESULTS, MAX_RESULTS_VALUE)
+                .queryParam(MAX_RESULTS, ISSUES_PER_BATCH)
                 .queryParam(QUERY_PARAM, uriJQL)
                 .build();
         // @formatter:on
 
+        return result;
+    }
+
+    public URI buildIssueHistoryURI() {
+        
+        // @formatter:off
+        URI result = UriBuilder.fromPath(ISSUE_HISTORY_URI_PATH)
+                .resolveTemplate("protocol", protocol)
+                .resolveTemplate("hostname", hostname)
+                .resolveTemplate("issueKey", issueKey)
+                .queryParam(FIELDS_PARAM, "changelog")
+                .queryParam(EXPAND_PARAM, "changelog")
+                .build();
+        // @formatter:on
+        
         return result;
     }
 
@@ -208,7 +241,18 @@ public class JiraOnlineAdapterUriBuilder {
     }
 
     public int getNextStartingIndex() {
-        return startingIndex + JiraOnlineAdapterUriBuilder.MAX_RESULTS_VALUE;
+        return startingIndex + JiraOnlineAdapterUriBuilder.ISSUES_PER_BATCH;
     }
 
+    public void setIssueKey(String issueKey) {
+        this.issueKey = issueKey;
+    }
+
+    public void setMode(Mode mode) {
+        this.mode = mode;
+    }
+
+    public enum Mode {
+        HISTORY, MULTI;
+    }
 }

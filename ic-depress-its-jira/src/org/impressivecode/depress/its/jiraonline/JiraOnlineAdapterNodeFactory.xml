@@ -50,6 +50,7 @@
 	</fullDescription>
 
 	<ports>
-		<outPort index="0" name="Issue Tracking System Data Table">Datatable read from Jira</outPort>
+		<outPort index="0" name="Issue Tracking System Data Table">Datatable read from Jira Online System</outPort>
+		<outPort index="1" name="Issues History Data Table">Issue history table read from Jira Online System</outPort>
 	</ports>
 </knimeNode>

@@ -26,48 +26,33 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.client.filter.HttpBasicAuthFilter;
 
 /**
- * 
+ * @author Marcin Kunert, Wroclaw University of Technology
  * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
  */
 public class JiraOnlineAdapterRsClient {
 
     private Client client;
-    private boolean securedConnection;
-    private JiraOnlineAdapterUriBuilder uriBuilder;
 
     public JiraOnlineAdapterRsClient() {
-        this(new JiraOnlineAdapterUriBuilder());
-    }
-
-    public JiraOnlineAdapterRsClient(JiraOnlineAdapterUriBuilder uriBuilder) {
         createClient();
-        this.uriBuilder = uriBuilder;
     }
 
     public void registerCredentials(String username, String password) {
         client.register(new HttpBasicAuthFilter(username, password));
     }
 
-    public String getIssues() throws Exception {
-        Response response = getReponse();
+    public String getJSON(URI uri) throws Exception {
+        Response response = getReponse(uri);
         isDataFetchSuccessful(response);
 
         return reponseToString(response);
     }
 
-    public boolean testConnection() throws Exception {
-        Response response = getReponse();
+    public boolean testConnection(URI uri) throws Exception {
+        Response response = getReponse(uri);
 
         return isDataFetchSuccessful(response);
-    }
-
-    public boolean isSecuredConnection() {
-        return securedConnection;
-    }
-
-    public void setSecuredConnection(boolean securedConnection) {
-        this.securedConnection = securedConnection;
     }
 
     private void createClient() {
@@ -86,19 +71,8 @@ public class JiraOnlineAdapterRsClient {
         return response.readEntity(String.class);
     }
 
-    private Response getReponse() {
-        final URI uri = uriBuilder.build();
-
+    private Response getReponse(URI uri) {
         return client.target(uri).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get();
-
-    }
-
-    public JiraOnlineAdapterUriBuilder getUriBuilder() {
-        return uriBuilder;
-    }
-
-    public void setUriBuilder(JiraOnlineAdapterUriBuilder uriBuilder) {
-        this.uriBuilder = uriBuilder;
     }
 
     public Client getClient() {
@@ -108,5 +82,4 @@ public class JiraOnlineAdapterRsClient {
     public void setClient(Client client) {
         this.client = client;
     }
-
 }
