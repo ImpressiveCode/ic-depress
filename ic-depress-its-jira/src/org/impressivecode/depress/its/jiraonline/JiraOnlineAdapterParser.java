@@ -58,7 +58,8 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 public class JiraOnlineAdapterParser {
 
     private static final String LINK_PATH = "browse/";
-    
+    private static final String UNKNOWN_NAME = "unknown";
+
     public static List<ITSDataType> parseSingleIssueBatch(String source, String hostname) {
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -132,61 +133,83 @@ public class JiraOnlineAdapterParser {
         return issueList.getTotal();
     }
 
-
-
     private static List<ITSDataType> parseData(JiraOnlineIssuesList issueList, String hostname) {
         List<ITSDataType> resultList = new ArrayList<>();
 
         for (JiraOnlineIssue issue : issueList.getIssues()) {
             ITSDataType data = new ITSDataType();
-            data.setIssueId(issue.getKey());
+            try {
 
-            String link = hostname + LINK_PATH + issue.getKey();
-            data.setLink(link);
+                data.setIssueId(issue.getKey());
 
-            Set<String> assignees = new HashSet<>();
-            if (issue.getFields().getAssignee() != null) {
-                assignees.add(issue.getFields().getAssignee().getName());
+                String link = hostname + LINK_PATH + issue.getKey();
+                data.setLink(link);
+
+                Set<String> assignees = new HashSet<>();
+                if (issue.getFields().getAssignee() != null) {
+                    assignees.add(issue.getFields().getAssignee().getName());
+                }
+                data.setAssignees(assignees);
+
+                data.setPriority(parsePriority(issue.getFields().getPriority()));
+
+                data.setType(parseType(issue.getFields().getIssueType()));
+                data.setStatus(parseStatus(issue.getFields().getStatus()));
+
+                data.setCreated(issue.getFields().getCreated());
+                data.setUpdated(issue.getFields().getUpdated());
+                data.setResolved(issue.getFields().getResolved());
+
+                data.setResolution(parseResolution(issue.getFields().getResolution()));
+
+                List<String> versions = new ArrayList<>();
+                if(issue.getFields().getVersions() != null) {
+                    for (JiraOnlineIssueVersion version : issue.getFields().getVersions()) {
+                        versions.add(version.getName());
+                    }
+                }
+                data.setVersion(versions);
+
+                List<String> fixVersions = new ArrayList<>();
+                if(issue.getFields().getFixVersions() != null) {
+                    for (JiraOnlineIssueVersion version : issue.getFields().getFixVersions()) {
+                        fixVersions.add(version.getName());
+                    }
+                }
+
+                data.setFixVersion(fixVersions);
+
+                String reporter = "unknown";
+                
+                if(issue.getFields().getReporter() != null && issue.getFields().getReporter().getName() != null) {
+                    reporter = issue.getFields().getReporter().getName();
+                }                
+                data.setReporter(reporter);
+
+                String summary = issue.getFields().getSummary();
+                if (summary == null) {
+                    summary = "";
+                }
+                data.setSummary(summary);
+
+                String decscription = issue.getFields().getDescription();
+                if (decscription == null) {
+                    decscription = "";
+                }
+                data.setDescription(decscription);
+
+                List<String> comments = new ArrayList<>();
+                Set<String> commentAuthors = new HashSet<>();
+                for (JiraOnlineComment comment : issue.getFields().getComment().getComments()) {
+                    comments.add(comment.getBody());
+                    commentAuthors.add(comment.getAuthor().getName());
+                }
+
+                data.setComments(comments);
+                data.setCommentAuthors(commentAuthors);
+            } catch (NullPointerException e) {
+                System.out.println("exception while parsing");
             }
-            data.setAssignees(assignees);
-
-            data.setPriority(parsePriority(issue.getFields().getPriority()));
-
-            data.setType(parseType(issue.getFields().getIssueType()));
-            data.setStatus(parseStatus(issue.getFields().getStatus()));
-
-            data.setCreated(issue.getFields().getCreated());
-            data.setUpdated(issue.getFields().getUpdated());
-            data.setResolved(issue.getFields().getResolved());
-
-            data.setResolution(parseResolution(issue.getFields().getResolution()));
-
-            List<String> versions = new ArrayList<>();
-            for (JiraOnlineIssueVersion version : issue.getFields().getVersions()) {
-                versions.add(version.getName());
-            }
-            data.setVersion(versions);
-
-            List<String> fixVersions = new ArrayList<>();
-            for (JiraOnlineIssueVersion version : issue.getFields().getFixVersions()) {
-                fixVersions.add(version.getName());
-            }
-            data.setFixVersion(fixVersions);
-
-            data.setReporter(issue.getFields().getReporter().getName());
-
-            data.setSummary(issue.getFields().getSummary());
-            data.setDescription(issue.getFields().getDescription());
-
-            List<String> comments = new ArrayList<>();
-            Set<String> commentAuthors = new HashSet<>();
-            for (JiraOnlineComment comment : issue.getFields().getComment().getComments()) {
-                comments.add(comment.getBody());
-                commentAuthors.add(comment.getAuthor().getName());
-            }
-
-            data.setComments(comments);
-            data.setCommentAuthors(commentAuthors);
 
             resultList.add(data);
         }
@@ -293,17 +316,25 @@ public class JiraOnlineAdapterParser {
         for (int i = 0; i < issue.getChangelog().getHistories().size(); i++) {
             JiraOnlineIssueChanges changes = issue.getChangelog().getHistories().get(i);
             for (int j = 0; j < changes.getItems().size(); j++) {
-                JiraOnlineIssueChange change = changes.getItems().get(j);
+                try {
+                    JiraOnlineIssueChange change = changes.getItems().get(j);
 
-                JiraOnlineIssueChangeRowItem parsedIssue = new JiraOnlineIssueChangeRowItem();
-                parsedIssue.setKey(issue.getKey());
-                parsedIssue.setAuthor(changes.getAuthor().getName());
-                parsedIssue.setTimestamp(changes.getTimestamp());
-                parsedIssue.setField(change.getFieldName());
-                parsedIssue.setChangedFrom(change.getFrom());
-                parsedIssue.setChangedTo(change.getTo());
+                    JiraOnlineIssueChangeRowItem parsedIssue = new JiraOnlineIssueChangeRowItem();
+                    parsedIssue.setKey(issue.getKey());
+                    if (changes.getAuthor() != null && changes.getAuthor().getName() != null) {
+                        parsedIssue.setAuthor(changes.getAuthor().getName());
+                    } else {
+                        parsedIssue.setAuthor(UNKNOWN_NAME);
+                    }
+                    parsedIssue.setTimestamp(changes.getTimestamp());
+                    parsedIssue.setField(change.getFieldName());
+                    parsedIssue.setChangedFrom(change.getFrom());
+                    parsedIssue.setChangedTo(change.getTo());
 
-                issueList.add(parsedIssue);
+                    issueList.add(parsedIssue);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         }
 

@@ -31,6 +31,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.eclipse.jface.util.Assert;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
@@ -234,7 +235,11 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         List<JiraOnlineIssueChangeRowItem> result = newArrayList();
 
         for (Future<List<JiraOnlineIssueChangeRowItem>> partialResult : partialResults) {
-            result.addAll(partialResult.get());
+            try {
+                result.addAll(partialResult.get());
+            } catch(Exception e) {
+                System.out.println("pause here");
+            }
         }
 
         return result;
@@ -315,6 +320,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.saveSettingsTo(settings);
         jiraSettingsStatus.saveSettingsTo(settings);
         jiraSettingsHistory.saveSettingsTo(settings);
+        jiraSettingsThreadCount.saveSettingsTo(settings);
     }
 
     @Override
@@ -327,6 +333,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.loadSettingsFrom(settings);
         jiraSettingsStatus.loadSettingsFrom(settings);
         jiraSettingsHistory.loadSettingsFrom(settings);
+        jiraSettingsThreadCount.loadSettingsFrom(settings);
     }
 
     @Override
@@ -339,6 +346,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.validateSettings(settings);
         jiraSettingsStatus.validateSettings(settings);
         jiraSettingsHistory.validateSettings(settings);
+        jiraSettingsThreadCount.validateSettings(settings);
     }
 
     @Override
