@@ -101,7 +101,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	private final SettingsModelInteger threadsCountSettings = createThreadsCountSettings();
 	
 	private final SettingsModelInteger bugsPerTaskSettings = createBugsPerTaskSettings();
-
+	
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
