@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
+import org.knime.core.node.defaultnodesettings.DialogComponentOptionalString;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
@@ -88,7 +89,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 	}
 	
 	private void createAndAddLimitFilter() {
-        addDialogComponent(new DialogComponentNumberEdit(BugzillaOnlineAdapterNodeModel.createLimitSettings(), LIMIT_LABEL, COMPONENT_WIDTH));
+        addDialogComponent(new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createLimitSettings(), LIMIT_LABEL, COMPONENT_WIDTH));
 	}
 	
 	private void createAndAddDateFromFilter() {
