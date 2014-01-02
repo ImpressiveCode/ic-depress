@@ -2,28 +2,27 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ic-depress-test
 Bundle-SymbolicName: org.impressivecode.depress.tests;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: ImpressiveCode
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.knime.workbench.core,
  org.knime.workbench.repository,
  org.knime.base;bundle-version="2.7.1",
  org.junit,
- org.impressivecode.depress.base,
- org.impressivecode.depress.metric.jacoco,
- org.impressivecode.depress.scm.git,
- org.impressivecode.depress.metric.eclipsemetrics,
- org.impressivecode.depress.metric.im,
- org.impressivecode.depress.metric.judy,
- org.impressivecode.depress.its.jira,
- org.impressivecode.depress.metric.po,
- org.impressivecode.depress.its.bugzilla,
- org.impressivecode.depress.data.anonymisation,
- org.impressivecode.depress.scm.svn,
- org.impressivecode.depress.metric.checkstyle,
- org.impressivecode.depress.metric.pmd,
- org.impressivecode.depress.data.source,
- org.impressivecode.depress.support.matcher
+ org.impressivecode.depress.base;bundle-version="1.0.0",
+ org.impressivecode.depress.scm.git;bundle-version="1.0.0",
+ org.impressivecode.depress.mr.judy;bundle-version="1.0.0",
+ org.impressivecode.depress.its.jira;bundle-version="1.0.0",
+ org.impressivecode.depress.its.bugzilla;bundle-version="1.0.0",
+ org.impressivecode.depress.data.anonymisation;bundle-version="1.0.0",
+ org.impressivecode.depress.scm.svn;bundle-version="1.0.0",
+ org.impressivecode.depress.mr.pmd;bundle-version="1.0.0",
+ org.impressivecode.depress.support.matcher;bundle-version="1.0.0",
+ org.impressivecode.depress.mr.checkstyle;bundle-version="1.0.0",
+ org.impressivecode.depress.mr.eclipsemetrics;bundle-version="1.0.0",
+ org.impressivecode.depress.mr.jacoco;bundle-version="1.0.0",
+ org.impressivecode.depress.mg.po;bundle-version="1.0.0",
+ org.impressivecode.depress.mg.ipa;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Eclipse-RegisterBuddy: org.knime.core.node
 Bundle-ClassPath: bin/,

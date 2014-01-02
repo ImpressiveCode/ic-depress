@@ -19,6 +19,8 @@ package org.impressivecode.depress.support.sematicanalysis;
 
 import static org.impressivecode.depress.common.Cells.integerOrMissingCell;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.impressivecode.depress.common.InputTransformer;
@@ -35,7 +37,8 @@ import com.google.common.base.Preconditions;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Marek Majchrzak, Michal Jawulski, Piotr Lewicki, Maciej Luzniak,
+ *         ImpressiveCode
  * 
  */
 public class SemanticAnalysisCellFactory implements AppendedCellFactory {
@@ -43,13 +46,18 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
     private final Configuration cfg;
     private final InputTransformer<SCMDataType> scmTransfomer;
     private MarkerInputTransformer markerTransformer;
+    private String selectedAlgorithm;
+    private String comparisionObject;
+    private double threshold;
 
     public SemanticAnalysisCellFactory(final Configuration configuration,
             final InputTransformer<SCMDataType> scmTransfomer, final MarkerInputTransformer markerTransformer) {
         this.cfg = configuration;
         this.scmTransfomer = Preconditions.checkNotNull(scmTransfomer, "ScmTransfomer has to be set");
         this.markerTransformer = Preconditions.checkNotNull(markerTransformer, "MarkerTransformer has to be set");
-        ;
+        this.comparisionObject = this.cfg.getMcComparsionObject();
+        this.selectedAlgorithm = this.cfg.getSelectedAlgorithm();
+        this.threshold = this.cfg.getComparsionLimit();
     }
 
     @Override
@@ -57,19 +65,85 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
 
         SCMDataType scm = scmTransfomer.transformRow(row);
         MarkerDataType marker = markerTransformer.transformRow(row);
+        try {
+            Integer confidence = checkConfidence(scm, marker);
+            return new DataCell[] { integerOrMissingCell(confidence) };
+        } catch (Exception e) {
+            return null;
+        }
 
-        Integer confidence = checkConfidence(scm, marker);
-
-        return new DataCell[] { integerOrMissingCell(confidence) };
     }
 
-    private int checkConfidence(final SCMDataType scm, final MarkerDataType marker) {
+    private int checkConfidence(final SCMDataType scm, final MarkerDataType marker) throws Exception {
         Set<ITSDataType> issues = this.cfg.getITSData().issues(marker.getAllMarkers());
         if (issues.isEmpty()) {
             return 0;
         } else {
-            return checkAuthor(scm, issues) + checkResolution(issues);
+            Set<ITSDataType> similarIssues = checkSimilarity(issues, scm);
+
+            return checkAuthor(scm, similarIssues) + checkResolution(similarIssues);
         }
+    }
+
+    private Set<ITSDataType> checkSimilarity(final Set<ITSDataType> issues, final SCMDataType scm) throws Exception {
+
+        String message = scm.getMessage();
+
+        Iterator<ITSDataType> issuesIterator = issues.iterator();
+        Set<ITSDataType> similarIssues = new HashSet<ITSDataType>();
+
+        double similarity = -1;
+        while (issuesIterator.hasNext()) {
+            ITSDataType issue;
+            issue = issuesIterator.next();
+            if (comparisionObject.equals(Configuration.MSC_DT_COMMENTS)) {
+                similarity = processComments(issue, message);
+            } else if (comparisionObject.equals(Configuration.MSC_DT_DESCRIPTION)) {
+                similarity = processDescription(issue, message);
+            } else if (comparisionObject.equals(Configuration.MSC_DT_SUMMARY)) {
+                similarity = processSummary(issue, message);
+            }
+            similarity = similarity * 100;
+            if (similarity > threshold) {
+                similarIssues.add(issue);
+            }
+        }
+        return similarIssues;
+    }
+
+    private double processComments(ITSDataType issue, String message) throws Exception {
+        int numberOfComments = issue.getComments().size();
+        double similarity = 0;
+        if (numberOfComments > 0) {
+            for (int i = 0; i < numberOfComments; i++) {
+                String comment = issue.getComments().get(i);
+                if (comment == null || message == null)
+                    continue;
+                similarity = SimilarityMatcher.doSimilarityTest(message, comment, selectedAlgorithm);
+                if (similarity > threshold) {
+                    break;
+                }
+            }
+        }
+        return similarity;
+    }
+
+    private double processDescription(ITSDataType issue, String message) throws Exception {
+        String description = issue.getDescription();
+        double similarity = 0;
+        if (message != null && description != null) {
+            similarity = SimilarityMatcher.doSimilarityTest(message, description, selectedAlgorithm);
+        }
+        return similarity;
+    }
+
+    private double processSummary(ITSDataType issue, String message) throws Exception {
+        String summary = issue.getSummary();
+        double similarity = 0;
+        if (message != null && summary != null) {
+            similarity = SimilarityMatcher.doSimilarityTest(message, summary, selectedAlgorithm);
+        }
+        return similarity;
     }
 
     private int checkResolution(final Set<ITSDataType> issues) {

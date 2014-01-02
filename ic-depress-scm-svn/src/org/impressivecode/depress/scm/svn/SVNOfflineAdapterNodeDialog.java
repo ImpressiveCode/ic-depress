@@ -20,13 +20,17 @@ package org.impressivecode.depress.scm.svn;
 import javax.swing.JFileChooser;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
+import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
+ * @author Krystian Dabrowski, Capgemini Poland
  * 
  */
 public class SVNOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
@@ -38,8 +42,17 @@ public class SVNOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
                 SVNOfflineAdapterNodeModel.CFG_FILENAME, SVNOfflineAdapterNodeModel.FILENAME_DEFAULT),
                 SVNOfflineAdapterNodeModel.FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
 
+        addDialogComponent(new DialogComponentLabel("Filter only file extensions:"));
+        
+        for(SVNFileExtensions supportedExtension:SVNFileExtensions.values()) {
+        	SettingsModelBoolean settingsModelBoolean = new SettingsModelBoolean(supportedExtension.getConfigName(), supportedExtension.isDefaultSelected());
+        	addDialogComponent(new DialogComponentBoolean(settingsModelBoolean, supportedExtension.getExtension()));	
+        }
+        
+        
         addDialogComponent(new DialogComponentString(new SettingsModelString(
                 SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT),
                 "Package: "));
+        
     }
 }

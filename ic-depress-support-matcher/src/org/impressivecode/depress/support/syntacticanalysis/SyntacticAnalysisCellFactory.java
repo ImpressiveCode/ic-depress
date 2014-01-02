@@ -27,7 +27,7 @@ import org.knime.core.data.def.StringCell;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
- * 
+ * To jest testowy commit
  */
 public class SyntacticAnalysisCellFactory implements AppendedCellFactory {
 

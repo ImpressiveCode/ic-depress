@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./jira.png" type="Source">
+	<name>Jira Online Adapter</name>
+
+	<shortDescription>
+		Jira Online Adapter, ImpressiveCode DePress Plugin Framework.
+	</shortDescription>
+
+	<fullDescription>
+		<intro>
+			This node can be used to read data from Jira entries file.
+
+			<p>
+			In order to use this plugin you should insert Jira repository address in the configuration window.
+			When executed, Jira Adapter node parses the file and return information collected in standard ITS table form, containing following data:
+			<ul>
+				<li>Id - issue key</li>
+				<li>Created - issue creation date</li>
+				<li>Resolved - issue resolution date</li>
+				<li>Updated - last update date</li>
+				<li>Status - issue status; the possible values are: OPEN, IN_PROGRESS, REOPEN, CLOSED, RESOLVED, UNKNOWN;</li>
+				<li>Type - issue type; the possible values are: BUG, ENHANCEMENT, TEST, UNKNOWN;</li>
+				<li>Resolution - issue resolution; the possible values are: INVALID, FIXED, WONT_FIX, DUPLICATE, UNRESOLVED, UNKNOWN;</li>
+				<li>Version - list of versions</li>
+				<li>Fix version - list of fix versions</li>
+				<li>Priority - issue priority; the possible values are: TRIVIAL, MINOR, MAJOR, CRITICAL, BLOCKER, UNKNOWN</li>
+				<li>Summary - issue summary</li>
+				<li>Reporter - Issue reporter</li>
+				<li>Assignees - set of assignees, Jira allows only one assignee, so this be a set with one element</li>
+				<li>Comment authors - comment authors set</li>
+				<li>Link - link to the issue</li>
+				<li>Description - issue description</li>
+				<li>Comments - issue comment list</li>
+			</ul>
+			</p>
+            <p>
+             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-its-jira/examples">here</a> or inside plugin jar.
+             <br/> 
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
+		</intro>
+		<option name="Jira URL">Jira repository address (e.g. "https://hibernate.atlassian.net")</option>
+		<option name="Status">Which date to filter (issue creation or resolution)</option>
+		<option name="Date from">Lower date limit for the request</option>
+		<option name="Date to">Upper date limit for the request</option>
+		<option name="JQL">Jira Query Language query for the request</option>
+		<option name="Login">This field is not being used now</option>
+		<option name="Password">This field is not being used now</option>
+	</fullDescription>
+
+	<ports>
+		<outPort index="0" name="Issue Tracking System Data Table">Datatable read from Jira Online System</outPort>
+		<outPort index="1" name="Issues History Data Table">Issue history table read from Jira Online System</outPort>
+	</ports>
+</knimeNode>

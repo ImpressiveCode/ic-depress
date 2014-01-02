@@ -40,6 +40,7 @@ import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
+import org.knime.core.node.defaultnodesettings.SettingsModelOptionalString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Preconditions;
@@ -60,7 +61,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	public static final String DEFAULT_STRING_VALUE = "";
 
-	private static final int DEFAULT_LIMIT_VALUE = 1000;
+	private static final String DEFAULT_LIMIT_VALUE = "";
 	
 	private static final int DEFAULT_BUGS_PER_TASK_VALUE = 1000;
 
@@ -96,12 +97,12 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	private final SettingsModelString productSettings = createProductSettings();
 
-	private final SettingsModelInteger limitSettings = createLimitSettings();
+	private final SettingsModelOptionalString limitSettings = createLimitSettings();
 	
 	private final SettingsModelInteger threadsCountSettings = createThreadsCountSettings();
 	
 	private final SettingsModelInteger bugsPerTaskSettings = createBugsPerTaskSettings();
-
+	
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
@@ -155,7 +156,12 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	private Integer getLimit() {
-		return limitSettings.getIntValue();
+		Integer result = null;
+		try {
+			result = Integer.parseInt(limitSettings.getStringValue());
+		} catch (NumberFormatException e) {
+		}
+		return result;
 	}
 	
 	private Integer getThreadsCount() {
@@ -268,8 +274,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		return new SettingsModelDate(BUGZILLA_DATE);
 	}
 
-	static SettingsModelInteger createLimitSettings() {
-		return new SettingsModelInteger(BUGZILLA_LIMIT, DEFAULT_LIMIT_VALUE);
+	static SettingsModelOptionalString createLimitSettings() {
+		return new SettingsModelOptionalString(BUGZILLA_LIMIT, DEFAULT_LIMIT_VALUE, false);
 	}
 
 	static SettingsModelInteger createThreadsCountSettings() {

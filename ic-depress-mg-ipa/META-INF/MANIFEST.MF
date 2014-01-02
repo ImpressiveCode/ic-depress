@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ic-depress-mg-noipa
+Bundle-SymbolicName: org.impressivecode.depress.mg.ipa;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: ImpressiveCode
+Require-Bundle: org.knime.base;bundle-version="2.8.0",
+ org.knime.workbench;bundle-version="2.8.0",
+ org.impressivecode.depress.base;bundle-version="1.0.0",
+ org.impressivecode.depress.support.matcher;bundle-version="1.0.0"
+Eclipse-RegisterBuddy: org.impressivecode.depress.base
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ClassPath: plugin.jar
+Export-Package: org.impressivecode.depress.mg.ipa
+Eclipse-BuddyPolicy: registered

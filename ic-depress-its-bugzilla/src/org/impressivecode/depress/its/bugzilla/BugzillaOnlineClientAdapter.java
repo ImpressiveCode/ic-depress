@@ -113,13 +113,12 @@ public class BugzillaOnlineClientAdapter {
 
 	public List<ITSDataType> listEntries(BugzillaOnlineOptions options) throws XmlRpcException, CanceledExecutionException, InterruptedException, ExecutionException {
 		checkNotNull(options.getProductName());
-		checkNotNull(options.getLimit());
 		checkNotNull(options.getThreadsCount());
 		checkNotNull(options.getBugsPerTask());
 		
 		checkIfIsCanceledAndMarkProgress(0);
 
-		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options), 0, options.getLimit());
+		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options));
 		List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
 
 		List<Callable<List<ITSDataType>>> tasks = partitionTasks(bugsIds, options.getBugsPerTask());
@@ -180,31 +179,24 @@ public class BugzillaOnlineClientAdapter {
 		}
 	}
 
-	Object[] searchBugs(Map<String, Object> parameters, int offset, int limit) throws XmlRpcException {
-		parameters.put(OFFSET, offset);
-		parameters.put(LIMIT, limit);
-
+	Object[] searchBugs(Map<String, Object> parameters) throws XmlRpcException {
 		Map<String, Object> result = bugzillaClient.execute(BUG_SEARCH_METHOD, parameters);
-
 		return (Object[]) result.get(BUGS);
 	}
 
 	Object[] getBugs(Map<String, Object> parameters) throws XmlRpcException {
 		Map<String, Object> result = bugzillaClient.execute(BUG_GET_METHOD, parameters);
-
 		return (Object[]) result.get(BUGS);
 	}
 
 	Object[] getBugsHistory(Map<String, Object> parameters) throws XmlRpcException {
 		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD, parameters);
-
 		return (Object[]) result.get(BUGS);
 	}
 
 	@SuppressWarnings("unchecked")
 	Map<String, Object> getBugsComments(Map<String, Object> parameters) throws XmlRpcException {
 		Map<String, Object> result = bugzillaClient.execute(BUG_COMMENT_METHOD, parameters);
-
 		return (Map<String, Object>) result.get(BUGS);
 	}
 
@@ -212,12 +204,24 @@ public class BugzillaOnlineClientAdapter {
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(PRODUCT_NAME, filter.getProductName());
 		parameters.put(INCLUDE_FIELDS, new String[] { ID });
-		if (creationTimeIsProvided(filter)) {
+		if (isLimitProvided(filter)) {
+			parameters.put(LIMIT, filter.getLimit());
+		}
+		if (isCreationTimeProvided(filter)) {
 			parameters.put(DATE_FROM, filter.getDateFrom());
 		}
+		
 		return parameters;
 	}
 
+	private boolean isLimitProvided(BugzillaOnlineOptions filter) {
+		return filter.getLimit() != null;
+	}
+
+	private boolean isCreationTimeProvided(BugzillaOnlineOptions filter) {
+		return filter.getDateFrom() != null;
+	}
+	
 	private Map<String, Object> prepareGetBugsParameters(List<String> ids) {
 		Map<String, Object> parameters = prepareBugsIdsParameters(ids);
 		parameters.put(INCLUDE_FIELDS, new String[] { ID, CREATED, UPDATED, STATUS, ASSIGNEE, FIX_VERSION, VERSION, REPORTER, PRIORITY, SUMMARY, LINK, RESOLUTION });
@@ -228,10 +232,6 @@ public class BugzillaOnlineClientAdapter {
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(IDS, ids);
 		return parameters;
-	}
-
-	private boolean creationTimeIsProvided(BugzillaOnlineOptions filter) {
-		return filter.getDateFrom() != null;
 	}
 
 	public void login(String username, String password) throws XmlRpcException {

@@ -2,6 +2,7 @@ package org.impressivecode.depress.scm.svn;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
@@ -31,7 +32,9 @@ public class SVNOfflineParserTest {
     @Test
     public void shouldParseGivenEntry() throws JAXBException, CloneNotSupportedException {
         // given
-        SVNParserOptions options = SVNParserOptions.options("org.");
+    	ArrayList<String> extensionsToFilter = new ArrayList<>();
+    	extensionsToFilter.add(".java");
+        SVNParserOptions options = SVNParserOptions.options("org.", extensionsToFilter);
         SVNOfflineParser parser = new SVNOfflineParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);

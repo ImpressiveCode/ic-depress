@@ -20,20 +20,24 @@ package org.impressivecode.depress.common;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Sets.newHashSet;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.collection.SetCell;
 import org.knime.core.data.date.DateAndTimeCell;
 import org.knime.core.data.def.StringCell;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
+
 
 /**
  * 
@@ -77,6 +81,10 @@ public final class TableCellReader {
     public Set<String> stringSetOptional(final String colName) {
         return optionalData(colName) ? Collections.<String>emptySet() : stringSet(colName);
     }
+    
+    public List<String> stringListOptional(final String colName) {
+    	return optionalData(colName) ? Collections.<String>emptyList() : stringListCellSet(colName);
+    }
 
     public Set<String> stringSet(final String colName) {
         SetCell set = ((SetCell) row.getCell(spec.findColumnIndex(colName)));
@@ -86,6 +94,17 @@ public final class TableCellReader {
                 return ((StringCell) cell).getStringValue();
             }
         }));
+    }
+    
+    public List<String> stringListCellSet(final String colName) {
+        ListCell set = ((ListCell) row.getCell(spec.findColumnIndex(colName)));
+        ArrayList<String> returned = new ArrayList<String>();
+        for(DataCell cell : set){
+        	String value = ((StringCell)cell).getStringValue(); 
+        	returned.add(value);
+        }
+        
+        return returned;
     }
 
     private boolean optionalData(final String colName) {
