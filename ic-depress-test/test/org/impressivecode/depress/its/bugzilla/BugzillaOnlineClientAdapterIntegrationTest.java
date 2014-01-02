@@ -49,11 +49,10 @@ public class BugzillaOnlineClientAdapterIntegrationTest {
 		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter("https://bugzilla.mozilla.org/xmlrpc.cgi", monitor);
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(BugzillaOnlineClientAdapter.PRODUCT_NAME, "Firefox");
-		Integer offset = 0;
-		Integer limit = 10;
+		parameters.put(BugzillaOnlineClientAdapter.LIMIT, 10);
 
 		// when
-		Object[] result = clientAdapter.searchBugs(parameters, offset, limit);
+		Object[] result = clientAdapter.searchBugs(parameters);
 
 		// then
 		assertNotNull(result);
