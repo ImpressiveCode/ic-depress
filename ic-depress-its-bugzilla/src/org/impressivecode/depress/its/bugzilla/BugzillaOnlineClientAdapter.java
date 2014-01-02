@@ -20,6 +20,7 @@ package org.impressivecode.depress.its.bugzilla;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
+import static java.lang.Integer.parseInt;
 import static java.lang.Math.ceil;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.ASSIGNEE;
@@ -36,6 +37,7 @@ import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.UPDAT
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.VERSION;
 
 import java.net.MalformedURLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -54,6 +56,10 @@ import org.knime.core.node.ExecutionMonitor;
  * @author Piotr Wróblewski, Wrocław University of Technology
  */
 public class BugzillaOnlineClientAdapter {
+
+	private static final String VERSION_SEPARATOR = "\\.";
+
+	private static final String BUGZILLA_VERSION_METHOD = "Bugzilla.version";
 
 	public static final String USER_LOGIN_METHOD = "User.login";
 
@@ -94,6 +100,8 @@ public class BugzillaOnlineClientAdapter {
 	private ExecutionMonitor monitor;
 	
 	private double progressStep;
+	
+	private String bugzillaVersion;
 
 	public BugzillaOnlineClientAdapter(String url, ExecutionMonitor monitor) throws MalformedURLException {
 		checkNotNull(url);
@@ -118,6 +126,8 @@ public class BugzillaOnlineClientAdapter {
 		
 		checkIfIsCanceledAndMarkProgress(0);
 
+		bugzillaVersion = getBugzillaVersion();
+		
 		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options));
 		List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
 
@@ -203,7 +213,9 @@ public class BugzillaOnlineClientAdapter {
 	private Map<String, Object> prepareSearchBugsParameters(BugzillaOnlineOptions filter) {
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(PRODUCT_NAME, filter.getProductName());
-		parameters.put(INCLUDE_FIELDS, new String[] { ID });
+		if (bugzillaInstanceSupportFieldsInclusionInSearch()) {
+			parameters.put(INCLUDE_FIELDS, new String[] { ID });			
+		}
 		if (isLimitProvided(filter)) {
 			parameters.put(LIMIT, filter.getLimit());
 		}
@@ -212,6 +224,22 @@ public class BugzillaOnlineClientAdapter {
 		}
 		
 		return parameters;
+	}
+
+	private boolean bugzillaInstanceSupportFieldsInclusionInSearch() {
+		return isVersionGreaterOrEqual("4.0", bugzillaVersion);
+	}
+	
+	private boolean isVersionGreaterOrEqual(String firstVersion, String secondVersion) {
+		String[] splittedFirstVersion = firstVersion.split(VERSION_SEPARATOR);
+		String[] splittedSecondVersion = secondVersion.split(VERSION_SEPARATOR);
+		
+		int firstMajorVersion = parseInt(splittedFirstVersion[0]);
+		int secondMajorVersion = parseInt(splittedSecondVersion[0]);
+		int firstMinorVersion = parseInt(splittedFirstVersion[1]);
+		int secondMinorVersion = parseInt(splittedSecondVersion[1]);
+		
+		return (firstMajorVersion < secondMajorVersion) || (firstMajorVersion == secondMajorVersion && firstMinorVersion <= secondMinorVersion); 
 	}
 
 	private boolean isLimitProvided(BugzillaOnlineOptions filter) {
@@ -224,8 +252,14 @@ public class BugzillaOnlineClientAdapter {
 	
 	private Map<String, Object> prepareGetBugsParameters(List<String> ids) {
 		Map<String, Object> parameters = prepareBugsIdsParameters(ids);
-		parameters.put(INCLUDE_FIELDS, new String[] { ID, CREATED, UPDATED, STATUS, ASSIGNEE, FIX_VERSION, VERSION, REPORTER, PRIORITY, SUMMARY, LINK, RESOLUTION });
+		if (bugzillaInstanceSupportFieldsInclusionInGet()) {
+			parameters.put(INCLUDE_FIELDS, new String[] { ID, CREATED, UPDATED, STATUS, ASSIGNEE, FIX_VERSION, VERSION, REPORTER, PRIORITY, SUMMARY, LINK, RESOLUTION });
+		}
 		return parameters;
+	}
+	
+	private boolean bugzillaInstanceSupportFieldsInclusionInGet() {
+		return isVersionGreaterOrEqual("3.6", bugzillaVersion);
 	}
 
 	private Map<String, Object> prepareBugsIdsParameters(List<String> ids) {
@@ -240,6 +274,11 @@ public class BugzillaOnlineClientAdapter {
 		params.put(PASSWORD, password);
 
 		bugzillaClient.execute(USER_LOGIN_METHOD, params);
+	}
+	
+	public String getBugzillaVersion() throws XmlRpcException {
+		Map<String, Object> result = bugzillaClient.execute(BUGZILLA_VERSION_METHOD, Collections.<String, Object> emptyMap());
+		return result.get(VERSION).toString();
 	}
 
 	private class Task implements Callable<List<ITSDataType>> {
