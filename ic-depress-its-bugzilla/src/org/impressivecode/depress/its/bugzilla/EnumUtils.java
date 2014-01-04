@@ -11,9 +11,10 @@ import java.util.List;
 
 public class EnumUtils {
 
+	//Enum as string collections is needed to create filter in filter panel. 
 	@SuppressWarnings("rawtypes")
 	public static List<String> getAsStringCollection(Enum[] values) {
-		List<String> names = new ArrayList<String>(6);
+		List<String> names = new ArrayList<String>(6);// 6 cause we do not have more than 6 elements in our enums
 		for (Enum value : values) {
 			names.add(value.name());
 		}
