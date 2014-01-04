@@ -61,7 +61,9 @@ public class BugzillaOnlineParser {
 
 	public static final String REPORTER = "creator";
 
-	public static final String PRIORITY = "severity"; // in Bugzilla bug severity contains appropriate values
+	public static final String PRIORITY = "severity"; // in Bugzilla bug
+														// severity contains
+														// appropriate values
 
 	public static final String SUMMARY = "summary";
 
@@ -84,14 +86,17 @@ public class BugzillaOnlineParser {
 	public static final String HISTORY = "history";
 
 	private static final String AUTHOR = "author";
-	
-	public List<ITSDataType> parseEntries(final Object[] bugs, final Object[] histories, final Map<String, Object> comments) {
+
+	public List<ITSDataType> parseEntries(final Object[] bugs,
+			final Object[] histories, final Map<String, Object> comments) {
 		List<ITSDataType> entries = newArrayListWithCapacity(bugs.length);
 
 		for (Object bug : bugs) {
 			ITSDataType entry = parse(bug);
-			fillHistoryData(entry, findBugHistory(histories, entry.getIssueId()));
-			fillCommentsData(entry, getBugsComments(comments, entry.getIssueId()));
+			fillHistoryData(entry,
+					findBugHistory(histories, entry.getIssueId()));
+			fillCommentsData(entry,
+					getBugsComments(comments, entry.getIssueId()));
 			fillDescription(entry);
 			entries.add(entry);
 		}
@@ -158,7 +163,13 @@ public class BugzillaOnlineParser {
 	}
 
 	private ITSPriority getPriority(Map<String, Object> details) {
-		return BugzillaCommonUtils.getPriority(details.get(PRIORITY).toString());
+		Object priority = details.get(PRIORITY);
+		if (priority != null) {
+			return BugzillaCommonUtils.getPriority(details.get(PRIORITY)
+					.toString());
+		} else {
+			return ITSPriority.UNKNOWN;
+		}
 	}
 
 	private String getSummary(Map<String, Object> details) {
@@ -170,11 +181,13 @@ public class BugzillaOnlineParser {
 	}
 
 	private ITSResolution getResolution(Map<String, Object> details) {
-		return BugzillaCommonUtils.getResolution(details.get(RESOLUTION).toString());
+		return BugzillaCommonUtils.getResolution(details.get(RESOLUTION)
+				.toString());
 	}
 
 	private String getReporter(Map<String, Object> details) {
-		return details.containsKey(REPORTER) ? details.get(REPORTER).toString() : null;
+		return details.containsKey(REPORTER) ? details.get(REPORTER).toString()
+				: null;
 	}
 
 	private HashSet<String> getAssignee(Map<String, Object> details) {
@@ -207,8 +220,12 @@ public class BugzillaOnlineParser {
 		}
 	}
 
-	private void tryToSetResolved(ITSDataType entry, Map<String, Object> eventDetails, Map<String, Object> changeDetails) {
-		if (isEntryResolved(entry) && isFieldStatus(changeDetails) && isValueAdded(changeDetails) && isValueChangeToResolved(changeDetails) && isAfterPreviouslyResolvedDate(entry, eventDetails)) {
+	private void tryToSetResolved(ITSDataType entry,
+			Map<String, Object> eventDetails, Map<String, Object> changeDetails) {
+		if (isEntryResolved(entry) && isFieldStatus(changeDetails)
+				&& isValueAdded(changeDetails)
+				&& isValueChangeToResolved(changeDetails)
+				&& isAfterPreviouslyResolvedDate(entry, eventDetails)) {
 			entry.setResolved((Date) eventDetails.get(WHEN));
 		}
 	}
@@ -226,15 +243,19 @@ public class BugzillaOnlineParser {
 	}
 
 	private boolean isValueChangeToResolved(Map<String, Object> changeDetails) {
-		return ITSStatus.RESOLVED.equals(BugzillaCommonUtils.getStatus(changeDetails.get(ADDED).toString()));
+		return ITSStatus.RESOLVED.equals(BugzillaCommonUtils
+				.getStatus(changeDetails.get(ADDED).toString()));
 	}
 
-	private boolean isAfterPreviouslyResolvedDate(ITSDataType entry, Map<String, Object> changeDetails) {
-		return entry.getResolved() == null || ((Date) changeDetails.get(WHEN)).after(entry.getResolved());
+	private boolean isAfterPreviouslyResolvedDate(ITSDataType entry,
+			Map<String, Object> changeDetails) {
+		return entry.getResolved() == null
+				|| ((Date) changeDetails.get(WHEN)).after(entry.getResolved());
 	}
 
 	@SuppressWarnings("unchecked")
-	private Object[] getBugsComments(final Map<String, Object> comments, String id) {
+	private Object[] getBugsComments(final Map<String, Object> comments,
+			String id) {
 		Map<String, Object> map = (Map<String, Object>) comments.get(id);
 		return (Object[]) map.get(COMMENTS);
 	}
@@ -263,7 +284,8 @@ public class BugzillaOnlineParser {
 	}
 
 	void fillDescription(ITSDataType entry) {
-		entry.setDescription(entry.getComments().get(0)); // first comment is a description
+		entry.setDescription(entry.getComments().get(0)); // first comment is a
+															// description
 	}
 
 	@SuppressWarnings("unchecked")
