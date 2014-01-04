@@ -20,10 +20,14 @@ package org.impressivecode.depress.its.bugzilla;
 import java.awt.event.ActionListener;
 
 import org.impressivecode.depress.its.ITSNodeDialog;
+import org.impressivecode.depress.its.ITSPriority;
+import org.impressivecode.depress.its.ITSResolution;
+import org.impressivecode.depress.its.ITSStatus;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentOptionalString;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
+import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
@@ -38,10 +42,22 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 
 	public static final String BUGS_PER_TASK_LABEL = "Bugs per thread:";
-	
+
 	public static final String DATE_FROM_LABEL = "Date from:";
-	
+
+	public static final String ASSIGNED_TO_LABEL = "Assigned to:";
+
 	public static final String LIMIT_LABEL = "Limit:";
+
+	public static final String CREATOR_LABEL = "Creator:";
+
+	public static final String PRIORITY_LABEL = "Priority:";
+
+	public static final String STATUS_LABEL = "Status:";
+
+	public static final String RESOLUTION_LABEL = "Resolution:";
+	
+	public static final String VERSION_LABEL = "Version:";
 	
 	@Override
 	protected SettingsModelString createURLSettings() {
@@ -57,19 +73,20 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 	protected ActionListener getButtonConnectionCheckListener() {
 		return null;
 	}
-	
+
 	@Override
 	protected void createProjectChooser() {
-		addDialogComponent(new DialogComponentString(createProjectSettings(), PROJECT_LABEL, true, COMPONENT_WIDTH));
+		addDialogComponent(new DialogComponentString(createProjectSettings(),
+				PROJECT_LABEL, true, COMPONENT_WIDTH));
 	};
-	
+
 	@Override
-    protected void createCheckProjectsButton() {
+	protected void createCheckProjectsButton() {
 	};
-    
-    @Override
-    protected void createCheckProjectsLabel() {
-    }
+
+	@Override
+	protected void createCheckProjectsLabel() {
+	}
 
 	@Override
 	protected SettingsModelString createLoginSettings() {
@@ -80,20 +97,66 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 	protected SettingsModelString createPasswordSettings() {
 		return BugzillaOnlineAdapterNodeModel.createPasswordSettings();
 	}
-	
+
 	@Override
 	protected void createFiltersTab() {
 		super.createFiltersTab();
 		createAndAddLimitFilter();
 		createAndAddDateFromFilter();
+		createAndAddAssignedToFilter();
+		createAndAddCreatorFilter();
+		createAndAddVersionFilter();
+		createAndAddPriorityFilter();
+		createAndAddStatusFilter();
+		createAndAddResolutionFilter();
 	}
-	
+
 	private void createAndAddLimitFilter() {
-        addDialogComponent(new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createLimitSettings(), LIMIT_LABEL, COMPONENT_WIDTH));
+		addDialogComponent(new DialogComponentOptionalString(
+				BugzillaOnlineAdapterNodeModel.createLimitSettings(),
+				LIMIT_LABEL, COMPONENT_WIDTH));
+	}
+
+	private void createAndAddDateFromFilter() {
+		addDialogComponent(new DialogComponentDate(
+				BugzillaOnlineAdapterNodeModel.createDateSettings(),
+				DATE_FROM_LABEL));
+	}
+
+	private void createAndAddAssignedToFilter() {
+		addDialogComponent(new DialogComponentOptionalString(
+				BugzillaOnlineAdapterNodeModel.createAssignedToSettings(),
+				ASSIGNED_TO_LABEL));
+	}
+
+	private void createAndAddCreatorFilter() {
+		addDialogComponent(new DialogComponentOptionalString(
+				BugzillaOnlineAdapterNodeModel.createCreatorSettings(),
+				CREATOR_LABEL));
 	}
 	
-	private void createAndAddDateFromFilter() {
-       addDialogComponent(new DialogComponentDate(BugzillaOnlineAdapterNodeModel.createDateSettings(), DATE_FROM_LABEL));
+	private void createAndAddVersionFilter() {
+		addDialogComponent(new DialogComponentOptionalString(
+				BugzillaOnlineAdapterNodeModel.createVersionSettings(),
+				VERSION_LABEL));
+	}
+	
+	private void createAndAddPriorityFilter() {
+		addDialogComponent(new DialogComponentStringSelection(
+				BugzillaOnlineAdapterNodeModel.createPrioritySettings(),
+				PRIORITY_LABEL, EnumUtils.getAsStringCollection(ITSPriority.values())));
+	}
+	
+	private void createAndAddResolutionFilter() {
+		addDialogComponent(new DialogComponentStringSelection(
+				BugzillaOnlineAdapterNodeModel.createResolutionSettings(),
+				RESOLUTION_LABEL, EnumUtils.getAsStringCollection(ITSResolution.values())));
+	}
+	
+	private void createAndAddStatusFilter() {
+		addDialogComponent(new DialogComponentStringSelection(
+				BugzillaOnlineAdapterNodeModel.createStatusSettings(),
+				STATUS_LABEL, EnumUtils.getAsStringCollection(ITSStatus.values())));
 	}
 
 	@Override
@@ -106,9 +169,11 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 		super.createAdvancedTab();
 		createAndAddBugsPerTaskComponent();
 	}
-	
+
 	private void createAndAddBugsPerTaskComponent() {
-        addDialogComponent(new DialogComponentNumberEdit(BugzillaOnlineAdapterNodeModel.createBugsPerTaskSettings(), BUGS_PER_TASK_LABEL, COMPONENT_WIDTH));
+		addDialogComponent(new DialogComponentNumberEdit(
+				BugzillaOnlineAdapterNodeModel.createBugsPerTaskSettings(),
+				BUGS_PER_TASK_LABEL, COMPONENT_WIDTH));
 	}
-	
+
 }

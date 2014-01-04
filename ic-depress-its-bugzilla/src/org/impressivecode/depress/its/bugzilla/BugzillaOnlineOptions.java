@@ -22,6 +22,7 @@ import java.util.Date;
 /**
  * 
  * @author Micha≈Ç Negacz, Wroc≈Çaw University of Technology
+ *  @author Piotr WrÛblewski, Wroc≥aw University of Technology
  * 
  */
 public class BugzillaOnlineOptions {
@@ -29,12 +30,26 @@ public class BugzillaOnlineOptions {
 	private String productName;
 
 	private Date dateFrom;
+	
+	private String assignedTo;
+	
+	private String creator;
+	
+	private String quickSearch;
+	
+	private String priority;
+	
+	private String resolution;
+	
+	private String status;
 
 	private Integer limit;
 
 	private Integer threadsCount;
 
 	private Integer bugsPerTask;
+	
+	private String version;
 
 	public String getProductName() {
 		return productName;
@@ -74,6 +89,62 @@ public class BugzillaOnlineOptions {
 
 	public void setBugsPerTask(Integer bugsPerTask) {
 		this.bugsPerTask = bugsPerTask;
+	}
+	
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+
+	public String getCreator() {
+		return creator;
+	}
+
+	public String getAssignedTo() {
+		return assignedTo;
+	}
+
+	public void setAssignedTo(String assignedTo) {
+		this.assignedTo = assignedTo;
+	}
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
+	public String getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(String resolution) {
+		this.resolution = resolution;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getQuickSearch() {
+		return quickSearch;
+	}
+
+	public void setQuickSearch(String quickSearch) {
+		this.quickSearch = quickSearch;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 }

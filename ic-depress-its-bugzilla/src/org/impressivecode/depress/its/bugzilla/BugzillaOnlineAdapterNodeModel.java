@@ -28,6 +28,9 @@ import java.util.List;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSPriority;
+import org.impressivecode.depress.its.ITSResolution;
+import org.impressivecode.depress.its.ITSStatus;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -62,7 +65,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	public static final String DEFAULT_STRING_VALUE = "";
 
 	private static final String DEFAULT_LIMIT_VALUE = "";
-	
+
 	private static final int DEFAULT_BUGS_PER_TASK_VALUE = 1000;
 
 	public static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
@@ -81,11 +84,24 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	public static final String BUGZILLA_LIMIT = "depress.its.bugzillaonline.limit";
 
-	public static final String BUGZILLA_THREADS_COUNT = "depress.its.bugzillaonline.threadsCount";
+	public static final String BUGZILLA_ASSIGNED_TO = "depress.its.bugzillaonline.assignedTo";
+
+	public static final String BUGZILLA_CREATOR = "depress.its.bugzillaonline.creator";
 	
+	public static final String BUGZILLA_VERSION = "depress.its.bugzillaonline.version";
+	
+	public static final String BUGZILLA_PRIORITY = "depress.its.bugzillaonline.priority";
+
+	public static final String BUGZILLA_STATUS = "depress.its.bugzillaonline.status";
+
+	public static final String BUGZILLA_RESOLUTION = "depress.its.bugzillaonline.resolution";
+
+	public static final String BUGZILLA_THREADS_COUNT = "depress.its.bugzillaonline.threadsCount";
+
 	public static final String BUGZILLA_BUGS_PER_TASK = "depress.its.bugzillaonline.bugsPerTask";
 
-	private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
+	private static final NodeLogger LOGGER = NodeLogger
+			.getLogger(BugzillaOnlineAdapterNodeModel.class);
 
 	private final SettingsModelString urlSettings = createURLSettings();
 
@@ -98,11 +114,23 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	private final SettingsModelString productSettings = createProductSettings();
 
 	private final SettingsModelOptionalString limitSettings = createLimitSettings();
+
+	private final SettingsModelOptionalString assignedToSettings = createAssignedToSettings();
+
+	private final SettingsModelOptionalString creatorSettings = createCreatorSettings();
 	
+	private final SettingsModelOptionalString versionSettings = createVersionSettings();
+	
+	private final SettingsModelString prioritySettings = createPrioritySettings();
+
+	private final SettingsModelString resolutionSettings = createResolutionSettings();
+
+	private final SettingsModelString statusSettings = createStatusSettings();
+
 	private final SettingsModelInteger threadsCountSettings = createThreadsCountSettings();
-	
+
 	private final SettingsModelInteger bugsPerTaskSettings = createBugsPerTaskSettings();
-	
+
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
@@ -112,17 +140,21 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext context) throws Exception {
+	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
+			final ExecutionContext context) throws Exception {
 		LOGGER.info("Preparing to read bugzilla entries.");
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(getURL(), context);
+		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(
+				getURL(), context);
 
 		if (isUsernameProvided(getUsername())) {
 			LOGGER.info("Logging to bugzilla as: " + getUsername());
 			clientAdapter.login(getUsername(), getPassword());
 		}
 
-		LOGGER.info("Reading entries from bugzilla instance: " + getURL() + " and product: " + getProductName());
-		List<ITSDataType> entries = clientAdapter.listEntries(getBugzillaOptions());
+		LOGGER.info("Reading entries from bugzilla instance: " + getURL()
+				+ " and product: " + getProductName());
+		List<ITSDataType> entries = clientAdapter
+				.listEntries(getBugzillaOptions());
 
 		LOGGER.info("Transforming to bugzilla entries.");
 		BufferedDataTable out = transform(entries, context);
@@ -141,6 +173,30 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	private String getUsername() {
 		return usernameSettings.getStringValue();
+	}
+
+	private String getAssignedTo() {
+		return assignedToSettings.getStringValue();
+	}
+
+	private String getCreator() {
+		return creatorSettings.getStringValue();
+	}
+	
+	private String getVersion(){
+		return versionSettings.getStringValue();
+	}
+	
+	private String getPriority() {
+		return prioritySettings.getStringValue();
+	}
+
+	private String getResolution() {
+		return resolutionSettings.getStringValue();
+	}
+
+	private String getStatus() {
+		return statusSettings.getStringValue();
 	}
 
 	private String getProductName() {
@@ -163,11 +219,11 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		}
 		return result;
 	}
-	
+
 	private Integer getThreadsCount() {
 		return threadsCountSettings.getIntValue();
 	}
-	
+
 	private Integer getBugsPerTask() {
 		return bugsPerTaskSettings.getIntValue();
 	}
@@ -176,14 +232,22 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		BugzillaOnlineOptions options = new BugzillaOnlineOptions();
 		options.setProductName(getProductName());
 		options.setDateFrom(getDateFrom());
+		options.setAssignedTo(getAssignedTo());
+		options.setCreator(getCreator());
+		options.setVersion(getVersion());
+		options.setPriority(getPriority());
+		options.setResolution(getResolution());
+		options.setStatus(getStatus());
 		options.setLimit(getLimit());
 		options.setThreadsCount(getThreadsCount());
 		options.setBugsPerTask(getBugsPerTask());
 		return options;
 	}
 
-	private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
-		ITSAdapterTransformer transformer = new ITSAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
+	private BufferedDataTable transform(final List<ITSDataType> entries,
+			final ExecutionContext exec) throws CanceledExecutionException {
+		ITSAdapterTransformer transformer = new ITSAdapterTransformer(
+				ITSAdapterTableFactory.createDataColumnSpec());
 		return transformer.transform(entries, exec);
 	}
 
@@ -193,7 +257,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	@Override
-	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
+	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
+			throws InvalidSettingsException {
 		Preconditions.checkArgument(inSpecs.length == 0);
 		return createTableSpec();
 	}
@@ -206,51 +271,82 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		productSettings.saveSettingsTo(settings);
 		dateFromSettings.saveSettingsTo(settings);
 		limitSettings.saveSettingsTo(settings);
+		assignedToSettings.saveSettingsTo(settings);
+		creatorSettings.saveSettingsTo(settings);
+		versionSettings.saveSettingsTo(settings);
+		prioritySettings.saveSettingsTo(settings);
+		statusSettings.saveSettingsTo(settings);
+		resolutionSettings.saveSettingsTo(settings);
 		threadsCountSettings.saveSettingsTo(settings);
 		bugsPerTaskSettings.saveSettingsTo(settings);
 	}
 
 	@Override
-	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
+			throws InvalidSettingsException {
 		urlSettings.loadSettingsFrom(settings);
 		usernameSettings.loadSettingsFrom(settings);
 		passwordSettings.loadSettingsFrom(settings);
 		productSettings.loadSettingsFrom(settings);
 		dateFromSettings.loadSettingsFrom(settings);
 		limitSettings.loadSettingsFrom(settings);
+		assignedToSettings.loadSettingsFrom(settings);
+		creatorSettings.loadSettingsFrom(settings);
+		versionSettings.loadSettingsFrom(settings);
+		prioritySettings.loadSettingsFrom(settings);
+		statusSettings.loadSettingsFrom(settings);
+		resolutionSettings.loadSettingsFrom(settings);
 		threadsCountSettings.loadSettingsFrom(settings);
 		bugsPerTaskSettings.loadSettingsFrom(settings);
 	}
 
 	@Override
-	protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-		urlSettings.validateSettings(settings); // TODO validate url, maybe test connection, bugzilla version and credentials
+	protected void validateSettings(final NodeSettingsRO settings)
+			throws InvalidSettingsException {
+		urlSettings.validateSettings(settings); // TODO validate url, maybe test
+												// connection, bugzilla version
+												// and credentials
 		usernameSettings.validateSettings(settings);
 		passwordSettings.validateSettings(settings);
 		productSettings.validateSettings(settings);
 		dateFromSettings.validateSettings(settings);
 		limitSettings.validateSettings(settings);
+		assignedToSettings.validateSettings(settings);
+		creatorSettings.validateSettings(settings);
+		prioritySettings.validateSettings(settings);
+		versionSettings.validateSettings(settings);
+		statusSettings.validateSettings(settings);
+		resolutionSettings.validateSettings(settings);
 		threadsCountSettings.validateSettings(settings);
 		bugsPerTaskSettings.validateSettings(settings);
 
-		SettingsModelString url = urlSettings.createCloneWithValidatedValue(settings);
-		if (!isNullOrEmpty(url.getStringValue()) && !url.getStringValue().matches(URL_PATTERN)) {
-			throw new InvalidSettingsException("Invalid URL address. Valid example: 'https://website.org'");
+		SettingsModelString url = urlSettings
+				.createCloneWithValidatedValue(settings);
+		if (!isNullOrEmpty(url.getStringValue())
+				&& !url.getStringValue().matches(URL_PATTERN)) {
+			throw new InvalidSettingsException(
+					"Invalid URL address. Valid example: 'https://website.org'");
 		}
 
-		SettingsModelString email = usernameSettings.createCloneWithValidatedValue(settings);
-		if (!isNullOrEmpty(email.getStringValue()) && !email.getStringValue().matches(EMAIL_PATTERN)) {
+		SettingsModelString email = usernameSettings
+				.createCloneWithValidatedValue(settings);
+		if (!isNullOrEmpty(email.getStringValue())
+				&& !email.getStringValue().matches(EMAIL_PATTERN)) {
 			throw new InvalidSettingsException("Invalid email address");
 		}
 	}
 
 	@Override
-	protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException, CanceledExecutionException {
+	protected void loadInternals(final File internDir,
+			final ExecutionMonitor exec) throws IOException,
+			CanceledExecutionException {
 		// NOOP
 	}
 
 	@Override
-	protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException, CanceledExecutionException {
+	protected void saveInternals(final File internDir,
+			final ExecutionMonitor exec) throws IOException,
+			CanceledExecutionException {
 		// NOOP
 	}
 
@@ -275,19 +371,52 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	static SettingsModelOptionalString createLimitSettings() {
-		return new SettingsModelOptionalString(BUGZILLA_LIMIT, DEFAULT_LIMIT_VALUE, false);
+		return new SettingsModelOptionalString(BUGZILLA_LIMIT,
+				DEFAULT_LIMIT_VALUE, false);
+	}
+
+	static SettingsModelOptionalString createAssignedToSettings() {
+		return new SettingsModelOptionalString(BUGZILLA_ASSIGNED_TO,
+				DEFAULT_STRING_VALUE, false);
+	}
+
+	static SettingsModelOptionalString createCreatorSettings() {
+		return new SettingsModelOptionalString(BUGZILLA_CREATOR,
+				DEFAULT_STRING_VALUE, false);
+	}
+	
+	static SettingsModelOptionalString createVersionSettings() {
+		return new SettingsModelOptionalString(BUGZILLA_VERSION,
+				DEFAULT_STRING_VALUE, false);
+	}
+	
+	static SettingsModelString createPrioritySettings() {
+		return new SettingsModelString(BUGZILLA_PRIORITY,
+				ITSPriority.UNKNOWN.name());
+	}
+
+	static SettingsModelString createResolutionSettings() {
+		return new SettingsModelString(BUGZILLA_RESOLUTION,
+				ITSResolution.UNKNOWN.name());
+	}
+
+	static SettingsModelString createStatusSettings() {
+		return new SettingsModelString(BUGZILLA_STATUS,
+				ITSStatus.UNKNOWN.name());
 	}
 
 	static SettingsModelInteger createThreadsCountSettings() {
-		return new SettingsModelInteger(BUGZILLA_THREADS_COUNT, getOptimalThreadsCount());
+		return new SettingsModelInteger(BUGZILLA_THREADS_COUNT,
+				getOptimalThreadsCount());
 	}
-	
+
 	static SettingsModelInteger createBugsPerTaskSettings() {
-		return new SettingsModelInteger(BUGZILLA_BUGS_PER_TASK, DEFAULT_BUGS_PER_TASK_VALUE);
+		return new SettingsModelInteger(BUGZILLA_BUGS_PER_TASK,
+				DEFAULT_BUGS_PER_TASK_VALUE);
 	}
-	
+
 	static private int getOptimalThreadsCount() {
 		return Runtime.getRuntime().availableProcessors() + 1;
 	}
-	
+
 }
