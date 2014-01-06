@@ -23,7 +23,7 @@ import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterHistory
 import java.util.List;
 
 import org.impressivecode.depress.common.OutputTransformer;
-import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChangeRowItem;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
@@ -50,7 +50,7 @@ public class JiraOnlineAdapterHistoryTransformer implements OutputTransformer<Ji
     }
 
     @Override
-    public BufferedDataTable transform(List<JiraOnlineIssueChangeRowItem> entries, ExecutionContext exec)
+    public BufferedDataTable transform(final List<JiraOnlineIssueChangeRowItem> entries, final ExecutionContext exec)
             throws CanceledExecutionException {
         BufferedDataContainer container = createDataContainer(exec);
         for (JiraOnlineIssueChangeRowItem entry : entries) {

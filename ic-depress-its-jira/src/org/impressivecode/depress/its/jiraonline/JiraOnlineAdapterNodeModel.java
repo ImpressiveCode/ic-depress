@@ -34,7 +34,7 @@ import java.util.concurrent.Future;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChangeRowItem;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -110,7 +110,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     }
 
     @Override
-    protected PortObjectSpec[] configure(PortObjectSpec[] inSpecs) throws InvalidSettingsException {
+    protected PortObjectSpec[] configure(final PortObjectSpec[] inSpecs) throws InvalidSettingsException {
         return new PortObjectSpec[OUTPUT_NODE_COUNT];
     }
 
@@ -166,8 +166,8 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         return JiraOnlineAdapterParser.getTotalIssuesCount(rawData);
     }
 
-    private List<ITSDataType> executeIssueTasks(List<URI> issueBatchLinks) throws InterruptedException,
-            ExecutionException {
+    private List<ITSDataType> executeIssueTasks(final List<URI> issueBatchLinks) throws InterruptedException,
+    ExecutionException {
         List<Callable<List<ITSDataType>>> tasks = newArrayList();
 
         for (URI uri : issueBatchLinks) {
@@ -178,7 +178,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         return issues;
     }
 
-    private List<JiraOnlineIssueChangeRowItem> executeHistoryTasks(List<ITSDataType> issues)
+    private List<JiraOnlineIssueChangeRowItem> executeHistoryTasks(final List<ITSDataType> issues)
             throws InterruptedException, ExecutionException {
         List<JiraOnlineIssueChangeRowItem> issuesHistory;
         List<Callable<List<JiraOnlineIssueChangeRowItem>>> historyTasks = newArrayList();
@@ -217,7 +217,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     }
 
-    private List<ITSDataType> combinePartialIssueResults(List<Future<List<ITSDataType>>> partialResults)
+    private List<ITSDataType> combinePartialIssueResults(final List<Future<List<ITSDataType>>> partialResults)
             throws InterruptedException, ExecutionException {
         List<ITSDataType> result = newArrayList();
 
@@ -229,7 +229,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     }
 
     private List<JiraOnlineIssueChangeRowItem> combinePartialIssueHistoryResults(
-            List<Future<List<JiraOnlineIssueChangeRowItem>>> partialResults) throws InterruptedException,
+            final List<Future<List<JiraOnlineIssueChangeRowItem>>> partialResults) throws InterruptedException,
             ExecutionException {
         List<JiraOnlineIssueChangeRowItem> result = newArrayList();
 
@@ -343,13 +343,13 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
+    CanceledExecutionException {
         // NOOP
     }
 
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
+    CanceledExecutionException {
         // NOOP
     }
 
@@ -384,7 +384,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     static SettingsModelBoolean createSettingsHistory() {
         return new SettingsModelBoolean(JIRA_HISTORY, false);
     }
-    
+
     static SettingsModelInteger createSettingsThreadCount() {
         return new SettingsModelInteger(THREAD_COUNT_SETTING, DEFAULT_THREAD_COUNT);
     }
@@ -393,7 +393,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
         private URI uri;
 
-        public DownloadAndParseIssuesTask(URI uri) {
+        public DownloadAndParseIssuesTask(final URI uri) {
             this.uri = uri;
         }
 
@@ -418,7 +418,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
         private URI uri;
 
-        public DownloadAndParseIssueHistoryTask(URI uri) {
+        public DownloadAndParseIssueHistoryTask(final URI uri) {
             this.uri = uri;
         }
 
