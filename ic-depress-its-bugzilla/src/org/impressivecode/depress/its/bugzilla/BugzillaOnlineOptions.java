@@ -22,7 +22,7 @@ import java.util.Date;
 /**
  * 
  * @author Michał Negacz, Wrocław University of Technology
- *  @author Piotr Wr�blewski, Wroc�aw University of Technology
+ * @author Piotr Wróblewski, Wrocław University of Technology
  * 
  */
 public class BugzillaOnlineOptions {

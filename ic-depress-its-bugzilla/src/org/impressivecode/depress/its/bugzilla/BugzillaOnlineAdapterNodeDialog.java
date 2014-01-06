@@ -17,7 +17,12 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.DEFAULT_COMBOBOX_ANY_VALUE;
+
 import java.awt.event.ActionListener;
+import java.util.Collection;
+import java.util.List;
 
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.ITSPriority;
@@ -40,6 +45,8 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * 
  */
 public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
+
+	public static final String UNKNOWN_ENUM_NAME = "UNKNOWN";
 
 	public static final String BUGS_PER_TASK_LABEL = "Bugs per thread:";
 
@@ -76,8 +83,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 
 	@Override
 	protected void createProjectChooser() {
-		addDialogComponent(new DialogComponentString(createProjectSettings(),
-				PROJECT_LABEL, true, COMPONENT_WIDTH));
+		addDialogComponent(new DialogComponentString(createProjectSettings(), PROJECT_LABEL, true, COMPONENT_WIDTH));
 	};
 
 	@Override
@@ -112,51 +118,49 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 	}
 
 	private void createAndAddLimitFilter() {
-		addDialogComponent(new DialogComponentOptionalString(
-				BugzillaOnlineAdapterNodeModel.createLimitSettings(),
-				LIMIT_LABEL, COMPONENT_WIDTH));
+		addDialogComponent(new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createLimitSettings(), LIMIT_LABEL, COMPONENT_WIDTH));
 	}
 
 	private void createAndAddDateFromFilter() {
-		addDialogComponent(new DialogComponentDate(
-				BugzillaOnlineAdapterNodeModel.createDateSettings(),
-				DATE_FROM_LABEL));
+		addDialogComponent(new DialogComponentDate(BugzillaOnlineAdapterNodeModel.createDateSettings(), DATE_FROM_LABEL));
 	}
 
 	private void createAndAddAssignedToFilter() {
-		addDialogComponent(new DialogComponentOptionalString(
-				BugzillaOnlineAdapterNodeModel.createAssignedToSettings(),
-				ASSIGNED_TO_LABEL));
+		addDialogComponent(new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createAssignedToSettings(), ASSIGNED_TO_LABEL));
 	}
 
 	private void createAndAddCreatorFilter() {
-		addDialogComponent(new DialogComponentOptionalString(
-				BugzillaOnlineAdapterNodeModel.createCreatorSettings(),
-				CREATOR_LABEL));
+		addDialogComponent(new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createCreatorSettings(), CREATOR_LABEL));
 	}
 	
 	private void createAndAddVersionFilter() {
-		addDialogComponent(new DialogComponentOptionalString(
-				BugzillaOnlineAdapterNodeModel.createVersionSettings(),
-				VERSION_LABEL));
+		addDialogComponent(new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createVersionSettings(), VERSION_LABEL));
 	}
 	
 	private void createAndAddPriorityFilter() {
-		addDialogComponent(new DialogComponentStringSelection(
-				BugzillaOnlineAdapterNodeModel.createPrioritySettings(),
-				PRIORITY_LABEL, EnumUtils.getAsStringCollection(ITSPriority.values())));
+		addDialogComponent(new DialogComponentStringSelection(BugzillaOnlineAdapterNodeModel.createPrioritySettings(), PRIORITY_LABEL, prepareEnumValuesToComboBox(ITSPriority.values())));
+	}
+	
+	private Collection<String> prepareEnumValuesToComboBox(Enum<?>[] enums) {
+		List<String> strings = newArrayList();
+		
+		for (Enum<?> value : enums) {
+			if (UNKNOWN_ENUM_NAME.equals(value.name())) {
+				strings.add(DEFAULT_COMBOBOX_ANY_VALUE);
+			} else {
+				strings.add(value.name());
+			}
+		}
+		
+		return strings;
 	}
 	
 	private void createAndAddResolutionFilter() {
-		addDialogComponent(new DialogComponentStringSelection(
-				BugzillaOnlineAdapterNodeModel.createResolutionSettings(),
-				RESOLUTION_LABEL, EnumUtils.getAsStringCollection(ITSResolution.values())));
+		addDialogComponent(new DialogComponentStringSelection(BugzillaOnlineAdapterNodeModel.createResolutionSettings(), RESOLUTION_LABEL, prepareEnumValuesToComboBox(ITSResolution.values())));
 	}
 	
 	private void createAndAddStatusFilter() {
-		addDialogComponent(new DialogComponentStringSelection(
-				BugzillaOnlineAdapterNodeModel.createStatusSettings(),
-				STATUS_LABEL, EnumUtils.getAsStringCollection(ITSStatus.values())));
+		addDialogComponent(new DialogComponentStringSelection(BugzillaOnlineAdapterNodeModel.createStatusSettings(), STATUS_LABEL, prepareEnumValuesToComboBox(ITSStatus.values())));
 	}
 
 	@Override
@@ -171,9 +175,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 	}
 
 	private void createAndAddBugsPerTaskComponent() {
-		addDialogComponent(new DialogComponentNumberEdit(
-				BugzillaOnlineAdapterNodeModel.createBugsPerTaskSettings(),
-				BUGS_PER_TASK_LABEL, COMPONENT_WIDTH));
+		addDialogComponent(new DialogComponentNumberEdit(BugzillaOnlineAdapterNodeModel.createBugsPerTaskSettings(), BUGS_PER_TASK_LABEL, COMPONENT_WIDTH));
 	}
 
 }
