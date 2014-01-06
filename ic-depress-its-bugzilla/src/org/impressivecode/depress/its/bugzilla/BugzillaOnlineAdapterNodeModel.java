@@ -45,6 +45,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelOptionalString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
+import org.knime.core.util.KnimeEncryption;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -148,7 +149,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 		if (isUsernameProvided(getUsername())) {
 			LOGGER.info("Logging to bugzilla as: " + getUsername());
-			clientAdapter.login(getUsername(), getPassword());
+			clientAdapter.login(getUsername(), getPasswordAsPlainText());
 		}
 
 		LOGGER.info("Reading entries from bugzilla instance: " + getURL()
@@ -169,6 +170,14 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	private String getPassword() {
 		return passwordSettings.getStringValue();
+	}
+	private String getPasswordAsPlainText(){
+		try {
+			return KnimeEncryption.decrypt(passwordSettings.getStringValue());
+        } catch (Exception e) {
+            LOGGER.error("Password could not be decrypted, reason: " + e.getMessage());
+        }
+		return "";
 	}
 
 	private String getUsername() {
@@ -267,7 +276,22 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	protected void saveSettingsTo(final NodeSettingsWO settings) {
 		urlSettings.saveSettingsTo(settings);
 		usernameSettings.saveSettingsTo(settings);
-		passwordSettings.saveSettingsTo(settings);
+		
+		
+		
+		String encryptedPassword="";
+		 try {
+			 encryptedPassword=KnimeEncryption.encrypt(passwordSettings.getStringValue().toCharArray());
+         } catch (Throwable t) {
+             LOGGER.error("Could not encrypt password, reason: "
+                     + t.getMessage(), t);
+         }
+		 if(encryptedPassword.length()>0){
+			 passwordSettings.setStringValue(encryptedPassword);
+		 }
+		 
+		 passwordSettings.saveSettingsTo(settings);
+		
 		productSettings.saveSettingsTo(settings);
 		dateFromSettings.saveSettingsTo(settings);
 		limitSettings.saveSettingsTo(settings);
@@ -298,6 +322,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		resolutionSettings.loadSettingsFrom(settings);
 		threadsCountSettings.loadSettingsFrom(settings);
 		bugsPerTaskSettings.loadSettingsFrom(settings);
+		
+		
 	}
 
 	@Override
