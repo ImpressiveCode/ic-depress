@@ -15,7 +15,7 @@
 		<node
 			category-path="depress/depress.its"
 			expert-flag="false"
-			factory-class="org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeFactory"
+			factory-class="org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapterNodeFactory"
 			id="org.impressivecode.depress.its.bugzillaonline">
 		</node>
 	</extension>

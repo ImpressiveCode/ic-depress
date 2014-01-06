@@ -28,16 +28,16 @@ import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChange;
-import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChangeRowItem;
-import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChanges;
-import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueHistory;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineComment;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Priority;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Resolution;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Status;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Type;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssue;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChange;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChanges;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueHistory;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueVersion;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssuesList;
 
@@ -58,8 +58,8 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 public class JiraOnlineAdapterParser {
 
     private static final String LINK_PATH = "browse/";
-    
-    public static List<ITSDataType> parseSingleIssueBatch(String source, String hostname) {
+
+    public static List<ITSDataType> parseSingleIssueBatch(final String source, final String hostname) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
@@ -80,7 +80,7 @@ public class JiraOnlineAdapterParser {
         return parseData(issueList, hostname);
     }
 
-    public static List<JiraOnlineIssueChangeRowItem> parseSingleIssue(String json) {
+    public static List<JiraOnlineIssueChangeRowItem> parseSingleIssue(final String json) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
@@ -101,7 +101,7 @@ public class JiraOnlineAdapterParser {
         return parseIssueHistory(issue);
     }
 
-    public static List<ITSDataType> parseMultipleIssueBatches(List<String> sources, String hostname) {
+    public static List<ITSDataType> parseMultipleIssueBatches(final List<String> sources, final String hostname) {
         List<ITSDataType> combinedIssues = new ArrayList<>();
 
         for (String source : sources) {
@@ -111,7 +111,7 @@ public class JiraOnlineAdapterParser {
         return combinedIssues;
     }
 
-    public static int getTotalIssuesCount(String source) {
+    public static int getTotalIssuesCount(final String source) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
@@ -134,7 +134,7 @@ public class JiraOnlineAdapterParser {
 
 
 
-    private static List<ITSDataType> parseData(JiraOnlineIssuesList issueList, String hostname) {
+    private static List<ITSDataType> parseData(final JiraOnlineIssuesList issueList, final String hostname) {
         List<ITSDataType> resultList = new ArrayList<>();
 
         for (JiraOnlineIssue issue : issueList.getIssues()) {
@@ -194,7 +194,7 @@ public class JiraOnlineAdapterParser {
         return resultList;
     }
 
-    private static ITSResolution parseResolution(Resolution resolution) {
+    private static ITSResolution parseResolution(final Resolution resolution) {
         if (resolution == null || resolution.getName() == null) {
             return ITSResolution.UNKNOWN;
         }
@@ -226,7 +226,7 @@ public class JiraOnlineAdapterParser {
         }
     }
 
-    private static ITSStatus parseStatus(Status status) {
+    private static ITSStatus parseStatus(final Status status) {
         if (status == null || status.getName() == null) {
             return ITSStatus.UNKNOWN;
         }
@@ -246,7 +246,7 @@ public class JiraOnlineAdapterParser {
         }
     }
 
-    private static ITSType parseType(Type type) {
+    private static ITSType parseType(final Type type) {
         if (type == null || type.getName() == null) {
             return ITSType.UNKNOWN;
         }
@@ -265,7 +265,7 @@ public class JiraOnlineAdapterParser {
         }
     }
 
-    private static ITSPriority parsePriority(Priority priority) {
+    private static ITSPriority parsePriority(final Priority priority) {
 
         if (priority == null || priority.getName() == null) {
             return ITSPriority.UNKNOWN;
@@ -286,7 +286,7 @@ public class JiraOnlineAdapterParser {
         }
     }
 
-    private static List<JiraOnlineIssueChangeRowItem> parseIssueHistory(JiraOnlineIssueHistory issue) {
+    private static List<JiraOnlineIssueChangeRowItem> parseIssueHistory(final JiraOnlineIssueHistory issue) {
 
         List<JiraOnlineIssueChangeRowItem> issueList = new ArrayList<>();
 

@@ -15,12 +15,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline.historymodel;
+package org.impressivecode.depress.its.jiraonline.model;
 
-import java.util.Date;
 import java.util.List;
 
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineUser;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -33,39 +31,41 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineIssueChanges {
+public class JiraOnlineIssueHistory {
 
-    @JsonProperty("author")
-    private JiraOnlineUser author;
+    private String key;
+    private JiraOnlineIssueChangelog changelog;
 
-    @JsonProperty("items")
-    private List<JiraOnlineIssueChange> items;
-    
-    @JsonProperty("created")
-    private Date timestamp;
-
-    public JiraOnlineUser getAuthor() {
-        return author;
+    public String getKey() {
+        return key;
     }
 
-    public void setAuthor(JiraOnlineUser author) {
-        this.author = author;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public List<JiraOnlineIssueChange> getItems() {
-        return items;
+    public JiraOnlineIssueChangelog getChangelog() {
+        return changelog;
     }
 
-    public void setItems(List<JiraOnlineIssueChange> items) {
-        this.items = items;
+    public void setChangelog(JiraOnlineIssueChangelog changelog) {
+        this.changelog = changelog;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
-    }
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class JiraOnlineIssueChangelog {
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+        @JsonProperty("histories")
+        private List<JiraOnlineIssueChanges> histories;
+
+        public List<JiraOnlineIssueChanges> getHistories() {
+            return histories;
+        }
+
+        public void setHistories(List<JiraOnlineIssueChanges> histories) {
+            this.histories = histories;
+        }
+
     }
 
 }

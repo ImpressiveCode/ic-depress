@@ -15,16 +15,16 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.bugzilla;
+package org.impressivecode.depress.its.bugzillaonline;
 
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createBugsPerTaskSettings;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createDateSettings;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createLimitSettings;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createPasswordSettings;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createProductSettings;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createThreadsCountSettings;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createURLSettings;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.createUsernameSettings;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapterNodeModel.createBugsPerTaskSettings;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapterNodeModel.createDateSettings;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapterNodeModel.createLimitSettings;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapterNodeModel.createPasswordSettings;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapterNodeModel.createProductSettings;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapterNodeModel.createThreadsCountSettings;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapterNodeModel.createURLSettings;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapterNodeModel.createUsernameSettings;
 
 import org.impressivecode.depress.its.ITSCommonDialog;
 import org.knime.core.node.defaultnodesettings.DialogComponent;

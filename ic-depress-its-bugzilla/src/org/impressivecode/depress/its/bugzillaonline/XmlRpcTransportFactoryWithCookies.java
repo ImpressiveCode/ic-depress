@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.bugzilla;
+package org.impressivecode.depress.its.bugzillaonline;
 
 import static com.google.common.collect.Sets.newSetFromMap;
 import static org.apache.xmlbeans.impl.common.XMLChar.isInvalid;
