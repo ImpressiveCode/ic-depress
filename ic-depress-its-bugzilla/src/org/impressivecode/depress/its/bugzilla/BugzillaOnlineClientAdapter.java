@@ -227,17 +227,14 @@ public class BugzillaOnlineClientAdapter {
 		if (isFilterProvided(filter.getLimit())) {
 			parameters.put(LIMIT, filter.getLimit());
 		}
+		if (isFilterProvided(filter.getOffset())) {
+			parameters.put(OFFSET, filter.getOffset());
+		}
 		if (isFilterProvided(filter.getDateFrom())) {
 			parameters.put(CREATED, filter.getDateFrom());
 		}
 		if (isFilterProvided(filter.getPriority())) {
 			parameters.put(PRIORITY, filter.getPriority());
-		}
-		if (isFilterProvided(filter.getResolution())) {
-			parameters.put(RESOLUTION, filter.getResolution());
-		}
-		if (isFilterProvided(filter.getStatus())) {
-			parameters.put(STATUS, filter.getStatus());
 		}
 		if (isFilterProvided(filter.getAssignedTo())) {
 			parameters.put(ASSIGNEE, filter.getAssignedTo());

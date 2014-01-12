@@ -26,8 +26,6 @@ import java.util.List;
 
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.ITSPriority;
-import org.impressivecode.depress.its.ITSResolution;
-import org.impressivecode.depress.its.ITSStatus;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentOptionalString;
@@ -55,14 +53,12 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 	public static final String ASSIGNED_TO_LABEL = "Assigned to:";
 
 	public static final String LIMIT_LABEL = "Limit:";
+	
+	public static final String OFFSET_LABEL = "Offset:";
 
 	public static final String CREATOR_LABEL = "Creator:";
 
 	public static final String PRIORITY_LABEL = "Priority:";
-
-	public static final String STATUS_LABEL = "Status:";
-
-	public static final String RESOLUTION_LABEL = "Resolution:";
 	
 	public static final String VERSION_LABEL = "Version:";
 	
@@ -108,17 +104,20 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 	protected void createFiltersTab() {
 		super.createFiltersTab();
 		createAndAddLimitFilter();
+		createAndAddOffsetFilter();
 		createAndAddDateFromFilter();
 		createAndAddAssignedToFilter();
 		createAndAddCreatorFilter();
 		createAndAddVersionFilter();
 		createAndAddPriorityFilter();
-		createAndAddStatusFilter();
-		createAndAddResolutionFilter();
 	}
 
 	private void createAndAddLimitFilter() {
 		addDialogComponent(new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createLimitSettings(), LIMIT_LABEL, COMPONENT_WIDTH));
+	}
+	
+	private void createAndAddOffsetFilter() {
+		addDialogComponent(new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createOffsetSettings(), OFFSET_LABEL, COMPONENT_WIDTH));
 	}
 
 	private void createAndAddDateFromFilter() {
@@ -153,14 +152,6 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 		}
 		
 		return strings;
-	}
-	
-	private void createAndAddResolutionFilter() {
-		addDialogComponent(new DialogComponentStringSelection(BugzillaOnlineAdapterNodeModel.createResolutionSettings(), RESOLUTION_LABEL, prepareEnumValuesToComboBox(ITSResolution.values())));
-	}
-	
-	private void createAndAddStatusFilter() {
-		addDialogComponent(new DialogComponentStringSelection(BugzillaOnlineAdapterNodeModel.createStatusSettings(), STATUS_LABEL, prepareEnumValuesToComboBox(ITSStatus.values())));
 	}
 
 	@Override

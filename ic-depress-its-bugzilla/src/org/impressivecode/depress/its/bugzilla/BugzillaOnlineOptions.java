@@ -38,13 +38,11 @@ public class BugzillaOnlineOptions {
 	private String quickSearch;
 	
 	private String priority;
-	
-	private String resolution;
-	
-	private String status;
 
 	private Integer limit;
 
+	private Integer offset;
+	
 	private Integer threadsCount;
 
 	private Integer bugsPerTask;
@@ -67,12 +65,52 @@ public class BugzillaOnlineOptions {
 		this.dateFrom = dateFrom;
 	}
 
+	public String getAssignedTo() {
+		return assignedTo;
+	}
+
+	public void setAssignedTo(String assignedTo) {
+		this.assignedTo = assignedTo;
+	}
+
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+
+	public String getQuickSearch() {
+		return quickSearch;
+	}
+
+	public void setQuickSearch(String quickSearch) {
+		this.quickSearch = quickSearch;
+	}
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
 	public Integer getLimit() {
 		return limit;
 	}
 
 	public void setLimit(Integer limit) {
 		this.limit = limit;
+	}
+
+	public Integer getOffset() {
+		return offset;
+	}
+
+	public void setOffset(Integer offset) {
+		this.offset = offset;
 	}
 
 	public Integer getThreadsCount() {
@@ -90,54 +128,6 @@ public class BugzillaOnlineOptions {
 	public void setBugsPerTask(Integer bugsPerTask) {
 		this.bugsPerTask = bugsPerTask;
 	}
-	
-	public void setCreator(String creator) {
-		this.creator = creator;
-	}
-
-	public String getCreator() {
-		return creator;
-	}
-
-	public String getAssignedTo() {
-		return assignedTo;
-	}
-
-	public void setAssignedTo(String assignedTo) {
-		this.assignedTo = assignedTo;
-	}
-
-	public String getPriority() {
-		return priority;
-	}
-
-	public void setPriority(String priority) {
-		this.priority = priority;
-	}
-
-	public String getResolution() {
-		return resolution;
-	}
-
-	public void setResolution(String resolution) {
-		this.resolution = resolution;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getQuickSearch() {
-		return quickSearch;
-	}
-
-	public void setQuickSearch(String quickSearch) {
-		this.quickSearch = quickSearch;
-	}
 
 	public String getVersion() {
 		return version;
@@ -146,5 +136,5 @@ public class BugzillaOnlineOptions {
 	public void setVersion(String version) {
 		this.version = version;
 	}
-
+	
 }

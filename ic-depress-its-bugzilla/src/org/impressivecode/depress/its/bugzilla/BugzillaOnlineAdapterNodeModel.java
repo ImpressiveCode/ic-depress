@@ -68,8 +68,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	public static final String DEFAULT_STRING_VALUE = "";
 
-	public static final String DEFAULT_LIMIT_VALUE = "";
-
 	public static final int DEFAULT_BUGS_PER_TASK_VALUE = 1000;
 	
 	public static final String DEFAULT_COMBOBOX_ANY_VALUE = "Any";
@@ -90,6 +88,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	public static final String BUGZILLA_LIMIT = "depress.its.bugzillaonline.limit";
 
+	public static final String BUGZILLA_OFFSET = "depress.its.bugzillaonline.offset";
+	
 	public static final String BUGZILLA_ASSIGNED_TO = "depress.its.bugzillaonline.assignedTo";
 
 	public static final String BUGZILLA_CREATOR = "depress.its.bugzillaonline.creator";
@@ -97,10 +97,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	public static final String BUGZILLA_VERSION = "depress.its.bugzillaonline.version";
 	
 	public static final String BUGZILLA_PRIORITY = "depress.its.bugzillaonline.priority";
-
-	public static final String BUGZILLA_STATUS = "depress.its.bugzillaonline.status";
-
-	public static final String BUGZILLA_RESOLUTION = "depress.its.bugzillaonline.resolution";
 
 	public static final String BUGZILLA_THREADS_COUNT = "depress.its.bugzillaonline.threadsCount";
 
@@ -119,6 +115,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	private final SettingsModelString productSettings = createProductSettings();
 
 	private final SettingsModelOptionalString limitSettings = createLimitSettings();
+	
+	private final SettingsModelOptionalString offsetSettings = createOffsetSettings();
 
 	private final SettingsModelOptionalString assignedToSettings = createAssignedToSettings();
 
@@ -127,10 +125,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	private final SettingsModelOptionalString versionSettings = createVersionSettings();
 	
 	private final SettingsModelString prioritySettings = createPrioritySettings();
-
-	private final SettingsModelString resolutionSettings = createResolutionSettings();
-
-	private final SettingsModelString statusSettings = createStatusSettings();
 
 	private final SettingsModelInteger threadsCountSettings = createThreadsCountSettings();
 
@@ -188,9 +182,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		options.setCreator(getCreator());
 		options.setVersion(getVersion());
 		options.setPriority(getPriority());
-		options.setResolution(getResolution());
-		options.setStatus(getStatus());
 		options.setLimit(getLimit());
+		options.setOffset(getOffset());
 		options.setThreadsCount(getThreadsCount());
 		options.setBugsPerTask(getBugsPerTask());
 		return options;
@@ -224,23 +217,23 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		return !DEFAULT_COMBOBOX_ANY_VALUE.equals(value);
 	}
 	
-	private String getResolution() {
-		return isComboboxChoosen(resolutionSettings.getStringValue()) ? resolutionSettings.getStringValue() : null;
-	}
-
-	private String getStatus() {
-		return isComboboxChoosen(statusSettings.getStringValue()) ? statusSettings.getStringValue() : null;
-	}
-
 	private Integer getLimit() {
+		return getOptionalIntegerValue(limitSettings);
+	}
+	
+	private Integer getOffset() {
+		return getOptionalIntegerValue(offsetSettings);
+	}
+
+	private Integer getOptionalIntegerValue(SettingsModelOptionalString settings) {
 		Integer result = null;
 		try {
-			result = parseInt(limitSettings.getStringValue());
+			result = parseInt(settings.getStringValue());
 		} catch (NumberFormatException e) {
 		}
 		return result;
 	}
-
+	
 	private Integer getThreadsCount() {
 		return threadsCountSettings.getIntValue();
 	}
@@ -281,12 +274,11 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		productSettings.saveSettingsTo(settings);
 		dateFromSettings.saveSettingsTo(settings);
 		limitSettings.saveSettingsTo(settings);
+		offsetSettings.saveSettingsTo(settings);
 		assignedToSettings.saveSettingsTo(settings);
 		creatorSettings.saveSettingsTo(settings);
 		versionSettings.saveSettingsTo(settings);
 		prioritySettings.saveSettingsTo(settings);
-		statusSettings.saveSettingsTo(settings);
-		resolutionSettings.saveSettingsTo(settings);
 		threadsCountSettings.saveSettingsTo(settings);
 		bugsPerTaskSettings.saveSettingsTo(settings);
 	}
@@ -299,12 +291,11 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		productSettings.loadSettingsFrom(settings);
 		dateFromSettings.loadSettingsFrom(settings);
 		limitSettings.loadSettingsFrom(settings);
+		offsetSettings.loadSettingsFrom(settings);
 		assignedToSettings.loadSettingsFrom(settings);
 		creatorSettings.loadSettingsFrom(settings);
 		versionSettings.loadSettingsFrom(settings);
 		prioritySettings.loadSettingsFrom(settings);
-		statusSettings.loadSettingsFrom(settings);
-		resolutionSettings.loadSettingsFrom(settings);
 		threadsCountSettings.loadSettingsFrom(settings);
 		bugsPerTaskSettings.loadSettingsFrom(settings);
 	}
@@ -317,12 +308,11 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		productSettings.validateSettings(settings);
 		dateFromSettings.validateSettings(settings);
 		limitSettings.validateSettings(settings);
+		offsetSettings.validateSettings(settings);
 		assignedToSettings.validateSettings(settings);
 		creatorSettings.validateSettings(settings);
 		prioritySettings.validateSettings(settings);
 		versionSettings.validateSettings(settings);
-		statusSettings.validateSettings(settings);
-		resolutionSettings.validateSettings(settings);
 		threadsCountSettings.validateSettings(settings);
 		bugsPerTaskSettings.validateSettings(settings);
 
@@ -368,7 +358,11 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	static SettingsModelOptionalString createLimitSettings() {
-		return new SettingsModelOptionalString(BUGZILLA_LIMIT, DEFAULT_LIMIT_VALUE, false);
+		return new SettingsModelOptionalString(BUGZILLA_LIMIT, DEFAULT_STRING_VALUE, false);
+	}
+	
+	static SettingsModelOptionalString createOffsetSettings() {
+		return new SettingsModelOptionalString(BUGZILLA_OFFSET, DEFAULT_STRING_VALUE, false);
 	}
 
 	static SettingsModelOptionalString createAssignedToSettings() {
@@ -385,14 +379,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	
 	static SettingsModelString createPrioritySettings() {
 		return new SettingsModelString(BUGZILLA_PRIORITY, DEFAULT_COMBOBOX_ANY_VALUE);
-	}
-
-	static SettingsModelString createResolutionSettings() {
-		return new SettingsModelString(BUGZILLA_RESOLUTION, DEFAULT_COMBOBOX_ANY_VALUE);
-	}
-
-	static SettingsModelString createStatusSettings() {
-		return new SettingsModelString(BUGZILLA_STATUS, DEFAULT_COMBOBOX_ANY_VALUE);
 	}
 
 	static SettingsModelInteger createThreadsCountSettings() {
