@@ -20,6 +20,7 @@ package org.impressivecode.depress.its.bugzilla;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
+import static java.lang.Integer.parseInt;
 import static java.lang.Math.ceil;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.ASSIGNEE;
@@ -36,6 +37,7 @@ import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.UPDAT
 import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.VERSION;
 
 import java.net.MalformedURLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -55,6 +57,14 @@ import org.knime.core.node.ExecutionMonitor;
  */
 public class BugzillaOnlineClientAdapter {
 
+	public static final String BUGZILLA_VERSION_THAT_SUPPORT_INCLUSION_IN_GET = "3.6";
+
+	public static final String BUGZILLA_VERSION_THAT_SUPPORT_INCLUSION_IN_SEARCH = "4.0";
+
+	public static final String VERSION_SEPARATOR = "\\.";
+
+	public static final String BUGZILLA_VERSION_METHOD = "Bugzilla.version";
+
 	public static final String USER_LOGIN_METHOD = "User.login";
 
 	public static final String BUG_SEARCH_METHOD = "Bug.search";
@@ -73,8 +83,6 @@ public class BugzillaOnlineClientAdapter {
 
 	public static final String PRODUCT_NAME = "product";
 
-	public static final String DATE_FROM = "creation_time";
-
 	public static final String PASSWORD = "password";
 
 	public static final String LOGIN = "login";
@@ -92,8 +100,10 @@ public class BugzillaOnlineClientAdapter {
 	private BugzillaOnlineParser parser;
 
 	private ExecutionMonitor monitor;
-	
+
 	private double progressStep;
+
+	private String bugzillaVersion;
 
 	public BugzillaOnlineClientAdapter(String url, ExecutionMonitor monitor) throws MalformedURLException {
 		checkNotNull(url);
@@ -113,13 +123,14 @@ public class BugzillaOnlineClientAdapter {
 
 	public List<ITSDataType> listEntries(BugzillaOnlineOptions options) throws XmlRpcException, CanceledExecutionException, InterruptedException, ExecutionException {
 		checkNotNull(options.getProductName());
-		checkNotNull(options.getLimit());
 		checkNotNull(options.getThreadsCount());
 		checkNotNull(options.getBugsPerTask());
-		
+
 		checkIfIsCanceledAndMarkProgress(0);
 
-		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options), 0, options.getLimit());
+		bugzillaVersion = getBugzillaVersion();
+
+		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options));
 		List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
 
 		List<Callable<List<ITSDataType>>> tasks = partitionTasks(bugsIds, options.getBugsPerTask());
@@ -128,15 +139,35 @@ public class BugzillaOnlineClientAdapter {
 		return combinePartialResults(partialResults);
 	}
 
-	private void setProgressStep(int tasksCount) {
-		progressStep = (1.0 / tasksCount / TASK_STEPS_COUNT);
+	private void checkIfIsCanceledAndMarkProgress(double value) throws CanceledExecutionException {
+		monitor.checkCanceled();
+		monitor.setProgress(value);
+	}
+	
+	public String getBugzillaVersion() throws XmlRpcException {
+		Map<String, Object> result = bugzillaClient.execute(BUGZILLA_VERSION_METHOD, Collections.<String, Object> emptyMap());
+		return result.get(VERSION).toString();
 	}
 
-	private List<Future<List<ITSDataType>>> executeTasks(List<Callable<List<ITSDataType>>> tasks, int threadsCount) throws InterruptedException {
-		ExecutorService executorService = newFixedThreadPool(threadsCount);
-		List<Future<List<ITSDataType>>> partialResults = executorService.invokeAll(tasks);
-		executorService.shutdown();
-		return partialResults;
+	Object[] searchBugs(Map<String, Object> parameters) throws XmlRpcException {
+		Map<String, Object> result = bugzillaClient.execute(BUG_SEARCH_METHOD, parameters);
+		return (Object[]) result.get(BUGS);
+	}
+
+	Object[] getBugs(Map<String, Object> parameters) throws XmlRpcException {
+		Map<String, Object> result = bugzillaClient.execute(BUG_GET_METHOD, parameters);
+		return (Object[]) result.get(BUGS);
+	}
+
+	Object[] getBugsHistory(Map<String, Object> parameters) throws XmlRpcException {
+		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD, parameters);
+		return (Object[]) result.get(BUGS);
+	}
+
+	@SuppressWarnings("unchecked")
+	Map<String, Object> getBugsComments(Map<String, Object> parameters) throws XmlRpcException {
+		Map<String, Object> result = bugzillaClient.execute(BUG_COMMENT_METHOD, parameters);
+		return (Map<String, Object>) result.get(BUGS);
 	}
 
 	private List<Callable<List<ITSDataType>>> partitionTasks(List<String> bugsIds, int bugsPerTask) {
@@ -157,6 +188,13 @@ public class BugzillaOnlineClientAdapter {
 		return tasks;
 	}
 
+	private List<Future<List<ITSDataType>>> executeTasks(List<Callable<List<ITSDataType>>> tasks, int threadsCount) throws InterruptedException {
+		ExecutorService executorService = newFixedThreadPool(threadsCount);
+		List<Future<List<ITSDataType>>> partialResults = executorService.invokeAll(tasks);
+		executorService.shutdown();
+		return partialResults;
+	}
+
 	private List<ITSDataType> combinePartialResults(List<Future<List<ITSDataType>>> partialResults) throws InterruptedException, ExecutionException {
 		List<ITSDataType> result = newArrayList();
 
@@ -166,10 +204,9 @@ public class BugzillaOnlineClientAdapter {
 
 		return result;
 	}
-
-	private void checkIfIsCanceledAndMarkProgress(double value) throws CanceledExecutionException {
-		monitor.checkCanceled();
-		monitor.setProgress(value);
+	
+	private void setProgressStep(int tasksCount) {
+		progressStep = (1.0 / tasksCount / TASK_STEPS_COUNT);
 	}
 
 	private void checkIfIsCanceledAndMarkProgress() throws CanceledExecutionException {
@@ -180,58 +217,74 @@ public class BugzillaOnlineClientAdapter {
 		}
 	}
 
-	Object[] searchBugs(Map<String, Object> parameters, int offset, int limit) throws XmlRpcException {
-		parameters.put(OFFSET, offset);
-		parameters.put(LIMIT, limit);
-
-		Map<String, Object> result = bugzillaClient.execute(BUG_SEARCH_METHOD, parameters);
-
-		return (Object[]) result.get(BUGS);
-	}
-
-	Object[] getBugs(Map<String, Object> parameters) throws XmlRpcException {
-		Map<String, Object> result = bugzillaClient.execute(BUG_GET_METHOD, parameters);
-
-		return (Object[]) result.get(BUGS);
-	}
-
-	Object[] getBugsHistory(Map<String, Object> parameters) throws XmlRpcException {
-		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD, parameters);
-
-		return (Object[]) result.get(BUGS);
-	}
-
-	@SuppressWarnings("unchecked")
-	Map<String, Object> getBugsComments(Map<String, Object> parameters) throws XmlRpcException {
-		Map<String, Object> result = bugzillaClient.execute(BUG_COMMENT_METHOD, parameters);
-
-		return (Map<String, Object>) result.get(BUGS);
-	}
-
 	private Map<String, Object> prepareSearchBugsParameters(BugzillaOnlineOptions filter) {
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(PRODUCT_NAME, filter.getProductName());
-		parameters.put(INCLUDE_FIELDS, new String[] { ID });
-		if (creationTimeIsProvided(filter)) {
-			parameters.put(DATE_FROM, filter.getDateFrom());
+		
+		if (bugzillaInstanceSupportFieldsInclusionInSearch()) {
+			parameters.put(INCLUDE_FIELDS, new String[] { ID });
+		}
+		if (isFilterProvided(filter.getLimit())) {
+			parameters.put(LIMIT, filter.getLimit());
+		}
+		if (isFilterProvided(filter.getOffset())) {
+			parameters.put(OFFSET, filter.getOffset());
+		}
+		if (isFilterProvided(filter.getDateFrom())) {
+			parameters.put(CREATED, filter.getDateFrom());
+		}
+		if (isFilterProvided(filter.getPriority())) {
+			parameters.put(PRIORITY, filter.getPriority());
+		}
+		if (isFilterProvided(filter.getAssignedTo())) {
+			parameters.put(ASSIGNEE, filter.getAssignedTo());
+		}
+		if (isFilterProvided(filter.getReporter())) {
+			parameters.put(REPORTER, filter.getReporter());
+		}
+		if (isFilterProvided(filter.getVersion())) {
+			parameters.put(VERSION, filter.getVersion());
+		}
+
+		return parameters;
+	}
+
+	private boolean bugzillaInstanceSupportFieldsInclusionInSearch() {
+		return isVersionGreaterOrEqual(BUGZILLA_VERSION_THAT_SUPPORT_INCLUSION_IN_SEARCH, bugzillaVersion);
+	}
+	
+	private boolean isFilterProvided(Object value) {
+		return value != null;
+	}
+	
+	private boolean isVersionGreaterOrEqual(String firstVersion, String secondVersion) {
+		String[] splittedFirstVersion = firstVersion.split(VERSION_SEPARATOR);
+		String[] splittedSecondVersion = secondVersion.split(VERSION_SEPARATOR);
+
+		int firstMajorVersion = parseInt(splittedFirstVersion[0]);
+		int secondMajorVersion = parseInt(splittedSecondVersion[0]);
+		int firstMinorVersion = parseInt(splittedFirstVersion[1]);
+		int secondMinorVersion = parseInt(splittedSecondVersion[1]);
+
+		return (firstMajorVersion < secondMajorVersion) || (firstMajorVersion == secondMajorVersion && firstMinorVersion <= secondMinorVersion);
+	}
+	
+	private Map<String, Object> prepareGetBugsParameters(List<String> ids) {
+		Map<String, Object> parameters = prepareBugsIdsParameters(ids);
+		if (bugzillaInstanceSupportFieldsInclusionInGet()) {
+			parameters.put(INCLUDE_FIELDS, new String[] { ID, CREATED, UPDATED, STATUS, ASSIGNEE, FIX_VERSION, VERSION, REPORTER, PRIORITY, SUMMARY, LINK, RESOLUTION });
 		}
 		return parameters;
 	}
 
-	private Map<String, Object> prepareGetBugsParameters(List<String> ids) {
-		Map<String, Object> parameters = prepareBugsIdsParameters(ids);
-		parameters.put(INCLUDE_FIELDS, new String[] { ID, CREATED, UPDATED, STATUS, ASSIGNEE, FIX_VERSION, VERSION, REPORTER, PRIORITY, SUMMARY, LINK, RESOLUTION });
-		return parameters;
+	private boolean bugzillaInstanceSupportFieldsInclusionInGet() {
+		return isVersionGreaterOrEqual(BUGZILLA_VERSION_THAT_SUPPORT_INCLUSION_IN_GET, bugzillaVersion);
 	}
 
 	private Map<String, Object> prepareBugsIdsParameters(List<String> ids) {
 		Map<String, Object> parameters = newHashMap();
 		parameters.put(IDS, ids);
 		return parameters;
-	}
-
-	private boolean creationTimeIsProvided(BugzillaOnlineOptions filter) {
-		return filter.getDateFrom() != null;
 	}
 
 	public void login(String username, String password) throws XmlRpcException {
@@ -254,13 +307,13 @@ public class BugzillaOnlineClientAdapter {
 		public List<ITSDataType> call() throws Exception {
 			checkIfIsCanceledAndMarkProgress();
 			Object[] bugs = getBugs(prepareGetBugsParameters(bugsIds));
-			
+
 			checkIfIsCanceledAndMarkProgress();
 			Object[] histories = getBugsHistory(prepareBugsIdsParameters(bugsIds));
-			
+
 			checkIfIsCanceledAndMarkProgress();
 			Map<String, Object> comments = getBugsComments(prepareBugsIdsParameters(bugsIds));
-			
+
 			checkIfIsCanceledAndMarkProgress();
 			return parser.parseEntries(bugs, histories, comments);
 		}

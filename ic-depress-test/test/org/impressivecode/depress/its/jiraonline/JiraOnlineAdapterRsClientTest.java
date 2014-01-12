@@ -19,11 +19,12 @@ package org.impressivecode.depress.its.jiraonline;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation.Builder;
@@ -36,8 +37,9 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 /**
- * @author Dawid Rutowicz, Wroclaw University of Technology
+ * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
+ * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
  */
 
@@ -50,11 +52,15 @@ public class JiraOnlineAdapterRsClientTest {
     private Response mockedResponse;
     private final static int HTTP_OK = 200;
     private final static int HTTP_NO_CONNECTION = 404;
+    private static final String DUMMY_URL = "dummy.website.com";
+
+    private URI dummyURL;
 
     @Before
-    public void setUp() {
+    public void setUp() throws URISyntaxException {
         prepareMocks();
         prepareJiraTestClient();
+        prepareURI();
     }
 
     @After
@@ -63,39 +69,17 @@ public class JiraOnlineAdapterRsClientTest {
     }
 
     @Test
-    public void should_not_throw_exception_when_get_issues_by_default_no_secure_protocol() throws Exception {
-        jiraOnlineClient.setSecuredConnection(false);
-
+    public void should_not_throw_exception_when_get_issues() throws Exception {
         when(mockedResponse.getStatus()).thenReturn(HTTP_OK);
 
-        jiraOnlineClient.getIssues();
+        jiraOnlineClient.getJSON(dummyURL);
     }
 
     @Test(expected = Exception.class)
-    public void should_throw_exception_when_get_issues_by_default_no_secure_protocol() throws Exception {
-        jiraOnlineClient.setSecuredConnection(false);
-
+    public void should_throw_exception_when_get_issues() throws Exception {
         when(mockedResponse.getStatus()).thenReturn(HTTP_NO_CONNECTION);
 
-        jiraOnlineClient.getIssues();
-    }
-
-    @Test
-    public void should_not_throw_exception_when_get_issues_by_default_with_secure_protocol() throws Exception {
-        jiraOnlineClient.setSecuredConnection(true);
-
-        when(mockedResponse.getStatus()).thenReturn(HTTP_OK);
-
-        jiraOnlineClient.getIssues();
-    }
-
-    @Test(expected = Exception.class)
-    public void should_throw_exception_when_get_get_issues_by_default_with_secure_protocol() throws Exception {
-        jiraOnlineClient.setSecuredConnection(true);
-
-        when(mockedResponse.getStatus()).thenReturn(HTTP_NO_CONNECTION);
-
-        jiraOnlineClient.getIssues();
+        jiraOnlineClient.getJSON(dummyURL);
     }
 
     private void prepareMocks() {
@@ -112,8 +96,11 @@ public class JiraOnlineAdapterRsClientTest {
 
     private void prepareJiraTestClient() {
         jiraOnlineClient = new JiraOnlineAdapterRsClient();
-        jiraOnlineClient.getUriBuilder().setHostname("dummy_hostname");
         jiraOnlineClient.setClient(mockedRsClient);
+    }
+
+    private void prepareURI() throws URISyntaxException {
+        dummyURL = new URI(DUMMY_URL);
     }
 
     private void verifyMocksCalls() {
