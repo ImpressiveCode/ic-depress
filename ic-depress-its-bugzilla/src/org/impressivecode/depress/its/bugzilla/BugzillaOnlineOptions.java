@@ -33,7 +33,7 @@ public class BugzillaOnlineOptions {
 	
 	private String assignedTo;
 	
-	private String creator;
+	private String reporter;
 	
 	private String quickSearch;
 	
@@ -73,12 +73,12 @@ public class BugzillaOnlineOptions {
 		this.assignedTo = assignedTo;
 	}
 
-	public String getCreator() {
-		return creator;
+	public String getReporter() {
+		return reporter;
 	}
 
-	public void setCreator(String creator) {
-		this.creator = creator;
+	public void setReporter(String reporter) {
+		this.reporter = reporter;
 	}
 
 	public String getQuickSearch() {

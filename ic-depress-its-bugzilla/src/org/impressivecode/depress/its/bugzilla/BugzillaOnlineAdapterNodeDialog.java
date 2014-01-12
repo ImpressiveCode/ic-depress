@@ -56,7 +56,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 	
 	public static final String OFFSET_LABEL = "Offset:";
 
-	public static final String CREATOR_LABEL = "Creator:";
+	public static final String REPORTER_LABEL = "Reporter:";
 
 	public static final String PRIORITY_LABEL = "Priority:";
 	
@@ -107,7 +107,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 		createAndAddOffsetFilter();
 		createAndAddDateFromFilter();
 		createAndAddAssignedToFilter();
-		createAndAddCreatorFilter();
+		createAndAddReporterFilter();
 		createAndAddVersionFilter();
 		createAndAddPriorityFilter();
 	}
@@ -128,8 +128,8 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 		addDialogComponent(new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createAssignedToSettings(), ASSIGNED_TO_LABEL));
 	}
 
-	private void createAndAddCreatorFilter() {
-		addDialogComponent(new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createCreatorSettings(), CREATOR_LABEL));
+	private void createAndAddReporterFilter() {
+		addDialogComponent(new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createReporterSettings(), REPORTER_LABEL));
 	}
 	
 	private void createAndAddVersionFilter() {

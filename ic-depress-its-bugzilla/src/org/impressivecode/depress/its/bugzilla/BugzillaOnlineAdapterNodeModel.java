@@ -92,7 +92,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	
 	public static final String BUGZILLA_ASSIGNED_TO = "depress.its.bugzillaonline.assignedTo";
 
-	public static final String BUGZILLA_CREATOR = "depress.its.bugzillaonline.creator";
+	public static final String BUGZILLA_REPORTER = "depress.its.bugzillaonline.creator";
 	
 	public static final String BUGZILLA_VERSION = "depress.its.bugzillaonline.version";
 	
@@ -120,7 +120,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	private final SettingsModelOptionalString assignedToSettings = createAssignedToSettings();
 
-	private final SettingsModelOptionalString creatorSettings = createCreatorSettings();
+	private final SettingsModelOptionalString reporterSettings = createReporterSettings();
 	
 	private final SettingsModelOptionalString versionSettings = createVersionSettings();
 	
@@ -179,7 +179,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		options.setProductName(getProductName());
 		options.setDateFrom(getDateFrom());
 		options.setAssignedTo(getAssignedTo());
-		options.setCreator(getCreator());
+		options.setReporter(getReporter());
 		options.setVersion(getVersion());
 		options.setPriority(getPriority());
 		options.setLimit(getLimit());
@@ -201,8 +201,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		return !isNullOrEmpty(assignedToSettings.getStringValue()) ? assignedToSettings.getStringValue() : null;
 	}
 
-	private String getCreator() {
-		return !isNullOrEmpty(creatorSettings.getStringValue()) ? creatorSettings.getStringValue() : null;
+	private String getReporter() {
+		return !isNullOrEmpty(reporterSettings.getStringValue()) ? reporterSettings.getStringValue() : null;
 	}
 	
 	private String getVersion(){
@@ -276,7 +276,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		limitSettings.saveSettingsTo(settings);
 		offsetSettings.saveSettingsTo(settings);
 		assignedToSettings.saveSettingsTo(settings);
-		creatorSettings.saveSettingsTo(settings);
+		reporterSettings.saveSettingsTo(settings);
 		versionSettings.saveSettingsTo(settings);
 		prioritySettings.saveSettingsTo(settings);
 		threadsCountSettings.saveSettingsTo(settings);
@@ -293,7 +293,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		limitSettings.loadSettingsFrom(settings);
 		offsetSettings.loadSettingsFrom(settings);
 		assignedToSettings.loadSettingsFrom(settings);
-		creatorSettings.loadSettingsFrom(settings);
+		reporterSettings.loadSettingsFrom(settings);
 		versionSettings.loadSettingsFrom(settings);
 		prioritySettings.loadSettingsFrom(settings);
 		threadsCountSettings.loadSettingsFrom(settings);
@@ -310,7 +310,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		limitSettings.validateSettings(settings);
 		offsetSettings.validateSettings(settings);
 		assignedToSettings.validateSettings(settings);
-		creatorSettings.validateSettings(settings);
+		reporterSettings.validateSettings(settings);
 		prioritySettings.validateSettings(settings);
 		versionSettings.validateSettings(settings);
 		threadsCountSettings.validateSettings(settings);
@@ -369,8 +369,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		return new SettingsModelOptionalString(BUGZILLA_ASSIGNED_TO, DEFAULT_STRING_VALUE, false);
 	}
 
-	static SettingsModelOptionalString createCreatorSettings() {
-		return new SettingsModelOptionalString(BUGZILLA_CREATOR, DEFAULT_STRING_VALUE, false);
+	static SettingsModelOptionalString createReporterSettings() {
+		return new SettingsModelOptionalString(BUGZILLA_REPORTER, DEFAULT_STRING_VALUE, false);
 	}
 	
 	static SettingsModelOptionalString createVersionSettings() {

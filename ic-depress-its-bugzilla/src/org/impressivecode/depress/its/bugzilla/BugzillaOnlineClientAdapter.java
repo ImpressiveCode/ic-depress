@@ -239,8 +239,8 @@ public class BugzillaOnlineClientAdapter {
 		if (isFilterProvided(filter.getAssignedTo())) {
 			parameters.put(ASSIGNEE, filter.getAssignedTo());
 		}
-		if (isFilterProvided(filter.getCreator())) {
-			parameters.put(REPORTER, filter.getCreator());
+		if (isFilterProvided(filter.getReporter())) {
+			parameters.put(REPORTER, filter.getReporter());
 		}
 		if (isFilterProvided(filter.getVersion())) {
 			parameters.put(VERSION, filter.getVersion());

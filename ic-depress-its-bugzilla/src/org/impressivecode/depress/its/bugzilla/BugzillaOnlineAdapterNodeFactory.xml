@@ -11,7 +11,7 @@
 		<intro>
 			<p>
 				This node can be used to read data from Bugzilla online installation.
-				In order to use this plugin please place Bugzilla installation address in configuration windows as well as name of Product, from which you want to retrieve bugs data.
+				In order to use this plugin please place Bugzilla installation address in configuration windows as well as name of Project, from which you want to retrieve bugs data.
 				If your Bugzilla is restricted to logged users only, please fill appropriate fields in Authentication tab.<br />
 				The following data are fetched:
 			</p>
@@ -67,6 +67,22 @@
 				<li>BLOCKER</li>
 				<li>UNKNOWN</li>
 			</ul>
+			<p>
+				In filters tab you can specify, which bug will be fetched. 
+				We support filters such as:
+				<ul>
+					<li>Date from - fetch bugs that were created after this date</li>
+					<li>Assigned to - fetch bugs that are currently assigned to this person</li>
+					<li>Reporter - fetch bugs that were created by this person</li>
+					<li>Version - fetch bugs that were assigned to this version</li>
+					<li>Priority - fetch bugs that have this severity in Bugzilla</li>
+				</ul>
+				This plugin also allow you to limit the number of fetched bugs and set offset which to begin.
+			</p>
+			<p>
+				In order to speed up retrieval of bugs plugin use threads. In advanced tab you can set how many threads plugin will use and how many bugs will by fetched in one task. 
+				Tasks after partitioning are submited to threads.
+			</p>
 			<p>
             	Please check <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-its-bugzilla/examples">here</a> for workflow examples. 
              	<br/> 
