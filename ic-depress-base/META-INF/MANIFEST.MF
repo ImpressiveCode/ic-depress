@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ic-depress-base
 Bundle-SymbolicName: org.impressivecode.depress.base;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: ImpressiveCode
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
- org.knime.workbench.core,
- org.knime.workbench.repository,
- org.knime.base
+ org.knime.workbench.core;bundle-version="2.8.0",
+ org.knime.workbench.repository;bundle-version="2.8.0",
+ org.knime.base;bundle-version="2.8.0"
 Export-Package: com.google.common.annotations,
  com.google.common.base,
  com.google.common.base.internal,

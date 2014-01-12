@@ -16,18 +16,21 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.svn;
-import com.google.common.base.Strings;
+import java.util.ArrayList;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
+ * @author Krystian Dabrowski, Capgemini Poland
  */
 public class SVNParserOptions {
 
     private String packageString;
+    private ArrayList<String> extensionsNamesToFilter;
 
-    public static SVNParserOptions options(final String packageString) {
+    public static SVNParserOptions options(final String packageString, final ArrayList<String> extensionsNamesToFilter) {
         SVNParserOptions options = new SVNParserOptions();
-        options.packageString = Strings.emptyToNull(packageString);
+        options.packageString = packageString;
+        options.extensionsNamesToFilter = extensionsNamesToFilter;
         return options;
     }
 
@@ -38,4 +41,9 @@ public class SVNParserOptions {
     public String getPackagePrefix() {
         return packageString;
     }
+
+	public ArrayList<String> getExtensionsNamesToFilter() {
+		return extensionsNamesToFilter;
+	}
+
 }

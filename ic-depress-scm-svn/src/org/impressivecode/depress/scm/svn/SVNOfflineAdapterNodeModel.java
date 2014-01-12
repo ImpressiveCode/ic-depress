@@ -22,7 +22,10 @@ import static org.impressivecode.depress.scm.svn.SVNParserOptions.options;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.impressivecode.depress.common.OutputTransformer;
 import org.impressivecode.depress.scm.SCMAdapterTableFactory;
@@ -38,14 +41,17 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelOptionalString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
+ * @author Krystian Dabrowski, Capgemini Poland
  * 
  */
 public class SVNOfflineAdapterNodeModel extends NodeModel {
@@ -59,11 +65,18 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
 
     private final SettingsModelString fileName = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_FILENAME,
             SVNOfflineAdapterNodeModel.FILENAME_DEFAULT);
+    
     private final SettingsModelOptionalString packageName = new SettingsModelOptionalString(
             SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT, true);
+    
+    private final ArrayList<SettingsModelBoolean> extensionsToFilter = new ArrayList<SettingsModelBoolean>();
 
-    protected SVNOfflineAdapterNodeModel() {
+	protected SVNOfflineAdapterNodeModel() {
         super(0, 1);
+        
+        for(SVNFileExtensions supportedExtension:SVNFileExtensions.values()) {
+        	extensionsToFilter.add(new SettingsModelBoolean(supportedExtension.getConfigName(), supportedExtension.isDefaultSelected()));	
+        }
     }
 
     @Override
@@ -71,7 +84,10 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
             throws Exception {
         try {
             LOGGER.info("Reading logs from file " + this.fileName.getStringValue());
-            SVNOfflineParser parser = new SVNOfflineParser(options(packageName.getStringValue()));
+            ArrayList<String> extensionNamesToFilter = getExtensionNamesToFilter();
+            String packageNameToFilter = Strings.emptyToNull(packageName.getStringValue());
+            SVNParserOptions parserOptions = options(packageNameToFilter, extensionNamesToFilter); 
+            SVNOfflineParser parser = new SVNOfflineParser(parserOptions);
             List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
             LOGGER.info("Reading logs finished");
             BufferedDataTable out = transform(commits, exec);
@@ -84,7 +100,27 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
 
     }
 
-    private BufferedDataTable transform(final List<SCMDataType> commits, final ExecutionContext exec)
+    private ArrayList<String> getExtensionNamesToFilter() {
+		ArrayList<String> extensionNamesToFilter = new ArrayList<String>();
+		for(SettingsModelBoolean extension : extensionsToFilter) {
+			if (extension.getBooleanValue()) {
+				String extensionConfigName = getExtensionConfigNameFromSettingsModelBoolean(extension);
+				extensionNamesToFilter.add(SVNFileExtensions.getSVNFileExtensionsFromConfigName(extensionConfigName).getExtension());
+			}
+		}
+		return extensionNamesToFilter;
+	}
+    
+    private String getExtensionConfigNameFromSettingsModelBoolean(SettingsModelBoolean extension) {
+    	Pattern pattern = Pattern.compile("'(.*)'");
+    	Matcher matcher = pattern.matcher(extension.toString());
+    	if (matcher.find())
+    		return matcher.group(1);
+    	else
+    		return null;
+    }
+
+	private BufferedDataTable transform(final List<SCMDataType> commits, final ExecutionContext exec)
             throws CanceledExecutionException {
         OutputTransformer<SCMDataType> transformer = new SCMAdapterTransformer(createDataColumnSpec());
         return transformer.transform(commits, exec);
@@ -105,18 +141,28 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         fileName.saveSettingsTo(settings);
         packageName.saveSettingsTo(settings);
+        
+        for(SettingsModelBoolean extensionToFilter : extensionsToFilter) {
+        	extensionToFilter.saveSettingsTo(settings);
+        }
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileName.loadSettingsFrom(settings);
         packageName.loadSettingsFrom(settings);
+        for(SettingsModelBoolean extensionToFilter : extensionsToFilter) {
+        	extensionToFilter.loadSettingsFrom(settings);
+        }
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileName.validateSettings(settings);
         packageName.validateSettings(settings);
+        for(SettingsModelBoolean extensionToFilter : extensionsToFilter) {
+        	extensionToFilter.validateSettings(settings);
+        }
     }
 
     @Override
@@ -130,4 +176,5 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     CanceledExecutionException {
         // NOOP
     }
+    
 }

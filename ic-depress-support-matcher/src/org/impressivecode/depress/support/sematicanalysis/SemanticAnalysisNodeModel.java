@@ -48,18 +48,19 @@ import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelIntegerBounded;
+import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Preconditions;
 
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Marek Majchrzak, Michal Jawulski, Piotr Lewicki, Maciej Luzniak,
+ *         ImpressiveCode
  * 
  */
 public class SemanticAnalysisNodeModel extends NodeModel {
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(SemanticAnalysisNodeModel.class);
-
 
     static final String CFG_RESOLUTION_WEIGHT = "depress.support.matcher.sematicanalysis.resolutionweight";
     static final Integer RESOLUTION_WEIGHT_DEFAULT = 1;
@@ -69,8 +70,25 @@ public class SemanticAnalysisNodeModel extends NodeModel {
 
     static final Integer SUM = RESOLUTION_WEIGHT_DEFAULT + AUTHOR_WEIGHT_DEFAULT;
 
-    private final SettingsModelInteger resolutionWeight = new SettingsModelIntegerBounded(CFG_RESOLUTION_WEIGHT, RESOLUTION_WEIGHT_DEFAULT, 0, SUM);
-    private final SettingsModelInteger authorWeight = new SettingsModelIntegerBounded(CFG_AUTHOR_WEIGHT, AUTHOR_WEIGHT_DEFAULT, 0, SUM);
+    static final String CFG_COMPARSION_LIMIT = "depress.support.matcher.sematicanalysis.comparsionlimit";
+    static final Integer COMPARSION_LIMIT_DEFAULT = 60;
+
+    static final String CFG_MSC_COMPARSION_OBJECT = "depress.support.matcher.sematicanalysis.msccomparsionobject";
+    static final String MSC_COMPARSION_OBJECT_DEFAULT = Configuration.MSC_DT_SUMMARY;
+
+    static final String CFG_SELECTED_ALGORITHM = "depress.support.matcher.sematicanalysis.selectedalgorithm";
+    static final String CFG_SELECTED_ALGORITHM_DEFAULT = Configuration.LEVENSTHEIN_ALGHORITM;
+
+    private final SettingsModelInteger resolutionWeight = new SettingsModelIntegerBounded(CFG_RESOLUTION_WEIGHT,
+            RESOLUTION_WEIGHT_DEFAULT, 0, SUM);
+    private final SettingsModelInteger authorWeight = new SettingsModelIntegerBounded(CFG_AUTHOR_WEIGHT,
+            AUTHOR_WEIGHT_DEFAULT, 0, SUM);
+    private final SettingsModelInteger comparsionLimit = new SettingsModelIntegerBounded(CFG_COMPARSION_LIMIT,
+            COMPARSION_LIMIT_DEFAULT, 0, 100);
+    private final SettingsModelString mscComparsionObject = new SettingsModelString(CFG_MSC_COMPARSION_OBJECT,
+            Configuration.MSC_DT_SUMMARY);
+    private final SettingsModelString selectedAlgorithm = new SettingsModelString(CFG_SELECTED_ALGORITHM,
+            CFG_SELECTED_ALGORITHM_DEFAULT);
 
     private ITSInputTransformer itsTransfomer;
     private InputTransformer<SCMDataType> scmTransfomer;
@@ -101,7 +119,8 @@ public class SemanticAnalysisNodeModel extends NodeModel {
     private SemanticAnalysisCellFactory cellFactory(final BufferedDataTable[] inData) {
         ITSDataHolder itsData = itsTransfomer.transformToDataHolder(inData[1]);
         return new SemanticAnalysisCellFactory(new Configuration(itsData, authorWeight.getIntValue(),
-                resolutionWeight.getIntValue()), this.scmTransfomer, this.markerTransformer);
+                resolutionWeight.getIntValue(), comparsionLimit.getIntValue(), mscComparsionObject.getStringValue(),
+                selectedAlgorithm.getStringValue()), this.scmTransfomer, this.markerTransformer);
     }
 
     private BufferedDataTable preapreTable(final AppendedColumnTable table, final ExecutionContext exec)
@@ -118,9 +137,13 @@ public class SemanticAnalysisNodeModel extends NodeModel {
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         Preconditions.checkArgument(inSpecs.length == 2);
 
-        this.scmTransfomer.setMinimalSpec(new DataTableSpec(RESOURCE_NAME, AUTHOR_COLSPEC)).setInputSpec(inSpecs[0]).validate();
-        this.itsTransfomer.setMinimalSpec(new DataTableSpec(ISSUE_ID_COLSPEC, ITSAdapterTableFactory.RESOLUTION_COLSPEC)).setInputSpec(inSpecs[1]).validate();
-        this.markerTransformer.setMinimalOrSpec(AM_MARKER_COLSPEC, EXT_MARKER_COLSPEC, MARKER_COLSPEC).setInputSpec(inSpecs[0]).validate();
+        this.scmTransfomer.setMinimalSpec(new DataTableSpec(RESOURCE_NAME, AUTHOR_COLSPEC)).setInputSpec(inSpecs[0])
+                .validate();
+        this.itsTransfomer
+                .setMinimalSpec(new DataTableSpec(ISSUE_ID_COLSPEC, ITSAdapterTableFactory.RESOLUTION_COLSPEC))
+                .setInputSpec(inSpecs[1]).validate();
+        this.markerTransformer.setMinimalOrSpec(AM_MARKER_COLSPEC, EXT_MARKER_COLSPEC, MARKER_COLSPEC)
+                .setInputSpec(inSpecs[0]).validate();
         final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], SEMANTIC_CONFIDENCE_COLSPEC);
 
         return new DataTableSpec[] { dts };
@@ -130,18 +153,27 @@ public class SemanticAnalysisNodeModel extends NodeModel {
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         authorWeight.saveSettingsTo(settings);
         resolutionWeight.saveSettingsTo(settings);
+        comparsionLimit.saveSettingsTo(settings);
+        mscComparsionObject.saveSettingsTo(settings);
+        selectedAlgorithm.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         authorWeight.loadSettingsFrom(settings);
         resolutionWeight.loadSettingsFrom(settings);
+        comparsionLimit.loadSettingsFrom(settings);
+        mscComparsionObject.loadSettingsFrom(settings);
+        selectedAlgorithm.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         authorWeight.validateSettings(settings);
         resolutionWeight.validateSettings(settings);
+        comparsionLimit.validateSettings(settings);
+        mscComparsionObject.validateSettings(settings);
+        selectedAlgorithm.validateSettings(settings);
 
         int current = settings.getInt(CFG_RESOLUTION_WEIGHT) + settings.getInt(CFG_AUTHOR_WEIGHT);
         if (current != SUM) {
@@ -151,13 +183,13 @@ public class SemanticAnalysisNodeModel extends NodeModel {
 
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 }

@@ -10,10 +10,25 @@
     <fullDescription>
         <intro>
             This node allows to analyze syntactic confidence from SCM message.
-              <p>
-             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-support-matcher/examples">here</a> or inside plugin jar. 
-             <br/> 
-             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            <br />
+            <p>
+	            In configure menu user can decide what part of ITS data he want to compare with SCM message.
+	          	User can also decide about value of similarity that is required to examine semantic confidence from SCM message.
+	          	If similarity value is less than set limit semantic confidence is equal to 0.
+	          	<br />
+	          	User can choose 1 of 4 text similarity algorithms 
+	          	<ul>
+	          		<li>Levensthein algorithm</li>
+	          		<li>Jaro Winkler algorithm</li>
+	          		<li>Chapman algorithm</li>
+	          		<li>Overlap algorithm</li>
+	          	</ul>
+	          	Algorithms are provided by <a href="http://sourceforge.net/projects/simmetrics/">SimMetrics 1.6.2</a> Library (GPLv2)
+	        </p>
+            <p>
+	            Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-support-matcher/examples">here</a> or inside plugin jar. 
+	            <br/> 
+	            Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
             </p>
         </intro>
 
