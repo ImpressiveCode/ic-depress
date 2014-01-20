@@ -37,25 +37,28 @@ public class Configuration {
     public static final String JARO_WINKLER_ALGHORITM = "Jaro Winkler Algorithm";
     public static final String CHAPMAN_ALGHORITM = "Chapman Length Deviation Algorithm";
     public static final String OVERLAP_ALGHORITM = "Overlap Coefficient Algorithm";
+    public static final String HYBRID_ALGHORITM = "Hybrid alghoritm";
 
     public static final String[] ALGORITHMS = { LEVENSTHEIN_ALGHORITM, JARO_WINKLER_ALGHORITM, CHAPMAN_ALGHORITM,
-            OVERLAP_ALGHORITM };
+            OVERLAP_ALGHORITM, HYBRID_ALGHORITM };
 
     private final ITSDataHolder itsData;
     private final int authorWeight;
     private final int resolutionWeight;
     private final int comparsionsLimit;
+    private final int similarityWeight;
     private final String mscComparsionObject;
     private final String selectedAlgorithm;
 
     public Configuration(final ITSDataHolder itsData, final int authorWeight, final int resolutionWeight,
-            final int comparsionLimit, final String mscComparsionObject, final String selectedAlgorithm) {
+            final int comparsionLimit, final String mscComparsionObject, final String selectedAlgorithm, final int similarityWeight) {
         this.itsData = itsData;
         this.authorWeight = authorWeight;
         this.resolutionWeight = resolutionWeight;
         this.comparsionsLimit = comparsionLimit;
         this.mscComparsionObject = mscComparsionObject;
         this.selectedAlgorithm = selectedAlgorithm;
+        this.similarityWeight = similarityWeight;
     }
 
     ITSDataHolder getITSData() {
@@ -80,5 +83,9 @@ public class Configuration {
 
     public String getSelectedAlgorithm() {
         return this.selectedAlgorithm;
+    }
+    
+    public int getSimilarityWeight() {
+        return this.similarityWeight;
     }
 }

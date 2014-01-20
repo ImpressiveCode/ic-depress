@@ -56,5 +56,10 @@ public class SemanticAnalysisNodeDialog extends DefaultNodeSettingsPane {
                 SemanticAnalysisNodeModel.CFG_SELECTED_ALGORITHM_DEFAULT), "Select algorithm: ",
                 Configuration.ALGORITHMS));
 
+        addDialogComponent(new DialogComponentNumberEdit(new SettingsModelInteger(
+                SemanticAnalysisNodeModel.CFG_SIMILARITY_WEIGHT, SemanticAnalysisNodeModel.SIMILARITY_WEIGHT_DEFAULT),
+                "Similarity weight: ", 26));
+
+
     }
 }

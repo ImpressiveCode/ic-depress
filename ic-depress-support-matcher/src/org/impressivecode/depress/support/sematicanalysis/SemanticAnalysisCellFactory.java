@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.support.sematicanalysis;
 
 import static org.impressivecode.depress.common.Cells.integerOrMissingCell;
-
+import static org.impressivecode.depress.common.Cells.doubleOrMissingCell;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -32,6 +32,8 @@ import org.impressivecode.depress.support.commonmarker.MarkerInputTransformer;
 import org.knime.base.data.append.column.AppendedCellFactory;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
+
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import com.google.common.base.Preconditions;
 
@@ -73,25 +75,23 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
         }
 
     }
+    
 
     private int checkConfidence(final SCMDataType scm, final MarkerDataType marker) throws Exception {
         Set<ITSDataType> issues = this.cfg.getITSData().issues(marker.getAllMarkers());
         if (issues.isEmpty()) {
             return 0;
         } else {
-            Set<ITSDataType> similarIssues = checkSimilarity(issues, scm);
-
-            return checkAuthor(scm, similarIssues) + checkResolution(similarIssues);
+    		return checkAuthor(scm, issues) + checkResolution(issues) + checkSimiliarity(issues, scm);
         }
     }
-
-    private Set<ITSDataType> checkSimilarity(final Set<ITSDataType> issues, final SCMDataType scm) throws Exception {
-
-        String message = scm.getMessage();
+    
+    
+    private int checkSimiliarity(final Set<ITSDataType> issues, final SCMDataType scm) throws Exception{
+    	String message = scm.getMessage();
 
         Iterator<ITSDataType> issuesIterator = issues.iterator();
-        Set<ITSDataType> similarIssues = new HashSet<ITSDataType>();
-
+        
         double similarity = -1;
         while (issuesIterator.hasNext()) {
             ITSDataType issue;
@@ -105,10 +105,10 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
             }
             similarity = similarity * 100;
             if (similarity > threshold) {
-                similarIssues.add(issue);
+                return this.cfg.getSimilarityWeight();
             }
         }
-        return similarIssues;
+        return 0;
     }
 
     private double processComments(ITSDataType issue, String message) throws Exception {
