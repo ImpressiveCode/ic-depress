@@ -30,18 +30,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JiraOnlineIssue {
 
-    private int id;
+    private String key;
     private JiraOnlineField fields;
 
     @JsonProperty("self")
     private String link;
 
-    public int getId() {
-        return id;
+
+    public String getKey() {
+        return key;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public JiraOnlineField getFields() {

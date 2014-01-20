@@ -18,14 +18,18 @@
 package org.impressivecode.depress.its.jiraonline;
 
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
+import java.net.URISyntaxException;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSPriority;
+import org.impressivecode.depress.its.ITSResolution;
+import org.impressivecode.depress.its.ITSStatus;
+import org.impressivecode.depress.its.ITSType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,48 +37,95 @@ import org.junit.Test;
  * Integration test for RESTful Client and JQL filters.<br />
  * Integration with Hibernate Jira hosted on: https://hibernate.atlassian.net/
  * 
- * @author Dawid Rutowicz, Wroclaw University of Technology
+ * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
+ * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
  */
 public class JiraOnlineAdapterRsClientIntegrationTest {
 
-    private final String HOSTNAME = "hibernate.atlassian.net";
+    private final String HOSTNAME_HIBERNATE = "hibernate.atlassian.net";
+    private final String HOSTNAME_SPRING = "jira.springsource.org";
 
     private JiraOnlineAdapterRsClient client;
+    private JiraOnlineAdapterUriBuilder hibernateUriBuilder;
+    private JiraOnlineAdapterUriBuilder springUriBuilder;
 
     @Before
-    public void setUp() {
-        client = new JiraOnlineAdapterRsClient();
-        client.setSecuredConnection(true);
-        client.getUriBuilder().setHostname(HOSTNAME);
+    public void setUp() throws URISyntaxException {
+        setupClient();
+        setupBuilders();
     }
 
     @Test
-    public void should_download_and_parse_one_jira_issues() throws Exception {
-        String jiraEntry = client.getIssues();
+    public void should_download_parse_and_check_specific_issues() throws Exception {
+        // given
+        springUriBuilder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED);
 
-        List<ITSDataType> entries = JiraOnlineParser.parse(jiraEntry);
+        GregorianCalendar dateFrom = new GregorianCalendar();
+        dateFrom.set(2012, 0, 1);
+        springUriBuilder.setDateFrom(dateFrom.getTime());
 
-        assertThat(entries, is(notNullValue()));
-        assertThat(entries.size(), is(equalTo(50)));
+        GregorianCalendar dateTo = new GregorianCalendar();
+        dateTo.set(2012, 0, 2);
+        springUriBuilder.setDateTo(dateTo.getTime());
 
-        for (ITSDataType entry : entries) {
-            assertThat(entry, is(notNullValue()));
+        // when
+        List<ITSDataType> entries = JiraOnlineAdapterParser.parseSingleIssueBatch(
+                client.getJSON(springUriBuilder.build()), springUriBuilder.getHostname());
 
-            assertThat(entry.getSummary(), is(notNullValue()));
+        // then
+        assertThat(entries.size(), is(2));
 
-            assertThat(entry.getPriority(), is(notNullValue()));
+        ITSDataType entry = entries.get(0);
 
-            assertThat(entry.getType(), is(notNullValue()));
+        assertThat(entry.getIssueId(), is("SECOAUTH-179"));
 
-            assertThat(entry.getReporter(), is(notNullValue()));
+        GregorianCalendar calendar = new GregorianCalendar();
 
-            assertTrue(entry.getLink().startsWith("https://hibernate.atlassian.net/rest/api/"));
+        calendar.setTime(entry.getCreated());
+        assertThat(calendar.get(GregorianCalendar.DAY_OF_MONTH), is(1));
+        assertThat(calendar.get(GregorianCalendar.MONTH), is(0));
+        assertThat(calendar.get(GregorianCalendar.YEAR), is(2012));
 
-            assertThat(entry.getResolution(), is(notNullValue()));
-        }
+        calendar.setTime(entry.getUpdated());
+        assertThat(calendar.get(GregorianCalendar.DAY_OF_MONTH), is(17));
+        assertThat(calendar.get(GregorianCalendar.MONTH), is(0));
+        assertThat(calendar.get(GregorianCalendar.YEAR), is(2012));
 
+        calendar.setTime(entry.getResolved());
+        assertThat(calendar.get(GregorianCalendar.DAY_OF_MONTH), is(17));
+        assertThat(calendar.get(GregorianCalendar.MONTH), is(0));
+        assertThat(calendar.get(GregorianCalendar.YEAR), is(2012));
+
+        assertThat(entry.getStatus(), is(ITSStatus.RESOLVED));
+        assertThat(entry.getType(), is(ITSType.ENHANCEMENT));
+        assertThat(entry.getVersion().size(), is(0));
+        assertThat(entry.getFixVersion().size(), is(1));
+        assertThat(entry.getFixVersion().get(0), is("1.0.0.M6"));
+        assertThat(entry.getPriority(), is(ITSPriority.MAJOR));
+        assertThat(entry.getSummary(),
+                is("Improve extendability of RandomValueTokenServices by keeping storage separate from token creation"));
+        assertThat(entry.getLink(), is("https://jira.springsource.org/browse/SECOAUTH-179"));
+        assertNull(entry.getDescription());
+        assertThat(entry.getComments().size(), is(0));
+        assertThat(entry.getResolution(), is(ITSResolution.FIXED));
+        assertThat(entry.getReporter(), is("david_syer"));
+        assertThat(entry.getAssignees().size(), is(1));
+        assertThat(entry.getAssignees().contains("david_syer"), is(true));
+        assertThat(entry.getComments().size(), is(0));
+    }
+
+    private void setupClient() {
+        client = new JiraOnlineAdapterRsClient();
+    }
+
+    private void setupBuilders() {
+        hibernateUriBuilder = new JiraOnlineAdapterUriBuilder();
+        springUriBuilder = new JiraOnlineAdapterUriBuilder();
+    
+        hibernateUriBuilder.setHostname(HOSTNAME_HIBERNATE);
+        springUriBuilder.setHostname(HOSTNAME_SPRING);
     }
 
 }
