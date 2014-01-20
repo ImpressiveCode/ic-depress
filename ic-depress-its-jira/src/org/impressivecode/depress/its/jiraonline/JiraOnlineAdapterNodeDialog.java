@@ -32,7 +32,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingWorker;
 
-import org.knime.core.node.FlowVariableModel;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
@@ -147,7 +146,7 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
         @SuppressWarnings("deprecation")
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent e) {
             connectionTestLabel.setText(TESTING_CONNECTION);
             checkConnectionButton.setEnabled(false);
             worker.execute();

@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.bugzilla;
+package org.impressivecode.depress.its.bugzillaonline;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.newArrayList;
@@ -23,18 +23,18 @@ import static com.google.common.collect.Maps.newHashMap;
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.ceil;
 import static java.util.concurrent.Executors.newFixedThreadPool;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.ASSIGNEE;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.CREATED;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.FIX_VERSION;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.ID;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.LINK;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.PRIORITY;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.REPORTER;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.RESOLUTION;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.STATUS;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.SUMMARY;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.UPDATED;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineParser.VERSION;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.ASSIGNEE;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.CREATED;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.FIX_VERSION;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.ID;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.LINK;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.PRIORITY;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.REPORTER;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.RESOLUTION;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.STATUS;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.SUMMARY;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.UPDATED;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.VERSION;
 
 import java.net.MalformedURLException;
 import java.util.Collections;

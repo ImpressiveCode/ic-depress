@@ -15,10 +15,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.bugzilla;
+package org.impressivecode.depress.its.bugzillaonline;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.impressivecode.depress.its.bugzilla.BugzillaOnlineAdapterNodeModel.DEFAULT_COMBOBOX_ANY_VALUE;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapterNodeModel.DEFAULT_COMBOBOX_ANY_VALUE;
 
 import java.awt.event.ActionListener;
 import java.util.Collection;
