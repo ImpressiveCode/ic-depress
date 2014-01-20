@@ -22,6 +22,7 @@ import java.util.Date;
 /**
  * 
  * @author Michał Negacz, Wrocław University of Technology
+ * @author Piotr Wróblewski, Wrocław University of Technology
  * 
  */
 public class BugzillaOnlineOptions {
@@ -29,12 +30,24 @@ public class BugzillaOnlineOptions {
 	private String productName;
 
 	private Date dateFrom;
+	
+	private String assignedTo;
+	
+	private String reporter;
+	
+	private String quickSearch;
+	
+	private String priority;
 
 	private Integer limit;
 
+	private Integer offset;
+	
 	private Integer threadsCount;
 
 	private Integer bugsPerTask;
+	
+	private String version;
 
 	public String getProductName() {
 		return productName;
@@ -52,12 +65,52 @@ public class BugzillaOnlineOptions {
 		this.dateFrom = dateFrom;
 	}
 
+	public String getAssignedTo() {
+		return assignedTo;
+	}
+
+	public void setAssignedTo(String assignedTo) {
+		this.assignedTo = assignedTo;
+	}
+
+	public String getReporter() {
+		return reporter;
+	}
+
+	public void setReporter(String reporter) {
+		this.reporter = reporter;
+	}
+
+	public String getQuickSearch() {
+		return quickSearch;
+	}
+
+	public void setQuickSearch(String quickSearch) {
+		this.quickSearch = quickSearch;
+	}
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
 	public Integer getLimit() {
 		return limit;
 	}
 
 	public void setLimit(Integer limit) {
 		this.limit = limit;
+	}
+
+	public Integer getOffset() {
+		return offset;
+	}
+
+	public void setOffset(Integer offset) {
+		this.offset = offset;
 	}
 
 	public Integer getThreadsCount() {
@@ -76,4 +129,12 @@ public class BugzillaOnlineOptions {
 		this.bugsPerTask = bugsPerTask;
 	}
 
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	
 }
