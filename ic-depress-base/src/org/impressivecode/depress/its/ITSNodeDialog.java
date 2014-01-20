@@ -16,31 +16,18 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 public abstract class ITSNodeDialog extends DefaultNodeSettingsPane {
 
     public static final String CONNECTION_TAB_NAME = "Connection";
-    
     public static final String LOGIN_TAB_NAME = "Login";
-    
     public static final String FILTERS_TAB_NAME = "Filters";
-    
     public static final String ADVANCED_TAB_NAME = "Advanced";
-
     public static final String URL_LABEL = "URL:";
-    
     public static final String PROJECT_LABEL = "Project:";
-    
     public static final String PASSWORD_LABEL = "Password:";
-    
     public static final String LOGIN_LABEL = "Login:";
-
     public static final String CHECK_PROJECTS_BUTTON = "Check projects";
-
     public static final String CHECK_PROJECTS_INIT_LABEL = "After the check you should be able to choose available projects from the project list.";
-    
     public static final String CHECK_PROJECTS_SUCCESS_LABEL = "Projects list updated.";
-    
     public static final String CHECK_PROJECTS_FAILURE_LABEL = "Connection failed.";
-    
     public static final String THREADS_COUNT_LABEL = "Threads:";
-
     public static final int COMPONENT_WIDTH = 32;
 
     /**

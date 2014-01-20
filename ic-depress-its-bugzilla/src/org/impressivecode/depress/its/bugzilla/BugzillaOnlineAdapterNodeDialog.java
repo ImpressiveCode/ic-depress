@@ -37,9 +37,9 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
- * @author Michał Negacz, Wrocław University of Technology
- * @author Piotr Wróblewski, Wrocław University of Technology
- * @author Bartosz Skuza, Wrocław University of Technology
+ * @author MichaÅ‚ Negacz, WrocÅ‚aw University of Technology
+ * @author Piotr WrÃ³blewski, WrocÅ‚aw University of Technology
+ * @author Bartosz Skuza, WrocÅ‚aw University of Technology
  * 
  */
 public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {

@@ -348,7 +348,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	static SettingsModelString createPasswordSettings() {
 		return new SettingsModelString(BUGZILLA_PASSWORD, DEFAULT_STRING_VALUE);
 	}
-
+	
 	static SettingsModelString createProductSettings() {
 		return new SettingsModelString(BUGZILLA_PRODUCT, DEFAULT_STRING_VALUE);
 	}

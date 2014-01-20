@@ -32,8 +32,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingWorker;
 
-import org.knime.core.node.FlowVariableModel;
-import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.impressivecode.depress.its.ITSNodeDialog;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
@@ -43,6 +42,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
+import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
@@ -52,7 +52,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
  */
-public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
+public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
 
     private static final String CONNECTION = "Connection";
     private static final String JIRA_URL_LABEL = "Jira URL: ";
@@ -79,8 +79,9 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
     private ActionListener checkConnectionButtonListener;
 
     protected JiraOnlineAdapterNodeDialog() {
-        initConnectionTab();
-        initLoginDataTab();
+//        initConnectionTab();
+//        initLoginDataTab();
+    	//addTab("test", new FiltersPanel());
     }
 
     private void initConnectionTab() {
@@ -110,7 +111,8 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(new DialogComponentMultiLineString(createSettingsJQL(), JQL, false, 100, 10));
     }
 
-    private void createHostnameComponent() {
+    @Override
+    protected void createHostnameComponent() {
         hostnameComponent = createSettingsURL();
         addDialogComponent(new DialogComponentString(hostnameComponent, JIRA_URL_LABEL, true, 32));
     }
@@ -182,5 +184,40 @@ public class JiraOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
         }
 
     }
+
+	@Override
+	protected SettingsModelString createURLSettings() {
+		return JiraOnlineAdapterNodeModel.createSettingsURL();
+	}
+	
+	@Override
+	protected void createProjectChooser() {
+		// NOOP
+	}
+
+	@Override
+	protected SettingsModelString createProjectSettings() {
+		return null;
+	}
+
+	@Override
+	protected ActionListener getButtonConnectionCheckListener() {
+		return null;
+	}
+
+	@Override
+	protected SettingsModelString createLoginSettings() {
+		return JiraOnlineAdapterNodeModel.createSettingsLogin();
+	}
+
+	@Override
+	protected SettingsModelString createPasswordSettings() {
+		return JiraOnlineAdapterNodeModel.createSettingsPass();
+	}
+
+	@Override
+	protected SettingsModelInteger createThreadsCountSettings() {
+		return JiraOnlineAdapterNodeModel.createSettingsThreadCount();
+	}
 
 }
