@@ -33,9 +33,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingWorker;
 
+import org.impressivecode.depress.its.ITSFilter;
+import org.impressivecode.depress.its.ITSFiltersDialogComponent;
 import org.impressivecode.depress.its.ITSNodeDialog;
-import org.impressivecode.depress.its.jiraonline.filter.Filter;
-import org.impressivecode.depress.its.jiraonline.filter.FiltersDialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
@@ -47,9 +47,6 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
-
-import pl.enofod.shuttlelist.ShuttleList;
-import pl.enofod.shuttlelist.ShuttleList.OnListItemClickListener;
 
 /**
  * 
@@ -85,14 +82,14 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     private ActionListener checkConnectionButtonListener;
 
     protected JiraOnlineAdapterNodeDialog() {
-//        initConnectionTab();
-//        initLoginDataTab();
+        // initConnectionTab();
+        // initLoginDataTab();
     }
 
     private void initConnectionTab() {
-//        createConnectionGroup();
-//        createFiltersGroup();
-//        createAdvancedGroup();
+        // createConnectionGroup();
+        // createFiltersGroup();
+        // createAdvancedGroup();
     }
 
     private void initLoginDataTab() {
@@ -116,27 +113,25 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         super.createFiltersTab();
     }
 
-    private Filter currentFilter;
+    private ITSFilter currentFilter;
 
     @Override
     protected void createAvailableFiltersComponent() {
         createNewGroup("Filters");
-        final FiltersDialogComponent filtersComp = new FiltersDialogComponent(new SettingsModelString("TODO", ""));
-        filtersComp.addOnListItemClickListener(new OnListItemClickListener<Filter>() {
+        final ITSFiltersDialogComponent filtersComp = new ITSFiltersDialogComponent(new SettingsModelString("TODO", ""));
+        filtersComp.addOnListItemClickListener(new ITSFiltersDialogComponent.OnListItemClickListener() {
 
             @Override
-            public void listItemClicked(Filter filter, int clickNo, int tableId) {
+            public void listItemClicked(ITSFilter filter, int clickNo, int tableId) {
 
-                System.out.println("Should change from " + currentFilter + " to: " + filter);
-
-                if (clickNo == 1 && tableId == ShuttleList.RIGHT_TABLE_ID) {
+                if (clickNo == 1 && tableId == 2) {
                     if (currentFilter != null) {
                         currentFilter.removeComponents(JiraOnlineAdapterNodeDialog.this);
                     }
 
                     filter.addComponents(JiraOnlineAdapterNodeDialog.this);
                     currentFilter = filter;
-                    
+
                     JiraOnlineAdapterNodeDialog.this.invalidate();
                 }
             }
@@ -149,9 +144,6 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     @Override
     protected void createFilterOptionsComponent() {
         createNewGroup("Filter settings");
-        getFilters().get(0).addComponents(this);
-        // dateFilter.removeComponents(this);
-        // projectNameFilter.addComponents(this);
     }
 
     private void createAdvancedGroup() {

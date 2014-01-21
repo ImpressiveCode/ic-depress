@@ -18,7 +18,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.its;
 
 import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
+import java.util.List;
 
+import javax.swing.Box;
+import javax.swing.JPanel;
+
+import org.knime.core.node.NodeDialogPane;
+import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentColumnFilter;
 import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
@@ -36,7 +44,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * @author Bartosz Skuza, Wrocław University of Technology
  * 
  */
-public abstract class ITSNodeDialog extends DefaultNodeSettingsPaneWithDeletion {
+public abstract class ITSNodeDialog extends DefaultNodeSettingsPane {
 
     public static final String CONNECTION_TAB_NAME = "Connection";
     public static final String LOGIN_TAB_NAME = "Login";
@@ -57,27 +65,27 @@ public abstract class ITSNodeDialog extends DefaultNodeSettingsPaneWithDeletion 
      * Connection components
      */
     protected DialogComponentString url;
-    
+
     protected DialogComponentStringSelection project;
-    
+
     protected DialogComponentButton checkProjectsButton;
-    
+
     protected DialogComponentLabel checkProjectsLabel;
-    
+
     /**
      * Login components
      */
     protected DialogComponentString login;
-    
+
     protected DialogComponentPasswordField password;
-    
+
     /**
      * Filter components
      */
     protected DialogComponentColumnFilter availableFilters;
-    
+
     protected Object filterOptions;
-    
+
     /**
      * Advanced components
      */
@@ -91,7 +99,7 @@ public abstract class ITSNodeDialog extends DefaultNodeSettingsPaneWithDeletion 
     }
 
     protected void createConnectionTab() {
-    	setDefaultTabTitle(CONNECTION_TAB_NAME);
+        setDefaultTabTitle(CONNECTION_TAB_NAME);
         createHostnameComponent();
         createProjectChooser();
         createCheckProjectsButton();
@@ -162,28 +170,77 @@ public abstract class ITSNodeDialog extends DefaultNodeSettingsPaneWithDeletion 
     }
 
     protected void createFilterOptionsComponent() {
-    	
+
     }
 
     protected void createAvailableFiltersComponent() {
-    	
+
     }
-    
+
     protected void createAdvancedTab() {
         createNewTab(ADVANCED_TAB_NAME);
         createThreadsCountComponent();
     }
 
     protected void createThreadsCountComponent() {
-		threadsCount = new DialogComponentNumberEdit(createThreadsCountSettings(), THREADS_COUNT_LABEL, COMPONENT_WIDTH);
-		addDialogComponent(threadsCount);
-	}
-	
-	protected abstract SettingsModelInteger createThreadsCountSettings();
-	
-	@Override
-	protected void addFlowVariablesTab() {
-	    // NOOP the flow variables tab is not needed
-	}
-	
+        threadsCount = new DialogComponentNumberEdit(createThreadsCountSettings(), THREADS_COUNT_LABEL, COMPONENT_WIDTH);
+        addDialogComponent(threadsCount);
+    }
+
+    protected abstract SettingsModelInteger createThreadsCountSettings();
+
+    @Override
+    protected void addFlowVariablesTab() {
+        // NOOP the flow variables tab is not needed
+    }
+
+    @SuppressWarnings("unchecked")
+    public void removeDialogComponent(final DialogComponent component) {
+
+        Box m_currentBox = null;
+        List<DialogComponent> m_dialogComponents = null;
+
+        try {
+            Field currentBoxField = DefaultNodeSettingsPane.class.getDeclaredField("m_currentBox");
+            currentBoxField.setAccessible(true);
+            m_currentBox = (Box) currentBoxField.get(this);
+
+            Field dialogComponentsField = DefaultNodeSettingsPane.class.getDeclaredField("m_dialogComponents");
+            dialogComponentsField.setAccessible(true);
+            m_dialogComponents = (List<DialogComponent>) dialogComponentsField.get(this);
+
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        m_dialogComponents.remove(component);
+        m_currentBox.remove(component.getComponentPanel());
+    }
+
+    public void invalidate() {
+
+        JPanel m_panel = null;
+        try {
+            Field f = NodeDialogPane.class.getDeclaredField("m_panel");
+            f.setAccessible(true);
+            m_panel = (JPanel) f.get(this);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        m_panel.repaint();
+    }
+
 }
