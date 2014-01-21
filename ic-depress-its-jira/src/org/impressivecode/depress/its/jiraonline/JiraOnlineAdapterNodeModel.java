@@ -34,6 +34,9 @@ import java.util.concurrent.Future;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
+import org.impressivecode.depress.its.jiraonline.filter.Filter;
+import org.impressivecode.depress.its.jiraonline.filter.ProjectNameFilter;
 import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
@@ -104,6 +107,8 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private int historyTaskStepsSum;
     private int issueTaskStepsCompleted;
     private int historyTaskStepsCompleted;
+
+    private static List<Filter> filters = createFilters();
 
     protected JiraOnlineAdapterNodeModel() {
         super(INPUT_NODE_COUNT, OUTPUT_NODE_COUNT);
@@ -384,9 +389,20 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     static SettingsModelBoolean createSettingsHistory() {
         return new SettingsModelBoolean(JIRA_HISTORY, false);
     }
-    
+
     static SettingsModelInteger createSettingsThreadCount() {
         return new SettingsModelInteger(THREAD_COUNT_SETTING, DEFAULT_THREAD_COUNT);
+    }
+    
+    private static List<Filter> createFilters() {
+        filters = new ArrayList<>();
+        filters.add(new CreationDateFilter());
+        filters.add(new ProjectNameFilter());
+        return filters;
+    }
+    
+    public static List<Filter> getFilters() {
+        return filters;
     }
 
     private class DownloadAndParseIssuesTask implements Callable<List<ITSDataType>> {

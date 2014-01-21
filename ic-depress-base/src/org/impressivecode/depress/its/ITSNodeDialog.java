@@ -19,7 +19,6 @@ package org.impressivecode.depress.its;
 
 import java.awt.event.ActionListener;
 
-import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentColumnFilter;
 import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
@@ -37,7 +36,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * @author Bartosz Skuza, Wrocław University of Technology
  * 
  */
-public abstract class ITSNodeDialog extends DefaultNodeSettingsPane {
+public abstract class ITSNodeDialog extends DefaultNodeSettingsPaneWithDeletion {
 
     public static final String CONNECTION_TAB_NAME = "Connection";
     public static final String LOGIN_TAB_NAME = "Login";
@@ -87,8 +86,8 @@ public abstract class ITSNodeDialog extends DefaultNodeSettingsPane {
     public ITSNodeDialog() {
         createConnectionTab();
         createLoginTab();
-        createFiltersTab();
         createAdvancedTab();
+        createFiltersTab();
     }
 
     protected void createConnectionTab() {
