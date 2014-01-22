@@ -20,7 +20,6 @@ package org.impressivecode.depress.its;
 import java.util.List;
 
 import org.knime.core.node.defaultnodesettings.DialogComponent;
-import org.knime.core.node.defaultnodesettings.SettingsModel;
 
 /**
  * 
@@ -29,34 +28,41 @@ import org.knime.core.node.defaultnodesettings.SettingsModel;
  */
 public abstract class ITSFilter {
 
-    private List<DialogComponent> dialogComponents;
+	private List<DialogComponent> dialogComponents;
 
-    public ITSFilter() {
-        dialogComponents = createDialogComponents();
-    }
+	protected String filterModelId;
 
-    public abstract List<DialogComponent> createDialogComponents();
+	public ITSFilter() {
+		dialogComponents = createDialogComponents();
+		filterModelId = getFilterModelId();
+	}
 
-    public abstract SettingsModel[] getSettingModels();
+	public abstract List<DialogComponent> createDialogComponents();
 
-    public abstract String getName();
+	public abstract String getName();
 
-    public abstract String getJQL();
+	public abstract String getFilterValue();
 
-    @Override
-    public String toString() {
-        return getName();
-    }
+	public abstract String getFilterModelId();
 
-    public void addComponents(ITSNodeDialog nodeDialog) {
-        for (DialogComponent component : dialogComponents) {
-            nodeDialog.addDialogComponent(component);
-        }
-    }
+	public void addComponents(ITSNodeDialog nodeDialog) {
+		for (DialogComponent component : dialogComponents) {
+			nodeDialog.addDialogComponent(component);
+		}
+	}
 
-    public void removeComponents(ITSNodeDialog nodeDialog) {
-        for (DialogComponent component : dialogComponents) {
-            nodeDialog.removeDialogComponent(component);
-        }
-    }
+	public void removeComponents(ITSNodeDialog nodeDialog) {
+		for (DialogComponent component : dialogComponents) {
+			nodeDialog.removeDialogComponent(component);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return getName();
+	}
+
+	public List<? extends DialogComponent> getDialogComponents() {
+		return dialogComponents;
+	}
 }
