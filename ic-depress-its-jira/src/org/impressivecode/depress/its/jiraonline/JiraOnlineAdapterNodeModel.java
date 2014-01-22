@@ -35,10 +35,12 @@ import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
 import org.impressivecode.depress.its.jiraonline.filter.LastUpdateDateFilter;
 import org.impressivecode.depress.its.jiraonline.filter.ProjectNameFilter;
 import org.impressivecode.depress.its.jiraonline.filter.ResolvedDateFilter;
+import org.impressivecode.depress.its.jiraonline.filter.StatusMapperFilter;
 import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
@@ -192,13 +194,15 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         if (shouldDownloadHistory()) {
             historyTaskStepsSum = issues.size() * STEPS_PER_TASK;
             issueHistoryMonitor.setProgress(0);
+            builder.setMode(Mode.HISTORY);
             for (ITSDataType issue : issues) {
                 builder.setIssueKey(issue.getIssueId());
-                historyTasks.add(new DownloadAndParseIssueHistoryTask(builder.buildIssueHistoryURI()));
+                historyTasks.add(new DownloadAndParseIssueHistoryTask(builder.build()));
             }
             List<Future<List<JiraOnlineIssueChangeRowItem>>> partialHistoryResults = executorService
                     .invokeAll(historyTasks);
             issuesHistory = combinePartialIssueHistoryResults(partialHistoryResults);
+            builder.setMode(Mode.MULTI);
         } else {
             issuesHistory = newArrayList();
         }
@@ -402,6 +406,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         filters.add(new ProjectNameFilter());
         filters.add(new LastUpdateDateFilter());
         filters.add(new ResolvedDateFilter());
+        filters.add(new StatusMapperFilter());
         return filters;
     }
 

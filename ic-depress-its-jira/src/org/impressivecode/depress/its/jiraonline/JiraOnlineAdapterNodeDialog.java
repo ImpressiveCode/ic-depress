@@ -245,6 +245,7 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
 
     @Override
     protected ActionListener getButtonConnectionCheckListener() {
+        //TODO potrzebna 4xlista pobranych typów do filtrów; moze dodanie tych filtrów po pobraniu info dopiero? - to by by³o ok
         return null;
     }
 

@@ -35,9 +35,15 @@ public class JiraOnlineAdapterUriBuilder {
     public static final int ISSUES_PER_BATCH = 100;
 
     private static final String SIMPLE_URI_PATH = "{protocol}://{hostname}/";
-    private static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/2/serverInfo";
+    private static final String BASIC_URI_PATH = "{protocol}://{hostname}/rest/api/latest/{command}";
+    private static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/latest/serverInfo";
     private static final String QUERY_URI_PATH = "{protocol}://{hostname}/rest/api/latest/search";
     private static final String ISSUE_HISTORY_URI_PATH = "{protocol}://{hostname}/rest/api/latest/issue/{issueKey}";
+    
+    private static final String STATE_LIST_PARAM = "status";
+    private static final String PRIORITY_LIST_PARAM = "priority";
+    private static final String RESOLUTION_LIST_PARAM = "resolution";
+    private static final String TYPE_LIST_PARAM = "issuetype";
     private static final String QUERY_PARAM = "jql";
     private static final String FIELDS_PARAM = "fields";
     private static final String EXPAND_PARAM = "expand";
@@ -122,16 +128,23 @@ public class JiraOnlineAdapterUriBuilder {
         if (isTest) {
             return testHost();
         }
-
-        if (mode == Mode.MULTI) {
+        
+        switch (mode) {
+        case MULTI:
             return buildMultiIssuesURI();
-        }
-
-        if (mode == Mode.HISTORY) {
+        case HISTORY:
             return buildIssueHistoryURI();
+        case PRIORITY_LIST:
+            return buildPriorityListURI();
+        case RESOLUTION_LIST:
+            return buildResolutionListURI();
+        case STATE_LIST:
+            return buildStateListURI();
+        case TYPE_LIST:
+            return buildTypeListURI();
+        default:
+            throw new RuntimeException("This should never happen. URI builder failed");
         }
-
-        throw new RuntimeException("This should never happen. URI builder failed");
     }
 
     private URI buildMultiIssuesURI() {
@@ -177,7 +190,7 @@ public class JiraOnlineAdapterUriBuilder {
         return result;
     }
 
-    public URI buildIssueHistoryURI() {
+    private URI buildIssueHistoryURI() {
         
         // @formatter:off
         URI result = UriBuilder.fromPath(ISSUE_HISTORY_URI_PATH)
@@ -190,6 +203,35 @@ public class JiraOnlineAdapterUriBuilder {
         // @formatter:on
         
         return result;
+    }
+    
+    private URI buildListURI(String jiraCommand) {
+        
+     // @formatter:off
+        URI result = UriBuilder.fromPath(BASIC_URI_PATH)
+                .resolveTemplate("protocol", protocol)
+                .resolveTemplate("hostname", hostname)
+                .resolveTemplate("command", jiraCommand)
+                .build();
+        // @formatter:on
+        
+        return result;
+    }
+    
+    private URI buildTypeListURI() {
+        return buildListURI(TYPE_LIST_PARAM);
+    }
+
+    private URI buildStateListURI() {
+        return buildListURI(STATE_LIST_PARAM);
+    }
+
+    private URI buildResolutionListURI() {
+        return buildListURI(RESOLUTION_LIST_PARAM);
+    }
+
+    private URI buildPriorityListURI() {
+        return buildListURI(PRIORITY_LIST_PARAM);
     }
 
     public SimpleDateFormat getDateFormatter() {
@@ -251,8 +293,13 @@ public class JiraOnlineAdapterUriBuilder {
     public void setMode(Mode mode) {
         this.mode = mode;
     }
+    
+    public void resetMode() {
+        this.mode = Mode.MULTI;
+    }
 
+    //imho MULTI jest bardzo niejasn¹ nazw¹ i bym j¹ (wraz z nazw¹ metody) zmieni³ - cys
     public enum Mode {
-        HISTORY, MULTI;
+        HISTORY, MULTI, STATE_LIST, PRIORITY_LIST, RESOLUTION_LIST, TYPE_LIST;
     }
 }
