@@ -31,10 +31,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
 import org.impressivecode.depress.its.jiraonline.filter.LastUpdateDateFilter;
 import org.impressivecode.depress.its.jiraonline.filter.ProjectNameFilter;
@@ -50,6 +50,7 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
@@ -322,6 +323,12 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.saveSettingsTo(settings);
         jiraSettingsStatus.saveSettingsTo(settings);
         jiraSettingsHistory.saveSettingsTo(settings);
+
+        for (ITSFilter filter : getFilters()) {
+            for (DialogComponent component : filter.getDialogComponents()) {
+                component.getModel().saveSettingsTo(settings);
+            }
+        }
     }
 
     @Override
@@ -334,6 +341,12 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.loadSettingsFrom(settings);
         jiraSettingsStatus.loadSettingsFrom(settings);
         jiraSettingsHistory.loadSettingsFrom(settings);
+        
+        for (ITSFilter filter : getFilters()) {
+            for (DialogComponent component : filter.getDialogComponents()) {
+                component.getModel().loadSettingsFrom(settings);
+            }
+        }
     }
 
     @Override
@@ -346,6 +359,12 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.validateSettings(settings);
         jiraSettingsStatus.validateSettings(settings);
         jiraSettingsHistory.validateSettings(settings);
+        
+        for (ITSFilter filter : getFilters()) {
+            for (DialogComponent component : filter.getDialogComponents()) {
+                component.getModel().validateSettings(settings);
+            }
+        }
     }
 
     @Override

@@ -24,10 +24,11 @@ import javax.swing.JPanel;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
-import org.knime.core.node.defaultnodesettings.SettingsModel;
+import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
 
 import pl.enofod.shuttlelist.ShuttleList;
+import pl.enofod.shuttlelist.ShuttleList.ListItemSelectionListener;
 
 /**
  * 
@@ -39,25 +40,34 @@ public class ITSFiltersDialogComponent extends DialogComponent {
     private JPanel panel;
     private ShuttleList<ITSFilter> list;
 
-    public ITSFiltersDialogComponent(SettingsModel model) {
+    public ITSFiltersDialogComponent(Collection<ITSFilter> filters, SettingsModelStringArray model) {
         super(model);
         panel = new JPanel();
         list = new ShuttleList<>();
+        list.addElements(filters);
+
+        for (ITSFilter filter : filters) {
+            for (String id : model.getStringArrayValue()) {
+                if (filter.getFilterModelId().equals(id)) {
+                    // filter selected
+                    list.addElementToRight(filter);
+                    break;
+                }
+            }
+            list.addElementToLeft(filter);
+        }
+
         panel.add(list);
     }
 
-    public void addOnListItemClickListener(final OnListItemClickListener listener) {
-        list.addOnListItemClickListener(new ShuttleList.OnListItemClickListener<ITSFilter>() {
+    public void addListItemSelectionListener(final ListItemSelectedListener listener) {
+        list.addListItemSelectionListener(new ListItemSelectionListener<ITSFilter>() {
 
             @Override
-            public void listItemClicked(ITSFilter elementClicked, int count, int tableId) {
-                listener.listItemClicked(elementClicked, count, tableId);
+            public void listItemSelected(ITSFilter elementSelected, int tableId) {
+                listener.listItemSelected(elementSelected, tableId);
             }
         });
-    }
-
-    public void addFilters(Collection<ITSFilter> filters) {
-        list.addElements(filters);
     }
 
     @Override
@@ -67,36 +77,31 @@ public class ITSFiltersDialogComponent extends DialogComponent {
 
     @Override
     protected void updateComponent() {
-        // TODO Auto-generated method stub
-
+        // NOOP
     }
 
     @Override
     protected void validateSettingsBeforeSave() throws InvalidSettingsException {
-        // TODO Auto-generated method stub
-
+        // NOOP
     }
 
     @Override
     protected void checkConfigurabilityBeforeLoad(PortObjectSpec[] specs) throws NotConfigurableException {
-        // TODO Auto-generated method stub
-
+        // NOOP
     }
 
     @Override
     protected void setEnabledComponents(boolean enabled) {
-        // TODO Auto-generated method stub
-
+        // NOOP
     }
 
     @Override
     public void setToolTipText(String text) {
-        // TODO Auto-generated method stub
-
+        // NOOP
     }
 
-    public interface OnListItemClickListener {
-        void listItemClicked(ITSFilter elementClicked, int count, int tableId);
+    public interface ListItemSelectedListener {
+        void listItemSelected(ITSFilter elementClicked, int tableId);
     }
 
 }
