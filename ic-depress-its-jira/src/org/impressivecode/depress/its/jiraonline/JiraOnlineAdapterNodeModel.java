@@ -89,10 +89,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private final SettingsModelString jiraSettingsURL = createSettingsURL();
     private final SettingsModelString jiraSettingsLogin = createSettingsLogin();
     private final SettingsModelString jiraSettingsPass = createSettingsPass();
-    private final SettingsModelDate jiraSettingsDateStart = createSettingsDateStart();
-    private final SettingsModelDate jiraSettingsDateEnd = createSettingsDateEnd();
     private final SettingsModelString jiraSettingsJQL = createSettingsJQL();
-    private final SettingsModelString jiraSettingsStatus = createSettingsDateFilterStatusChooser();
     private final SettingsModelBoolean jiraSettingsHistory = createSettingsHistory();
     private final SettingsModelInteger jiraSettingsThreadCount = createSettingsThreadCount();
 
@@ -275,21 +272,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         if (jiraSettingsJQL.getStringValue() != null && !jiraSettingsJQL.getStringValue().equals("")) {
             builder.setJQL(jiraSettingsJQL.getStringValue());
         }
-        if (jiraSettingsDateStart.getSelectedFields() > 0) {
-            builder.setDateFrom(jiraSettingsDateStart.getDate());
-        }
-        if (jiraSettingsDateEnd.getSelectedFields() > 0) {
-            builder.setDateTo(jiraSettingsDateEnd.getDate());
-        }
 
-        switch (jiraSettingsStatus.getStringValue().toLowerCase()) {
-        case "created":
-            builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED);
-            break;
-        case "resolutiondate":
-            builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.RESOLUTION_DATE);
-            break;
-        }
         return builder;
     }
 
@@ -322,15 +305,16 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsURL.saveSettingsTo(settings);
         jiraSettingsLogin.saveSettingsTo(settings);
         jiraSettingsPass.saveSettingsTo(settings);
-        jiraSettingsDateStart.saveSettingsTo(settings);
-        jiraSettingsDateEnd.saveSettingsTo(settings);
         jiraSettingsJQL.saveSettingsTo(settings);
-        jiraSettingsStatus.saveSettingsTo(settings);
         jiraSettingsHistory.saveSettingsTo(settings);
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
-                component.getModel().saveSettingsTo(settings);
+                try {
+                    component.getModel().saveSettingsTo(settings);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }
@@ -340,15 +324,16 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsURL.loadSettingsFrom(settings);
         jiraSettingsLogin.loadSettingsFrom(settings);
         jiraSettingsPass.loadSettingsFrom(settings);
-        jiraSettingsDateStart.loadSettingsFrom(settings);
-        jiraSettingsDateEnd.loadSettingsFrom(settings);
         jiraSettingsJQL.loadSettingsFrom(settings);
-        jiraSettingsStatus.loadSettingsFrom(settings);
         jiraSettingsHistory.loadSettingsFrom(settings);
-        
+
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
-                component.getModel().loadSettingsFrom(settings);
+                try {
+                    component.getModel().loadSettingsFrom(settings);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }
@@ -358,15 +343,16 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsURL.validateSettings(settings);
         jiraSettingsLogin.validateSettings(settings);
         jiraSettingsPass.validateSettings(settings);
-        jiraSettingsDateStart.validateSettings(settings);
-        jiraSettingsDateEnd.validateSettings(settings);
         jiraSettingsJQL.validateSettings(settings);
-        jiraSettingsStatus.validateSettings(settings);
         jiraSettingsHistory.validateSettings(settings);
-        
+
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
-                component.getModel().validateSettings(settings);
+                try {
+                    component.getModel().validateSettings(settings);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }

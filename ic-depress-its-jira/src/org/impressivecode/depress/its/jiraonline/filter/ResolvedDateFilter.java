@@ -4,7 +4,8 @@ import org.impressivecode.depress.its.ITSTimePeriodFilter;
 
 public class ResolvedDateFilter extends ITSTimePeriodFilter {
 
-
+    private static final String JIRA_RESOLUTIN_DATE = "depress.its.jiraonline.resolution.date";
+    
     @Override
     public String getName() {
         return "Resolved date";
@@ -18,7 +19,6 @@ public class ResolvedDateFilter extends ITSTimePeriodFilter {
 
 	@Override
 	public String getFilterModelId() {
-		// TODO Auto-generated method stub
-		return null;
+		return JIRA_RESOLUTIN_DATE;
 	}
 }

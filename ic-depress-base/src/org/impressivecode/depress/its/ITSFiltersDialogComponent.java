@@ -44,17 +44,20 @@ public class ITSFiltersDialogComponent extends DialogComponent {
         super(model);
         panel = new JPanel();
         list = new ShuttleList<>();
-        list.addElements(filters);
 
         for (ITSFilter filter : filters) {
+            boolean added = false;
             for (String id : model.getStringArrayValue()) {
                 if (filter.getFilterModelId().equals(id)) {
                     // filter selected
                     list.addElementToRight(filter);
+                    added = true;
                     break;
                 }
             }
-            list.addElementToLeft(filter);
+            if(!added) {
+                list.addElementToLeft(filter);
+            }
         }
 
         panel.add(list);

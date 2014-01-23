@@ -4,6 +4,8 @@ import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mod
 
 public class StatusMapperFilter extends CustomFieldMapperFilter {
 
+    private static final String JIRA_STATUS = "depress.its.jiraonline.status";
+
     @Override
     protected Mode getURIMode() {
         return Mode.STATE_LIST;
@@ -22,8 +24,7 @@ public class StatusMapperFilter extends CustomFieldMapperFilter {
 
     @Override
     public String getFilterModelId() {
-        // TODO Auto-generated method stub
-        return null;
+        return JIRA_STATUS;
     }
 
 }

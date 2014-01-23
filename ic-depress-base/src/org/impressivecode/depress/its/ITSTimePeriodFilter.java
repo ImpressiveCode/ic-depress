@@ -39,8 +39,8 @@ public abstract class ITSTimePeriodFilter extends ITSFilter {
     @Override
     public List<DialogComponent> createDialogComponents() {
         List<DialogComponent> dialogComponents = new ArrayList<>();
-        dialogComponents.add(FROM_ID, new DialogComponentDate(new SettingsModelDate(filterModelId + ".from"), "From"));
-        dialogComponents.add(TO_ID, new DialogComponentDate(new SettingsModelDate(filterModelId + ".to"), "To"));
+        dialogComponents.add(FROM_ID, new DialogComponentDate(new SettingsModelDate(getFilterModelId() + ".from"), "From"));
+        dialogComponents.add(TO_ID, new DialogComponentDate(new SettingsModelDate(getFilterModelId() + ".to"), "To"));
         return dialogComponents;
     }
 
