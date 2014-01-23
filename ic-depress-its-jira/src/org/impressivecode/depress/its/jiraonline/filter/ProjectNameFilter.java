@@ -9,6 +9,8 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 public class ProjectNameFilter extends ITSFilter {
+    
+    private static final String JIRA_PROJECT_NAME = "depress.its.jiraonline.project.name";
 
     @Override
     public String getName() {
@@ -24,14 +26,13 @@ public class ProjectNameFilter extends ITSFilter {
     @Override
     public List<DialogComponent> createDialogComponents() {
         List<DialogComponent> dialogComponents = new ArrayList<>();
-        dialogComponents.add(new DialogComponentString(new SettingsModelString("todo2", "works"), "From"));
+        dialogComponents.add(new DialogComponentString(new SettingsModelString(getFilterModelId(), "works"), "From"));
         return dialogComponents;
     }
 
     @Override
     public String getFilterModelId() {
-        // TODO Auto-generated method stub
-        return null;
+        return JIRA_PROJECT_NAME;
     }
 
 }

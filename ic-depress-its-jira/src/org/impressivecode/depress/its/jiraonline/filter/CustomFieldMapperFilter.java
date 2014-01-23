@@ -34,7 +34,7 @@ public abstract class CustomFieldMapperFilter extends ITSFilter {
     }
     
     protected abstract Mode getURIMode();
-
+    
     @Override
     public String getName() {
         // TODO Auto-generated method stub
@@ -52,5 +52,4 @@ public abstract class CustomFieldMapperFilter extends ITSFilter {
         // TODO Auto-generated method stub
         return null;
     }
-
 }
