@@ -30,12 +30,15 @@ import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeMod
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.SwingWorker;
 
 import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.ITSFiltersDialogComponent;
 import org.impressivecode.depress.its.ITSNodeDialog;
+import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
@@ -161,9 +164,9 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     private void createCheckConnectionButton() {
-        checkConnectionButton = new DialogComponentButton(BUTTON_CEHCK);
-        checkConnectionButtonListener = new CheckConnectionButtonListener();
-        checkConnectionButton.addActionListener(checkConnectionButtonListener);
+        //checkConnectionButton = new DialogComponentButton(BUTTON_CEHCK);
+        //checkConnectionButtonListener = new CheckConnectionButtonListener();
+        //checkConnectionButton.addActionListener(checkConnectionButtonListener);
 
         addDialogComponent(checkConnectionButton);
     }
@@ -179,53 +182,6 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
                 DATE_FILTER_STATUSES));
         addDialogComponent(new DialogComponentDate(createSettingsDateStart(), DATE_FROM, true));
         addDialogComponent(new DialogComponentDate(createSettingsDateEnd(), DATE_TO, true));
-    }
-
-    class CheckConnectionButtonListener implements ActionListener {
-        private static final String TESTING_CONNECTION = "Testing connection...";
-
-        private ConnectionTestWorker worker;
-
-        public CheckConnectionButtonListener() {
-            worker = new ConnectionTestWorker();
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            connectionTestLabel.setText(TESTING_CONNECTION);
-            checkConnectionButton.setEnabled(false);
-            worker.execute();
-        }
-    }
-
-    class ConnectionTestWorker extends SwingWorker<Boolean, Void> {
-        private static final String CONNECTION_FAILED = "Connection failed";
-        private static final String CONNECTION_OK = "Connection ok";
-
-        @Override
-        protected Boolean doInBackground() throws Exception {
-            JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient();
-
-            JiraOnlineAdapterUriBuilder testBuilder = new JiraOnlineAdapterUriBuilder();
-            testBuilder.setHostname(hostnameComponent.getStringValue()).setIsTest(true);
-
-            return client.testConnection(testBuilder.build());
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public void done() {
-            try {
-                get();
-                connectionTestLabel.setText(CONNECTION_OK);
-            } catch (Exception e) {
-                connectionTestLabel.setText(CONNECTION_FAILED);
-            }
-
-            checkConnectionButton.setEnabled(true);
-        }
-
     }
 
     @Override
@@ -245,8 +201,60 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
 
     @Override
     protected ActionListener getButtonConnectionCheckListener() {
-        //TODO potrzebna 4xlista pobranych typów do filtrów; moze dodanie tych filtrów po pobraniu info dopiero? - to by by³o ok
-        return null;
+        return new CheckConnectionButtonListener();
+    }
+    
+    class CheckConnectionButtonListener implements ActionListener {
+        private static final String TESTING_CONNECTION = "Testing connection.";
+
+        private ConnectionChecker worker;
+
+        public CheckConnectionButtonListener() {
+            worker = new ConnectionChecker();
+        }
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            checkProjectsLabel.setText(TESTING_CONNECTION);
+            checkProjectsButton.setEnabled(false);
+            worker.execute();
+        }
+    }
+
+    class ConnectionChecker extends SwingWorker<Boolean, Void> {
+        private static final String CONNECTION_FAILED = "Connection failed.";
+        private static final String CONNECTION_OK = "Connection ok, Jira filters updated.";
+
+        @Override
+        protected Boolean doInBackground() throws Exception {
+            JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient();
+
+            JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+            builder.setHostname(hostnameComponent.getStringValue());
+            builder.setMode(Mode.TYPE_LIST);
+            String rawData = client.getJSON(builder.build());
+            List<JiraOnlineFilterListItem> list = JiraOnlineAdapterParser.getCustomFieldList(rawData);
+            for (JiraOnlineFilterListItem jiraOnlineFilterListItem : list) {
+                System.out.println(jiraOnlineFilterListItem.getName() + " " + jiraOnlineFilterListItem.getDescription());
+            }
+            
+            return true;
+        }
+
+        @SuppressWarnings("deprecation")
+        @Override
+        public void done() {
+            try {
+                get();
+                checkProjectsLabel.setText(CONNECTION_OK);
+            } catch (Exception e) {
+                checkProjectsLabel.setText(CONNECTION_FAILED);
+            }
+
+            checkProjectsButton.setEnabled(true);
+        }
+
     }
 
     @Override

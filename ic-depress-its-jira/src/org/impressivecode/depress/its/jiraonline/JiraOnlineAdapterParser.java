@@ -37,7 +37,7 @@ import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Priority;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Resolution;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Status;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Type;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterList;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssue;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueVersion;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssuesList;
@@ -133,7 +133,26 @@ public class JiraOnlineAdapterParser {
         return issueList.getTotal();
     }
 
+    public static List<JiraOnlineFilterListItem> getCustomFieldList(String source) {
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonFactory jsonFactory = new JsonFactory();
+        JsonParser jp = null;
+        List<JiraOnlineFilterListItem> fieldList = null;
+
+        try {
+            jp = jsonFactory.createJsonParser(source);
+            fieldList = objectMapper.readValue(jp, new TypeReference<List<JiraOnlineFilterListItem>>() {
+            });
+        } catch (JsonParseException e) {
+        } catch (UnrecognizedPropertyException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return fieldList;
+    }
 
     private static List<ITSDataType> parseData(JiraOnlineIssuesList issueList, String hostname) {
         List<ITSDataType> resultList = new ArrayList<>();
@@ -309,26 +328,5 @@ public class JiraOnlineAdapterParser {
         }
 
         return issueList;
-    }
-    
-    public static JiraOnlineFilterList getCustomFieldList(String source) {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonFactory jsonFactory = new JsonFactory();
-        JsonParser jp = null;
-        JiraOnlineFilterList fieldList = null;
-
-        try {
-            jp = jsonFactory.createJsonParser(source);
-            fieldList = objectMapper.readValue(jp, new TypeReference<JiraOnlineFilterList>() {
-            });
-        } catch (JsonParseException e) {
-        } catch (UnrecognizedPropertyException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return fieldList;
     }
 }
