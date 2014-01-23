@@ -411,7 +411,6 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         filters.add(new ProjectNameFilter());
         filters.add(new LastUpdateDateFilter());
         filters.add(new ResolvedDateFilter());
-        filters.add(new StatusMapperFilter());
         return filters;
     }
 

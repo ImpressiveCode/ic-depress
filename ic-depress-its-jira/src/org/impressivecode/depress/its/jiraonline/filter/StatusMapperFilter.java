@@ -1,19 +1,28 @@
 package org.impressivecode.depress.its.jiraonline.filter;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 
 public class StatusMapperFilter extends CustomFieldMapperFilter {
 
-    private static final String JIRA_STATUS = "depress.its.jiraonline.status";
-
-    @Override
-    protected Mode getURIMode() {
-        return Mode.STATE_LIST;
+    public StatusMapperFilter(List<JiraOnlineFilterListItem> fieldList) {
+        super(fieldList);
     }
 
+    private static final String JIRA_STATUS = "depress.its.jiraonline.statusList";
+
     @Override
-    public String getName() {
-        return "Status list";
+    protected Collection<String> getImplementedMappings() {
+        Collection<String> statuses = new ArrayList<String>();
+        for (ITSStatus statusEnum : ITSStatus.values()) {
+            statuses.add(statusEnum.toString());
+        }
+        return statuses;
     }
 
     @Override
@@ -27,4 +36,8 @@ public class StatusMapperFilter extends CustomFieldMapperFilter {
         return JIRA_STATUS;
     }
 
+    @Override
+    protected Mode getURIMode() {
+        return Mode.STATE_LIST;
+    }
 }

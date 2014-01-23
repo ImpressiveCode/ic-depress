@@ -2,54 +2,43 @@ package org.impressivecode.depress.its.jiraonline.filter;
 
 import static com.google.common.collect.Lists.newArrayList;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSFilter;
-import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterRsClient;
-import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
+import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
+import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 public abstract class CustomFieldMapperFilter extends ITSFilter {
 
-    private static final String JIRA_URL_LABEL = "Jira URL:";
-    protected JiraOnlineAdapterUriBuilder uriBuilder;
-    protected JiraOnlineAdapterRsClient client;
-    
-    public CustomFieldMapperFilter() {
-        init();
-    }
-    
-    private void init() {
-        client = new JiraOnlineAdapterRsClient();
-        uriBuilder = new JiraOnlineAdapterUriBuilder();
-        uriBuilder.setMode(getURIMode());
+    protected final Mode uriMode;
+    protected List<JiraOnlineFilterListItem> fieldList;
+
+    public CustomFieldMapperFilter(List<JiraOnlineFilterListItem> fieldList) {
+        this.fieldList = fieldList;
+        this.uriMode = getURIMode();
     }
 
     @Override
     public List<DialogComponent> createDialogComponents() {
         List<DialogComponent> dialogComponents = newArrayList();
-        //dialogComponents.add(new DialogComponentString(JiraOnlineAdapterNodeModel.createSettingsURL(), JIRA_URL_LABEL, true, 32));
+        for (JiraOnlineFilterListItem item : fieldList) {
+            DialogComponentStringSelection comp = new DialogComponentStringSelection(new SettingsModelString(getFilterModelId(), ""), item.getName(), getImplementedMappings());
+            comp.setToolTipText(item.getDescription());
+            dialogComponents.add(comp);
+        }
         return dialogComponents;
     }
-    
+
     protected abstract Mode getURIMode();
     
+    protected abstract Collection<String> getImplementedMappings();
+
     @Override
     public String getName() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getFilterValue() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getFilterModelId() {
-        // TODO Auto-generated method stub
-        return null;
+        return uriMode.toString();
     }
 }

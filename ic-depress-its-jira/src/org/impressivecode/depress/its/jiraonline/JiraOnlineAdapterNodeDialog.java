@@ -36,6 +36,7 @@ import org.impressivecode.depress.its.ITSFiltersDialogComponent;
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
+import org.impressivecode.depress.its.jiraonline.filter.StatusMapperFilter;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
@@ -199,9 +200,8 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
             builder.setMode(Mode.TYPE_LIST);
             String rawData = client.getJSON(builder.build());
             List<JiraOnlineFilterListItem> list = JiraOnlineAdapterParser.getCustomFieldList(rawData);
-            for (JiraOnlineFilterListItem jiraOnlineFilterListItem : list) {
-                System.out.println(jiraOnlineFilterListItem.getName() + " " + jiraOnlineFilterListItem.getDescription());
-            }
+            StatusMapperFilter status = new StatusMapperFilter(list);
+            JiraOnlineAdapterNodeModel.getFilters().add(status);
             
             return true;
         }
