@@ -32,7 +32,6 @@ public abstract class CustomFieldMapperFilter extends ITSFilter {
         //dialogComponents.add(new DialogComponentString(JiraOnlineAdapterNodeModel.createSettingsURL(), JIRA_URL_LABEL, true, 32));
         return dialogComponents;
     }
-<<<<<<< HEAD
     
     protected abstract Mode getURIMode();
     
@@ -53,9 +52,4 @@ public abstract class CustomFieldMapperFilter extends ITSFilter {
         // TODO Auto-generated method stub
         return null;
     }
-=======
-
-    protected abstract Mode getURIMode();
-
->>>>>>> 22fd2f25c44209c83c6e5b6830b243d522037899
 }
