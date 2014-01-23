@@ -34,9 +34,13 @@ import javax.swing.SwingWorker;
 import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.ITSFiltersDialogComponent;
 import org.impressivecode.depress.its.ITSNodeDialog;
+<<<<<<< HEAD
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
+=======
+import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
+>>>>>>> 22fd2f25c44209c83c6e5b6830b243d522037899
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
