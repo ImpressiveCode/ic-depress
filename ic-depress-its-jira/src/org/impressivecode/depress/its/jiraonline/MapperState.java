@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSStatus;
-import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 
 public class MapperState extends MapperAbstractCustomField {
@@ -18,6 +17,7 @@ public class MapperState extends MapperAbstractCustomField {
 
     protected Collection<String> getImplementedMappings() {
         Collection<String> statuses = new ArrayList<String>();
+        statuses.add(DEFAULT_MAPPING);
         for (ITSStatus statusEnum : ITSStatus.values()) {
             statuses.add(statusEnum.toString());
         }
@@ -27,11 +27,5 @@ public class MapperState extends MapperAbstractCustomField {
     @Override
     protected String getMapperModelString() {
         return JIRA_STATUS;
-    }
-
-    @Override
-    protected Mode getURIMode() {
-        // TODO Auto-generated method stub
-        return null;
     }
 }

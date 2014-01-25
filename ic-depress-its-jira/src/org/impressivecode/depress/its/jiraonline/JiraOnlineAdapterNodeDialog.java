@@ -23,11 +23,11 @@ import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 
 import org.impressivecode.depress.its.ITSFilter;
-import org.impressivecode.depress.its.ITSFiltersDialogComponent;
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
@@ -41,7 +41,6 @@ import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentMultiLineString;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
-import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
 
 /**
@@ -55,11 +54,18 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
 
     private static final String JQL = "JQL:";
     private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
+    private static final String MAPPING = "Mapping";
 
     private SettingsModelString hostnameComponent;
 
     private DialogComponentBoolean history;
     private DialogComponentMultiLineString jql;
+    private JPanel mappingTab;
+
+    public JiraOnlineAdapterNodeDialog() {
+        super();
+        addTab(MAPPING, createMappersTab());
+    }
 
     @Override
     protected Component createAdvancedTab() {
@@ -73,16 +79,25 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         return panel;
     }
 
-    // @Override
-    // protected Component createHostnameComponent() {
-    // hostnameComponent = createSettingsURL();
-    // addDialogComponent(new DialogComponentString(hostnameComponent,
-    // JIRA_URL_LABEL, true, 32));
-    // }
+    private Component createMappersTab() {
+        mappingTab = new JPanel();
+
+        mappingTab.setLayout(new BoxLayout(mappingTab, BoxLayout.Y_AXIS));
+        repaintMappersTab();
+
+        return mappingTab;
+    }
+
+    private void repaintMappersTab() {
+        for (DialogComponent comp : JiraOnlineAdapterNodeModel.getMapperManager().getComponentsMapperState()) {
+            mappingTab.add(comp.getComponentPanel());
+        }
+    }
 
     @Override
     protected SettingsModelString createURLSettings() {
-        return JiraOnlineAdapterNodeModel.createSettingsURL();
+        hostnameComponent = JiraOnlineAdapterNodeModel.createSettingsURL();
+        return hostnameComponent;
     }
 
     @Override
@@ -103,17 +118,14 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     class CheckConnectionButtonListener implements ActionListener {
-        private static final String TESTING_CONNECTION = "Testing connection.";
+        private static final String TESTING_CONNECTION = "Testing connection...";
 
         private ConnectionChecker worker;
-
-        public CheckConnectionButtonListener() {
-            worker = new ConnectionChecker();
-        }
 
         @SuppressWarnings("deprecation")
         @Override
         public void actionPerformed(ActionEvent e) {
+            worker = new ConnectionChecker();
             checkProjectsLabel.setText(TESTING_CONNECTION);
             checkProjectsButton.setEnabled(false);
             worker.execute();
@@ -135,11 +147,11 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         protected Boolean doInBackground() throws Exception {
             builder.setHostname(hostnameComponent.getStringValue());
 
-            MapperManager mm = new MapperManager();
-            mm.createStateMapper(getMapperList(Mode.STATE_LIST));
-            mm.createPriorytyMapper(getMapperList(Mode.PRIORITY_LIST));
-            mm.createResolutionMapper(getMapperList(Mode.RESOLUTION_LIST));
-            mm.createTypeMapper(getMapperList(Mode.TYPE_LIST));
+            MapperManager mm = JiraOnlineAdapterNodeModel.getMapperManager();
+            mm.createMapperState(getMapperList(Mode.STATE_LIST));
+            mm.createMapperPrioryty(getMapperList(Mode.PRIORITY_LIST));
+            mm.createMapperResolution(getMapperList(Mode.RESOLUTION_LIST));
+            mm.createMapperType(getMapperList(Mode.TYPE_LIST));
 
             return true;
         }
@@ -160,8 +172,10 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         public void done() {
             try {
                 get();
+                repaintMappersTab();
                 checkProjectsLabel.setText(CONNECTION_OK);
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 checkProjectsLabel.setText(CONNECTION_FAILED);
             }
 
