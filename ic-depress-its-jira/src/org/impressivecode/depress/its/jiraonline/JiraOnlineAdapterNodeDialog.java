@@ -37,6 +37,7 @@ import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
+import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
@@ -67,6 +68,7 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     private static final String STATUS = "Status:";
     private static final String NOT_TESTED_YET = "Not tested yet...";
     private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
+    private static final String MAPPERS = "Mappers";
 
     private final String[] DATE_FILTER_STATUSES = new String[] { "Created", "Resolution" };
 
@@ -81,7 +83,7 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         addDialogComponent(new DialogComponentBoolean(createSettingsHistory(), DOWNLOAD_HISTORY));
         addDialogComponent(new DialogComponentMultiLineString(createSettingsJQL(), JQL, false, 100, 10));
     }
-
+    
     private ITSFilter currentFilter;
 
     @Override
@@ -147,6 +149,13 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         addDialogComponent(new DialogComponentDate(createSettingsDateStart(), DATE_FROM, true));
         addDialogComponent(new DialogComponentDate(createSettingsDateEnd(), DATE_TO, true));
     }
+    
+    private void createMappersTab() {
+        createNewTab(MAPPERS);
+        for (DialogComponent comp : JiraOnlineAdapterNodeModel.getMapperManager().getComponentsMapperState()) {
+            addDialogComponent(comp);
+        }
+    }
 
     @Override
     protected SettingsModelString createURLSettings() {
@@ -201,12 +210,12 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         protected Boolean doInBackground() throws Exception {
             builder.setHostname(hostnameComponent.getStringValue());
 
-            MapperManager mm = new MapperManager();
-            mm.createStateMapper(getMapperList(Mode.STATE_LIST));
-            mm.createPriorytyMapper(getMapperList(Mode.PRIORITY_LIST));
-            mm.createResolutionMapper(getMapperList(Mode.RESOLUTION_LIST));
-            mm.createTypeMapper(getMapperList(Mode.TYPE_LIST));
-
+            MapperManager mm = JiraOnlineAdapterNodeModel.getMapperManager();
+            mm.createMapperState(getMapperList(Mode.STATE_LIST));
+            mm.createMapperPrioryty(getMapperList(Mode.PRIORITY_LIST));
+            mm.createMapperResolution(getMapperList(Mode.RESOLUTION_LIST));
+            mm.createMapperType(getMapperList(Mode.TYPE_LIST));
+            
             return true;
         }
 
@@ -226,6 +235,7 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         public void done() {
             try {
                 get();
+                JiraOnlineAdapterNodeDialog.this.createMappersTab();
                 checkProjectsLabel.setText(CONNECTION_OK);
             } catch (Exception e) {
                 checkProjectsLabel.setText(CONNECTION_FAILED);

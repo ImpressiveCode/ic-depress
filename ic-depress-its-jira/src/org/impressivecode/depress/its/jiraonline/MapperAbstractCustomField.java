@@ -2,10 +2,10 @@ package org.impressivecode.depress.its.jiraonline;
 
 import static com.google.common.collect.Lists.newArrayList;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
@@ -13,31 +13,34 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 public abstract class MapperAbstractCustomField {
 
-    protected final Mode uriMode;
     protected List<JiraOnlineFilterListItem> fieldList;
+    private List<DialogComponent> dialogComponents;
+    protected static final String DEFAULT_MAPPING = "Default mapping";
 
     public MapperAbstractCustomField(List<JiraOnlineFilterListItem> fieldList) {
         this.fieldList = fieldList;
-        this.uriMode = getURIMode();
     }
 
-    public List<DialogComponent> createDialogComponents() {
-        List<DialogComponent> dialogComponents = newArrayList();
+    public void createDialogComponents() {
+        dialogComponents = newArrayList();
         for (JiraOnlineFilterListItem item : fieldList) {
-            DialogComponentStringSelection comp = new DialogComponentStringSelection(new SettingsModelString(getMapperModelString(), ""), item.getName(), getImplementedMappings());
+            DialogComponentStringSelection comp = new DialogComponentStringSelection(new SettingsModelString(
+                    getMapperModelString() + "." + item.getName(), ""), formatName(item.getName()),
+                    getImplementedMappings());
             comp.setToolTipText(item.getDescription());
             dialogComponents.add(comp);
         }
-        return dialogComponents;
+    }
+
+    private String formatName(String name) {
+        return "Map \"" + name + "\" to: ";
+    }
+
+    public List<DialogComponent> getDialogComponents() {
+        return dialogComponents == null ? new ArrayList<DialogComponent>() : dialogComponents;
     }
 
     protected abstract String getMapperModelString();
 
-    protected abstract Mode getURIMode();
-    
     protected abstract Collection<String> getImplementedMappings();
-    
-    public String getName() {
-        return uriMode.toString();
-    }
 }

@@ -110,6 +110,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private int historyTaskStepsCompleted;
 
     private static List<ITSFilter> filters = createFilters();
+    private static MapperManager mapperManager = new MapperManager();
 
     protected JiraOnlineAdapterNodeModel() {
         super(INPUT_NODE_COUNT, OUTPUT_NODE_COUNT);
@@ -316,6 +317,14 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
                 }
             }
         }
+
+//        for (DialogComponent component : mapperManager.getDialogComponents()) {
+//            try {
+//                component.getModel().saveSettingsTo(settings);
+//            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
     }
 
     @Override
@@ -335,6 +344,14 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
                 }
             }
         }
+
+//        for (DialogComponent component : mapperManager.getDialogComponents()) {
+//            try {
+//                component.getModel().loadSettingsFrom(settings);
+//            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
     }
 
     @Override
@@ -354,6 +371,14 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
                 }
             }
         }
+
+//        for (DialogComponent component : mapperManager.getDialogComponents()) {
+//            try {
+//                component.getModel().validateSettings(settings);
+//            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
     }
 
     @Override
@@ -411,6 +436,10 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         filters.add(new LastUpdateDateFilter());
         filters.add(new ResolvedDateFilter());
         return filters;
+    }
+
+    public static MapperManager getMapperManager() {
+        return mapperManager;
     }
 
     public static List<ITSFilter> getFilters() {
