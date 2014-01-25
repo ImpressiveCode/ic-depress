@@ -39,6 +39,7 @@ import org.knime.core.data.def.StringCell;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
+ * @author Michał Negacz, Wrocław University of Technology
  * 
  */
 public class ITSAdapterTableFactory {
@@ -109,7 +110,7 @@ public class ITSAdapterTableFactory {
                 stringListOrMissingCell(itsData.getFixVersion()),
                 stringOrMissingCell(itsData.getPriority()), 
                 stringOrMissingCell(itsData.getSummary()),
-                stringCell(itsData.getReporter()),
+                stringOrMissingCell(itsData.getReporter()),
                 stringSetCell(itsData.getAssignees()),
                 stringSetCell(itsData.getCommentAuthors()),
                 stringOrMissingCell(itsData.getLink()), 
