@@ -17,15 +17,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.its;
 
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import javax.swing.Box;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
+import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeDialogPane;
-import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.knime.core.node.NodeSettingsRO;
+import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentColumnFilter;
@@ -36,6 +44,8 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
+import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
+import org.knime.core.node.port.PortObjectSpec;
 
 /**
  * 
@@ -44,7 +54,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * @author Bartosz Skuza, Wrocław University of Technology
  * 
  */
-public abstract class ITSNodeDialog extends DefaultNodeSettingsPane {
+public abstract class ITSNodeDialog extends NodeDialogPane {
 
     public static final String CONNECTION_TAB_NAME = "Connection";
     public static final String LOGIN_TAB_NAME = "Login";
@@ -91,48 +101,53 @@ public abstract class ITSNodeDialog extends DefaultNodeSettingsPane {
      */
     protected DialogComponentNumberEdit threadsCount;
 
+    private JPanel filterPanel;
+
     public ITSNodeDialog() {
-        createConnectionTab();
-        createLoginTab();
-        createAdvancedTab();
-        createFiltersTab();
+        addTab(CONNECTION_TAB_NAME, createConnectionTab());
+        addTab(LOGIN_TAB_NAME, createLoginTab());
+        addTab(FILTERS_TAB_NAME, createFiltersTab());
+        addTab(ADVANCED_TAB_NAME, createAdvancedTab());
     }
 
-    protected void createConnectionTab() {
-        setDefaultTabTitle(CONNECTION_TAB_NAME);
-        createHostnameComponent();
-        createProjectChooser();
-        createCheckProjectsButton();
-        createCheckProjectsLabel();
+    protected Component createConnectionTab() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(createHostnameComponent());
+        panel.add(createProjectChooser());
+        panel.add(createCheckProjectsButton());
+        panel.add(createCheckProjectsLabel());
+        return panel;
     }
 
-    protected void createHostnameComponent() {
-        SettingsModelString hostnameComponentModel = createURLSettings();
-        url = new DialogComponentString(hostnameComponentModel, URL_LABEL, true, COMPONENT_WIDTH);
-        addDialogComponent(url);
+    protected Component createHostnameComponent() {
+        url = new DialogComponentString(createURLSettings(), URL_LABEL, true, COMPONENT_WIDTH);
+        return url.getComponentPanel();
     }
 
     protected abstract SettingsModelString createURLSettings();
 
-    protected void createProjectChooser() {
+    protected Component createProjectChooser() {
         SettingsModelString projectChooserModel = createProjectSettings();
-        project = new DialogComponentStringSelection(projectChooserModel, PROJECT_LABEL, null, false);
-        addDialogComponent(project);
+        List<String> projects = new ArrayList<>();
+        projects.add("project");
+        project = new DialogComponentStringSelection(projectChooserModel, PROJECT_LABEL, projects, false);
+        return project.getComponentPanel();
     }
 
     protected abstract SettingsModelString createProjectSettings();
 
-    protected void createCheckProjectsButton() {
+    protected Component createCheckProjectsButton() {
         checkProjectsButton = new DialogComponentButton(CHECK_PROJECTS_BUTTON);
         checkProjectsButton.addActionListener(getButtonConnectionCheckListener());
-        addDialogComponent(checkProjectsButton);
+        return checkProjectsButton.getComponentPanel();
     }
 
     protected abstract ActionListener getButtonConnectionCheckListener();
 
-    protected void createCheckProjectsLabel() {
+    protected Component createCheckProjectsLabel() {
         checkProjectsLabel = new DialogComponentLabel(CHECK_PROJECTS_INIT_LABEL);
-        addDialogComponent(checkProjectsLabel);
+        return checkProjectsLabel.getComponentPanel();
     }
 
     protected void updateCheckProjectsLabel(boolean connectionOK) {
@@ -143,48 +158,88 @@ public abstract class ITSNodeDialog extends DefaultNodeSettingsPane {
         }
     }
 
-    protected void createLoginTab() {
-        createNewTab(LOGIN_TAB_NAME);
-        createLoginComponent();
-        createPasswordComponent();
+    protected Component createLoginTab() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(createLoginComponent());
+        panel.add(createPasswordComponent());
+        return panel;
     }
 
-    protected void createLoginComponent() {
+    protected Component createLoginComponent() {
         login = new DialogComponentString(createLoginSettings(), LOGIN_LABEL, false, COMPONENT_WIDTH);
-        addDialogComponent(login);
+
+        return login.getComponentPanel();
     }
 
-    protected void createPasswordComponent() {
+    protected Component createPasswordComponent() {
         password = new DialogComponentPasswordField(createPasswordSettings(), PASSWORD_LABEL, COMPONENT_WIDTH);
-        addDialogComponent(password);
+        return password.getComponentPanel();
     }
 
     protected abstract SettingsModelString createLoginSettings();
 
     protected abstract SettingsModelString createPasswordSettings();
 
-    protected void createFiltersTab() {
-        createNewTab(FILTERS_TAB_NAME);
-        createAvailableFiltersComponent();
-        createFilterOptionsComponent();
+    protected abstract Collection<ITSFilter> getFilters();
+
+    protected Component createFiltersTab() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        panel.add(createAvailableFiltersComponent());
+        panel.add(createFilterOptions());
+
+        return panel;
     }
 
-    protected void createFilterOptionsComponent() {
+    protected Component createAvailableFiltersComponent() {
 
+        final ITSFiltersDialogComponent filtersComp = new ITSFiltersDialogComponent(getFilters(),
+                new SettingsModelStringArray("conf", new String[1]));
+
+        filtersComp.addListItemSelectionListener(new ITSFiltersDialogComponent.ListItemSelectedListener() {
+
+            @Override
+            public void listItemSelected(ITSFilter filter, int tableId) {
+
+                filterPanel.removeAll();
+
+                if (filter != null) {
+                    if (tableId == 2) {
+                        for (DialogComponent component : filter.getDialogComponents()) {
+                            filterPanel.add(component.getComponentPanel());
+                        }
+                        ITSNodeDialog.this.getPanel().repaint();
+                    }
+                }
+            }
+        });
+
+        return filtersComp.getComponentPanel();
     }
 
-    protected void createAvailableFiltersComponent() {
-
+    protected Component createFilterOptions() {
+        filterPanel = new JPanel();
+        filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
+        addLargestFilter(filterPanel);
+        return filterPanel;
+    }
+    
+    protected void addLargestFilter(JPanel panel) {
+        
     }
 
-    protected void createAdvancedTab() {
-        createNewTab(ADVANCED_TAB_NAME);
-        createThreadsCountComponent();
+    protected Component createAdvancedTab() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(createThreadsCountComponent());
+        return panel;
     }
 
-    protected void createThreadsCountComponent() {
+    protected Component createThreadsCountComponent() {
         threadsCount = new DialogComponentNumberEdit(createThreadsCountSettings(), THREADS_COUNT_LABEL, COMPONENT_WIDTH);
-        addDialogComponent(threadsCount);
+        return threadsCount.getComponentPanel();
     }
 
     protected abstract SettingsModelInteger createThreadsCountSettings();
@@ -194,53 +249,44 @@ public abstract class ITSNodeDialog extends DefaultNodeSettingsPane {
         // NOOP the flow variables tab is not needed
     }
 
-    @SuppressWarnings("unchecked")
-    public void removeDialogComponent(final DialogComponent component) {
+    @Override
+    protected void loadSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs) throws NotConfigurableException {
+        url.loadSettingsFrom(settings, specs);
+        login.loadSettingsFrom(settings, specs);
+        password.loadSettingsFrom(settings, specs);
+        threadsCount.loadSettingsFrom(settings, specs);
 
-        Box m_currentBox = null;
-        List<DialogComponent> m_dialogComponents = null;
-
-        try {
-            Field currentBoxField = DefaultNodeSettingsPane.class.getDeclaredField("m_currentBox");
-            currentBoxField.setAccessible(true);
-            m_currentBox = (Box) currentBoxField.get(this);
-
-            Field dialogComponentsField = DefaultNodeSettingsPane.class.getDeclaredField("m_dialogComponents");
-            dialogComponentsField.setAccessible(true);
-            m_dialogComponents = (List<DialogComponent>) dialogComponentsField.get(this);
-
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        for (ITSFilter filter : getFilters()) {
+            for (DialogComponent component : filter.getDialogComponents()) {
+                component.loadSettingsFrom(settings, specs);
+            }
         }
 
-        m_dialogComponents.remove(component);
-        m_currentBox.remove(component.getComponentPanel());
+        loadSpecificSettingsFrom(settings, specs);
     }
 
-    public void invalidate() {
+    protected abstract void loadSpecificSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs)
+            throws NotConfigurableException;
 
-        JPanel m_panel = null;
-        try {
-            Field f = NodeDialogPane.class.getDeclaredField("m_panel");
-            f.setAccessible(true);
-            m_panel = (JPanel) f.get(this);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+    @Override
+    protected void saveSettingsTo(NodeSettingsWO settings) throws InvalidSettingsException {
+        url.saveSettingsTo(settings);
+        login.saveSettingsTo(settings);
+        password.saveSettingsTo(settings);
+        threadsCount.saveSettingsTo(settings);
+
+        for (ITSFilter filter : getFilters()) {
+            for (DialogComponent component : filter.getDialogComponents()) {
+                try {
+                    component.saveSettingsTo(settings);
+                } catch (Exception e) {
+                    System.out.println(filter.getName() + " -> " + e.getMessage());
+                }
+            }
         }
 
-        m_panel.repaint();
+        saveSpecificSettingsTo(settings);
     }
 
+    protected abstract void saveSpecificSettingsTo(NodeSettingsWO settings) throws InvalidSettingsException;
 }

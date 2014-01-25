@@ -306,6 +306,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsPass.saveSettingsTo(settings);
         jiraSettingsJQL.saveSettingsTo(settings);
         jiraSettingsHistory.saveSettingsTo(settings);
+        jiraSettingsThreadCount.saveSettingsTo(settings);
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
@@ -317,6 +318,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
             }
         }
     }
+    
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
@@ -325,6 +327,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsPass.loadSettingsFrom(settings);
         jiraSettingsJQL.loadSettingsFrom(settings);
         jiraSettingsHistory.loadSettingsFrom(settings);
+        jiraSettingsThreadCount.loadSettingsFrom(settings);
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
@@ -344,6 +347,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsPass.validateSettings(settings);
         jiraSettingsJQL.validateSettings(settings);
         jiraSettingsHistory.validateSettings(settings);
+        jiraSettingsThreadCount.loadSettingsFrom(settings);
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {

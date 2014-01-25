@@ -17,18 +17,13 @@
  */
 package org.impressivecode.depress.its.jiraonline;
 
-import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsDateEnd;
-import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsDateFilterStatusChooser;
-import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsDateStart;
-import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsHistory;
-import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsJQL;
-import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.createSettingsURL;
-import static org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeModel.getFilters;
-
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.List;
 
+import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 
 import org.impressivecode.depress.its.ITSFilter;
@@ -37,16 +32,17 @@ import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
+import org.knime.core.node.InvalidSettingsException;
+import org.knime.core.node.NodeSettingsRO;
+import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.NotConfigurableException;
+import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
-import org.knime.core.node.defaultnodesettings.DialogComponentButton;
-import org.knime.core.node.defaultnodesettings.DialogComponentDate;
-import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
 import org.knime.core.node.defaultnodesettings.DialogComponentMultiLineString;
-import org.knime.core.node.defaultnodesettings.DialogComponentString;
-import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
+import org.knime.core.node.port.PortObjectSpec;
 
 /**
  * 
@@ -57,96 +53,32 @@ import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
  */
 public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
 
-    private static final String CONNECTION = "Connection";
-    private static final String JIRA_URL_LABEL = "Jira URL: ";
-    private static final String BUTTON_CEHCK = "Check";
-    private static final String FILTERS = "Filters";
     private static final String JQL = "JQL:";
-    private static final String DATE_TO = "Date to:";
-    private static final String DATE_FROM = "Date from:";
-    private static final String STATUS = "Status:";
-    private static final String NOT_TESTED_YET = "Not tested yet...";
     private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
 
-    private final String[] DATE_FILTER_STATUSES = new String[] { "Created", "Resolution" };
-
-    private DialogComponentLabel connectionTestLabel;
-    private DialogComponentButton checkConnectionButton;
     private SettingsModelString hostnameComponent;
-    private ActionListener checkConnectionButtonListener;
+
+    private DialogComponentBoolean history;
+    private DialogComponentMultiLineString jql;
 
     @Override
-    protected void createAdvancedTab() {
-        super.createAdvancedTab();
-        addDialogComponent(new DialogComponentBoolean(createSettingsHistory(), DOWNLOAD_HISTORY));
-        addDialogComponent(new DialogComponentMultiLineString(createSettingsJQL(), JQL, false, 100, 10));
+    protected Component createAdvancedTab() {
+        JPanel panel = (JPanel) super.createAdvancedTab();
+        history = new DialogComponentBoolean(JiraOnlineAdapterNodeModel.createSettingsHistory(), DOWNLOAD_HISTORY);
+        jql = new DialogComponentMultiLineString(JiraOnlineAdapterNodeModel.createSettingsJQL(), JQL, false, 100, 10);
+
+        panel.add(history.getComponentPanel());
+        panel.add(jql.getComponentPanel());
+
+        return panel;
     }
 
-    private ITSFilter currentFilter;
-
-    @Override
-    protected void createAvailableFiltersComponent() {
-        createNewGroup("Filters");
-        final ITSFiltersDialogComponent filtersComp = new ITSFiltersDialogComponent(getFilters(),
-                new SettingsModelStringArray("conf", new String[1]));
-
-        filtersComp.addListItemSelectionListener(new ITSFiltersDialogComponent.ListItemSelectedListener() {
-
-            @Override
-            public void listItemSelected(ITSFilter filter, int tableId) {
-
-                if (currentFilter != null) {
-                    currentFilter.removeComponents(JiraOnlineAdapterNodeDialog.this);
-                }
-
-                if (filter != null) {
-                    if (tableId == 2) {
-                        filter.addComponents(JiraOnlineAdapterNodeDialog.this);
-                        currentFilter = filter;
-                        JiraOnlineAdapterNodeDialog.this.invalidate();
-                    }
-                }
-            }
-        });
-
-        addDialogComponent(filtersComp);
-    }
-
-    @Override
-    protected void createFilterOptionsComponent() {
-        createNewGroup("Filter settings");
-
-        currentFilter = new CreationDateFilter();
-        currentFilter.addComponents(this);
-        // filter.removeComponents(this);
-    }
-
-    @Override
-    protected void createHostnameComponent() {
-        hostnameComponent = createSettingsURL();
-        addDialogComponent(new DialogComponentString(hostnameComponent, JIRA_URL_LABEL, true, 32));
-    }
-
-    private void createCheckConnectionButton() {
-        // checkConnectionButton = new DialogComponentButton(BUTTON_CEHCK);
-        // checkConnectionButtonListener = new CheckConnectionButtonListener();
-        // checkConnectionButton.addActionListener(checkConnectionButtonListener);
-
-        addDialogComponent(checkConnectionButton);
-    }
-
-    private void createTestConnectionLabel() {
-        connectionTestLabel = new DialogComponentLabel(NOT_TESTED_YET);
-        addDialogComponent(connectionTestLabel);
-    }
-
-    private void createFiltersGroup() {
-        createNewGroup(FILTERS);
-        addDialogComponent(new DialogComponentStringSelection(createSettingsDateFilterStatusChooser(), STATUS,
-                DATE_FILTER_STATUSES));
-        addDialogComponent(new DialogComponentDate(createSettingsDateStart(), DATE_FROM, true));
-        addDialogComponent(new DialogComponentDate(createSettingsDateEnd(), DATE_TO, true));
-    }
+    // @Override
+    // protected Component createHostnameComponent() {
+    // hostnameComponent = createSettingsURL();
+    // addDialogComponent(new DialogComponentString(hostnameComponent,
+    // JIRA_URL_LABEL, true, 32));
+    // }
 
     @Override
     protected SettingsModelString createURLSettings() {
@@ -154,18 +86,20 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     @Override
-    protected void createProjectChooser() {
-        // NOOP
-    }
-
-    @Override
     protected SettingsModelString createProjectSettings() {
-        return null;
+        return new SettingsModelString("createProjectSettings", "");
     }
 
     @Override
     protected ActionListener getButtonConnectionCheckListener() {
         return new CheckConnectionButtonListener();
+    }
+
+    @Override
+    protected void addLargestFilter(JPanel panel) {
+        for (DialogComponent component : new CreationDateFilter().getDialogComponents()) {
+            panel.add(component.getComponentPanel());
+        }
     }
 
     class CheckConnectionButtonListener implements ActionListener {
@@ -251,4 +185,21 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         return JiraOnlineAdapterNodeModel.createSettingsThreadCount();
     }
 
+    @Override
+    protected Collection<ITSFilter> getFilters() {
+        return JiraOnlineAdapterNodeModel.getFilters();
+    }
+
+    @Override
+    protected void loadSpecificSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs)
+            throws NotConfigurableException {
+        history.loadSettingsFrom(settings, specs);
+        jql.loadSettingsFrom(settings, specs);
+    }
+
+    @Override
+    protected void saveSpecificSettingsTo(NodeSettingsWO settings) throws InvalidSettingsException {
+        history.saveSettingsTo(settings);
+        jql.saveSettingsTo(settings);
+    }
 }

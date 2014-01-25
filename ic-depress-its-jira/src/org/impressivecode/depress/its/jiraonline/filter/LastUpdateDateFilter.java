@@ -4,7 +4,7 @@ import org.impressivecode.depress.its.ITSTimePeriodFilter;
 
 public class LastUpdateDateFilter extends ITSTimePeriodFilter {
     
-    private static final String JIRA_LAST_UPDATE_DATE = "depress.its.jiraonline.last.update.date";
+    private static final String JIRA_LAST_UPDATE_DATE = "depress.its.jiraonline.filter.last.update.date";
 
     @Override
     public String getName() {

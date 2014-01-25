@@ -4,7 +4,7 @@ import org.impressivecode.depress.its.ITSTimePeriodFilter;
 
 public class CreationDateFilter extends ITSTimePeriodFilter {
 
-    private static final String JIRA_CREATION_DATE = "depress.its.jiraonline.creation.date";
+    private static final String JIRA_CREATION_DATE = "depress.its.jiraonline.filter.creation.date";
 
     @Override
     public String getFilterValue() {

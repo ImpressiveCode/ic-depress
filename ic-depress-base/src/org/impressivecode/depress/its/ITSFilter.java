@@ -28,41 +28,29 @@ import org.knime.core.node.defaultnodesettings.DialogComponent;
  */
 public abstract class ITSFilter {
 
-	private List<DialogComponent> dialogComponents;
+    private List<DialogComponent> dialogComponents;
 
-	protected String filterModelId;
+    protected String filterModelId;
 
-	public ITSFilter() {
-		dialogComponents = createDialogComponents();
-		filterModelId = getFilterModelId();
-	}
+    public ITSFilter() {
+        dialogComponents = createDialogComponents();
+        filterModelId = getFilterModelId();
+    }
 
-	public abstract List<DialogComponent> createDialogComponents();
+    public abstract List<DialogComponent> createDialogComponents();
 
-	public abstract String getName();
+    public abstract String getName();
 
-	public abstract String getFilterValue();
+    public abstract String getFilterValue();
 
-	public abstract String getFilterModelId();
+    public abstract String getFilterModelId();
 
-	public void addComponents(ITSNodeDialog nodeDialog) {
-		for (DialogComponent component : dialogComponents) {
-			nodeDialog.addDialogComponent(component);
-		}
-	}
+    @Override
+    public String toString() {
+        return getName();
+    }
 
-	public void removeComponents(ITSNodeDialog nodeDialog) {
-		for (DialogComponent component : dialogComponents) {
-			nodeDialog.removeDialogComponent(component);
-		}
-	}
-
-	@Override
-	public String toString() {
-		return getName();
-	}
-
-	public List<? extends DialogComponent> getDialogComponents() {
-		return dialogComponents;
-	}
+    public List<DialogComponent> getDialogComponents() {
+        return dialogComponents;
+    }
 }

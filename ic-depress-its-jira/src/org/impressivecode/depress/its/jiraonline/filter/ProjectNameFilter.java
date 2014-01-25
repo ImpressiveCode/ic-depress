@@ -10,7 +10,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 public class ProjectNameFilter extends ITSFilter {
     
-    private static final String JIRA_PROJECT_NAME = "depress.its.jiraonline.project.name";
+    private static final String JIRA_PROJECT_NAME = "depress.its.jiraonline.filter.project.name";
 
     @Override
     public String getName() {
