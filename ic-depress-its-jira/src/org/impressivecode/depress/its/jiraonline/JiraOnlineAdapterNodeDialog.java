@@ -55,8 +55,11 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     private static final String JQL = "JQL:";
     private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
     private static final String MAPPING = "Mapping";
+    private static final String MAPPERS = "Mappers";
 
     private SettingsModelString hostnameComponent;
+    private ActionListener checkConnectionButtonListener;
+
 
     private DialogComponentBoolean history;
     private DialogComponentMultiLineString jql;
@@ -93,7 +96,7 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
             mappingTab.add(comp.getComponentPanel());
         }
     }
-
+    
     @Override
     protected SettingsModelString createURLSettings() {
         hostnameComponent = JiraOnlineAdapterNodeModel.createSettingsURL();
@@ -152,7 +155,6 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
             mm.createMapperPrioryty(getMapperList(Mode.PRIORITY_LIST));
             mm.createMapperResolution(getMapperList(Mode.RESOLUTION_LIST));
             mm.createMapperType(getMapperList(Mode.TYPE_LIST));
-
             return true;
         }
 
