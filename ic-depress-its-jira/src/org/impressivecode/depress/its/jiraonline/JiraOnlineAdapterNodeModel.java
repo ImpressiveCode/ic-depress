@@ -40,7 +40,6 @@ import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
 import org.impressivecode.depress.its.jiraonline.filter.LastUpdateDateFilter;
 import org.impressivecode.depress.its.jiraonline.filter.ProjectNameFilter;
 import org.impressivecode.depress.its.jiraonline.filter.ResolvedDateFilter;
-import org.impressivecode.depress.its.jiraonline.filter.StatusMapperFilter;
 import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;

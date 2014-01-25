@@ -36,7 +36,6 @@ import org.impressivecode.depress.its.ITSFiltersDialogComponent;
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
-import org.impressivecode.depress.its.jiraonline.filter.StatusMapperFilter;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
@@ -88,8 +87,8 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     @Override
     protected void createAvailableFiltersComponent() {
         createNewGroup("Filters");
-        final ITSFiltersDialogComponent filtersComp = new ITSFiltersDialogComponent(getFilters(), new SettingsModelStringArray(
-                "conf", new String[1]));
+        final ITSFiltersDialogComponent filtersComp = new ITSFiltersDialogComponent(getFilters(),
+                new SettingsModelStringArray("conf", new String[1]));
 
         filtersComp.addListItemSelectionListener(new ITSFiltersDialogComponent.ListItemSelectedListener() {
 
@@ -129,9 +128,9 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     private void createCheckConnectionButton() {
-        //checkConnectionButton = new DialogComponentButton(BUTTON_CEHCK);
-        //checkConnectionButtonListener = new CheckConnectionButtonListener();
-        //checkConnectionButton.addActionListener(checkConnectionButtonListener);
+        // checkConnectionButton = new DialogComponentButton(BUTTON_CEHCK);
+        // checkConnectionButtonListener = new CheckConnectionButtonListener();
+        // checkConnectionButton.addActionListener(checkConnectionButtonListener);
 
         addDialogComponent(checkConnectionButton);
     }
@@ -168,7 +167,7 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     protected ActionListener getButtonConnectionCheckListener() {
         return new CheckConnectionButtonListener();
     }
-    
+
     class CheckConnectionButtonListener implements ActionListener {
         private static final String TESTING_CONNECTION = "Testing connection.";
 
@@ -190,20 +189,36 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     class ConnectionChecker extends SwingWorker<Boolean, Void> {
         private static final String CONNECTION_FAILED = "Connection failed.";
         private static final String CONNECTION_OK = "Connection ok, Jira filters updated.";
+        private JiraOnlineAdapterUriBuilder builder;
+        private JiraOnlineAdapterRsClient client;
+
+        public ConnectionChecker() {
+            builder = new JiraOnlineAdapterUriBuilder();
+            client = new JiraOnlineAdapterRsClient();
+        }
 
         @Override
         protected Boolean doInBackground() throws Exception {
-            JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient();
-
-            JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
             builder.setHostname(hostnameComponent.getStringValue());
-            builder.setMode(Mode.TYPE_LIST);
-            String rawData = client.getJSON(builder.build());
-            List<JiraOnlineFilterListItem> list = JiraOnlineAdapterParser.getCustomFieldList(rawData);
-            StatusMapperFilter status = new StatusMapperFilter(list);
-            JiraOnlineAdapterNodeModel.getFilters().add(status);
-            
+
+            MapperManager mm = new MapperManager();
+            mm.createStateMapper(getMapperList(Mode.STATE_LIST));
+            mm.createPriorytyMapper(getMapperList(Mode.PRIORITY_LIST));
+            mm.createResolutionMapper(getMapperList(Mode.RESOLUTION_LIST));
+            mm.createTypeMapper(getMapperList(Mode.TYPE_LIST));
+
             return true;
+        }
+
+        private List<JiraOnlineFilterListItem> getMapperList(Mode mode) {
+            builder.setMode(mode);
+            String rawData = null;
+            try {
+                rawData = client.getJSON(builder.build());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return JiraOnlineAdapterParser.getCustomFieldList(rawData);
         }
 
         @SuppressWarnings("deprecation")
