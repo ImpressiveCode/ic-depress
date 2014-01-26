@@ -23,7 +23,7 @@ package org.impressivecode.depress.its;
  * 
  */
 public enum ITSStatus {
-    OPEN, IN_PROGRESS, REOPEN, CLOSED, RESOLVED, UNKNOWN;
+    OPEN, IN_PROGRESS, REOPENED, CLOSED, RESOLVED, UNKNOWN;
     
     @Override
     public String toString() {

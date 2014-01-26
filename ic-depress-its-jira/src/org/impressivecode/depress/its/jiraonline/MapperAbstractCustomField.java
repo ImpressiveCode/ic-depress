@@ -24,8 +24,9 @@ public abstract class MapperAbstractCustomField {
     public void createDialogComponents() {
         dialogComponents = newArrayList();
         for (JiraOnlineFilterListItem item : fieldList) {
-            DialogComponentStringSelection comp = new DialogComponentStringSelection(new SettingsModelString(
-                    getMapperModelString() + "." + item.getName(), ""), formatName(item.getName()),
+            SettingsModelString sms = new SettingsModelString(getMapperModelString() + "." + item.getName(), "");
+            sms.setStringValue(getParserValue(item.getName()));
+            DialogComponentStringSelection comp = new DialogComponentStringSelection(sms, formatName(item.getName()),
                     getImplementedMappings());
             comp.setToolTipText(item.getDescription());
             dialogComponents.add(comp);
@@ -43,4 +44,6 @@ public abstract class MapperAbstractCustomField {
     protected abstract String getMapperModelString();
 
     protected abstract Collection<String> getImplementedMappings();
+    
+    protected abstract String getParserValue(String nameToParse);
 }

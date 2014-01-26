@@ -28,4 +28,9 @@ public class MapperResolution extends MapperAbstractCustomField {
         }
         return statuses;
     }
+
+    @Override
+    protected String getParserValue(String resolution) {
+        return JiraOnlineAdapterParser.parseResolution(resolution).toString();
+    }
 }

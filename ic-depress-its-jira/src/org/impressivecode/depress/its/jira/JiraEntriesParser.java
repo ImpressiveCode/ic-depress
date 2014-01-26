@@ -199,8 +199,8 @@ public class JiraEntriesParser {
         switch (status) {
         case "Open":
             return ITSStatus.OPEN;
-        case "Reopen":
-            return ITSStatus.REOPEN;
+        case "Reopened":
+            return ITSStatus.REOPENED;
         case "In Progress":
             return ITSStatus.IN_PROGRESS;
         case "Resolved":

@@ -26,6 +26,12 @@ public enum ITSResolution {
     
     @Override
     public String toString() {
-        return (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
+        String value;
+        if (this.equals(WONT_FIX)) {
+            value = "Won't fix";
+        } else {
+            value = (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
+        }
+        return value;
     };
 }

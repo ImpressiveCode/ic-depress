@@ -28,4 +28,9 @@ public class MapperState extends MapperAbstractCustomField {
         }
         return statuses;
     }
+
+    @Override
+    protected String getParserValue(String state) {
+        return JiraOnlineAdapterParser.parseStatus(state).toString();
+    }
 }

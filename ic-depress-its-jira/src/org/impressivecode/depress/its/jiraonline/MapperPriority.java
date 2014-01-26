@@ -28,4 +28,9 @@ public class MapperPriority extends MapperAbstractCustomField {
         }
         return statuses;
     }
+
+    @Override
+    protected String getParserValue(String priority) {
+        return JiraOnlineAdapterParser.parsePriority(priority).toString();
+    }
 }

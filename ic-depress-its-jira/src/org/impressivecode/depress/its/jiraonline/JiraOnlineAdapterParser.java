@@ -33,10 +33,6 @@ import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueCha
 import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChanges;
 import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueHistory;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineComment;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Priority;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Resolution;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Status;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineField.Type;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssue;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueVersion;
@@ -59,7 +55,7 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 public class JiraOnlineAdapterParser {
 
     private static final String LINK_PATH = "browse/";
-    
+
     public static List<ITSDataType> parseSingleIssueBatch(String source, String hostname) {
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -170,16 +166,16 @@ public class JiraOnlineAdapterParser {
             }
             data.setAssignees(assignees);
 
-            data.setPriority(parsePriority(issue.getFields().getPriority()));
+            data.setPriority(parsePriority(issue.getFields().getPriority().getName()));
 
-            data.setType(parseType(issue.getFields().getIssueType()));
-            data.setStatus(parseStatus(issue.getFields().getStatus()));
+            data.setType(parseType(issue.getFields().getIssueType().getName()));
+            data.setStatus(parseStatus(issue.getFields().getStatus().getName()));
 
             data.setCreated(issue.getFields().getCreated());
             data.setUpdated(issue.getFields().getUpdated());
             data.setResolved(issue.getFields().getResolved());
 
-            data.setResolution(parseResolution(issue.getFields().getResolution()));
+            data.setResolution(parseResolution(issue.getFields().getResolution().getName()));
 
             List<String> versions = new ArrayList<>();
             for (JiraOnlineIssueVersion version : issue.getFields().getVersions()) {
@@ -214,96 +210,136 @@ public class JiraOnlineAdapterParser {
         return resultList;
     }
 
-    private static ITSResolution parseResolution(Resolution resolution) {
-        if (resolution == null || resolution.getName() == null) {
-            return ITSResolution.UNKNOWN;
+    public static ITSResolution parseResolution(String resolution) {
+        // if (resolution == null || resolution.getName() == null) {
+        // return ITSResolution.UNKNOWN;
+        // }
+        // switch (resolution.getName()) {
+        // case "Unresolved":
+        // return ITSResolution.UNRESOLVED;
+        // case "Fixed":
+        // return ITSResolution.FIXED;
+        // case "Wont't Fix":
+        // return ITSResolution.WONT_FIX;
+        // case "Duplicate":
+        // return ITSResolution.DUPLICATE;
+        // case "Invalid":
+        // return ITSResolution.INVALID;
+        // case "Incomplete":
+        // return ITSResolution.INVALID;
+        // case "Cannot Reproduce":
+        // return ITSResolution.WONT_FIX;
+        // case "Later":
+        // return ITSResolution.WONT_FIX;
+        // case "Not A Problem":
+        // return ITSResolution.WONT_FIX;
+        // case "Implemented":
+        // return ITSResolution.FIXED;
+        // case "Complete":
+        // return ITSResolution.FIXED;
+        // default:
+        // return ITSResolution.UNKNOWN;
+        // }
+        ITSResolution parsed = ITSResolution.UNKNOWN;
+
+        for (ITSResolution itsResolution : ITSResolution.values()) {
+            if (resolution.equalsIgnoreCase(itsResolution.toString())) {
+                parsed = itsResolution;
+                break;
+            }
         }
-        switch (resolution.getName()) {
-        case "Unresolved":
-            return ITSResolution.UNRESOLVED;
-        case "Fixed":
-            return ITSResolution.FIXED;
-        case "Wont't Fix":
-            return ITSResolution.WONT_FIX;
-        case "Duplicate":
-            return ITSResolution.DUPLICATE;
-        case "Invalid":
-            return ITSResolution.INVALID;
-        case "Incomplete":
-            return ITSResolution.INVALID;
-        case "Cannot Reproduce":
-            return ITSResolution.WONT_FIX;
-        case "Later":
-            return ITSResolution.WONT_FIX;
-        case "Not A Problem":
-            return ITSResolution.WONT_FIX;
-        case "Implemented":
-            return ITSResolution.FIXED;
-        case "Complete":
-            return ITSResolution.FIXED;
-        default:
-            return ITSResolution.UNKNOWN;
-        }
+
+        return parsed;
     }
 
-    private static ITSStatus parseStatus(Status status) {
-        if (status == null || status.getName() == null) {
-            return ITSStatus.UNKNOWN;
+    public static ITSStatus parseStatus(String status) {
+        // if (status == null || status.getName() == null) {
+        // return ITSStatus.UNKNOWN;
+        // }
+        // switch (status.getName()) {
+        // case "Open":
+        // return ITSStatus.OPEN;
+        // case "Reopen":
+        // return ITSStatus.REOPEN;
+        // case "In Progress":
+        // return ITSStatus.IN_PROGRESS;
+        // case "Resolved":
+        // return ITSStatus.RESOLVED;
+        // case "Closed":
+        // return ITSStatus.CLOSED;
+        // default:
+        // return ITSStatus.UNKNOWN;
+        // }
+        ITSStatus parsed = ITSStatus.UNKNOWN;
+
+        for (ITSStatus itsStatus : ITSStatus.values()) {
+            if (status.equalsIgnoreCase(itsStatus.toString())) {
+                parsed = itsStatus;
+                break;
+            }
         }
-        switch (status.getName()) {
-        case "Open":
-            return ITSStatus.OPEN;
-        case "Reopen":
-            return ITSStatus.REOPEN;
-        case "In Progress":
-            return ITSStatus.IN_PROGRESS;
-        case "Resolved":
-            return ITSStatus.RESOLVED;
-        case "Closed":
-            return ITSStatus.CLOSED;
-        default:
-            return ITSStatus.UNKNOWN;
-        }
+
+        return parsed;
     }
 
-    private static ITSType parseType(Type type) {
-        if (type == null || type.getName() == null) {
-            return ITSType.UNKNOWN;
+    public static ITSType parseType(String type) {
+        // if (type == null || type.getName() == null) {
+        // return ITSType.UNKNOWN;
+        // }
+        // switch (type.getName()) {
+        // case "Bug":
+        // return ITSType.BUG;
+        // case "Test":
+        // return ITSType.TEST;
+        // case "Improvement":
+        // case "New Feature":
+        // case "Task":
+        // case "Wish":
+        // return ITSType.ENHANCEMENT;
+        // default:
+        // return ITSType.UNKNOWN;
+        // }
+        ITSType parsed = ITSType.UNKNOWN;
+
+        for (ITSType itsType : ITSType.values()) {
+            if (type.equalsIgnoreCase(itsType.toString())) {
+                parsed = itsType;
+                break;
+            }
         }
-        switch (type.getName()) {
-        case "Bug":
-            return ITSType.BUG;
-        case "Test":
-            return ITSType.TEST;
-        case "Improvement":
-        case "New Feature":
-        case "Task":
-        case "Wish":
-            return ITSType.ENHANCEMENT;
-        default:
-            return ITSType.UNKNOWN;
-        }
+
+        return parsed;
     }
 
-    private static ITSPriority parsePriority(Priority priority) {
+    public static ITSPriority parsePriority(String priority) {
 
-        if (priority == null || priority.getName() == null) {
-            return ITSPriority.UNKNOWN;
+        // if (priority == null || priority.getName() == null) {
+        // return ITSPriority.UNKNOWN;
+        // }
+        // switch (priority) {
+        // case "Trivial":
+        // return ITSPriority.TRIVIAL;
+        // case "Minor":
+        // return ITSPriority.MINOR;
+        // case "Major":
+        // return ITSPriority.MAJOR;
+        // case "Critical":
+        // return ITSPriority.CRITICAL;
+        // case "Blocker":
+        // return ITSPriority.BLOCKER;
+        // default:
+        // return ITSPriority.UNKNOWN;
+        // }
+        ITSPriority parsed = ITSPriority.UNKNOWN;
+
+        for (ITSPriority itsPriority : ITSPriority.values()) {
+            if (priority.equalsIgnoreCase(itsPriority.toString())) {
+                parsed = itsPriority;
+                break;
+            }
         }
-        switch (priority.getName()) {
-        case "Trivial":
-            return ITSPriority.TRIVIAL;
-        case "Minor":
-            return ITSPriority.MINOR;
-        case "Major":
-            return ITSPriority.MAJOR;
-        case "Critical":
-            return ITSPriority.CRITICAL;
-        case "Blocker":
-            return ITSPriority.BLOCKER;
-        default:
-            return ITSPriority.UNKNOWN;
-        }
+
+        return parsed;
     }
 
     private static List<JiraOnlineIssueChangeRowItem> parseIssueHistory(JiraOnlineIssueHistory issue) {
