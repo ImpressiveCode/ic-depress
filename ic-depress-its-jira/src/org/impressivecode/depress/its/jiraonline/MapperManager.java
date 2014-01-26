@@ -9,14 +9,16 @@ import org.knime.core.node.defaultnodesettings.DialogComponent;
 public class MapperManager {
 
     private MapperState mapperState;
-
-    // private MapperPriority mapperPriority;
-    // private MapperResolution mapperResolution;
-    // private MapperType mapperType;
+     private MapperPriority mapperPriority;
+     private MapperResolution mapperResolution;
+     private MapperType mapperType;
 
     public List<DialogComponent> getDialogComponents() {
         ArrayList<DialogComponent> componentList = new ArrayList<DialogComponent>();
         componentList.addAll(getComponentsMapperState());
+        componentList.addAll(getComponentsMapperPriority());
+        componentList.addAll(getComponentsMapperResolution());
+        componentList.addAll(getComponentsMapperType());
         return componentList;
     }
 
@@ -26,15 +28,18 @@ public class MapperManager {
     }
 
     public void createMapperPrioryty(List<JiraOnlineFilterListItem> fieldList) {
-
+        mapperPriority = new MapperPriority(fieldList);
+        mapperPriority.createDialogComponents();
     }
 
     public void createMapperResolution(List<JiraOnlineFilterListItem> fieldList) {
-
+        mapperResolution = new MapperResolution(fieldList);
+        mapperResolution.createDialogComponents();
     }
 
     public void createMapperType(List<JiraOnlineFilterListItem> fieldList) {
-
+        mapperType = new MapperType(fieldList);
+        mapperType.createDialogComponents();
     }
 
     public List<DialogComponent> getComponentsMapperState() {
@@ -42,17 +47,14 @@ public class MapperManager {
     }
 
     public List<DialogComponent> getComponentsMapperPriority() {
-        return null;
-        // return mapperPriority.createDialogComponents();
+        return mapperPriority == null ? new ArrayList<DialogComponent>() : mapperPriority.getDialogComponents();
     }
 
     public List<DialogComponent> getComponentsMapperResolution() {
-        return null;
-        // return mapperResolution.createDialogComponents();
+        return mapperResolution == null ? new ArrayList<DialogComponent>() : mapperResolution.getDialogComponents();
     }
 
     public List<DialogComponent> getComponentsMapperType() {
-        return null;
-        // return mapperType.createDialogComponents();
+        return mapperType == null ? new ArrayList<DialogComponent>() : mapperType.getDialogComponents();
     }
 }

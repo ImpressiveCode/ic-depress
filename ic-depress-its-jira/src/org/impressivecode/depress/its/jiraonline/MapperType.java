@@ -4,26 +4,26 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.impressivecode.depress.its.ITSStatus;
+import org.impressivecode.depress.its.ITSType;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 
-public class MapperState extends MapperAbstractCustomField {
+public class MapperType extends MapperAbstractCustomField {
 
-    public MapperState(List<JiraOnlineFilterListItem> fieldList) {
+    public MapperType(List<JiraOnlineFilterListItem> fieldList) {
         super(fieldList);
     }
 
-    private static final String JIRA_STATUS = "depress.its.jiraonline.statusList";
+    private static final String JIRA_TYPE = "depress.its.jiraonline.typeList";
 
     @Override
     protected String getMapperModelString() {
-        return JIRA_STATUS;
+        return JIRA_TYPE;
     }
-    
+
     @Override
     protected Collection<String> getImplementedMappings() {
         Collection<String> statuses = new ArrayList<String>();
-        for (ITSStatus statusEnum : ITSStatus.values()) {
+        for (ITSType statusEnum : ITSType.values()) {
             statuses.add(statusEnum.toString());
         }
         return statuses;

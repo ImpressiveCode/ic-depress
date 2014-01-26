@@ -25,6 +25,8 @@ import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.SwingWorker;
 
 import org.impressivecode.depress.its.ITSFilter;
@@ -81,17 +83,22 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
 
     private Component createMappersTab() {
         mappingTab = new JPanel();
+        // JTabbedPane mapTabs = new JTabbedPane();
+        // JScrollPane scrollPane = new JScrollPane();
+        // mapTabs.add(MAPPING, scrollPane);
+        //
+        // mappingTab.add(mapTabs);
 
         mappingTab.setLayout(new BoxLayout(mappingTab, BoxLayout.Y_AXIS));
-        repaintMappersTab();
+        // mappingTab.
+        // repaintMappersTab();
 
         return mappingTab;
     }
 
-    private void repaintMappersTab() {
-        for (DialogComponent comp : JiraOnlineAdapterNodeModel.getMapperManager().getComponentsMapperState()) {
-            mappingTab.add(comp.getComponentPanel());
-        }
+    private void repaintMappersTab(JTabbedPane tabs) {
+        mappingTab.removeAll();
+        mappingTab.add(tabs);
     }
 
     @Override
@@ -117,6 +124,19 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         }
     }
 
+    @Override
+    protected void saveSettingsTo(NodeSettingsWO settings) throws InvalidSettingsException {
+        for (DialogComponent component : JiraOnlineAdapterNodeModel.getMapperManager().getDialogComponents()) {
+            try {
+                component.getModel().saveSettingsTo(settings);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        super.saveSettingsTo(settings);
+    }
+
     class CheckConnectionButtonListener implements ActionListener {
         private static final String TESTING_CONNECTION = "Testing connection...";
 
@@ -132,27 +152,35 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         }
     }
 
-    class ConnectionChecker extends SwingWorker<Boolean, Void> {
+    class ConnectionChecker extends SwingWorker<JTabbedPane, Void> {
         private static final String CONNECTION_FAILED = "Connection failed.";
         private static final String CONNECTION_OK = "Connection ok, Jira filters updated.";
+
+        private static final String STATE = "State";
+        private static final String PRIORITY = "Priority";
+        private static final String RESOLUTION = "Resolution";
+        private static final String TYPE = "Type";
+
         private JiraOnlineAdapterUriBuilder builder;
         private JiraOnlineAdapterRsClient client;
+        private MapperManager mm;
 
         public ConnectionChecker() {
+            mm = JiraOnlineAdapterNodeModel.getMapperManager();
             builder = new JiraOnlineAdapterUriBuilder();
             client = new JiraOnlineAdapterRsClient();
         }
 
         @Override
-        protected Boolean doInBackground() throws Exception {
+        protected JTabbedPane doInBackground() throws Exception {
             builder.setHostname(hostnameComponent.getStringValue());
 
-            MapperManager mm = JiraOnlineAdapterNodeModel.getMapperManager();
             mm.createMapperState(getMapperList(Mode.STATE_LIST));
             mm.createMapperPrioryty(getMapperList(Mode.PRIORITY_LIST));
             mm.createMapperResolution(getMapperList(Mode.RESOLUTION_LIST));
             mm.createMapperType(getMapperList(Mode.TYPE_LIST));
-            return true;
+
+            return createTabs();
         }
 
         private List<JiraOnlineFilterListItem> getMapperList(Mode mode) {
@@ -166,12 +194,33 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
             return JiraOnlineAdapterParser.getCustomFieldList(rawData);
         }
 
+        private JTabbedPane createTabs() {
+            JTabbedPane mapTabs = new JTabbedPane();
+            mapTabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+            mapTabs.add(STATE, createTab(mm.getComponentsMapperState()));
+            mapTabs.add(PRIORITY, createTab(mm.getComponentsMapperPriority()));
+            mapTabs.add(RESOLUTION, createTab(mm.getComponentsMapperResolution()));
+            mapTabs.add(TYPE, createTab(mm.getComponentsMapperType()));
+            return mapTabs;
+        }
+
+        private Component createTab(List<DialogComponent> componentList) {
+            JPanel tabPanel = new JPanel();
+            JScrollPane scrollPane = new JScrollPane();
+            tabPanel.setLayout(new BoxLayout(tabPanel, BoxLayout.Y_AXIS));
+            for (DialogComponent dialogComponent : componentList) {
+                tabPanel.add(dialogComponent.getComponentPanel());
+            }
+            scrollPane.setViewportView(tabPanel);
+            return scrollPane;
+        }
+
         @SuppressWarnings("deprecation")
         @Override
         public void done() {
             try {
-                get();
-                repaintMappersTab();
+                JTabbedPane tabs = get();
+                repaintMappersTab(tabs);
                 checkProjectsLabel.setText(CONNECTION_OK);
             } catch (Exception e) {
                 System.out.println(e.getMessage());

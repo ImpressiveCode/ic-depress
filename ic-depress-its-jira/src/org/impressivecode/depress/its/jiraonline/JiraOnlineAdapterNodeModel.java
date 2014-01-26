@@ -322,6 +322,15 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
                 }
             }
         }
+
+        for (DialogComponent component : mapperManager.getDialogComponents()) {
+            try {
+                component.getModel().saveSettingsTo(settings);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
     }
 
     @Override
@@ -343,6 +352,14 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
                 }
             }
         }
+
+        for (DialogComponent component : mapperManager.getDialogComponents()) {
+            try {
+                component.getModel().loadSettingsFrom(settings);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     @Override
@@ -362,6 +379,14 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
+            }
+        }
+
+        for (DialogComponent component : mapperManager.getDialogComponents()) {
+            try {
+                component.getModel().validateSettings(settings);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -413,7 +438,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     static SettingsModelInteger createSettingsThreadCount() {
         return new SettingsModelInteger(THREAD_COUNT_SETTING, DEFAULT_THREAD_COUNT);
     }
-    
+
     static SettingsModelStringArray createSettingsFilters() {
         return new SettingsModelStringArray(FILTERS_SETTING, new String[] {});
     }
@@ -483,6 +508,5 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
             return list;
         }
     }
-
 
 }

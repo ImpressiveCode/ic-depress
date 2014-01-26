@@ -216,6 +216,15 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
                         ITSNodeDialog.this.getPanel().repaint();
                     }
                 }
+                
+                if (filter != null) {
+                    if (tableId == 2) {
+                        for (DialogComponent component : filter.getDialogComponents()) {
+                            filterPanel.add(component.getComponentPanel());
+                        }
+                        ITSNodeDialog.this.getPanel().repaint();
+                    }
+                }
             }
         });
 
