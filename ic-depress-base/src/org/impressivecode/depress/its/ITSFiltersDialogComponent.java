@@ -39,26 +39,27 @@ public class ITSFiltersDialogComponent extends DialogComponent {
 
     private JPanel panel;
     private ShuttleList<ITSFilter> list;
+    private Collection<ITSFilter> filters;
 
-    public ITSFiltersDialogComponent(Collection<ITSFilter> filters, SettingsModelStringArray model) {
+    public ITSFiltersDialogComponent(Collection<ITSFilter> filters, final SettingsModelStringArray model) {
         super(model);
         panel = new JPanel();
         list = new ShuttleList<>();
+        this.filters = filters;
 
-        for (ITSFilter filter : filters) {
-            boolean added = false;
-            for (String id : model.getStringArrayValue()) {
-                if (filter.getFilterModelId().equals(id)) {
-                    // filter selected
-                    list.addElementToRight(filter);
-                    added = true;
-                    break;
+        list.addListItemMovedListener(new ShuttleList.OnListItemMovedListener<ITSFilter>() {
+
+            @Override
+            public void listItemMoved(ITSFilter listItem, int tableTo) {
+
+                String[] stringArray = new String[list.getRightTableElements().size()];
+                for (int i = 0; i < list.getRightTableElements().size(); i++) {
+                    stringArray[i] = list.getRightTableElements().get(i).getFilterModelId();
                 }
+
+                model.setStringArrayValue(stringArray);
             }
-            if(!added) {
-                list.addElementToLeft(filter);
-            }
-        }
+        });
 
         panel.add(list);
     }
@@ -73,14 +74,33 @@ public class ITSFiltersDialogComponent extends DialogComponent {
         });
     }
 
+    private void update() {
+        list.removeAllElements();
+        for (ITSFilter filter : filters) {
+            boolean added = false;
+            for (String id : ((SettingsModelStringArray)getModel()).getStringArrayValue()) {
+                if (filter.getFilterModelId().equals(id)) {
+                    // filter selected
+                    list.addElementToRight(filter);
+                    added = true;
+                    break;
+                }
+            }
+            if (!added) {
+                list.addElementToLeft(filter);
+            }
+        }
+    }
+    
     @Override
     public JPanel getComponentPanel() {
         return panel;
     }
+    
 
     @Override
     protected void updateComponent() {
-        // NOOP
+        update();
     }
 
     @Override

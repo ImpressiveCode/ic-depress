@@ -41,6 +41,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentMultiLineString;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
+import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
 
 /**
@@ -55,12 +56,8 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     private static final String JQL = "JQL:";
     private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
     private static final String MAPPING = "Mapping";
-    private static final String MAPPERS = "Mappers";
 
     private SettingsModelString hostnameComponent;
-    private ActionListener checkConnectionButtonListener;
-
-
     private DialogComponentBoolean history;
     private DialogComponentMultiLineString jql;
     private JPanel mappingTab;
@@ -96,7 +93,7 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
             mappingTab.add(comp.getComponentPanel());
         }
     }
-    
+
     @Override
     protected SettingsModelString createURLSettings() {
         hostnameComponent = JiraOnlineAdapterNodeModel.createSettingsURL();
@@ -202,6 +199,11 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     @Override
+    protected SettingsModelStringArray createFilterSettings() {
+        return JiraOnlineAdapterNodeModel.createSettingsFilters();
+    }
+
+    @Override
     protected Collection<ITSFilter> getFilters() {
         return JiraOnlineAdapterNodeModel.getFilters();
     }
@@ -218,4 +220,5 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         history.saveSettingsTo(settings);
         jql.saveSettingsTo(settings);
     }
+
 }

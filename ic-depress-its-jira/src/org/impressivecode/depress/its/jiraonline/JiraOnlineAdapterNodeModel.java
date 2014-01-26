@@ -56,6 +56,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
+import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
 
 import com.google.common.base.Preconditions;
@@ -84,6 +85,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private static final String JIRA_STATUS = "depress.its.jiraonline.status";
     private static final String JIRA_HISTORY = "depress.its.jiraonline.history";
     private static final String THREAD_COUNT_SETTING = "depress.its.jiraonline.threadcount";
+    private static final String FILTERS_SETTING = "depress.its.jiraonline.filters";
 
     private final SettingsModelString jiraSettingsURL = createSettingsURL();
     private final SettingsModelString jiraSettingsLogin = createSettingsLogin();
@@ -91,6 +93,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private final SettingsModelString jiraSettingsJQL = createSettingsJQL();
     private final SettingsModelBoolean jiraSettingsHistory = createSettingsHistory();
     private final SettingsModelInteger jiraSettingsThreadCount = createSettingsThreadCount();
+    private final SettingsModelStringArray jiraSettingsFilter = createSettingsFilters();
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraOnlineAdapterNodeModel.class);
 
@@ -308,6 +311,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.saveSettingsTo(settings);
         jiraSettingsHistory.saveSettingsTo(settings);
         jiraSettingsThreadCount.saveSettingsTo(settings);
+        jiraSettingsFilter.saveSettingsTo(settings);
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
@@ -318,16 +322,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
                 }
             }
         }
-
-//        for (DialogComponent component : mapperManager.getDialogComponents()) {
-//            try {
-//                component.getModel().saveSettingsTo(settings);
-//            } catch (Exception e) {
-//                System.out.println(e.getMessage());
-//            }
-//        }
     }
-    
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
@@ -337,6 +332,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.loadSettingsFrom(settings);
         jiraSettingsHistory.loadSettingsFrom(settings);
         jiraSettingsThreadCount.loadSettingsFrom(settings);
+        jiraSettingsFilter.loadSettingsFrom(settings);
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
@@ -347,14 +343,6 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
                 }
             }
         }
-
-//        for (DialogComponent component : mapperManager.getDialogComponents()) {
-//            try {
-//                component.getModel().loadSettingsFrom(settings);
-//            } catch (Exception e) {
-//                System.out.println(e.getMessage());
-//            }
-//        }
     }
 
     @Override
@@ -365,6 +353,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.validateSettings(settings);
         jiraSettingsHistory.validateSettings(settings);
         jiraSettingsThreadCount.loadSettingsFrom(settings);
+        jiraSettingsFilter.loadSettingsFrom(settings);
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
@@ -375,14 +364,6 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
                 }
             }
         }
-
-//        for (DialogComponent component : mapperManager.getDialogComponents()) {
-//            try {
-//                component.getModel().validateSettings(settings);
-//            } catch (Exception e) {
-//                System.out.println(e.getMessage());
-//            }
-//        }
     }
 
     @Override
@@ -431,6 +412,10 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     static SettingsModelInteger createSettingsThreadCount() {
         return new SettingsModelInteger(THREAD_COUNT_SETTING, DEFAULT_THREAD_COUNT);
+    }
+    
+    static SettingsModelStringArray createSettingsFilters() {
+        return new SettingsModelStringArray(FILTERS_SETTING, new String[] {});
     }
 
     private static List<ITSFilter> createFilters() {
@@ -498,4 +483,6 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
             return list;
         }
     }
+
+
 }

@@ -100,6 +100,8 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
      * Advanced components
      */
     protected DialogComponentNumberEdit threadsCount;
+    
+    protected ITSFiltersDialogComponent filterSelection;
 
     private JPanel filterPanel;
 
@@ -180,6 +182,8 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     protected abstract SettingsModelString createLoginSettings();
 
     protected abstract SettingsModelString createPasswordSettings();
+    
+    protected abstract SettingsModelStringArray createFilterSettings();
 
     protected abstract Collection<ITSFilter> getFilters();
 
@@ -195,10 +199,9 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
 
     protected Component createAvailableFiltersComponent() {
 
-        final ITSFiltersDialogComponent filtersComp = new ITSFiltersDialogComponent(getFilters(),
-                new SettingsModelStringArray("conf", new String[1]));
+        filterSelection = new ITSFiltersDialogComponent(getFilters(), createFilterSettings());
 
-        filtersComp.addListItemSelectionListener(new ITSFiltersDialogComponent.ListItemSelectedListener() {
+        filterSelection.addListItemSelectionListener(new ITSFiltersDialogComponent.ListItemSelectedListener() {
 
             @Override
             public void listItemSelected(ITSFilter filter, int tableId) {
@@ -216,7 +219,7 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
             }
         });
 
-        return filtersComp.getComponentPanel();
+        return filterSelection.getComponentPanel();
     }
 
     protected Component createFilterOptions() {
@@ -227,7 +230,7 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     }
     
     protected void addLargestFilter(JPanel panel) {
-        
+        // NOOP, should be implemented by dialogs to set their size
     }
 
     protected Component createAdvancedTab() {
@@ -248,13 +251,14 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     protected void addFlowVariablesTab() {
         // NOOP the flow variables tab is not needed
     }
-
+    
     @Override
     protected void loadSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs) throws NotConfigurableException {
         url.loadSettingsFrom(settings, specs);
         login.loadSettingsFrom(settings, specs);
         password.loadSettingsFrom(settings, specs);
         threadsCount.loadSettingsFrom(settings, specs);
+        filterSelection.loadSettingsFrom(settings, specs);
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
@@ -274,6 +278,7 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         login.saveSettingsTo(settings);
         password.saveSettingsTo(settings);
         threadsCount.saveSettingsTo(settings);
+        filterSelection.saveSettingsTo(settings);
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
