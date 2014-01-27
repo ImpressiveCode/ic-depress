@@ -57,8 +57,8 @@ public class JiraOnlineAdapterParser {
     private static final String LINK_PATH = "browse/";
 
     public static List<ITSDataType> parseSingleIssueBatch(String source, String hostname) {
-        
-//        System.out.println("Parsing: "+source);
+
+        // System.out.println("Parsing: "+source);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
@@ -150,57 +150,61 @@ public class JiraOnlineAdapterParser {
         List<ITSDataType> resultList = new ArrayList<>();
 
         for (JiraOnlineIssue issue : issueList.getIssues()) {
-            ITSDataType data = new ITSDataType();
-            data.setIssueId(issue.getKey());
+            try {
+                ITSDataType data = new ITSDataType();
+                data.setIssueId(issue.getKey());
 
-            String link = hostname + LINK_PATH + issue.getKey();
-            data.setLink(link);
+                String link = hostname + LINK_PATH + issue.getKey();
+                data.setLink(link);
 
-            Set<String> assignees = new HashSet<>();
-            if (issue.getFields().getAssignee() != null) {
-                assignees.add(issue.getFields().getAssignee().getName());
+                Set<String> assignees = new HashSet<>();
+                if (issue.getFields().getAssignee() != null) {
+                    assignees.add(issue.getFields().getAssignee().getName());
+                }
+                data.setAssignees(assignees);
+
+                data.setPriority(parsePriority(issue.getFields().getPriority().getName()));
+
+                data.setType(parseType(issue.getFields().getIssueType().getName()));
+                data.setStatus(parseStatus(issue.getFields().getStatus().getName()));
+
+                data.setCreated(issue.getFields().getCreated());
+                data.setUpdated(issue.getFields().getUpdated());
+                data.setResolved(issue.getFields().getResolved());
+
+                data.setResolution(parseResolution(issue.getFields().getResolution().getName()));
+
+                List<String> versions = new ArrayList<>();
+                for (JiraOnlineIssueVersion version : issue.getFields().getVersions()) {
+                    versions.add(version.getName());
+                }
+                data.setVersion(versions);
+
+                List<String> fixVersions = new ArrayList<>();
+                for (JiraOnlineIssueVersion version : issue.getFields().getFixVersions()) {
+                    fixVersions.add(version.getName());
+                }
+                data.setFixVersion(fixVersions);
+
+                data.setReporter(issue.getFields().getReporter().getName());
+
+                data.setSummary(issue.getFields().getSummary());
+                data.setDescription(issue.getFields().getDescription());
+
+                List<String> comments = new ArrayList<>();
+                Set<String> commentAuthors = new HashSet<>();
+                for (JiraOnlineComment comment : issue.getFields().getComment().getComments()) {
+                    comments.add(comment.getBody());
+                    commentAuthors.add(comment.getAuthor().getName());
+                }
+
+                data.setComments(comments);
+                data.setCommentAuthors(commentAuthors);
+
+                resultList.add(data);
+            } catch (Exception e) {
+                System.out.println("Failed to parse issue: " + issue.getKey());
             }
-            data.setAssignees(assignees);
-
-            data.setPriority(parsePriority(issue.getFields().getPriority().getName()));
-
-            data.setType(parseType(issue.getFields().getIssueType().getName()));
-            data.setStatus(parseStatus(issue.getFields().getStatus().getName()));
-
-            data.setCreated(issue.getFields().getCreated());
-            data.setUpdated(issue.getFields().getUpdated());
-            data.setResolved(issue.getFields().getResolved());
-
-            data.setResolution(parseResolution(issue.getFields().getResolution().getName()));
-
-            List<String> versions = new ArrayList<>();
-            for (JiraOnlineIssueVersion version : issue.getFields().getVersions()) {
-                versions.add(version.getName());
-            }
-            data.setVersion(versions);
-
-            List<String> fixVersions = new ArrayList<>();
-            for (JiraOnlineIssueVersion version : issue.getFields().getFixVersions()) {
-                fixVersions.add(version.getName());
-            }
-            data.setFixVersion(fixVersions);
-
-            data.setReporter(issue.getFields().getReporter().getName());
-
-            data.setSummary(issue.getFields().getSummary());
-            data.setDescription(issue.getFields().getDescription());
-
-            List<String> comments = new ArrayList<>();
-            Set<String> commentAuthors = new HashSet<>();
-            for (JiraOnlineComment comment : issue.getFields().getComment().getComments()) {
-                comments.add(comment.getBody());
-                commentAuthors.add(comment.getAuthor().getName());
-            }
-
-            data.setComments(comments);
-            data.setCommentAuthors(commentAuthors);
-
-            resultList.add(data);
         }
 
         return resultList;

@@ -235,11 +235,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         List<ITSDataType> result = new ArrayList<>();
 
         for (Future<List<ITSDataType>> partialResult : partialResults) {
-            if (partialResult != null && partialResult.get() != null) {
-                result.addAll(partialResult.get());
-            } else {
-                System.out.println("breakpoint");
-            }
+            result.addAll(partialResult.get());
         }
 
         return result;
@@ -500,10 +496,6 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
             List<ITSDataType> list = JiraOnlineAdapterParser.parseSingleIssueBatch(rawData, hostname);
             markProgressForIssue();
-
-            if (list == null) {
-                System.out.println("breakpoint");
-            }
 
             return list;
         }
