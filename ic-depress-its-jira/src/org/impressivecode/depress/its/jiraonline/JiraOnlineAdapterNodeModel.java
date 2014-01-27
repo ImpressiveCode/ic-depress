@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -195,7 +196,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         if (shouldDownloadHistory()) {
             historyTaskStepsSum = issues.size() * STEPS_PER_TASK;
             issueHistoryMonitor.setProgress(0);
-            builder.setMode(Mode.HISTORY);
+            builder.setMode(Mode.SINGLE_ISSUE_WITH_HISTORY);
             for (ITSDataType issue : issues) {
                 builder.setIssueKey(issue.getIssueId());
                 historyTasks.add(new DownloadAndParseIssueHistoryTask(builder.build()));
@@ -203,7 +204,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
             List<Future<List<JiraOnlineIssueChangeRowItem>>> partialHistoryResults = executorService
                     .invokeAll(historyTasks);
             issuesHistory = combinePartialIssueHistoryResults(partialHistoryResults);
-            builder.setMode(Mode.MULTI);
+            builder.setMode(Mode.MULTIPLE_ISSUES);
         } else {
             issuesHistory = newArrayList();
         }
@@ -231,10 +232,14 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     private List<ITSDataType> combinePartialIssueResults(List<Future<List<ITSDataType>>> partialResults)
             throws InterruptedException, ExecutionException {
-        List<ITSDataType> result = newArrayList();
+        List<ITSDataType> result = new ArrayList<>();
 
         for (Future<List<ITSDataType>> partialResult : partialResults) {
-            result.addAll(partialResult.get());
+            if (partialResult != null && partialResult.get() != null) {
+                result.addAll(partialResult.get());
+            } else {
+                System.out.println("breakpoint");
+            }
         }
 
         return result;
@@ -276,7 +281,22 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
             builder.setJQL(jiraSettingsJQL.getStringValue());
         }
 
+        builder.setFilters(getEnabledFilters());
+
         return builder;
+    }
+
+    private Collection<ITSFilter> getEnabledFilters() {
+        ArrayList<ITSFilter> enabledFiters = new ArrayList<>();
+        for (ITSFilter filter : getFilters()) {
+            for (String enabledFilterName : jiraSettingsFilter.getStringArrayValue()) {
+                if (enabledFilterName.equals(filter.getFilterModelId())) {
+                    enabledFiters.add(filter);
+                    break;
+                }
+            }
+        }
+        return enabledFiters;
     }
 
     private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
@@ -480,6 +500,10 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
             List<ITSDataType> list = JiraOnlineAdapterParser.parseSingleIssueBatch(rawData, hostname);
             markProgressForIssue();
+
+            if (list == null) {
+                System.out.println("breakpoint");
+            }
 
             return list;
         }

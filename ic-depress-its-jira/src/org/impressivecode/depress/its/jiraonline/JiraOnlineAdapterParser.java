@@ -57,6 +57,8 @@ public class JiraOnlineAdapterParser {
     private static final String LINK_PATH = "browse/";
 
     public static List<ITSDataType> parseSingleIssueBatch(String source, String hostname) {
+        
+//        System.out.println("Parsing: "+source);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
@@ -68,6 +70,7 @@ public class JiraOnlineAdapterParser {
             issueList = objectMapper.readValue(jp, new TypeReference<JiraOnlineIssuesList>() {
             });
         } catch (JsonParseException e) {
+            e.printStackTrace();
         } catch (UnrecognizedPropertyException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -89,6 +92,7 @@ public class JiraOnlineAdapterParser {
             issue = objectMapper.readValue(jp, new TypeReference<JiraOnlineIssueHistory>() {
             });
         } catch (JsonParseException e) {
+            e.printStackTrace();
         } catch (UnrecognizedPropertyException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -96,16 +100,6 @@ public class JiraOnlineAdapterParser {
         }
 
         return parseIssueHistory(issue);
-    }
-
-    public static List<ITSDataType> parseMultipleIssueBatches(List<String> sources, String hostname) {
-        List<ITSDataType> combinedIssues = new ArrayList<>();
-
-        for (String source : sources) {
-            combinedIssues.addAll(parseSingleIssueBatch(source, hostname));
-        }
-
-        return combinedIssues;
     }
 
     public static int getTotalIssuesCount(String source) {
@@ -120,6 +114,7 @@ public class JiraOnlineAdapterParser {
             issueList = objectMapper.readValue(jp, new TypeReference<JiraOnlineIssuesList>() {
             });
         } catch (JsonParseException e) {
+            e.printStackTrace();
         } catch (UnrecognizedPropertyException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -141,6 +136,7 @@ public class JiraOnlineAdapterParser {
             fieldList = objectMapper.readValue(jp, new TypeReference<List<JiraOnlineFilterListItem>>() {
             });
         } catch (JsonParseException e) {
+            e.printStackTrace();
         } catch (UnrecognizedPropertyException e) {
             e.printStackTrace();
         } catch (IOException e) {

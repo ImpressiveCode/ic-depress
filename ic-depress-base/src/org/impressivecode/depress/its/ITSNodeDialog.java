@@ -18,16 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.its;
 
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeDialogPane;
@@ -41,7 +36,6 @@ import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
-import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
@@ -75,8 +69,6 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
      * Connection components
      */
     protected DialogComponentString url;
-
-    protected DialogComponentStringSelection project;
 
     protected DialogComponentButton checkProjectsButton;
 
@@ -116,7 +108,6 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(createHostnameComponent());
-        panel.add(createProjectChooser());
         panel.add(createCheckProjectsButton());
         panel.add(createCheckProjectsLabel());
         return panel;
@@ -128,14 +119,6 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     }
 
     protected abstract SettingsModelString createURLSettings();
-
-    protected Component createProjectChooser() {
-        SettingsModelString projectChooserModel = createProjectSettings();
-        List<String> projects = new ArrayList<>();
-        projects.add("project");
-        project = new DialogComponentStringSelection(projectChooserModel, PROJECT_LABEL, projects, false);
-        return project.getComponentPanel();
-    }
 
     protected abstract SettingsModelString createProjectSettings();
 

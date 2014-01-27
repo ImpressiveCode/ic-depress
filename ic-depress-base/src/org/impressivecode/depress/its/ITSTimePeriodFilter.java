@@ -36,11 +36,18 @@ public abstract class ITSTimePeriodFilter extends ITSFilter {
     public static final int FROM_ID = 0;
     public static final int TO_ID = 1;
 
+    private SettingsModelDate fromModel;
+    private SettingsModelDate toModel;
+
     @Override
     public List<DialogComponent> createDialogComponents() {
+        fromModel = new SettingsModelDate(getFilterModelId() + ".from");
+        toModel = new SettingsModelDate(getFilterModelId() + ".to");
+
         List<DialogComponent> dialogComponents = new ArrayList<>();
-        dialogComponents.add(FROM_ID, new DialogComponentDate(new SettingsModelDate(getFilterModelId() + ".from"), "From"));
-        dialogComponents.add(TO_ID, new DialogComponentDate(new SettingsModelDate(getFilterModelId() + ".to"), "To"));
+        dialogComponents.add(FROM_ID, new DialogComponentDate(fromModel, "From"));
+        dialogComponents.add(TO_ID, new DialogComponentDate(toModel, "To"));
+
         return dialogComponents;
     }
 
@@ -57,5 +64,13 @@ public abstract class ITSTimePeriodFilter extends ITSFilter {
     private Date getDateFromComponent(int componentId) {
         SettingsModelDate settings = (SettingsModelDate) getDialogComponents().get(FROM_ID).getModel();
         return settings.getDate();
+    }
+
+    public boolean isFromEnabled() {
+        return fromModel.getSelectedFields() > 0;
+    }
+
+    public boolean isToEnabled() {
+        return toModel.getSelectedFields() > 0;
     }
 }
