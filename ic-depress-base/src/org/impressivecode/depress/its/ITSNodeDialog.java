@@ -250,7 +250,10 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         login.loadSettingsFrom(settings, specs);
         password.loadSettingsFrom(settings, specs);
         threadsCount.loadSettingsFrom(settings, specs);
-        filterSelection.loadSettingsFrom(settings, specs);
+        
+        if(filterSelection != null) {
+            filterSelection.loadSettingsFrom(settings, specs);
+        }
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
@@ -270,7 +273,11 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         login.saveSettingsTo(settings);
         password.saveSettingsTo(settings);
         threadsCount.saveSettingsTo(settings);
-        filterSelection.saveSettingsTo(settings);
+        
+        
+        if(filterSelection != null) {
+            filterSelection.saveSettingsTo(settings);
+        }
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
