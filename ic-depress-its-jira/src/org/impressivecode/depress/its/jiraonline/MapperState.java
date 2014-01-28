@@ -31,6 +31,6 @@ public class MapperState extends MapperAbstractCustomField {
 
     @Override
     protected String getParserValue(String state) {
-        return JiraOnlineAdapterParser.parseStatus(state).toString();
+        return JiraOnlineAdapterParser.parseStatusFromEnum(state).toString();
     }
 }

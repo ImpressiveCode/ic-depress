@@ -31,6 +31,6 @@ public class MapperResolution extends MapperAbstractCustomField {
 
     @Override
     protected String getParserValue(String resolution) {
-        return JiraOnlineAdapterParser.parseResolution(resolution).toString();
+        return JiraOnlineAdapterParser.parseResolutionFromEnum(resolution).toString();
     }
 }

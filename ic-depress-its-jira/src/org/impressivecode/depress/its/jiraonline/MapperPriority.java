@@ -31,6 +31,6 @@ public class MapperPriority extends MapperAbstractCustomField {
 
     @Override
     protected String getParserValue(String priority) {
-        return JiraOnlineAdapterParser.parsePriority(priority).toString();
+        return JiraOnlineAdapterParser.parsePriorityFromEnum(priority).toString();
     }
 }

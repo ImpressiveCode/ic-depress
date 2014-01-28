@@ -1,6 +1,7 @@
 package org.impressivecode.depress.its.jiraonline;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
@@ -9,9 +10,18 @@ import org.knime.core.node.defaultnodesettings.DialogComponent;
 public class MapperManager {
 
     private MapperState mapperState;
-     private MapperPriority mapperPriority;
-     private MapperResolution mapperResolution;
-     private MapperType mapperType;
+    private MapperPriority mapperPriority;
+    private MapperResolution mapperResolution;
+    private MapperType mapperType;
+
+    private HashMap<String, String> mapperStateMap;
+    private HashMap<String, String> mapperPriorityMap;
+    private HashMap<String, String> mapperResolutionMap;
+    private HashMap<String, String> mapperTypeMap;
+    
+    public MapperManager() {
+        refreshMaps();
+    }
 
     public List<DialogComponent> getDialogComponents() {
         ArrayList<DialogComponent> componentList = new ArrayList<DialogComponent>();
@@ -56,5 +66,28 @@ public class MapperManager {
 
     public List<DialogComponent> getComponentsMapperType() {
         return mapperType == null ? new ArrayList<DialogComponent>() : mapperType.getDialogComponents();
+    }
+
+    public HashMap<String, String> getMapMapperState() {
+        return mapperStateMap;
+    }
+
+    public HashMap<String, String> getMapMapperPriority() {
+        return mapperPriorityMap;
+    }
+
+    public HashMap<String, String> getMapMapperResolution() {
+        return mapperResolutionMap;
+    }
+
+    public HashMap<String, String> getMapMapperType() {
+        return mapperTypeMap;
+    }
+
+    public void refreshMaps() {
+        mapperStateMap = mapperState == null ? new HashMap<String, String>() : mapperState.getMappingMap();
+        mapperPriorityMap = mapperPriority == null ? new HashMap<String, String>() : mapperPriority.getMappingMap();
+        mapperTypeMap = mapperType == null ? new HashMap<String, String>() : mapperType.getMappingMap();
+        mapperResolutionMap = mapperResolution == null ? new HashMap<String, String>() : mapperResolution.getMappingMap();
     }
 }

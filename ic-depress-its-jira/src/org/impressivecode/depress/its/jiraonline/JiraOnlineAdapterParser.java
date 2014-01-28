@@ -19,6 +19,7 @@ package org.impressivecode.depress.its.jiraonline;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -148,7 +149,11 @@ public class JiraOnlineAdapterParser {
 
     private static List<ITSDataType> parseData(JiraOnlineIssuesList issueList, String hostname) {
         List<ITSDataType> resultList = new ArrayList<>();
-
+        MapperManager mm = JiraOnlineAdapterNodeModel.getMapperManager();
+        HashMap<String, String> priorityMap = mm.getMapMapperPriority();
+        HashMap<String, String> resolutionMap = mm.getMapMapperResolution();
+        HashMap<String, String> statusMap = mm.getMapMapperState();
+        HashMap<String, String> typeMap = mm.getMapMapperType();
         for (JiraOnlineIssue issue : issueList.getIssues()) {
             try {
                 ITSDataType data = new ITSDataType();
@@ -163,16 +168,18 @@ public class JiraOnlineAdapterParser {
                 }
                 data.setAssignees(assignees);
 
-                data.setPriority(parsePriority(issue.getFields().getPriority().getName()));
-
-                data.setType(parseType(issue.getFields().getIssueType().getName()));
-                data.setStatus(parseStatus(issue.getFields().getStatus().getName()));
+                String valueToParse = issue.getFields().getPriority().getName();
+                data.setPriority(parsePriorityFromMapper(priorityMap.get(valueToParse), valueToParse));
+                valueToParse = issue.getFields().getIssueType().getName();
+                data.setType(parseTypeFromMapper(typeMap.get(valueToParse), valueToParse));
+                valueToParse = issue.getFields().getStatus().getName();
+                data.setStatus(parseStatusFromMapper(statusMap.get(valueToParse), valueToParse));
+                valueToParse = issue.getFields().getResolution().getName();
+                data.setResolution(parseResolutionFromMapper(resolutionMap.get(valueToParse), valueToParse));
 
                 data.setCreated(issue.getFields().getCreated());
                 data.setUpdated(issue.getFields().getUpdated());
                 data.setResolved(issue.getFields().getResolved());
-
-                data.setResolution(parseResolution(issue.getFields().getResolution().getName()));
 
                 List<String> versions = new ArrayList<>();
                 for (JiraOnlineIssueVersion version : issue.getFields().getVersions()) {
@@ -210,36 +217,11 @@ public class JiraOnlineAdapterParser {
         return resultList;
     }
 
-    public static ITSResolution parseResolution(String resolution) {
-        // if (resolution == null || resolution.getName() == null) {
-        // return ITSResolution.UNKNOWN;
-        // }
-        // switch (resolution.getName()) {
-        // case "Unresolved":
-        // return ITSResolution.UNRESOLVED;
-        // case "Fixed":
-        // return ITSResolution.FIXED;
-        // case "Wont't Fix":
-        // return ITSResolution.WONT_FIX;
-        // case "Duplicate":
-        // return ITSResolution.DUPLICATE;
-        // case "Invalid":
-        // return ITSResolution.INVALID;
-        // case "Incomplete":
-        // return ITSResolution.INVALID;
-        // case "Cannot Reproduce":
-        // return ITSResolution.WONT_FIX;
-        // case "Later":
-        // return ITSResolution.WONT_FIX;
-        // case "Not A Problem":
-        // return ITSResolution.WONT_FIX;
-        // case "Implemented":
-        // return ITSResolution.FIXED;
-        // case "Complete":
-        // return ITSResolution.FIXED;
-        // default:
-        // return ITSResolution.UNKNOWN;
-        // }
+    public static ITSResolution parseResolutionFromMapper(String mapValue, String value) {
+        return mapValue == null ? parseResolutionFromEnum(value) : parseResolutionFromEnum(mapValue);
+    }
+
+    public static ITSResolution parseResolutionFromEnum(String resolution) {
         ITSResolution parsed = ITSResolution.UNKNOWN;
 
         for (ITSResolution itsResolution : ITSResolution.values()) {
@@ -248,28 +230,15 @@ public class JiraOnlineAdapterParser {
                 break;
             }
         }
-
+        
         return parsed;
     }
 
-    public static ITSStatus parseStatus(String status) {
-        // if (status == null || status.getName() == null) {
-        // return ITSStatus.UNKNOWN;
-        // }
-        // switch (status.getName()) {
-        // case "Open":
-        // return ITSStatus.OPEN;
-        // case "Reopen":
-        // return ITSStatus.REOPEN;
-        // case "In Progress":
-        // return ITSStatus.IN_PROGRESS;
-        // case "Resolved":
-        // return ITSStatus.RESOLVED;
-        // case "Closed":
-        // return ITSStatus.CLOSED;
-        // default:
-        // return ITSStatus.UNKNOWN;
-        // }
+    public static ITSStatus parseStatusFromMapper(String mapValue, String value) {
+        return mapValue == null ? parseStatusFromEnum(value) : parseStatusFromEnum(mapValue);
+    }
+
+    public static ITSStatus parseStatusFromEnum(String status) {
         ITSStatus parsed = ITSStatus.UNKNOWN;
 
         for (ITSStatus itsStatus : ITSStatus.values()) {
@@ -282,23 +251,11 @@ public class JiraOnlineAdapterParser {
         return parsed;
     }
 
-    public static ITSType parseType(String type) {
-        // if (type == null || type.getName() == null) {
-        // return ITSType.UNKNOWN;
-        // }
-        // switch (type.getName()) {
-        // case "Bug":
-        // return ITSType.BUG;
-        // case "Test":
-        // return ITSType.TEST;
-        // case "Improvement":
-        // case "New Feature":
-        // case "Task":
-        // case "Wish":
-        // return ITSType.ENHANCEMENT;
-        // default:
-        // return ITSType.UNKNOWN;
-        // }
+    public static ITSType parseTypeFromMapper(String mapValue, String value) {
+        return mapValue == null ? parseTypeFromEnum(value) : parseTypeFromEnum(mapValue);
+    }
+
+    public static ITSType parseTypeFromEnum(String type) {
         ITSType parsed = ITSType.UNKNOWN;
 
         for (ITSType itsType : ITSType.values()) {
@@ -311,25 +268,11 @@ public class JiraOnlineAdapterParser {
         return parsed;
     }
 
-    public static ITSPriority parsePriority(String priority) {
+    public static ITSPriority parsePriorityFromMapper(String mapValue, String value) {
+        return mapValue == null ? parsePriorityFromEnum(value) : parsePriorityFromEnum(mapValue);
+    }
 
-        // if (priority == null || priority.getName() == null) {
-        // return ITSPriority.UNKNOWN;
-        // }
-        // switch (priority) {
-        // case "Trivial":
-        // return ITSPriority.TRIVIAL;
-        // case "Minor":
-        // return ITSPriority.MINOR;
-        // case "Major":
-        // return ITSPriority.MAJOR;
-        // case "Critical":
-        // return ITSPriority.CRITICAL;
-        // case "Blocker":
-        // return ITSPriority.BLOCKER;
-        // default:
-        // return ITSPriority.UNKNOWN;
-        // }
+    public static ITSPriority parsePriorityFromEnum(String priority) {
         ITSPriority parsed = ITSPriority.UNKNOWN;
 
         for (ITSPriority itsPriority : ITSPriority.values()) {

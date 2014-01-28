@@ -31,6 +31,6 @@ public class MapperType extends MapperAbstractCustomField {
 
     @Override
     protected String getParserValue(String type) {
-        return JiraOnlineAdapterParser.parseType(type).toString();
+        return JiraOnlineAdapterParser.parseTypeFromEnum(type).toString();
     }
 }

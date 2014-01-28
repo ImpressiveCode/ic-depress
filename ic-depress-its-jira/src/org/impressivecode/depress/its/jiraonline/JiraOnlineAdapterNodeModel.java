@@ -141,6 +141,8 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         issueListMonitor.setProgress(0);
         issueTaskStepsSum = issueBatchLinks.size() * STEPS_PER_TASK;
 
+        mapperManager.refreshMaps();
+        
         List<ITSDataType> issues = executeIssueTasks(issueBatchLinks);
         List<JiraOnlineIssueChangeRowItem> issuesHistory = executeHistoryTasks(issues);
 

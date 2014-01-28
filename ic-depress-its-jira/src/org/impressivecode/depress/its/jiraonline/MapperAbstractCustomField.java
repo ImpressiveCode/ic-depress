@@ -4,6 +4,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
@@ -16,9 +17,11 @@ public abstract class MapperAbstractCustomField {
     protected List<JiraOnlineFilterListItem> fieldList;
     private List<DialogComponent> dialogComponents;
     protected static final String DEFAULT_MAPPING = "Default mapping";
+    private HashMap<String, SettingsModelString> mappingMap;
 
     public MapperAbstractCustomField(List<JiraOnlineFilterListItem> fieldList) {
         this.fieldList = fieldList;
+        this.mappingMap = new HashMap<>();
     }
 
     public void createDialogComponents() {
@@ -30,6 +33,7 @@ public abstract class MapperAbstractCustomField {
                     getImplementedMappings());
             comp.setToolTipText(item.getDescription());
             dialogComponents.add(comp);
+            mappingMap.put(item.getName(), sms);
         }
     }
 
@@ -39,6 +43,14 @@ public abstract class MapperAbstractCustomField {
 
     public List<DialogComponent> getDialogComponents() {
         return dialogComponents == null ? new ArrayList<DialogComponent>() : dialogComponents;
+    }
+    
+    public HashMap<String, String> getMappingMap() {
+        HashMap<String, String> map = new HashMap<>();
+        for (String key : mappingMap.keySet()) {
+            map.put(key, mappingMap.get(key).getStringValue());
+        }
+        return map;
     }
 
     protected abstract String getMapperModelString();
