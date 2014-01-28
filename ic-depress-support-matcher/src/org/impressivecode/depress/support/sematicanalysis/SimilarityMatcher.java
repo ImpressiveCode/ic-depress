@@ -21,6 +21,7 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.ChapmanLengthDeviation;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.JaroWinkler;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.Levenshtein;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.OverlapCoefficient;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.*;
 
 /**
  * 
@@ -30,8 +31,8 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.OverlapCoefficient;
 public class SimilarityMatcher {
 
     private static double doLevenstheinTest(String string1, String string2) {
-        Levenshtein levenstheinTest = new Levenshtein();
-        return levenstheinTest.getSimilarity(string1, string2);
+        Levenshtein levensthteinTest = new Levenshtein();
+        return levensthteinTest.getSimilarity(string1, string2);
     }
 
     private static double doJaroWinklerTest(String string1, String string2) {
@@ -48,6 +49,20 @@ public class SimilarityMatcher {
         OverlapCoefficient overlapTest = new OverlapCoefficient();
         return overlapTest.getSimilarity(string1, string2);
     }
+    
+    private static double doMongeElkanTest(String string1, String string2){
+    	MongeElkan mongeElkan = new MongeElkan();
+        return mongeElkan.getSimilarity(string1, string2);
+    }
+    
+    private static double doHybridTest(String string1, String string2){
+        double s1 = doMongeElkanTest(string1, string2);
+        double s2 = doChapmanTest(string1, string2);
+        double s3 = doJaroWinklerTest(string1,string2);
+        double suma = s1+s2+s3;
+        
+        return (s1/suma)*s1 + (s2/suma)*s2 + (s3/suma)*s3;
+    }
 
     public static double doSimilarityTest(String string1, String string2, String selectedAlgorithm) throws Exception {
         if (selectedAlgorithm.equals(Configuration.JARO_WINKLER_ALGHORITM)) {
@@ -58,7 +73,10 @@ public class SimilarityMatcher {
             return doChapmanTest(string1, string2);
         } else if (selectedAlgorithm.equals(Configuration.OVERLAP_ALGHORITM)) {
             return doOverlapTest(string1, string2);
-        } else {
+        } else if(selectedAlgorithm.equals(Configuration.HYBRID_ALGHORITM)){
+        	return doHybridTest(string1, string2);
+        }
+        else {
             throw new Exception("Unsupported Algorithm!");
         }
     }

@@ -15,8 +15,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline.historymodel;
+package org.impressivecode.depress.its.jiraonline.model;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,41 +32,39 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineIssueHistory {
+public class JiraOnlineIssueChanges {
 
-    private String key;
-    private JiraOnlineIssueChangelog changelog;
+    @JsonProperty("author")
+    private JiraOnlineUser author;
 
-    public String getKey() {
-        return key;
+    @JsonProperty("items")
+    private List<JiraOnlineIssueChange> items;
+    
+    @JsonProperty("created")
+    private Date timestamp;
+
+    public JiraOnlineUser getAuthor() {
+        return author;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setAuthor(JiraOnlineUser author) {
+        this.author = author;
     }
 
-    public JiraOnlineIssueChangelog getChangelog() {
-        return changelog;
+    public List<JiraOnlineIssueChange> getItems() {
+        return items;
     }
 
-    public void setChangelog(JiraOnlineIssueChangelog changelog) {
-        this.changelog = changelog;
+    public void setItems(List<JiraOnlineIssueChange> items) {
+        this.items = items;
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public class JiraOnlineIssueChangelog {
+    public Date getTimestamp() {
+        return timestamp;
+    }
 
-        @JsonProperty("histories")
-        private List<JiraOnlineIssueChanges> histories;
-
-        public List<JiraOnlineIssueChanges> getHistories() {
-            return histories;
-        }
-
-        public void setHistories(List<JiraOnlineIssueChanges> histories) {
-            this.histories = histories;
-        }
-
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
 }

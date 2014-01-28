@@ -20,7 +20,6 @@ package org.impressivecode.depress.its;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.newArrayListWithExpectedSize;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 

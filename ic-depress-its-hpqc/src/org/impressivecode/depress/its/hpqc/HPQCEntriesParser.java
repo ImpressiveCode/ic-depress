@@ -24,11 +24,15 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+
 import javax.xml.parsers.ParserConfigurationException;
+
+import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
@@ -36,9 +40,12 @@ import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
+import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.container.CloseableRowIterator;
 import org.knime.core.node.BufferedDataTable;
+import org.knime.core.util.MutableInteger;
 import org.xml.sax.SAXException;
+
 import com.google.common.collect.Lists;
 
 /**
@@ -49,82 +56,116 @@ import com.google.common.collect.Lists;
 public class HPQCEntriesParser {
     private HashMap<String, Integer> columnIds;
     private static final String HPQC_DATE_FORMAT = "mm/dd/yy HH:mm";
+    private static final Integer NOSUFFIX = new Integer(0);
 
-    public List<ITSDataType> parseEntries(BufferedDataTable table) throws ParserConfigurationException, SAXException,
-    IOException, ParseException {
+    private final Hashtable<String, Number> m_rowIDhash = new Hashtable<String, Number>();
+
+    public List<ITSDataType> parseEntries(BufferedDataTable table, HPQCUserSettings settings)
+            throws ParserConfigurationException, SAXException, IOException, ParseException {
         List<ITSDataType> entries = Lists.newLinkedList();
-    	 CloseableRowIterator itr = table.iterator();
-    	 
-    	 columnIds = new HashMap<String, Integer>();
-         for (int i = 0; i < table.getSpec().getNumColumns(); i++){
-        	 columnIds.put(table.getSpec().getColumnSpec(i).getName(), i);
-         }
-         while(itr.hasNext()){
-        	 entries.add(parse(itr.next()));
-         }
+        CloseableRowIterator itr = table.iterator();
+
+        HashMap<String, String> itsColumnsMap = new HashMap<String, String>();
+        DataTableSpec dts = ITSAdapterTableFactory.createDataColumnSpec();
+        String[] itsColumnNames = dts.getColumnNames();
+        for (int i = 0; i < itsColumnNames.length; i++) {
+            itsColumnsMap.put(itsColumnNames[i], settings.getMapping()[i]);
+        }
+
+        columnIds = new HashMap<String, Integer>();
+        for (int i = 0; i < table.getSpec().getNumColumns(); i++) {
+            columnIds.put(table.getSpec().getColumnSpec(i).getName(), i);
+        }
+
+        while (itr.hasNext()) {
+            entries.add(parse(itr.next(), itsColumnsMap));
+        }
         return entries;
     }
 
-    private ITSDataType parse(final DataRow row) throws ParseException {
+    private ITSDataType parse(final DataRow row, HashMap<String, String> itsColumnsMap) {
         ITSDataType data = new ITSDataType();
-        data.setIssueId(getStringValue(getDataCell(row, "CQ ID")));
-        String[] comments = new String[3];
-        comments[0] = getStringValue(getDataCell(row, "Comments"));
-        comments[1] = getStringValue(getDataCell(row, "Design Comments"));
-        comments[2] = getStringValue(getDataCell(row, "Requirement Comments"));
-        data.setComments(Arrays.asList(comments));
-        data.setCreated(getDateValue(row, "Created"));
-        data.setDescription(getStringValue(getDataCell(row, "Problem Description" )));
-        data.setFixVersion(getListValues(row, "Closing Version"));
-        data.setLink("");
-        data.setPriority(getPriority(row));
-        data.setResolved(getDateValue(row, "Closing Date"));
-        data.setStatus(getStatus(row));
-        data.setSummary("Description Log");
-        data.setType(getType(row));
-        data.setUpdated(getDateValue(row, "Modified"));
-        data.setVersion(getListValues(row, "Planed Closing Version"));
-        data.setResolution(getResolution(row));
-        data.setReporter(getStringValue(getDataCell(row, "Submitter")));
-        data.setAssignees(getSetValues(row, "Assigned To"));
-        data.setCommentAuthors(new HashSet<String>(Arrays.asList(comments)));
+        data.setIssueId(getUniqueId(row, itsColumnsMap.get(ITSAdapterTableFactory.ISSUE_ID)));
+        data.setComments(getListValues(row, itsColumnsMap.get(ITSAdapterTableFactory.COMMENTS)));
+        data.setCreated(getCreated(row, itsColumnsMap.get(ITSAdapterTableFactory.CREATION_DATE)));
+        data.setDescription(getStringValue(getDataCell(row, itsColumnsMap.get(ITSAdapterTableFactory.DESCRIPTION))));
+        data.setFixVersion(getListValues(row, itsColumnsMap.get(ITSAdapterTableFactory.FIX_VERSION)));
+        data.setLink(getStringValue(getDataCell(row, itsColumnsMap.get(ITSAdapterTableFactory.LINK))));
+        data.setPriority(getPriority(row, itsColumnsMap.get(ITSAdapterTableFactory.PRIORITY)));
+        data.setResolved(getDateValue(row, itsColumnsMap.get(ITSAdapterTableFactory.RESOLVED_DATE)));
+        data.setStatus(getStatus(row, itsColumnsMap.get(ITSAdapterTableFactory.STATUS)));
+        data.setSummary(getStringValue(getDataCell(row, itsColumnsMap.get(ITSAdapterTableFactory.SUMMARY))));
+        data.setType(getType(row, itsColumnsMap.get(ITSAdapterTableFactory.TYPE)));
+        data.setUpdated(getDateValue(row, itsColumnsMap.get(ITSAdapterTableFactory.UPDATED_DATE)));
+        data.setVersion(getListValues(row, itsColumnsMap.get(ITSAdapterTableFactory.VERSION)));
+        data.setResolution(getResolution(row, itsColumnsMap.get(ITSAdapterTableFactory.RESOLUTION)));
+        data.setReporter(getStringValue(getDataCell(row, itsColumnsMap.get(ITSAdapterTableFactory.REPORTER))));
+        data.setAssignees(getSetValues(row, itsColumnsMap.get(ITSAdapterTableFactory.ASSIGNEES)));
+        data.setCommentAuthors(getSetValues(row, itsColumnsMap.get(ITSAdapterTableFactory.COMMENT_AUTHORS)));
         return data;
     }
-    private DataCell getDataCell(final DataRow row, String name)
-    {
-    	Integer columnId =columnIds.get(name);
-    	return  columnId != null ? row.getCell(columnId) : null;
-    }
-    private String getStringValue(final DataCell cell)
-    {
-    	return cell != null ? cell.toString() : "";
-    }
-    private List<String> getListValues(final DataRow row, String name)
-    {
-    	DataCell value = getDataCell(row, name);
-    	return value == null  ? new LinkedList<String>() : Arrays.asList( name.split(","));
-    }
-    private Set<String> getSetValues(final DataRow row, String name)
-    {
-    	DataCell value = getDataCell(row, name);
-    	return value == null  ? new HashSet<String>() : new HashSet<String>(Arrays.asList(name.split(",")));
-    }
-	private Date getDateValue(final DataRow row, String name)
-			throws ParseException {
-		DataCell value = getDataCell(row, name);
-		return value == null ? new Date() : parseDate(value.toString());
-	}
 
-	private Date parseDate(final String nodeValue) throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat(HPQC_DATE_FORMAT,
-				Locale.forLanguageTag("PL"));
-		sdf.setLenient(true);
-		Date date = sdf.parse(nodeValue);
-		return date;
-	}
+    private DataCell getDataCell(final DataRow row, String name) {
+        Integer columnId = columnIds.get(name);
+        return columnId != null ? row.getCell(columnId) : null;
+    }
 
-    private ITSResolution getResolution(final DataRow row) {
-    	DataCell resolution = getDataCell(row, "resolution");
+    private String getUniqueId(final DataRow row, String name) {
+        return uniquifyRowId(getStringValue(getDataCell(row, name)));
+    }
+
+    private String getStringValue(final DataCell cell) {
+        return cell != null ? cell.toString() : "";
+    }
+
+    private List<String> getListValues(final DataRow row, String name) {
+        DataCell value = getDataCell(row, name);
+        return value == null ? new LinkedList<String>() : Arrays.asList(value.toString().split(","));
+    }
+
+    private Set<String> getSetValues(final DataRow row, String name) {
+        DataCell value = getDataCell(row, name);
+        return value == null ? new HashSet<String>() : new HashSet<String>(Arrays.asList(value.toString().split(",")));
+    }
+
+    private Date getDateValue(final DataRow row, String name) {
+        DataCell value = getDataCell(row, name);
+        return value == null ? null : parseDate(value.toString());
+    }
+
+    private Date getCreated(final DataRow row, String name) {
+        DataCell value = getDataCell(row, name);
+        return value == null ? new Date() : parseCreationDate(value.toString());
+    }
+
+    private Date parseDate(final String nodeValue) {
+        SimpleDateFormat sdf = new SimpleDateFormat(HPQC_DATE_FORMAT, Locale.forLanguageTag("PL"));
+        sdf.setLenient(true);
+        Date date = null;
+        try {
+            date = sdf.parse(nodeValue);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+        }
+        return date;
+
+    }
+
+    private Date parseCreationDate(final String nodeValue) {
+        SimpleDateFormat sdf = new SimpleDateFormat(HPQC_DATE_FORMAT, Locale.forLanguageTag("PL"));
+        sdf.setLenient(true);
+        Date date = new Date();
+        try {
+            date = sdf.parse(nodeValue);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+        }
+        return date;
+
+    }
+
+    private ITSResolution getResolution(final DataRow row, String name) {
+        DataCell resolution = getDataCell(row, name);
         if (resolution == null) {
             return ITSResolution.UNKNOWN;
         }
@@ -154,8 +195,8 @@ public class HPQCEntriesParser {
         }
     }
 
-    private ITSType getType(final DataRow row) {
-    	DataCell type = getDataCell(row, "RecordType");
+    private ITSType getType(final DataRow row, String name) {
+        DataCell type = getDataCell(row, name);
         if (type == null) {
             return ITSType.UNKNOWN;
         }
@@ -174,8 +215,8 @@ public class HPQCEntriesParser {
         }
     }
 
-    private ITSStatus getStatus(final DataRow row) {
-    	DataCell status = getDataCell(row, "Status");
+    private ITSStatus getStatus(final DataRow row, String name) {
+        DataCell status = getDataCell(row, name);
         if (status == null) {
             return ITSStatus.UNKNOWN;
         }
@@ -195,8 +236,8 @@ public class HPQCEntriesParser {
         }
     }
 
-    private ITSPriority getPriority(final DataRow row) {
-    	DataCell priority = getDataCell(row, "Priority");
+    private ITSPriority getPriority(final DataRow row, String name) {
+        DataCell priority = getDataCell(row, name);
         if (priority == null) {
             return ITSPriority.UNKNOWN;
         }
@@ -215,4 +256,44 @@ public class HPQCEntriesParser {
             return ITSPriority.UNKNOWN;
         }
     }
+
+    private String uniquifyRowId(final String newRowHeader) {
+
+        Number oldSuffix = m_rowIDhash.put(newRowHeader, NOSUFFIX);
+
+        if (oldSuffix == null) {
+            // haven't seen the rowID so far.
+            return newRowHeader;
+        }
+
+        String result = newRowHeader;
+        while (oldSuffix != null) {
+
+            // we have seen this rowID before!
+            int idx = oldSuffix.intValue();
+
+            assert idx >= NOSUFFIX.intValue();
+
+            idx++;
+
+            if (oldSuffix == NOSUFFIX) {
+                // until now the NOSUFFIX placeholder was in the hash
+                assert idx - 1 == NOSUFFIX.intValue();
+                m_rowIDhash.put(result, new MutableInteger(idx));
+            } else {
+                assert oldSuffix instanceof MutableInteger;
+                ((MutableInteger) oldSuffix).inc();
+                assert idx == oldSuffix.intValue();
+                // put back the old (incr.) suffix (overridden with NOSUFFIX).
+                m_rowIDhash.put(result, oldSuffix);
+            }
+
+            result = result + "_" + idx;
+            oldSuffix = m_rowIDhash.put(result, NOSUFFIX);
+
+        }
+
+        return result;
+    }
+
 }

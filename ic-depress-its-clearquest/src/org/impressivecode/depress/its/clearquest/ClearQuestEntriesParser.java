@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
@@ -38,6 +39,7 @@ import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
+import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.container.CloseableRowIterator;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.util.MutableInteger;
@@ -58,10 +60,17 @@ public class ClearQuestEntriesParser {
 
     private HashMap<String, Integer> columnIds;
 
-    public List<ITSDataType> parseEntries(BufferedDataTable table) throws ParserConfigurationException, SAXException,
-            IOException, ParseException {
+    public List<ITSDataType> parseEntries(BufferedDataTable table, ClearQuestUserSettings settings)
+            throws ParserConfigurationException, SAXException, IOException, ParseException {
         List<ITSDataType> entries = Lists.newLinkedList();
         CloseableRowIterator itr = table.iterator();
+
+        HashMap<String, String> itsColumnsMap = new HashMap<String, String>();
+        DataTableSpec dts = ITSAdapterTableFactory.createDataColumnSpec();
+        String[] itsColumnNames = dts.getColumnNames();
+        for (int i = 0; i < itsColumnNames.length; i++) {
+            itsColumnsMap.put(itsColumnNames[i], settings.getMapping()[i]);
+        }
 
         columnIds = new HashMap<String, Integer>();
         for (int i = 0; i < table.getSpec().getNumColumns(); i++) {
@@ -69,30 +78,30 @@ public class ClearQuestEntriesParser {
         }
 
         while (itr.hasNext()) {
-            entries.add(parse(itr.next()));
+            entries.add(parse(itr.next(), itsColumnsMap));
         }
         return entries;
     }
 
-    private ITSDataType parse(final DataRow row) throws ParseException {
+    private ITSDataType parse(final DataRow row, HashMap<String, String> itsColumnsMap) {
         ITSDataType data = new ITSDataType();
-        data.setIssueId(getUniqueId(row, "id"));
-        data.setComments(getListValues(row, "Title"));
-        data.setCreated(getDateValue(row, "SubmissionDate"));
-        data.setDescription(getStringValue(getDataCell(row, "Description")));
-        data.setFixVersion(getListValues(row, "CorrectedInBuild"));
-        data.setLink("");
-        data.setPriority(getPriority(row));
-        data.setResolved(getDateValue(row, ""));
-        data.setStatus(getStatus(row));
-        data.setSummary("");
-        data.setType(getType(row));
-        data.setUpdated(getDateValue(row, ""));
-        data.setVersion(getListValues(row, "FoundInBuild"));
-        data.setResolution(getResolution(row));
-        data.setReporter(getStringValue(getDataCell(row, "Submitter")));
-        data.setAssignees(getSetValues(row, ""));
-        data.setCommentAuthors(getSetValues(row, ""));
+        data.setIssueId(getUniqueId(row, itsColumnsMap.get(ITSAdapterTableFactory.ISSUE_ID)));
+        data.setComments(getListValues(row, itsColumnsMap.get(ITSAdapterTableFactory.COMMENTS)));
+        data.setCreated(getCreated(row, itsColumnsMap.get(ITSAdapterTableFactory.CREATION_DATE)));
+        data.setDescription(getStringValue(getDataCell(row, itsColumnsMap.get(ITSAdapterTableFactory.DESCRIPTION))));
+        data.setFixVersion(getListValues(row, itsColumnsMap.get(ITSAdapterTableFactory.FIX_VERSION)));
+        data.setLink(getStringValue(getDataCell(row, itsColumnsMap.get(ITSAdapterTableFactory.LINK))));
+        data.setPriority(getPriority(row, itsColumnsMap.get(ITSAdapterTableFactory.PRIORITY)));
+        data.setResolved(getDateValue(row, itsColumnsMap.get(ITSAdapterTableFactory.RESOLVED_DATE)));
+        data.setStatus(getStatus(row, itsColumnsMap.get(ITSAdapterTableFactory.STATUS)));
+        data.setSummary(getStringValue(getDataCell(row, itsColumnsMap.get(ITSAdapterTableFactory.SUMMARY))));
+        data.setType(getType(row, itsColumnsMap.get(ITSAdapterTableFactory.TYPE)));
+        data.setUpdated(getDateValue(row, itsColumnsMap.get(ITSAdapterTableFactory.UPDATED_DATE)));
+        data.setVersion(getListValues(row, itsColumnsMap.get(ITSAdapterTableFactory.VERSION)));
+        data.setResolution(getResolution(row, itsColumnsMap.get(ITSAdapterTableFactory.RESOLUTION)));
+        data.setReporter(getStringValue(getDataCell(row, itsColumnsMap.get(ITSAdapterTableFactory.REPORTER))));
+        data.setAssignees(getSetValues(row, itsColumnsMap.get(ITSAdapterTableFactory.ASSIGNEES)));
+        data.setCommentAuthors(getSetValues(row, itsColumnsMap.get(ITSAdapterTableFactory.COMMENT_AUTHORS)));
         return data;
     }
 
@@ -154,29 +163,52 @@ public class ClearQuestEntriesParser {
 
     private List<String> getListValues(final DataRow row, String name) {
         DataCell value = getDataCell(row, name);
-        return value == null ? new LinkedList<String>() : Arrays.asList(name.split(","));
+        return value == null ? new LinkedList<String>() : Arrays.asList(value.toString().split(","));
     }
 
     private Set<String> getSetValues(final DataRow row, String name) {
         DataCell value = getDataCell(row, name);
-        return value == null ? new HashSet<String>() : new HashSet<String>(Arrays.asList(name.split(",")));
+        return value == null ? new HashSet<String>() : new HashSet<String>(Arrays.asList(value.toString().split(",")));
     }
 
-    private Date getDateValue(final DataRow row, String name) throws ParseException {
+    private Date getDateValue(final DataRow row, String name) {
         DataCell value = getDataCell(row, name);
-        return value == null ? new Date() : parseDate(value.toString());
+        return value == null ? null : parseDate(value.toString());
     }
 
-    private Date parseDate(final String nodeValue) throws ParseException {
+    private Date getCreated(final DataRow row, String name) {
+        DataCell value = getDataCell(row, name);
+        return value == null ? new Date() : parseCreationDate(value.toString());
+    }
+
+    private Date parseDate(final String nodeValue) {
         // 29 october 2013 07:35:03 GMT+01:00
-        SimpleDateFormat sdf = new SimpleDateFormat(ClearQuest_DATE_FORMAT, Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(ClearQuest_DATE_FORMAT, Locale.getDefault());
         sdf.setLenient(true);
-        Date date = sdf.parse(nodeValue);
+        Date date = null;
+        try {
+            date = sdf.parse(nodeValue);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+        }
         return date;
     }
 
-    private ITSResolution getResolution(final DataRow row) {
-        DataCell resolution = getDataCell(row, "action_name");
+    private Date parseCreationDate(final String nodeValue) {
+        // 29 october 2013 07:35:03 GMT+01:00
+        SimpleDateFormat sdf = new SimpleDateFormat(ClearQuest_DATE_FORMAT, Locale.getDefault());
+        sdf.setLenient(true);
+        Date date = new Date();
+        try {
+            date = sdf.parse(nodeValue);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+        }
+        return date;
+    }
+
+    private ITSResolution getResolution(final DataRow row, String name) {
+        DataCell resolution = getDataCell(row, name);
         if (resolution == null) {
             return ITSResolution.UNKNOWN;
         }
@@ -208,8 +240,8 @@ public class ClearQuestEntriesParser {
         }
     }
 
-    private ITSType getType(final DataRow row) {
-        DataCell type = getDataCell(row, "record_type");
+    private ITSType getType(final DataRow row, String name) {
+        DataCell type = getDataCell(row, name);
         if (type == null) {
             return ITSType.UNKNOWN;
         }
@@ -221,8 +253,8 @@ public class ClearQuestEntriesParser {
         }
     }
 
-    private ITSStatus getStatus(final DataRow row) {
-        DataCell status = getDataCell(row, "action_name");
+    private ITSStatus getStatus(final DataRow row, String name) {
+        DataCell status = getDataCell(row, name);
         if (status == null) {
             return ITSStatus.UNKNOWN;
         }
@@ -254,15 +286,16 @@ public class ClearQuestEntriesParser {
         }
     }
 
-    private ITSPriority getPriority(final DataRow row) {
-        DataCell priority = getDataCell(row, "Severity");
+    private ITSPriority getPriority(final DataRow row, String name) {
+        DataCell priority = getDataCell(row, name);
         if (priority == null) {
             return ITSPriority.UNKNOWN;
         }
         switch (priority.toString()) {
-        case "4 - Minor":
+        case "5 - Enhancement":
             return ITSPriority.TRIVIAL;
         case "3 - Average":
+        case "4 - Minor":
             return ITSPriority.MINOR;
         case "2 - Major":
             return ITSPriority.MAJOR;

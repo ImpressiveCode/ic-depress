@@ -29,13 +29,13 @@ import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChange;
-import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChangeRowItem;
-import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChanges;
-import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueHistory;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineComment;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssue;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChange;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChanges;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueHistory;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueVersion;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssuesList;
 
@@ -58,9 +58,6 @@ public class JiraOnlineAdapterParser {
     private static final String LINK_PATH = "browse/";
 
     public static List<ITSDataType> parseSingleIssueBatch(String source, String hostname) {
-
-        // System.out.println("Parsing: "+source);
-
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
         JsonParser jp = null;
@@ -81,7 +78,7 @@ public class JiraOnlineAdapterParser {
         return parseData(issueList, hostname);
     }
 
-    public static List<JiraOnlineIssueChangeRowItem> parseSingleIssue(String json) {
+    public static List<JiraOnlineIssueChangeRowItem> parseSingleIssue(final String json) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
@@ -147,7 +144,7 @@ public class JiraOnlineAdapterParser {
         return fieldList;
     }
 
-    private static List<ITSDataType> parseData(JiraOnlineIssuesList issueList, String hostname) {
+    private static List<ITSDataType> parseData(final JiraOnlineIssuesList issueList, final String hostname) {
         List<ITSDataType> resultList = new ArrayList<>();
         MapperManager mm = JiraOnlineAdapterNodeModel.getMapperManager();
         HashMap<String, String> priorityMap = mm.getMapMapperPriority();
@@ -285,7 +282,7 @@ public class JiraOnlineAdapterParser {
         return parsed;
     }
 
-    private static List<JiraOnlineIssueChangeRowItem> parseIssueHistory(JiraOnlineIssueHistory issue) {
+    private static List<JiraOnlineIssueChangeRowItem> parseIssueHistory(final JiraOnlineIssueHistory issue) {
 
         List<JiraOnlineIssueChangeRowItem> issueList = new ArrayList<>();
 

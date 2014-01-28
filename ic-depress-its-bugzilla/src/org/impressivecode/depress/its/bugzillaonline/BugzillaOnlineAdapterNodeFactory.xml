@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./bugzilla.png" type="Source">
-	<name>Bugzilla Online Adapter</name>
+	<name>Bugzilla Adapter (Online)</name>
 
 	<shortDescription>
 		Bugzilla Online Adapter, ImpressiveCode DePress Plugin Framework.
@@ -89,12 +89,19 @@
              	Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
             </p>
 		</intro>
-		<option name="Bugzilla URL">Enter a Bugzilla installation address.</option>
-		<option name="Product">Enter a Product name, from which you want to retrieve bugs.</option>
-		<option name="Date from">Optional bugs date limit.</option>
-		<option name="Limit">Numbers of bug you want to fetch.</option>
-		<option name="Username">Your login to Bugzilla installation.</option>
+		<option name="URL">Enter a Bugzilla installation address.</option>
+		<option name="Project">Enter a Product name, from which you want to retrieve bugs.</option>
+		<option name="Login">Your login to Bugzilla installation.</option>
 		<option name="Password">Your password to Bugzilla installation.</option>
+		<option name="Limit">Optional numbers of bug you want to fetch.</option>
+		<option name="Offset">Optional offset which to begin.</option>
+		<option name="Date from">Optional bugs date limit.</option>
+		<option name="Assigned to">Optional person to whom bugs are assigned.</option>
+		<option name="Reporter">Optional person who created bugs.</option>
+		<option name="Version">Optional project version of bug.</option>
+		<option name="Priority">Optional priority of bug.</option>
+		<option name="Threads">In how many threads bugs are fetched.</option>
+		<option name="Bugs per thread">Size of task, which is submitted to thread.</option>
 	</fullDescription>
 
 	<ports>

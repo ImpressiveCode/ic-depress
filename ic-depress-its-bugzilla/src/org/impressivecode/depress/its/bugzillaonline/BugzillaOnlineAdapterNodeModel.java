@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.bugzilla;
+package org.impressivecode.depress.its.bugzillaonline;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
@@ -198,15 +198,24 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 	
 	private String getAssignedTo() {
-		return !isNullOrEmpty(assignedToSettings.getStringValue()) ? assignedToSettings.getStringValue() : null;
+		return returnActiveStringSetting(assignedToSettings);
 	}
 
 	private String getReporter() {
-		return !isNullOrEmpty(reporterSettings.getStringValue()) ? reporterSettings.getStringValue() : null;
+		return returnActiveStringSetting(reporterSettings);
+	}
+
+	private String getVersion() {
+		return returnActiveStringSetting(versionSettings);
 	}
 	
-	private String getVersion(){
-		return !isNullOrEmpty(versionSettings.getStringValue()) ? versionSettings.getStringValue() : null;
+	private String returnActiveStringSetting(SettingsModelOptionalString model) {
+		if (model.isActive()) {
+			return !isNullOrEmpty(model.getStringValue()) ? model
+					.getStringValue() : null;
+		} else {
+			return null;
+		}
 	}
 	
 	private String getPriority() {
@@ -227,9 +236,11 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	private Integer getOptionalIntegerValue(SettingsModelOptionalString settings) {
 		Integer result = null;
-		try {
-			result = parseInt(settings.getStringValue());
-		} catch (NumberFormatException e) {
+		if(settings.isActive()){
+			try {
+				result = parseInt(settings.getStringValue());
+			} catch (NumberFormatException e) {
+			}
 		}
 		return result;
 	}

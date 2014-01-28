@@ -28,7 +28,7 @@ import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.List;
 
-import org.impressivecode.depress.its.jiraonline.historymodel.JiraOnlineIssueChangeRowItem;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
 import org.junit.Test;
 
 /**
