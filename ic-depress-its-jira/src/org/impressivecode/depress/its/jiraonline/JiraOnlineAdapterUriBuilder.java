@@ -18,10 +18,11 @@
 package org.impressivecode.depress.its.jiraonline;
 
 import java.net.URI;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Collection;
 
 import javax.ws.rs.core.UriBuilder;
+
+import org.impressivecode.depress.its.ITSFilter;
 
 /**
  * Builder for JIRA REST API
@@ -33,52 +34,33 @@ import javax.ws.rs.core.UriBuilder;
 public class JiraOnlineAdapterUriBuilder {
 
     public static final int ISSUES_PER_BATCH = 100;
+    public static final String JIRA_DATE_FORMAT = "yyyy-MM-dd";
 
     private static final String SIMPLE_URI_PATH = "{protocol}://{hostname}/";
-    private static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/2/serverInfo";
+    private static final String BASIC_URI_PATH = "{protocol}://{hostname}/rest/api/latest/{command}";
+    private static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/latest/serverInfo";
     private static final String QUERY_URI_PATH = "{protocol}://{hostname}/rest/api/latest/search";
     private static final String ISSUE_HISTORY_URI_PATH = "{protocol}://{hostname}/rest/api/latest/issue/{issueKey}";
+
+    private static final String STATE_LIST_PARAM = "status";
+    private static final String PRIORITY_LIST_PARAM = "priority";
+    private static final String RESOLUTION_LIST_PARAM = "resolution";
+    private static final String TYPE_LIST_PARAM = "issuetype";
     private static final String QUERY_PARAM = "jql";
     private static final String FIELDS_PARAM = "fields";
     private static final String EXPAND_PARAM = "expand";
     private static final String CONJUNCTION = " AND ";
-    private static final String GREATER_EQUAL = " >= ";
-    private static final String LESS_EQUAL = " <= ";
-    private static final String JIRA_DATE_FORMAT = "yyyy-MM-dd";
     private static final String MAX_RESULTS = "maxResults";
     private static final String START_AT = "startAt";
 
-    private Mode mode = Mode.MULTI;
+    private Mode mode = Mode.MULTIPLE_ISSUES;
     private int startingIndex = 0;
     private String issueKey;
-
-    public static enum DateFilterType {
-
-        CREATED("created"), RESOLUTION_DATE("resolutiondate");
-
-        public final String value;
-
-        private DateFilterType(String value) {
-            this.value = value;
-        }
-
-        public String toString() {
-            return value;
-        }
-    }
-
-    private SimpleDateFormat dateFormatter;
     private String hostname;
     private String jql;
     private String protocol;
-    private Date dateFrom;
-    private Date dateTo;
-    private JiraOnlineAdapterUriBuilder.DateFilterType dateFilterStatus;
+    private Collection<ITSFilter> filters;
     private boolean isTest;
-
-    public JiraOnlineAdapterUriBuilder() {
-        dateFormatter = new SimpleDateFormat(JIRA_DATE_FORMAT);
-    }
 
     public JiraOnlineAdapterUriBuilder setHostname(String hostname) {
         this.hostname = hostname;
@@ -92,18 +74,8 @@ public class JiraOnlineAdapterUriBuilder {
         return this;
     }
 
-    public JiraOnlineAdapterUriBuilder setDateFrom(Date dateFrom) {
-        this.dateFrom = dateFrom;
-        return this;
-    }
-
-    public JiraOnlineAdapterUriBuilder setDateTo(Date dateTo) {
-        this.dateTo = dateTo;
-        return this;
-    }
-
-    public JiraOnlineAdapterUriBuilder setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType dateFilterStatus) {
-        this.dateFilterStatus = dateFilterStatus;
+    public JiraOnlineAdapterUriBuilder setFilters(Collection<ITSFilter> filters) {
+        this.filters = filters;
         return this;
     }
 
@@ -123,15 +95,22 @@ public class JiraOnlineAdapterUriBuilder {
             return testHost();
         }
 
-        if (mode == Mode.MULTI) {
+        switch (mode) {
+        case MULTIPLE_ISSUES:
             return buildMultiIssuesURI();
-        }
-
-        if (mode == Mode.HISTORY) {
+        case SINGLE_ISSUE_WITH_HISTORY:
             return buildIssueHistoryURI();
+        case PRIORITY_LIST:
+            return buildPriorityListURI();
+        case RESOLUTION_LIST:
+            return buildResolutionListURI();
+        case STATE_LIST:
+            return buildStateListURI();
+        case TYPE_LIST:
+            return buildTypeListURI();
+        default:
+            throw new RuntimeException("This should never happen. URI builder failed");
         }
-
-        throw new RuntimeException("This should never happen. URI builder failed");
     }
 
     private URI buildMultiIssuesURI() {
@@ -142,16 +121,10 @@ public class JiraOnlineAdapterUriBuilder {
             jqlBuilder.append(CONJUNCTION);
         }
 
-        if (dateFilterStatus != null) {
-            if (dateFrom != null) {
-                jqlBuilder.append(dateFilterStatus);
-                jqlBuilder.append(GREATER_EQUAL + dateFormatter.format(dateFrom));
-                jqlBuilder.append(CONJUNCTION);
-            }
-
-            if (dateTo != null) {
-                jqlBuilder.append(dateFilterStatus);
-                jqlBuilder.append(LESS_EQUAL + dateFormatter.format(dateTo));
+        for (ITSFilter filter : filters) {
+            String filterJQL = filter.getFilterValue();
+            if (filterJQL != null && !filterJQL.isEmpty()) {
+                jqlBuilder.append(filterJQL);
                 jqlBuilder.append(CONJUNCTION);
             }
         }
@@ -177,8 +150,8 @@ public class JiraOnlineAdapterUriBuilder {
         return result;
     }
 
-    public URI buildIssueHistoryURI() {
-        
+    private URI buildIssueHistoryURI() {
+
         // @formatter:off
         URI result = UriBuilder.fromPath(ISSUE_HISTORY_URI_PATH)
                 .resolveTemplate("protocol", protocol)
@@ -188,12 +161,37 @@ public class JiraOnlineAdapterUriBuilder {
                 .queryParam(EXPAND_PARAM, "changelog")
                 .build();
         // @formatter:on
-        
+
         return result;
     }
 
-    public SimpleDateFormat getDateFormatter() {
-        return (SimpleDateFormat) dateFormatter.clone();
+    private URI buildListURI(String jiraCommand) {
+
+        // @formatter:off
+        URI result = UriBuilder.fromPath(BASIC_URI_PATH)
+                .resolveTemplate("protocol", protocol)
+                .resolveTemplate("hostname", hostname)
+                .resolveTemplate("command", jiraCommand)
+                .build();
+        // @formatter:on
+
+        return result;
+    }
+
+    private URI buildTypeListURI() {
+        return buildListURI(TYPE_LIST_PARAM);
+    }
+
+    private URI buildStateListURI() {
+        return buildListURI(STATE_LIST_PARAM);
+    }
+
+    private URI buildResolutionListURI() {
+        return buildListURI(RESOLUTION_LIST_PARAM);
+    }
+
+    private URI buildPriorityListURI() {
+        return buildListURI(PRIORITY_LIST_PARAM);
     }
 
     public URI testHost() {
@@ -252,7 +250,11 @@ public class JiraOnlineAdapterUriBuilder {
         this.mode = mode;
     }
 
+    public void resetMode() {
+        this.mode = Mode.MULTIPLE_ISSUES;
+    }
+
     public enum Mode {
-        HISTORY, MULTI;
+        SINGLE_ISSUE_WITH_HISTORY, MULTIPLE_ISSUES, STATE_LIST, PRIORITY_LIST, RESOLUTION_LIST, TYPE_LIST;
     }
 }

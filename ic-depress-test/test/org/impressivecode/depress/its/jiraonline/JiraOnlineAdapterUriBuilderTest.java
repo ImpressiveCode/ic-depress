@@ -56,15 +56,6 @@ public class JiraOnlineAdapterUriBuilderTest {
     }
 
     @Test
-    public void should_have_jira_date_format_pattern() {
-        String actualPattern = builder.getDateFormatter().toPattern();
-        String expectedPattern = "yyyy-MM-dd";
-
-        assertThat(actualPattern, is(notNullValue()));
-        assertThat(actualPattern, is(equalTo(expectedPattern)));
-    }
-
-    @Test
     public void should_have_default_link_pattern() {
         String actualPattern = builder.build().toString();
         String expectedPattern = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql=";

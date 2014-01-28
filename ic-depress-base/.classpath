@@ -4,5 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="lib/guava-14.0-rc3.jar" sourcepath="C:/Users/marek/.m2/repository/com/google/guava/guava/14.0-rc3/guava-14.0-rc3-sources.jar"/>
+	<classpathentry kind="lib" path="lib/shuttlelist-0.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/miglayout15-swing.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

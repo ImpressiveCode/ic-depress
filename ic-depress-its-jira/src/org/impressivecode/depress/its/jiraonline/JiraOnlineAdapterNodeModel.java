@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -34,6 +35,12 @@ import java.util.concurrent.Future;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSFilter;
+import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
+import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
+import org.impressivecode.depress.its.jiraonline.filter.LastUpdateDateFilter;
+import org.impressivecode.depress.its.jiraonline.filter.ProjectNameFilter;
+import org.impressivecode.depress.its.jiraonline.filter.ResolvedDateFilter;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
@@ -45,10 +52,12 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
+import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
 
 import com.google.common.base.Preconditions;
@@ -77,16 +86,15 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private static final String JIRA_STATUS = "depress.its.jiraonline.status";
     private static final String JIRA_HISTORY = "depress.its.jiraonline.history";
     private static final String THREAD_COUNT_SETTING = "depress.its.jiraonline.threadcount";
+    private static final String FILTERS_SETTING = "depress.its.jiraonline.filters";
 
     private final SettingsModelString jiraSettingsURL = createSettingsURL();
     private final SettingsModelString jiraSettingsLogin = createSettingsLogin();
     private final SettingsModelString jiraSettingsPass = createSettingsPass();
-    private final SettingsModelDate jiraSettingsDateStart = createSettingsDateStart();
-    private final SettingsModelDate jiraSettingsDateEnd = createSettingsDateEnd();
     private final SettingsModelString jiraSettingsJQL = createSettingsJQL();
-    private final SettingsModelString jiraSettingsStatus = createSettingsDateFilterStatusChooser();
     private final SettingsModelBoolean jiraSettingsHistory = createSettingsHistory();
     private final SettingsModelInteger jiraSettingsThreadCount = createSettingsThreadCount();
+    private final SettingsModelStringArray jiraSettingsFilter = createSettingsFilters();
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraOnlineAdapterNodeModel.class);
 
@@ -104,6 +112,9 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private int historyTaskStepsSum;
     private int issueTaskStepsCompleted;
     private int historyTaskStepsCompleted;
+
+    private static List<ITSFilter> filters = createFilters();
+    private static MapperManager mapperManager = new MapperManager();
 
     protected JiraOnlineAdapterNodeModel() {
         super(INPUT_NODE_COUNT, OUTPUT_NODE_COUNT);
@@ -130,6 +141,8 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         issueListMonitor.setProgress(0);
         issueTaskStepsSum = issueBatchLinks.size() * STEPS_PER_TASK;
 
+        mapperManager.refreshMaps();
+        
         List<ITSDataType> issues = executeIssueTasks(issueBatchLinks);
         List<JiraOnlineIssueChangeRowItem> issuesHistory = executeHistoryTasks(issues);
 
@@ -185,13 +198,15 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         if (shouldDownloadHistory()) {
             historyTaskStepsSum = issues.size() * STEPS_PER_TASK;
             issueHistoryMonitor.setProgress(0);
+            builder.setMode(Mode.SINGLE_ISSUE_WITH_HISTORY);
             for (ITSDataType issue : issues) {
                 builder.setIssueKey(issue.getIssueId());
-                historyTasks.add(new DownloadAndParseIssueHistoryTask(builder.buildIssueHistoryURI()));
+                historyTasks.add(new DownloadAndParseIssueHistoryTask(builder.build()));
             }
             List<Future<List<JiraOnlineIssueChangeRowItem>>> partialHistoryResults = executorService
                     .invokeAll(historyTasks);
             issuesHistory = combinePartialIssueHistoryResults(partialHistoryResults);
+            builder.setMode(Mode.MULTIPLE_ISSUES);
         } else {
             issuesHistory = newArrayList();
         }
@@ -219,7 +234,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     private List<ITSDataType> combinePartialIssueResults(final List<Future<List<ITSDataType>>> partialResults)
             throws InterruptedException, ExecutionException {
-        List<ITSDataType> result = newArrayList();
+        List<ITSDataType> result = new ArrayList<>();
 
         for (Future<List<ITSDataType>> partialResult : partialResults) {
             result.addAll(partialResult.get());
@@ -263,22 +278,23 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         if (jiraSettingsJQL.getStringValue() != null && !jiraSettingsJQL.getStringValue().equals("")) {
             builder.setJQL(jiraSettingsJQL.getStringValue());
         }
-        if (jiraSettingsDateStart.getSelectedFields() > 0) {
-            builder.setDateFrom(jiraSettingsDateStart.getDate());
-        }
-        if (jiraSettingsDateEnd.getSelectedFields() > 0) {
-            builder.setDateTo(jiraSettingsDateEnd.getDate());
-        }
 
-        switch (jiraSettingsStatus.getStringValue().toLowerCase()) {
-        case "created":
-            builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED);
-            break;
-        case "resolutiondate":
-            builder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.RESOLUTION_DATE);
-            break;
-        }
+        builder.setFilters(getEnabledFilters());
+
         return builder;
+    }
+
+    private Collection<ITSFilter> getEnabledFilters() {
+        ArrayList<ITSFilter> enabledFiters = new ArrayList<>();
+        for (ITSFilter filter : getFilters()) {
+            for (String enabledFilterName : jiraSettingsFilter.getStringArrayValue()) {
+                if (enabledFilterName.equals(filter.getFilterModelId())) {
+                    enabledFiters.add(filter);
+                    break;
+                }
+            }
+        }
+        return enabledFiters;
     }
 
     private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
@@ -310,11 +326,29 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsURL.saveSettingsTo(settings);
         jiraSettingsLogin.saveSettingsTo(settings);
         jiraSettingsPass.saveSettingsTo(settings);
-        jiraSettingsDateStart.saveSettingsTo(settings);
-        jiraSettingsDateEnd.saveSettingsTo(settings);
         jiraSettingsJQL.saveSettingsTo(settings);
-        jiraSettingsStatus.saveSettingsTo(settings);
         jiraSettingsHistory.saveSettingsTo(settings);
+        jiraSettingsThreadCount.saveSettingsTo(settings);
+        jiraSettingsFilter.saveSettingsTo(settings);
+
+        for (ITSFilter filter : getFilters()) {
+            for (DialogComponent component : filter.getDialogComponents()) {
+                try {
+                    component.getModel().saveSettingsTo(settings);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+
+        for (DialogComponent component : mapperManager.getDialogComponents()) {
+            try {
+                component.getModel().saveSettingsTo(settings);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
     }
 
     @Override
@@ -322,11 +356,28 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsURL.loadSettingsFrom(settings);
         jiraSettingsLogin.loadSettingsFrom(settings);
         jiraSettingsPass.loadSettingsFrom(settings);
-        jiraSettingsDateStart.loadSettingsFrom(settings);
-        jiraSettingsDateEnd.loadSettingsFrom(settings);
         jiraSettingsJQL.loadSettingsFrom(settings);
-        jiraSettingsStatus.loadSettingsFrom(settings);
         jiraSettingsHistory.loadSettingsFrom(settings);
+        jiraSettingsThreadCount.loadSettingsFrom(settings);
+        jiraSettingsFilter.loadSettingsFrom(settings);
+
+        for (ITSFilter filter : getFilters()) {
+            for (DialogComponent component : filter.getDialogComponents()) {
+                try {
+                    component.getModel().loadSettingsFrom(settings);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+
+        for (DialogComponent component : mapperManager.getDialogComponents()) {
+            try {
+                component.getModel().loadSettingsFrom(settings);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     @Override
@@ -334,11 +385,28 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsURL.validateSettings(settings);
         jiraSettingsLogin.validateSettings(settings);
         jiraSettingsPass.validateSettings(settings);
-        jiraSettingsDateStart.validateSettings(settings);
-        jiraSettingsDateEnd.validateSettings(settings);
         jiraSettingsJQL.validateSettings(settings);
-        jiraSettingsStatus.validateSettings(settings);
         jiraSettingsHistory.validateSettings(settings);
+        jiraSettingsThreadCount.loadSettingsFrom(settings);
+        jiraSettingsFilter.loadSettingsFrom(settings);
+
+        for (ITSFilter filter : getFilters()) {
+            for (DialogComponent component : filter.getDialogComponents()) {
+                try {
+                    component.getModel().validateSettings(settings);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+
+        for (DialogComponent component : mapperManager.getDialogComponents()) {
+            try {
+                component.getModel().validateSettings(settings);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     @Override
@@ -389,6 +457,27 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         return new SettingsModelInteger(THREAD_COUNT_SETTING, DEFAULT_THREAD_COUNT);
     }
 
+    static SettingsModelStringArray createSettingsFilters() {
+        return new SettingsModelStringArray(FILTERS_SETTING, new String[] {});
+    }
+
+    private static List<ITSFilter> createFilters() {
+        filters = new ArrayList<>();
+        filters.add(new CreationDateFilter());
+        filters.add(new ProjectNameFilter());
+        filters.add(new LastUpdateDateFilter());
+        filters.add(new ResolvedDateFilter());
+        return filters;
+    }
+
+    public static MapperManager getMapperManager() {
+        return mapperManager;
+    }
+
+    public static List<ITSFilter> getFilters() {
+        return filters;
+    }
+
     private class DownloadAndParseIssuesTask implements Callable<List<ITSDataType>> {
 
         private URI uri;
@@ -437,4 +526,5 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
             return list;
         }
     }
+
 }

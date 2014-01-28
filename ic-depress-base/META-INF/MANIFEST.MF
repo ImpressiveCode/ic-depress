@@ -26,5 +26,5 @@ Export-Package: com.google.common.annotations,
  org.impressivecode.depress.scm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Eclipse-RegisterBuddy: registered
-Bundle-ClassPath: lib/guava-14.0-rc3.jar,
+Bundle-ClassPath: lib/guava-14.0-rc3.jar, lib/shuttlelist-0.0.1.jar, lib/miglayout15-swing.jar,
  depressbase.jar

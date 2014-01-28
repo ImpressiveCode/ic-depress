@@ -17,16 +17,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.its;
 
+import java.util.List;
+
+import org.knime.core.node.defaultnodesettings.DialogComponent;
+
 /**
  * 
- * @author Marek Majchrzak, ImpressiveCode
+ * @author Marcin Kunert, Wrocław University of Technology
  * 
  */
-public enum ITSStatus {
-    OPEN, IN_PROGRESS, REOPENED, CLOSED, RESOLVED, UNKNOWN;
-    
+public abstract class ITSFilter {
+
+    private List<DialogComponent> dialogComponents;
+
+    protected String filterModelId;
+
+    public ITSFilter() {
+        dialogComponents = createDialogComponents();
+        filterModelId = getFilterModelId();
+    }
+
+    public abstract List<DialogComponent> createDialogComponents();
+
+    public abstract String getName();
+
+    public abstract String getFilterValue();
+
+    public abstract String getFilterModelId();
+
     @Override
     public String toString() {
-        return (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
-    };
+        return getName();
+    }
+
+    public List<DialogComponent> getDialogComponents() {
+        return dialogComponents;
+    }
 }

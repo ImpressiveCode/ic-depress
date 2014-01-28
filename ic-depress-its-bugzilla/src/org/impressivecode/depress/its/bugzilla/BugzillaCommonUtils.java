@@ -62,7 +62,7 @@ public class BugzillaCommonUtils {
 		case "NEW":
 			return ITSStatus.OPEN;
 		case "REOPENED":
-			return ITSStatus.REOPEN;
+			return ITSStatus.REOPENED;
 		case "ASSIGN":
 			return ITSStatus.IN_PROGRESS;
 		case "RESOLVED":
