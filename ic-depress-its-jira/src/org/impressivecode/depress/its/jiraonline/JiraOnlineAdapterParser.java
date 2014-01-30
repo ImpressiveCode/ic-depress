@@ -56,6 +56,7 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 public class JiraOnlineAdapterParser {
 
     private static final String LINK_PATH = "browse/";
+    private static final String UNKNOWN_NAME = "unknown";
 
     public static List<ITSDataType> parseSingleIssueBatch(String source, String hostname) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -227,7 +228,7 @@ public class JiraOnlineAdapterParser {
                 break;
             }
         }
-        
+
         return parsed;
     }
 
@@ -289,17 +290,25 @@ public class JiraOnlineAdapterParser {
         for (int i = 0; i < issue.getChangelog().getHistories().size(); i++) {
             JiraOnlineIssueChanges changes = issue.getChangelog().getHistories().get(i);
             for (int j = 0; j < changes.getItems().size(); j++) {
-                JiraOnlineIssueChange change = changes.getItems().get(j);
+                try {
+                    JiraOnlineIssueChange change = changes.getItems().get(j);
 
-                JiraOnlineIssueChangeRowItem parsedIssue = new JiraOnlineIssueChangeRowItem();
-                parsedIssue.setKey(issue.getKey());
-                parsedIssue.setAuthor(changes.getAuthor().getName());
-                parsedIssue.setTimestamp(changes.getTimestamp());
-                parsedIssue.setField(change.getFieldName());
-                parsedIssue.setChangedFrom(change.getFrom());
-                parsedIssue.setChangedTo(change.getTo());
+                    JiraOnlineIssueChangeRowItem parsedIssue = new JiraOnlineIssueChangeRowItem();
+                    parsedIssue.setKey(issue.getKey());
+                    if (changes.getAuthor() != null && changes.getAuthor().getName() != null) {
+                        parsedIssue.setAuthor(changes.getAuthor().getName());
+                    } else {
+                        parsedIssue.setAuthor(UNKNOWN_NAME);
+                    }
+                    parsedIssue.setTimestamp(changes.getTimestamp());
+                    parsedIssue.setField(change.getFieldName());
+                    parsedIssue.setChangedFrom(change.getFrom());
+                    parsedIssue.setChangedTo(change.getTo());
 
-                issueList.add(parsedIssue);
+                    issueList.add(parsedIssue);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         }
 

@@ -32,6 +32,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.eclipse.jface.util.Assert;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
@@ -249,7 +250,11 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         List<JiraOnlineIssueChangeRowItem> result = newArrayList();
 
         for (Future<List<JiraOnlineIssueChangeRowItem>> partialResult : partialResults) {
-            result.addAll(partialResult.get());
+            try {
+                result.addAll(partialResult.get());
+            } catch(Exception e) {
+                System.out.println("pause here");
+            }
         }
 
         return result;
@@ -348,7 +353,6 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
                 System.out.println(e.getMessage());
             }
         }
-
     }
 
     @Override
@@ -407,6 +411,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
                 System.out.println(e.getMessage());
             }
         }
+        jiraSettingsThreadCount.validateSettings(settings);
     }
 
     @Override
