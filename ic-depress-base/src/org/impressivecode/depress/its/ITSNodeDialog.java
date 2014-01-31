@@ -42,6 +42,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
 
 /**
+ * Abstract node dialog for issue tracking systems.
  * 
  * @author Marcin Kunert, Wrocław University of Technology
  * @author Krzysztof Kwoka, Wrocław University of Technology
@@ -92,7 +93,7 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
      * Advanced components
      */
     protected DialogComponentNumberEdit threadsCount;
-    
+
     protected ITSFiltersDialogComponent filterSelection;
 
     private JPanel filterPanel;
@@ -165,7 +166,7 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     protected abstract SettingsModelString createLoginSettings();
 
     protected abstract SettingsModelString createPasswordSettings();
-    
+
     protected abstract SettingsModelStringArray createFilterSettings();
 
     protected abstract Collection<ITSFilter> getFilters();
@@ -199,7 +200,7 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
                         ITSNodeDialog.this.getPanel().repaint();
                     }
                 }
-                
+
                 if (filter != null) {
                     if (tableId == 2) {
                         for (DialogComponent component : filter.getDialogComponents()) {
@@ -220,7 +221,7 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         addLargestFilter(filterPanel);
         return filterPanel;
     }
-    
+
     protected void addLargestFilter(JPanel panel) {
         // NOOP, should be implemented by dialogs to set their size
     }
@@ -243,15 +244,15 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     protected void addFlowVariablesTab() {
         // NOOP the flow variables tab is not needed
     }
-    
+
     @Override
     protected void loadSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs) throws NotConfigurableException {
         url.loadSettingsFrom(settings, specs);
         login.loadSettingsFrom(settings, specs);
         password.loadSettingsFrom(settings, specs);
         threadsCount.loadSettingsFrom(settings, specs);
-        
-        if(filterSelection != null) {
+
+        if (filterSelection != null) {
             filterSelection.loadSettingsFrom(settings, specs);
         }
 
@@ -273,9 +274,8 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         login.saveSettingsTo(settings);
         password.saveSettingsTo(settings);
         threadsCount.saveSettingsTo(settings);
-        
-        
-        if(filterSelection != null) {
+
+        if (filterSelection != null) {
             filterSelection.saveSettingsTo(settings);
         }
 

@@ -147,7 +147,7 @@ public class JiraOnlineAdapterParser {
 
     private static List<ITSDataType> parseData(final JiraOnlineIssuesList issueList, final String hostname) {
         List<ITSDataType> resultList = new ArrayList<>();
-        MapperManager mm = JiraOnlineAdapterNodeModel.getMapperManager();
+        JiraOnlineMapperManager mm = JiraOnlineAdapterNodeModel.getMapperManager();
         HashMap<String, String> priorityMap = mm.getMapMapperPriority();
         HashMap<String, String> resolutionMap = mm.getMapMapperResolution();
         HashMap<String, String> statusMap = mm.getMapMapperState();

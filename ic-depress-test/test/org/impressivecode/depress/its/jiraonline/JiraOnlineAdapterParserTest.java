@@ -32,21 +32,11 @@ import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowI
 import org.junit.Test;
 
 /**
- * 
+ * Test suite for parsing jira response using Jackson Library
  * @author Marcin Kunert, Wroclaw University of Technology
  * 
  */
 public class JiraOnlineAdapterParserTest {
-
-    @Test
-    public void shouldParseMultipleIssues() {
-        // TODO issue list parser test
-        // given
-
-        // when
-
-        // then
-    }
 
     @Test
     public void shouldParseSingleIssueHistory() throws Exception {

@@ -32,7 +32,7 @@ import javax.swing.SwingWorker;
 import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
-import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
+import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterCreationDate;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
@@ -119,7 +119,7 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
 
     @Override
     protected void addLargestFilter(JPanel panel) {
-        for (DialogComponent component : new CreationDateFilter().getDialogComponents()) {
+        for (DialogComponent component : new JiraOnlineFilterCreationDate().getDialogComponents()) {
             panel.add(component.getComponentPanel());
         }
     }
@@ -163,7 +163,7 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
 
         private JiraOnlineAdapterUriBuilder builder;
         private JiraOnlineAdapterRsClient client;
-        private MapperManager mm;
+        private JiraOnlineMapperManager mm;
 
         public ConnectionChecker() {
             mm = JiraOnlineAdapterNodeModel.getMapperManager();

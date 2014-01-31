@@ -31,6 +31,7 @@ import pl.enofod.shuttlelist.ShuttleList;
 import pl.enofod.shuttlelist.ShuttleList.ListItemSelectionListener;
 
 /**
+ * Dialog component containing a ShuttleList for filter selection.
  * 
  * @author Marcin Kunert, Wrocław University of Technology
  * 
@@ -78,7 +79,7 @@ public class ITSFiltersDialogComponent extends DialogComponent {
         list.removeAllElements();
         for (ITSFilter filter : filters) {
             boolean added = false;
-            for (String id : ((SettingsModelStringArray)getModel()).getStringArrayValue()) {
+            for (String id : ((SettingsModelStringArray) getModel()).getStringArrayValue()) {
                 if (filter.getFilterModelId().equals(id)) {
                     // filter selected
                     list.addElementToRight(filter);
@@ -91,12 +92,11 @@ public class ITSFiltersDialogComponent extends DialogComponent {
             }
         }
     }
-    
+
     @Override
     public JPanel getComponentPanel() {
         return panel;
     }
-    
 
     @Override
     protected void updateComponent() {

@@ -121,11 +121,13 @@ public class JiraOnlineAdapterUriBuilder {
             jqlBuilder.append(CONJUNCTION);
         }
 
-        for (ITSFilter filter : filters) {
-            String filterJQL = filter.getFilterValue();
-            if (filterJQL != null && !filterJQL.isEmpty()) {
-                jqlBuilder.append(filterJQL);
-                jqlBuilder.append(CONJUNCTION);
+        if (filters != null) {
+            for (ITSFilter filter : filters) {
+                String filterJQL = filter.getFilterValue();
+                if (filterJQL != null && !filterJQL.isEmpty()) {
+                    jqlBuilder.append(filterJQL);
+                    jqlBuilder.append(CONJUNCTION);
+                }
             }
         }
 

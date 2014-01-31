@@ -32,16 +32,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import org.eclipse.jface.util.Assert;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
-import org.impressivecode.depress.its.jiraonline.filter.CreationDateFilter;
-import org.impressivecode.depress.its.jiraonline.filter.LastUpdateDateFilter;
-import org.impressivecode.depress.its.jiraonline.filter.ProjectNameFilter;
-import org.impressivecode.depress.its.jiraonline.filter.ResolvedDateFilter;
+import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterCreationDate;
+import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterLastUpdateDate;
+import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterProjectName;
+import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterResolvedDate;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
@@ -115,7 +114,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private int historyTaskStepsCompleted;
 
     private static List<ITSFilter> filters = createFilters();
-    private static MapperManager mapperManager = new MapperManager();
+    private static JiraOnlineMapperManager mapperManager = new JiraOnlineMapperManager();
 
     protected JiraOnlineAdapterNodeModel() {
         super(INPUT_NODE_COUNT, OUTPUT_NODE_COUNT);
@@ -468,14 +467,14 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     private static List<ITSFilter> createFilters() {
         filters = new ArrayList<>();
-        filters.add(new CreationDateFilter());
-        filters.add(new ProjectNameFilter());
-        filters.add(new LastUpdateDateFilter());
-        filters.add(new ResolvedDateFilter());
+        filters.add(new JiraOnlineFilterCreationDate());
+        filters.add(new JiraOnlineFilterProjectName());
+        filters.add(new JiraOnlineFilterLastUpdateDate());
+        filters.add(new JiraOnlineFilterResolvedDate());
         return filters;
     }
 
-    public static MapperManager getMapperManager() {
+    public static JiraOnlineMapperManager getMapperManager() {
         return mapperManager;
     }
 
