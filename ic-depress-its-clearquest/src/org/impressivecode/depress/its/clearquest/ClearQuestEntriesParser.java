@@ -262,7 +262,7 @@ public class ClearQuestEntriesParser {
         case "Submit":
             return ITSStatus.OPEN;
         case "Resubmit":
-            return ITSStatus.REOPEN;
+            return ITSStatus.REOPENED;
         case "Start_Correction":
         case "Set_Priority":
         case "Assign":
