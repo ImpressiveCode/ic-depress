@@ -17,6 +17,7 @@
  */
 package org.impressivecode.depress.its.jiraonline;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -24,13 +25,18 @@ import static org.junit.Assert.assertThat;
 
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
+import org.impressivecode.depress.its.ITSFilter;
+import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterCreationDate;
+import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterResolvedDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
+ * Test suite for {@link JiraOnlineAdapterUriBuilder}
+ * 
  * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
  * @author Dawid Rutowicz, Wroclaw University of Technology
@@ -39,20 +45,19 @@ import org.junit.Test;
 
 public class JiraOnlineAdapterUriBuilderTest {
     private JiraOnlineAdapterUriBuilder builder;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private final String HOSTNAME = "hostname";
     private final String FIELDS = "fields=*all";
     private final String START_AT = "startAt=0";
     private final String MAX_RESULTS = "maxResults=";
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Before
     public void setUp() throws ParseException {
         builder = new JiraOnlineAdapterUriBuilder();
         builder.setHostname(HOSTNAME);
-        startDate = new SimpleDateFormat("yyyy-MM-dd").parse("2013-12-01");
-        endDate = new SimpleDateFormat("yyyy-MM-dd").parse("2013-12-31");
+        startDate = "2013-12-01";
+        endDate = "2013-12-31";
     }
 
     @Test
@@ -65,7 +70,7 @@ public class JiraOnlineAdapterUriBuilderTest {
     }
 
     @Test
-    public void should_create_link_with_JQL_filter() throws UnsupportedEncodingException {
+    public void shoudCreateLinkWithJqlFilter() throws UnsupportedEncodingException {
         String jql = "labels=metamodel";
         String actual = builder.setJQL(jql).build().toString();
         String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart()
@@ -76,31 +81,69 @@ public class JiraOnlineAdapterUriBuilderTest {
     }
 
     @Test
-    public void should_create_start_and_end_dates_with_status_created_filter() {
-        String actual = builder.setDateFrom(startDate).setDateTo(endDate)
-                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED).build().toString();
+    public void shouldCreateCreationDateFilter() {
+        // given
+        JiraOnlineFilterCreationDate filter = new JiraOnlineFilterCreationDate();
+        JiraOnlineFilterCreationDate filterSpy = Mockito.spy(filter);
+
+        Mockito.when(filterSpy.isFromEnabled()).thenReturn(true);
+        Mockito.when(filterSpy.getFrom()).thenReturn(startDate);
+        Mockito.when(filterSpy.isToEnabled()).thenReturn(true);
+        Mockito.when(filterSpy.getTo()).thenReturn(endDate);
+
+        List<ITSFilter> filters = newArrayList();
+        filters.add(filterSpy);
+
+        // when
+        String actual = builder.setFilters(filters).build().toString();
         String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql="
                 + createBothDatesStatusCreatedExpectedFilterResult();
 
+        // then
         assertThat(actual, is(notNullValue()));
         assertThat(actual, is(equalTo(expected)));
     }
 
     @Test
-    public void should_create_start_and_end_dates_with_status_resolution_filter() {
-        String actual = builder.setDateFrom(startDate).setDateTo(endDate)
-                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.RESOLUTION_DATE).build().toString();
+    public void shouldCreateResolutionDateFilter() {
+        JiraOnlineFilterResolvedDate filter = new JiraOnlineFilterResolvedDate();
+        JiraOnlineFilterResolvedDate filterSpy = Mockito.spy(filter);
+
+        Mockito.when(filterSpy.isFromEnabled()).thenReturn(true);
+        Mockito.when(filterSpy.getFrom()).thenReturn(startDate);
+        Mockito.when(filterSpy.isToEnabled()).thenReturn(true);
+        Mockito.when(filterSpy.getTo()).thenReturn(endDate);
+
+        List<ITSFilter> filters = newArrayList();
+        filters.add(filterSpy);
+
+        // when
+        String actual = builder.setFilters(filters).build().toString();
+
         String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql="
                 + createBothDatesStatusResolutionExpectedFilterResult();
 
+        // then
         assertThat(actual, is(notNullValue()));
         assertThat(actual, is(equalTo(expected)));
     }
 
     @Test
     public void should_create_start_only_date_with_status_created_filter() {
-        String actual = builder.setDateFrom(startDate)
-                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED).build().toString();
+        // given
+        JiraOnlineFilterCreationDate filter = new JiraOnlineFilterCreationDate();
+        JiraOnlineFilterCreationDate filterSpy = Mockito.spy(filter);
+
+        Mockito.when(filterSpy.isFromEnabled()).thenReturn(true);
+        Mockito.when(filterSpy.getFrom()).thenReturn(startDate);
+        Mockito.when(filterSpy.isToEnabled()).thenReturn(false);
+
+        List<ITSFilter> filters = newArrayList();
+        filters.add(filterSpy);
+
+        // when
+        String actual = builder.setFilters(filters).build().toString();
+
         String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql="
                 + createStartDateOnlyStatusCreatedExpectedFilterResult();
 
@@ -110,33 +153,69 @@ public class JiraOnlineAdapterUriBuilderTest {
 
     @Test
     public void should_create_start_only_date_with_status_resolution_filter() {
-        String actual = builder.setDateFrom(startDate)
-                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.RESOLUTION_DATE).build().toString();
+        // given
+        JiraOnlineFilterResolvedDate filter = new JiraOnlineFilterResolvedDate();
+        JiraOnlineFilterResolvedDate filterSpy = Mockito.spy(filter);
+
+        Mockito.when(filterSpy.isFromEnabled()).thenReturn(true);
+        Mockito.when(filterSpy.getFrom()).thenReturn(startDate);
+        Mockito.when(filterSpy.isToEnabled()).thenReturn(false);
+
+        List<ITSFilter> filters = newArrayList();
+        filters.add(filterSpy);
+
+        // when
+        String actual = builder.setFilters(filters).build().toString();
         String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql="
                 + createStartDateOnlyStatusResolutionExpectedFilterResult();
 
+        // then
         assertThat(actual, is(notNullValue()));
         assertThat(actual, is(equalTo(expected)));
     }
 
     @Test
     public void should_create_end_only_date_with_status_created_filter() {
-        String actual = builder.setDateTo(endDate)
-                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED).build().toString();
+        // given
+        JiraOnlineFilterCreationDate filter = new JiraOnlineFilterCreationDate();
+        JiraOnlineFilterCreationDate filterSpy = Mockito.spy(filter);
+
+        Mockito.when(filterSpy.isFromEnabled()).thenReturn(false);
+        Mockito.when(filterSpy.isToEnabled()).thenReturn(true);
+        Mockito.when(filterSpy.getTo()).thenReturn(endDate);
+
+        List<ITSFilter> filters = newArrayList();
+        filters.add(filterSpy);
+
+        // when
+        String actual = builder.setFilters(filters).build().toString();
         String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql="
                 + createEndDateOnlyStatusCreatedExpectedFilterResult();
 
+        // then
         assertThat(actual, is(notNullValue()));
         assertThat(actual, is(equalTo(expected)));
     }
 
     @Test
     public void should_create_end_only_date_with_status_resolution_filter() {
-        String actual = builder.setDateTo(endDate)
-                .setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.RESOLUTION_DATE).build().toString();
+        // given
+        JiraOnlineFilterResolvedDate filter = new JiraOnlineFilterResolvedDate();
+        JiraOnlineFilterResolvedDate filterSpy = Mockito.spy(filter);
+
+        Mockito.when(filterSpy.isFromEnabled()).thenReturn(false);
+        Mockito.when(filterSpy.isToEnabled()).thenReturn(true);
+        Mockito.when(filterSpy.getTo()).thenReturn(endDate);
+
+        List<ITSFilter> filters = newArrayList();
+        filters.add(filterSpy);
+
+        // when
+        String actual = builder.setFilters(filters).build().toString();
         String expected = "https://" + HOSTNAME + "/rest/api/latest/search?" + createLinkPart() + "&jql="
                 + createEndDateOnlyStatusResolutionExpectedFilterResult();
 
+        // then
         assertThat(actual, is(notNullValue()));
         assertThat(actual, is(equalTo(expected)));
     }
@@ -170,7 +249,7 @@ public class JiraOnlineAdapterUriBuilderTest {
     }
 
     @Test
-    public void should_detect_unsecured_connection_protocol() {
+    public void shouldDetectUnecuredConnectionProtocol() {
         // given
         JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
         builder.setHostname("http://dummyhostname.com/");
@@ -183,7 +262,7 @@ public class JiraOnlineAdapterUriBuilderTest {
     }
 
     @Test
-    public void should_detect_secured_connection_protocol() {
+    public void shouldDetectSecuredConnectionProtocol() {
         // given
         JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
         builder.setHostname("https://dummyhostname.com/");
@@ -220,27 +299,27 @@ public class JiraOnlineAdapterUriBuilderTest {
 
     private String createStartDateOnlyStatusCreatedExpectedFilterResult() {
         StringBuilder expectedResult = new StringBuilder("created+%3E%3D+");
-        expectedResult.append(dateFormat.format(startDate));
+        expectedResult.append(startDate);
         return expectedResult.toString();
     }
 
     private String createStartDateOnlyStatusResolutionExpectedFilterResult() {
-        StringBuilder expectedResult = new StringBuilder("resolutiondate+%3E%3D+");
-        expectedResult.append(dateFormat.format(startDate));
+        StringBuilder expectedResult = new StringBuilder("resolved+%3E%3D+");
+        expectedResult.append(startDate);
 
         return expectedResult.toString();
     }
 
     private String createEndDateOnlyStatusCreatedExpectedFilterResult() {
         StringBuilder expectedResult = new StringBuilder("created+%3C%3D+");
-        expectedResult.append(dateFormat.format(endDate));
+        expectedResult.append(endDate);
 
         return expectedResult.toString();
     }
 
     private String createEndDateOnlyStatusResolutionExpectedFilterResult() {
-        StringBuilder expectedResult = new StringBuilder("resolutiondate+%3C%3D+");
-        expectedResult.append(dateFormat.format(endDate));
+        StringBuilder expectedResult = new StringBuilder("resolved+%3C%3D+");
+        expectedResult.append(endDate);
 
         return expectedResult.toString();
     }

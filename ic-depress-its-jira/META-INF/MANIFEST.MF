@@ -12,6 +12,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.impressivecode.depress.its.jira,
  org.impressivecode.depress.its.jiraonline,
+ org.impressivecode.depress.its.jiraonline.filter,
  org.impressivecode.depress.its.jiraonline.model
 Bundle-ClassPath: plugin.jar,
  lib/jackson-annotations-2.0.6.jar,
@@ -35,7 +36,5 @@ Bundle-ClassPath: plugin.jar,
  lib/jersey-client-2.3.1.jar,
  lib/jersey-common-2.3.1.jar,
  lib/osgi-resource-locator-1.0.1.jar,
- lib/shuttlelist-0.0.1.jar,
- lib/miglayout15-swing.jar,
  lib/tiger-types-1.4.jar
 Eclipse-BuddyPolicy: registered

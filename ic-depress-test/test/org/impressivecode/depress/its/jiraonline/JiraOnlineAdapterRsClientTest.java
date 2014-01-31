@@ -37,6 +37,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 /**
+ * Test suite for {@link JiraOnlineAdapterRsClient}
+ * 
  * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
  * @author Dawid Rutowicz, Wroclaw University of Technology

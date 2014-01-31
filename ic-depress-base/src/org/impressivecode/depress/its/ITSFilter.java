@@ -22,6 +22,9 @@ import java.util.List;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
 
 /**
+ * Abstract class for creating ITS filters. Provides the basic interface to
+ * create dialog components and generate output string, which can be used to add
+ * restrictions for any issue tracking system
  * 
  * @author Marcin Kunert, Wrocław University of Technology
  * 

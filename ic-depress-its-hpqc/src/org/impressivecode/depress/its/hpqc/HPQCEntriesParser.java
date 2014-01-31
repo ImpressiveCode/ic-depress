@@ -224,7 +224,7 @@ public class HPQCEntriesParser {
         case "New":
             return ITSStatus.OPEN;
         case "Reopen":
-            return ITSStatus.REOPEN;
+            return ITSStatus.REOPENED;
         case "In Progress":
             return ITSStatus.IN_PROGRESS;
         case "Resolved":

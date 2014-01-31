@@ -17,6 +17,7 @@
  */
 package org.impressivecode.depress.its.jiraonline;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -26,16 +27,20 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
+import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterCreationDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * Integration test for RESTful Client and JQL filters.<br />
  * Integration with Hibernate Jira hosted on: https://hibernate.atlassian.net/
+ * and Spring Jira hosted on https://jira.springsource.org/
  * 
  * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
@@ -58,17 +63,20 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
     }
 
     @Test
-    public void should_download_parse_and_check_specific_issues() throws Exception {
+    public void shouldDownloadParseAndCheckSpecificIssue() throws Exception {
         // given
-        springUriBuilder.setDateFilterStatus(JiraOnlineAdapterUriBuilder.DateFilterType.CREATED);
+        JiraOnlineFilterCreationDate filter = new JiraOnlineFilterCreationDate();
+        JiraOnlineFilterCreationDate filterSpy = Mockito.spy(filter);
 
-        GregorianCalendar dateFrom = new GregorianCalendar();
-        dateFrom.set(2012, 0, 1);
-        springUriBuilder.setDateFrom(dateFrom.getTime());
+        Mockito.when(filterSpy.isFromEnabled()).thenReturn(true);
+        Mockito.when(filterSpy.getFrom()).thenReturn("2012-1-1");
+        Mockito.when(filterSpy.isToEnabled()).thenReturn(true);
+        Mockito.when(filterSpy.getTo()).thenReturn("2012-1-2");
 
-        GregorianCalendar dateTo = new GregorianCalendar();
-        dateTo.set(2012, 0, 2);
-        springUriBuilder.setDateTo(dateTo.getTime());
+        List<ITSFilter> filters = newArrayList();
+        filters.add(filterSpy);
+
+        springUriBuilder.setFilters(filters);
 
         // when
         List<ITSDataType> entries = JiraOnlineAdapterParser.parseSingleIssueBatch(
@@ -99,7 +107,7 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
         assertThat(calendar.get(GregorianCalendar.YEAR), is(2012));
 
         assertThat(entry.getStatus(), is(ITSStatus.RESOLVED));
-        assertThat(entry.getType(), is(ITSType.ENHANCEMENT));
+        assertThat(entry.getType(), is(ITSType.UNKNOWN));
         assertThat(entry.getVersion().size(), is(0));
         assertThat(entry.getFixVersion().size(), is(1));
         assertThat(entry.getFixVersion().get(0), is("1.0.0.M6"));
@@ -109,7 +117,7 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
         assertThat(entry.getLink(), is("https://jira.springsource.org/browse/SECOAUTH-179"));
         assertNull(entry.getDescription());
         assertThat(entry.getComments().size(), is(0));
-        assertThat(entry.getResolution(), is(ITSResolution.FIXED));
+        assertThat(entry.getResolution(), is(ITSResolution.UNKNOWN));
         assertThat(entry.getReporter(), is("david_syer"));
         assertThat(entry.getAssignees().size(), is(1));
         assertThat(entry.getAssignees().contains("david_syer"), is(true));
@@ -123,7 +131,7 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
     private void setupBuilders() {
         hibernateUriBuilder = new JiraOnlineAdapterUriBuilder();
         springUriBuilder = new JiraOnlineAdapterUriBuilder();
-    
+
         hibernateUriBuilder.setHostname(HOSTNAME_HIBERNATE);
         springUriBuilder.setHostname(HOSTNAME_SPRING);
     }

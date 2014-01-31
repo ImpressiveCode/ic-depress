@@ -27,6 +27,8 @@ import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 
 /**
+ * Abstract class for time period filters. Provides a two date selection
+ * components.
  * 
  * @author Marcin Kunert, Wrocław University of Technology
  * 
