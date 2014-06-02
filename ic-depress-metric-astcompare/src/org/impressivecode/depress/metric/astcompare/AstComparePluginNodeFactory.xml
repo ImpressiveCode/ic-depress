@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./default.png" type="Source">
+    <name>AstCompare</name>
+    
+    <shortDescription>
+        Plugin is checking project repository and generating method level metrics base on AST(Abstract Syntax Tree) comparsion.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+			Plugin is checking project repository and generating method level metrics base on AST(Abstract Syntax Tree) comparsion.
+			<p>Copyright(c) Piotr Mitka</p>
+		</intro>
+              
+        <option name="Project">Select Java project for which you want to generate metrics</option>
+        <option name="Set revision's date range">Set start and end date(using format DD-MM-YYYY) of revisions for which you want to generate metrics</option>
+        <option name="Choose sample's timeframe">Select timeframe for which you want to generate metrics</option>
+    </fullDescription>
+    
+    <ports>
+        <outPort index="0" name="Metrics result">Metrics generated base on AST changes</outPort>
+    </ports>       
+</knimeNode>
