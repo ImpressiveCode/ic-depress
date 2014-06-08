@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ic-depress-metric-astcompare
-Bundle-SymbolicName: org.impressivecode.depress.metric.astcompare;singleton:=true
+Bundle-Name: ic-depress-mr-astcompare
+Bundle-SymbolicName: org.impressivecode.depress.mr.astcompare;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: plugin.jar,
  lib/changedistiller-0.0.1-SNAPSHOT-jar-with-dependencies.jar,
@@ -17,9 +17,7 @@ Require-Bundle: org.impressivecode.depress.base;bundle-version="0.1.0",
  org.eclipse.core.resources,
  org.eclipse.core.filesystem,
  org.eclipse.team.core,
- org.eclipse.team.ui,
- org.polarion.eclipse.team.svn.connector.svnkit17;bundle-version="3.0.0",
- org.eclipse.team.svn.core;bundle-version="1.0.1"
+ org.eclipse.team.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: ch.uzh.ifi.seal.changedistiller,
@@ -86,12 +84,11 @@ Export-Package: ch.uzh.ifi.seal.changedistiller,
  org.eclipse.jdt.internal.compiler.tool,
  org.eclipse.jdt.internal.compiler.util,
  org.eclipse.jdt.internal.core.util,
- org.impressivecode.depress.metric.astcompare,
- org.impressivecode.depress.metric.astcompare.ast,
- org.impressivecode.depress.metric.astcompare.bug_prone,
- org.impressivecode.depress.metric.astcompare.db,
- org.impressivecode.depress.metric.astcompare.svn,
- org.impressivecode.depress.metric.astcompare.utils,
+ org.impressivecode.depress.mr.astcompare,
+ org.impressivecode.depress.mr.astcompare.ast,
+ org.impressivecode.depress.mr.astcompare.db,
+ org.impressivecode.depress.mr.astcompare.svn,
+ org.impressivecode.depress.mr.astcompare.utils,
  org.jsoup,
  org.jsoup.examples,
  org.jsoup.helper,

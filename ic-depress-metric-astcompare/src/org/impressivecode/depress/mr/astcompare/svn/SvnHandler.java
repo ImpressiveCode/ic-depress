@@ -1,4 +1,4 @@
-package org.impressivecode.depress.metric.astcompare.svn;
+package org.impressivecode.depress.mr.astcompare.svn;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,14 +12,26 @@ import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.core.history.provider.FileHistoryProvider;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
-import org.knime.core.node.NodeLogger;
 
-/**
- * @author Piotr Mitka
+/*
+ ImpressiveCode Depress Framework
+ Copyright (C) 2013  ImpressiveCode contributors
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 public class SvnHandler {
 
-    private static final NodeLogger logger = NodeLogger.getLogger(SvnHandler.class);
     private final ExecutionContext exec;
     private RepositoryProvider repositoryProvider;
     long revisionDateMin;
@@ -78,16 +90,13 @@ public class SvnHandler {
         if (fileHistoryProvider == null)
             return null;
 
-        try {
-            IFileHistory iFileHistory = fileHistoryProvider.getFileHistoryFor(file,
-                    FileHistoryProvider.SINGLE_LINE_OF_DESCENT, null);
+        IFileHistory iFileHistory = fileHistoryProvider.getFileHistoryFor(file,
+                FileHistoryProvider.SINGLE_LINE_OF_DESCENT, null);
 
-            if (iFileHistory != null) {
-                revisions = iFileHistory.getFileRevisions();
-            }
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+        if (iFileHistory != null) {
+            revisions = iFileHistory.getFileRevisions();
         }
+
         return revisions;
     }
 

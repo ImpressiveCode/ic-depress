@@ -1,11 +1,12 @@
-package org.impressivecode.depress.metric.astcompare;
+package org.impressivecode.depress.mr.astcompare;
 
-import static org.impressivecode.depress.metric.astcompare.utils.Utils.DATE_FROM;
-import static org.impressivecode.depress.metric.astcompare.utils.Utils.DATE_TO;
-import static org.impressivecode.depress.metric.astcompare.utils.Utils.DEFAULT_VALUE;
-import static org.impressivecode.depress.metric.astcompare.utils.Utils.PROJECTS_NAMES;
-import static org.impressivecode.depress.metric.astcompare.utils.Utils.WEEKS;
-import static org.impressivecode.depress.metric.astcompare.utils.Utils.getWeeksAsInteger;
+import static org.impressivecode.depress.mr.astcompare.utils.AstMetricsTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mr.astcompare.utils.Utils.DATE_FROM;
+import static org.impressivecode.depress.mr.astcompare.utils.Utils.DATE_TO;
+import static org.impressivecode.depress.mr.astcompare.utils.Utils.DEFAULT_VALUE;
+import static org.impressivecode.depress.mr.astcompare.utils.Utils.PROJECTS_NAMES;
+import static org.impressivecode.depress.mr.astcompare.utils.Utils.WEEKS;
+import static org.impressivecode.depress.mr.astcompare.utils.Utils.getWeeksAsInteger;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,11 +21,11 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.core.RepositoryProvider;
-import org.impressivecode.depress.metric.astcompare.ast.AstController;
-import org.impressivecode.depress.metric.astcompare.db.DbHandler;
-import org.impressivecode.depress.metric.astcompare.svn.SvnHandler;
-import org.impressivecode.depress.metric.astcompare.utils.DataTableHandler;
-import org.impressivecode.depress.metric.astcompare.utils.Utils;
+import org.impressivecode.depress.mr.astcompare.ast.AstController;
+import org.impressivecode.depress.mr.astcompare.db.DbHandler;
+import org.impressivecode.depress.mr.astcompare.svn.SvnHandler;
+import org.impressivecode.depress.mr.astcompare.utils.AstMetricsTransformer;
+import org.impressivecode.depress.mr.astcompare.utils.Utils;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -37,15 +38,25 @@ import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
-/**
- * This is the model implementation of AstComparePlugin. Plugin is checking
- * project repository and generating metrics by ast compare.
- * 
- * @author Piotr Mitka
+/*
+ ImpressiveCode Depress Framework
+ Copyright (C) 2013  ImpressiveCode contributors
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 public class AstComparePluginNodeModel extends NodeModel {
 
-    private static final NodeLogger logger = NodeLogger.getLogger(AstComparePluginNodeModel.class);
     // default values
     private final SettingsModelString m_projects = new SettingsModelString(PROJECTS_NAMES, DEFAULT_VALUE);
     private final SettingsModelString m_dateFrom = new SettingsModelString(DATE_FROM, Utils.getCurrentDayPlus(
@@ -62,45 +73,36 @@ public class AstComparePluginNodeModel extends NodeModel {
             db = DbHandler.getInstance();
             db.connect();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            NodeLogger.getLogger(AstComparePluginNodeModel.class).error(e.getMessage(), e);
+            e.printStackTrace();
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
-        try {
-            long revisionDateMin = Utils.getTime(m_dateFrom.getStringValue());
-            long revisionDateMax = Utils.getTime(m_dateTo.getStringValue());
+        long revisionDateMin = Utils.getTime(m_dateFrom.getStringValue());
+        long revisionDateMax = Utils.getTime(m_dateTo.getStringValue());
 
-            if (selectedProject != null) {
-                IJavaProject project = JavaCore.create(selectedProject);
-                RepositoryProvider provider = RepositoryProvider.getProvider(project.getProject());
-                SvnHandler svnHandler = new SvnHandler(exec, provider, revisionDateMin, revisionDateMax);
+        if (selectedProject != null) {
+            IJavaProject project = JavaCore.create(selectedProject);
+            RepositoryProvider provider = RepositoryProvider.getProvider(project.getProject());
+            SvnHandler svnHandler = new SvnHandler(exec, provider, revisionDateMin, revisionDateMax);
 
-                AstController controller = new AstController(exec, db, svnHandler);
-                if (!db.isDataExistInDb(selectedProject.getName(), revisionDateMin, revisionDateMax)) {
-                    controller.collectDataAndSaveInDb(project.getPackageFragments(), selectedProject.getName(),
-                            revisionDateMin, revisionDateMax);
-                }
+            AstController controller = new AstController(exec, db, svnHandler);
+            if (!db.isDataExistInDb(selectedProject.getName(), revisionDateMin, revisionDateMax)) {
+                controller.collectDataAndSaveInDb(project.getPackageFragments(), selectedProject.getName(),
+                        revisionDateMin, revisionDateMax);
             }
-            DataTableHandler dataTableHandler = new DataTableHandler(exec, db);
-
-            BufferedDataTable out = dataTableHandler.loadDateFromDbToTable(selectedProject, revisionDateMin,
-                    revisionDateMax, getWeeksAsInteger(m_weeks.getStringValue()));
-            return new BufferedDataTable[] { out };
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return null;
         }
+        AstMetricsTransformer astMetricsTransformer = new AstMetricsTransformer(createDataColumnSpec());
+        BufferedDataTable out = astMetricsTransformer.transform(astMetricsTransformer.getMetricEntries(db,
+                selectedProject.getName(), revisionDateMin, revisionDateMax,
+                getWeeksAsInteger(m_weeks.getStringValue())), exec);
+
+        return new BufferedDataTable[] { out };
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         m_projects.saveSettingsTo(settings);
@@ -109,9 +111,6 @@ public class AstComparePluginNodeModel extends NodeModel {
         m_weeks.saveSettingsTo(settings);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
 
@@ -129,9 +128,6 @@ public class AstComparePluginNodeModel extends NodeModel {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
 
@@ -163,32 +159,20 @@ public class AstComparePluginNodeModel extends NodeModel {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void reset() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         return new DataTableSpec[] { null };
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
             CanceledExecutionException {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
             CanceledExecutionException {
