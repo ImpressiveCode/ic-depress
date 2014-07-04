@@ -63,6 +63,8 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     static final String CFG_PACKAGENAME = "depress.scm.svn.package";
     static final String PACKAGENAME_DEFAULT = "org.";
 
+	public static final String CFG_STR = "depress.scm.svn.string";
+
     private final SettingsModelString fileName = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_FILENAME,
             SVNOfflineAdapterNodeModel.FILENAME_DEFAULT);
     
