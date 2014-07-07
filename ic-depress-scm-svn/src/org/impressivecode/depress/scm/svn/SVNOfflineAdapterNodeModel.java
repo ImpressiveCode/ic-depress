@@ -23,9 +23,9 @@ import static org.impressivecode.depress.scm.svn.SVNParserOptions.options;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections; 
+
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.impressivecode.depress.common.OutputTransformer;
 import org.impressivecode.depress.scm.SCMAdapterTableFactory;
@@ -41,7 +41,6 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
-import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelOptionalString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
@@ -52,6 +51,7 @@ import com.google.common.base.Strings;
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Krystian Dabrowski, Capgemini Poland
+ * @author Zuzanna Pacholczyk, Capgemini Poland
  * 
  */
 public class SVNOfflineAdapterNodeModel extends NodeModel {
@@ -62,8 +62,9 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     static final String FILENAME_DEFAULT = "";
     static final String CFG_PACKAGENAME = "depress.scm.svn.package";
     static final String PACKAGENAME_DEFAULT = "org.";
-
-	public static final String CFG_STR = "depress.scm.svn.string";
+    static final String EXTENSION_DEFAULT = ".java";
+    static final String EXTENSION_STR = "depress.scm.svn.string";
+	
 
     private final SettingsModelString fileName = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_FILENAME,
             SVNOfflineAdapterNodeModel.FILENAME_DEFAULT);
@@ -71,14 +72,14 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     private final SettingsModelOptionalString packageName = new SettingsModelOptionalString(
             SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT, true);
     
-    private final ArrayList<SettingsModelBoolean> extensionsToFilter = new ArrayList<SettingsModelBoolean>();
+    public static final SettingsModelString extensions = new SettingsModelString(
+    		SVNOfflineAdapterNodeModel.EXTENSION_STR, SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT);
+    
+    private ArrayList<String> userExtensions;
 
 	protected SVNOfflineAdapterNodeModel() {
         super(0, 1);
-        
-        for(SVNFileExtensions supportedExtension:SVNFileExtensions.values()) {
-        	extensionsToFilter.add(new SettingsModelBoolean(supportedExtension.getConfigName(), supportedExtension.isDefaultSelected()));	
-        }
+      
     }
 
     @Override
@@ -86,11 +87,16 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
             throws Exception {
         try {
             LOGGER.info("Reading logs from file " + this.fileName.getStringValue());
-            ArrayList<String> extensionNamesToFilter = getExtensionNamesToFilter();
+            userExtensions = new ArrayList<String>(); 
+            Collections.addAll( userExtensions, getExtensions());
             String packageNameToFilter = Strings.emptyToNull(packageName.getStringValue());
-            SVNParserOptions parserOptions = options(packageNameToFilter, extensionNamesToFilter); 
+        	System.out.println(userExtensions);
+            SVNParserOptions parserOptions = options(packageNameToFilter, userExtensions); 
+
             SVNOfflineParser parser = new SVNOfflineParser(parserOptions);
+
             List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
+            
             LOGGER.info("Reading logs finished");
             BufferedDataTable out = transform(commits, exec);
             LOGGER.info("Transforming logs finished.");
@@ -100,26 +106,6 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
             throw ex;
         }
 
-    }
-
-    private ArrayList<String> getExtensionNamesToFilter() {
-		ArrayList<String> extensionNamesToFilter = new ArrayList<String>();
-		for(SettingsModelBoolean extension : extensionsToFilter) {
-			if (extension.getBooleanValue()) {
-				String extensionConfigName = getExtensionConfigNameFromSettingsModelBoolean(extension);
-				extensionNamesToFilter.add(SVNFileExtensions.getSVNFileExtensionsFromConfigName(extensionConfigName).getExtension());
-			}
-		}
-		return extensionNamesToFilter;
-	}
-    
-    private String getExtensionConfigNameFromSettingsModelBoolean(SettingsModelBoolean extension) {
-    	Pattern pattern = Pattern.compile("'(.*)'");
-    	Matcher matcher = pattern.matcher(extension.toString());
-    	if (matcher.find())
-    		return matcher.group(1);
-    	else
-    		return null;
     }
 
 	private BufferedDataTable transform(final List<SCMDataType> commits, final ExecutionContext exec)
@@ -143,28 +129,24 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         fileName.saveSettingsTo(settings);
         packageName.saveSettingsTo(settings);
-        
-        for(SettingsModelBoolean extensionToFilter : extensionsToFilter) {
-        	extensionToFilter.saveSettingsTo(settings);
-        }
+        extensions.saveSettingsTo(settings);
+
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileName.loadSettingsFrom(settings);
         packageName.loadSettingsFrom(settings);
-        for(SettingsModelBoolean extensionToFilter : extensionsToFilter) {
-        	extensionToFilter.loadSettingsFrom(settings);
-        }
+        extensions.loadSettingsFrom(settings);
+
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileName.validateSettings(settings);
         packageName.validateSettings(settings);
-        for(SettingsModelBoolean extensionToFilter : extensionsToFilter) {
-        	extensionToFilter.validateSettings(settings);
-        }
+        extensions.validateSettings(settings);
+
     }
 
     @Override
@@ -178,5 +160,18 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     CanceledExecutionException {
         // NOOP
     }
+    
+    // parsing user's extensions into a list
+	private String[] getExtensions() {
+		String ext = extensions.getStringValue();
+		String[] ext_ = ext.split("\\s*,\\s*");
+		for(String word : ext_){
+			if(word.equals("*")){
+				ext_[0] = "*";
+				break;
+			}			
+		}
+		return ext_;
+	}
     
 }

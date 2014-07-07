@@ -39,12 +39,14 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.apache.commons.io.FilenameUtils;
 import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.svn.SVNOfflineParser.SVNLog.Logentry;
 import org.impressivecode.depress.scm.svn.SVNOfflineParser.SVNLog.Logentry.Paths.Path;
 
 import com.google.common.collect.Lists;
+import com.google.common.io.Files;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
@@ -55,6 +57,7 @@ public class SVNOfflineParser {
 
     public SVNOfflineParser(final SVNParserOptions parserOptions) {
         this.parserOptions = checkNotNull(parserOptions, "Options has to be set");
+        
     }
 
     public List<SCMDataType> parseEntries(final String path) throws JAXBException, CloneNotSupportedException {
@@ -104,29 +107,48 @@ public class SVNOfflineParser {
     private boolean hasCorrectExtension(String path) {
     	ArrayList<String> extensionNamesToFilter = parserOptions.getExtensionsNamesToFilter();
     	if (extensionNamesToFilter.isEmpty()) return true;
+    	if (extensionNamesToFilter.get(0).equals("*")) return true;
     	for (String extensionName : extensionNamesToFilter) {
     		if (path.endsWith(extensionName)) return true;
     	}
     	return false;
     }
     
+    //important only for .java files; for others always true
     private boolean hasCorrectPackagePrefix(String path) {
-    	if (parserOptions.hasPackagePrefix()) {
-            return path.indexOf(parserOptions.getPackagePrefix()) != -1;
-        } else {
-            return true;
-        }
+    	if(path.endsWith(".java")){
+	    	if (parserOptions.hasPackagePrefix()) {
+	            return path.indexOf(parserOptions.getPackagePrefix()) != -1;
+	        } else {
+	            return true;
+	        }
+    	}
+    	else {
+    		return true;
+    	}
+    		
     }
     
     private SCMDataType scm(final SCMDataType scm, final Path path) {
         scm.setOperation(parseOperation(path));
-        scm.setResourceName(parseJavaClass(path));
+        scm.setExtention(parseExtention(path));
+        String transformedPath = path.getValue().replaceAll("/", ".");
+        if(transformedPath.endsWith(".java")){
+        	scm.setResourceName(parseJavaClass(path));
+        }
+        else{
+        	scm.setResourceName("");
+        }
         scm.setPath(parsePath(path));
         return scm;
     }
 
     private String parsePath(final Path path) {
         return path.getValue();
+    }
+    
+    private String parseExtention(final Path path) {
+    	return Files.getFileExtension(path.getValue());
     }
 
     private String parseJavaClass(final Path path) {

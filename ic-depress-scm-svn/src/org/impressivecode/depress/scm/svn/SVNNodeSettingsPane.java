@@ -53,7 +53,6 @@
 package org.impressivecode.depress.scm.svn;
 
 import java.awt.Component;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +68,6 @@ import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
-import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
@@ -80,7 +78,7 @@ import org.knime.core.node.port.PortObjectSpec;
  * stored and retrieved in the node settings objects.
  *
  * @author M. Berthold, University of Konstanz
- * @author Zuzanna Pacholczyk, University of Wroclaw
+ * @author Zuzanna Pacholczyk, Capgemini Poland
  */
 
 
@@ -94,8 +92,6 @@ public class SVNNodeSettingsPane extends NodeDialogPane {
     private final List<DialogComponent> m_dialogComponents;
 
     private JPanel m_compositePanel;
-    private JPanel m_optionsPanel;
-
     private JPanel m_currentPanel;
 
     private String m_defaultTabTitle = OPTIONS_TAB_TITLE;
