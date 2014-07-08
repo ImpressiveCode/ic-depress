@@ -127,11 +127,6 @@ public class SVNNodeSettingsPane extends NodeDialogPane {
         m_compositePanel = new JPanel();
         m_compositePanel.setLayout(new BoxLayout(m_compositePanel,
                 BoxLayout.Y_AXIS));
-        //m_currentPanel = m_compositePanel;
-        //m_currentBox = createBox(m_horizontal);
-       // m_currentPanel.add(m_currentBox);        
-    	//createNewGroup("Java");
-        //m_compositePanel.add(createPackageComponent());
         return m_compositePanel;
     }
     
@@ -198,7 +193,7 @@ public class SVNNodeSettingsPane extends NodeDialogPane {
             throw new IllegalArgumentException("A tab with the specified new"
                     + " name (" + tabTitle + ") already exists.");
         }
-        //optionsPanel();
+        
         super.addTabAt(index, tabTitle, m_compositePanel);
     }
 

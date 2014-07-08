@@ -39,18 +39,11 @@ public class SVNOfflineAdapterNodeDialog extends SVNNodeSettingsPane {
         addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(
                 SVNOfflineAdapterNodeModel.CFG_FILENAME, SVNOfflineAdapterNodeModel.FILENAME_DEFAULT),
                 SVNOfflineAdapterNodeModel.FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
-        
-        // zuza
-        addDialogComponent(new DialogComponentString(SVNOfflineAdapterNodeModel.extensions, "Extension pattern:"));  
-        
-       // addDialogComponent(new DialogComponentLabel("Filter only file extensions:"));
-        
-       /* for(SVNFileExtensions supportedExtension:SVNFileExtensions.values()) {
-        	SettingsModelBoolean settingsModelBoolean = new SettingsModelBoolean(supportedExtension.getConfigName(), supportedExtension.isDefaultSelected());
-        	addDialogComponent(new DialogComponentBoolean(settingsModelBoolean, supportedExtension.getExtension()));	
-        }*/
-    	createNewGroup("Java");
-        
+
+        addDialogComponent(new DialogComponentString(SVNOfflineAdapterNodeModel.extensions, "Extension pattern: (* = any extension)", false, 30));  
+
+  
+        createNewGroup("Java");
         addDialogComponent(new DialogComponentString(new SettingsModelString(
                 SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT),
                 "Package prefix: "));

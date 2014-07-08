@@ -90,7 +90,6 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
             userExtensions = new ArrayList<String>(); 
             Collections.addAll( userExtensions, getExtensions());
             String packageNameToFilter = Strings.emptyToNull(packageName.getStringValue());
-        	System.out.println(userExtensions);
             SVNParserOptions parserOptions = options(packageNameToFilter, userExtensions); 
 
             SVNOfflineParser parser = new SVNOfflineParser(parserOptions);

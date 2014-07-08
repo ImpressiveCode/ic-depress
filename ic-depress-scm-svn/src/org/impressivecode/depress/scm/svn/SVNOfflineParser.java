@@ -51,6 +51,7 @@ import com.google.common.io.Files;
 /**
  * @author Marek Majchrzak, ImpressiveCode
  * @author Krystian Dabrowski, Capgemini Poland
+ * @author Zuzanna Pacholczyk, Capgemini Poland
  */
 public class SVNOfflineParser {
     final SVNParserOptions parserOptions;
@@ -131,7 +132,6 @@ public class SVNOfflineParser {
     
     private SCMDataType scm(final SCMDataType scm, final Path path) {
         scm.setOperation(parseOperation(path));
-        scm.setExtention(parseExtention(path));
         String transformedPath = path.getValue().replaceAll("/", ".");
         if(transformedPath.endsWith(".java")){
         	scm.setResourceName(parseJavaClass(path));
@@ -140,6 +140,7 @@ public class SVNOfflineParser {
         	scm.setResourceName("");
         }
         scm.setPath(parsePath(path));
+        scm.setExtention(parseExtention(path));
         return scm;
     }
 

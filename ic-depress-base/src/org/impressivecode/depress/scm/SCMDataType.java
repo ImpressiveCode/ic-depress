@@ -33,7 +33,8 @@ public class SCMDataType implements Cloneable{
     private String path;
     private Date commitDate;
     private String commitID;
-
+    private String extention;
+    
     public String getAuthor() {
         return author;
     }
@@ -89,16 +90,26 @@ public class SCMDataType implements Cloneable{
     public String getResourceName() {
         return resourceName;
     }
+    
+	public String getExtention() {
+		return extention;
+	}
+	
+    public void setExtention(final String extention) {
+        this.extention = extention;
+    }
 
     @Override
     public String toString() {
         return String
-                .format("SCMDataType [resourceName=%s, author=%s, operation=%s, message=%s, path=%s, commitDate=%s, commitID=%s]",
-                        resourceName, author, operation, message, path, commitDate, commitID);
+                .format("SCMDataType [resourceName=%s, extention=%s, author=%s, operation=%s, message=%s, path=%s, commitDate=%s, commitID=%s]",
+                        resourceName, extention, author, operation, message, path, commitDate, commitID);
     }
 
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+
 }
