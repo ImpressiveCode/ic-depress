@@ -1,8 +1,0 @@
-*.class
-bin/
-gen/
-junit/
-target/
-.settings/
-.history/
-.metadata/
