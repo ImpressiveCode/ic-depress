@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.svn;
 
+
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
@@ -39,7 +40,6 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.apache.commons.io.FilenameUtils;
 import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.svn.SVNOfflineParser.SVNLog.Logentry;
@@ -79,7 +79,7 @@ public class SVNOfflineParser {
 
     private List<SCMDataType> convertToSCMType(final SVNLog log, final SVNParserOptions parserOptions)
             throws CloneNotSupportedException {
-        List<SCMDataType> scmEntries = Lists.newArrayListWithCapacity(1000);
+/*        List<SCMDataType> scmEntries = Lists.newArrayListWithCapacity(1000);
         for (Logentry entry : log.getLogentry()) {
             if(entry.getPaths() == null){
                 continue;
@@ -92,8 +92,29 @@ public class SVNOfflineParser {
             }
         }
         return scmEntries;
+ */
+        List<SCMDataType> scmEntries = Lists.newArrayListWithCapacity(1000);
+        parseLogEntries(log.getLogentry(), scmEntries);
+        return scmEntries;
     }
 
+    private void parseLogEntries(final List<Logentry> entries, final List<SCMDataType> scmEntries) throws CloneNotSupportedException {
+        for (Logentry entry : entries) {
+            if(entry.getPaths() == null){
+                continue;
+            }
+            SCMDataType base = scmBase(entry);
+            for (Path path : entry.getPaths().getPath()) {
+                if (include(path)) {
+                    scmEntries.add(scm((SCMDataType) base.clone(), path));
+                }
+            }
+            if(!entry.getLogentry().isEmpty()){
+                parseLogEntries(entry.getLogentry(), scmEntries);
+            }
+        }
+    }
+    
     private boolean include(final Path path) {
         String transformedPath = path.getValue().replaceAll("/", ".");
         return isCorrectAccordingToFilterRules(transformedPath);
@@ -140,7 +161,7 @@ public class SVNOfflineParser {
         	scm.setResourceName("");
         }
         scm.setPath(parsePath(path));
-        scm.setExtention(parseExtention(path));
+        scm.setExtension(parseExtension(path));
         return scm;
     }
 
@@ -148,7 +169,7 @@ public class SVNOfflineParser {
         return path.getValue();
     }
     
-    private String parseExtention(final Path path) {
+    private String parseExtension(final Path path) {
     	return Files.getFileExtension(path.getValue());
     }
 
@@ -217,7 +238,8 @@ public class SVNOfflineParser {
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "", propOrder = { "author", "date", "paths", "msg" })
+        //@XmlType(name = "", propOrder = { "author", "date", "paths", "msg" })
+        @XmlType(name = "", propOrder = { "author", "date", "paths", "msg", "logentry"})
         public static class Logentry {
 
             @XmlElement(required = true)
@@ -231,6 +253,8 @@ public class SVNOfflineParser {
             protected String msg;
             @XmlAttribute(required = true)
             protected int revision;
+            @XmlElement(required = false)
+            protected List<SVNLog.Logentry> logentry;
 
             public String getAuthor() {
                 return author;
@@ -272,6 +296,18 @@ public class SVNOfflineParser {
                 this.revision = value;
             }
 
+            
+            public List<SVNLog.Logentry> getLogentry() {
+                if (logentry == null) {
+                    logentry = new ArrayList<SVNLog.Logentry>();
+                }
+                return this.logentry;
+            }
+
+            public void setLogentry(final List<SVNLog.Logentry> logentry) {
+                this.logentry = logentry;
+            }
+            
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = { "path" })
             public static class Paths {

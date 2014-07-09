@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log>
+<logentry
+   revision="928306">
+<author>psteitz</author>
+<date>2010-03-27T23:57:25.560655Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/site/site.xml</path>
+</paths>
+<msg>Added 2.1 and snapshot javadoc links.</msg><logentry revision="936295">
+<author>erans</author>
+<date>2010-04-21T13:27:44.654436Z</date>
+<paths>
+<path kind="file" action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/optimization/fitting/PolynomialFitter.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/SmoothingBicubicSplineInterpolatorTest.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BivariateRealGridInterpolator.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/site/xdoc/userguide/analysis.xml</path>
+<path kind="file" action="A">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolatorTest.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingBicubicSplineInterpolator.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/BivariateRealFunction.java</path>
+<path kind="file" action="A">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolatorTest.java</path>
+<path kind="file" action="A">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolator.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/site/xdoc/changes.xml</path>
+<path kind="file" action="A">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolator.java</path>
+</paths>
+<msg>sdsd MATH-365 sdsdsd</msg><logentry revision="936391">
+<author>erans</author>
+<date>2010-04-21T17:00:56.129409Z</date>
+<paths>
+<path kind="file" action="M">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/SmoothingBicubicSplineInterpolatorTest.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BivariateRealGridInterpolator.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolatorTest.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingBicubicSplineInterpolator.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolator.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolator.java</path>
+</paths>
+<msg>Had forgotten to set the svn:keywords property.
+</msg>
+</logentry>
+</logentry>
+</logentry>
+
+
+<logentry
+   revision="936471">
+<author>erans</author>
+<date>2010-04-21T20:02:43.428520Z</date>
+<paths>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolatorTest.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolator.java</path>
+<path
+   kind="file"
+   action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolator.java</path>
+</paths>
+<msg>Had forgotten to set svn:eol-style.
+</msg>
+<logentry revision="937080">
+<author>erans</author>
+<date>2010-04-22T22:09:21.053775Z</date>
+<paths>
+<path kind="file" action="A">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/TricubicSplineInterpolatingFunctionTest.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolatingFunction.java</path>
+<path kind="file" action="A">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/TricubicSplineInterpolator.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/site/xdoc/userguide/analysis.xml</path>
+<path kind="file" action="A">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/TricubicSplineInterpolatingFunction.java</path>
+<path kind="file" action="A">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/TrivariateRealGridInterpolator.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingPolynomialBicubicSplineInterpolator.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolatingFunctionTest.java</path>
+<path kind="file" action="A">/commons/proper/math/trunk/src/main/java/org/apache/commons/math/analysis/TrivariateRealFunction.java</path>
+<path kind="file" action="M">/commons/proper/math/trunk/src/site/xdoc/changes.xml</path>
+<path kind="file" action="A">/commons/proper/math/trunk/src/test/java/org/apache/commons/math/analysis/interpolation/TricubicSplineInterpolatorTest.java</path>
+</paths>
+<msg>MATH-366
+</msg>
+</logentry></logentry>
+
+</log>

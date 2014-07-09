@@ -18,8 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.support.sematicanalysis;
 
 import static org.impressivecode.depress.common.Cells.integerOrMissingCell;
-import static org.impressivecode.depress.common.Cells.doubleOrMissingCell;
-import java.util.HashSet;
+
 import java.util.Iterator;
 import java.util.Set;
 
@@ -32,8 +31,6 @@ import org.impressivecode.depress.support.commonmarker.MarkerInputTransformer;
 import org.knime.base.data.append.column.AppendedCellFactory;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import com.google.common.base.Preconditions;
 
@@ -75,23 +72,23 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
         }
 
     }
-    
+
 
     private int checkConfidence(final SCMDataType scm, final MarkerDataType marker) throws Exception {
         Set<ITSDataType> issues = this.cfg.getITSData().issues(marker.getAllMarkers());
         if (issues.isEmpty()) {
             return 0;
         } else {
-    		return checkAuthor(scm, issues) + checkResolution(issues) + checkSimiliarity(issues, scm);
+            return checkAuthor(scm, issues) + checkResolution(issues) + checkSimiliarity(issues, scm);
         }
     }
-    
-    
+
+
     private int checkSimiliarity(final Set<ITSDataType> issues, final SCMDataType scm) throws Exception{
-    	String message = scm.getMessage();
+        String message = scm.getMessage();
 
         Iterator<ITSDataType> issuesIterator = issues.iterator();
-        
+
         double similarity = -1;
         while (issuesIterator.hasNext()) {
             ITSDataType issue;
@@ -111,7 +108,7 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
         return 0;
     }
 
-    private double processComments(ITSDataType issue, String message) throws Exception {
+    private double processComments(final ITSDataType issue, final String message) throws Exception {
         int numberOfComments = issue.getComments().size();
         double similarity = 0;
         if (numberOfComments > 0) {
@@ -128,7 +125,7 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
         return similarity;
     }
 
-    private double processDescription(ITSDataType issue, String message) throws Exception {
+    private double processDescription(final ITSDataType issue, final String message) throws Exception {
         String description = issue.getDescription();
         double similarity = 0;
         if (message != null && description != null) {
@@ -137,7 +134,7 @@ public class SemanticAnalysisCellFactory implements AppendedCellFactory {
         return similarity;
     }
 
-    private double processSummary(ITSDataType issue, String message) throws Exception {
+    private double processSummary(final ITSDataType issue, final String message) throws Exception {
         String summary = issue.getSummary();
         double similarity = 0;
         if (message != null && summary != null) {

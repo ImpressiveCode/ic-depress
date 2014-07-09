@@ -23,14 +23,14 @@ public class SVNCommitFile {
 	private String path;
 	private String javaClass;
 	private SCMOperation operation;
-	private String extention;
+	private String extension;
 
 	public String getPath() {
 		return path;
 	}
 	
-	public String getExtention() {
-		return extention;
+	public String getExtension() {
+		return extension;
 	}
 
 	public SCMOperation getOperation() {
@@ -62,8 +62,8 @@ public class SVNCommitFile {
 		this.path = path;
 	}
 
-	public void setExtention(final String extention) {
-		this.extention = extention;
+	public void setExtension(final String extension) {
+		this.extension = extension;
 	}
 	
 	public void setJavaClass(final String javaClass) {
