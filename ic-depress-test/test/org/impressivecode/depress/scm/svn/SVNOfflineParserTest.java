@@ -16,7 +16,8 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public class SVNOfflineParserTest {
-	private final static String logFilePath = SVNOfflineParserTest.class.getResource("svn.xml").getPath();
+	
+    private final static String logFilePath = SVNOfflineParserTest.class.getResource("svn.xml").getPath();
     private final static String logFilePathMerged = SVNOfflineParserTest.class.getResource("svn_merged.xml").getPath();
 
     @Test

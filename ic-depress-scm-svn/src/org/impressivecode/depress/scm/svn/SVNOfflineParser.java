@@ -79,20 +79,6 @@ public class SVNOfflineParser {
 
     private List<SCMDataType> convertToSCMType(final SVNLog log, final SVNParserOptions parserOptions)
             throws CloneNotSupportedException {
-/*        List<SCMDataType> scmEntries = Lists.newArrayListWithCapacity(1000);
-        for (Logentry entry : log.getLogentry()) {
-            if(entry.getPaths() == null){
-                continue;
-            }
-            SCMDataType base = scmBase(entry);
-            for (Path path : entry.getPaths().getPath()) {
-                if (include(path)) {
-                    scmEntries.add(scm((SCMDataType) base.clone(), path));
-                }
-            }
-        }
-        return scmEntries;
- */
         List<SCMDataType> scmEntries = Lists.newArrayListWithCapacity(1000);
         parseLogEntries(log.getLogentry(), scmEntries);
         return scmEntries;
@@ -119,11 +105,11 @@ public class SVNOfflineParser {
         String transformedPath = path.getValue().replaceAll("/", ".");
         return isCorrectAccordingToFilterRules(transformedPath);
     }
-    
-    private boolean isCorrectAccordingToFilterRules(String path) {
-    	boolean isCorrect = false;
-    	isCorrect |= (hasCorrectExtension(path) && hasCorrectPackagePrefix(path));
-    	return isCorrect;
+
+    private boolean isCorrectAccordingToFilterRules(final String path) {
+        boolean isCorrect = false;
+        isCorrect |= (hasCorrectExtension(path) && hasCorrectPackagePrefix(path));
+        return isCorrect;
     }
     
     private boolean hasCorrectExtension(String path) {
@@ -238,8 +224,7 @@ public class SVNOfflineParser {
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
-        //@XmlType(name = "", propOrder = { "author", "date", "paths", "msg" })
-        @XmlType(name = "", propOrder = { "author", "date", "paths", "msg", "logentry"})
+        @XmlType(name = "", propOrder = { "author", "date", "paths", "msg",  "logentry"})
         public static class Logentry {
 
             @XmlElement(required = true)
@@ -296,7 +281,7 @@ public class SVNOfflineParser {
                 this.revision = value;
             }
 
-            
+
             public List<SVNLog.Logentry> getLogentry() {
                 if (logentry == null) {
                     logentry = new ArrayList<SVNLog.Logentry>();
@@ -307,7 +292,7 @@ public class SVNOfflineParser {
             public void setLogentry(final List<SVNLog.Logentry> logentry) {
                 this.logentry = logentry;
             }
-            
+
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = { "path" })
             public static class Paths {
