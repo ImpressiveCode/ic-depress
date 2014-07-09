@@ -20,6 +20,7 @@ package org.impressivecode.depress.scm.svn;
 import javax.swing.JFileChooser;
 
 
+import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
@@ -31,8 +32,9 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * @author Zuzanna Pacholczyk, Capgemini Poland
  * 
  **/
-//public class SVNOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
-public class SVNOfflineAdapterNodeDialog extends SVNNodeSettingsPane {
+public class SVNOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
+	
+	public static final String ADVANCED_TAB_NAME = "Advanced";
     protected SVNOfflineAdapterNodeDialog() {
         super();
 
@@ -42,6 +44,7 @@ public class SVNOfflineAdapterNodeDialog extends SVNNodeSettingsPane {
 
         addDialogComponent(new DialogComponentString(SVNOfflineAdapterNodeModel.extensions, "Extension pattern: (* = any extension)", false, 30));  
 
+        createNewTab(ADVANCED_TAB_NAME);
   
         createNewGroup("Java");
         addDialogComponent(new DialogComponentString(new SettingsModelString(
