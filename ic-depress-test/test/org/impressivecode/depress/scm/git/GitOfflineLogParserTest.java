@@ -142,9 +142,6 @@ public class GitOfflineLogParserTest {
         		"ic-depress-metric-checkstyle/LICENSE.txt",
                 specificCommit(ext).getFiles().get(3).getPath());
         ext.add("*");
-        for(int i = 0; i < 10; i++){
-        	System.out.println(specificCommit(ext).getFiles().get(i).getPath());
-        }
         assertEquals(
         		"ic-depress-metric-checkstyle/.project",
                 specificCommit(ext).getFiles().get(3).getPath());
