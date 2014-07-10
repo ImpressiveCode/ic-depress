@@ -5518,7 +5518,7 @@ button.close {
 }
 .carousel-indicators {
   position: absolute;
-  bottom: -80px;
+  bottom: -150px;
   left: 50%;
   z-index: 15;
   width: 60%;
@@ -5526,21 +5526,21 @@ button.close {
   padding-left: 0;
   list-style: none;
   text-align: center;
+  font-size: 5px;
 }
 .carousel-indicators li {
   display: inline-block;
-  width: 12px;
-  height: 12px;
-  margin: 0px;
+  width: 14px;
+  height: 14px;
+  margin: 8px;
   text-indent: -999px;
   border: 1px solid #ffffff;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
   background-color: #000 \9;
   background-color: rgba(0, 0, 0, 0);
 }
 .carousel-indicators .active {
-  margin: 0;
   background-color: #ffffff;
 }
 .carousel-caption {
