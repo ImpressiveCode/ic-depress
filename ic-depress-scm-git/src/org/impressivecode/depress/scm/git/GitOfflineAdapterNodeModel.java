@@ -81,15 +81,13 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
         super(0, 1);
     }
     
-    private ArrayList<String> userExtensions;
-
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
     	
         try {
             logger.info("Reading git logs from file " + this.gitFileName.getStringValue());
-            userExtensions = getExtensions(); 
+            ArrayList<String> userExtensions = getExtensions(); 
             String packageNameToFilter = Strings.emptyToNull(gitPackageName.getStringValue());
             GitParserOptions parserOptions = options(packageNameToFilter, userExtensions, ""); //empty branch name
             GitOfflineLogParser parser = new GitOfflineLogParser(parserOptions);
@@ -189,6 +187,7 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
   			}
   			arr.add(word);
   		}
+  		System.out.println(arr);
   		return arr;
   	}
 }
