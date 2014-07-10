@@ -5839,7 +5839,7 @@ button.close {
   font-size: 80px;
   letter-spacing: -2px;
   line-height: 1;
-  margin: 0 0 15px;
+  margin: 0 0 0px;
 }
 .jumbotron p {
   font-family: proxima-nova-sc-osf, "Helvetica Neue", Helvetica, Arial, sans-serif;
