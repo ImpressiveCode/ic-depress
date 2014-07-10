@@ -22,6 +22,7 @@ import static org.impressivecode.depress.scm.git.GitParserOptions.options;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.impressivecode.depress.common.OutputTransformer;
@@ -41,6 +42,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelOptionalString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 /**
@@ -48,17 +50,20 @@ import com.google.common.collect.Lists;
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
  * @author Marek Majchrzak, ImpressiveCode
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class GitOfflineAdapterNodeModel extends NodeModel {
 
     // the logger instance
     private static final NodeLogger logger = NodeLogger.getLogger(GitOfflineAdapterNodeModel.class);
-
+    
     static final String GIT_FILENAME = "depress.scm.git.filename";
     static final String GIT_FILENAME_DEFAULT = "";
     static final String GIT_PACKAGENAME = "depress.scm.git.package";
     static final String GIT_PACKAGENAME_DEFAULT = "org.";
-
+    static final String EXTENSION_STR = "depress.scm.svn.string";
+    static final String EXTENSION_DEFAULT = ".java";
+    
     static final Boolean GIT_PACKAGENAME_ACTIVE_STATE = false;
 
     // example value: the models count variable filled from the dialog
@@ -66,30 +71,41 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
     // dialog work with "SettingsModels".
     private final SettingsModelString gitFileName = new SettingsModelString(GitOfflineAdapterNodeModel.GIT_FILENAME,
             GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT);
-    private final SettingsModelOptionalString gitPackageName = new SettingsModelOptionalString(
+    public static final SettingsModelOptionalString gitPackageName = new SettingsModelOptionalString(
             GitOfflineAdapterNodeModel.GIT_PACKAGENAME, GitOfflineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT, true);
-
+    
+    public static final SettingsModelString extensions = new SettingsModelString(
+    		GitOfflineAdapterNodeModel.EXTENSION_STR, GitOfflineAdapterNodeModel.EXTENSION_DEFAULT);
+    
     protected GitOfflineAdapterNodeModel() {
         super(0, 1);
     }
+    
+    private ArrayList<String> userExtensions;
 
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
+    	
+        try {
+            logger.info("Reading git logs from file " + this.gitFileName.getStringValue());
+            userExtensions = getExtensions(); 
+            String packageNameToFilter = Strings.emptyToNull(gitPackageName.getStringValue());
+            GitParserOptions parserOptions = options(packageNameToFilter, userExtensions, ""); //empty branch name
+            GitOfflineLogParser parser = new GitOfflineLogParser(parserOptions);
+            List<GitCommit> commits = parser.parseEntries(this.gitFileName.getStringValue());
+            logger.info("Reading git logs finished");
+            BufferedDataTable out = transform(commits, exec);
+            logger.info("Transforming git logs finished.");
+            return new BufferedDataTable[] { out };
+        } catch (Exception ex) {
+        	logger.error("Unable to parse git entries", ex);
+            throw ex;
+        }
 
-        logger.info("Reading logs from file " + this.gitFileName.getStringValue());
-
-        GitOfflineLogParser parser = new GitOfflineLogParser();
-        List<GitCommit> commits = parser.parseEntries(this.gitFileName.getStringValue(),
-                options(gitPackageName.getStringValue()));
-
-        BufferedDataTable out = transform(commits, exec);
-        logger.info("Reading git logs finished.");
-
-        return new BufferedDataTable[] { out };
     }
 
-    @Override
+	@Override
     protected void reset() {
         // NOOP
     }
@@ -152,10 +168,27 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
         scm.setOperation(file.getOperation());
         scm.setPath(file.getPath());
         scm.setResourceName(file.getJavaClass());
+        scm.setExtension(file.getExtension());
         return scm;
     }
 
     private void progress(final ExecutionContext exec) throws CanceledExecutionException {
         exec.checkCanceled();
     }
+    
+    // parsing user's extensions into a list
+  	private ArrayList<String> getExtensions() {
+  		String ext = extensions.getStringValue();
+  		String[] ext_ = ext.split("\\s*,\\s*");
+  		ArrayList<String> arr = new ArrayList<String>();
+  		for(String word : ext_){
+  			if(word.equals("*")){
+  				arr = new ArrayList<String>();
+  				arr.add("*");
+  				break;
+  			}
+  			arr.add(word);
+  		}
+  		return arr;
+  	}
 }

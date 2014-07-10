@@ -33,6 +33,7 @@ public class SCMDataType implements Cloneable{
     private String path;
     private Date commitDate;
     private String commitID;
+    private String extension;
 
     public String getAuthor() {
         return author;
@@ -101,4 +102,12 @@ public class SCMDataType implements Cloneable{
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+	public String getExtension() {
+		return extension;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
 }

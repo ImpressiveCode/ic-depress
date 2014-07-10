@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.impressivecode.depress.scm.SCMOperation;
@@ -49,9 +50,23 @@ public class GitOfflineLogParserTest {
     }
 
     private GitCommit specificCommit() throws IOException, ParseException {
-        this.parser = new GitOfflineLogParser();
-        for (GitCommit c : parser.parseEntries(logFilePath, options("#([0-9]+)", "org."))) {
+    	ArrayList<String> ext = new ArrayList<String>();
+    	ext.add(".java");
+    	GitParserOptions parserOptions = options("org.", ext, "");
+        this.parser = new GitOfflineLogParser(parserOptions);
+        for (GitCommit c : parser.parseEntries(logFilePath)) {
             if (c.getId().equals("45a2beca9d97777733e1a472e54c003551b7d9b1")) {
+                return c;
+            }
+        }
+        throw new IllegalStateException("Fail");
+    }
+    
+    private GitCommit specificCommit(ArrayList<String> ext) throws IOException, ParseException {
+    	GitParserOptions parserOptions = options("org.", ext, "");
+        this.parser = new GitOfflineLogParser(parserOptions);
+        for (GitCommit c : parser.parseEntries(logFilePath)) {
+            if (c.getId().equals("b4f3088d8894ac224535a31ccf4d1600d3fc0c57")) {
                 return c;
             }
         }
@@ -60,12 +75,12 @@ public class GitOfflineLogParserTest {
 
     @Test(expected = FileNotFoundException.class)
     public void shouldThrowFileNotFound() throws Exception {
-        new GitOfflineLogParser().parseEntries("fake_path", options(null, null));
+        parser.parseEntries("fake_path");
     }
 
     @Test
     public void shouldCountCommits() throws Exception {
-        assertEquals(51, parser.parseEntries(logFilePath, options(null, null)).size());
+        assertEquals(51, parser.parseEntries(logFilePath).size());
     }
 
     @Test
@@ -109,5 +124,29 @@ public class GitOfflineLogParserTest {
                 specificCommit().getFiles().get(13).getPath());
         assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(13).getOperation());
 
+    }
+    
+    @Test
+    public void shouldCommitWithExtensionsMatch() throws Exception {
+    	ArrayList<String> ext = new ArrayList<String>();
+    	ext.add(".txt");
+        assertEquals(
+        		"ic-depress-metric-eclipsemetrics/LICENSE.txt",
+                specificCommit(ext).getFiles().get(3).getPath());
+        ext.add(".xml");
+        assertEquals(
+        		"ic-depress-metric-eclipsemetrics/LICENSE.txt",
+                specificCommit(ext).getFiles().get(3).getPath());
+        ext.add(".classpath");
+        assertEquals(
+        		"ic-depress-metric-checkstyle/LICENSE.txt",
+                specificCommit(ext).getFiles().get(3).getPath());
+        ext.add("*");
+        for(int i = 0; i < 10; i++){
+        	System.out.println(specificCommit(ext).getFiles().get(i).getPath());
+        }
+        assertEquals(
+        		"ic-depress-metric-checkstyle/.project",
+                specificCommit(ext).getFiles().get(3).getPath());
     }
 }

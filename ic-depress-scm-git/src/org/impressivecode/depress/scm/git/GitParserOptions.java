@@ -17,6 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.git;
 
+import java.util.ArrayList;
+
 import com.google.common.base.Strings;
 
 /**
@@ -25,16 +27,18 @@ import com.google.common.base.Strings;
 public class GitParserOptions {
     private String packageString;
     private String branch;
+    private ArrayList<String> extensionsNamesToFilter;
 
-    public static GitParserOptions options(final String packageString) {
-        return options(packageString, null);
-    }
-
-    public static GitParserOptions options(final String packageString, final String branch) {
+    public static GitParserOptions options(final String packageString, final ArrayList<String> extensionsNamesToFilter, final String branch) {
         GitParserOptions options = new GitParserOptions();
         options.packageString = Strings.emptyToNull(packageString);
+        options.extensionsNamesToFilter = extensionsNamesToFilter;
         options.branch = Strings.emptyToNull(branch);
         return options;
+    }
+    
+    public static GitParserOptions options(final String packageString, final String branch) {
+        return options(packageString, new ArrayList<String>(), branch);
     }
 
     public boolean hasPackagePrefix() {
@@ -52,4 +56,8 @@ public class GitParserOptions {
     public String getBranch() {
         return branch;
     }
+    
+	public ArrayList<String> getExtensionsNamesToFilter() {
+		return extensionsNamesToFilter;
+	}
 }
