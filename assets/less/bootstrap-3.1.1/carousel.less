@@ -144,7 +144,7 @@
 
 .carousel-indicators {
   position: absolute;
-  bottom: -80px;
+  bottom: -150px;
   left: 50%;
   z-index: 15;
   width: 60%;
@@ -152,15 +152,16 @@
   padding-left: 0;
   list-style: none;
   text-align: center;
+  font-size: 5px;
 
   li {
     display: inline-block;
-    width:  12px;
-    height: 12px;
-    margin: 0px;
+    width:  14px;
+    height: 14px;
+    margin: 8px;
     text-indent: -999px;
     border: 1px solid @carousel-indicator-border-color;
-    border-radius: 12px;
+    border-radius: 14px;
     cursor: pointer;
 
     // IE8-9 hack for event handling
@@ -175,7 +176,6 @@
     background-color: rgba(0,0,0,0); // IE9
   }
   .active {
-    margin: 0;
     background-color: @carousel-indicator-active-bg;
   }
 }
