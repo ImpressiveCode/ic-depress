@@ -187,7 +187,6 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
   			}
   			arr.add(word);
   		}
-  		System.out.println(arr);
   		return arr;
   	}
 }
