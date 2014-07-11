@@ -51,8 +51,8 @@ public class SCMAdapterTableFactory {
     public final static String PATH_COLNAME = "Path";
     public final static String DATE_COLNAME = "Date";
     public final static String UID_COLNAME = "CommitID";
-    
     public static final String EXTENSION_COLNAME = "Extension";
+
     public static final DataColumnSpec EXTENSION_COLSPEC = new DataColumnSpecCreator(EXTENSION_COLNAME, StringCell.TYPE)
     .createSpec();
 
@@ -92,5 +92,6 @@ public class SCMAdapterTableFactory {
         checkNotNull(scmData.getPath(), "Path has to be set.");
         checkNotNull(scmData.getCommitDate(), "CommitDate has to be set.");
         checkNotNull(scmData.getCommitID(), "CommitId has to be set.");
+        checkNotNull(scmData.getExtension(), "Extension has to be set.");
     }
 }

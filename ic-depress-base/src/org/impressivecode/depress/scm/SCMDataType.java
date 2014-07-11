@@ -111,5 +111,4 @@ public class SCMDataType implements Cloneable{
         return super.clone();
     }
 
-
 }
