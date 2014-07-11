@@ -16,6 +16,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public class SVNOfflineParserTest {
+	
     private final static String logFilePath = SVNOfflineParserTest.class.getResource("svn.xml").getPath();
     private final static String logFilePathMerged = SVNOfflineParserTest.class.getResource("svn_merged.xml").getPath();
 
@@ -76,6 +77,51 @@ public class SVNOfflineParserTest {
         assertThat(entry.getOperation()).isEqualTo(SCMOperation.MODIFIED);
         assertThat(entry.getPath()).isEqualTo("/commons/proper/math/trunk/src/main/java/org/apache/commons/math/optimization/fitting/PolynomialFitter.java");
         assertThat(entry.getResourceName()).isEqualTo("org.apache.commons.math.optimization.fitting.PolynomialFitter");
+    }
+    
+    
+    @Test
+    public void shouldParseAnyEntry() throws JAXBException, CloneNotSupportedException {
+        // given
+        ArrayList<String> extensionsToFilter = new ArrayList<>();
+        SVNParserOptions options = SVNParserOptions.options("org.", extensionsToFilter);
+        SVNOfflineParser parser = new SVNOfflineParser(options);
+        // when
+        List<SCMDataType> entries = parser.parseEntries(logFilePath);
+
+        //then
+        assertThat(entries).hasSize(32);
+        
+    }
+    
+    @Test
+    public void shouldNotParseWithWrongPackage() throws JAXBException, CloneNotSupportedException {
+        // given
+        ArrayList<String> extensionsToFilter = new ArrayList<>();
+        extensionsToFilter.add("*");
+        SVNParserOptions options = SVNParserOptions.options("de.", extensionsToFilter);
+        SVNOfflineParser parser = new SVNOfflineParser(options);
+        // when
+        List<SCMDataType> entries = parser.parseEntries(logFilePath);
+
+        //then
+        assertThat(entries).hasSize(5);
+        
+    }
+    
+    @Test
+    public void shouldParseNullPackage() throws JAXBException, CloneNotSupportedException {
+        // given
+        ArrayList<String> extensionsToFilter = new ArrayList<>();
+        extensionsToFilter.add("*");
+        SVNParserOptions options = SVNParserOptions.options(null, extensionsToFilter);
+        SVNOfflineParser parser = new SVNOfflineParser(options);
+        // when
+        List<SCMDataType> entries = parser.parseEntries(logFilePath);
+
+        //then
+        assertThat(entries).hasSize(32);
+        
     }
 
 }
