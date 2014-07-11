@@ -63,7 +63,7 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     static final String CFG_PACKAGENAME = "depress.scm.svn.package";
     static final String PACKAGENAME_DEFAULT = "org.";
     static final String EXTENSION_DEFAULT = ".java";
-    static final String EXTENSION_STR = "depress.scm.svn.string";
+    static final String CFG_EXTENSION = "depress.scm.svn.string";
 	
 
     private final SettingsModelString fileName = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_FILENAME,
@@ -72,14 +72,15 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     private final SettingsModelOptionalString packageName = new SettingsModelOptionalString(
             SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT, true);
     
-    public static final SettingsModelString extensions = new SettingsModelString(
-    		SVNOfflineAdapterNodeModel.EXTENSION_STR, SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT);
+    public final SettingsModelString extensions = new SettingsModelString(
+    		SVNOfflineAdapterNodeModel.CFG_EXTENSION, SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT);
     
     private ArrayList<String> userExtensions;
 
 	protected SVNOfflineAdapterNodeModel() {
         super(0, 1);
       
+    
     }
 
     @Override
@@ -124,6 +125,8 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
         return SCMAdapterTableFactory.createTableSpec();
     }
 
+    
+      
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         fileName.saveSettingsTo(settings);
