@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.svn;
 
+
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
@@ -45,16 +46,19 @@ import org.impressivecode.depress.scm.svn.SVNOfflineParser.SVNLog.Logentry;
 import org.impressivecode.depress.scm.svn.SVNOfflineParser.SVNLog.Logentry.Paths.Path;
 
 import com.google.common.collect.Lists;
+import com.google.common.io.Files;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
  * @author Krystian Dabrowski, Capgemini Poland
+ * @author Zuzanna Pacholczyk, Capgemini Poland
  */
 public class SVNOfflineParser {
     final SVNParserOptions parserOptions;
 
     public SVNOfflineParser(final SVNParserOptions parserOptions) {
         this.parserOptions = checkNotNull(parserOptions, "Options has to be set");
+        
     }
 
     public List<SCMDataType> parseEntries(final String path) throws JAXBException, CloneNotSupportedException {
@@ -76,7 +80,12 @@ public class SVNOfflineParser {
     private List<SCMDataType> convertToSCMType(final SVNLog log, final SVNParserOptions parserOptions)
             throws CloneNotSupportedException {
         List<SCMDataType> scmEntries = Lists.newArrayListWithCapacity(1000);
-        for (Logentry entry : log.getLogentry()) {
+        parseLogEntries(log.getLogentry(), scmEntries);
+        return scmEntries;
+    }
+
+    private void parseLogEntries(final List<Logentry> entries, final List<SCMDataType> scmEntries) throws CloneNotSupportedException {
+        for (Logentry entry : entries) {
             if(entry.getPaths() == null){
                 continue;
             }
@@ -86,47 +95,68 @@ public class SVNOfflineParser {
                     scmEntries.add(scm((SCMDataType) base.clone(), path));
                 }
             }
+            if(!entry.getLogentry().isEmpty()){
+                parseLogEntries(entry.getLogentry(), scmEntries);
+            }
         }
-        return scmEntries;
     }
-
+    
     private boolean include(final Path path) {
         String transformedPath = path.getValue().replaceAll("/", ".");
         return isCorrectAccordingToFilterRules(transformedPath);
     }
-    
-    private boolean isCorrectAccordingToFilterRules(String path) {
-    	boolean isCorrect = false;
-    	isCorrect |= (hasCorrectExtension(path) && hasCorrectPackagePrefix(path));
-    	return isCorrect;
+
+    private boolean isCorrectAccordingToFilterRules(final String path) {
+        boolean isCorrect = false;
+        isCorrect |= (hasCorrectExtension(path) && hasCorrectPackagePrefix(path));
+        return isCorrect;
     }
     
     private boolean hasCorrectExtension(String path) {
     	ArrayList<String> extensionNamesToFilter = parserOptions.getExtensionsNamesToFilter();
     	if (extensionNamesToFilter.isEmpty()) return true;
+    	if (extensionNamesToFilter.get(0).equals("*")) return true;
     	for (String extensionName : extensionNamesToFilter) {
-    		if (path.endsWith(extensionName)) return true;
+    		if (path.endsWith(extensionName) || extensionName.equals("*")) return true;
     	}
     	return false;
     }
     
+    //important only for .java files; for others always true
     private boolean hasCorrectPackagePrefix(String path) {
-    	if (parserOptions.hasPackagePrefix()) {
-            return path.indexOf(parserOptions.getPackagePrefix()) != -1;
-        } else {
-            return true;
-        }
+    	if(path.endsWith(".java")){
+	    	if (parserOptions.hasPackagePrefix()) {
+	            return path.indexOf(parserOptions.getPackagePrefix()) != -1;
+	        } else {
+	            return true;
+	        }
+    	}
+    	else {
+    		return true;
+    	}
+    		
     }
     
     private SCMDataType scm(final SCMDataType scm, final Path path) {
         scm.setOperation(parseOperation(path));
-        scm.setResourceName(parseJavaClass(path));
+        String transformedPath = path.getValue().replaceAll("/", ".");
+        if(transformedPath.endsWith(".java")){
+        	scm.setResourceName(parseJavaClass(path));
+        }
+        else{
+        	scm.setResourceName("");
+        }
         scm.setPath(parsePath(path));
+        scm.setExtension(parseExtension(path));
         return scm;
     }
 
     private String parsePath(final Path path) {
         return path.getValue();
+    }
+    
+    private String parseExtension(final Path path) {
+    	return Files.getFileExtension(path.getValue());
     }
 
     private String parseJavaClass(final Path path) {
@@ -194,7 +224,7 @@ public class SVNOfflineParser {
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "", propOrder = { "author", "date", "paths", "msg" })
+        @XmlType(name = "", propOrder = { "author", "date", "paths", "msg",  "logentry"})
         public static class Logentry {
 
             @XmlElement(required = true)
@@ -208,6 +238,8 @@ public class SVNOfflineParser {
             protected String msg;
             @XmlAttribute(required = true)
             protected int revision;
+            @XmlElement(required = false)
+            protected List<SVNLog.Logentry> logentry;
 
             public String getAuthor() {
                 return author;
@@ -247,6 +279,18 @@ public class SVNOfflineParser {
 
             public void setRevision(final int value) {
                 this.revision = value;
+            }
+
+
+            public List<SVNLog.Logentry> getLogentry() {
+                if (logentry == null) {
+                    logentry = new ArrayList<SVNLog.Logentry>();
+                }
+                return this.logentry;
+            }
+
+            public void setLogentry(final List<SVNLog.Logentry> logentry) {
+                this.logentry = logentry;
             }
 
             @XmlAccessorType(XmlAccessType.FIELD)
