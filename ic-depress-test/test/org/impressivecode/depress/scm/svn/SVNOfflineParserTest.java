@@ -84,10 +84,37 @@ public class SVNOfflineParserTest {
     public void shouldParseAnyEntry() throws JAXBException, CloneNotSupportedException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
-        extensionsToFilter.add(".java"); 
-        extensionsToFilter.add(".*");
-        extensionsToFilter.add(".xml");
         SVNParserOptions options = SVNParserOptions.options("org.", extensionsToFilter);
+        SVNOfflineParser parser = new SVNOfflineParser(options);
+        // when
+        List<SCMDataType> entries = parser.parseEntries(logFilePath);
+
+        //then
+        assertThat(entries).hasSize(32);
+        
+    }
+    
+    @Test
+    public void shouldNotParseWithWrongPackage() throws JAXBException, CloneNotSupportedException {
+        // given
+        ArrayList<String> extensionsToFilter = new ArrayList<>();
+        extensionsToFilter.add("*");
+        SVNParserOptions options = SVNParserOptions.options("de.", extensionsToFilter);
+        SVNOfflineParser parser = new SVNOfflineParser(options);
+        // when
+        List<SCMDataType> entries = parser.parseEntries(logFilePath);
+
+        //then
+        assertThat(entries).hasSize(5);
+        
+    }
+    
+    @Test
+    public void shouldParseNullPackage() throws JAXBException, CloneNotSupportedException {
+        // given
+        ArrayList<String> extensionsToFilter = new ArrayList<>();
+        extensionsToFilter.add("*");
+        SVNParserOptions options = SVNParserOptions.options(null, extensionsToFilter);
         SVNOfflineParser parser = new SVNOfflineParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);

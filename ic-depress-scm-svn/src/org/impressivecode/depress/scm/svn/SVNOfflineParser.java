@@ -117,7 +117,7 @@ public class SVNOfflineParser {
     	if (extensionNamesToFilter.isEmpty()) return true;
     	if (extensionNamesToFilter.get(0).equals("*")) return true;
     	for (String extensionName : extensionNamesToFilter) {
-    		if (path.endsWith(extensionName)) return true;
+    		if (path.endsWith(extensionName) || extensionName.equals("*")) return true;
     	}
     	return false;
     }
