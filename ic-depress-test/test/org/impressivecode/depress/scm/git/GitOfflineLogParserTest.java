@@ -73,6 +73,19 @@ public class GitOfflineLogParserTest {
         throw new IllegalStateException("Fail");
     }
 
+    private GitCommit packageCommit(String packageName) throws IOException, ParseException {
+    	ArrayList<String> ext = new ArrayList<String>();
+    	ext.add(".java");
+    	GitParserOptions parserOptions = options(packageName, ext, "");
+        this.parser = new GitOfflineLogParser(parserOptions);
+        for (GitCommit c : parser.parseEntries(logFilePath)) {
+            if (c.getId().equals("b4f3088d8894ac224535a31ccf4d1600d3fc0c57")) {
+                return c;
+            }
+        }
+        throw new IllegalStateException("Fail");
+    }
+    
     @Test(expected = FileNotFoundException.class)
     public void shouldThrowFileNotFound() throws Exception {
         parser.parseEntries("fake_path");
@@ -145,5 +158,10 @@ public class GitOfflineLogParserTest {
         assertEquals(
         		"ic-depress-metric-checkstyle/.project",
                 specificCommit(ext).getFiles().get(3).getPath());
+    }
+    
+    @Test
+    public void shouldCommitWithPackageMatch() throws Exception {
+    	assertThat(packageCommit("org.spring.").getFiles()).hasSize(0);
     }
 }
