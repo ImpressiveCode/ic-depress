@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.scm.svn;
 
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.scm.svn.SVNParserOptions.options;
+import static org.impressivecode.depress.scm.SCMParserOptions.options;
 
 import java.io.File;
 import java.io.IOException;

@@ -17,8 +17,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.svn;
 
+import org.impressivecode.depress.scm.SCMExtensionParser;
+
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.scm.svn.SVNParserOptions.options;
+import static org.impressivecode.depress.scm.SCMParserOptions.options;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +33,7 @@ import org.impressivecode.depress.common.OutputTransformer;
 import org.impressivecode.depress.scm.SCMAdapterTableFactory;
 import org.impressivecode.depress.scm.SCMAdapterTransformer;
 import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.scm.SCMParserOptions;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -91,10 +94,10 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
             userExtensions = new ArrayList<String>(); 
             Collections.addAll( userExtensions, getExtensions());
             String packageNameToFilter = Strings.emptyToNull(packageName.getStringValue());
-            SVNParserOptions parserOptions = options(packageNameToFilter, userExtensions); 
-
-            SVNOfflineParser parser = new SVNOfflineParser(parserOptions);
-
+            SCMParserOptions parserOptions = options(packageNameToFilter, userExtensions); 
+            
+            SCMExtensionParser parser = new SCMExtensionParser(parserOptions);
+            
             List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
             
             LOGGER.info("Reading logs finished");
