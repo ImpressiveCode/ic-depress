@@ -114,11 +114,39 @@ public class SVNOfflineParser {
     
     private boolean hasCorrectExtension(String path) {
     	ArrayList<String> extensionNamesToFilter = parserOptions.getExtensionsNamesToFilter();
+    	
     	if (extensionNamesToFilter.isEmpty()) return true;
-    	if (extensionNamesToFilter.get(0).equals("*")) return true;
-    	for (String extensionName : extensionNamesToFilter) {
-    		if (path.endsWith(extensionName) || extensionName.equals("*")) return true;
+	    if (extensionNamesToFilter.get(0).equals("*")) return true;
+    	for (String extension : extensionNamesToFilter) {
+    		if (path.endsWith(extension) || extension.equals("*")) return true;
     	}
+    	
+    	for (String extensionName : extensionNamesToFilter) {	
+	    	int path_length = path.length()-1;
+	    	int extension_length = extensionName.length()-1;
+	    	while (path_length >=0){
+	    		if(!(path.charAt(path_length) == '.')){
+	    			if(extensionName.charAt(extension_length) == '?'){
+	    				path_length--;
+	    				extension_length--;
+	    			}
+	    			else if(extensionName.charAt(extension_length) == '*'){
+	    				///
+	    			}
+	    			else if(extensionName.charAt(extension_length) == path.charAt(path_length)){
+	    				path_length--;
+	    				extension_length--;	    				
+	    			}
+	    			else 
+	    				return false;
+	    			
+	    		}
+	    		else
+	    			return true;
+	    		path_length --;
+	    	}
+    	}
+
     	return false;
     }
     
