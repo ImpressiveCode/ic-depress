@@ -1,5 +1,6 @@
 package org.impressivecode.depress.scm.svn;
 
+import org.impressivecode.depress.scm.SCMParserOptions;
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import javax.xml.bind.JAXBException;
 
 import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.scm.SCMExtensionParser;
 import org.impressivecode.depress.scm.SCMOperation;
 import org.junit.Test;
 
@@ -25,8 +27,8 @@ public class SVNOfflineParserTest {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add(".java");
-        SVNParserOptions options = SVNParserOptions.options("", extensionsToFilter);
-        SVNOfflineParser parser = new SVNOfflineParser(options);
+        SCMParserOptions options = SCMParserOptions.options("", extensionsToFilter);
+        SCMExtensionParser parser = new SCMExtensionParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);
         // then
@@ -38,8 +40,8 @@ public class SVNOfflineParserTest {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add(".java");
-        SVNParserOptions options = SVNParserOptions.options("", extensionsToFilter);
-        SVNOfflineParser parser = new SVNOfflineParser(options);
+        SCMParserOptions options = SCMParserOptions.options("", extensionsToFilter);
+        SCMExtensionParser parser = new SCMExtensionParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePathMerged);
         // then
@@ -50,9 +52,9 @@ public class SVNOfflineParserTest {
     public void shouldParseGivenEntry() throws JAXBException, CloneNotSupportedException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
-        extensionsToFilter.add(".java");
-        SVNParserOptions options = SVNParserOptions.options("org.", extensionsToFilter);
-        SVNOfflineParser parser = new SVNOfflineParser(options);
+        extensionsToFilter.add(".j?va");
+        SCMParserOptions options = SCMParserOptions.options("org.", extensionsToFilter);
+        SCMExtensionParser parser = new SCMExtensionParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);
         List<SCMDataType> revision = Lists.newArrayList(Iterables.filter(entries, new Predicate<SCMDataType>() {
@@ -84,13 +86,25 @@ public class SVNOfflineParserTest {
     public void shouldParseAnyEntry() throws JAXBException, CloneNotSupportedException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
-        SVNParserOptions options = SVNParserOptions.options("org.", extensionsToFilter);
-        SVNOfflineParser parser = new SVNOfflineParser(options);
+        SCMParserOptions options = SCMParserOptions.options("org.", extensionsToFilter);
+        SCMExtensionParser parser = new SCMExtensionParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);
 
         //then
         assertThat(entries).hasSize(32);
+        SCMDataType entry = Iterables.find(entries, new Predicate<SCMDataType>() {
+            @Override
+            public boolean apply(final SCMDataType scm) {
+                return scm.getPath().endsWith("analysis.xml");
+            }
+        });
+        assertThat(entry.getAuthor()).isEqualTo("erans");
+        assertThat(entry.getCommitDate()).isNotNull();
+        assertThat(entry.getCommitID()).isEqualTo("936295");
+        assertThat(entry.getMessage()).isEqualTo("sdsd MATH-365 sdsdsd");  
+        assertThat(entry.getOperation()).isEqualTo(SCMOperation.MODIFIED);
+        assertThat(entry.getPath()).isEqualTo("/commons/proper/math/trunk/src/site/xdoc/userguide/analysis.xml");
         
     }
     
@@ -99,13 +113,17 @@ public class SVNOfflineParserTest {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add("*");
-        SVNParserOptions options = SVNParserOptions.options("de.", extensionsToFilter);
-        SVNOfflineParser parser = new SVNOfflineParser(options);
+        SCMParserOptions options = SCMParserOptions.options("de.", extensionsToFilter);
+        SCMExtensionParser parser = new SCMExtensionParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);
 
         //then
         assertThat(entries).hasSize(5);
+        for(SCMDataType entry : entries)
+        {
+        	assertThat(entry.getExtension()).isNotEqualTo(".java");
+        }
         
     }
     
@@ -114,8 +132,8 @@ public class SVNOfflineParserTest {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add("*");
-        SVNParserOptions options = SVNParserOptions.options(null, extensionsToFilter);
-        SVNOfflineParser parser = new SVNOfflineParser(options);
+        SCMParserOptions options = SCMParserOptions.options(null, extensionsToFilter);
+        SCMExtensionParser parser = new SCMExtensionParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);
 

@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm.svn;
+package org.impressivecode.depress.scm;
 
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -26,6 +26,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -42,8 +44,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.SCMOperation;
-import org.impressivecode.depress.scm.svn.SVNOfflineParser.SVNLog.Logentry;
-import org.impressivecode.depress.scm.svn.SVNOfflineParser.SVNLog.Logentry.Paths.Path;
+import org.impressivecode.depress.scm.SCMParserOptions;
+import org.impressivecode.depress.scm.SCMExtensionParser.SVNLog.Logentry;
+import org.impressivecode.depress.scm.SCMExtensionParser.SVNLog.Logentry.Paths.Path;
 
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
@@ -53,10 +56,10 @@ import com.google.common.io.Files;
  * @author Krystian Dabrowski, Capgemini Poland
  * @author Zuzanna Pacholczyk, Capgemini Poland
  */
-public class SVNOfflineParser {
-    final SVNParserOptions parserOptions;
+public class SCMExtensionParser {
+    final SCMParserOptions parserOptions;
 
-    public SVNOfflineParser(final SVNParserOptions parserOptions) {
+    public SCMExtensionParser(final SCMParserOptions parserOptions) {
         this.parserOptions = checkNotNull(parserOptions, "Options has to be set");
         
     }
@@ -69,7 +72,7 @@ public class SVNOfflineParser {
         return commitsList;
     }
 
-    private List<SCMDataType> parse(final String path, final SVNParserOptions parserOptions) throws JAXBException,
+    private List<SCMDataType> parse(final String path, final SCMParserOptions parserOptions) throws JAXBException,
     CloneNotSupportedException {
         JAXBContext jaxbContext = JAXBContext.newInstance(SVNLog.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
@@ -77,7 +80,7 @@ public class SVNOfflineParser {
         return convertToSCMType(log, parserOptions);
     }
 
-    private List<SCMDataType> convertToSCMType(final SVNLog log, final SVNParserOptions parserOptions)
+    private List<SCMDataType> convertToSCMType(final SVNLog log, final SCMParserOptions parserOptions)
             throws CloneNotSupportedException {
         List<SCMDataType> scmEntries = Lists.newArrayListWithCapacity(1000);
         parseLogEntries(log.getLogentry(), scmEntries);
@@ -114,10 +117,23 @@ public class SVNOfflineParser {
     
     private boolean hasCorrectExtension(String path) {
     	ArrayList<String> extensionNamesToFilter = parserOptions.getExtensionsNamesToFilter();
+    	
     	if (extensionNamesToFilter.isEmpty()) return true;
-    	if (extensionNamesToFilter.get(0).equals("*")) return true;
-    	for (String extensionName : extensionNamesToFilter) {
-    		if (path.endsWith(extensionName) || extensionName.equals("*")) return true;
+	    if (extensionNamesToFilter.get(0).equals("*")) return true;
+    	for (String extension : extensionNamesToFilter) {
+    		if (path.endsWith(extension) || extension.equals("*")) return true;
+
+    		extension = extension.replace("*", "\\S+");
+    		extension = extension.replace("?", "\\S");
+    		if(extension.charAt(0) != '.')
+    			extension = "." + extension;
+    		String pattern = extension;
+    		String ext = path.substring(path.lastIndexOf(".")); 
+    		Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
+    	    Matcher m = p.matcher(ext);
+
+    		if(m.matches())
+    			return true;	
     	}
     	return false;
     }

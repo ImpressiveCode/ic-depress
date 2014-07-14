@@ -42,7 +42,7 @@ public class SVNOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
                 SVNOfflineAdapterNodeModel.CFG_FILENAME, SVNOfflineAdapterNodeModel.FILENAME_DEFAULT),
                 SVNOfflineAdapterNodeModel.FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
 
-        addDialogComponent(new DialogComponentString(SVNOfflineAdapterNodeModel.extensions, "Extension pattern: (* = any extension)", false, 30));  
+        addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_EXTENSION, SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT),"Extension pattern: (* = any extension)", false, 30));  
 
         createNewTab(ADVANCED_TAB_NAME);
   
