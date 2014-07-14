@@ -4057,7 +4057,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-inverse .navbar-collapse,
 .navbar-inverse .navbar-form {
-  border-color: #00225c;
+  border-color: #3881ff;
 }
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
@@ -5924,9 +5924,7 @@ section {
 #social-buttons {
   padding: 3px 0 0px;
   text-align: center;
-  background-color: #f5f5f5;
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #eee;
+  margin-top: 7px;
 }
 #social-buttons ul.list-inline {
   margin-bottom: 0;
