@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/DePress_1.0.0.jar" id="DePress" version="1.0.0">
+      <category name="ImpressiveCode"/>
+   </feature>
+   <category-def name="ImpressiveCode" label="ImpressiveCode"/>
+</site>
