@@ -27,16 +27,24 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 /**
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
+ * @author Maciej Borkowski Capgemini Poland
  */
 public class GitOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
+    public static final String ADVANCED_TAB_NAME = "Advanced";
+	
     protected GitOfflineAdapterNodeDialog() {
         super();
 
         addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(GitOfflineAdapterNodeModel.GIT_FILENAME,
                 GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT), GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
-
-        addDialogComponent(new DialogComponentString(new SettingsModelString(GitOfflineAdapterNodeModel.GIT_PACKAGENAME, 
-                GitOfflineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT), "Package: "));
+        
+        
+        addDialogComponent(new DialogComponentString(GitOfflineAdapterNodeModel.extensions, "Extension pattern: (* = any extension)", false, 30)); 
+        
+        createNewTab(ADVANCED_TAB_NAME);
+        
+        addDialogComponent(new DialogComponentString(GitOfflineAdapterNodeModel.gitPackageName, "Package: ", false, 30)); 
+        
     }
 }
