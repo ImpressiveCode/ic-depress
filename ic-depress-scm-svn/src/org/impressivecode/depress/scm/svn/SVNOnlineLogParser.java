@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.svn;
 
+import org.impressivecode.depress.scm.SCMParserOptions;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
@@ -45,7 +46,7 @@ public class SVNOnlineLogParser {
     private final Pattern PATTERN = Pattern.compile("^(.*)");
 
     public List<SVNCommit> parseEntries(final String path,
-            final SVNParserOptions svnParserOptions) throws IOException,
+            final SCMParserOptions svnParserOptions) throws IOException,
             ParseException, SVNException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
 
@@ -55,7 +56,7 @@ public class SVNOnlineLogParser {
     }
 
     private List<SVNCommit> processRepo(final String path,
-            final SVNParserOptions svnParserOptions) throws IOException,
+            final SCMParserOptions svnParserOptions) throws IOException,
             SVNException {
 
         SVNRepository svn = initializeSvn(path);
@@ -88,7 +89,7 @@ public class SVNOnlineLogParser {
     }
 
     private void setCommitFile(final SVNCommit commit, final SVNLogEntryPath logFile,
-            final SVNParserOptions svnParserOptions) {
+            final SCMParserOptions svnParserOptions) {
 
         Matcher matcher = PATTERN.matcher(logFile.getPath());
 
@@ -111,7 +112,7 @@ public class SVNOnlineLogParser {
     }
 
     private void setMessage(final SVNCommit commit, final SVNLogEntry svnLogEntry,
-            final SVNParserOptions svnParserOptions) {
+            final SCMParserOptions svnParserOptions) {
         String message = getMessage(svnLogEntry);
 
         commit.addToMessage(message);
@@ -134,7 +135,7 @@ public class SVNOnlineLogParser {
         return message;
     }
 
-    private boolean include(final SVNParserOptions svnParserOptions, final String path) {
+    private boolean include(final SCMParserOptions svnParserOptions, final String path) {
         boolean java = path.endsWith(".java");
         if (java) {
             if (svnParserOptions.hasPackagePrefix()) {
@@ -147,7 +148,7 @@ public class SVNOnlineLogParser {
         }
     }
 
-    private String parseJavaClass(final SVNParserOptions svnParserOptions,
+    private String parseJavaClass(final SCMParserOptions svnParserOptions,
             final String path) {
         String javaClass = path.replace(".java", "");
         if (svnParserOptions.hasPackagePrefix()) {
