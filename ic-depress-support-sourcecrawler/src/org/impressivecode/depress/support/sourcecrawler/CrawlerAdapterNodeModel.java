@@ -24,6 +24,7 @@ import static org.impressivecode.depress.support.sourcecrawler.CrawlerAdapterTab
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
@@ -61,7 +62,6 @@ public class CrawlerAdapterNodeModel extends NodeModel {
         BufferedDataContainer container = createDataContainer(exec);
         SourceCrawlerOutput result = entriesParser.parseSourceCrawlerResult(fileSettings.getStringValue());
         BufferedDataTable out = transform(container, result, exec);
-
         return new BufferedDataTable[] { out };
     }
 
@@ -113,28 +113,26 @@ public class CrawlerAdapterNodeModel extends NodeModel {
 
     private void fillTable(final BufferedDataContainer container, final ExecutionContext exec,
             final List<SourceFile> sourceFiles, final int size) throws CanceledExecutionException {
+    	AtomicInteger counter = new AtomicInteger(0);
         for (int i = 0; i < size; i++) {
             progress(exec, size, i);
             SourceFile sourceFile = sourceFiles.get(i);
             List<Clazz> classesInSource = sourceFile.getClasses();
-            addClassesToDatatable(container, sourceFile, classesInSource);
-
+            addClassesToDatatable(container, sourceFile, classesInSource, counter);
         }
     }
 
     private void addClassesToDatatable(final BufferedDataContainer container, final SourceFile sourceFile,
-            final List<Clazz> classesInSource) {
+            final List<Clazz> classesInSource, AtomicInteger counter) {
         for (Clazz clazz : classesInSource) {
-
-            addRowToTable(container, sourceFile.getSourcePackage() + "." + clazz.getName(), clazz.getName(),
-                    clazz.getType(), clazz.isException(), clazz.isInner(), clazz.isTest(),
-                    sourceFile.getSourcePackage(), sourceFile.getPath());
+            addRowToTable(container, Long.toString(counter.getAndIncrement()), clazz.getName(), clazz.getType(), clazz.isException(), clazz.isInner(),
+            		clazz.isTest(), sourceFile.getSourcePackage(), sourceFile.getPath());
         }
     }
 
-    private void addRowToTable(final BufferedDataContainer container, final String id, final String name, final String type, final boolean exception,
+    private void addRowToTable(final BufferedDataContainer container, final String counter, final String name, final String type, final boolean exception,
             final boolean inner, final boolean test, final String sourcePackage, final String path) {
-        container.addRowToTable(createTableRow(id, name, type, exception, inner, test, sourcePackage, path));
+        container.addRowToTable(createTableRow(counter, name, type, exception, inner, test, sourcePackage, path));
     }
 
     private void progress(final ExecutionContext exec, final int size, final int i) throws CanceledExecutionException {
