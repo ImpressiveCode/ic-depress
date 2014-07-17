@@ -42,6 +42,12 @@ public enum ColumnNames {
             return new DataColumnSpecCreator(ColumnNames.PACKAGE.toString(), StringCell.TYPE).createSpec();
         }
     },
+    ACCESS("Access") {
+        @Override
+        public DataColumnSpec getDataColumnCreator() {
+            return new DataColumnSpecCreator(ColumnNames.ACCESS.toString(), StringCell.TYPE).createSpec();
+        }
+    },
 	TYPE("Type") {
 	    @Override
 	    public DataColumnSpec getDataColumnCreator() {
@@ -64,6 +70,12 @@ public enum ColumnNames {
         @Override
         public DataColumnSpec getDataColumnCreator() {
             return new DataColumnSpecCreator(ColumnNames.TEST.toString(), StringCell.TYPE).createSpec();
+        }
+    },
+    FINAL("Final") {
+        @Override
+        public DataColumnSpec getDataColumnCreator() {
+            return new DataColumnSpecCreator(ColumnNames.FINAL.toString(), StringCell.TYPE).createSpec();
         }
     },
     FILE("File") {

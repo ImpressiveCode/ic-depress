@@ -49,23 +49,27 @@ public class CrawlerAdapterTableFactory {
         return outputSpec;
     }
 
-    public static DataRow createTableRow(final String counter, final String name, final String type, final boolean exception, final boolean inner,
-            final boolean test, final String sourcePackage, final String path) {
-        DataCell[] cells = new DataCell[7];
-        prepareCells(name, type, exception, inner, test, sourcePackage, path, cells);
+    public static DataRow createTableRow(final String counter, final String name, final String access, final String type, final boolean exception, final boolean inner,
+            final boolean test, final boolean finals, final String sourcePackage, final String path) {
+        DataCell[] cells = new DataCell[9];
+        prepareCells(name, type, access, exception, inner, test, finals, sourcePackage, path, cells);
         DataRow row = new DefaultRow(counter, cells);
         return row;
     }
 
-    private static void prepareCells(final String name, final String type, final boolean exception, final boolean inner, final boolean test,
-            final String sourcePackage, final String path, final DataCell[] cells) {
+    private static void prepareCells(final String name, final String access, final String type, final boolean exception, final boolean inner,
+            final boolean test, final boolean finals, final String sourcePackage, final String path, final DataCell[] cells) {
     	cells[0] = new StringCell(name);
     	cells[1] = new StringCell(sourcePackage);
-        cells[2] = new StringCell(type);
-        cells[3] = new StringCell(Boolean.toString(exception));
-        cells[4] = new StringCell(Boolean.toString(inner));
-        cells[5] = new StringCell(Boolean.toString(test));
-        cells[6] = new StringCell(path);
+    	cells[2] = new StringCell(access);
+        cells[3] = new StringCell(type);
+        cells[4] = new StringCell(Boolean.toString(exception));
+        cells[5] = new StringCell(Boolean.toString(inner));
+        cells[6] = new StringCell(Boolean.toString(test));
+        cells[7] = new StringCell(Boolean.toString(finals));
+        cells[8] = new StringCell(path);
+        
+        
     }
 
 }
