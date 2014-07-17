@@ -18,33 +18,21 @@
 
 package org.impressivecode.depress.mr.pitest;
 
-import javax.swing.JFileChooser;
+import static org.impressivecode.depress.mr.pitest.PitestAdapterNodeModel.createFileChooserSettings;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
-import org.knime.core.node.defaultnodesettings.DialogComponentNumber;
-import org.knime.core.node.defaultnodesettings.SettingsModelIntegerBounded;
-import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  *
- *
- * 
  * @author Zuzanna Pacholczyk, Capgemini Polska
  */
 public class PitestAdapterNodeDialog extends DefaultNodeSettingsPane {
-
-    /**
-     * New pane for configuring PitestAdapter node dialog.
-     * This is just a suggestion to demonstrate possible default dialog
-     * components.
-     */
     
 	protected PitestAdapterNodeDialog() {
         super();
 
-        addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(
-        		PitestAdapterNodeModel.CONFIG_NAME, PitestAdapterNodeModel.DEFAULT_VALUE),
+        addDialogComponent(new DialogComponentFileChooser(createFileChooserSettings(),
         		PitestAdapterNodeModel.DEFAULT_VALUE, PitestAdapterNodeModel.FILE_EXTENSION));
 	}
 }

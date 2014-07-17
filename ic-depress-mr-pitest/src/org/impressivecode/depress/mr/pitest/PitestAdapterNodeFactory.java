@@ -23,7 +23,6 @@ import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 
 /**
- * <code>NodeFactory</code> for the "PitestAdapter" Node.
  * 
  *
  * @author Zuzanna Pacholczyk, Capgemini Polska
@@ -31,42 +30,27 @@ import org.knime.core.node.NodeView;
 public class PitestAdapterNodeFactory 
         extends NodeFactory<PitestAdapterNodeModel> {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public PitestAdapterNodeModel createNodeModel() {
         return new PitestAdapterNodeModel();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getNrNodeViews() {
-        return 1;
+        return 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public NodeView<PitestAdapterNodeModel> createNodeView(final int viewIndex,
             final PitestAdapterNodeModel nodeModel) {
-        return new PitestAdapterNodeView(nodeModel);
+        throw new IllegalStateException("View not supported");
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean hasDialog() {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public NodeDialogPane createNodeDialogPane() {
         return new PitestAdapterNodeDialog();
