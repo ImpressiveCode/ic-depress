@@ -100,7 +100,6 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
         	logger.error("Unable to parse git entries", ex);
             throw ex;
         }
-
     }
 
 	@Override

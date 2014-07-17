@@ -50,6 +50,8 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     private static final String CONFIG_NAME = "depress.sourcecrawler.confname";
 
     private final SettingsModelString fileSettings = createFileSettings();
+    
+    CrawlerEntriesParser parser = new CrawlerEntriesParser();
 
     protected CrawlerAdapterNodeModel() {
         super(0, 1);
@@ -58,10 +60,9 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
-        CrawlerEntriesParser entriesParser = new CrawlerEntriesParser();
         BufferedDataContainer container = createDataContainer(exec);
-        SourceCrawlerOutput result = entriesParser.parseSourceCrawlerResult(fileSettings.getStringValue());
-        BufferedDataTable out = transform(container, result, exec);
+        SourceCrawlerOutput result = parser.parseFromXML(fileSettings.getStringValue());
+        BufferedDataTable out = transformIntoTable(container, result, exec);
         return new BufferedDataTable[] { out };
     }
 
@@ -101,24 +102,23 @@ public class CrawlerAdapterNodeModel extends NodeModel {
         // NOOP
     }
 
-    private BufferedDataTable transform(final BufferedDataContainer container, final SourceCrawlerOutput classes,
+    private BufferedDataTable transformIntoTable(final BufferedDataContainer container, final SourceCrawlerOutput classes,
             final ExecutionContext exec) throws CanceledExecutionException {
         List<SourceFile> sourceFiles = classes.getSourceFiles();
-        int size = sourceFiles.size();
-        fillTable(container, exec, sourceFiles, size);
+        fillTable(container, exec, sourceFiles);
         container.close();
         BufferedDataTable out = container.getTable();
         return out;
     }
 
     private void fillTable(final BufferedDataContainer container, final ExecutionContext exec,
-            final List<SourceFile> sourceFiles, final int size) throws CanceledExecutionException {
+            final List<SourceFile> sourceFiles) throws CanceledExecutionException {
     	AtomicInteger counter = new AtomicInteger(0);
-        for (int i = 0; i < size; i++) {
+    	int size = sourceFiles.size();
+    	for(int i = 0; i < size; i++){
             progress(exec, size, i);
-            SourceFile sourceFile = sourceFiles.get(i);
-            List<Clazz> classesInSource = sourceFile.getClasses();
-            addClassesToDatatable(container, sourceFile, classesInSource, counter);
+        	List<Clazz> clazzes = parser.parseClassesFromFile(sourceFiles.get(i));
+            addClassesToDatatable(container, sourceFiles.get(i), clazzes, counter);
         }
     }
 

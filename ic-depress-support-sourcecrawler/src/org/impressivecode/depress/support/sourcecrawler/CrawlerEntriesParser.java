@@ -21,6 +21,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 import java.io.File;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -33,12 +34,24 @@ import javax.xml.bind.Unmarshaller;
  */
 public class CrawlerEntriesParser {
 
-    public SourceCrawlerOutput parseSourceCrawlerResult(final String path) throws JAXBException {
+    public SourceCrawlerOutput parseFromXML(final String path) throws JAXBException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
-        JAXBContext jaxbContext = JAXBContext.newInstance(SourceCrawlerOutput.class);
+        JAXBContext jaxbContext;
+		jaxbContext = JAXBContext.newInstance(SourceCrawlerOutput.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        SourceCrawlerOutput result = (SourceCrawlerOutput) unmarshaller.unmarshal(new File(path));
+    	SourceCrawlerOutput result;
+		try {
+			result = (SourceCrawlerOutput) unmarshaller.unmarshal(new File(path));
+		} catch (JAXBException e) {
+			throw new JAXBException("Could not parse file, unmarshaller failed");
+		}
+
         return result;
     }
+
+	public List<Clazz> parseClassesFromFile(SourceFile sourceFile) {
+		return sourceFile.getClasses();
+	}
+
 
 }
