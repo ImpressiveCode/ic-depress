@@ -50,6 +50,8 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     private static final String CONFIG_NAME = "depress.sourcecrawler.confname";
 
     private final SettingsModelString fileSettings = createFileSettings();
+    
+    private final CrawlerEntriesParser parser = new CrawlerEntriesParser();
 
     protected CrawlerAdapterNodeModel() {
         super(0, 1);
@@ -58,13 +60,60 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
-        CrawlerEntriesParser entriesParser = new CrawlerEntriesParser();
         BufferedDataContainer container = createDataContainer(exec);
-        SourceCrawlerOutput result = entriesParser.parseSourceCrawlerResult(fileSettings.getStringValue());
-        BufferedDataTable out = transform(container, result, exec);
+        SourceCrawlerOutput result = parser.parseFromXML(fileSettings.getStringValue());
+        BufferedDataTable out = transformIntoTable(container, result, exec);
         return new BufferedDataTable[] { out };
     }
 
+    private BufferedDataTable transformIntoTable(final BufferedDataContainer container, final SourceCrawlerOutput classes,
+            final ExecutionContext exec) throws CanceledExecutionException {
+        List<SourceFile> sourceFiles = classes.getSourceFiles();
+        fillTable(container, exec, sourceFiles);
+        container.close();
+        BufferedDataTable out = container.getTable();
+        return out;
+    }
+
+    private void fillTable(final BufferedDataContainer container, final ExecutionContext exec,
+            final List<SourceFile> sourceFiles) throws CanceledExecutionException {
+    	AtomicInteger counter = new AtomicInteger(0);
+    	int size = sourceFiles.size();
+    	for(int i = 0; i < size; i++){
+            progress(exec, size, i);
+        	List<Clazz> clazzes = parser.parseClassesFromFile(sourceFiles.get(i));
+            addClassesToDatatable(container, sourceFiles.get(i), clazzes, counter);
+        }
+    }
+
+    private void addClassesToDatatable(final BufferedDataContainer container, final SourceFile sourceFile,
+            final List<Clazz> classesInSource, AtomicInteger counter) {
+        for (Clazz clazz : classesInSource) {
+            addRowToTable(container, Long.toString(counter.getAndIncrement()), clazz.getName(), clazz.getAccess(), clazz.getType(), clazz.isException(), clazz.isInner(),
+            		clazz.isTest(), clazz.isFinal(), sourceFile.getSourcePackage(), sourceFile.getPath());
+        }
+    }
+
+    private void addRowToTable(final BufferedDataContainer container, final String counter, final String name, final String type, String access, final boolean exception,
+            final boolean inner, final boolean test, boolean finals, final String sourcePackage, final String path) {
+        container.addRowToTable(createTableRow(counter, name, access, type, exception, inner, test, finals, sourcePackage, path));
+    }
+
+    private void progress(final ExecutionContext exec, final int size, final int i) throws CanceledExecutionException {
+        exec.checkCanceled();
+        exec.setProgress(i / size);
+    }
+
+    private BufferedDataContainer createDataContainer(final ExecutionContext exec) {
+        DataTableSpec outputSpec = createDataColumnSpec();
+        BufferedDataContainer container = exec.createDataContainer(outputSpec);
+        return container;
+    }
+
+    public SettingsModelString createFileSettings() {
+        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
+    }
+    
     @Override
     protected void reset() {
     }
@@ -99,54 +148,5 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
     CanceledExecutionException {
         // NOOP
-    }
-
-    private BufferedDataTable transform(final BufferedDataContainer container, final SourceCrawlerOutput classes,
-            final ExecutionContext exec) throws CanceledExecutionException {
-        List<SourceFile> sourceFiles = classes.getSourceFiles();
-        int size = sourceFiles.size();
-        fillTable(container, exec, sourceFiles, size);
-        container.close();
-        BufferedDataTable out = container.getTable();
-        return out;
-    }
-
-    private void fillTable(final BufferedDataContainer container, final ExecutionContext exec,
-            final List<SourceFile> sourceFiles, final int size) throws CanceledExecutionException {
-    	AtomicInteger counter = new AtomicInteger(0);
-        for (int i = 0; i < size; i++) {
-            progress(exec, size, i);
-            SourceFile sourceFile = sourceFiles.get(i);
-            List<Clazz> classesInSource = sourceFile.getClasses();
-            addClassesToDatatable(container, sourceFile, classesInSource, counter);
-        }
-    }
-
-    private void addClassesToDatatable(final BufferedDataContainer container, final SourceFile sourceFile,
-            final List<Clazz> classesInSource, AtomicInteger counter) {
-        for (Clazz clazz : classesInSource) {
-            addRowToTable(container, Long.toString(counter.getAndIncrement()), clazz.getName(), clazz.getType(), clazz.isException(), clazz.isInner(),
-            		clazz.isTest(), sourceFile.getSourcePackage(), sourceFile.getPath());
-        }
-    }
-
-    private void addRowToTable(final BufferedDataContainer container, final String counter, final String name, final String type, final boolean exception,
-            final boolean inner, final boolean test, final String sourcePackage, final String path) {
-        container.addRowToTable(createTableRow(counter, name, type, exception, inner, test, sourcePackage, path));
-    }
-
-    private void progress(final ExecutionContext exec, final int size, final int i) throws CanceledExecutionException {
-        exec.checkCanceled();
-        exec.setProgress(i / size);
-    }
-
-    private BufferedDataContainer createDataContainer(final ExecutionContext exec) {
-        DataTableSpec outputSpec = createDataColumnSpec();
-        BufferedDataContainer container = exec.createDataContainer(outputSpec);
-        return container;
-    }
-
-    public SettingsModelString createFileSettings() {
-        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
     }
 }

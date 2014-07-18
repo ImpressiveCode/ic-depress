@@ -31,4 +31,5 @@ Bundle-ClassPath: bin/,
  lib/fest-assert-1.4.jar,
  lib/fest-util-1.1.6.jar,
  lib/mockito-all-1.9.5.jar
+Import-Package: org.impressivecode.depress.support.sourcecrawler
 

@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.scm.git;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.impressivecode.depress.scm.git.GitParserOptions.options;
+import static org.impressivecode.depress.scm.SCMParserOptions.options;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.impressivecode.depress.scm.SCMOperation;
+import org.impressivecode.depress.scm.SCMParserOptions;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,6 +38,7 @@ import org.junit.Test;
  * @author Tomasz Kuzemko
  * @author Slawomir Kapłoński
  * @author Marek Majchrzak, Impressive Code
+ * @author Maciej Borkowski, Capgemini Polska
  */
 
 public class GitOfflineLogParserTest {
@@ -52,7 +54,7 @@ public class GitOfflineLogParserTest {
     private GitCommit specificCommit() throws IOException, ParseException {
     	ArrayList<String> ext = new ArrayList<String>();
     	ext.add(".java");
-    	GitParserOptions parserOptions = options("org.", ext, "");
+    	SCMParserOptions parserOptions = options("org.", ext);
         this.parser = new GitOfflineLogParser(parserOptions);
         for (GitCommit c : parser.parseEntries(logFilePath)) {
             if (c.getId().equals("45a2beca9d97777733e1a472e54c003551b7d9b1")) {
@@ -63,7 +65,7 @@ public class GitOfflineLogParserTest {
     }
     
     private GitCommit specificCommit(ArrayList<String> ext) throws IOException, ParseException {
-    	GitParserOptions parserOptions = options("org.", ext, "");
+    	SCMParserOptions parserOptions = options("org.", ext);
         this.parser = new GitOfflineLogParser(parserOptions);
         for (GitCommit c : parser.parseEntries(logFilePath)) {
             if (c.getId().equals("b4f3088d8894ac224535a31ccf4d1600d3fc0c57")) {
@@ -76,7 +78,7 @@ public class GitOfflineLogParserTest {
     private GitCommit packageCommit(String packageName) throws IOException, ParseException {
     	ArrayList<String> ext = new ArrayList<String>();
     	ext.add(".java");
-    	GitParserOptions parserOptions = options(packageName, ext, "");
+    	SCMParserOptions parserOptions = options(packageName, ext);
         this.parser = new GitOfflineLogParser(parserOptions);
         for (GitCommit c : parser.parseEntries(logFilePath)) {
             if (c.getId().equals("b4f3088d8894ac224535a31ccf4d1600d3fc0c57")) {
