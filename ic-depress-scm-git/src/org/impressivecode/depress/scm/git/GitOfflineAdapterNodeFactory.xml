@@ -54,6 +54,6 @@
     </fullDescription>
 
     <ports>
-        <outPort index="0" name="Change history data">Table with data read from Git log file or Git repository</outPort>
+        <outPort index="0" name="Data change history ">Table with data read from Git log file or Git repository</outPort>
     </ports>
 </knimeNode>

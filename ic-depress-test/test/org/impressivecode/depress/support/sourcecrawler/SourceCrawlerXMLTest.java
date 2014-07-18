@@ -24,9 +24,9 @@ import javax.xml.bind.JAXBException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SourceCrawlerTest {
+public class SourceCrawlerXMLTest {
 	
-	private final static String testedFilePath = SourceCrawlerTest.class.getResource("test.xml").getPath();
+	private final static String testedFilePath = SourceCrawlerXMLTest.class.getResource("test.xml").getPath();
     
 	SourceCrawlerOutput output;
 	
