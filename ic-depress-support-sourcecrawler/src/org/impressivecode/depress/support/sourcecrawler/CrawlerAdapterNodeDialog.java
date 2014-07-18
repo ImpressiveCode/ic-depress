@@ -17,12 +17,14 @@
  */
 package org.impressivecode.depress.support.sourcecrawler;
 
+import javax.swing.JFileChooser;
+
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
-import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 
 /**
  * 
  * @author Pawel Nosal, ImpressiveCode
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
@@ -31,11 +33,10 @@ public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
     private static final String HISTORY_ID = "depress.sourcecrawler.historyid";
 
     protected CrawlerAdapterNodeDialog() {
-        addDialogComponent(getFileChooserComponent());
+    	CrawlerAdapterNodeModel nodeModel = new CrawlerAdapterNodeModel();
+    	
+        addDialogComponent(new DialogComponentFileChooser(nodeModel.createFileSettings(), HISTORY_ID, JFileChooser.OPEN_DIALOG, false, FILE_EXTENSION));
+        
     }
 
-    private DialogComponentFileChooser getFileChooserComponent() {
-        CrawlerAdapterNodeModel nodeModel = new CrawlerAdapterNodeModel();
-        return new DialogComponentFileChooser(nodeModel.createFileSettings(), HISTORY_ID, FILE_EXTENSION);
-    }
 }

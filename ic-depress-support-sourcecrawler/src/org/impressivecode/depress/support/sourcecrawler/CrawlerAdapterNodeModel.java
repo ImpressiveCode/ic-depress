@@ -41,16 +41,15 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 /**
  * 
  * @author Pawel Nosal, ImpressiveCode
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public class CrawlerAdapterNodeModel extends NodeModel {
 
     private static final String DEFAULT_VALUE = "";
-
     private static final String CONFIG_NAME = "depress.sourcecrawler.confname";
 
     private final SettingsModelString fileSettings = createFileSettings();
-    
     private final CrawlerEntriesParser parser = new CrawlerEntriesParser();
 
     protected CrawlerAdapterNodeModel() {
@@ -60,8 +59,17 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
+        String path = fileSettings.getStringValue();
+        File file = new File(fileSettings.getStringValue());
+        SourceCrawlerOutput result = null;
+        if(file.isDirectory()){
+        	result = parser.parseFromExecutableJar(path);
+        }
+        else if(file.isFile()){
+        	result = parser.parseFromXML(path);
+        } else 
+        	throw new IOException("Path does not point at any file or directory");
         BufferedDataContainer container = createDataContainer(exec);
-        SourceCrawlerOutput result = parser.parseFromXML(fileSettings.getStringValue());
         BufferedDataTable out = transformIntoTable(container, result, exec);
         return new BufferedDataTable[] { out };
     }
