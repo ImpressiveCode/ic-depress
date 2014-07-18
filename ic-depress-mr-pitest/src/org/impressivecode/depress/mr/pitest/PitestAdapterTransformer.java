@@ -15,12 +15,14 @@
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 */
-	package org.impressivecode.depress.mr.pitest;
+	
+package org.impressivecode.depress.mr.pitest;
 	import static com.google.common.base.Preconditions.checkNotNull;
 	import static org.impressivecode.depress.common.Cells.stringOrMissingCell;
-
+	import static org.impressivecode.depress.common.Cells.booleanCell;
+	import static org.impressivecode.depress.common.Cells.integerCell;
 	import java.util.List;
-
+		
 	import org.knime.core.data.DataCell;
 	import org.knime.core.data.DataRow;
 	import org.knime.core.data.DataTableSpec;
@@ -30,7 +32,7 @@
 	import org.knime.core.node.CanceledExecutionException;
 	import org.knime.core.node.ExecutionContext;
 	import org.knime.core.node.NodeLogger;
-import org.knime.core.node.NodeLogger.LEVEL;
+	import org.knime.core.node.NodeLogger.LEVEL;
 
 	/**
 	 * 
@@ -55,17 +57,18 @@ public class PitestAdapterTransformer {
     public BufferedDataTable transform(final List<PitestEntry> pitestdata, final ExecutionContext exec)
             throws CanceledExecutionException {
         BufferedDataContainer container = createDataContainer(exec);
+        Long counter = 0l;
         for (PitestEntry entry : pitestdata) {
             progress(exec);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Transforming metric, class: ");// + entry.getClassName());
+                LOGGER.debug("Transforming metric, class: " + entry.getSourceFile());
             }
 
             if (LOGGER.isEnabledFor(LEVEL.ALL)) {
-                LOGGER.debug("Transforming metric:");// + entry.toString());
+                LOGGER.debug("Transforming metric:" + entry.toString());
             }
-            DataRow row = createTableRow(entry);
+            DataRow row = createTableRow(String.valueOf(counter++),entry);
             container.addRowToTable(row);
         }
         container.close();
@@ -73,21 +76,23 @@ public class PitestAdapterTransformer {
         return out;
     }
 
-    private DataRow createTableRow(final PitestEntry entry) {
+    private DataRow createTableRow(final String rowId, final PitestEntry entry) {
         DataCell[] cells = getPitestCells(entry);
-        DataRow row = new DefaultRow(entry.getSourceFile(), cells);
+        DataRow row = new DefaultRow(rowId, cells);
         return row;
     }
 
     private DataCell[] getPitestCells(final PitestEntry value) {
         DataCell[] cells = { 
+        		stringOrMissingCell(value.getMutationStatus()),
+        		booleanCell(value.getDetection()),
         		stringOrMissingCell(value.getSourceFile()),
         		stringOrMissingCell(value.getMutatedClass()),
         		stringOrMissingCell(value.getMutatedMethod()),
         		stringOrMissingCell(value.getMethodDescription()),
-        		stringOrMissingCell(value.getLineNumber()),
+        		integerCell(value.getLineNumber()),
         		stringOrMissingCell(value.getMutator()),
-        		stringOrMissingCell(value.getIndex()),
+        		integerCell(value.getIndex()),
         		stringOrMissingCell(value.getKillingTest())};
         return cells;
     }

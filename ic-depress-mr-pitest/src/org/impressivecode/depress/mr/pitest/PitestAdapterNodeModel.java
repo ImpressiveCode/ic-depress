@@ -17,7 +17,6 @@
  */
 
 package org.impressivecode.depress.mr.pitest;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static org.impressivecode.depress.mr.pitest.PitestAdapterTableFactory.createDataColumnSpec;
 

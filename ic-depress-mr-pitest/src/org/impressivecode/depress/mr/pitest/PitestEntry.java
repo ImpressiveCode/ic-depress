@@ -25,21 +25,32 @@ package org.impressivecode.depress.mr.pitest;
  **/
 
 public class PitestEntry {
+		private boolean detection;
+		private String mutationStatus;
 		private String sourceFile;
 		private String mutatedClass;
 		private String mutatedMethod;
 		private String methodDescription;
-		private String lineNumber;
+		private int lineNumber;
 		private String mutator;
-		private String index;
+		private int index;
 		private String killingTest;
 	    @Override
 	    public String toString() {
 	        return String
-	                .format("PitestEntry [sourceFile=%s, mutatedClass=%s, mutatedMethod=%s, methodDescription=%s, lineNumber=%s, mutator=%s, index=%s, killingTest=%s]",
-	                        sourceFile, mutatedClass, mutatedMethod, methodDescription, lineNumber, mutator, index, killingTest);
+	                .format("PitestEntry [mutationStatus=%s, detection=%s, sourceFile=%s, mutatedClass=%s, mutatedMethod=%s, methodDescription=%s, lineNumber=%s, mutator=%s, index=%s, killingTest=%s]",
+	                        mutationStatus, detection, sourceFile, mutatedClass, mutatedMethod, methodDescription, lineNumber, mutator, index, killingTest);
 	    }
 
+	    
+	    public void setMutationStatus(String textContent){
+	    	this.mutationStatus = textContent;
+	    }
+	    
+	    public void setDetection(boolean textContent){
+	    	this.detection = textContent;
+	    }
+	    
 		public void setSourceFile(String textContent) {
 			this.sourceFile = textContent;
 			
@@ -60,7 +71,7 @@ public class PitestEntry {
 			
 		}
 
-		public void setLineNumber(String textContent) {
+		public void setLineNumber(int textContent) {
 			this.lineNumber = textContent;
 			
 		}
@@ -70,14 +81,22 @@ public class PitestEntry {
 			
 		}
 
-		public void setIndex(String textContent) {
-			this.index = textContent;
+		public void setIndex(int i) {
+			this.index = i;
 			
 		}
 
 		public void setKillingTest(String textContent) {
 			this.killingTest = textContent;
 			
+		}
+		
+		public String getMutationStatus(){
+			return mutationStatus;
+		}
+		
+		public boolean getDetection(){
+			return detection;
 		}
 
 		public String getSourceFile() {
@@ -100,7 +119,7 @@ public class PitestEntry {
 			
 		}
 
-		public String getLineNumber() {
+		public int getLineNumber() {
 			return lineNumber;
 			
 		}
@@ -110,7 +129,7 @@ public class PitestEntry {
 			
 		}
 
-		public String getIndex() {
+		public int getIndex() {
 			return index;
 			
 		}

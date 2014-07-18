@@ -56,7 +56,6 @@ public class PitestEntriesParser {
         List<PitestEntry> pitestEntries = Lists.newLinkedList();
         for (int i = 0; i < size; i++) {
             Node item = nList.item(i);
-            //System.out.println(item.getNodeName());
             PitestEntry entry = parse(item);
             pitestEntries.add(entry);
         }
@@ -72,14 +71,16 @@ public class PitestEntriesParser {
         PitestEntry pitest = new PitestEntry();
 
         Element eItem = (Element) item;
-
+        
+        pitest.setMutationStatus(eItem.getAttribute("status"));
+        pitest.setDetection(Boolean.valueOf(eItem.getAttribute("detected")));
     	pitest.setSourceFile(eItem.getElementsByTagName("sourceFile").item(0).getTextContent());
     	pitest.setMutatedClass(eItem.getElementsByTagName("mutatedClass").item(0).getTextContent());
     	pitest.setMutatedMethod(eItem.getElementsByTagName("mutatedMethod").item(0).getTextContent());
     	pitest.setMethodDescription(eItem.getElementsByTagName("methodDescription").item(0).getTextContent());
-    	pitest.setLineNumber(eItem.getElementsByTagName("lineNumber").item(0).getTextContent());
+    	pitest.setLineNumber(Integer.parseInt(eItem.getElementsByTagName("lineNumber").item(0).getTextContent()));
     	pitest.setMutator(eItem.getElementsByTagName("mutator").item(0).getTextContent());
-    	pitest.setIndex(eItem.getElementsByTagName("index").item(0).getTextContent());
+    	pitest.setIndex(Integer.parseInt(eItem.getElementsByTagName("index").item(0).getTextContent()));
     	pitest.setKillingTest(eItem.getElementsByTagName("killingTest").item(0).getTextContent());
 
         return pitest;
