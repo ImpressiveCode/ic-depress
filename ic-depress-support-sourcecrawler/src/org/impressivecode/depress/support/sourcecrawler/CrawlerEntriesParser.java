@@ -21,19 +21,67 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.impressivecode.utils.sourcecrawler.SourceCrawler;
+import org.impressivecode.utils.sourcecrawler.model.JavaClazz;
+import org.impressivecode.utils.sourcecrawler.model.JavaFile;
+
 /**
  * 
  * @author Pawel Nosal, ImpressiveCode
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public class CrawlerEntriesParser {
 
+	public SourceCrawlerOutput parseFromExecutableJar(final String path) throws IOException {
+    	SourceCrawler sourceCrawler = new SourceCrawler();
+    	List<JavaFile> javaFiles;
+		try {
+			javaFiles = sourceCrawler.executeCleanly(path);
+		} catch (IOException e) {
+			throw new IOException("Could not find java files");
+		}
+    	SourceCrawlerOutput result = new SourceCrawlerOutput();
+    	ArrayList<SourceFile> sourceFiles = new ArrayList<SourceFile>();
+    	for(JavaFile javaFile : javaFiles){
+    		 sourceFiles.add(parseJavaFile(javaFile));
+    	}
+    	result.setSourceFiles(sourceFiles);
+		return result;
+	}
+	
+	private SourceFile parseJavaFile(final JavaFile javaFile) {
+		SourceFile sourceFile = new SourceFile();
+		ArrayList<Clazz> clazzes = new ArrayList<Clazz>();
+		for(JavaClazz javaClazz : javaFile.getClasses()){
+			clazzes.add(parseJavaClazz(javaClazz));
+		}
+		sourceFile.setClasses(clazzes);
+		sourceFile.setPath(javaFile.getFilePath());
+		sourceFile.setSourcePackage(javaFile.getPackageName());
+		return sourceFile;
+	}
+
+	private Clazz parseJavaClazz(final JavaClazz javaClazz){
+		Clazz clazz = new Clazz();
+		clazz.setAccess(javaClazz.getClassAccess().toString());
+		clazz.setException(javaClazz.isTest());
+		clazz.setFinal(javaClazz.isFinal());
+		clazz.setInner(javaClazz.isInner());
+		clazz.setName(javaClazz.getClassName());
+		clazz.setTest(javaClazz.isTest());
+		clazz.setType(javaClazz.getClassType().toString());
+		return clazz;
+	}
+	
     public SourceCrawlerOutput parseFromXML(final String path) throws JAXBException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
         JAXBContext jaxbContext;
@@ -45,13 +93,11 @@ public class CrawlerEntriesParser {
 		} catch (JAXBException e) {
 			throw new JAXBException("Could not parse file, unmarshaller failed");
 		}
-
         return result;
     }
 
 	public List<Clazz> parseClassesFromFile(SourceFile sourceFile) {
 		return sourceFile.getClasses();
 	}
-
 
 }
