@@ -20,6 +20,7 @@ package org.impressivecode.depress.support.sourcecrawler;
 import javax.swing.JFileChooser;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 
 /**
  * 
@@ -33,10 +34,29 @@ public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
     private static final String HISTORY_ID = "depress.sourcecrawler.historyid";
 
     protected CrawlerAdapterNodeDialog() {
-    	CrawlerAdapterNodeModel nodeModel = new CrawlerAdapterNodeModel();
-    	
-        addDialogComponent(new DialogComponentFileChooser(nodeModel.createFileSettings(), HISTORY_ID, JFileChooser.OPEN_DIALOG, false, FILE_EXTENSION));
+        addDialogComponent(new DialogComponentFileChooser(CrawlerAdapterNodeModel.createFileSettings(), HISTORY_ID, JFileChooser.OPEN_DIALOG, false, FILE_EXTENSION));
         
+        setHorizontalPlacement(true);
+        createNewGroup("Acces:");
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelPublic(), CrawlerOptionsParser.PUBLIC));
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelPrivate(), CrawlerOptionsParser.PRIVATE));
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelProtected(), CrawlerOptionsParser.PROTECTED));
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelPackage(), CrawlerOptionsParser.PACKAGE));
+        closeCurrentGroup();
+        
+        createNewGroup("Type:");
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelClass(), CrawlerOptionsParser.CLASS));
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelInterface(), CrawlerOptionsParser.INTERFACE));
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelAbstract(), CrawlerOptionsParser.ABSTRACT));
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelEnum(), CrawlerOptionsParser.ENUM));
+        closeCurrentGroup();
+        
+        createNewGroup("Other:");
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelException(), CrawlerOptionsParser.EXCEPTION));
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelInner(), CrawlerOptionsParser.INNER));
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelTest(), CrawlerOptionsParser.TEST));
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelFinal(), CrawlerOptionsParser.FINAL));
+        closeCurrentGroup();
     }
 
 }
