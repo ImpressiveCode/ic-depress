@@ -21,6 +21,7 @@ import javax.swing.JFileChooser;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
+import org.knime.core.node.defaultnodesettings.DialogComponentString;
 
 /**
  * 
@@ -29,7 +30,10 @@ import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
  * 
  */
 public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
-
+	
+	public static final String ADVANCED_TAB_NAME = "Advanced";
+	public static final String CREATE_XML = "Create XML file";
+	 
     private static final String FILE_EXTENSION = ".xml";
     private static final String HISTORY_ID = "depress.sourcecrawler.historyid";
 
@@ -57,6 +61,11 @@ public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelTest(), CrawlerOptionsParser.TEST));
         addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModelFinal(), CrawlerOptionsParser.FINAL));
         closeCurrentGroup();
+        
+        createNewTab(ADVANCED_TAB_NAME);
+        
+        addDialogComponent(new DialogComponentString(CrawlerAdapterNodeModel.createPackageSettings(), "Package: ", false, 40));
+        addDialogComponent(new DialogComponentBoolean(CrawlerAdapterNodeModel.createXMLSettings(), CREATE_XML));
     }
 
 }
