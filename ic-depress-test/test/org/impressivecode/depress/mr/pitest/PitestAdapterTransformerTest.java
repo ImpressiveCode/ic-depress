@@ -23,7 +23,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.List;
 
 import org.impressivecode.depress.mr.pitest.PitestAdapterTransformer;
@@ -31,14 +30,14 @@ import org.impressivecode.depress.mr.pitest.PitestEntry;
 import org.junit.Test;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.def.DoubleCell;
+import org.knime.core.data.def.BooleanCell;
+import org.knime.core.data.def.IntCell;
+import org.knime.core.data.def.StringCell;
 import org.knime.core.node.BufferedDataContainer;
-import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.knime.core.node.NodeLogger;
 import com.google.common.collect.Lists;
 /**
  * 
@@ -81,18 +80,10 @@ public class PitestAdapterTransformerTest {
         verify(container).addRowToTable(captor.capture());
         DataRow value = captor.getValue();
         assertThat(value.getKey().getString()).isEqualTo("KILLED");
-        //        new DataColumnSpecCreator(LINE_COVERAGE, DoubleCell.TYPE).createSpec(),
-        //        new DataColumnSpecCreator(INSTRUCTIONS_COVERAGE, DoubleCell.TYPE).createSpec(),
-        //        new DataColumnSpecCreator(BRANCHE_COVERAGE, DoubleCell.TYPE).createSpec(),
-        //        new DataColumnSpecCreator(COMPLEXITY_COVERAGE, DoubleCell.TYPE).createSpec(),
-        //        new DataColumnSpecCreator(METHOD_COVERAGE, DoubleCell.TYPE).createSpec(), 
-        //        new DataColumnSpecCreator(CLASS_COVERAGE, DoubleCell.TYPE).createSpec()};
-        assertThat(((DoubleCell)value.getCell(2)).getDoubleValue()).isEqualTo(1.0);
-        assertThat(((DoubleCell)value.getCell(5)).getDoubleValue()).isEqualTo(2.0);
-        assertThat(((DoubleCell)value.getCell(3)).getDoubleValue()).isEqualTo(3.0);
-        assertThat(((DoubleCell)value.getCell(1)).getDoubleValue()).isEqualTo(4.0);
-        assertThat(((DoubleCell)value.getCell(0)).getDoubleValue()).isEqualTo(5.0);
-        assertThat(((DoubleCell)value.getCell(4)).getDoubleValue()).isEqualTo(6.0);
+        assertThat(((BooleanCell)value.getCell(2)).getBooleanValue()).isEqualTo(true);
+        assertThat(((StringCell)value.getCell(5)).getStringValue()).isEqualTo("Bar");
+        assertThat(((StringCell)value.getCell(3)).getStringValue()).isEqualTo("Foo");
+        assertThat(((IntCell)value.getCell(7)).getIntValue()).isEqualTo(2);
     }
 
     private PitestEntry createPitestEntry(final String mutationStatus, final boolean detection, final String sourceFile, final String mutatedClass, 
