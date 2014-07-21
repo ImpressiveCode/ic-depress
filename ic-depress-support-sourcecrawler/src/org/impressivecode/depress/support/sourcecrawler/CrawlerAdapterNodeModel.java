@@ -36,6 +36,7 @@ import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
@@ -45,30 +46,62 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * 
  */
 public class CrawlerAdapterNodeModel extends NodeModel {
-
+	
     private static final String DEFAULT_VALUE = "";
     private static final String CONFIG_NAME = "depress.sourcecrawler.confname";
-
-    private final SettingsModelString fileSettings = createFileSettings();
-    private final CrawlerEntriesParser parser = new CrawlerEntriesParser();
-
+    
+    private static final String PUBLIC = "depress.sourcecrawler.public";
+    private static final String PRIVATE = "depress.sourcecrawler.private";
+    private static final String PROTECTED = "depress.sourcecrawler.protected";
+    private static final String PACKAGE = "depress.sourcecrawler.package";
+    private static final String CLASS = "depress.sourcecrawler.class";
+    private static final String INTERFACE = "depress.sourcecrawler.interface";
+    private static final String ABSTRACT = "depress.sourcecrawler.abstract";
+    private static final String ENUM = "depress.sourcecrawler.enum";
+    private static final String EXCEPTION = "depress.sourcecrawler.exception";
+    private static final String INNER = "depress.sourcecrawler.inner";
+    private static final String TEST = "depress.sourcecrawler.test";
+    private static final String FINAL = "depress.sourcecrawler.final"; 
+    
+	private final SettingsModelString fileSettings = createFileSettings();
+    private final SettingsModelBoolean booleanPublic = createSettingsModelPublic();
+    private final SettingsModelBoolean booleanPrivate = createSettingsModelPrivate();
+    private final SettingsModelBoolean booleanProtected = createSettingsModelProtected();
+    private final SettingsModelBoolean booleanPackage = createSettingsModelPackage();
+    private final SettingsModelBoolean booleanClass = createSettingsModelClass();
+    private final SettingsModelBoolean booleanInterface = createSettingsModelInterface();
+    private final SettingsModelBoolean booleanAbstract = createSettingsModelAbstract();
+    private final SettingsModelBoolean booleanEnum = createSettingsModelEnum();
+    private final SettingsModelBoolean booleanException = createSettingsModelException();
+    private final SettingsModelBoolean booleanInner = createSettingsModelInner();
+    private final SettingsModelBoolean booleanTest = createSettingsModelTest();
+    private final SettingsModelBoolean booleanFinal = createSettingsModelFinal();
+	
+    private final CrawlerEntriesParser entriesParser = new CrawlerEntriesParser();
+    
     protected CrawlerAdapterNodeModel() {
         super(0, 1);
     }
 
     @Override
-    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
-            throws Exception {
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
+    	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(booleanPublic.getBooleanValue(), 
+    			booleanPrivate.getBooleanValue(), booleanProtected.getBooleanValue(), booleanPackage.getBooleanValue(), 
+    			booleanClass.getBooleanValue(), booleanInterface.getBooleanValue(), booleanAbstract.getBooleanValue(), 
+    			booleanEnum.getBooleanValue(), booleanException.getBooleanValue(), booleanInner.getBooleanValue(), 
+    			booleanTest.getBooleanValue(), booleanFinal.getBooleanValue());
+    	
         String path = fileSettings.getStringValue();
         File file = new File(fileSettings.getStringValue());
         SourceCrawlerOutput result = null;
         if(file.isDirectory()){
-        	result = parser.parseFromExecutableJar(path);
+        	result = entriesParser.parseFromExecutableJar(path);
         }
         else if(file.isFile()){
-        	result = parser.parseFromXML(path);
+        	result = entriesParser.parseFromXML(path);
         } else 
         	throw new IOException("Path does not point at any file or directory");
+        result = optionsParser.checkRequirements(result);
         BufferedDataContainer container = createDataContainer(exec);
         BufferedDataTable out = transformIntoTable(container, result, exec);
         return new BufferedDataTable[] { out };
@@ -89,7 +122,7 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     	int size = sourceFiles.size();
     	for(int i = 0; i < size; i++){
             progress(exec, size, i);
-        	List<Clazz> clazzes = parser.parseClassesFromFile(sourceFiles.get(i));
+        	List<Clazz> clazzes = entriesParser.parseClassesFromFile(sourceFiles.get(i));
             addClassesToDatatable(container, sourceFiles.get(i), clazzes, counter);
         }
     }
@@ -97,13 +130,15 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     private void addClassesToDatatable(final BufferedDataContainer container, final SourceFile sourceFile,
             final List<Clazz> classesInSource, AtomicInteger counter) {
         for (Clazz clazz : classesInSource) {
-            addRowToTable(container, Long.toString(counter.getAndIncrement()), clazz.getName(), clazz.getAccess(), clazz.getType(), clazz.isException(), clazz.isInner(),
+            addRowToTable(container, Long.toString(counter.getAndIncrement()), clazz.getName(),
+            		clazz.getAccess(), clazz.getType(), clazz.isException(), clazz.isInner(),
             		clazz.isTest(), clazz.isFinal(), sourceFile.getSourcePackage(), sourceFile.getPath());
         }
     }
 
-    private void addRowToTable(final BufferedDataContainer container, final String counter, final String name, final String type, String access, final boolean exception,
-            final boolean inner, final boolean test, boolean finals, final String sourcePackage, final String path) {
+    private void addRowToTable(final BufferedDataContainer container, final String counter, final String name,
+    		final String type, String access, final boolean exception, final boolean inner, final boolean test,
+    		boolean finals, final String sourcePackage, final String path) {
         container.addRowToTable(createTableRow(counter, name, access, type, exception, inner, test, finals, sourcePackage, path));
     }
 
@@ -118,10 +153,6 @@ public class CrawlerAdapterNodeModel extends NodeModel {
         return container;
     }
 
-    public SettingsModelString createFileSettings() {
-        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
-    }
-    
     @Override
     protected void reset() {
     }
@@ -133,17 +164,53 @@ public class CrawlerAdapterNodeModel extends NodeModel {
 
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
-        fileSettings.saveSettingsTo(settings);
+    	fileSettings.saveSettingsTo(settings);
+        booleanPublic.saveSettingsTo(settings);
+        booleanPrivate.saveSettingsTo(settings);
+        booleanProtected.saveSettingsTo(settings);
+        booleanPackage.saveSettingsTo(settings);
+        booleanClass.saveSettingsTo(settings);
+        booleanInterface.saveSettingsTo(settings);
+        booleanAbstract.saveSettingsTo(settings);
+        booleanEnum.saveSettingsTo(settings);
+        booleanException.saveSettingsTo(settings);
+        booleanInner.saveSettingsTo(settings);
+        booleanTest.saveSettingsTo(settings);
+        booleanFinal.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.loadSettingsFrom(settings);
+    	fileSettings.loadSettingsFrom(settings);
+        booleanPublic.loadSettingsFrom(settings);
+        booleanPrivate.loadSettingsFrom(settings);
+        booleanProtected.loadSettingsFrom(settings);
+        booleanPackage.loadSettingsFrom(settings);
+        booleanClass.loadSettingsFrom(settings);
+        booleanInterface.loadSettingsFrom(settings);
+        booleanAbstract.loadSettingsFrom(settings);
+        booleanEnum.loadSettingsFrom(settings);
+        booleanException.loadSettingsFrom(settings);
+        booleanInner.loadSettingsFrom(settings);
+        booleanTest.loadSettingsFrom(settings);
+        booleanFinal.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.validateSettings(settings);
+    	fileSettings.validateSettings(settings);
+        booleanPublic.validateSettings(settings);
+        booleanPrivate.validateSettings(settings);
+        booleanProtected.validateSettings(settings);
+        booleanPackage.validateSettings(settings);
+        booleanClass.validateSettings(settings);
+        booleanInterface.validateSettings(settings);
+        booleanAbstract.validateSettings(settings);
+        booleanEnum.validateSettings(settings);
+        booleanException.validateSettings(settings);
+        booleanInner.validateSettings(settings);
+        booleanTest.validateSettings(settings);
+        booleanFinal.validateSettings(settings);
     }
 
     @Override
@@ -157,4 +224,46 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     CanceledExecutionException {
         // NOOP
     }
+    
+    static SettingsModelString createFileSettings() {
+        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
+    }
+    
+    static SettingsModelBoolean createSettingsModelPublic() {
+        return new SettingsModelBoolean(PUBLIC, true);
+    }
+    static SettingsModelBoolean createSettingsModelPrivate() {
+        return new SettingsModelBoolean(PRIVATE, true);
+    }
+    static SettingsModelBoolean createSettingsModelProtected() {
+        return new SettingsModelBoolean(PROTECTED, true);
+    }
+    static SettingsModelBoolean createSettingsModelPackage() {
+        return new SettingsModelBoolean(PACKAGE, true);
+    }
+    static SettingsModelBoolean createSettingsModelClass() {
+        return new SettingsModelBoolean(CLASS, true);
+    }
+    static SettingsModelBoolean createSettingsModelInterface() {
+        return new SettingsModelBoolean(INTERFACE, true);
+    }
+    static SettingsModelBoolean createSettingsModelAbstract() {
+        return new SettingsModelBoolean(ABSTRACT, true);
+    }
+    static SettingsModelBoolean createSettingsModelEnum() {
+        return new SettingsModelBoolean(ENUM, true);
+    }
+    static SettingsModelBoolean createSettingsModelException() {
+        return new SettingsModelBoolean(EXCEPTION, true);
+    }
+    static SettingsModelBoolean createSettingsModelInner() {
+        return new SettingsModelBoolean(INNER, true);
+    }
+    static SettingsModelBoolean createSettingsModelTest() {
+        return new SettingsModelBoolean(TEST, true);
+    }
+    static SettingsModelBoolean createSettingsModelFinal() {
+        return new SettingsModelBoolean(FINAL, true);
+    }
+    
 }

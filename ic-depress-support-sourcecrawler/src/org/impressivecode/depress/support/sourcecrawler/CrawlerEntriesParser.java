@@ -72,13 +72,13 @@ public class CrawlerEntriesParser {
 
 	private Clazz parseJavaClazz(final JavaClazz javaClazz){
 		Clazz clazz = new Clazz();
-		clazz.setAccess(javaClazz.getClassAccess().toString());
-		clazz.setException(javaClazz.isTest());
+		clazz.setAccess(javaClazz.getClassAccess().getAccess());
+		clazz.setException(javaClazz.isException());
 		clazz.setFinal(javaClazz.isFinal());
 		clazz.setInner(javaClazz.isInner());
 		clazz.setName(javaClazz.getClassName());
 		clazz.setTest(javaClazz.isTest());
-		clazz.setType(javaClazz.getClassType().toString());
+		clazz.setType(javaClazz.getClassType().getName());
 		return clazz;
 	}
 	
