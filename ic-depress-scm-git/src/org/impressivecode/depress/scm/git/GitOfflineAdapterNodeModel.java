@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.scm.git;
 
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.scm.git.GitParserOptions.options;
+import static org.impressivecode.depress.scm.SCMParserOptions.options;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +28,8 @@ import java.util.List;
 import org.impressivecode.depress.common.OutputTransformer;
 import org.impressivecode.depress.scm.SCMAdapterTransformer;
 import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.scm.SCMExtensionsParser;
+import org.impressivecode.depress.scm.SCMParserOptions;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -87,9 +89,10 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
     	
         try {
             logger.info("Reading git logs from file " + this.gitFileName.getStringValue());
-            ArrayList<String> userExtensions = getExtensions(); 
+            SCMExtensionsParser extensionsParser = new SCMExtensionsParser();
+            ArrayList<String> userExtensions = extensionsParser.parseExtensions(extensions.getStringValue()); 
             String packageNameToFilter = Strings.emptyToNull(gitPackageName.getStringValue());
-            GitParserOptions parserOptions = options(packageNameToFilter, userExtensions, ""); //empty branch name
+            SCMParserOptions parserOptions = options(packageNameToFilter, userExtensions);
             GitOfflineLogParser parser = new GitOfflineLogParser(parserOptions);
             List<GitCommit> commits = parser.parseEntries(this.gitFileName.getStringValue());
             logger.info("Reading git logs finished");
@@ -100,7 +103,6 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
         	logger.error("Unable to parse git entries", ex);
             throw ex;
         }
-
     }
 
 	@Override
@@ -173,20 +175,4 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
     private void progress(final ExecutionContext exec) throws CanceledExecutionException {
         exec.checkCanceled();
     }
-    
-    // parsing user's extensions into a list
-  	private ArrayList<String> getExtensions() {
-  		String ext = extensions.getStringValue();
-  		String[] ext_ = ext.split("\\s*,\\s*");
-  		ArrayList<String> arr = new ArrayList<String>();
-  		for(String word : ext_){
-  			if(word.equals("*")){
-  				arr = new ArrayList<String>();
-  				arr.add("*");
-  				break;
-  			}
-  			arr.add(word);
-  		}
-  		return arr;
-  	}
 }

@@ -30,6 +30,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
+import org.impressivecode.depress.scm.SCMExtensionsParser;
+import org.impressivecode.depress.scm.SCMParserOptions;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
@@ -52,9 +54,9 @@ import com.google.common.io.LineProcessor;
  * @author Maciej Borkowski, Capgemini Poland
  */
 public class GitOfflineLogParser {
-    final GitParserOptions parserOptions;
+    final SCMParserOptions parserOptions;
     
-    public GitOfflineLogParser(final GitParserOptions parserOptions) {
+    public GitOfflineLogParser(final SCMParserOptions parserOptions) {
         this.parserOptions = checkNotNull(parserOptions, "Options has to be set");
     }
 	
@@ -75,12 +77,12 @@ public class GitOfflineLogParser {
                 .compile("^:\\d{6} \\d{6} [a-f0-9]{40} [a-f0-9]{40} (A|C|D|M|R|T)\t(.*)$");
 
         final ImmutableList.Builder<GitCommit> builder = ImmutableList.builder();
-        private GitParserOptions options;
+        private SCMParserOptions options;
         private GitCommit commit;
         private LEXER nextStep = LEXER.HASH;
         private long counter = 0;
 
-        public GitLineProcessor(final GitParserOptions options) {
+        public GitLineProcessor(final SCMParserOptions options) {
             this.options = options;
         }
 
@@ -167,28 +169,20 @@ public class GitOfflineLogParser {
             String transformed = origin.replaceAll("/", ".");
             
             String parseJavaClass = "";
-        	for(String ext : options.getExtensionsNamesToFilter()){
-        		if(ext == "*" || transformed.endsWith(ext)){
-        			if(transformed.endsWith(".java")){
-        				if(packagePrefixValidate(transformed)){
-        					parseJavaClass = parseJavaClass(transformed);
-        				}
-        				else{
-        					break;
-        				}
-        			}
-        			else{
-        				parseJavaClass = "";
-        			}
-					GitCommitFile gitFile = new GitCommitFile();
-                    gitFile.setRawOperation(operationCode.charAt(0));
-                    gitFile.setPath(origin);
-                    gitFile.setExtension(FilenameUtils.getExtension(transformed));
-                    gitFile.setJavaClass(parseJavaClass);
-        			this.commit.getFiles().add(gitFile);
-        			break;
-        		}
-        	}
+            SCMExtensionsParser parser = new SCMExtensionsParser();
+            if(parser.extensionFits(transformed, options.getExtensionsNamesToFilter())){
+            	if(transformed.endsWith(".java")){
+    				if(packagePrefixValidate(transformed)){
+    					parseJavaClass = parseJavaClass(transformed);
+    				}
+    			}
+				GitCommitFile gitFile = new GitCommitFile();
+                gitFile.setRawOperation(operationCode.charAt(0));
+                gitFile.setPath(origin);
+                gitFile.setExtension(FilenameUtils.getExtension(transformed));
+                gitFile.setJavaClass(parseJavaClass);
+    			commit.getFiles().add(gitFile);
+            }
         }
 
         private boolean packagePrefixValidate(final String path) {

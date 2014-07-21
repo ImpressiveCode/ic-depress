@@ -1,19 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./crawler.png" type="Source">
-	<name>Sourcecrawler Adapter</name>
+	<name>SourceCrawler Adapter</name>
 
 	<shortDescription>
+		SourceCrawler, ImpressiveCode Depress
 	</shortDescription>
 
 	<fullDescription>
 		<intro>
-			
+			  This node can be used to load java classes from a file (output from Maven plugin SourceCrawler)
+            or load them directly from directory.<br />
+            <p>
+                To create xml file from standalone version of SourceCrawler you can use command 
+                java -jar sourcecrawler.jar -i ./dir/to/scan -o ./dir/output.xml
+                You can find sourcecrawler.jar in lib directory of this plugin.
+                For more information visit https://github.com/ImpressiveCode/ic-utils.
+            </p>
+            <p>
+                This node analyzes information about every class in every .java file from the given directory
+                 or xml file which has been found by SourceCrawler and returns a table with the following data: <br />
+                <ul>
+                    <li>Class name</li>
+					<li>Package</li>
+                    <li>Class access</li>
+                    <li>Class type</li>
+                    <li>Does class represent an exception</li>
+                    <li>Is the class inside another</li>
+                    <li>Is this a class used for testing</li>
+                    <li>Is this class final</li>
+                    <li>File path</li>
+                </ul>
+            </p>
 		</intro>
-		
 	</fullDescription>
 
 	<ports>
-		
+		<outPort index="0" name="Java classes">Table with Java classes with their properties</outPort>
 	</ports>
 </knimeNode>

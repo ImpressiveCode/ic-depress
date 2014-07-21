@@ -24,6 +24,7 @@ import static org.impressivecode.depress.support.sourcecrawler.CrawlerAdapterTab
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
@@ -35,106 +36,110 @@ import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * 
  * @author Pawel Nosal, ImpressiveCode
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public class CrawlerAdapterNodeModel extends NodeModel {
-
+	
     private static final String DEFAULT_VALUE = "";
-
     private static final String CONFIG_NAME = "depress.sourcecrawler.confname";
-
-    private final SettingsModelString fileSettings = createFileSettings();
-
+    
+    private static final String PUBLIC = "depress.sourcecrawler.public";
+    private static final String PRIVATE = "depress.sourcecrawler.private";
+    private static final String PROTECTED = "depress.sourcecrawler.protected";
+    private static final String PACKAGE = "depress.sourcecrawler.package";
+    private static final String CLASS = "depress.sourcecrawler.class";
+    private static final String INTERFACE = "depress.sourcecrawler.interface";
+    private static final String ABSTRACT = "depress.sourcecrawler.abstract";
+    private static final String ENUM = "depress.sourcecrawler.enum";
+    private static final String EXCEPTION = "depress.sourcecrawler.exception";
+    private static final String INNER = "depress.sourcecrawler.inner";
+    private static final String TEST = "depress.sourcecrawler.test";
+    private static final String FINAL = "depress.sourcecrawler.final"; 
+    
+	private final SettingsModelString fileSettings = createFileSettings();
+    private final SettingsModelBoolean booleanPublic = createSettingsModelPublic();
+    private final SettingsModelBoolean booleanPrivate = createSettingsModelPrivate();
+    private final SettingsModelBoolean booleanProtected = createSettingsModelProtected();
+    private final SettingsModelBoolean booleanPackage = createSettingsModelPackage();
+    private final SettingsModelBoolean booleanClass = createSettingsModelClass();
+    private final SettingsModelBoolean booleanInterface = createSettingsModelInterface();
+    private final SettingsModelBoolean booleanAbstract = createSettingsModelAbstract();
+    private final SettingsModelBoolean booleanEnum = createSettingsModelEnum();
+    private final SettingsModelBoolean booleanException = createSettingsModelException();
+    private final SettingsModelBoolean booleanInner = createSettingsModelInner();
+    private final SettingsModelBoolean booleanTest = createSettingsModelTest();
+    private final SettingsModelBoolean booleanFinal = createSettingsModelFinal();
+	
+    private final CrawlerEntriesParser entriesParser = new CrawlerEntriesParser();
+    
     protected CrawlerAdapterNodeModel() {
         super(0, 1);
     }
 
     @Override
-    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
-            throws Exception {
-        CrawlerEntriesParser entriesParser = new CrawlerEntriesParser();
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
+    	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(booleanPublic.getBooleanValue(), 
+    			booleanPrivate.getBooleanValue(), booleanProtected.getBooleanValue(), booleanPackage.getBooleanValue(), 
+    			booleanClass.getBooleanValue(), booleanInterface.getBooleanValue(), booleanAbstract.getBooleanValue(), 
+    			booleanEnum.getBooleanValue(), booleanException.getBooleanValue(), booleanInner.getBooleanValue(), 
+    			booleanTest.getBooleanValue(), booleanFinal.getBooleanValue());
+    	
+        String path = fileSettings.getStringValue();
+        File file = new File(fileSettings.getStringValue());
+        SourceCrawlerOutput result = null;
+        if(file.isDirectory()){
+        	result = entriesParser.parseFromExecutableJar(path);
+        }
+        else if(file.isFile()){
+        	result = entriesParser.parseFromXML(path);
+        } else 
+        	throw new IOException("Path does not point at any file or directory");
+        result = optionsParser.checkRequirements(result);
         BufferedDataContainer container = createDataContainer(exec);
-        SourceCrawlerOutput result = entriesParser.parseSourceCrawlerResult(fileSettings.getStringValue());
-        BufferedDataTable out = transform(container, result, exec);
-
+        BufferedDataTable out = transformIntoTable(container, result, exec);
         return new BufferedDataTable[] { out };
     }
 
-    @Override
-    protected void reset() {
-    }
-
-    @Override
-    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
-        return createTableSpec();
-    }
-
-    @Override
-    protected void saveSettingsTo(final NodeSettingsWO settings) {
-        fileSettings.saveSettingsTo(settings);
-    }
-
-    @Override
-    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.loadSettingsFrom(settings);
-    }
-
-    @Override
-    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.validateSettings(settings);
-    }
-
-    @Override
-    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
-        // NOOP
-    }
-
-    @Override
-    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
-        // NOOP
-    }
-
-    private BufferedDataTable transform(final BufferedDataContainer container, final SourceCrawlerOutput classes,
+    private BufferedDataTable transformIntoTable(final BufferedDataContainer container, final SourceCrawlerOutput classes,
             final ExecutionContext exec) throws CanceledExecutionException {
         List<SourceFile> sourceFiles = classes.getSourceFiles();
-        int size = sourceFiles.size();
-        fillTable(container, exec, sourceFiles, size);
+        fillTable(container, exec, sourceFiles);
         container.close();
         BufferedDataTable out = container.getTable();
         return out;
     }
 
     private void fillTable(final BufferedDataContainer container, final ExecutionContext exec,
-            final List<SourceFile> sourceFiles, final int size) throws CanceledExecutionException {
-        for (int i = 0; i < size; i++) {
+            final List<SourceFile> sourceFiles) throws CanceledExecutionException {
+    	AtomicInteger counter = new AtomicInteger(0);
+    	int size = sourceFiles.size();
+    	for(int i = 0; i < size; i++){
             progress(exec, size, i);
-            SourceFile sourceFile = sourceFiles.get(i);
-            List<Clazz> classesInSource = sourceFile.getClasses();
-            addClassesToDatatable(container, sourceFile, classesInSource);
-
+        	List<Clazz> clazzes = entriesParser.parseClassesFromFile(sourceFiles.get(i));
+            addClassesToDatatable(container, sourceFiles.get(i), clazzes, counter);
         }
     }
 
     private void addClassesToDatatable(final BufferedDataContainer container, final SourceFile sourceFile,
-            final List<Clazz> classesInSource) {
+            final List<Clazz> classesInSource, AtomicInteger counter) {
         for (Clazz clazz : classesInSource) {
-
-            addRowToTable(container, sourceFile.getSourcePackage() + "." + clazz.getName(), clazz.getName(),
-                    clazz.getType(), clazz.isException(), clazz.isInner(), clazz.isTest(),
-                    sourceFile.getSourcePackage(), sourceFile.getPath());
+            addRowToTable(container, Long.toString(counter.getAndIncrement()), clazz.getName(),
+            		clazz.getAccess(), clazz.getType(), clazz.isException(), clazz.isInner(),
+            		clazz.isTest(), clazz.isFinal(), sourceFile.getSourcePackage(), sourceFile.getPath());
         }
     }
 
-    private void addRowToTable(final BufferedDataContainer container, final String id, final String name, final String type, final boolean exception,
-            final boolean inner, final boolean test, final String sourcePackage, final String path) {
-        container.addRowToTable(createTableRow(id, name, type, exception, inner, test, sourcePackage, path));
+    private void addRowToTable(final BufferedDataContainer container, final String counter, final String name,
+    		final String type, String access, final boolean exception, final boolean inner, final boolean test,
+    		boolean finals, final String sourcePackage, final String path) {
+        container.addRowToTable(createTableRow(counter, name, access, type, exception, inner, test, finals, sourcePackage, path));
     }
 
     private void progress(final ExecutionContext exec, final int size, final int i) throws CanceledExecutionException {
@@ -148,7 +153,117 @@ public class CrawlerAdapterNodeModel extends NodeModel {
         return container;
     }
 
-    public SettingsModelString createFileSettings() {
+    @Override
+    protected void reset() {
+    }
+
+    @Override
+    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
+        return createTableSpec();
+    }
+
+    @Override
+    protected void saveSettingsTo(final NodeSettingsWO settings) {
+    	fileSettings.saveSettingsTo(settings);
+        booleanPublic.saveSettingsTo(settings);
+        booleanPrivate.saveSettingsTo(settings);
+        booleanProtected.saveSettingsTo(settings);
+        booleanPackage.saveSettingsTo(settings);
+        booleanClass.saveSettingsTo(settings);
+        booleanInterface.saveSettingsTo(settings);
+        booleanAbstract.saveSettingsTo(settings);
+        booleanEnum.saveSettingsTo(settings);
+        booleanException.saveSettingsTo(settings);
+        booleanInner.saveSettingsTo(settings);
+        booleanTest.saveSettingsTo(settings);
+        booleanFinal.saveSettingsTo(settings);
+    }
+
+    @Override
+    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+    	fileSettings.loadSettingsFrom(settings);
+        booleanPublic.loadSettingsFrom(settings);
+        booleanPrivate.loadSettingsFrom(settings);
+        booleanProtected.loadSettingsFrom(settings);
+        booleanPackage.loadSettingsFrom(settings);
+        booleanClass.loadSettingsFrom(settings);
+        booleanInterface.loadSettingsFrom(settings);
+        booleanAbstract.loadSettingsFrom(settings);
+        booleanEnum.loadSettingsFrom(settings);
+        booleanException.loadSettingsFrom(settings);
+        booleanInner.loadSettingsFrom(settings);
+        booleanTest.loadSettingsFrom(settings);
+        booleanFinal.loadSettingsFrom(settings);
+    }
+
+    @Override
+    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+    	fileSettings.validateSettings(settings);
+        booleanPublic.validateSettings(settings);
+        booleanPrivate.validateSettings(settings);
+        booleanProtected.validateSettings(settings);
+        booleanPackage.validateSettings(settings);
+        booleanClass.validateSettings(settings);
+        booleanInterface.validateSettings(settings);
+        booleanAbstract.validateSettings(settings);
+        booleanEnum.validateSettings(settings);
+        booleanException.validateSettings(settings);
+        booleanInner.validateSettings(settings);
+        booleanTest.validateSettings(settings);
+        booleanFinal.validateSettings(settings);
+    }
+
+    @Override
+    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+    CanceledExecutionException {
+        // NOOP
+    }
+
+    @Override
+    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+    CanceledExecutionException {
+        // NOOP
+    }
+    
+    static SettingsModelString createFileSettings() {
         return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
     }
+    
+    static SettingsModelBoolean createSettingsModelPublic() {
+        return new SettingsModelBoolean(PUBLIC, true);
+    }
+    static SettingsModelBoolean createSettingsModelPrivate() {
+        return new SettingsModelBoolean(PRIVATE, true);
+    }
+    static SettingsModelBoolean createSettingsModelProtected() {
+        return new SettingsModelBoolean(PROTECTED, true);
+    }
+    static SettingsModelBoolean createSettingsModelPackage() {
+        return new SettingsModelBoolean(PACKAGE, true);
+    }
+    static SettingsModelBoolean createSettingsModelClass() {
+        return new SettingsModelBoolean(CLASS, true);
+    }
+    static SettingsModelBoolean createSettingsModelInterface() {
+        return new SettingsModelBoolean(INTERFACE, true);
+    }
+    static SettingsModelBoolean createSettingsModelAbstract() {
+        return new SettingsModelBoolean(ABSTRACT, true);
+    }
+    static SettingsModelBoolean createSettingsModelEnum() {
+        return new SettingsModelBoolean(ENUM, true);
+    }
+    static SettingsModelBoolean createSettingsModelException() {
+        return new SettingsModelBoolean(EXCEPTION, true);
+    }
+    static SettingsModelBoolean createSettingsModelInner() {
+        return new SettingsModelBoolean(INNER, true);
+    }
+    static SettingsModelBoolean createSettingsModelTest() {
+        return new SettingsModelBoolean(TEST, true);
+    }
+    static SettingsModelBoolean createSettingsModelFinal() {
+        return new SettingsModelBoolean(FINAL, true);
+    }
+    
 }
