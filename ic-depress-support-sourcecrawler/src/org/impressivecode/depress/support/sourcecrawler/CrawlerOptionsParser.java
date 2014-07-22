@@ -50,13 +50,14 @@ public class CrawlerOptionsParser {
     private boolean booleanInner;
     private boolean booleanTest;
     private boolean booleanFinal;
+	private String packageSettings;
     
     public CrawlerOptionsParser(boolean booleanPublic, boolean booleanPrivate,
 			boolean booleanProtected, boolean booleanPackage,
 			boolean booleanClass, boolean booleanInterface,
 			boolean booleanAbstract, boolean booleanEnum,
 			boolean booleanException, boolean booleanInner,
-			boolean booleanTest, boolean booleanFinal) {
+			boolean booleanTest, boolean booleanFinal, String packageSettings) {
 		super();
 		
 		this.booleanPublic = booleanPublic;
@@ -71,11 +72,16 @@ public class CrawlerOptionsParser {
 		this.booleanInner = booleanInner;
 		this.booleanTest = booleanTest;
 		this.booleanFinal = booleanFinal;
+		this.packageSettings = packageSettings;
 	}
 
     public SourceCrawlerOutput checkRequirements(SourceCrawlerOutput input){
     	for (Iterator<SourceFile> fileIterator =  input.getSourceFiles().iterator(); fileIterator.hasNext(); ){
     		SourceFile file = fileIterator.next();
+    		if(!checkPackage(file.getSourcePackage())){
+    			fileIterator.remove();
+    			continue;
+    		}
     	    for (Iterator<Clazz> clazzIterator = file.getClasses().iterator(); clazzIterator.hasNext(); )
     			if(!checkClazz(clazzIterator.next())){
     				clazzIterator.remove();
@@ -87,7 +93,7 @@ public class CrawlerOptionsParser {
     	return input;
     }
     
-    private boolean checkClazz(Clazz clazz){
+    private boolean checkClazz(final Clazz clazz){
     	if(!checkAccess(clazz.getAccess())) return false;
     	if(!checkType(clazz.getType())) return false;
     	if(!booleanException && clazz.isException()) return false;
@@ -97,7 +103,7 @@ public class CrawlerOptionsParser {
     	return true;
     }
    
-    private boolean checkAccess(String access){
+    private boolean checkAccess(final String access){
     	if(access.equals(PUBLIC) && booleanPublic) return true;
     	if(access.equals(PRIVATE) && booleanPrivate) return true;
     	if(access.equals(PROTECTED) && booleanProtected) return true;
@@ -105,12 +111,16 @@ public class CrawlerOptionsParser {
     	return false;
     }
     
-    private boolean checkType(String type){
+    private boolean checkType(final String type){
     	if(type.equals(CLASS) && booleanClass) return true;
     	if(type.equals(INTERFACE) && booleanInterface) return true;
     	if(type.equals(ABSTRACT) && booleanAbstract) return true;
     	if(type.equals(ENUM) && booleanEnum) return true;
     	return false;
+    }
+    
+    private boolean checkPackage(final String packageName) {
+    	return packageName.contains(packageSettings);
     }
        
 }

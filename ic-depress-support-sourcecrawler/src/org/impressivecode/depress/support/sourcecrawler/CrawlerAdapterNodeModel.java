@@ -47,13 +47,16 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  */
 public class CrawlerAdapterNodeModel extends NodeModel {
 	
-    private static final String DEFAULT_VALUE = "";
-    private static final String CONFIG_NAME = "depress.sourcecrawler.confname";
+    private static final String FILE_DEFAULT_VALUE = "";
+    private static final String PACKAGE_DEFAULT_VALUE = "org.";
     
+    private static final String FILE_NAME = "depress.sourcecrawler.file";
+    private static final String PACKAGE_NAME = "depress.sourcecrawler.package";
+    private static final String CREATE_XML = "depress.sourcecrawler.xml";
     private static final String PUBLIC = "depress.sourcecrawler.public";
     private static final String PRIVATE = "depress.sourcecrawler.private";
     private static final String PROTECTED = "depress.sourcecrawler.protected";
-    private static final String PACKAGE = "depress.sourcecrawler.package";
+    private static final String PACKAGE = "depress.sourcecrawler.packageprivate";
     private static final String CLASS = "depress.sourcecrawler.class";
     private static final String INTERFACE = "depress.sourcecrawler.interface";
     private static final String ABSTRACT = "depress.sourcecrawler.abstract";
@@ -61,9 +64,11 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     private static final String EXCEPTION = "depress.sourcecrawler.exception";
     private static final String INNER = "depress.sourcecrawler.inner";
     private static final String TEST = "depress.sourcecrawler.test";
-    private static final String FINAL = "depress.sourcecrawler.final"; 
-    
+    private static final String FINAL = "depress.sourcecrawler.final";
+	
 	private final SettingsModelString fileSettings = createFileSettings();
+	private final SettingsModelString packageSettings = createPackageSettings();
+	private final SettingsModelBoolean createXML = createXMLSettings();
     private final SettingsModelBoolean booleanPublic = createSettingsModelPublic();
     private final SettingsModelBoolean booleanPrivate = createSettingsModelPrivate();
     private final SettingsModelBoolean booleanProtected = createSettingsModelProtected();
@@ -89,13 +94,13 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     			booleanPrivate.getBooleanValue(), booleanProtected.getBooleanValue(), booleanPackage.getBooleanValue(), 
     			booleanClass.getBooleanValue(), booleanInterface.getBooleanValue(), booleanAbstract.getBooleanValue(), 
     			booleanEnum.getBooleanValue(), booleanException.getBooleanValue(), booleanInner.getBooleanValue(), 
-    			booleanTest.getBooleanValue(), booleanFinal.getBooleanValue());
+    			booleanTest.getBooleanValue(), booleanFinal.getBooleanValue(), packageSettings.getStringValue());
     	
         String path = fileSettings.getStringValue();
         File file = new File(fileSettings.getStringValue());
         SourceCrawlerOutput result = null;
         if(file.isDirectory()){
-        	result = entriesParser.parseFromExecutableJar(path);
+       		result = entriesParser.parseFromExecutableJar(path, createXML.getBooleanValue());
         }
         else if(file.isFile()){
         	result = entriesParser.parseFromXML(path);
@@ -165,6 +170,8 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
     	fileSettings.saveSettingsTo(settings);
+    	packageSettings.saveSettingsTo(settings);
+    	createXML.saveSettingsTo(settings);
         booleanPublic.saveSettingsTo(settings);
         booleanPrivate.saveSettingsTo(settings);
         booleanProtected.saveSettingsTo(settings);
@@ -182,6 +189,8 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
     	fileSettings.loadSettingsFrom(settings);
+    	packageSettings.loadSettingsFrom(settings);
+    	createXML.loadSettingsFrom(settings);
         booleanPublic.loadSettingsFrom(settings);
         booleanPrivate.loadSettingsFrom(settings);
         booleanProtected.loadSettingsFrom(settings);
@@ -199,6 +208,8 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
     	fileSettings.validateSettings(settings);
+    	packageSettings.validateSettings(settings);
+    	createXML.validateSettings(settings);
         booleanPublic.validateSettings(settings);
         booleanPrivate.validateSettings(settings);
         booleanProtected.validateSettings(settings);
@@ -226,9 +237,14 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     }
     
     static SettingsModelString createFileSettings() {
-        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
+        return new SettingsModelString(FILE_NAME, FILE_DEFAULT_VALUE);
     }
-    
+	static SettingsModelString createPackageSettings() {
+		return new SettingsModelString(PACKAGE_NAME, PACKAGE_DEFAULT_VALUE);
+	}
+	static SettingsModelBoolean createXMLSettings() {
+		return new SettingsModelBoolean(CREATE_XML, false);
+	}
     static SettingsModelBoolean createSettingsModelPublic() {
         return new SettingsModelBoolean(PUBLIC, true);
     }
@@ -265,5 +281,5 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     static SettingsModelBoolean createSettingsModelFinal() {
         return new SettingsModelBoolean(FINAL, true);
     }
-    
+   
 }
