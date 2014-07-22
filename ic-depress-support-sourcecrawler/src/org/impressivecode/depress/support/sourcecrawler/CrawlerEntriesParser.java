@@ -102,8 +102,7 @@ public class CrawlerEntriesParser {
 			throw new JAXBException("Could not parse file, unmarshaller failed");
 		}
         return result;
-    }
-    
+    }   
 
 	public List<Clazz> parseClassesFromFile(SourceFile sourceFile) {
 		return sourceFile.getClasses();

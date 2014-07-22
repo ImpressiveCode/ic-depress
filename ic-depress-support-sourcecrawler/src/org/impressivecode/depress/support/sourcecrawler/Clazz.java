@@ -85,7 +85,7 @@ public class Clazz {
 		return access;
 	}
 
-	public void setAccess(String access) {
+	public void setAccess(final String access) {
 		this.access = access;
 	}
 
@@ -94,7 +94,7 @@ public class Clazz {
 		return isFinal;
 	}
 
-	public void setFinal(boolean isFinal) {
+	public void setFinal(final boolean isFinal) {
 		this.isFinal = isFinal;
 	}
 
