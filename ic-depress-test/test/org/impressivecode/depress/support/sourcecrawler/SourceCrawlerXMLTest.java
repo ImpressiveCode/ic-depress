@@ -35,6 +35,18 @@ public class SourceCrawlerXMLTest {
     	CrawlerEntriesParser parser = new CrawlerEntriesParser();
     	output = parser.parseFromXML(testedFilePath);	
     }
+	
+    @Test(expected=JAXBException.class)
+    public void badPath() throws JAXBException{
+    	CrawlerEntriesParser parser = new CrawlerEntriesParser();
+    	output = parser.parseFromXML("doesnotexist");
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void noPath() throws JAXBException{
+    	CrawlerEntriesParser parser = new CrawlerEntriesParser();
+    	output = parser.parseFromXML("");
+    }
     
     @Test
     public void shouldParseNumberOfSources(){
@@ -42,7 +54,7 @@ public class SourceCrawlerXMLTest {
     	for(SourceFile f : output.getSourceFiles()){
 	    	number += f.getClasses().size();
     	}
-    	assertEquals(number, 293);
+    	assertEquals(number, 296);
     }
     
     @Test
@@ -100,6 +112,29 @@ public class SourceCrawlerXMLTest {
     	}
     	assertEquals(type, "Enum");
     }
-
+    	
+    @Test
+    public void shouldParseFiltered(){
+    	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(false, false, true, true, 
+    			true, false, true, false, false, true, true, true, "org.impressivecode.depress.scm");
+    	output = optionsParser.checkRequirements(output);
+    	int number = 0;
+    	for(SourceFile f : output.getSourceFiles()){
+	    	number += f.getClasses().size();
+    	}
+    	assertEquals(number, 40);
+    }
+    
+    @Test
+    public void shouldParseFiltered2(){
+    	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(true, true, false, false, 
+    			false, true, false, true, true, false, false, false, "org.");
+    	output = optionsParser.checkRequirements(output);
+    	int number = 0;
+    	for(SourceFile f : output.getSourceFiles()){
+	    	number += f.getClasses().size();
+    	}
+    	assertEquals(number, 3);
+    }
 
 }
