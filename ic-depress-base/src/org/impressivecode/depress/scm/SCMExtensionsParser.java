@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.scm;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,7 +41,7 @@ public class SCMExtensionsParser {
   		return arr;
   	}
 	
-	public boolean extensionFits(final String str, final ArrayList<String> extensions){
+	public boolean extensionFits(final String str, final List<String> extensions){
 		for (String extension : extensions) {
 			int idx = str.lastIndexOf(".");
 			if(idx == -1 && extension.equals(""))

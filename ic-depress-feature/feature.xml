@@ -8,6 +8,11 @@
    <description url="http://impressivecode.github.io/ic-depress/">
       Defect Prediction in Software Systems (DePress) Extensible Framework allows building workflows in graphical manner. DePress is based on the KNIME project. The main aim of the DePress Framework is support for empirical software analysis. It allows you to collect, combine and analyse data from various data sources like software repositories or software metrics.
    </description>
+
+   <copyright url="http://www.gnu.org/licenses/gpl.html/">
+      %copyright
+   </copyright>
+<licenses size='1'>
       <license url='http://www.gnu.org/licenses/gpl.html'>
          Preamble
 
@@ -190,9 +195,22 @@ If the disclaimer of warranty and limitation of liability provided above cannot 
 
 END OF TERMS AND CONDITIONS
       </license>
-    <copyright url='http://www.gnu.org/licenses/gpl.html/'>
-      %copyright
-    </copyright>
+      </licenses>
+   <requires>
+      <import plugin="org.eclipse.core.runtime" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.knime.workbench.core" version="2.8.0" match="greaterOrEqual"/>
+      <import plugin="org.knime.workbench.repository" version="2.8.0" match="greaterOrEqual"/>
+      <import plugin="org.knime.base" version="2.8.0" match="greaterOrEqual"/>
+      <import plugin="org.impressivecode.depress.base" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.knime.workbench" version="2.8.0" match="greaterOrEqual"/>
+      <import plugin="org.impressivecode.depress.support.matcher" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.impressivecode.depress.base" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.core.filesystem"/>
+      <import plugin="org.eclipse.team.core"/>
+      <import plugin="org.eclipse.team.ui"/>
+   </requires>
 
    <plugin
          id="org.impressivecode.depress.base"

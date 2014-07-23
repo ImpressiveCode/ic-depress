@@ -24,11 +24,13 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ListBranchCommand;
@@ -49,6 +51,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
+import org.impressivecode.depress.scm.SCMExtensionsParser;
 
 /**
  * 
@@ -204,33 +207,34 @@ public class GitOnlineLogParser {
             String[] commitId = this.revCommit.getId().toString().split(" ");
             this.analyzedCommit.setId(commitId[1]);
         }
-
+        
         private void parsePath(final Matcher matcher) {
             String operationCode = matcher.group(2);
             String origin = matcher.group(1);
             String transformed = origin.replaceAll("/", ".");
-
-            // only java classes
-            if (include(transformed)) {
-                GitCommitFile gitFile = new GitCommitFile();
+            
+            String parseJavaClass = "";
+            SCMExtensionsParser parser = new SCMExtensionsParser();
+            if(parser.extensionFits(transformed, Arrays.asList("*"))){
+            	if(transformed.endsWith(".java")){
+    				if(packagePrefixValidate(transformed)){
+    					parseJavaClass = parseJavaClass(transformed);
+    				}
+    			}
+				GitCommitFile gitFile = new GitCommitFile();
                 gitFile.setRawOperation(operationCode.charAt(0));
                 gitFile.setPath(origin);
-                gitFile.setJavaClass(parseJavaClass(transformed));
+                gitFile.setExtension(FilenameUtils.getExtension(transformed));
+                gitFile.setJavaClass(parseJavaClass);
                 this.analyzedCommit.getFiles().add(gitFile);
             }
         }
 
-        private boolean include(final String path) {
-            boolean java = path.endsWith(".java");
-            if (java) {
-                if (options.hasPackagePrefix()) {
-                    return path.indexOf(options.getPackagePrefix()) != -1;
-                } else {
-                    return true;
-                }
-            } else {
-                return false;
-            }
+        private boolean packagePrefixValidate(final String path) {
+			if(options.hasPackagePrefix()) {
+				return path.indexOf(options.getPackagePrefix()) != -1;
+			}
+			return false;
         }
 
         private String parseJavaClass(final String path) {
