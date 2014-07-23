@@ -9,7 +9,7 @@
 
 	<fullDescription>
 		<intro>
-			  This node can be used to load java classes from a file (output from Maven plugin SourceCrawler)
+			  This node can be used to load java classes from a file (output from Maven plugin SourceCrawler or this plugin - see advanced options)
             or load them directly from directory.<br />
             <p>
                 To create xml file from standalone version of SourceCrawler you can use command 
@@ -33,6 +33,12 @@
                 </ul>
             </p>
 		</intro>
+		
+        <option name="Selected File or Directory">Select a file from previous SourceCrawler use or a directory with java files</option>
+        <option name="Access and Type">Accept only classess of certain attriubutes</option>
+        <option name="Other">Accept classes described as Exception, Inner, Test or Final</option>
+        <option name="Package">Name of accepted java packages</option>
+        <option name="Create XML file">A file will be created, which can be used as input for SourceCrawler</option>
 	</fullDescription>
 
 	<ports>

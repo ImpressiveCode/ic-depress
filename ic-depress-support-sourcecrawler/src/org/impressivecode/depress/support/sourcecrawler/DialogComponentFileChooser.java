@@ -234,7 +234,7 @@ public class DialogComponentFileChooser extends DialogComponent {
         m_browseButton = new JButton("Browse...");
 
         final String title =
-            !fileOnly ? "Selected Directory:" : "Selected File:";
+            !fileOnly ? "Selected File or Directory:" : "Selected File:";
         m_border = BorderFactory.createTitledBorder(title);
         p.setBorder(m_border);
         p.add(m_fileComboBox);
