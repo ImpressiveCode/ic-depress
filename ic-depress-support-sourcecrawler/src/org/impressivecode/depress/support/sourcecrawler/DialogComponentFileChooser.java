@@ -94,6 +94,8 @@ import org.knime.core.util.SimpleFileFilter;
  * name.
  *
  * @author M. Berthold, University of Konstanz
+ * @author Maciej Borkowski, Capgemini Poland
+ * 
  */
 public class DialogComponentFileChooser extends DialogComponent {
 

@@ -117,7 +117,7 @@ public class SourceCrawlerXMLTest {
     public void shouldParseFiltered(){
     	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(false, false, true, true, 
     			true, false, true, false, false, true, true, true, "org.impressivecode.depress.scm");
-    	output = optionsParser.checkRequirements(output);
+    	optionsParser.checkRequirements(output);
     	int number = 0;
     	for(SourceFile f : output.getSourceFiles()){
 	    	number += f.getClasses().size();
@@ -129,7 +129,7 @@ public class SourceCrawlerXMLTest {
     public void shouldParseFiltered2(){
     	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(true, true, false, false, 
     			false, true, false, true, true, false, false, false, "org.");
-    	output = optionsParser.checkRequirements(output);
+    	optionsParser.checkRequirements(output);
     	int number = 0;
     	for(SourceFile f : output.getSourceFiles()){
 	    	number += f.getClasses().size();

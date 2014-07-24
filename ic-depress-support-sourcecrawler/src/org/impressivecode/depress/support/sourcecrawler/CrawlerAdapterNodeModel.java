@@ -90,12 +90,6 @@ public class CrawlerAdapterNodeModel extends NodeModel {
 
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
-    	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(booleanPublic.getBooleanValue(), 
-    			booleanPrivate.getBooleanValue(), booleanProtected.getBooleanValue(), booleanPackage.getBooleanValue(), 
-    			booleanClass.getBooleanValue(), booleanInterface.getBooleanValue(), booleanAbstract.getBooleanValue(), 
-    			booleanEnum.getBooleanValue(), booleanException.getBooleanValue(), booleanInner.getBooleanValue(), 
-    			booleanTest.getBooleanValue(), booleanFinal.getBooleanValue(), packageSettings.getStringValue());
-    	
         String path = fileSettings.getStringValue();
         File file = new File(fileSettings.getStringValue());
         SourceCrawlerOutput result = null;
@@ -106,13 +100,22 @@ public class CrawlerAdapterNodeModel extends NodeModel {
         	result = entriesParser.parseFromXML(path);
         } else 
         	throw new IOException("Path does not point at any file or directory");
-        result = optionsParser.checkRequirements(result);
+        optionsFilter(result);
         BufferedDataContainer container = createDataContainer(exec);
         BufferedDataTable out = transformIntoTable(container, result, exec);
         return new BufferedDataTable[] { out };
     }
 
-    private BufferedDataTable transformIntoTable(final BufferedDataContainer container, final SourceCrawlerOutput classes,
+    private void optionsFilter(SourceCrawlerOutput result) {
+        CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(booleanPublic.getBooleanValue(), 
+    			booleanPrivate.getBooleanValue(), booleanProtected.getBooleanValue(), booleanPackage.getBooleanValue(), 
+    			booleanClass.getBooleanValue(), booleanInterface.getBooleanValue(), booleanAbstract.getBooleanValue(), 
+    			booleanEnum.getBooleanValue(), booleanException.getBooleanValue(), booleanInner.getBooleanValue(), 
+    			booleanTest.getBooleanValue(), booleanFinal.getBooleanValue(), packageSettings.getStringValue());
+        optionsParser.checkRequirements(result);
+	}
+
+	private BufferedDataTable transformIntoTable(final BufferedDataContainer container, final SourceCrawlerOutput classes,
             final ExecutionContext exec) throws CanceledExecutionException {
         List<SourceFile> sourceFiles = classes.getSourceFiles();
         fillTable(container, exec, sourceFiles);

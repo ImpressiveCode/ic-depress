@@ -42,28 +42,27 @@ import org.impressivecode.utils.sourcecrawler.model.JavaFile;
  */
 public class CrawlerEntriesParser {
 
-	public SourceCrawlerOutput parseFromExecutableJar(final String path, boolean withXML) throws IOException, MojoExecutionException, JAXBException {
+	public SourceCrawlerOutput parseFromExecutableJar(final String path, boolean createXML) throws IOException, MojoExecutionException, JAXBException {
     	SourceCrawler sourceCrawler = new SourceCrawler();
-    	if(withXML){
+    	List<JavaFile> javaFiles;
+		try {
+			javaFiles = sourceCrawler.executeCleanly(path);
+		} catch (IOException e) {
+			throw new IOException("Could not find java files");
+		}
+    	if(createXML){
     		String output = new File(path).getName() + ".xml";
-    		sourceCrawler.execute(path, output);
-    		return parseFromXML(output);
+    		sourceCrawler.writeXMLDocument(javaFiles, output);
     	}
-    	else{
-	    	List<JavaFile> javaFiles;
-			try {
-				javaFiles = sourceCrawler.executeCleanly(path);
-			} catch (IOException e) {
-				throw new IOException("Could not find java files");
-			}
-	    	SourceCrawlerOutput result = new SourceCrawlerOutput();
-	    	ArrayList<SourceFile> sourceFiles = new ArrayList<SourceFile>();
-	    	for(JavaFile javaFile : javaFiles){
-	    		 sourceFiles.add(parseJavaFile(javaFile));
-	    	}
-	    	result.setSourceFiles(sourceFiles);
-	    	return result;
+    	
+    	SourceCrawlerOutput result = new SourceCrawlerOutput();
+    	ArrayList<SourceFile> sourceFiles = new ArrayList<SourceFile>();
+    	for(JavaFile javaFile : javaFiles){
+    		 sourceFiles.add(parseJavaFile(javaFile));
     	}
+    	result.setSourceFiles(sourceFiles);
+    	
+    	return result;
 	}
 	
 	private SourceFile parseJavaFile(final JavaFile javaFile) {

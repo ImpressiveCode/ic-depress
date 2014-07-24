@@ -75,7 +75,7 @@ public class CrawlerOptionsParser {
 		this.packageSettings = packageSettings;
 	}
 
-    public SourceCrawlerOutput checkRequirements(SourceCrawlerOutput input){
+	public void checkRequirements(SourceCrawlerOutput input){
     	for (Iterator<SourceFile> fileIterator =  input.getSourceFiles().iterator(); fileIterator.hasNext(); ){
     		SourceFile file = fileIterator.next();
     		if(!checkPackage(file.getSourcePackage())){
@@ -90,7 +90,6 @@ public class CrawlerOptionsParser {
     			fileIterator.remove();
     		}
     	}
-    	return input;
     }
     
     private boolean checkClazz(final Clazz clazz){
