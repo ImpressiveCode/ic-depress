@@ -40,5 +40,4 @@ public class SourceCrawlerOutput {
     public void setSourceFiles(final List<SourceFile> sourceFiles) {
         this.sourceFiles = sourceFiles;
     }
-
 }

@@ -24,6 +24,7 @@ import javax.swing.JFileChooser;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 
 /**
  * 
@@ -45,12 +46,6 @@ public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
     	createOptionsTab();
     	createNewTab(ADVANCED_TAB_NAME);
         createAdvancedTab();
-    }
-    
-    private DialogComponentBoolean createBooleanComponent(final String label, final String configLabel, int width, int height){
-    	DialogComponentBoolean component = new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModel(configLabel, true), label);
-    	component.getComponentPanel().setPreferredSize(new Dimension(width, height));
-    	return component;
     }
     
     private void createOptionsTab(){
@@ -92,10 +87,16 @@ public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
         setHorizontalPlacement(false);
     }
     
-    void createAdvancedTab(){
+    private void createAdvancedTab(){
         addDialogComponent(new DialogComponentString(CrawlerAdapterNodeModel.createPackageSettings(), "Package: ", false, 40));
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.CREATE_XML, CrawlerAdapterNodeModel.CREATE_XML_CONFIG, 
         		booleanComponentWidth, booleanComponentHeight));
+    }
+    
+    private DialogComponentBoolean createBooleanComponent(final String label, final String configLabel, int width, int height){
+    	DialogComponentBoolean component = new DialogComponentBoolean(new SettingsModelBoolean(configLabel, true), label);
+    	component.getComponentPanel().setPreferredSize(new Dimension(width, height));
+    	return component;
     }
 
 }
