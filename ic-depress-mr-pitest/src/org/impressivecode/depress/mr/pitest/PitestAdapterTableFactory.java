@@ -21,6 +21,7 @@ import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.def.BooleanCell;
+import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 
 /**
@@ -57,9 +58,9 @@ public class PitestAdapterTableFactory {
                 new DataColumnSpecCreator(MUTATED_CLASS, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(MUTATED_METHOD, StringCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(METHOD_DESCRIPTION, StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(LINE_NUMBER, StringCell.TYPE).createSpec(), 
+                new DataColumnSpecCreator(LINE_NUMBER, IntCell.TYPE).createSpec(), 
                 new DataColumnSpecCreator(MUTATOR, StringCell.TYPE).createSpec(),
-		        new DataColumnSpecCreator(INDEX, StringCell.TYPE).createSpec(), 
+		        new DataColumnSpecCreator(INDEX, IntCell.TYPE).createSpec(), 
 		        new DataColumnSpecCreator(KILLING_TEST, StringCell.TYPE).createSpec()};
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
         return outputSpec;
