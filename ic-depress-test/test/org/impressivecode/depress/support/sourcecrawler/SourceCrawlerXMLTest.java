@@ -25,8 +25,6 @@ import javax.xml.bind.JAXBException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
-import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 public class SourceCrawlerXMLTest {
 	
@@ -119,18 +117,17 @@ public class SourceCrawlerXMLTest {
     	
     @Test
     public void shouldParseFiltered(){
+    	int number = 0;
     	CrawlerOptionsParser optionsParser = createOptionsParser(false, false, true, true, 
     			true, false, true, false, false, true, true, true, "org.impressivecode.depress.scm");
     	optionsParser.checkRequirements(output);
-    	int number = 0;
+    	
     	for(SourceFile f : output.getSourceFiles()){
 	    	number += f.getClasses().size();
     	}
     	assertEquals(number, 40);
     }
     
-
-
 	@Test
     public void shouldParseFiltered2(){
     	CrawlerOptionsParser optionsParser = createOptionsParser(true, true, false, false, 
@@ -143,30 +140,23 @@ public class SourceCrawlerXMLTest {
     	assertEquals(number, 3);
     }
 	
-    private CrawlerOptionsParser createOptionsParser(final boolean publi, final boolean privat,
-    		 final boolean protecte, final boolean packag, final boolean clas, final boolean interfac,
-    		 final boolean abstrac, final boolean enu, final boolean exception, final boolean inner,
-    		 final boolean test, final boolean fina, final String packageName) {
-    	Hashtable<String, SettingsModelBoolean> booleanSettings = new Hashtable<String, SettingsModelBoolean>();
-        booleanSettings.put(CrawlerAdapterNodeModel.PUBLIC, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.PUBLIC_CONFIG, publi));
-        booleanSettings.put(CrawlerAdapterNodeModel.PRIVATE, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.PRIVATE_CONFIG, privat));
-        booleanSettings.put(CrawlerAdapterNodeModel.PROTECTED, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.PROTECTED_CONFIG, protecte));
-        booleanSettings.put(CrawlerAdapterNodeModel.PACKAGE, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.PACKAGE_CONFIG, packag));
-        booleanSettings.put(CrawlerAdapterNodeModel.CLASS, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.CLASS_CONFIG, clas));
-        booleanSettings.put(CrawlerAdapterNodeModel.INTERFACE, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.INTERFACE_CONFIG, interfac));
-        booleanSettings.put(CrawlerAdapterNodeModel.ABSTRACT, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.ABSTRACT_CONFIG, abstrac));
-        booleanSettings.put(CrawlerAdapterNodeModel.ENUM, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.ENUM_CONFIG, enu));
-        booleanSettings.put(CrawlerAdapterNodeModel.EXCEPTION, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.EXCEPTION_CONFIG, exception));
-        booleanSettings.put(CrawlerAdapterNodeModel.INNER, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.INNER_CONFIG, inner));
-        booleanSettings.put(CrawlerAdapterNodeModel.TEST, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.TEST_CONFIG, test));
-        booleanSettings.put(CrawlerAdapterNodeModel.FINAL, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.FINAL_CONFIG, fina));
-        
-        SettingsModelString packageSettings = CrawlerAdapterNodeModel.createPackageSettings();
-        packageSettings.setStringValue(packageName);
-        
-    	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(booleanSettings, packageSettings);
-    	
-    	return optionsParser;
+	private CrawlerOptionsParser createOptionsParser(final boolean bPublic, final boolean bPrivate, final boolean bProtected,
+			final boolean bPackage, final boolean bClass, final boolean bInterface, final boolean bAbstract, final boolean bEnum, 
+			final boolean bException, final boolean bInner, final boolean bTest, final boolean bFinal, final String packageName){
+    	Hashtable<String, Boolean> currentSettings = new Hashtable<String, Boolean>();
+    	currentSettings.put("Public", bPublic);
+    	currentSettings.put("Private", bPrivate);
+    	currentSettings.put("Protected", bProtected);
+    	currentSettings.put("Package-private", bPackage);
+    	currentSettings.put("Class", bClass);
+    	currentSettings.put("Interface", bInterface);
+    	currentSettings.put("Abstract", bAbstract);
+    	currentSettings.put("Enum", bEnum);
+    	currentSettings.put("Exception", bException);
+    	currentSettings.put("Inner", bInner);
+    	currentSettings.put("Test", bTest);
+    	currentSettings.put("Final", bFinal);
+    	return new CrawlerOptionsParser(currentSettings, packageName);
 	}
-
+	
 }

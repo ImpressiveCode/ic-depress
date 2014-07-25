@@ -112,7 +112,11 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     }
 
     private void optionsFilter(SourceCrawlerOutput result) {
-        CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(booleanSettings, packageSettings);
+    	Hashtable<String, Boolean> currentSettings = new Hashtable<String, Boolean>();
+    	for(String key : currentSettings.keySet()){
+    		currentSettings.put(key, booleanSettings.get(key).getBooleanValue());
+    	}
+        CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(currentSettings, packageSettings.getStringValue());
         optionsParser.checkRequirements(result);
 	}
 
