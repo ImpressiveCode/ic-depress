@@ -17,17 +17,17 @@
  */
 package org.impressivecode.depress.support.sourcecrawler;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 /**
  * @author Maciej Borkowski, Capgemini Poland
  */
 public class CrawlerOptionsParser {
-	private Hashtable<String, Boolean> booleanSettings;
+	private HashMap<String, Boolean> booleanSettings;
 	private String acceptPackageName;
 
 	public CrawlerOptionsParser(
-			final Hashtable<String, Boolean> currentSettings,
+			final HashMap<String, Boolean> currentSettings,
 			final String acceptedPackage) {
 		booleanSettings = currentSettings;
 		acceptPackageName = acceptedPackage;

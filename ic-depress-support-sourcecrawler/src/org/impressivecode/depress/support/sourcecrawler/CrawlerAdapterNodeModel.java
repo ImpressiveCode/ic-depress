@@ -23,7 +23,7 @@ import static org.impressivecode.depress.support.sourcecrawler.CrawlerAdapterTab
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -84,7 +84,7 @@ public class CrawlerAdapterNodeModel extends NodeModel {
 
 	private final SettingsModelString fileSettings = createFileSettings();
 	private final SettingsModelString packageSettings = createPackageSettings();
-    private final Hashtable<String, SettingsModelBoolean> booleanSettings = new Hashtable<String, SettingsModelBoolean>();
+    private final HashMap<String, SettingsModelBoolean> booleanSettings = new HashMap<String, SettingsModelBoolean>();
     
     private final CrawlerEntriesParser entriesParser = new CrawlerEntriesParser();
     
@@ -112,7 +112,7 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     }
 
     private void optionsFilter(SourceCrawlerOutput result) {
-    	Hashtable<String, Boolean> currentSettings = new Hashtable<String, Boolean>();
+    	HashMap<String, Boolean> currentSettings = new HashMap<String, Boolean>();
     	for(String key : currentSettings.keySet()){
     		currentSettings.put(key, booleanSettings.get(key).getBooleanValue());
     	}

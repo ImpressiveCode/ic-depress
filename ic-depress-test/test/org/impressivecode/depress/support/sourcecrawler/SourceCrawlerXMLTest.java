@@ -19,7 +19,7 @@ package org.impressivecode.depress.support.sourcecrawler;
 
 import static org.junit.Assert.*;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import javax.xml.bind.JAXBException;
 
@@ -143,7 +143,7 @@ public class SourceCrawlerXMLTest {
 	private CrawlerOptionsParser createOptionsParser(final boolean bPublic, final boolean bPrivate, final boolean bProtected,
 			final boolean bPackage, final boolean bClass, final boolean bInterface, final boolean bAbstract, final boolean bEnum, 
 			final boolean bException, final boolean bInner, final boolean bTest, final boolean bFinal, final String packageName){
-    	Hashtable<String, Boolean> currentSettings = new Hashtable<String, Boolean>();
+    	HashMap<String, Boolean> currentSettings = new HashMap<String, Boolean>();
     	currentSettings.put("Public", bPublic);
     	currentSettings.put("Private", bPrivate);
     	currentSettings.put("Protected", bProtected);
