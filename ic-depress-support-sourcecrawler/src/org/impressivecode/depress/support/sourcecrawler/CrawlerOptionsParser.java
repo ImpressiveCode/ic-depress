@@ -27,8 +27,7 @@ public class CrawlerOptionsParser {
 	private String acceptPackageName;
 
 	public CrawlerOptionsParser(
-			final HashMap<String, Boolean> currentSettings,
-			final String acceptedPackage) {
+			final HashMap<String, Boolean> currentSettings, final String acceptedPackage) {
 		booleanSettings = currentSettings;
 		acceptPackageName = acceptedPackage;
 	}

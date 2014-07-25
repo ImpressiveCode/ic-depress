@@ -221,24 +221,20 @@ public class CrawlerAdapterNodeModel extends NodeModel {
 	static SettingsModelString createPackageSettings() {
 		return new SettingsModelString(PACKAGE_NAME_CONFIG, PACKAGE_DEFAULT_VALUE);
 	}
-	
-    static SettingsModelBoolean createSettingsModel(final String config, final boolean defaultValue) {
-        return new SettingsModelBoolean(config, defaultValue);
-    }
    
     private void initializeSettings() {
-        booleanSettings.put(PUBLIC, createSettingsModel(PUBLIC_CONFIG, true));
-        booleanSettings.put(PRIVATE, createSettingsModel(PRIVATE_CONFIG, true));
-        booleanSettings.put(PROTECTED, createSettingsModel(PUBLIC_CONFIG, true));
-        booleanSettings.put(PACKAGE, createSettingsModel(PACKAGE_CONFIG, true));
-        booleanSettings.put(CLASS, createSettingsModel(CLASS_CONFIG, true));
-        booleanSettings.put(INTERFACE, createSettingsModel(INTERFACE_CONFIG, true));
-        booleanSettings.put(ABSTRACT, createSettingsModel(ABSTRACT_CONFIG, true));
-        booleanSettings.put(ENUM, createSettingsModel(ENUM_CONFIG, true));
-        booleanSettings.put(EXCEPTION, createSettingsModel(EXCEPTION_CONFIG, true));
-        booleanSettings.put(INNER, createSettingsModel(INNER_CONFIG, true));
-        booleanSettings.put(TEST, createSettingsModel(TEST_CONFIG, true));
-        booleanSettings.put(FINAL, createSettingsModel(FINAL_CONFIG, true));
-        booleanSettings.put(CREATE_XML, createSettingsModel(CREATE_XML_CONFIG, false));
+        booleanSettings.put(PUBLIC, new SettingsModelBoolean(PUBLIC_CONFIG, true));
+        booleanSettings.put(PRIVATE, new SettingsModelBoolean(PRIVATE_CONFIG, true));
+        booleanSettings.put(PROTECTED, new SettingsModelBoolean(PUBLIC_CONFIG, true));
+        booleanSettings.put(PACKAGE, new SettingsModelBoolean(PACKAGE_CONFIG, true));
+        booleanSettings.put(CLASS, new SettingsModelBoolean(CLASS_CONFIG, true));
+        booleanSettings.put(INTERFACE, new SettingsModelBoolean(INTERFACE_CONFIG, true));
+        booleanSettings.put(ABSTRACT, new SettingsModelBoolean(ABSTRACT_CONFIG, true));
+        booleanSettings.put(ENUM, new SettingsModelBoolean(ENUM_CONFIG, true));
+        booleanSettings.put(EXCEPTION, new SettingsModelBoolean(EXCEPTION_CONFIG, true));
+        booleanSettings.put(INNER, new SettingsModelBoolean(INNER_CONFIG, true));
+        booleanSettings.put(TEST, new SettingsModelBoolean(TEST_CONFIG, true));
+        booleanSettings.put(FINAL, new SettingsModelBoolean(FINAL_CONFIG, true));
+        booleanSettings.put(CREATE_XML, new SettingsModelBoolean(CREATE_XML_CONFIG, false));
 	}
 }
