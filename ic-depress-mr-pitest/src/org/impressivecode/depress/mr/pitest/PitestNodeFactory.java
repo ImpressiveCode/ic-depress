@@ -18,35 +18,42 @@
 
 package org.impressivecode.depress.mr.pitest;
 
-import org.eclipse.core.runtime.Plugin;
-import org.osgi.framework.BundleContext;
+import org.knime.core.node.NodeDialogPane;
+import org.knime.core.node.NodeFactory;
+import org.knime.core.node.NodeView;
 
 /**
  * 
+ *
  * @author Zuzanna Pacholczyk, Capgemini Polska
  */
-public class PitestNodePlugin extends Plugin {
-    private static PitestNodePlugin plugin;
+public class PitestNodeFactory 
+        extends NodeFactory<PitestAdapterNodeModel> {
 
-    public PitestNodePlugin() {
-        super();
-        plugin = this;
+    @Override
+    public PitestAdapterNodeModel createNodeModel() {
+        return new PitestAdapterNodeModel();
     }
 
     @Override
-    public void start(final BundleContext context) throws Exception {
-        super.start(context);
-
+    public int getNrNodeViews() {
+        return 0;
     }
 
     @Override
-    public void stop(final BundleContext context) throws Exception {
-        super.stop(context);
-        plugin = null;
+    public NodeView<PitestAdapterNodeModel> createNodeView(final int viewIndex,
+            final PitestAdapterNodeModel nodeModel) {
+        throw new IllegalStateException("View not supported");
     }
 
-    public static PitestNodePlugin getDefault() {
-        return plugin;
+    @Override
+    public boolean hasDialog() {
+        return true;
+    }
+
+    @Override
+    public NodeDialogPane createNodeDialogPane() {
+        return new PitestAdapterNodeDialog();
     }
 
 }

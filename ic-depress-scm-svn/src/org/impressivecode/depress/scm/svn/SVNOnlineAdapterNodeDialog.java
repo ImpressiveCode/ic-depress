@@ -18,26 +18,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.scm.svn;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * 
  * @author IcDepress
+ * @author Zuzanna Pacholczyk, Capgemini Poland
  */
 public class SVNOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
+	public static final String ADVANCED_TAB_NAME = "Advanced";
     private final SettingsModelString remoteRepo = new SettingsModelString(
             SVNOnlineAdapterNodeModel.SVN_REPOSITORY_ADDRESS, SVNOnlineAdapterNodeModel.SVN_REPOSITORY_DEFAULT);
 
     protected SVNOnlineAdapterNodeDialog() {
         super();
 
-        final DialogComponentString remoteRepoAddress = new DialogComponentString(remoteRepo, "Repository address: ");
+        final DialogComponentString remoteRepoAddress = new DialogComponentString(remoteRepo, "Repository address: ", false, 30);
 
         addDialogComponent(remoteRepoAddress);
+        
+        addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOnlineAdapterNodeModel.SVN_EXTENSION, SVNOnlineAdapterNodeModel.EXTENSION_DEFAULT),"Extension pattern:", false, 30)); 
+        addDialogComponent(new DialogComponentLabel(" (* = any extension, any string, ? = any character)"));
 
-        addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOnlineAdapterNodeModel.SVN_PACKAGENAME,
-                SVNOnlineAdapterNodeModel.SVN_PACKAGENAME_DEFAULT), "Package: "));
+        createNewTab(ADVANCED_TAB_NAME);
+  
+        createNewGroup("Java");
+        addDialogComponent(new DialogComponentString(new SettingsModelString(
+        		SVNOnlineAdapterNodeModel.SVN_PACKAGENAME, SVNOnlineAdapterNodeModel.SVN_PACKAGENAME_DEFAULT),
+                "Package prefix: "));
+        closeCurrentGroup();
     }
 }

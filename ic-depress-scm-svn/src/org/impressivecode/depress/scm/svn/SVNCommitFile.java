@@ -21,7 +21,7 @@ import org.impressivecode.depress.scm.SCMOperation;
 
 public class SVNCommitFile {
 	private String path;
-	private String javaClass;
+	private String resourceName;
 	private SCMOperation operation;
 	private String extension;
 
@@ -66,11 +66,11 @@ public class SVNCommitFile {
 		this.extension = extension;
 	}
 	
-	public void setJavaClass(final String javaClass) {
-		this.javaClass = javaClass;
+	public void setResourceName(final String resourceName) {
+		this.resourceName = resourceName;
 	}
 
-	public String getJavaClass() {
-		return this.javaClass;
+	public String getResourceName() {
+		return this.resourceName;
 	}
 }
