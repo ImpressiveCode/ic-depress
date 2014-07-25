@@ -24,7 +24,6 @@ import javax.swing.JFileChooser;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
-import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 
 /**
  * 
@@ -34,8 +33,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
  */
 public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
 	
-	public static final String ADVANCED_TAB_NAME = "Advanced";
-	public static final String CREATE_XML = "Create XML file";
+	private static final String ADVANCED_TAB_NAME = "Advanced";
 	 
     private static final String FILE_EXTENSION = ".xml";
     private static final String HISTORY_ID = "depress.sourcecrawler.historyid";
@@ -44,56 +42,60 @@ public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
     private static final int booleanComponentHeight = 30;
     
     protected CrawlerAdapterNodeDialog() {
+    	createOptionsTab();
+    	createNewTab(ADVANCED_TAB_NAME);
+        createAdvancedTab();
+    }
+    
+    private DialogComponentBoolean createBooleanComponent(final String label, final String configLabel, int width, int height){
+    	DialogComponentBoolean component = new DialogComponentBoolean(CrawlerAdapterNodeModel.createSettingsModel(configLabel, true), label);
+    	component.getComponentPanel().setPreferredSize(new Dimension(width, height));
+    	return component;
+    }
+    
+    private void createOptionsTab(){
         addDialogComponent(new DialogComponentFileChooser(CrawlerAdapterNodeModel.createFileSettings(), HISTORY_ID, JFileChooser.OPEN_DIALOG, false, FILE_EXTENSION));
         
         setHorizontalPlacement(true);
-        
         createNewGroup("Acces:");
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createSettingsModelPublic(),
-        		CrawlerOptionsParser.PUBLIC, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createSettingsModelPrivate(),
-        		CrawlerOptionsParser.PRIVATE, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createSettingsModelProtected(),
-        		CrawlerOptionsParser.PROTECTED, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createSettingsModelPackage(),
-        		CrawlerOptionsParser.PACKAGE, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PUBLIC, CrawlerAdapterNodeModel.PUBLIC_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PRIVATE, CrawlerAdapterNodeModel.PRIVATE_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PROTECTED, CrawlerAdapterNodeModel.PROTECTED_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PACKAGE, CrawlerAdapterNodeModel.PACKAGE_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
         closeCurrentGroup();
         
         createNewGroup("Type:");
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createSettingsModelClass(),
-        		CrawlerOptionsParser.CLASS, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createSettingsModelInterface(),
-        		CrawlerOptionsParser.INTERFACE, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createSettingsModelAbstract(),
-        		CrawlerOptionsParser.ABSTRACT, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createSettingsModelEnum(),
-        		CrawlerOptionsParser.ENUM, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.CLASS, CrawlerAdapterNodeModel.CLASS_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.INTERFACE, CrawlerAdapterNodeModel.INTERFACE_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.ABSTRACT, CrawlerAdapterNodeModel.ABSTRACT_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.ENUM, CrawlerAdapterNodeModel.ENUM_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
         closeCurrentGroup();
         
         createNewGroup("Other:");
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createSettingsModelException(),
-        		CrawlerOptionsParser.EXCEPTION, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createSettingsModelInner(),
-        		CrawlerOptionsParser.INNER, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createSettingsModelTest(),
-        		CrawlerOptionsParser.TEST, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createSettingsModelFinal(),
-        		CrawlerOptionsParser.FINAL, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.EXCEPTION, CrawlerAdapterNodeModel.EXCEPTION_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.INNER, CrawlerAdapterNodeModel.INNER_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.TEST, CrawlerAdapterNodeModel.TEST_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.FINAL, CrawlerAdapterNodeModel.FINAL_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
         closeCurrentGroup();
-        
         setHorizontalPlacement(false);
-        
-        createNewTab(ADVANCED_TAB_NAME);
-        
-        addDialogComponent(new DialogComponentString(CrawlerAdapterNodeModel.createPackageSettings(), "Package: ", false, 40));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.createXMLSettings(),
-        		CREATE_XML, booleanComponentWidth, booleanComponentHeight));
     }
     
-    private DialogComponentBoolean createBooleanComponent(SettingsModelBoolean settings, String label, int width, int height){
-    	DialogComponentBoolean component = new DialogComponentBoolean(settings, label);
-    	component.getComponentPanel().setPreferredSize(new Dimension(width, height));
-    	return component;
+    void createAdvancedTab(){
+        addDialogComponent(new DialogComponentString(CrawlerAdapterNodeModel.createPackageSettings(), "Package: ", false, 40));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.CREATE_XML, CrawlerAdapterNodeModel.CREATE_XML_CONFIG, 
+        		booleanComponentWidth, booleanComponentHeight));
     }
 
 }

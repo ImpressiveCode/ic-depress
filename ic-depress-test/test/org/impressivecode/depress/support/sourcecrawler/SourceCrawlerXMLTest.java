@@ -19,10 +19,14 @@ package org.impressivecode.depress.support.sourcecrawler;
 
 import static org.junit.Assert.*;
 
+import java.util.Hashtable;
+
 import javax.xml.bind.JAXBException;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
+import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 public class SourceCrawlerXMLTest {
 	
@@ -115,7 +119,7 @@ public class SourceCrawlerXMLTest {
     	
     @Test
     public void shouldParseFiltered(){
-    	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(false, false, true, true, 
+    	CrawlerOptionsParser optionsParser = createOptionsParser(false, false, true, true, 
     			true, false, true, false, false, true, true, true, "org.impressivecode.depress.scm");
     	optionsParser.checkRequirements(output);
     	int number = 0;
@@ -125,9 +129,11 @@ public class SourceCrawlerXMLTest {
     	assertEquals(number, 40);
     }
     
-    @Test
+
+
+	@Test
     public void shouldParseFiltered2(){
-    	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(true, true, false, false, 
+    	CrawlerOptionsParser optionsParser = createOptionsParser(true, true, false, false, 
     			false, true, false, true, true, false, false, false, "org.");
     	optionsParser.checkRequirements(output);
     	int number = 0;
@@ -136,5 +142,31 @@ public class SourceCrawlerXMLTest {
     	}
     	assertEquals(number, 3);
     }
+	
+    private CrawlerOptionsParser createOptionsParser(final boolean publi, final boolean privat,
+    		 final boolean protecte, final boolean packag, final boolean clas, final boolean interfac,
+    		 final boolean abstrac, final boolean enu, final boolean exception, final boolean inner,
+    		 final boolean test, final boolean fina, final String packageName) {
+    	Hashtable<String, SettingsModelBoolean> booleanSettings = new Hashtable<String, SettingsModelBoolean>();
+        booleanSettings.put(CrawlerAdapterNodeModel.PUBLIC, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.PUBLIC_CONFIG, publi));
+        booleanSettings.put(CrawlerAdapterNodeModel.PRIVATE, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.PRIVATE_CONFIG, privat));
+        booleanSettings.put(CrawlerAdapterNodeModel.PROTECTED, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.PROTECTED_CONFIG, protecte));
+        booleanSettings.put(CrawlerAdapterNodeModel.PACKAGE, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.PACKAGE_CONFIG, packag));
+        booleanSettings.put(CrawlerAdapterNodeModel.CLASS, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.CLASS_CONFIG, clas));
+        booleanSettings.put(CrawlerAdapterNodeModel.INTERFACE, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.INTERFACE_CONFIG, interfac));
+        booleanSettings.put(CrawlerAdapterNodeModel.ABSTRACT, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.ABSTRACT_CONFIG, abstrac));
+        booleanSettings.put(CrawlerAdapterNodeModel.ENUM, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.ENUM_CONFIG, enu));
+        booleanSettings.put(CrawlerAdapterNodeModel.EXCEPTION, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.EXCEPTION_CONFIG, exception));
+        booleanSettings.put(CrawlerAdapterNodeModel.INNER, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.INNER_CONFIG, inner));
+        booleanSettings.put(CrawlerAdapterNodeModel.TEST, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.TEST_CONFIG, test));
+        booleanSettings.put(CrawlerAdapterNodeModel.FINAL, CrawlerAdapterNodeModel.createSettingsModel(CrawlerAdapterNodeModel.FINAL_CONFIG, fina));
+        
+        SettingsModelString packageSettings = CrawlerAdapterNodeModel.createPackageSettings();
+        packageSettings.setStringValue(packageName);
+        
+    	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(booleanSettings, packageSettings);
+    	
+    	return optionsParser;
+	}
 
 }

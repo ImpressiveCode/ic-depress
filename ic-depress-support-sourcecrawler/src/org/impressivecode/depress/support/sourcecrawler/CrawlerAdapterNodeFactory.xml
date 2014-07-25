@@ -9,17 +9,20 @@
 
 	<fullDescription>
 		<intro>
-			  This node can be used to load java classes from a file (output from Maven plugin SourceCrawler or this plugin - see advanced options)
-            or load them directly from directory.<br />
+			  This node can be used to load java classes from: 
+			  	<ul>
+                    <li> directory</li>
+					<li> a XML file (output from Maven plugin SourceCrawler or this plugin - see advanced options)</li>
+				</ul> 
             <p>
                 To create xml file from standalone version of SourceCrawler you can use command 
                 java -jar sourcecrawler.jar -i ./dir/to/scan -o ./dir/output.xml
-                You can find sourcecrawler.jar in lib directory of this plugin.
-                For more information visit https://github.com/ImpressiveCode/ic-utils.
+                You can find sourcecrawler.jar in lib directory of this plugin or you can
+                visit https://github.com/ImpressiveCode/ic-utils for more information.
             </p>
             <p>
-                This node analyzes information about every class in every .java file from the given directory
-                 or xml file which has been found by SourceCrawler and returns a table with the following data: <br />
+                This node analyzes every class in every .java file from the given directory
+                 or file which has been found by SourceCrawler and returns a table with the following data: <br />
                 <ul>
                     <li>Class name</li>
 					<li>Package</li>
