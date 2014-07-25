@@ -17,8 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.svn;
 
-import org.impressivecode.depress.scm.SCMExtensionParser;
-
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataColumnSpec;
 import static org.impressivecode.depress.scm.SCMParserOptions.options;
 
@@ -96,7 +94,7 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
             String packageNameToFilter = Strings.emptyToNull(packageName.getStringValue());
             SCMParserOptions parserOptions = options(packageNameToFilter, userExtensions); 
             
-            SCMExtensionParser parser = new SCMExtensionParser(parserOptions);
+            SVNExtensionParser parser = new SVNExtensionParser(parserOptions);
             
             List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
             
