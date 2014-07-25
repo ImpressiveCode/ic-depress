@@ -19,6 +19,8 @@ package org.impressivecode.depress.support.sourcecrawler;
 
 import static org.junit.Assert.*;
 
+import java.util.Hashtable;
+
 import javax.xml.bind.JAXBException;
 
 import org.junit.Before;
@@ -115,19 +117,20 @@ public class SourceCrawlerXMLTest {
     	
     @Test
     public void shouldParseFiltered(){
-    	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(false, false, true, true, 
+    	int number = 0;
+    	CrawlerOptionsParser optionsParser = createOptionsParser(false, false, true, true, 
     			true, false, true, false, false, true, true, true, "org.impressivecode.depress.scm");
     	optionsParser.checkRequirements(output);
-    	int number = 0;
+    	
     	for(SourceFile f : output.getSourceFiles()){
 	    	number += f.getClasses().size();
     	}
     	assertEquals(number, 40);
     }
     
-    @Test
+	@Test
     public void shouldParseFiltered2(){
-    	CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(true, true, false, false, 
+    	CrawlerOptionsParser optionsParser = createOptionsParser(true, true, false, false, 
     			false, true, false, true, true, false, false, false, "org.");
     	optionsParser.checkRequirements(output);
     	int number = 0;
@@ -136,5 +139,24 @@ public class SourceCrawlerXMLTest {
     	}
     	assertEquals(number, 3);
     }
-
+	
+	private CrawlerOptionsParser createOptionsParser(final boolean bPublic, final boolean bPrivate, final boolean bProtected,
+			final boolean bPackage, final boolean bClass, final boolean bInterface, final boolean bAbstract, final boolean bEnum, 
+			final boolean bException, final boolean bInner, final boolean bTest, final boolean bFinal, final String packageName){
+    	Hashtable<String, Boolean> currentSettings = new Hashtable<String, Boolean>();
+    	currentSettings.put("Public", bPublic);
+    	currentSettings.put("Private", bPrivate);
+    	currentSettings.put("Protected", bProtected);
+    	currentSettings.put("Package-private", bPackage);
+    	currentSettings.put("Class", bClass);
+    	currentSettings.put("Interface", bInterface);
+    	currentSettings.put("Abstract", bAbstract);
+    	currentSettings.put("Enum", bEnum);
+    	currentSettings.put("Exception", bException);
+    	currentSettings.put("Inner", bInner);
+    	currentSettings.put("Test", bTest);
+    	currentSettings.put("Final", bFinal);
+    	return new CrawlerOptionsParser(currentSettings, packageName);
+	}
+	
 }

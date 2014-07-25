@@ -40,7 +40,6 @@ import org.junit.Test;
  * @author Marek Majchrzak, Impressive Code
  * @author Maciej Borkowski, Capgemini Polska
  */
-
 public class GitOfflineLogParserTest {
 
     private final static String logFilePath = GitOfflineLogParserTest.class.getResource("git-test-log.txt").getPath();

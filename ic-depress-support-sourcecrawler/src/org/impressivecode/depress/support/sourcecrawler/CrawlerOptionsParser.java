@@ -17,72 +17,30 @@
  */
 package org.impressivecode.depress.support.sourcecrawler;
 
+import java.util.Hashtable;
 import java.util.Iterator;
 /**
- * 
  * @author Maciej Borkowski, Capgemini Poland
- * 
  */
 public class CrawlerOptionsParser {
-	
-	static final String PUBLIC = "Public";
-    static final String PRIVATE = "Private";
-    static final String PROTECTED = "Protected";
-    static final String PACKAGE = "Package-private";
-    static final String CLASS = "Class";
-    static final String INTERFACE = "Interface";
-    static final String ABSTRACT = "Abstract";
-    static final String ENUM = "Enum";
-    static final String EXCEPTION = "Exception";
-    static final String INNER = "Inner";
-    static final String TEST = "Test";
-    static final String FINAL = "Final"; 
-    
-    private boolean booleanPublic;
-    private boolean booleanPrivate;
-    private boolean booleanProtected;
-    private boolean booleanPackage;
-    private boolean booleanClass;
-    private boolean booleanInterface;
-    private boolean booleanAbstract;
-    private boolean booleanEnum;
-    private boolean booleanException;
-    private boolean booleanInner;
-    private boolean booleanTest;
-    private boolean booleanFinal;
-	private String packageSettings;
-    
-    public CrawlerOptionsParser(boolean booleanPublic, boolean booleanPrivate,
-			boolean booleanProtected, boolean booleanPackage,
-			boolean booleanClass, boolean booleanInterface,
-			boolean booleanAbstract, boolean booleanEnum,
-			boolean booleanException, boolean booleanInner,
-			boolean booleanTest, boolean booleanFinal, String packageSettings) {
-		super();
-		
-		this.booleanPublic = booleanPublic;
-		this.booleanPrivate = booleanPrivate;
-		this.booleanProtected = booleanProtected;
-		this.booleanPackage = booleanPackage;
-		this.booleanClass = booleanClass;
-		this.booleanInterface = booleanInterface;
-		this.booleanAbstract = booleanAbstract;
-		this.booleanEnum = booleanEnum;
-		this.booleanException = booleanException;
-		this.booleanInner = booleanInner;
-		this.booleanTest = booleanTest;
-		this.booleanFinal = booleanFinal;
-		this.packageSettings = packageSettings;
+	private Hashtable<String, Boolean> booleanSettings;
+	private String acceptPackageName;
+
+	public CrawlerOptionsParser(
+			final Hashtable<String, Boolean> currentSettings,
+			final String acceptedPackage) {
+		booleanSettings = currentSettings;
+		acceptPackageName = acceptedPackage;
 	}
 
-	public void checkRequirements(SourceCrawlerOutput input){
-    	for (Iterator<SourceFile> fileIterator =  input.getSourceFiles().iterator(); fileIterator.hasNext(); ){
+	public void checkRequirements(final SourceCrawlerOutput input){
+    	for (Iterator<SourceFile> fileIterator =  input.getSourceFiles().iterator(); fileIterator.hasNext();){
     		SourceFile file = fileIterator.next();
     		if(!checkPackage(file.getSourcePackage())){
     			fileIterator.remove();
     			continue;
     		}
-    	    for (Iterator<Clazz> clazzIterator = file.getClasses().iterator(); clazzIterator.hasNext(); )
+    	    for (Iterator<Clazz> clazzIterator = file.getClasses().iterator(); clazzIterator.hasNext();)
     			if(!checkClazz(clazzIterator.next())){
     				clazzIterator.remove();
     			}
@@ -95,31 +53,31 @@ public class CrawlerOptionsParser {
     private boolean checkClazz(final Clazz clazz){
     	if(!checkAccess(clazz.getAccess())) return false;
     	if(!checkType(clazz.getType())) return false;
-    	if(!booleanException && clazz.isException()) return false;
-    	if(!booleanInner && clazz.isInner()) return false;
-    	if(!booleanTest && clazz.isTest()) return false;
-    	if(!booleanFinal && clazz.isFinal()) return false;
+    	if(!booleanSettings.get(CrawlerAdapterNodeModel.PUBLIC) && clazz.isException()) return false;
+    	if(!booleanSettings.get(CrawlerAdapterNodeModel.INNER) && clazz.isInner()) return false;
+    	if(!booleanSettings.get(CrawlerAdapterNodeModel.TEST) && clazz.isTest()) return false;
+    	if(!booleanSettings.get(CrawlerAdapterNodeModel.FINAL) && clazz.isFinal()) return false;
     	return true;
     }
    
     private boolean checkAccess(final String access){
-    	if(access.equals(PUBLIC) && booleanPublic) return true;
-    	if(access.equals(PRIVATE) && booleanPrivate) return true;
-    	if(access.equals(PROTECTED) && booleanProtected) return true;
-    	if(access.equals(PACKAGE) && booleanPackage) return true;
+    	if(access.equals(CrawlerAdapterNodeModel.PUBLIC) && booleanSettings.get(CrawlerAdapterNodeModel.PUBLIC)) return true;
+    	if(access.equals(CrawlerAdapterNodeModel.PRIVATE) && booleanSettings.get(CrawlerAdapterNodeModel.PRIVATE)) return true;
+    	if(access.equals(CrawlerAdapterNodeModel.PROTECTED) && booleanSettings.get(CrawlerAdapterNodeModel.PROTECTED)) return true;
+    	if(access.equals(CrawlerAdapterNodeModel.PACKAGE) && booleanSettings.get(CrawlerAdapterNodeModel.PACKAGE)) return true;
     	return false;
     }
     
     private boolean checkType(final String type){
-    	if(type.equals(CLASS) && booleanClass) return true;
-    	if(type.equals(INTERFACE) && booleanInterface) return true;
-    	if(type.equals(ABSTRACT) && booleanAbstract) return true;
-    	if(type.equals(ENUM) && booleanEnum) return true;
+    	if(type.equals(CrawlerAdapterNodeModel.CLASS) && booleanSettings.get(CrawlerAdapterNodeModel.CLASS)) return true;
+    	if(type.equals(CrawlerAdapterNodeModel.INTERFACE) && booleanSettings.get(CrawlerAdapterNodeModel.INTERFACE)) return true;
+    	if(type.equals(CrawlerAdapterNodeModel.ABSTRACT) && booleanSettings.get(CrawlerAdapterNodeModel.ABSTRACT)) return true;
+    	if(type.equals(CrawlerAdapterNodeModel.ENUM) && booleanSettings.get(CrawlerAdapterNodeModel.ENUM)) return true;
     	return false;
     }
     
     private boolean checkPackage(final String packageName) {
-    	return packageName.contains(packageSettings);
+    	return packageName.contains(acceptPackageName);
     }
        
 }
