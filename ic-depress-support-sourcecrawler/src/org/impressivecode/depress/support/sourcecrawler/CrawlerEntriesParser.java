@@ -33,12 +33,9 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.impressivecode.utils.sourcecrawler.SourceCrawler;
 import org.impressivecode.utils.sourcecrawler.model.JavaClazz;
 import org.impressivecode.utils.sourcecrawler.model.JavaFile;
-
 /**
- * 
  * @author Pawel Nosal, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
- * 
  */
 public class CrawlerEntriesParser {
 
@@ -68,7 +65,7 @@ public class CrawlerEntriesParser {
 	private SourceFile parseJavaFile(final JavaFile javaFile) {
 		SourceFile sourceFile = new SourceFile();
 		ArrayList<Clazz> clazzes = new ArrayList<Clazz>();
-		for(JavaClazz javaClazz : javaFile.getClasses()){
+		for(JavaClazz javaClazz : javaFile.getClasses()) {
 			clazzes.add(parseJavaClazz(javaClazz));
 		}
 		sourceFile.setClasses(clazzes);
@@ -77,7 +74,7 @@ public class CrawlerEntriesParser {
 		return sourceFile;
 	}
 
-	private Clazz parseJavaClazz(final JavaClazz javaClazz){
+	private Clazz parseJavaClazz(final JavaClazz javaClazz) {
 		Clazz clazz = new Clazz();
 		clazz.setAccess(javaClazz.getClassAccess().getAccess());
 		clazz.setException(javaClazz.isException());

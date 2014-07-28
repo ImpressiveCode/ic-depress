@@ -32,24 +32,24 @@ public class CrawlerOptionsParser {
 		acceptPackageName = acceptedPackage;
 	}
 
-	public void checkRequirements(final SourceCrawlerOutput input){
-    	for (Iterator<SourceFile> fileIterator =  input.getSourceFiles().iterator(); fileIterator.hasNext();){
+	public void checkRequirements(final SourceCrawlerOutput input) {
+    	for (Iterator<SourceFile> fileIterator =  input.getSourceFiles().iterator(); fileIterator.hasNext();) {
     		SourceFile file = fileIterator.next();
-    		if(!checkPackage(file.getSourcePackage())){
+    		if(!checkPackage(file.getSourcePackage())) {
     			fileIterator.remove();
     			continue;
     		}
     	    for (Iterator<Clazz> clazzIterator = file.getClasses().iterator(); clazzIterator.hasNext();)
-    			if(!checkClazz(clazzIterator.next())){
+    			if(!checkClazz(clazzIterator.next())) {
     				clazzIterator.remove();
     			}
-    		if(file.getClasses().isEmpty()){
+    		if(file.getClasses().isEmpty()) {
     			fileIterator.remove();
     		}
     	}
     }
     
-    private boolean checkClazz(final Clazz clazz){
+    private boolean checkClazz(final Clazz clazz) {
     	if(!checkAccess(clazz.getAccess())) return false;
     	if(!checkType(clazz.getType())) return false;
     	if(!booleanSettings.get(CrawlerAdapterNodeModel.PUBLIC) && clazz.isException()) return false;
@@ -59,7 +59,7 @@ public class CrawlerOptionsParser {
     	return true;
     }
    
-    private boolean checkAccess(final String access){
+    private boolean checkAccess(final String access) {
     	if(access.equals(CrawlerAdapterNodeModel.PUBLIC) && booleanSettings.get(CrawlerAdapterNodeModel.PUBLIC)) return true;
     	if(access.equals(CrawlerAdapterNodeModel.PRIVATE) && booleanSettings.get(CrawlerAdapterNodeModel.PRIVATE)) return true;
     	if(access.equals(CrawlerAdapterNodeModel.PROTECTED) && booleanSettings.get(CrawlerAdapterNodeModel.PROTECTED)) return true;
@@ -67,7 +67,7 @@ public class CrawlerOptionsParser {
     	return false;
     }
     
-    private boolean checkType(final String type){
+    private boolean checkType(final String type) {
     	if(type.equals(CrawlerAdapterNodeModel.CLASS) && booleanSettings.get(CrawlerAdapterNodeModel.CLASS)) return true;
     	if(type.equals(CrawlerAdapterNodeModel.INTERFACE) && booleanSettings.get(CrawlerAdapterNodeModel.INTERFACE)) return true;
     	if(type.equals(CrawlerAdapterNodeModel.ABSTRACT) && booleanSettings.get(CrawlerAdapterNodeModel.ABSTRACT)) return true;

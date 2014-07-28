@@ -18,29 +18,38 @@
 package org.impressivecode.depress.support.sourcecrawler;
 
 import java.awt.Dimension;
-
 import javax.swing.JFileChooser;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
+import org.knime.core.node.defaultnodesettings.DialogComponentButtonGroup;
+import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
-
+import org.knime.core.node.defaultnodesettings.SettingsModelString;
 /**
- * 
  * @author Pawel Nosal, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
- * 
  */
 public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
 	
 	private static final String ADVANCED_TAB_NAME = "Advanced";
 	 
     private static final String FILE_EXTENSION = ".xml";
-    private static final String HISTORY_ID = "depress.sourcecrawler.historyid";
-
+    private static final String HISTORY_ID_XML = "depress.sourcecrawler.historyidxml";
+    private static final String HISTORY_ID_DIR = "depress.sourcecrawler.historyiddir";
+     
     private static final int booleanComponentWidth = 40;
     private static final int booleanComponentHeight = 30;
+    
+    private final DialogComponentButtonGroup radioButton = new DialogComponentButtonGroup(CrawlerAdapterNodeModel.createRadioSettings(),
+    				null, false, CrawlerAdapterNodeModel.actions, CrawlerAdapterNodeModel.actions);
+    private final DialogComponentFileChooser fileChooser = new DialogComponentFileChooser(CrawlerAdapterNodeModel.createFileSettingsXML(),
+    				HISTORY_ID_XML, JFileChooser.OPEN_DIALOG, false, FILE_EXTENSION);
+    private final DialogComponentFileChooser directoryChooser = new DialogComponentFileChooser(CrawlerAdapterNodeModel.createFileSettingsDIR(),
+    				HISTORY_ID_DIR, JFileChooser.OPEN_DIALOG, true);
     
     protected CrawlerAdapterNodeDialog() {
     	createOptionsTab();
@@ -48,55 +57,78 @@ public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
         createAdvancedTab();
     }
     
-    private void createOptionsTab(){
-        addDialogComponent(new DialogComponentFileChooser(CrawlerAdapterNodeModel.createFileSettings(), HISTORY_ID, JFileChooser.OPEN_DIALOG, false, FILE_EXTENSION));
-        
-        setHorizontalPlacement(true);
+    private void createOptionsTab() {
+    	addDialogComponent(radioButton);
+    	addDialogComponent(fileChooser);
+        addDialogComponent(directoryChooser);
+        directoryChooser.getComponentPanel().setVisible(false);
+        radioButton.getModel().addChangeListener(new RadioButtonChangeListener());
+    }
+    
+    private void createAdvancedTab() {
+    	setHorizontalPlacement(true);
         createNewGroup("Acces:");
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PUBLIC, CrawlerAdapterNodeModel.PUBLIC_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
+        		true, booleanComponentWidth, booleanComponentHeight));
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PRIVATE, CrawlerAdapterNodeModel.PRIVATE_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
+        		true, booleanComponentWidth, booleanComponentHeight));
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PROTECTED, CrawlerAdapterNodeModel.PROTECTED_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
+        		true, booleanComponentWidth, booleanComponentHeight));
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PACKAGE, CrawlerAdapterNodeModel.PACKAGE_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
+        		true, booleanComponentWidth, booleanComponentHeight));
         closeCurrentGroup();
         
         createNewGroup("Type:");
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.CLASS, CrawlerAdapterNodeModel.CLASS_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
+        		true, booleanComponentWidth, booleanComponentHeight));
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.INTERFACE, CrawlerAdapterNodeModel.INTERFACE_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
+        		true, booleanComponentWidth, booleanComponentHeight));
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.ABSTRACT, CrawlerAdapterNodeModel.ABSTRACT_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
+        		true, booleanComponentWidth, booleanComponentHeight));
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.ENUM, CrawlerAdapterNodeModel.ENUM_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
+        		true, booleanComponentWidth, booleanComponentHeight));
         closeCurrentGroup();
         
         createNewGroup("Other:");
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.EXCEPTION, CrawlerAdapterNodeModel.EXCEPTION_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
+        		true, booleanComponentWidth, booleanComponentHeight));
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.INNER, CrawlerAdapterNodeModel.INNER_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
+        		true, booleanComponentWidth, booleanComponentHeight));
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.TEST, CrawlerAdapterNodeModel.TEST_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
+        		true, booleanComponentWidth, booleanComponentHeight));
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.FINAL, CrawlerAdapterNodeModel.FINAL_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
-        closeCurrentGroup();
+        		true, booleanComponentWidth, booleanComponentHeight));
         setHorizontalPlacement(false);
-    }
-    
-    private void createAdvancedTab(){
         addDialogComponent(new DialogComponentString(CrawlerAdapterNodeModel.createPackageSettings(), "Package: ", false, 40));
+        closeCurrentGroup();
+        
         addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.CREATE_XML, CrawlerAdapterNodeModel.CREATE_XML_CONFIG, 
-        		booleanComponentWidth, booleanComponentHeight));
+        		false, booleanComponentWidth, booleanComponentHeight));
     }
     
-    private DialogComponentBoolean createBooleanComponent(final String label, final String configLabel, int width, int height){
-    	DialogComponentBoolean component = new DialogComponentBoolean(new SettingsModelBoolean(configLabel, true), label);
+    private DialogComponentBoolean createBooleanComponent(final String label, final String configLabel,
+    		final boolean defaultValue, int width, int height) {
+    	DialogComponentBoolean component = new DialogComponentBoolean(new SettingsModelBoolean(configLabel, defaultValue), label);
     	component.getComponentPanel().setPreferredSize(new Dimension(width, height));
     	return component;
     }
 
+   private class RadioButtonChangeListener implements ChangeListener {
+		@Override
+		public void stateChanged(ChangeEvent event) {
+			SettingsModelString radioSettings = (SettingsModelString)(event.getSource());
+			if(radioSettings.getStringValue().equals(CrawlerAdapterNodeModel.FILE)) {
+				fileChooser.getComponentPanel().setVisible(true);
+				directoryChooser.getComponentPanel().setVisible(false);
+				fileChooser.getModel().setEnabled(true);
+				directoryChooser.getModel().setEnabled(false);
+			} else {
+				fileChooser.getComponentPanel().setVisible(false);
+				directoryChooser.getComponentPanel().setVisible(true);
+				fileChooser.getModel().setEnabled(false);
+				directoryChooser.getModel().setEnabled(true);
+			}
+		}
+	}
+   
 }
