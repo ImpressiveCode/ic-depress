@@ -30,7 +30,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.maven.plugin.MojoExecutionException;
-import org.impressivecode.utils.sourcecrawler.SourceCrawler;
+import org.impressivecode.utils.sourcecrawler.SourceCrawlerScanner;
 import org.impressivecode.utils.sourcecrawler.model.JavaClazz;
 import org.impressivecode.utils.sourcecrawler.model.JavaFile;
 /**
@@ -38,18 +38,17 @@ import org.impressivecode.utils.sourcecrawler.model.JavaFile;
  * @author Maciej Borkowski, Capgemini Poland
  */
 public class CrawlerEntriesParser {
-
 	public SourceCrawlerOutput parseFromExecutableJar(final String path, boolean createXML) throws IOException, MojoExecutionException, JAXBException {
-    	SourceCrawler sourceCrawler = new SourceCrawler();
+		SourceCrawlerScanner sourceCrawlerScanner = new SourceCrawlerScanner();
     	List<JavaFile> javaFiles;
 		try {
-			javaFiles = sourceCrawler.executeCleanly(path);
+			javaFiles = sourceCrawlerScanner.executeCleanly(path);
 		} catch (IOException e) {
 			throw new IOException("Could not find java files");
 		}
     	if(createXML){
     		String output = new File(path).getName() + ".xml";
-    		sourceCrawler.writeXMLDocument(javaFiles, output);
+    		sourceCrawlerScanner.writeXMLDocument(javaFiles, output);
     	}
     	
     	SourceCrawlerOutput result = new SourceCrawlerOutput();

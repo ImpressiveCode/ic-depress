@@ -42,7 +42,7 @@ public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
     private static final String HISTORY_ID_DIR = "depress.sourcecrawler.historyiddir";
      
     private static final int booleanComponentWidth = 40;
-    private static final int booleanComponentHeight = 30;
+    private static final int booleanComponentHeight = 25;
     
     private final DialogComponentButtonGroup radioButton = new DialogComponentButtonGroup(CrawlerAdapterNodeModel.createRadioSettings(),
     				null, false, CrawlerAdapterNodeModel.actions, CrawlerAdapterNodeModel.actions);
@@ -58,11 +58,13 @@ public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
     }
     
     private void createOptionsTab() {
+    	createNewGroup("Input:");
     	addDialogComponent(radioButton);
     	addDialogComponent(fileChooser);
         addDialogComponent(directoryChooser);
         directoryChooser.getComponentPanel().setVisible(false);
         radioButton.getModel().addChangeListener(new RadioButtonChangeListener());
+        closeCurrentGroup();
     }
     
     private void createAdvancedTab() {
