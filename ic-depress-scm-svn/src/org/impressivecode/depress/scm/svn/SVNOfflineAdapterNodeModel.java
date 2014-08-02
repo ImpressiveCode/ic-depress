@@ -17,8 +17,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.svn;
 
+import org.impressivecode.depress.scm.SCMExtensionParser;
+
 import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.scm.svn.SVNParserOptions.options;
+import static org.impressivecode.depress.scm.SCMParserOptions.options;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +33,7 @@ import org.impressivecode.depress.common.OutputTransformer;
 import org.impressivecode.depress.scm.SCMAdapterTableFactory;
 import org.impressivecode.depress.scm.SCMAdapterTransformer;
 import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.scm.SCMParserOptions;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -63,7 +66,7 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     static final String CFG_PACKAGENAME = "depress.scm.svn.package";
     static final String PACKAGENAME_DEFAULT = "org.";
     static final String EXTENSION_DEFAULT = ".java";
-    static final String EXTENSION_STR = "depress.scm.svn.string";
+    static final String CFG_EXTENSION = "depress.scm.svn.string";
 	
 
     private final SettingsModelString fileName = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_FILENAME,
@@ -72,14 +75,15 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     private final SettingsModelOptionalString packageName = new SettingsModelOptionalString(
             SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT, true);
     
-    public static final SettingsModelString extensions = new SettingsModelString(
-    		SVNOfflineAdapterNodeModel.EXTENSION_STR, SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT);
+    public final SettingsModelString extensions = new SettingsModelString(
+    		SVNOfflineAdapterNodeModel.CFG_EXTENSION, SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT);
     
     private ArrayList<String> userExtensions;
 
 	protected SVNOfflineAdapterNodeModel() {
         super(0, 1);
       
+    
     }
 
     @Override
@@ -90,10 +94,10 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
             userExtensions = new ArrayList<String>(); 
             Collections.addAll( userExtensions, getExtensions());
             String packageNameToFilter = Strings.emptyToNull(packageName.getStringValue());
-            SVNParserOptions parserOptions = options(packageNameToFilter, userExtensions); 
-
-            SVNOfflineParser parser = new SVNOfflineParser(parserOptions);
-
+            SCMParserOptions parserOptions = options(packageNameToFilter, userExtensions); 
+            
+            SCMExtensionParser parser = new SCMExtensionParser(parserOptions);
+            
             List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
             
             LOGGER.info("Reading logs finished");
@@ -124,6 +128,8 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
         return SCMAdapterTableFactory.createTableSpec();
     }
 
+    
+      
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         fileName.saveSettingsTo(settings);
