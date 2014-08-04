@@ -344,7 +344,7 @@ textarea {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/bootstrap-3\.1\.1\/scaffolding\.less}line{font-family:\0000348}}
 a {
-  color: #626262;
+  color: #959595;
   text-decoration: none;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/bootstrap-3\.1\.1\/scaffolding\.less}line{font-family:\0000352}}
@@ -2772,7 +2772,7 @@ fieldset[disabled] .btn-danger.active {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/bootstrap-3\.1\.1\/buttons\.less}line{font-family:\0000385}}
 .btn-link {
-  color: #626262;
+  color: #959595;
   font-weight: normal;
   cursor: pointer;
   border-radius: 0;
@@ -4273,7 +4273,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav .open > a:hover,
 .nav .open > a:focus {
   background-color: #eeeeee;
-  border-color: #626262;
+  border-color: #959595;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/bootstrap-3\.1\.1\/navs\.less}line{font-family:\0000359}}
 .nav .nav-divider {
@@ -5076,7 +5076,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   padding: 6px 12px;
   line-height: 1.42857143;
   text-decoration: none;
-  color: #626262;
+  color: #959595;
   background-color: #ffffff;
   border: 1px solid #dddddd;
   margin-left: -1px;
@@ -5331,7 +5331,7 @@ a.badge:focus {
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/bootstrap-3\.1\.1\/badges\.less}line{font-family:\0000348}}
 a.list-group-item.active > .badge,
 .nav-pills > .active > a > .badge {
-  color: #626262;
+  color: #959595;
   background-color: #ffffff;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/bootstrap-3\.1\.1\/badges\.less}line{font-family:\0000353}}
@@ -5403,7 +5403,7 @@ a.list-group-item.active > .badge,
 a.thumbnail:hover,
 a.thumbnail:focus,
 a.thumbnail.active {
-  border-color: #626262;
+  border-color: #959595;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/bootstrap-3\.1\.1\/thumbnails\.less}line{font-family:\0000332}}
 .thumbnail .caption {
@@ -7667,7 +7667,7 @@ body {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/site\/lazy\.less}line{font-family:\0000377}}
 .text-hilite {
-  color: #626262;
+  color: #959595;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/site\/lazy\.less}line{font-family:\0000379}}
 .text-hilite:hover {
