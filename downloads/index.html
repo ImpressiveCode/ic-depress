@@ -24,7 +24,7 @@
 					<div class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
 							<li><a href="../">Home</a></li>
-							<li><a href="../quickstart/">Quick Start</a></li>
+							<li><a href="../quickstart/">Quickstart</a></li>
 							<li><a href="../whatsnew/">What's New</a></li>
 							<li class="hidden-sm  active"><a href="../downloads/">Downloads</a></li>
 							<li><a href="../examples/">Examples</a></li>
@@ -56,10 +56,7 @@
 			<div class="jumbotron jumbotron-ad hidden-print">
 				<div class="container">
 					<h1><i class="fa fa-download"></i>&nbsp; Downloads</h1>
-				</div>
-			</div>
-			
-			<div class="container text-center">
+								<div class="container text-center">
 			<p></p>
 				<a class="btn btn-default btn-lg" href=https://github.com/ImpressiveCode/ic-depress/zipball/master">
 					<i class="fa fa-download fa-lg"></i>&nbsp;&nbsp;
@@ -70,6 +67,43 @@
 					Download tar from GitHub
 				</a>
 			</div>
+				</div>
+			</div>
+			
+
+			
+			<div class="container">
+				<p class="lead">
+					<h4>Users</h4>
+					<ol>
+					<li>Setup your KNIME as described in <a href="../quiuckstart">Quickstart</a></li>
+					<li>Run <i>eclipse.exe</i></li>
+					<li>Click <i>Help</i> -> <i>Install New Software</i>.</li>
+					<li>Next to the box <i>Work with</i> click <i>Add</i>.</li>
+					<li>Name your plugins source as you want and as the <i>Location</i> insert <i>http://impressivecode.github.io/ic-depress/update</i>. Click <i>OK</i>.</li>
+					<li>DePress plugin appeared below. Click <i>Select all</i> to choose plugins to install and click <i>Next</i> twice.
+					<li>Read the license and when you agree with it, tick it and finish.</i>
+					<li>Restart Eclipse application.</i>
+					<li>When you switch the perspective into KNIME, you will see DePress's plugins in the <i>Node Repository</i>.</li>
+					</ol><br>
+					
+					<h4>Developers</h4> 
+					<ol>
+					<li>Setup your KNIME as described in <a href="../quiuckstart">Quickstart</a></li>
+ 					<li>Download the repository from an appropriate tab above. Decompress it if necessary.</li>
+ 					<li>Run <i>eclipse.exe</i></li>
+					<li>Choose <i>File</i> -> <i>Import</i> and then in <i>General section</i>, choose <i>Existing Projects into Workspace</i>. Click <i>Next</i>.</li>
+ 					<li>In next step, in <i>Select root directory</i> choose the directory of your git cloned repository. 19 positions should appear in a box under the name of chosen directory. 
+ 					Select them all, select <i>Copy projects into workspace</i>, under the list and click <i>Finish</i>.</li>
+ 					<li>Now you have to compile it. To do so, right-click on any of imported projects seen on the right (eg. ic-depress-examples) and choose <i>Run As</i> -> <i>Eclipse Application</i>. (The same thing you can do by clicking the button on the top with a white arrow in a green circle.) </li>
+ 					<li>New eclipse instance should execute with all DePress plugins loaded. Open KNIME Perspective.</li>
+					<li>In the new instance, you should be able to find DePress plugins in <i>Node Repository</i> window(if you can not find this window, the link in the third point of KNIME instruction can be useful).</li>
+ 					<li>Now you are ready to create KNIME Workflow. Right-click on <i>Local(Local Workspace)</i> in KNIME Explorer window. Choose <i>New KNIME Workflow</i>. Type the name of your workflow and you can start using plugins.</li>
+ 					<li>In the directory with KNIME application you can find an useful document called <i>Quickstart</i>. There is a lot of information about starting work with as well KNIME as plugins. We recommend checking it out.</li>
+ 					</ol>
+
+				</p>
+			</div>		
 		</div>
 		
 		<footer id="footer" class="footer hidden-print">
