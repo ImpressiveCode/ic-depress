@@ -26,82 +26,36 @@ package org.impressivecode.depress.mr.pitest;
 
 public class PitestEntry {
 		private boolean detection;
-		private String mutationStatus;
-		private String sourceFile;
 		private String mutatedClass;
-		private String mutatedMethod;
-		private String methodDescription;
-		private int lineNumber;
-		private String mutator;
-		private int index;
-		private String killingTest;
+		private double mutationScoreIndicator;
+
 	    @Override
 	    public String toString() {
 	        return String
-	                .format("PitestEntry [mutationStatus=%s, detection=%s, sourceFile=%s, mutatedClass=%s, mutatedMethod=%s, methodDescription=%s, lineNumber=%s, mutator=%s, index=%s, killingTest=%s]",
-	                        mutationStatus, detection, sourceFile, mutatedClass, mutatedMethod, methodDescription, lineNumber, mutator, index, killingTest);
+	                .format("PitestEntry [detection=%s, mutatedClass=%s]",
+	                        detection, mutatedClass);
 	    }
 
-	    
-	    public void setMutationStatus(String textContent){
-	    	this.mutationStatus = textContent;
-	    }
 	    
 	    public void setDetection(boolean textContent){
 	    	this.detection = textContent;
 	    }
 	    
-		public void setSourceFile(String textContent) {
-			this.sourceFile = textContent;
-			
-		}
-
+	    public void setMutationScoreIndicator(double textContent){
+	    	this.mutationScoreIndicator = textContent;
+	    }
+	    
 		public void setMutatedClass(String textContent) {
 			this.mutatedClass = textContent;
 			
 		}
 
-		public void setMutatedMethod(String textContent) {
-			this.mutatedMethod = textContent;
-			
-		}
-
-		public void setMethodDescription(String textContent) {
-			this.methodDescription = textContent;
-			
-		}
-
-		public void setLineNumber(int textContent) {
-			this.lineNumber = textContent;
-			
-		}
-
-		public void setMutator(String textContent) {
-			this.mutator = textContent;
-			
-		}
-
-		public void setIndex(int i) {
-			this.index = i;
-			
-		}
-
-		public void setKillingTest(String textContent) {
-			this.killingTest = textContent;
-			
-		}
-		
-		public String getMutationStatus(){
-			return mutationStatus;
-		}
-		
 		public boolean getDetection(){
 			return detection;
 		}
-
-		public String getSourceFile() {
-			return sourceFile;
-			
+		
+		public double getMutationScoreIndicator(){
+			return mutationScoreIndicator;
 		}
 
 		public String getMutatedClass() {
@@ -109,33 +63,4 @@ public class PitestEntry {
 			
 		}
 
-		public String getMutatedMethod() {
-			return mutatedMethod;
-			
-		}
-
-		public String getMethodDescription() {
-			return methodDescription;
-			
-		}
-
-		public int getLineNumber() {
-			return lineNumber;
-			
-		}
-
-		public String getMutator() {
-			return mutator;
-			
-		}
-
-		public int getIndex() {
-			return index;
-			
-		}
-
-		public String getKillingTest() {
-			return killingTest;
-			
-		}
 }

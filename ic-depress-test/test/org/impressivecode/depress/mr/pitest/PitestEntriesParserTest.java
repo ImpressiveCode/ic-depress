@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.mr.pitest;
 
 import static org.fest.assertions.Assertions.assertThat;
-
+import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.util.List;
 
@@ -40,17 +40,12 @@ public class PitestEntriesParserTest {
         String path = getClass().getResource("pitest.xml").getPath();
         PitestEntriesParser parser = new PitestEntriesParser();
         List<PitestEntry> results = parser.parseEntries(path);
-        assertThat(results).hasSize(16);
+        assertThat(results).hasSize(206);
         assertEntry(results.get(0));
     }
 
     private void assertEntry(final PitestEntry pitestEntry) {
-        assertThat(pitestEntry.getSourceFile()).isEqualTo("H2WKundenrollenTransformer.java");
-        assertThat(pitestEntry.getMutationStatus()).isNotNull();
-        assertThat(pitestEntry.getDetection()).isNotNull();
         assertThat(pitestEntry.getMutatedClass()).isNotNull();
-        assertThat(pitestEntry.getMutatedMethod()).isNotNull();
-        assertThat(pitestEntry.getLineNumber()).isNotNull();
-        assertThat(pitestEntry.getMutator()).isNotNull();
+        assertEquals(0.78, 0.001, pitestEntry.getMutationScoreIndicator());
     }
 }

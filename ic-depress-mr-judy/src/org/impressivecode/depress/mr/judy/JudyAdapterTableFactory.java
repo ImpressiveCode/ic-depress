@@ -17,15 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.mr.judy;
 
-import java.math.BigDecimal;
-
-import org.knime.core.data.DataCell;
-import org.knime.core.data.DataColumnSpec;
-import org.knime.core.data.DataColumnSpecCreator;
-import org.knime.core.data.DataRow;
+import org.impressivecode.depress.mr.MRAdapterTableFactory;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.def.DefaultRow;
-import org.knime.core.data.def.DoubleCell;
 
 /**
  * 
@@ -33,31 +26,7 @@ import org.knime.core.data.def.DoubleCell;
  * 
  */
 public class JudyAdapterTableFactory {
-    private static final String MUTANTS_SCORE = "MutationScoreIndicator";
-
-    private JudyAdapterTableFactory() {
-
-    }
-
-    public static DataTableSpec[] createTableSpec() {
-        return new DataTableSpec[] { createDataColumnSpec() };
-    }
-
-    public static DataTableSpec createDataColumnSpec() {
-        DataColumnSpec[] allColSpecs = new DataColumnSpec[1];
-        allColSpecs[0] = new DataColumnSpecCreator(MUTANTS_SCORE, DoubleCell.TYPE).createSpec();
-        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
-        return outputSpec;
-    }
-
-    public static DataRow createTableRow(final String className, final BigDecimal score) {
-        DataCell[] cells = new DataCell[1];
-        cells[0] = getScoreCell(score);
-        DataRow row = new DefaultRow(className, cells);
-        return row;
-    }
-
-    private static DataCell getScoreCell(final BigDecimal score) {
-        return new DoubleCell(score != null ? score.doubleValue() : 0);
-    }
+	 public static DataTableSpec[] createTableSpec() {
+	        return new DataTableSpec[] { MRAdapterTableFactory.createDataColumnSpec() };
+	    }
 }
