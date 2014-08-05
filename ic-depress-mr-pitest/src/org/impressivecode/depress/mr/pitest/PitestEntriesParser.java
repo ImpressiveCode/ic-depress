@@ -21,6 +21,8 @@ package org.impressivecode.depress.mr.pitest;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -52,6 +54,7 @@ public class PitestEntriesParser {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(path);
         NodeList nList = getSourceFileNodes(doc);
+        DecimalFormat df = new DecimalFormat("#.##");
         int size = nList.getLength();
         List<PitestEntry> pitestEntries = Lists.newLinkedList();
         for (int i = 0; i < size; i++) {
@@ -59,8 +62,37 @@ public class PitestEntriesParser {
             PitestEntry entry = parse(item);
             pitestEntries.add(entry);
         }
+        
+        for(int i = 0; i< pitestEntries.size(); i++) {
+        	int mutations = 1;
+        	int passed_mutations = 0;
+        	PitestEntry elem = pitestEntries.get(i);
+        	//pitestEntries.remove(elem);
+        	if(elem.getDetection() == true)
+        		passed_mutations++;
+        	for(int j = i+1; j< pitestEntries.size(); j++) {
+            	PitestEntry elem1 = pitestEntries.get(j);
+            	if(elem.getMutatedClass().equals(elem1.getMutatedClass())) {
+            		if(elem1.getDetection() == true) {
+        				passed_mutations++;
+        			}
+        			mutations ++;
+        			pitestEntries.remove(elem1);
+        			j--;
+	
+            	}
+            	
+            }
+
+        	if(mutations != 0)
+        		elem.setMutationScoreIndicator(Double.valueOf(df.format((double)passed_mutations/(double)mutations)));
+        	else
+        		elem.setMutationScoreIndicator(0.00);
+ 
+       }
+       
         return pitestEntries;
-    }
+    } 
 
     private NodeList getSourceFileNodes(final Document doc) {
         return doc.getElementsByTagName("mutation");
@@ -71,17 +103,9 @@ public class PitestEntriesParser {
         PitestEntry pitest = new PitestEntry();
 
         Element eItem = (Element) item;
-        
-        pitest.setMutationStatus(eItem.getAttribute("status"));
+
         pitest.setDetection(Boolean.valueOf(eItem.getAttribute("detected")));
-    	pitest.setSourceFile(eItem.getElementsByTagName("sourceFile").item(0).getTextContent());
     	pitest.setMutatedClass(eItem.getElementsByTagName("mutatedClass").item(0).getTextContent());
-    	pitest.setMutatedMethod(eItem.getElementsByTagName("mutatedMethod").item(0).getTextContent());
-    	pitest.setMethodDescription(eItem.getElementsByTagName("methodDescription").item(0).getTextContent());
-    	pitest.setLineNumber(Integer.parseInt(eItem.getElementsByTagName("lineNumber").item(0).getTextContent()));
-    	pitest.setMutator(eItem.getElementsByTagName("mutator").item(0).getTextContent());
-    	pitest.setIndex(Integer.parseInt(eItem.getElementsByTagName("index").item(0).getTextContent()));
-    	pitest.setKillingTest(eItem.getElementsByTagName("killingTest").item(0).getTextContent());
 
         return pitest;
     }

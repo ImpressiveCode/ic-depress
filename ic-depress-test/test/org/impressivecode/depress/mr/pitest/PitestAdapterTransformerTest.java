@@ -24,7 +24,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.List;
-
 import org.impressivecode.depress.mr.pitest.PitestAdapterTransformer;
 import org.impressivecode.depress.mr.pitest.PitestEntry;
 import org.junit.Test;
@@ -90,16 +89,8 @@ public class PitestAdapterTransformerTest {
     		final String mutatedMethod, final String methodDescription, final int lineNumber, final String mutator, final int index, final String killingTest) {
     	PitestEntry entry = new PitestEntry();
         
-    	entry.setMutationStatus(mutationStatus);
     	entry.setDetection(detection);
-    	entry.setSourceFile(sourceFile);
     	entry.setMutatedClass(mutatedClass);
-    	entry.setMutatedMethod(mutatedMethod);
-    	entry.setMethodDescription(methodDescription);
-    	entry.setLineNumber(lineNumber);
-    	entry.setMutator(mutator);
-    	entry.setIndex(index);
-    	entry.setKillingTest(killingTest);
         return entry;
     }
 }

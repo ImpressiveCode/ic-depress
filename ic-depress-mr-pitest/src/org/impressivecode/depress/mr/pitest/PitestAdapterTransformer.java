@@ -20,7 +20,7 @@ package org.impressivecode.depress.mr.pitest;
 	import static com.google.common.base.Preconditions.checkNotNull;
 	import static org.impressivecode.depress.common.Cells.stringOrMissingCell;
 	import static org.impressivecode.depress.common.Cells.booleanCell;
-	import static org.impressivecode.depress.common.Cells.integerCell;
+	import static org.impressivecode.depress.common.Cells.doubleOrMissingCell;
 	import java.util.List;
 		
 	import org.knime.core.data.DataCell;
@@ -57,18 +57,17 @@ public class PitestAdapterTransformer {
     public BufferedDataTable transform(final List<PitestEntry> pitestdata, final ExecutionContext exec)
             throws CanceledExecutionException {
         BufferedDataContainer container = createDataContainer(exec);
-        Long counter = 0l;
         for (PitestEntry entry : pitestdata) {
             progress(exec);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Transforming metric, class: " + entry.getSourceFile());
+                LOGGER.debug("Transforming metric, class: " + entry.getMutatedClass());
             }
 
             if (LOGGER.isEnabledFor(LEVEL.ALL)) {
                 LOGGER.debug("Transforming metric:" + entry.toString());
             }
-            DataRow row = createTableRow(String.valueOf(counter++),entry);
+            DataRow row = createTableRow(entry.getMutatedClass(),entry);
             container.addRowToTable(row);
         }
         container.close();
@@ -84,16 +83,7 @@ public class PitestAdapterTransformer {
 
     private DataCell[] getPitestCells(final PitestEntry value) {
         DataCell[] cells = { 
-        		stringOrMissingCell(value.getMutationStatus()),
-        		booleanCell(value.getDetection()),
-        		stringOrMissingCell(value.getSourceFile()),
-        		stringOrMissingCell(value.getMutatedClass()),
-        		stringOrMissingCell(value.getMutatedMethod()),
-        		stringOrMissingCell(value.getMethodDescription()),
-        		integerCell(value.getLineNumber()),
-        		stringOrMissingCell(value.getMutator()),
-        		integerCell(value.getIndex()),
-        		stringOrMissingCell(value.getKillingTest())};
+        		doubleOrMissingCell(value.getMutationScoreIndicator())};
         return cells;
     }
 

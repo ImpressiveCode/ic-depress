@@ -45,12 +45,7 @@ public class PitestEntriesParserTest {
     }
 
     private void assertEntry(final PitestEntry pitestEntry) {
-        assertThat(pitestEntry.getSourceFile()).isEqualTo("H2WKundenrollenTransformer.java");
-        assertThat(pitestEntry.getMutationStatus()).isNotNull();
         assertThat(pitestEntry.getDetection()).isNotNull();
         assertThat(pitestEntry.getMutatedClass()).isNotNull();
-        assertThat(pitestEntry.getMutatedMethod()).isNotNull();
-        assertThat(pitestEntry.getLineNumber()).isNotNull();
-        assertThat(pitestEntry.getMutator()).isNotNull();
     }
 }
