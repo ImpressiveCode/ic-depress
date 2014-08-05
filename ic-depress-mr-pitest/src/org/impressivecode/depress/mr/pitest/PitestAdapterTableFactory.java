@@ -17,32 +17,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.mr.pitest;
 
-import org.knime.core.data.DataColumnSpec;
-import org.knime.core.data.DataColumnSpecCreator;
+import org.impressivecode.depress.mr.MRAdapterTableFactory;
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.data.def.DoubleCell;
 
 /**
  * 
- * @author Zuzanna Pacholczyk, Capgemini Polska
+ * @author Zuzanna Pacholczyk, Capgemini Poland
  * 
  */
-public class PitestAdapterTableFactory {	
-
-    private static final String MUTATION_SCORE = "MutationScoreIndicator";
-
-    public PitestAdapterTableFactory() {
-
-    }
-
-    public static DataTableSpec[] createTableSpec() {
-        return new DataTableSpec[] { createDataColumnSpec() };
-    }
-
-    public static DataTableSpec createDataColumnSpec() {
-        DataColumnSpec[] allColSpecs = {  
-                new DataColumnSpecCreator(MUTATION_SCORE, DoubleCell.TYPE).createSpec()};
-        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
-        return outputSpec;
-    }
+public class PitestAdapterTableFactory {
+	 public static DataTableSpec[] createTableSpec() {
+	        return new DataTableSpec[] { MRAdapterTableFactory.createDataColumnSpec() };
+	    }
 }

@@ -22,7 +22,6 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -67,7 +66,6 @@ public class PitestEntriesParser {
         	int mutations = 1;
         	int passed_mutations = 0;
         	PitestEntry elem = pitestEntries.get(i);
-        	//pitestEntries.remove(elem);
         	if(elem.getDetection() == true)
         		passed_mutations++;
         	for(int j = i+1; j< pitestEntries.size(); j++) {
@@ -85,7 +83,7 @@ public class PitestEntriesParser {
             }
 
         	if(mutations != 0)
-        		elem.setMutationScoreIndicator(Double.valueOf(df.format((double)passed_mutations/(double)mutations)));
+        		elem.setMutationScoreIndicator(Double.valueOf((df.format((double)passed_mutations/(double)mutations)).replaceAll(",",".")));
         	else
         		elem.setMutationScoreIndicator(0.00);
  

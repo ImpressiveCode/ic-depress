@@ -18,8 +18,6 @@
 	
 package org.impressivecode.depress.mr.pitest;
 	import static com.google.common.base.Preconditions.checkNotNull;
-	import static org.impressivecode.depress.common.Cells.stringOrMissingCell;
-	import static org.impressivecode.depress.common.Cells.booleanCell;
 	import static org.impressivecode.depress.common.Cells.doubleOrMissingCell;
 	import java.util.List;
 		
