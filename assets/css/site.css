@@ -7688,14 +7688,12 @@ body {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/site\/textured-bg\.less}line{font-family:\000031}}
 .jumbotron,
-.navbar-inverse,
-#footer {
+.navbar-inverse {
   position: relative;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/site\/textured-bg\.less}line{font-family:\000033}}
 .jumbotron:after,
-.navbar-inverse:after,
-#footer:after {
+.navbar-inverse:after {
   content: '';
   display: block;
   position: absolute;
@@ -7709,8 +7707,7 @@ body {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/site\/textured-bg\.less}line{font-family:\0000315}}
 .jumbotron .container,
-.navbar-inverse .container,
-#footer .container {
+.navbar-inverse .container {
   position: relative;
   z-index: 2;
 }
