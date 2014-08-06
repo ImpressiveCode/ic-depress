@@ -4959,7 +4959,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
   color: #ffffff;
-  background-color: #4f90ff;
+  background-color: #3d85ff;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/bootstrap-3\.1\.1\/navbar\.less}line{font-family:\00003534}}
 .navbar-inverse .navbar-nav > .disabled > a,
@@ -4990,7 +4990,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
 .navbar-inverse .navbar-nav > .open > a:focus {
-  background-color: #4f90ff;
+  background-color: #3d85ff;
   color: #ffffff;
 }
 @media (max-width: 767px) {
@@ -5017,7 +5017,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #ffffff;
-    background-color: #4f90ff;
+    background-color: #3d85ff;
   }
   @media -sass-debug-info{filename{font-family:file\:\/\/C\:\/xampp\/tomcat\/webapps\/ic-depress\/assets\/less\/bootstrap-3\.1\.1\/navbar\.less}line{font-family:\00003597}}
   .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a,
