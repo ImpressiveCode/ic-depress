@@ -45,19 +45,20 @@ import org.xml.sax.SAXException;
 import com.google.common.base.Preconditions;
 
 /**
- * 
  * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class JiraAdapterNodeModel extends NodeModel {
 
+	private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraAdapterNodeModel.class);
+	
     private static final String DEFAULT_VALUE = "";
-
     private static final String CONFIG_NAME = "depress.its.jira.confname";
-
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraAdapterNodeModel.class);
+    private static final String RADIO_DEFAULT_VALUE = "Trivial";
+    private static final String RADIO_CONFIG_NAME = "depress.its.jira.radio";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
+    private final SettingsModelString radioSettings = createRadioSettings();
 
     protected JiraAdapterNodeModel() {
         super(0, 1);
@@ -98,16 +99,19 @@ public class JiraAdapterNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         fileSettings.saveSettingsTo(settings);
+        radioSettings.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileSettings.loadSettingsFrom(settings);
+        radioSettings.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileSettings.validateSettings(settings);
+        radioSettings.validateSettings(settings);
     }
 
     @Override
@@ -125,4 +129,9 @@ public class JiraAdapterNodeModel extends NodeModel {
     static SettingsModelString createFileChooserSettings() {
         return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
     }
+
+	static SettingsModelString createRadioSettings() {
+		return new SettingsModelString(RADIO_CONFIG_NAME, RADIO_DEFAULT_VALUE);
+	}
+    
 }

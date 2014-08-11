@@ -27,6 +27,7 @@ import org.knime.core.data.def.StringCell;
 /**
  * 
  * @author Pawel Nosal, ImpressiveCode
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public enum ColumnNames {

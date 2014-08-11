@@ -216,8 +216,8 @@ public class CrawlerAdapterNodeModel extends NodeModel {
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-    	//fileSettingsXML.validateSettings(settings);
-    	//fileSettingsDIR.validateSettings(settings);
+    	fileSettingsXML.validateSettings(settings);
+    	fileSettingsDIR.validateSettings(settings);
     	radioSettings.validateSettings(settings);
     	packageSettings.validateSettings(settings);
     	for(SettingsModelBoolean settingsModelBoolean : booleanSettings.values()){
