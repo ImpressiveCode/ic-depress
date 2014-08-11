@@ -21,6 +21,10 @@ import static org.impressivecode.depress.its.jira.JiraAdapterNodeModel.createFil
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -28,9 +32,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
@@ -46,6 +59,10 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
 import org.knime.core.node.util.ColumnFilterPanel;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
@@ -78,8 +95,11 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
     private void createPriorityTab() {
     	JPanel panel = new JPanel(new BorderLayout());
     	JPanel north = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    	JButton refreshButton = new JButton("Refresh");
+    	refreshButton.addActionListener(new RefreshListener());
     	radioButton = new DialogComponentButtonGroup(radioButtonSettings, null, false, actions, actions);
     	radioButton.getModel().addChangeListener(new RadioButtonChangeListener());
+    	north.add(refreshButton);
     	north.add(radioButton.getComponentPanel());
         panel.add(north, BorderLayout.NORTH);
         filterPanel = new ColumnFilterPanel(false);
@@ -102,9 +122,9 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
 
     @SuppressWarnings("unchecked")
 	private void loadMultiFilterSettings() {
-    	List<String> priorityList;
+    	List<String> priorityList = null;
     	if(actionsIncludeList.isEmpty()) {
-    		priorityList = parsePrioritiesFromFile();
+			priorityList = parsePriorities();
             priorityTable = createTableSpec(priorityList);
             filterPanel.update(priorityTable, false, Collections.EMPTY_SET);
     	} else {
@@ -115,8 +135,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
             filterPanel.update(priorityTable, filterPanel.getIncludedColumnSet(), filterPanel.getExcludedColumnSet());
     	}
 	}
-
-	private List<String> parsePrioritiesFromFile() {
+    private List<String> parsePriorities() {
     	for(String action : actions) {
     		actionsIncludeList.put(action, new LinkedList<String>());
     	}
@@ -129,6 +148,36 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
         return priorityList;
     }
     
+	private List<String> parsePrioritiesFromFile() {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = null;
+		try {
+			builder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {}
+        Document doc = null;
+		try {
+			System.out.println("Looking at: " + ((SettingsModelString)(chooser.getModel())).getStringValue());
+			doc = builder.parse(new File(((SettingsModelString)(chooser.getModel())).getStringValue()));
+		} catch (SAXException | IOException e) {
+		}
+        XPathFactory xPathfactory = XPathFactory.newInstance();
+        XPath xpath = xPathfactory.newXPath();
+        XPathExpression expr = null;
+		try {
+			expr = xpath.compile("/rss/channel/item/priority[not(preceding::priority/. = .)]");
+		} catch (XPathExpressionException e1) {}
+		List<String> priorityList = new LinkedList<String>();
+        try {
+			NodeList list = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+			for (int i = 0; i < list.getLength(); i++) {
+			    Node node = list.item(i);
+			    priorityList.add(node.getTextContent());
+			    System.out.println(node.getTextContent());
+			}
+		} catch (XPathExpressionException e) {} 
+        return priorityList;
+    }
+    
     @Override
     public final void saveSettingsTo(final NodeSettingsWO settings)
             throws InvalidSettingsException {
@@ -138,17 +187,27 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
     }
     
     private void saveMultiFilterSettings(final NodeSettingsWO settings) {
-    	Set<String> priority = filterPanel.getIncludedColumnSet();
-    	String[] columnsArray = priority.toArray(new String[priority.size()]);
-    	settings.addStringArray("priorityColumns", columnsArray);
+    	//refactor
+    	Set<String> set = filterPanel.getIncludedColumnSet();
+    	settings.addStringArray(JiraAdapterNodeModel.UNKNOWN_CONFIG_NAME, set.toArray(new String[set.size()]));
+    	List<String> list;
+    	list = actionsIncludeList.get("Blocker");
+    	settings.addStringArray(JiraAdapterNodeModel.BLOCKER_CONFIG_NAME, list.toArray(new String[list.size()]));
+    	list = actionsIncludeList.get("Critical");
+    	settings.addStringArray(JiraAdapterNodeModel.CRITICAL_CONFIG_NAME, list.toArray(new String[list.size()]));
+    	list = actionsIncludeList.get("Major");
+    	settings.addStringArray(JiraAdapterNodeModel.MAJOR_CONFIG_NAME, list.toArray(new String[list.size()]));
+    	list = actionsIncludeList.get("Minor");
+    	settings.addStringArray(JiraAdapterNodeModel.MINOR_CONFIG_NAME, list.toArray(new String[list.size()]));
+    	list = actionsIncludeList.get("Trivial");
+    	settings.addStringArray(JiraAdapterNodeModel.TRIVIAL_CONFIG_NAME, list.toArray(new String[list.size()]));
 	}
 
 	private DataTableSpec createTableSpec(List<String> list) {
 		DataColumnSpec[] columns = new DataColumnSpec[list.size()];
-        int index = 0;
+		int index = 0;
         for (String s : list) {
-        	columns[index++] =
-                new DataColumnSpecCreator(s, StringCell.TYPE).createSpec();
+        	columns[index++] = new DataColumnSpecCreator(s, StringCell.TYPE).createSpec();
         }
         return new DataTableSpec(columns);
     }
@@ -163,16 +222,32 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
  	}
     
     private class RadioButtonChangeListener implements ChangeListener {
-    	@Override
- 		public void stateChanged(ChangeEvent event) {
- 			SettingsModelString radioSettings = (SettingsModelString)(event.getSource());
- 			List<String> newIncludeList = actionsIncludeList.get(radioSettings.getStringValue());
- 			List<String> priorityList = new LinkedList<String>();
+		@Override
+		public void stateChanged(ChangeEvent event) {
+			SettingsModelString radioSettings = (SettingsModelString)(event.getSource());
+			List<String> newIncludeList = actionsIncludeList.get(radioSettings.getStringValue());
+			List<String> priorityList = new LinkedList<String>();
 			priorityList.addAll(newIncludeList);
 			priorityList.addAll(filterPanel.getExcludedColumnSet());
 			priorityTable = createTableSpec(priorityList);
  			filterPanel.update(priorityTable, newIncludeList, filterPanel.getExcludedColumnSet());
  		}
  	}
-
+    
+    private class RefreshListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			((JButton)event.getSource()).setText("Refreshing...");
+			((JButton)event.getSource()).setEnabled(false);
+			radioButton.getModel().setEnabled(false);
+			filterPanel.setEnabled(false);
+			
+			parsePrioritiesFromFile();
+	        
+	        radioButton.getModel().setEnabled(true);
+	        filterPanel.setEnabled(true);
+	        ((JButton)event.getSource()).setEnabled(true);
+	        ((JButton)event.getSource()).setText("Refresh");
+		}
+    }
 }
