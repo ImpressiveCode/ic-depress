@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <knimeNode icon="./default.png" type="Source" xmlns="http://knime.org/node/v2.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://knime.org/node/v2.8 http://knime.org/node/v2.8.xsd">
-    <name>ChidamberKemererJavaMetrics</name>
+    <name>ChidamberKemererMetrics</name>
     
     <shortDescription>
-        Chidamber and Kemerer Java Metrics Adapter, ImpressiveCode DePress Plugin Framework.
+        Chidamber and Kemerer Metrics Adapter, ImpressiveCode DePress Plugin Framework.
     </shortDescription>
     
     <fullDescription>
@@ -22,11 +22,19 @@
 			    <li>LCOM: Lack of cohesion in methods</li>
 			    <li>Ca: Afferent couplings</li>
 			    <li>NPM: Number of public methods</li>
+		        <li>DAM: Data Access Metric</li>
+		        <li>MOA: Measure of Aggregation</li>
+		        <li>MFA: Measure of Functional Abstraction</li>
+				<li>CAM: Cohesion Among Methods of Class</li>
+				<li>IC: Inheritance Coupling</li>
+				<li>CBM: Coupling Between Methods</li>
+				<li>AMC: Average Method Complexity</li>
+		        		        
 				</ul>
 				<br />
 				
 				Running Ckjm - refer to
-				<a href="http://www.spinellis.gr/sw/ckjm/">http://www.spinellis.gr/sw/ckjm/</a>
+				<a href="http://www.spinellis.gr/sw/ckjm/doc/anttask.html">http://www.spinellis.gr/sw/ckjm/doc/anttask.html</a>
 				<br />
 
 			</p>
