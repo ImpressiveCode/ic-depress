@@ -29,6 +29,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
+import org.impressivecode.depress.its.ITSPriority;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -53,27 +54,22 @@ public class JiraAdapterNodeModel extends NodeModel {
 
 	private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraAdapterNodeModel.class);
 	
-    private static final String DEFAULT_VALUE = "";
-    private static final String CONFIG_NAME = "depress.its.jira.confname";
+	static final String CONFIG_NAME = "depress.its.jira.";
+	
+    private static final String CHOOSER_DEFAULT_VALUE = "";
+    private static final String CHOOSER_CONFIG_NAME = CONFIG_NAME + "chooser";
     private static final String RADIO_DEFAULT_VALUE = "Trivial";
-    private static final String RADIO_CONFIG_NAME = "depress.its.jira.radio";
-    
-    static final String UNKNOWN_CONFIG_NAME = "depress.its.jira.unknown";
-    static final String BLOCKER_CONFIG_NAME = "depress.its.jira.blocker";
-    static final String CRITICAL_CONFIG_NAME = "depress.its.jira.critical";
-    static final String MAJOR_CONFIG_NAME = "depress.its.jira.major";
-    static final String MINOR_CONFIG_NAME = "depress.its.jira.minor";
-    static final String TRIVIAL_CONFIG_NAME = "depress.its.jira.trivial";
+    private static final String RADIO_CONFIG_NAME = "CONFIG_NAME" + "radio";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
     private final SettingsModelString radioSettings = createRadioSettings();
     //refactor
-    private final SettingsModelStringArray unknownPrioritySettings = new SettingsModelStringArray(UNKNOWN_CONFIG_NAME, null);
-    private final SettingsModelStringArray blockerPrioritySettings = new SettingsModelStringArray(BLOCKER_CONFIG_NAME, null);
-    private final SettingsModelStringArray criticalPrioritySettings = new SettingsModelStringArray(CRITICAL_CONFIG_NAME, null);
-    private final SettingsModelStringArray majorPrioritySettings = new SettingsModelStringArray(MAJOR_CONFIG_NAME, null);
-    private final SettingsModelStringArray minorPrioritySettings = new SettingsModelStringArray(MINOR_CONFIG_NAME, null);
-    private final SettingsModelStringArray trivialPrioritySettings = new SettingsModelStringArray(TRIVIAL_CONFIG_NAME, null);
+    private final SettingsModelStringArray unknownPrioritySettings = new SettingsModelStringArray(CONFIG_NAME + ITSPriority.UNKNOWN.getLabel(), null);
+    private final SettingsModelStringArray blockerPrioritySettings = new SettingsModelStringArray(CONFIG_NAME + ITSPriority.BLOCKER.getLabel(), null);
+    private final SettingsModelStringArray criticalPrioritySettings = new SettingsModelStringArray(CONFIG_NAME + ITSPriority.CRITICAL.getLabel(), null);
+    private final SettingsModelStringArray majorPrioritySettings = new SettingsModelStringArray(CONFIG_NAME + ITSPriority.MAJOR.getLabel(), null);
+    private final SettingsModelStringArray minorPrioritySettings = new SettingsModelStringArray(CONFIG_NAME + ITSPriority.MINOR.getLabel(), null);
+    private final SettingsModelStringArray trivialPrioritySettings = new SettingsModelStringArray(CONFIG_NAME + ITSPriority.TRIVIAL.getLabel(), null);
     
     protected JiraAdapterNodeModel() {
         super(0, 1);
@@ -159,7 +155,7 @@ public class JiraAdapterNodeModel extends NodeModel {
     }
 
     static SettingsModelString createFileChooserSettings() {
-        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
+        return new SettingsModelString(CHOOSER_CONFIG_NAME, CHOOSER_DEFAULT_VALUE);
     }
 
 	static SettingsModelString createRadioSettings() {

@@ -1,6 +1,24 @@
+/*
+ ImpressiveCode Depress Framework
+ Copyright (C) 2013  ImpressiveCode contributors
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.impressivecode.depress.its.jira;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,7 +27,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 import javax.swing.JButton;
@@ -27,34 +44,41 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponentButtonGroup;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
-import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
 import org.knime.core.node.util.ColumnFilterPanel;
 
+/**
+ * @author Maciej Borkowski, Capgemini Poland
+ */
 public class MultiFilterComponent {
-    private final JPanel panel = new JPanel();
+    private final JPanel panel = new JPanel(new BorderLayout());
 
     private final JButton refreshButton;
     private final DialogComponentButtonGroup radioButton;
     private final ColumnFilterPanel filterPanel;
     private final SettingsModelString radioButtonSettings;
     private final String[] radioLabels;
+    private final String configName;
     private final Callable<List<String>> refreshCaller;
 
     private final Map<String, List<String>> includeLists = new LinkedHashMap<String, List<String>>();
 
-    public JPanel getPanel() {
-        return panel;
-    }
-
-    public MultiFilterComponent(final SettingsModelString radioButtonSettings,
-            final SettingsModelStringArray filterSettings, final String[] radioLabels, Callable<List<String>> refreshCall) {
+    /**
+     * Creates a component that lets user put some input strings into multiple groups.
+     * You can add this component to your dialog using getPanel().
+     * @param radioButtonSettings settings for DialogComponentButtonGroup 
+     * @param radioLabels labels for DialogComponentButtonGroup
+     * @param configName the beggining of your chosen configuration String user by SettingsModel, which will be used with radioLabels to store data(configName+radioLabel)
+     * @param refreshCall function called after every Refresh button click, intended for loading input Strings
+     */
+    public MultiFilterComponent(final SettingsModelString radioButtonSettings, final String[] radioLabels, final String configName, Callable<List<String>> refreshCall) {
         this.radioButtonSettings = radioButtonSettings;
         this.radioLabels = radioLabels;
         this.refreshCaller = refreshCall;
+        this.configName = configName;
         
-        JPanel north = new JPanel();
-
+        JPanel north = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        
         refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(new RefreshListener());
         north.add(refreshButton);
@@ -103,21 +127,12 @@ public class MultiFilterComponent {
     }
 
     public final void saveSettingsTo(final NodeSettingsWO settings) throws InvalidSettingsException {
-        radioButton.saveSettingsTo(settings);
-        // refactor
-        Set<String> set = filterPanel.getIncludedColumnSet();
-        settings.addStringArray(JiraAdapterNodeModel.UNKNOWN_CONFIG_NAME, set.toArray(new String[set.size()]));
+        radioButton.saveSettingsTo(settings);  
         List<String> list;
-        list = includeLists.get("Blocker");
-        settings.addStringArray(JiraAdapterNodeModel.BLOCKER_CONFIG_NAME, list.toArray(new String[list.size()]));
-        list = includeLists.get("Critical");
-        settings.addStringArray(JiraAdapterNodeModel.CRITICAL_CONFIG_NAME, list.toArray(new String[list.size()]));
-        list = includeLists.get("Major");
-        settings.addStringArray(JiraAdapterNodeModel.MAJOR_CONFIG_NAME, list.toArray(new String[list.size()]));
-        list = includeLists.get("Minor");
-        settings.addStringArray(JiraAdapterNodeModel.MINOR_CONFIG_NAME, list.toArray(new String[list.size()]));
-        list = includeLists.get("Trivial");
-        settings.addStringArray(JiraAdapterNodeModel.TRIVIAL_CONFIG_NAME, list.toArray(new String[list.size()]));
+        for(String label : radioLabels) {
+            list = includeLists.get(label);
+            settings.addStringArray(configName + label, list.toArray(new String[list.size()]));
+        }
     }
 
     private List<String> initLists() {
@@ -175,6 +190,10 @@ public class MultiFilterComponent {
             ((JButton) event.getSource()).setEnabled(true);
             ((JButton) event.getSource()).setText("Refresh");
         }
+    }
+    
+    public JPanel getPanel() {
+        return panel;
     }
 
 }

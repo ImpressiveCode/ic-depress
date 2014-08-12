@@ -72,7 +72,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
 	}
 	
     private void createPriorityTab() {
-    	multiFilterComponent = new MultiFilterComponent(radioButtonSettings, null, ITSPriority.labels(), new refreshCaller());
+    	multiFilterComponent = new MultiFilterComponent(radioButtonSettings, ITSPriority.labels(), JiraAdapterNodeModel.CONFIG_NAME, new refreshCaller());
         addTab("Priority", multiFilterComponent.getPanel());
 	}
     
