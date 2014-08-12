@@ -24,6 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -56,9 +57,14 @@ import com.google.common.collect.Lists;
  */
 public class JiraEntriesParser {
     private static final String JIRA_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z";
+    private final HashMap<String, String[]> settings;
 
-    public List<ITSDataType> parseEntries(final String path) throws ParserConfigurationException, SAXException,
-    IOException, ParseException {
+    public JiraEntriesParser(final HashMap<String, String[]> settings) {
+        this.settings = settings;
+    }
+
+    public List<ITSDataType> parseEntries(final String path)
+            throws ParserConfigurationException, SAXException, IOException, ParseException {
         Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -221,20 +227,16 @@ public class JiraEntriesParser {
         if (priority == null) {
             return ITSPriority.UNKNOWN;
         }
-        switch (priority) {
-        case "Trivial":
-            return ITSPriority.TRIVIAL;
-        case "Minor":
-            return ITSPriority.MINOR;
-        case "Major":
-            return ITSPriority.MAJOR;
-        case "Critical":
-            return ITSPriority.CRITICAL;
-        case "Blocker":
-            return ITSPriority.BLOCKER;
-        default:
-            return ITSPriority.UNKNOWN;
+        for(String key : settings.keySet()) {
+            if(priority.equals(key)) {
+                return ITSPriority.get(key);
+            }
+            for(String value : settings.get(key)) {
+                if(priority.equals(value) ) return ITSPriority.get(key);
+            }
         }
+        
+        return ITSPriority.UNKNOWN;
     }
 
     private String getLink(final Element elem) {

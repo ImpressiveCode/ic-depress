@@ -21,6 +21,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -58,7 +59,8 @@ public class JiraEntriesParserTest {
     }
 
     private List<ITSDataType> parse() throws ParserConfigurationException, SAXException, IOException, ParseException {
-        JiraEntriesParser parser = new JiraEntriesParser();
+        HashMap<String, String[]> settings = new HashMap<String, String[]>();
+        JiraEntriesParser parser = new JiraEntriesParser(settings);
         String path = getClass().getResource("jira.xml").getPath();
         List<ITSDataType> entries = parser.parseEntries(path);
         return entries;

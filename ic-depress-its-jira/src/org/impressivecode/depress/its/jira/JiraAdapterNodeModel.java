@@ -22,7 +22,9 @@ import static org.impressivecode.depress.its.jira.JiraAdapterTableFactory.create
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -58,24 +60,26 @@ public class JiraAdapterNodeModel extends NodeModel {
 	
     private static final String CHOOSER_DEFAULT_VALUE = "";
     private static final String CHOOSER_CONFIG_NAME = CONFIG_NAME + "chooser";
-    private static final String RADIO_DEFAULT_VALUE = "Trivial";
-    private static final String RADIO_CONFIG_NAME = "CONFIG_NAME" + "radio";
+    static final String RADIO_CONFIG_NAME1 = CONFIG_NAME + "radio1";
+    static final String RADIO_CONFIG_NAME2 = CONFIG_NAME + "radio2";
+    static final String RADIO_CONFIG_NAME3 = CONFIG_NAME + "radio3";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
-    private final SettingsModelString radioSettings = createRadioSettings();
-    //refactor
-    private final SettingsModelStringArray unknownPrioritySettings = new SettingsModelStringArray(CONFIG_NAME + ITSPriority.UNKNOWN.getLabel(), null);
-    private final SettingsModelStringArray blockerPrioritySettings = new SettingsModelStringArray(CONFIG_NAME + ITSPriority.BLOCKER.getLabel(), null);
-    private final SettingsModelStringArray criticalPrioritySettings = new SettingsModelStringArray(CONFIG_NAME + ITSPriority.CRITICAL.getLabel(), null);
-    private final SettingsModelStringArray majorPrioritySettings = new SettingsModelStringArray(CONFIG_NAME + ITSPriority.MAJOR.getLabel(), null);
-    private final SettingsModelStringArray minorPrioritySettings = new SettingsModelStringArray(CONFIG_NAME + ITSPriority.MINOR.getLabel(), null);
-    private final SettingsModelStringArray trivialPrioritySettings = new SettingsModelStringArray(CONFIG_NAME + ITSPriority.TRIVIAL.getLabel(), null);
+    
+    private final HashMap<String, SettingsModelStringArray> prioritySettings = new HashMap<String, SettingsModelStringArray>();
     
     protected JiraAdapterNodeModel() {
         super(0, 1);
+        initializeSettings();
     }
 
-	@Override
+	private void initializeSettings() {
+	    for(String label : ITSPriority.labels()) {
+	        prioritySettings.put(label, new SettingsModelStringArray(CONFIG_NAME + label, null));
+	    }
+    }
+
+    @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
         LOGGER.info("Preparing to read jira entries.");
         String filePath = fileSettings.getStringValue();
@@ -86,6 +90,14 @@ public class JiraAdapterNodeModel extends NodeModel {
         return new BufferedDataTable[] { out };
     }
 
+    private HashMap<String, String[]> getSettings() {
+        HashMap<String, String[]> currentSettings = new HashMap<String, String[]>();      
+        for(Entry<String, SettingsModelStringArray> entry: prioritySettings.entrySet()){
+            currentSettings.put(entry.getKey(), entry.getValue().getStringArrayValue());
+        }
+        return currentSettings;
+    }
+    
     private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
         ITSAdapterTransformer transformer = new ITSAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
         return transformer.transform(entries, exec);
@@ -93,7 +105,7 @@ public class JiraAdapterNodeModel extends NodeModel {
 
     private List<ITSDataType> parseEntries(final String filePath) throws ParserConfigurationException, SAXException,
     IOException, ParseException {
-        return new JiraEntriesParser().parseEntries(filePath);
+        return new JiraEntriesParser(getSettings()).parseEntries(filePath);
     }
 
     @Override
@@ -109,37 +121,25 @@ public class JiraAdapterNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         fileSettings.saveSettingsTo(settings);
-        radioSettings.saveSettingsTo(settings);
-        unknownPrioritySettings.saveSettingsTo(settings);
-        blockerPrioritySettings.saveSettingsTo(settings);
-        criticalPrioritySettings.saveSettingsTo(settings);
-        majorPrioritySettings.saveSettingsTo(settings);
-        minorPrioritySettings.saveSettingsTo(settings);
-        trivialPrioritySettings.saveSettingsTo(settings);
+        for(SettingsModelStringArray prioritySetting : prioritySettings.values()){
+            prioritySetting.saveSettingsTo(settings);
+        }
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileSettings.loadSettingsFrom(settings);
-        radioSettings.loadSettingsFrom(settings);
-        unknownPrioritySettings.loadSettingsFrom(settings);
-        blockerPrioritySettings.loadSettingsFrom(settings);
-        criticalPrioritySettings.loadSettingsFrom(settings);
-        majorPrioritySettings.loadSettingsFrom(settings);
-        minorPrioritySettings.loadSettingsFrom(settings);
-        trivialPrioritySettings.loadSettingsFrom(settings);
+        for(SettingsModelStringArray prioritySetting : prioritySettings.values()){
+            prioritySetting.loadSettingsFrom(settings);
+        }
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileSettings.validateSettings(settings);
-        radioSettings.validateSettings(settings);
-        unknownPrioritySettings.validateSettings(settings);
-        blockerPrioritySettings.validateSettings(settings);
-        criticalPrioritySettings.validateSettings(settings);
-        majorPrioritySettings.validateSettings(settings);
-        minorPrioritySettings.validateSettings(settings);
-        trivialPrioritySettings.validateSettings(settings);
+        for(SettingsModelStringArray prioritySetting : prioritySettings.values()){
+            prioritySetting.validateSettings(settings);
+        }
     }
 
     @Override
@@ -157,9 +157,5 @@ public class JiraAdapterNodeModel extends NodeModel {
     static SettingsModelString createFileChooserSettings() {
         return new SettingsModelString(CHOOSER_CONFIG_NAME, CHOOSER_DEFAULT_VALUE);
     }
-
-	static SettingsModelString createRadioSettings() {
-		return new SettingsModelString(RADIO_CONFIG_NAME, RADIO_DEFAULT_VALUE);
-	}
     
 }

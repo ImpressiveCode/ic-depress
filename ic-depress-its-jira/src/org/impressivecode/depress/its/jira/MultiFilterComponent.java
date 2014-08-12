@@ -60,7 +60,6 @@ public class MultiFilterComponent {
     private final String[] radioLabels;
     private final String configName;
     private final Callable<List<String>> refreshCaller;
-
     private final Map<String, List<String>> includeLists = new LinkedHashMap<String, List<String>>();
 
     /**
@@ -88,6 +87,8 @@ public class MultiFilterComponent {
         north.add(radioButton.getComponentPanel());
 
         filterPanel = new ColumnFilterPanel(false);
+        filterPanel.setExcludeTitle("Available");
+        filterPanel.setIncludeTitle(radioButtonSettings.getStringValue());
         filterPanel.addChangeListener(new FilteringChangeListener());
 
         panel.add(north, BorderLayout.NORTH);
@@ -109,13 +110,13 @@ public class MultiFilterComponent {
         loadFilter(list);
     }
 
-    public final void loadFilter(List<String> list) throws NotConfigurableException {
+    private final void loadFilter(List<String> list) throws NotConfigurableException {
         if (null == list) {
+            list = new LinkedList<String>();
             if (includeLists.isEmpty()) {
-                list = initLists();
+                initLists();
                 filterPanel.update(createTableSpec(list), false, Collections.<String> emptySet());
             } else {
-                list = new LinkedList<String>();
                 list.addAll(filterPanel.getIncludedColumnSet());
                 list.addAll(filterPanel.getExcludedColumnSet());
                 filterPanel.update(createTableSpec(list), filterPanel.getIncludedColumnSet(),
@@ -135,12 +136,10 @@ public class MultiFilterComponent {
         }
     }
 
-    private List<String> initLists() {
+    private void initLists() {
         for (String action : radioLabels) {
             includeLists.put(action, new LinkedList<String>());
         }
-        List<String> priorityList = new LinkedList<String>();
-        return priorityList;
     }
 
     private class FilteringChangeListener implements ChangeListener {
@@ -156,6 +155,7 @@ public class MultiFilterComponent {
         @Override
         public void stateChanged(ChangeEvent event) {
             SettingsModelString radioSettings = (SettingsModelString) (event.getSource());
+            filterPanel.setIncludeTitle(radioSettings.getStringValue());
             List<String> newIncludeList = includeLists.get(radioSettings.getStringValue());
             List<String> priorityList = new LinkedList<String>();
             priorityList.addAll(newIncludeList);
@@ -171,7 +171,7 @@ public class MultiFilterComponent {
             ((JButton) event.getSource()).setEnabled(false);
             radioButton.getModel().setEnabled(false);
             filterPanel.setEnabled(false);
-
+            
             List<String> priorities = null;
             try {
                 priorities = refreshCaller.call();
@@ -184,7 +184,7 @@ public class MultiFilterComponent {
                 loadFilter(priorities);
             } catch (NotConfigurableException e) {
             }
-
+            
             radioButton.getModel().setEnabled(true);
             filterPanel.setEnabled(true);
             ((JButton) event.getSource()).setEnabled(true);
@@ -195,5 +195,5 @@ public class MultiFilterComponent {
     public JPanel getPanel() {
         return panel;
     }
-
+    
 }
