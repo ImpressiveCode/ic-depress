@@ -27,7 +27,7 @@ import java.util.Map;
  * 
  */
 public enum ITSResolution {
-    INVALID("Invalid"), FIXED("Fixed"), WONT_FIX("Won'tFix"), DUPLICATE("Duplicate"), UNRESOLVED("Unresolved"), UNKNOWN("Unknown");
+    INVALID("Invalid"), FIXED("Fixed"), WONT_FIX("Won´t Fix"), DUPLICATE("Duplicate"), UNRESOLVED("Unresolved"), UNKNOWN("Unknown");
     
     private final String label;
     
@@ -38,11 +38,7 @@ public enum ITSResolution {
     @Override
     public String toString() {
         String value;
-        if (this.equals(WONT_FIX)) {
-            value = "Won't fix";
-        } else {
-            value = (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
-        }
+        value = (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
         return value;
     };
     

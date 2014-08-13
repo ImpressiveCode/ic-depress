@@ -139,30 +139,12 @@ public class JiraEntriesParser {
         if (resolution == null) {
             return ITSResolution.UNKNOWN;
         }
-        switch (resolution) {
-        case "Unresolved":
-            return ITSResolution.UNRESOLVED;
-        case "Fixed":
-            return ITSResolution.FIXED;
-        case "Wont't Fix":
-            return ITSResolution.WONT_FIX;
-        case "Duplicate":
-            return ITSResolution.DUPLICATE;
-        case "Invalid":
-            return ITSResolution.INVALID;
-        case "Incomplete":
-            return ITSResolution.INVALID;
-        case "Cannot Reproduce":
-            return ITSResolution.WONT_FIX;
-        case "Later":
-            return ITSResolution.WONT_FIX;
-        case "Not A Problem":
-            return ITSResolution.WONT_FIX;
-        case "Implemented":
-            return ITSResolution.FIXED;
-        default:
-            return ITSResolution.UNKNOWN;
+        for(String key : settings.keySet()) {
+            for(String value : settings.get(key)) {
+                if(resolution.equals(value) ) return ITSResolution.get(key);
+            }
         }
+        return ITSResolution.UNKNOWN;
     }
 
     private List<String> getVersion(final Element elem) {
@@ -178,19 +160,12 @@ public class JiraEntriesParser {
         if (type == null) {
             return ITSType.UNKNOWN;
         }
-        switch (type) {
-        case "Bug":
-            return ITSType.BUG;
-        case "Test":
-            return ITSType.TEST;
-        case "Improvement":
-        case "New Feature":
-        case "Task":
-        case "Wish":
-            return ITSType.ENHANCEMENT;
-        default:
-            return ITSType.UNKNOWN;
+        for(String key : settings.keySet()) {
+            for(String value : settings.get(key)) {
+                if(type.equals(value) ) return ITSType.get(key);
+            }
         }
+        return ITSType.UNKNOWN;
     }
 
     private String getSummary(final Element elem) {
@@ -228,14 +203,10 @@ public class JiraEntriesParser {
             return ITSPriority.UNKNOWN;
         }
         for(String key : settings.keySet()) {
-            if(priority.equals(key)) {
-                return ITSPriority.get(key);
-            }
             for(String value : settings.get(key)) {
                 if(priority.equals(value) ) return ITSPriority.get(key);
             }
         }
-        
         return ITSPriority.UNKNOWN;
     }
 

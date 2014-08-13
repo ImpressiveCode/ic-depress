@@ -18,6 +18,7 @@
 package org.impressivecode.depress.its.jira;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,10 +53,10 @@ import org.knime.core.node.util.ColumnFilterPanel;
  */
 public class MultiFilterComponent {
     private final JPanel panel = new JPanel(new BorderLayout());
-
     private final JButton refreshButton;
     private final DialogComponentButtonGroup radioButton;
     private final ColumnFilterPanel filterPanel;
+
     private final SettingsModelString radioButtonSettings;
     private final String[] radioLabels;
     private final String configName;
@@ -63,25 +64,33 @@ public class MultiFilterComponent {
     private final Map<String, List<String>> includeLists = new LinkedHashMap<String, List<String>>();
 
     /**
-     * Creates a component that lets user put some input strings into multiple groups.
-     * You can add this component to your dialog using getPanel().
-     * @param radioButtonSettings settings for DialogComponentButtonGroup 
-     * @param radioLabels labels for DialogComponentButtonGroup
-     * @param configName the beggining of your chosen configuration String user by SettingsModel, which will be used with radioLabels to store data(configName+radioLabel)
-     * @param refreshCall function called after every Refresh button click, intended for loading input Strings
+     * Creates a component that lets user put some input strings into multiple
+     * groups. You can add this component to your dialog using getPanel().
+     * 
+     * @param configName
+     *            the beggining of your chosen configuration String used by
+     *            SettingsModel, together with radioLabels it stores
+     *            data(configName+radioLabel) settings for
+     *            DialogComponentButtonGroup
+     * @param radioLabels
+     *            labels for DialogComponentButtonGroup
+     * @param refreshCall
+     *            function called after every Refresh button click, intended for
+     *            loading input Strings
      */
-    public MultiFilterComponent(final SettingsModelString radioButtonSettings, final String[] radioLabels, final String configName, Callable<List<String>> refreshCall) {
-        this.radioButtonSettings = radioButtonSettings;
+    public MultiFilterComponent(final String configName, final String[] radioLabels, Callable<List<String>> refreshCall) {
+        this.configName = configName;
         this.radioLabels = radioLabels;
         this.refreshCaller = refreshCall;
-        this.configName = configName;
-        
+
         JPanel north = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        
+
         refreshButton = new JButton("Refresh");
+        refreshButton.setPreferredSize(new Dimension(100, 25));
         refreshButton.addActionListener(new RefreshListener());
         north.add(refreshButton);
 
+        radioButtonSettings = new SettingsModelString(configName, radioLabels[0]);
         radioButton = new DialogComponentButtonGroup(radioButtonSettings, null, false, radioLabels, radioLabels);
         radioButton.getModel().addChangeListener(new RadioButtonChangeListener());
         north.add(radioButton.getComponentPanel());
@@ -94,7 +103,7 @@ public class MultiFilterComponent {
         panel.add(north, BorderLayout.NORTH);
         panel.add(filterPanel, BorderLayout.CENTER);
     }
-    
+
     private DataTableSpec createTableSpec(List<String> list) {
         DataColumnSpec[] columns = new DataColumnSpec[list.size()];
         int index = 0;
@@ -107,38 +116,41 @@ public class MultiFilterComponent {
     public final void loadSettingsFrom(final NodeSettingsRO settings, final PortObjectSpec[] specs, List<String> list)
             throws NotConfigurableException {
         radioButton.loadSettingsFrom(settings, specs);
-        loadFilter(list);
+        initFilter();
     }
 
-    private final void loadFilter(List<String> list) throws NotConfigurableException {
-        if (null == list) {
-            list = new LinkedList<String>();
-            if (includeLists.isEmpty()) {
-                initLists();
-                filterPanel.update(createTableSpec(list), false, Collections.<String> emptySet());
-            } else {
-                list.addAll(filterPanel.getIncludedColumnSet());
-                list.addAll(filterPanel.getExcludedColumnSet());
-                filterPanel.update(createTableSpec(list), filterPanel.getIncludedColumnSet(),
-                        filterPanel.getExcludedColumnSet());
+    private void initFilter() {
+        LinkedList<String> all = new LinkedList<String>();
+        if (includeLists.isEmpty()) {
+            for (String action : radioLabels) {
+                includeLists.put(action, new LinkedList<String>());
             }
+            filterPanel.update(createTableSpec(all), false, Collections.<String> emptySet());
         } else {
-            filterPanel.update(createTableSpec(list), false, Collections.<String> emptySet());
+            all.addAll(filterPanel.getIncludedColumnSet());
+            all.addAll(filterPanel.getExcludedColumnSet());
+            filterPanel.update(createTableSpec(all), filterPanel.getIncludedColumnSet(),
+                    filterPanel.getExcludedColumnSet());
         }
+    }
+
+    private void loadFilter(final List<String> initList) {
+        List<String> excluded = new LinkedList<String>(initList);
+        for (List<String> include : includeLists.values()) {
+            excluded.removeAll(include);
+        }
+        List<String> included = includeLists.get(radioButtonSettings.getStringValue());
+        List<String> all = new LinkedList<String>(excluded);
+        all.addAll(included);
+        filterPanel.update(createTableSpec(all), included, excluded);
     }
 
     public final void saveSettingsTo(final NodeSettingsWO settings) throws InvalidSettingsException {
-        radioButton.saveSettingsTo(settings);  
+        radioButton.saveSettingsTo(settings);
         List<String> list;
-        for(String label : radioLabels) {
+        for (String label : radioLabels) {
             list = includeLists.get(label);
-            settings.addStringArray(configName + label, list.toArray(new String[list.size()]));
-        }
-    }
-
-    private void initLists() {
-        for (String action : radioLabels) {
-            includeLists.put(action, new LinkedList<String>());
+            settings.addStringArray(configName + "." + label, list.toArray(new String[list.size()]));
         }
     }
 
@@ -157,43 +169,50 @@ public class MultiFilterComponent {
             SettingsModelString radioSettings = (SettingsModelString) (event.getSource());
             filterPanel.setIncludeTitle(radioSettings.getStringValue());
             List<String> newIncludeList = includeLists.get(radioSettings.getStringValue());
-            List<String> priorityList = new LinkedList<String>();
-            priorityList.addAll(newIncludeList);
-            priorityList.addAll(filterPanel.getExcludedColumnSet());
-            filterPanel.update(createTableSpec(priorityList), newIncludeList, filterPanel.getExcludedColumnSet());
+            List<String> list = new LinkedList<String>();
+            list.addAll(newIncludeList);
+            list.addAll(filterPanel.getExcludedColumnSet());
+            filterPanel.update(createTableSpec(list), newIncludeList, filterPanel.getExcludedColumnSet());
         }
     }
 
     private class RefreshListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-            ((JButton) event.getSource()).setText("Refreshing...");
-            ((JButton) event.getSource()).setEnabled(false);
-            radioButton.getModel().setEnabled(false);
-            filterPanel.setEnabled(false);
-            
-            List<String> priorities = null;
+            setRefreshingPanel(true);
+            panel.paintImmediately(panel.getVisibleRect());
+
+            List<String> list = null;
             try {
-                priorities = refreshCaller.call();
-            } catch (Exception e1) {
+                list = refreshCaller.call();
+            } catch (Exception e) {
             }
-            for (List<String> list : includeLists.values()) {
-                list.clear();
+            for (List<String> include : includeLists.values()) {
+                include.clear();
             }
-            try {
-                loadFilter(priorities);
-            } catch (NotConfigurableException e) {
+            for (String label : radioLabels) {
+                if (list.contains(label)) {
+                    includeLists.get(label).add(label);
+                }
             }
-            
-            radioButton.getModel().setEnabled(true);
-            filterPanel.setEnabled(true);
-            ((JButton) event.getSource()).setEnabled(true);
-            ((JButton) event.getSource()).setText("Refresh");
+            loadFilter(list);
+            setRefreshingPanel(false);
         }
     }
-    
+
     public JPanel getPanel() {
         return panel;
     }
-    
+
+    private void setRefreshingPanel(final boolean refreshing) {
+        if (refreshing) {
+            refreshButton.setText("Refreshing...");
+        } else {
+            refreshButton.setText("Refresh");
+        }
+        radioButton.getModel().setEnabled(!refreshing);
+        filterPanel.setEnabled(!refreshing);
+        refreshButton.setEnabled(!refreshing);
+    }
+
 }

@@ -32,6 +32,8 @@ import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSPriority;
+import org.impressivecode.depress.its.ITSType;
+import org.impressivecode.depress.its.ITSResolution;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -54,33 +56,39 @@ import com.google.common.base.Preconditions;
  */
 public class JiraAdapterNodeModel extends NodeModel {
 
-	private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraAdapterNodeModel.class);
-	
-	static final String CONFIG_NAME = "depress.its.jira.";
-	
-    private static final String CHOOSER_DEFAULT_VALUE = "";
-    private static final String CHOOSER_CONFIG_NAME = CONFIG_NAME + "chooser";
-    static final String RADIO_CONFIG_NAME1 = CONFIG_NAME + "radio1";
-    static final String RADIO_CONFIG_NAME2 = CONFIG_NAME + "radio2";
-    static final String RADIO_CONFIG_NAME3 = CONFIG_NAME + "radio3";
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraAdapterNodeModel.class);
 
+    private static final String CHOOSER_DEFAULT_VALUE = "";
+    
+    private static final String CONFIG_NAME = "depress.its.jira.";
+    static final String CHOOSER_CONFIG_NAME = CONFIG_NAME + "chooser";
+    static final String PRIORITY_CONFIG_NAME = CONFIG_NAME + "priority";
+    static final String TYPE_CONFIG_NAME = CONFIG_NAME + "type";
+    static final String RESOLUTION_CONFIG_NAME = CONFIG_NAME + "resolution";
     private final SettingsModelString fileSettings = createFileChooserSettings();
-    
-    private final HashMap<String, SettingsModelStringArray> prioritySettings = new HashMap<String, SettingsModelStringArray>();
-    
+
+    private final HashMap<String, SettingsModelStringArray> groupSettings = new HashMap<String, SettingsModelStringArray>();
+
     protected JiraAdapterNodeModel() {
         super(0, 1);
         initializeSettings();
     }
 
-	private void initializeSettings() {
-	    for(String label : ITSPriority.labels()) {
-	        prioritySettings.put(label, new SettingsModelStringArray(CONFIG_NAME + label, null));
-	    }
+    private void initializeSettings() {
+        for (String label : ITSPriority.labels()) {
+            groupSettings.put(label, new SettingsModelStringArray(PRIORITY_CONFIG_NAME + "." + label, null));
+        }
+        for (String label : ITSType.labels()) {
+            groupSettings.put(label, new SettingsModelStringArray(TYPE_CONFIG_NAME + "." + label, null));
+        }
+        for (String label : ITSResolution.labels()) {
+            groupSettings.put(label, new SettingsModelStringArray(RESOLUTION_CONFIG_NAME + "." + label, null));
+        }
     }
 
     @Override
-    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
+            throws Exception {
         LOGGER.info("Preparing to read jira entries.");
         String filePath = fileSettings.getStringValue();
         List<ITSDataType> entries = parseEntries(filePath);
@@ -91,20 +99,21 @@ public class JiraAdapterNodeModel extends NodeModel {
     }
 
     private HashMap<String, String[]> getSettings() {
-        HashMap<String, String[]> currentSettings = new HashMap<String, String[]>();      
-        for(Entry<String, SettingsModelStringArray> entry: prioritySettings.entrySet()){
+        HashMap<String, String[]> currentSettings = new HashMap<String, String[]>();
+        for (Entry<String, SettingsModelStringArray> entry : groupSettings.entrySet()) {
             currentSettings.put(entry.getKey(), entry.getValue().getStringArrayValue());
         }
         return currentSettings;
     }
-    
-    private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
+
+    private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
+            throws CanceledExecutionException {
         ITSAdapterTransformer transformer = new ITSAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
         return transformer.transform(entries, exec);
     }
 
     private List<ITSDataType> parseEntries(final String filePath) throws ParserConfigurationException, SAXException,
-    IOException, ParseException {
+            IOException, ParseException {
         return new JiraEntriesParser(getSettings()).parseEntries(filePath);
     }
 
@@ -121,7 +130,7 @@ public class JiraAdapterNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         fileSettings.saveSettingsTo(settings);
-        for(SettingsModelStringArray prioritySetting : prioritySettings.values()){
+        for (SettingsModelStringArray prioritySetting : groupSettings.values()) {
             prioritySetting.saveSettingsTo(settings);
         }
     }
@@ -129,7 +138,7 @@ public class JiraAdapterNodeModel extends NodeModel {
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileSettings.loadSettingsFrom(settings);
-        for(SettingsModelStringArray prioritySetting : prioritySettings.values()){
+        for (SettingsModelStringArray prioritySetting : groupSettings.values()) {
             prioritySetting.loadSettingsFrom(settings);
         }
     }
@@ -137,25 +146,25 @@ public class JiraAdapterNodeModel extends NodeModel {
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileSettings.validateSettings(settings);
-        for(SettingsModelStringArray prioritySetting : prioritySettings.values()){
+        for (SettingsModelStringArray prioritySetting : groupSettings.values()) {
             prioritySetting.validateSettings(settings);
         }
     }
 
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
     static SettingsModelString createFileChooserSettings() {
         return new SettingsModelString(CHOOSER_CONFIG_NAME, CHOOSER_DEFAULT_VALUE);
     }
-    
+
 }

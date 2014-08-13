@@ -38,7 +38,6 @@ import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSType;
 import org.impressivecode.depress.its.ITSResolution;
 
-
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeSettingsRO;
@@ -59,64 +58,63 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
 
     private static final String FILE_EXTENSION = ".xml";
     private static final String HISTORY_ID = "depress.its.jira.historyid";
-    
+
     private DialogComponentFileChooser chooser;
     private MultiFilterComponent multiFilterComponentPriority;
     private MultiFilterComponent multiFilterComponentType;
     private MultiFilterComponent multiFilterComponentResolution;
 
     protected JiraAdapterNodeDialog() {
-    	createSettingsTab();
-    	createPriorityTab();
-    	createTypeTab();
-    	createResolutionTab();
+        createSettingsTab();
+        createPriorityTab();
+        createTypeTab();
+        createResolutionTab();
     }
 
     private void createSettingsTab() {
-		chooser = createFileChooserComponent(HISTORY_ID, FILE_EXTENSION);
-    	addTab("Settings", chooser.getComponentPanel());
-	}
+        chooser = createFileChooserComponent(HISTORY_ID, FILE_EXTENSION);
+        addTab("Settings", chooser.getComponentPanel());
+    }
 
     private void createPriorityTab() {
-    	multiFilterComponentPriority = new MultiFilterComponent(new SettingsModelString(JiraAdapterNodeModel.CONFIG_NAME + "priorityRadio", ITSPriority.labels()[0]),
-    	        ITSPriority.labels(), JiraAdapterNodeModel.CONFIG_NAME, new refreshCaller());
+        multiFilterComponentPriority = new MultiFilterComponent(JiraAdapterNodeModel.PRIORITY_CONFIG_NAME,
+                ITSPriority.labels(), new refreshCaller());
         addTab("Priority", multiFilterComponentPriority.getPanel());
-	}
-    
+    }
+
     private void createTypeTab() {
-        multiFilterComponentType = new MultiFilterComponent(new SettingsModelString(JiraAdapterNodeModel.CONFIG_NAME + "typeRadio", ITSType.labels()[0]),
-                ITSType.labels(), JiraAdapterNodeModel.CONFIG_NAME, new refreshCaller2());
+        multiFilterComponentType = new MultiFilterComponent(JiraAdapterNodeModel.TYPE_CONFIG_NAME, ITSType.labels(),
+                new refreshCaller2());
         addTab("Type", multiFilterComponentType.getPanel());
     }
-    
+
     private void createResolutionTab() {
-        multiFilterComponentResolution = new MultiFilterComponent(new SettingsModelString(JiraAdapterNodeModel.CONFIG_NAME + "resolutionRadio", ITSResolution.labels()[0]),
-                ITSResolution.labels(), JiraAdapterNodeModel.CONFIG_NAME, new refreshCaller3());
+        multiFilterComponentResolution = new MultiFilterComponent(JiraAdapterNodeModel.RESOLUTION_CONFIG_NAME,
+                ITSResolution.labels(), new refreshCaller3());
         addTab("Resolution", multiFilterComponentResolution.getPanel());
     }
-    
-	private DialogComponentFileChooser createFileChooserComponent(final String historyId, final String fileExtansion) {
+
+    private DialogComponentFileChooser createFileChooserComponent(final String historyId, final String fileExtansion) {
         return new DialogComponentFileChooser(createFileChooserSettings(), historyId, fileExtansion);
     }
 
-	@Override
-    public final void loadSettingsFrom(final NodeSettingsRO settings,
-            final PortObjectSpec[] specs) throws NotConfigurableException {
-    	chooser.loadSettingsFrom(settings, specs);
-    	multiFilterComponentPriority.loadSettingsFrom(settings, specs, null);
-    	multiFilterComponentType.loadSettingsFrom(settings, specs, null);
-    	multiFilterComponentResolution.loadSettingsFrom(settings, specs, null);
-    }
-    
     @Override
-    public final void saveSettingsTo(final NodeSettingsWO settings)
-            throws InvalidSettingsException {
-    	chooser.saveSettingsTo(settings);
+    public final void loadSettingsFrom(final NodeSettingsRO settings, final PortObjectSpec[] specs)
+            throws NotConfigurableException {
+        chooser.loadSettingsFrom(settings, specs);
+        multiFilterComponentPriority.loadSettingsFrom(settings, specs, null);
+        multiFilterComponentType.loadSettingsFrom(settings, specs, null);
+        multiFilterComponentResolution.loadSettingsFrom(settings, specs, null);
+    }
+
+    @Override
+    public final void saveSettingsTo(final NodeSettingsWO settings) throws InvalidSettingsException {
+        chooser.saveSettingsTo(settings);
         multiFilterComponentPriority.saveSettingsTo(settings);
         multiFilterComponentType.saveSettingsTo(settings);
         multiFilterComponentResolution.saveSettingsTo(settings);
     }
-    
+
     private class refreshCaller implements Callable<List<String>> {
         @Override
         public List<String> call() throws Exception {
@@ -128,7 +126,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
             }
             Document doc = null;
             try {
-                doc = builder.parse(new File(((SettingsModelString)(chooser.getModel())).getStringValue()));
+                doc = builder.parse(new File(((SettingsModelString) (chooser.getModel())).getStringValue()));
             } catch (SAXException | IOException e) {
             }
             XPathFactory xPathfactory = XPathFactory.newInstance();
@@ -142,14 +140,14 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
             try {
                 NodeList list = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
                 for (int i = 0; i < list.getLength(); i++) {
-                    priorityList.add(list.item(i).getTextContent());
+                    priorityList.add(list.item(i).getTextContent().trim());
                 }
             } catch (XPathExpressionException e) {
             }
             return priorityList;
         }
     }
-    
+
     private class refreshCaller2 implements Callable<List<String>> {
         @Override
         public List<String> call() throws Exception {
@@ -161,7 +159,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
             }
             Document doc = null;
             try {
-                doc = builder.parse(new File(((SettingsModelString)(chooser.getModel())).getStringValue()));
+                doc = builder.parse(new File(((SettingsModelString) (chooser.getModel())).getStringValue()));
             } catch (SAXException | IOException e) {
             }
             XPathFactory xPathfactory = XPathFactory.newInstance();
@@ -175,14 +173,14 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
             try {
                 NodeList list = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
                 for (int i = 0; i < list.getLength(); i++) {
-                    priorityList.add(list.item(i).getTextContent());
+                    priorityList.add(list.item(i).getTextContent().trim());
                 }
             } catch (XPathExpressionException e) {
             }
             return priorityList;
         }
     }
-    
+
     private class refreshCaller3 implements Callable<List<String>> {
         @Override
         public List<String> call() throws Exception {
@@ -194,7 +192,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
             }
             Document doc = null;
             try {
-                doc = builder.parse(new File(((SettingsModelString)(chooser.getModel())).getStringValue()));
+                doc = builder.parse(new File(((SettingsModelString) (chooser.getModel())).getStringValue()));
             } catch (SAXException | IOException e) {
             }
             XPathFactory xPathfactory = XPathFactory.newInstance();
@@ -208,7 +206,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
             try {
                 NodeList list = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
                 for (int i = 0; i < list.getLength(); i++) {
-                    priorityList.add(list.item(i).getTextContent());
+                    priorityList.add(list.item(i).getTextContent().trim());
                 }
             } catch (XPathExpressionException e) {
             }
