@@ -23,6 +23,18 @@
             name="ITS"
             path="depress/">
       </category>
+             <category
+            description="DePress MR Plugins"
+            level-id="depress.mr"
+            name="MR"
+            path="depress/">
+      </category>
+             <category
+            description="DePress MG Plugins"
+            level-id="depress.mg"
+            name="MG"
+            path="depress/">
+      </category>
        <category
              description="DePress Data Plugins"
              level-id="depress.data"

@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ic-depress-mr-judy
+Bundle-SymbolicName: org.impressivecode.depress.mr.judy;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Vendor: ImpressiveCode
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
+ org.knime.workbench.core,
+ org.knime.workbench.repository,
+ org.knime.base,
+ org.impressivecode.depress.base;bundle-version="0.1.0"
+Bundle-ClassPath: plugin.jar
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: org.impressivecode.depress.mr.judy
+Eclipse-BuddyPolicy: registered
