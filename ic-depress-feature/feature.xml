@@ -200,35 +200,23 @@ END OF TERMS AND CONDITIONS
          id="org.impressivecode.depress.base"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.data.anonymisation"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.examples"
          download-size="0"
          install-size="0"
-         version="1.0.0"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.impressivecode.depress.its.bugzilla"
-         download-size="0"
-         install-size="0"
-         version="1.0.0"/>
-
-   <plugin
-         id="org.impressivecode.depress.its.clearquest"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.impressivecode.depress.its.hpqc"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -237,16 +225,10 @@ END OF TERMS AND CONDITIONS
          id="org.impressivecode.depress.its.jira"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.metric.im"
-         download-size="0"
-         install-size="0"
-         version="1.0.0"/>
-
-   <plugin
-         id="org.impressivecode.depress.mg.ipa"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -255,66 +237,60 @@ END OF TERMS AND CONDITIONS
          id="org.impressivecode.depress.mg.po"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
-
-   <plugin
-         id="org.impressivecode.depress.mr.astcompare"
-         download-size="0"
-         install-size="0"
          version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.mr.checkstyle"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.mr.eclipsemetrics"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.mr.jacoco"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.mr.judy"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.mr.pmd"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.scm.git"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.scm.svn"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.sourcecrawler"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.support.matcher"
          download-size="0"
          install-size="0"
-         version="1.0.0"/>
+         version="0.0.0"/>
 
 </feature>
