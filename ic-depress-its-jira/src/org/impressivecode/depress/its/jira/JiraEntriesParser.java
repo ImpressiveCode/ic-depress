@@ -51,9 +51,8 @@ import com.google.common.collect.ImmutableSet.Builder;
 import com.google.common.collect.Lists;
 
 /**
- * 
  * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class JiraEntriesParser {
     private static final String JIRA_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z";
@@ -63,8 +62,8 @@ public class JiraEntriesParser {
         this.settings = settings;
     }
 
-    public List<ITSDataType> parseEntries(final String path)
-            throws ParserConfigurationException, SAXException, IOException, ParseException {
+    public List<ITSDataType> parseEntries(final String path) throws ParserConfigurationException, SAXException,
+            IOException, ParseException {
         Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -139,9 +138,10 @@ public class JiraEntriesParser {
         if (resolution == null) {
             return ITSResolution.UNKNOWN;
         }
-        for(String key : settings.keySet()) {
-            for(String value : settings.get(key)) {
-                if(resolution.equals(value) ) return ITSResolution.get(key);
+        for (String key : settings.keySet()) {
+            for (String value : settings.get(key)) {
+                if (resolution.equals(value))
+                    return ITSResolution.get(key);
             }
         }
         return ITSResolution.UNKNOWN;
@@ -160,9 +160,10 @@ public class JiraEntriesParser {
         if (type == null) {
             return ITSType.UNKNOWN;
         }
-        for(String key : settings.keySet()) {
-            for(String value : settings.get(key)) {
-                if(type.equals(value) ) return ITSType.get(key);
+        for (String key : settings.keySet()) {
+            for (String value : settings.get(key)) {
+                if (type.equals(value))
+                    return ITSType.get(key);
             }
         }
         return ITSType.UNKNOWN;
@@ -202,9 +203,10 @@ public class JiraEntriesParser {
         if (priority == null) {
             return ITSPriority.UNKNOWN;
         }
-        for(String key : settings.keySet()) {
-            for(String value : settings.get(key)) {
-                if(priority.equals(value) ) return ITSPriority.get(key);
+        for (String key : settings.keySet()) {
+            for (String value : settings.get(key)) {
+                if (priority.equals(value))
+                    return ITSPriority.get(key);
             }
         }
         return ITSPriority.UNKNOWN;

@@ -44,6 +44,7 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.xml.sax.SAXException;
@@ -59,14 +60,19 @@ public class JiraAdapterNodeModel extends NodeModel {
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraAdapterNodeModel.class);
 
     private static final String CHOOSER_DEFAULT_VALUE = "";
-    
+
     private static final String CONFIG_NAME = "depress.its.jira.";
     static final String CHOOSER_CONFIG_NAME = CONFIG_NAME + "chooser";
     static final String PRIORITY_CONFIG_NAME = CONFIG_NAME + "priority";
     static final String TYPE_CONFIG_NAME = CONFIG_NAME + "type";
     static final String RESOLUTION_CONFIG_NAME = CONFIG_NAME + "resolution";
+    static final String PRIORITY_BOOLEAN_CONFIG_NAME = CONFIG_NAME + "prioritybool";
+    static final String TYPE_BOOLEAN_CONFIG_NAME = CONFIG_NAME + "typebool"; 
+    static final String RESOLUTION_BOOLEAN_CONFIG_NAME = CONFIG_NAME + "resolutionbool";
     private final SettingsModelString fileSettings = createFileChooserSettings();
-
+    private final SettingsModelBoolean priorityEnabled = createSettingsModelBoolean(PRIORITY_BOOLEAN_CONFIG_NAME, false);
+    private final SettingsModelBoolean typeEnabled = createSettingsModelBoolean(TYPE_BOOLEAN_CONFIG_NAME, false);
+    private final SettingsModelBoolean resolutionEnabled = createSettingsModelBoolean(RESOLUTION_BOOLEAN_CONFIG_NAME, false);
     private final HashMap<String, SettingsModelStringArray> groupSettings = new HashMap<String, SettingsModelStringArray>();
 
     protected JiraAdapterNodeModel() {
@@ -130,6 +136,9 @@ public class JiraAdapterNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         fileSettings.saveSettingsTo(settings);
+        priorityEnabled.saveSettingsTo(settings);
+        typeEnabled.saveSettingsTo(settings);
+        resolutionEnabled.saveSettingsTo(settings);
         for (SettingsModelStringArray prioritySetting : groupSettings.values()) {
             prioritySetting.saveSettingsTo(settings);
         }
@@ -138,6 +147,9 @@ public class JiraAdapterNodeModel extends NodeModel {
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileSettings.loadSettingsFrom(settings);
+        priorityEnabled.loadSettingsFrom(settings);
+        typeEnabled.loadSettingsFrom(settings);
+        resolutionEnabled.loadSettingsFrom(settings);
         for (SettingsModelStringArray prioritySetting : groupSettings.values()) {
             prioritySetting.loadSettingsFrom(settings);
         }
@@ -146,6 +158,9 @@ public class JiraAdapterNodeModel extends NodeModel {
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileSettings.validateSettings(settings);
+        priorityEnabled.validateSettings(settings);
+        typeEnabled.validateSettings(settings);
+        resolutionEnabled.validateSettings(settings);
         for (SettingsModelStringArray prioritySetting : groupSettings.values()) {
             prioritySetting.validateSettings(settings);
         }
@@ -165,6 +180,10 @@ public class JiraAdapterNodeModel extends NodeModel {
 
     static SettingsModelString createFileChooserSettings() {
         return new SettingsModelString(CHOOSER_CONFIG_NAME, CHOOSER_DEFAULT_VALUE);
+    }
+    
+    static SettingsModelBoolean createSettingsModelBoolean(final String config, final boolean defaultValue) {
+        return new SettingsModelBoolean(config, defaultValue);
     }
 
 }

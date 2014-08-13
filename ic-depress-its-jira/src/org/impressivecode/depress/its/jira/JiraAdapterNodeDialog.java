@@ -20,19 +20,8 @@ package org.impressivecode.depress.its.jira;
 import static org.impressivecode.depress.its.jira.JiraAdapterNodeModel.createFileChooserSettings;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSType;
@@ -46,9 +35,6 @@ import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
@@ -78,24 +64,24 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
 
     private void createPriorityTab() {
         multiFilterComponentPriority = new MultiFilterComponent(JiraAdapterNodeModel.PRIORITY_CONFIG_NAME,
-                ITSPriority.labels(), new refreshCaller());
+                ITSPriority.labels(), new refreshPriorityCaller());
         addTab("Priority", multiFilterComponentPriority.getPanel());
     }
 
     private void createTypeTab() {
         multiFilterComponentType = new MultiFilterComponent(JiraAdapterNodeModel.TYPE_CONFIG_NAME, ITSType.labels(),
-                new refreshCaller2());
+                new refreshTypeCaller());
         addTab("Type", multiFilterComponentType.getPanel());
     }
 
     private void createResolutionTab() {
         multiFilterComponentResolution = new MultiFilterComponent(JiraAdapterNodeModel.RESOLUTION_CONFIG_NAME,
-                ITSResolution.labels(), new refreshCaller3());
+                ITSResolution.labels(), new refreshResolutionCaller());
         addTab("Resolution", multiFilterComponentResolution.getPanel());
     }
 
-    private DialogComponentFileChooser createFileChooserComponent(final String historyId, final String fileExtansion) {
-        return new DialogComponentFileChooser(createFileChooserSettings(), historyId, fileExtansion);
+    private DialogComponentFileChooser createFileChooserComponent(final String historyId, final String fileExtension) {
+        return new DialogComponentFileChooser(createFileChooserSettings(), historyId, fileExtension);
     }
 
     @Override
@@ -115,102 +101,33 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
         multiFilterComponentResolution.saveSettingsTo(settings);
     }
 
-    private class refreshCaller implements Callable<List<String>> {
+    private class refreshPriorityCaller implements Callable<List<String>> {
         @Override
         public List<String> call() throws Exception {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = null;
-            try {
-                builder = factory.newDocumentBuilder();
-            } catch (ParserConfigurationException e) {
-            }
-            Document doc = null;
-            try {
-                doc = builder.parse(new File(((SettingsModelString) (chooser.getModel())).getStringValue()));
-            } catch (SAXException | IOException e) {
-            }
-            XPathFactory xPathfactory = XPathFactory.newInstance();
-            XPath xpath = xPathfactory.newXPath();
-            XPathExpression expr = null;
-            try {
-                expr = xpath.compile("/rss/channel/item/priority[not(preceding::priority/. = .)]");
-            } catch (XPathExpressionException e1) {
-            }
-            List<String> priorityList = new LinkedList<String>();
-            try {
-                NodeList list = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
-                for (int i = 0; i < list.getLength(); i++) {
-                    priorityList.add(list.item(i).getTextContent().trim());
-                }
-            } catch (XPathExpressionException e) {
-            }
-            return priorityList;
+            JiraFileParser parser = new JiraFileParser();
+            File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
+            String expression = "/rss/channel/item/priority[not(preceding::priority/. = .)]";
+            return parser.parseXPath(file, expression);
         }
     }
 
-    private class refreshCaller2 implements Callable<List<String>> {
+    private class refreshTypeCaller implements Callable<List<String>> {
         @Override
         public List<String> call() throws Exception {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = null;
-            try {
-                builder = factory.newDocumentBuilder();
-            } catch (ParserConfigurationException e) {
-            }
-            Document doc = null;
-            try {
-                doc = builder.parse(new File(((SettingsModelString) (chooser.getModel())).getStringValue()));
-            } catch (SAXException | IOException e) {
-            }
-            XPathFactory xPathfactory = XPathFactory.newInstance();
-            XPath xpath = xPathfactory.newXPath();
-            XPathExpression expr = null;
-            try {
-                expr = xpath.compile("/rss/channel/item/type[not(preceding::type/. = .)]");
-            } catch (XPathExpressionException e1) {
-            }
-            List<String> priorityList = new LinkedList<String>();
-            try {
-                NodeList list = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
-                for (int i = 0; i < list.getLength(); i++) {
-                    priorityList.add(list.item(i).getTextContent().trim());
-                }
-            } catch (XPathExpressionException e) {
-            }
-            return priorityList;
+            JiraFileParser parser = new JiraFileParser();
+            File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
+            String expression = "/rss/channel/item/type[not(preceding::type/. = .)]";
+            return parser.parseXPath(file, expression);
         }
     }
 
-    private class refreshCaller3 implements Callable<List<String>> {
+    private class refreshResolutionCaller implements Callable<List<String>> {
         @Override
         public List<String> call() throws Exception {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = null;
-            try {
-                builder = factory.newDocumentBuilder();
-            } catch (ParserConfigurationException e) {
-            }
-            Document doc = null;
-            try {
-                doc = builder.parse(new File(((SettingsModelString) (chooser.getModel())).getStringValue()));
-            } catch (SAXException | IOException e) {
-            }
-            XPathFactory xPathfactory = XPathFactory.newInstance();
-            XPath xpath = xPathfactory.newXPath();
-            XPathExpression expr = null;
-            try {
-                expr = xpath.compile("/rss/channel/item/resolution[not(preceding::resolution/. = .)]");
-            } catch (XPathExpressionException e1) {
-            }
-            List<String> priorityList = new LinkedList<String>();
-            try {
-                NodeList list = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
-                for (int i = 0; i < list.getLength(); i++) {
-                    priorityList.add(list.item(i).getTextContent().trim());
-                }
-            } catch (XPathExpressionException e) {
-            }
-            return priorityList;
+            JiraFileParser parser = new JiraFileParser();
+            File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
+            String expression = "/rss/channel/item/resolution[not(preceding::resolution/. = .)]";
+            return parser.parseXPath(file, expression);
         }
     }
 
