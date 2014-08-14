@@ -1,0 +1,18 @@
+<rss>
+	<channel>
+		<item>
+			<priority>ONE</priority>
+		</item>
+		<item>
+			<priority>TWO</priority>
+		</item>
+	</channel>
+	<channel>
+		<item>
+			<priority>THREE</priority>
+		</item>
+		<item>
+			<priority>TWO</priority>
+		</item>
+	</channel>
+</rss>

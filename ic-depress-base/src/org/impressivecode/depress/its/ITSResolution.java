@@ -16,22 +16,48 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.its;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
 public enum ITSResolution {
-    INVALID, FIXED, WONT_FIX, DUPLICATE, UNRESOLVED, UNKNOWN;
+    INVALID("Invalid"), FIXED("Fixed"), WONT_FIX("Won´t Fix"), DUPLICATE("Duplicate"), UNRESOLVED("Unresolved"), UNKNOWN("Unknown");
+    
+    private final String label;
+    
+    private ITSResolution(final String label) {
+        this.label = label;
+    }
     
     @Override
     public String toString() {
         String value;
-        if (this.equals(WONT_FIX)) {
-            value = "Won't fix";
-        } else {
-            value = (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
-        }
+        value = (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
         return value;
     };
+    
+    private static Map<String, ITSResolution> lookup = new HashMap<String, ITSResolution>();
+    static {
+        for (ITSResolution resolution : ITSResolution.values()) {
+            lookup.put(resolution.getLabel(), resolution);
+        }
+    }
+
+    public static ITSResolution get(final String label) {
+        return lookup.get(label);
+    }
+    
+    public String getLabel() {
+        return label;
+    }
+    
+    public static String[] labels() {
+        return Arrays.toString(ITSResolution.values()).replaceAll("^.|.$", "").split(", ");
+    }
 }
