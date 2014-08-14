@@ -8,6 +8,7 @@
             category-path="depress/depress.matcher"
             factory-class="org.impressivecode.depress.support.markerparser.MarkerParserNodeFactory"
             id="org.impressivecode.depress.support.markerparser"/>
+      <!--
       <node
             category-path="depress/depress.matcher"
             factory-class="org.impressivecode.depress.support.extmarkerparser.ExtendedMarkerParserNodeFactory"
@@ -28,5 +29,6 @@
             factory-class="org.impressivecode.depress.support.sematicanalysis.SemanticAnalysisNodeFactory"
             id="org.impressivecode.depress.support.semanticanalysis">
       </node>
+      -->
    </extension>
 </plugin>

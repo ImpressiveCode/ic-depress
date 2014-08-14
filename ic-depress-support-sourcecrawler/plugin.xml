@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+<!--
    <extension point="org.knime.workbench.repository.nodes">
       <node
             category-path="depress"
@@ -9,4 +10,5 @@
             id="org.impressivecode.depress.sourcecrawler">
       </node>
 </extension>
+-->
 </plugin>

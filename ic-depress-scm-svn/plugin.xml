@@ -10,6 +10,7 @@
             factory-class="org.impressivecode.depress.scm.svn.SVNOfflineAdapterNodeFactory"
             id="org.impressivecode.depress.scm.svnoffline"/>
    </extension>
+   <!--
      <extension
          point="org.knime.workbench.repository.nodes">
       <node
@@ -17,4 +18,5 @@
             factory-class="org.impressivecode.depress.scm.svn.SVNOnlineAdapterNodeFactory"
             id="org.impressivecode.depress.scm.svnonline"/>
    </extension>
+   -->
 </plugin>
