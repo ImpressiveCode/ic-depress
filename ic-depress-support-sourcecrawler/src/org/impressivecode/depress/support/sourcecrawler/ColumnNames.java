@@ -27,37 +27,14 @@ import org.knime.core.data.def.StringCell;
 /**
  * 
  * @author Pawel Nosal, ImpressiveCode
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public enum ColumnNames {
-    RESOURCE("Resource") {
+    NAME("Name") {
         @Override
         public DataColumnSpec getDataColumnCreator() {
-            return new DataColumnSpecCreator(ColumnNames.RESOURCE.toString(), StringCell.TYPE).createSpec();
-        }
-    },
-    IS_EXCEPTION("Is exception") {
-        @Override
-        public DataColumnSpec getDataColumnCreator() {
-            return new DataColumnSpecCreator(ColumnNames.IS_EXCEPTION.toString(), StringCell.TYPE).createSpec();
-        }
-    },
-    IS_INNER("Is inner") {
-        @Override
-        public DataColumnSpec getDataColumnCreator() {
-            return new DataColumnSpecCreator(ColumnNames.IS_INNER.toString(), StringCell.TYPE).createSpec();
-        }
-    },
-    IS_TEST("Is test") {
-        @Override
-        public DataColumnSpec getDataColumnCreator() {
-            return new DataColumnSpecCreator(ColumnNames.IS_TEST.toString(), StringCell.TYPE).createSpec();
-        }
-    },
-    TYPE("Type") {
-        @Override
-        public DataColumnSpec getDataColumnCreator() {
-            return new DataColumnSpecCreator(ColumnNames.TYPE.toString(), StringCell.TYPE).createSpec();
+            return new DataColumnSpecCreator(ColumnNames.NAME.toString(), StringCell.TYPE).createSpec();
         }
     },
     PACKAGE("Package") {
@@ -66,10 +43,46 @@ public enum ColumnNames {
             return new DataColumnSpecCreator(ColumnNames.PACKAGE.toString(), StringCell.TYPE).createSpec();
         }
     },
-    PATH("Path") {
+    ACCESS("Access") {
         @Override
         public DataColumnSpec getDataColumnCreator() {
-            return new DataColumnSpecCreator(ColumnNames.PATH.toString(), StringCell.TYPE).createSpec();
+            return new DataColumnSpecCreator(ColumnNames.ACCESS.toString(), StringCell.TYPE).createSpec();
+        }
+    },
+	TYPE("Type") {
+	    @Override
+	    public DataColumnSpec getDataColumnCreator() {
+	        return new DataColumnSpecCreator(ColumnNames.TYPE.toString(), StringCell.TYPE).createSpec();
+	    }
+	},
+    EXCEPTION("Exception") {
+        @Override
+        public DataColumnSpec getDataColumnCreator() {
+            return new DataColumnSpecCreator(ColumnNames.EXCEPTION.toString(), StringCell.TYPE).createSpec();
+        }
+    },
+    INNER("Inner") {
+        @Override
+        public DataColumnSpec getDataColumnCreator() {
+            return new DataColumnSpecCreator(ColumnNames.INNER.toString(), StringCell.TYPE).createSpec();
+        }
+    },
+    TEST("Test") {
+        @Override
+        public DataColumnSpec getDataColumnCreator() {
+            return new DataColumnSpecCreator(ColumnNames.TEST.toString(), StringCell.TYPE).createSpec();
+        }
+    },
+    FINAL("Final") {
+        @Override
+        public DataColumnSpec getDataColumnCreator() {
+            return new DataColumnSpecCreator(ColumnNames.FINAL.toString(), StringCell.TYPE).createSpec();
+        }
+    },
+    FILE("File") {
+        @Override
+        public DataColumnSpec getDataColumnCreator() {
+            return new DataColumnSpecCreator(ColumnNames.FILE.toString(), StringCell.TYPE).createSpec();
         }
     };
 

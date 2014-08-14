@@ -16,11 +16,48 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.its;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
 public enum ITSPriority {
-    TRIVIAL, MINOR, MAJOR, CRITICAL, BLOCKER, UNKNOWN;
+    TRIVIAL("Trivial"), MINOR("Minor"), MAJOR("Major"),
+    CRITICAL("Critical"), BLOCKER("Blocker"), UNKNOWN("Unknown");
+    
+    private final String label;
+    
+	private ITSPriority(final String label) {
+    	this.label = label;
+    }
+	
+    @Override
+    public String toString() {
+        return (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
+    }
+    
+    private static Map<String, ITSPriority> lookup = new HashMap<String, ITSPriority>();
+    static {
+        for (ITSPriority priority : ITSPriority.values()) {
+            lookup.put(priority.getLabel(), priority);
+        }
+    }
+
+    public static ITSPriority get(final String label) {
+        return lookup.get(label);
+    }
+    
+	public String getLabel() {
+		return label;
+	}
+	
+	public static String[] labels() {
+	    return Arrays.toString(ITSPriority.values()).replaceAll("^.|.$", "").split(", ");
+	}
+
 }

@@ -16,11 +16,46 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.its;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
 public enum ITSType {
-    BUG, ENHANCEMENT, TEST, UNKNOWN;
+    BUG("Bug"), ENHANCEMENT("Enhancement"), TEST("Test"), UNKNOWN("Unknown");
+    
+    private final String label;
+    
+    private ITSType(final String label) {
+        this.label = label;
+    }
+    
+    @Override
+    public String toString() {
+        return (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
+    };
+    
+    private static Map<String, ITSType> lookup = new HashMap<String, ITSType>();
+    static {
+        for (ITSType type : ITSType.values()) {
+            lookup.put(type.getLabel(), type);
+        }
+    }
+
+    public static ITSType get(final String label) {
+        return lookup.get(label);
+    }
+    
+    public String getLabel() {
+        return label;
+    }
+    
+    public static String[] labels() {
+        return Arrays.toString(ITSType.values()).replaceAll("^.|.$", "").split(", ");
+    }
 }

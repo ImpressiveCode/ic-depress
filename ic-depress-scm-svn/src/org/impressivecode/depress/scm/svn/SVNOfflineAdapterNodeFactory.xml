@@ -25,7 +25,9 @@
         </intro>
 
         <option name="Selected file">File with SVN log to analyze in offline version of plugin</option>
-        <option name="Package">Prefix of package</option>
+        <option name="Extension pattern">It gives a possibility to filter files. Empty box or * means that files with any extension will be displayed. There could be typed more 
+        than one extension, to do so, extensions should be splitted by coma.</option>        
+        <option name="Package prefix">Prefix of package. It is only used with java files. Empty box lets displaying files with any package prefix.</option>
     </fullDescription>
 
     <ports>

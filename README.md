@@ -21,6 +21,8 @@ Please also remember these points:
 
 *Please do not use GitHub Issues for enhancement request and bugs.*
 
+Visit our webpage: http://impressivecode.github.io/ic-depress/
+
 ## License
 Copyright (C) 2013 ImpressiveCode (http://impressivecode.org)
 

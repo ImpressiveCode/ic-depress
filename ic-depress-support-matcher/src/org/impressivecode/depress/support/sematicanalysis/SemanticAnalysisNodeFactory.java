@@ -21,7 +21,6 @@ import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 
-
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
@@ -40,7 +39,8 @@ public class SemanticAnalysisNodeFactory extends NodeFactory<SemanticAnalysisNod
     }
 
     @Override
-    public NodeView<SemanticAnalysisNodeModel> createNodeView(final int viewIndex, final SemanticAnalysisNodeModel nodeModel) {
+    public NodeView<SemanticAnalysisNodeModel> createNodeView(final int viewIndex,
+            final SemanticAnalysisNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 

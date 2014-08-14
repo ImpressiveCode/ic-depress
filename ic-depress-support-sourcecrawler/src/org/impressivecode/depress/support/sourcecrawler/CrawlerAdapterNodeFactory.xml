@@ -1,19 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./crawler.png" type="Source">
-	<name>Sourcecrawler Adapter</name>
+	<name>SourceCrawler Adapter</name>
 
 	<shortDescription>
+		SourceCrawler, ImpressiveCode Depress
 	</shortDescription>
 
 	<fullDescription>
 		<intro>
-			
+			  This node can be used to load java classes from: 
+			  	<ul>
+                    <li> directory</li>
+					<li> a XML file (output from Maven plugin SourceCrawler or this plugin - see advanced options)</li>
+				</ul> 
+            <p>
+                To create xml file from standalone version of SourceCrawler you can use command 
+                java -jar sourcecrawler.jar -i ./dir/to/scan -o ./dir/output.xml
+                You can find sourcecrawler.jar in lib directory of this plugin or you can
+                visit https://github.com/ImpressiveCode/ic-utils for more information.
+            </p>
+            <p>
+                This node analyzes every class in every .java file from the given directory
+                 or file which has been found by SourceCrawler and returns a table with the following data: <br />
+                <ul>
+                    <li>Class name</li>
+					<li>Package</li>
+                    <li>Class access</li>
+                    <li>Class type</li>
+                    <li>Does class represent an exception</li>
+                    <li>Is the class inside another</li>
+                    <li>Is this a class used for testing</li>
+                    <li>Is this class final</li>
+                    <li>File path</li>
+                </ul>
+            </p>
 		</intro>
 		
+        <option name="Selected File or Directory">Select a file from previous SourceCrawler use or a directory with java files</option>
+        <option name="Access and Type">Accept only classess of certain attriubutes</option>
+        <option name="Other">Accept classes described as Exception, Inner, Test or Final</option>
+        <option name="Package">Name of accepted java packages</option>
+        <option name="Create XML file">A file will be created, which can be used as input for SourceCrawler</option>
 	</fullDescription>
 
 	<ports>
-		
+		<outPort index="0" name="Java classes">Table with Java classes with their properties</outPort>
 	</ports>
 </knimeNode>

@@ -4,7 +4,7 @@
 <plugin>
    <extension point="org.knime.workbench.repository.nodes">
       <node
-            category-path="depress"
+            category-path="depress/depress.mr"
             factory-class="org.impressivecode.depress.support.sourcecrawler.CrawlerAdapterNodeFactory"
             id="org.impressivecode.depress.sourcecrawler">
       </node>

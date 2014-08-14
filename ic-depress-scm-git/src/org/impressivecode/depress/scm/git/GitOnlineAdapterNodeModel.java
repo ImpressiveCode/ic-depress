@@ -87,7 +87,7 @@ public class GitOnlineAdapterNodeModel extends NodeModel {
 
         logger.info("Reading logs from repository " + gitPath);
         GitOnlineLogParser parser = new GitOnlineLogParser();
-
+        
         List<GitCommit> commits = parser.parseEntries(gitPath,
                 options(gitPackageName.getStringValue(), gitBranch.getStringValue()));
 
@@ -162,6 +162,7 @@ public class GitOnlineAdapterNodeModel extends NodeModel {
         scm.setMessage(commit.getMessage());
         scm.setOperation(file.getOperation());
         scm.setPath(file.getPath());
+        scm.setExtension(file.getExtension());
         scm.setResourceName(file.getJavaClass());
         return scm;
     }

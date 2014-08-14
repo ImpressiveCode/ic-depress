@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./default.png" type="Source">
+    <name>AstMetrics</name>
+    
+    <shortDescription>
+        Ast Metric Adapter. ImpressiveCode DePress Plugin Framework.
+    </shortDescription>
+    
+    <fullDescription>
+    	<intro>
+			<p>
+				This node can be used to calculate metrics using AST (abstract syntax tree) comparison.
+				It downloads revisions from SVN repository for chosen project. These revision's data are processed and displayed as metics table at method level.<br/> <br/>  
+				In the plugin there is used changedistiller library to compare AST changes
+				<br/> 	
+				[Beat Fluri, Michael Würsch, Martin Pinzger, and Harald C. Gall. Change distilling: Tree differencing for fine-grained source code change extraction. IEEE Transaction on Software Engineering, 33(11), pages 725–743, 2007.] 
+			</p>
+			<p>
+				This plugin works only with Java projects previously imported to KNIME from SVN repository.<br/> 
+				The node requires installed Subversive Plugin-In (http://www.eclipse.org/subversive/installation-instructions.php).
+			</p>
+			<p>
+				Before plugin execution please select project, set revision's date range (dd-MM-yyyy) and choose sample's timeframe in configuration dialog.
+				<br/><br/>  
+				Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>
+			</p>
+		</intro>
+              
+        <option name="Project">Select Java project(previously imported to Knime) to generate metrics</option>
+        <option name="Set revision's date range">Set start and end date(using format DD-MM-YYYY) of revisions</option>
+        <option name="Choose sample's timeframe">Select timeframe</option>
+    </fullDescription>
+    
+    <ports>
+        <outPort index="0" name="Metrics result">Metrics generated base on AST changes</outPort>
+    </ports>       
+</knimeNode>

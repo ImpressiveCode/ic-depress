@@ -51,8 +51,10 @@ public class SCMAdapterTableFactory {
     public final static String PATH_COLNAME = "Path";
     public final static String DATE_COLNAME = "Date";
     public final static String UID_COLNAME = "CommitID";
-
-
+    
+    public static final String EXTENSION_COLNAME = "Extension";
+    public static final DataColumnSpec EXTENSION_COLSPEC = new DataColumnSpecCreator(EXTENSION_COLNAME, StringCell.TYPE)
+    .createSpec();
 
     public static final DataColumnSpec DATE_COLSPEC = new DataColumnSpecCreator(DATE_COLNAME, DateAndTimeCell.TYPE)
     .createSpec();
@@ -65,7 +67,7 @@ public class SCMAdapterTableFactory {
     }
 
     public static DataTableSpec createDataColumnSpec() {
-        DataColumnSpec[] allColSpecs = { RESOURCE_COLSPEC, AUTHOR_COLSPEC,
+        DataColumnSpec[] allColSpecs = { RESOURCE_COLSPEC, EXTENSION_COLSPEC, AUTHOR_COLSPEC,
                 new DataColumnSpecCreator(ACTION_COLNAME, StringCell.TYPE).createSpec(), MESSAGE_COLSPEC,
                 new DataColumnSpecCreator(PATH_COLNAME, StringCell.TYPE).createSpec(), DATE_COLSPEC,
                 new DataColumnSpecCreator(UID_COLNAME, StringCell.TYPE).createSpec() };
@@ -74,7 +76,7 @@ public class SCMAdapterTableFactory {
 
     public static DataRow createTableRow(final String rowId, final SCMDataType scmData) {
         assertData(scmData);
-        DataCell[] cells = { stringCell(scmData.getResourceName()), stringOrMissingCell(scmData.getAuthor()),
+        DataCell[] cells = { stringCell(scmData.getResourceName()), stringCell(scmData.getExtension()), stringOrMissingCell(scmData.getAuthor()),
                 stringCell(scmData.getOperation()), stringOrMissingCell(scmData.getMessage()),
                 stringCell(scmData.getPath()), dateTimeCell(scmData.getCommitDate()),
                 stringCell(scmData.getCommitID()), };
