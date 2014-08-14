@@ -116,6 +116,7 @@ public class MultiFilterComponent {
     }
 
     public void setEnabled(final boolean enabled) {
+        filterEnabledModel.setBooleanValue(enabled);
         radioButtonModel.setEnabled(enabled);
         filterPanel.setEnabled(enabled);
     }

@@ -56,6 +56,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
     private MultiFilterComponent multiFilterComponentPriority;
     private MultiFilterComponent multiFilterComponentType;
     private MultiFilterComponent multiFilterComponentResolution;
+    private File oldFile = null;
 
     protected JiraAdapterNodeDialog() {
         createSettingsTab();
@@ -167,6 +168,13 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
                                 panel.setSelectedIndex(panel.indexOfTab("Settings"));
                                 JOptionPane.showMessageDialog(new JFrame(),
                                         "Invalid settings.\nPlease specify a valid filename.");
+                            } else {
+                                if(!file.equals(oldFile)) {
+                                    multiFilterComponentPriority.setEnabled(false);
+                                    multiFilterComponentType.setEnabled(false);
+                                    multiFilterComponentResolution.setEnabled(false);
+                                }
+                                oldFile = file;
                             }
                         }
                     }
