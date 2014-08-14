@@ -33,6 +33,7 @@ import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
 import org.junit.Test;
 import org.xml.sax.SAXException;
+
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
@@ -49,7 +50,8 @@ public class JiraEntriesParserTest {
     }
 
     @Test
-    public void shouldParseJiraEntriesAndAcceptEmptyItems() throws ParserConfigurationException, SAXException, IOException, ParseException {
+    public void shouldParseJiraEntriesAndAcceptEmptyItems() throws ParserConfigurationException, SAXException,
+            IOException, ParseException {
         List<ITSDataType> entries = parse();
 
         ITSDataType entry = entries.get(1);
@@ -60,7 +62,7 @@ public class JiraEntriesParserTest {
 
     private List<ITSDataType> parse() throws ParserConfigurationException, SAXException, IOException, ParseException {
         HashMap<String, String[]> settings = new HashMap<String, String[]>();
-        JiraEntriesParser parser = new JiraEntriesParser(settings);
+        JiraEntriesParser parser = new JiraEntriesParser(settings, false, false, false);
         String path = getClass().getResource("jira.xml").getPath();
         List<ITSDataType> entries = parser.parseEntries(path);
         return entries;
@@ -83,6 +85,6 @@ public class JiraEntriesParserTest {
         assertThat(its.getVersion()).containsExactly("3.0");
         assertThat(its.getAssignees()).containsOnly("garydgregory");
         assertThat(its.getReporter()).isEqualTo("garydgregory");
-        assertThat(its.getCommentAuthors()).containsOnly("bayard","mbenson", "garydgregory");
+        assertThat(its.getCommentAuthors()).containsOnly("bayard", "mbenson", "garydgregory");
     }
 }

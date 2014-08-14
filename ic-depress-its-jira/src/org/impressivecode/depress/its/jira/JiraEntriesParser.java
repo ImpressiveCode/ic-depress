@@ -57,9 +57,16 @@ import com.google.common.collect.Lists;
 public class JiraEntriesParser {
     private static final String JIRA_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z";
     private final HashMap<String, String[]> settings;
+    private boolean priorityEnabled;
+    private boolean typeEnabled;
+    private boolean resolutionEnabled;
 
-    public JiraEntriesParser(final HashMap<String, String[]> settings) {
+    public JiraEntriesParser(final HashMap<String, String[]> settings, final boolean priorityEnabled,
+            final boolean typeEnabled, final boolean resolutionEnabled) {
         this.settings = settings;
+        this.priorityEnabled = priorityEnabled;
+        this.typeEnabled = typeEnabled;
+        this.resolutionEnabled = resolutionEnabled;
     }
 
     public List<ITSDataType> parseEntries(final String path) throws ParserConfigurationException, SAXException,
@@ -138,12 +145,21 @@ public class JiraEntriesParser {
         if (resolution == null) {
             return ITSResolution.UNKNOWN;
         }
-        for (String key : settings.keySet()) {
-            for (String value : settings.get(key)) {
-                if (resolution.equals(value))
-                    return ITSResolution.get(key);
+        if (resolutionEnabled) {
+            for (String key : settings.keySet()) {
+                for (String value : settings.get(key)) {
+                    if (resolution.equals(value))
+                        return ITSResolution.get(key);
+                }
+            }
+        } else {
+            for (String label : ITSResolution.labels()) {
+                if (label.equals(resolution)) {
+                    return ITSResolution.get(label);
+                }
             }
         }
+
         return ITSResolution.UNKNOWN;
     }
 
@@ -160,10 +176,18 @@ public class JiraEntriesParser {
         if (type == null) {
             return ITSType.UNKNOWN;
         }
-        for (String key : settings.keySet()) {
-            for (String value : settings.get(key)) {
-                if (type.equals(value))
-                    return ITSType.get(key);
+        if (typeEnabled) {
+            for (String key : settings.keySet()) {
+                for (String value : settings.get(key)) {
+                    if (type.equals(value))
+                        return ITSType.get(key);
+                }
+            }
+        } else {
+            for (String label : ITSType.labels()) {
+                if (label.equals(type)) {
+                    return ITSType.get(label);
+                }
             }
         }
         return ITSType.UNKNOWN;
@@ -203,10 +227,18 @@ public class JiraEntriesParser {
         if (priority == null) {
             return ITSPriority.UNKNOWN;
         }
-        for (String key : settings.keySet()) {
-            for (String value : settings.get(key)) {
-                if (priority.equals(value))
-                    return ITSPriority.get(key);
+        if (priorityEnabled) {
+            for (String key : settings.keySet()) {
+                for (String value : settings.get(key)) {
+                    if (priority.equals(value))
+                        return ITSPriority.get(key);
+                }
+            }
+        } else {
+            for (String label : ITSPriority.labels()) {
+                if (label.equals(priority)) {
+                    return ITSPriority.get(label);
+                }
             }
         }
         return ITSPriority.UNKNOWN;

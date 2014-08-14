@@ -67,12 +67,13 @@ public class JiraAdapterNodeModel extends NodeModel {
     static final String TYPE_CONFIG_NAME = CONFIG_NAME + "type";
     static final String RESOLUTION_CONFIG_NAME = CONFIG_NAME + "resolution";
     static final String PRIORITY_BOOLEAN_CONFIG_NAME = CONFIG_NAME + "prioritybool";
-    static final String TYPE_BOOLEAN_CONFIG_NAME = CONFIG_NAME + "typebool"; 
+    static final String TYPE_BOOLEAN_CONFIG_NAME = CONFIG_NAME + "typebool";
     static final String RESOLUTION_BOOLEAN_CONFIG_NAME = CONFIG_NAME + "resolutionbool";
     private final SettingsModelString fileSettings = createFileChooserSettings();
     private final SettingsModelBoolean priorityEnabled = createSettingsModelBoolean(PRIORITY_BOOLEAN_CONFIG_NAME, false);
     private final SettingsModelBoolean typeEnabled = createSettingsModelBoolean(TYPE_BOOLEAN_CONFIG_NAME, false);
-    private final SettingsModelBoolean resolutionEnabled = createSettingsModelBoolean(RESOLUTION_BOOLEAN_CONFIG_NAME, false);
+    private final SettingsModelBoolean resolutionEnabled = createSettingsModelBoolean(RESOLUTION_BOOLEAN_CONFIG_NAME,
+            false);
     private final HashMap<String, SettingsModelStringArray> groupSettings = new HashMap<String, SettingsModelStringArray>();
 
     protected JiraAdapterNodeModel() {
@@ -120,7 +121,8 @@ public class JiraAdapterNodeModel extends NodeModel {
 
     private List<ITSDataType> parseEntries(final String filePath) throws ParserConfigurationException, SAXException,
             IOException, ParseException {
-        return new JiraEntriesParser(getSettings()).parseEntries(filePath);
+        return new JiraEntriesParser(getSettings(), priorityEnabled.getBooleanValue(), typeEnabled.getBooleanValue(),
+                resolutionEnabled.getBooleanValue()).parseEntries(filePath);
     }
 
     @Override
@@ -181,7 +183,7 @@ public class JiraAdapterNodeModel extends NodeModel {
     static SettingsModelString createFileChooserSettings() {
         return new SettingsModelString(CHOOSER_CONFIG_NAME, CHOOSER_DEFAULT_VALUE);
     }
-    
+
     static SettingsModelBoolean createSettingsModelBoolean(final String config, final boolean defaultValue) {
         return new SettingsModelBoolean(config, defaultValue);
     }
