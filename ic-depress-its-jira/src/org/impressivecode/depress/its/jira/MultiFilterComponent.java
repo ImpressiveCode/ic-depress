@@ -18,10 +18,8 @@
 package org.impressivecode.depress.its.jira;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.Cursor;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -30,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -56,7 +53,6 @@ import org.knime.core.node.util.ColumnFilterPanel;
  */
 public class MultiFilterComponent {
     private final JPanel panel = new JPanel(new BorderLayout());
-    private final JButton refreshButton;
     private final DialogComponentButtonGroup radioButton;
     private final ColumnFilterPanel filterPanel;
     private final DialogComponentBoolean filterEnabled;
@@ -67,11 +63,14 @@ public class MultiFilterComponent {
     private final String configName;
     private final Callable<List<String>> refreshCaller;
     private final Map<String, List<String>> includeLists = new LinkedHashMap<String, List<String>>();
+    private boolean active = true;
 
     /**
      * Creates a component that lets user put some input strings into multiple
      * groups. You can add this component to your dialog using getPanel().
      * 
+     * @param filterEnabledModel
+     *            gives state of panel - enabled or disabled.
      * @param configName
      *            the beggining of your chosen configuration String used by
      *            SettingsModel, together with radioLabels it stores
@@ -83,22 +82,18 @@ public class MultiFilterComponent {
      *            function called after every Refresh button click, intended for
      *            loading input Strings
      */
-    public MultiFilterComponent(final String configName, final String[] radioLabels, Callable<List<String>> refreshCall) {
+    public MultiFilterComponent(SettingsModelBoolean filterEnabledModel, final String configName,
+            final String[] radioLabels, Callable<List<String>> refreshCall) {
         this.configName = configName;
         this.radioLabels = radioLabels;
         this.refreshCaller = refreshCall;
+        this.filterEnabledModel = filterEnabledModel;
 
         JPanel north = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        filterEnabledModel = new SettingsModelBoolean(configName + "bool", true);
         filterEnabledModel.addChangeListener(new EnabledListener());
         filterEnabled = new DialogComponentBoolean(filterEnabledModel, "Customize types");
         north.add(filterEnabled.getComponentPanel());
-
-        refreshButton = new JButton("Refresh");
-        refreshButton.setPreferredSize(new Dimension(100, 25));
-        refreshButton.addActionListener(new RefreshListener());
-        north.add(refreshButton);
 
         radioButtonModel = new SettingsModelString(configName, radioLabels[0]);
         radioButtonModel.addChangeListener(new RadioButtonChangeListener());
@@ -112,6 +107,8 @@ public class MultiFilterComponent {
 
         panel.add(north, BorderLayout.NORTH);
         panel.add(filterPanel, BorderLayout.CENTER);
+
+        setEnabled(false);
     }
 
     public JPanel getPanel() {
@@ -121,7 +118,6 @@ public class MultiFilterComponent {
     public void setEnabled(final boolean enabled) {
         radioButtonModel.setEnabled(enabled);
         filterPanel.setEnabled(enabled);
-        refreshButton.setEnabled(enabled);
     }
 
     public final void saveSettingsTo(final NodeSettingsWO settings) throws InvalidSettingsException {
@@ -177,14 +173,16 @@ public class MultiFilterComponent {
     }
 
     private void setRefreshing(final boolean refreshing) {
+        active = false;
         if (refreshing) {
-            refreshButton.setText("Refreshing...");
+            panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         } else {
-            refreshButton.setText("Refresh");
+            panel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
         filterEnabledModel.setEnabled(!refreshing);
         setEnabled(!refreshing);
         panel.paintImmediately(panel.getVisibleRect());
+        active = true;
     }
 
     private class FilteringChangeListener implements ChangeListener {
@@ -213,33 +211,35 @@ public class MultiFilterComponent {
         }
     }
 
-    private class RefreshListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            setRefreshing(true);
-            List<String> list = null;
-            try {
-                list = refreshCaller.call();
-            } catch (Exception e) {
-                Logger.getLogger().debug("File parsing error : " + e.getMessage());
-            }
-            for (List<String> include : includeLists.values()) {
-                include.clear();
-            }
-            for (String label : radioLabels) {
-                if (list.contains(label)) {
-                    includeLists.get(label).add(label);
-                }
-            }
-            loadFilter(list);
-            setRefreshing(false);
+    private void refresh() {
+        setRefreshing(true);
+        List<String> list = null;
+        try {
+            list = refreshCaller.call();
+        } catch (Exception e) {
+            Logger.getLogger().debug("File parsing error : " + e.getMessage());
         }
+        for (List<String> include : includeLists.values()) {
+            include.clear();
+        }
+        for (String label : radioLabels) {
+            if (list.contains(label)) {
+                includeLists.get(label).add(label);
+            }
+        }
+        loadFilter(list);
+        setRefreshing(false);
     }
 
     private class EnabledListener implements ChangeListener {
         @Override
         public void stateChanged(ChangeEvent event) {
-            setEnabled(((SettingsModelBoolean) (event.getSource())).getBooleanValue());
+            SettingsModelBoolean enabledModel = (SettingsModelBoolean) (event.getSource());
+            if (enabledModel.getBooleanValue() && active) {
+                refresh();
+            } else if (!enabledModel.getBooleanValue()) {
+                setEnabled(false);
+            }
         }
     }
 
