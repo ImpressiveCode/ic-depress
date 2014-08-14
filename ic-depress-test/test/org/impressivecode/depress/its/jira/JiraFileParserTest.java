@@ -27,41 +27,43 @@ import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
-import org.impressivecode.depress.support.sourcecrawler.SourceCrawlerXMLTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
+
 /**
  * @author Maciej Borkowski, Capgemini Poland
  */
 public class JiraFileParserTest {
     private final static String testedFilePath = JiraFileParserTest.class.getResource("test.xml").getPath();
     private JiraFileParser parser;
-    private File file ;
+    private File file;
     private String expression;
-    
+
     @Before
     public void setUp() throws JAXBException {
         parser = new JiraFileParser();
         file = new File(testedFilePath);
         expression = "/rss/channel/item/priority[not(preceding::priority/. = .)]";
     }
-    
+
     @Test
-    public void shouldParseFile() throws XPathExpressionException, SAXException, IOException, ParserConfigurationException {
-        //when
+    public void shouldParseFile() throws XPathExpressionException, SAXException, IOException,
+            ParserConfigurationException {
+        // when
         List<String> list = parser.parseXPath(file, expression);
-        //then
+        // then
         assertTrue(list.contains("ONE"));
         assertTrue(list.contains("TWO"));
         assertTrue(list.contains("THREE"));
     }
-    
+
     @Test
-    public void shouldParseUnique() throws XPathExpressionException, SAXException, IOException, ParserConfigurationException {
-        //when
+    public void shouldParseUnique() throws XPathExpressionException, SAXException, IOException,
+            ParserConfigurationException {
+        // when
         List<String> list = parser.parseXPath(file, expression);
-        //then
+        // then
         assertTrue(list.size() == 3);
     }
 }
