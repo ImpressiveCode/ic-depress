@@ -45,6 +45,7 @@ public class SVNOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
         addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_EXTENSION, SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT),"Extension pattern:", false, 30));  
         addDialogComponent(new DialogComponentLabel(" (* = any extension, any string, ? = any character)"));
+
         createNewTab(ADVANCED_TAB_NAME);
   
         createNewGroup("Java");
