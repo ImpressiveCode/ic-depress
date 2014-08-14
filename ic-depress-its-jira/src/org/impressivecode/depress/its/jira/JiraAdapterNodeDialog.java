@@ -30,6 +30,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.impressivecode.depress.common.MultiFilterComponent;
 import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSType;
 import org.impressivecode.depress.its.ITSResolution;

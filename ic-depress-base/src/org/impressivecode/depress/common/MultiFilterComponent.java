@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jira;
+package org.impressivecode.depress.common;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -27,12 +27,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.glassfish.hk2.utilities.reflection.Logger;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataTableSpec;
@@ -218,7 +218,7 @@ public class MultiFilterComponent {
         try {
             list = refreshCaller.call();
         } catch (Exception e) {
-            Logger.getLogger().debug("File parsing error : " + e.getMessage());
+            Logger.getLogger("Error").severe("File parsing error : " + e.getMessage());
         }
         for (List<String> include : includeLists.values()) {
             include.clear();
