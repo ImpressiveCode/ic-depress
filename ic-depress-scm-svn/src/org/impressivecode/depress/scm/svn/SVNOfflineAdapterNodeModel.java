@@ -95,7 +95,7 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
             SCMParserOptions parserOptions = options(packageNameToFilter, userExtensions); 
             
             SVNExtensionParser parser = new SVNExtensionParser(parserOptions);
-            
+   
             List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
             
             LOGGER.info("Reading logs finished");

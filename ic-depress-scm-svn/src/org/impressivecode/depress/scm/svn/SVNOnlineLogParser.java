@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.svn;
 
+import org.impressivecode.depress.scm.SCMParserOptions;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
@@ -29,7 +30,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static org.impressivecode.depress.scm.svn.SVNExtensionParser.isCorrectAccordingToFilterRules;
 import org.impressivecode.depress.scm.SCMOperation;
-import org.impressivecode.depress.scm.SCMParserOptions;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNLogEntry;
 import org.tmatesoft.svn.core.SVNLogEntryPath;
