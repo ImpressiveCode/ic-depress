@@ -21,6 +21,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.impressivecode.depress.mr.checkstyle;bundle-version="1.0.0",
  org.impressivecode.depress.mr.eclipsemetrics;bundle-version="1.0.0",
  org.impressivecode.depress.mr.jacoco;bundle-version="1.0.0",
+  org.impressivecode.depress.mr.pitest;bundle-version="1.0.0",
  org.impressivecode.depress.mg.po;bundle-version="1.0.0",
  org.impressivecode.depress.mg.ipa;bundle-version="1.0.0",
  org.impressivecode.depress.mr.astcompare;bundle-version="0.1.0"
@@ -31,4 +32,6 @@ Bundle-ClassPath: bin/,
  lib/fest-assert-1.4.jar,
  lib/fest-util-1.1.6.jar,
  lib/mockito-all-1.9.5.jar
+Import-Package: org.apache.log4j;version="1.2.15",
+ org.impressivecode.depress.support.sourcecrawler
 

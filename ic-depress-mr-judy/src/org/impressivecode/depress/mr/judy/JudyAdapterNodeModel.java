@@ -17,8 +17,8 @@
  */
 package org.impressivecode.depress.mr.judy;
 
-import static org.impressivecode.depress.mr.judy.JudyAdapterTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.mr.judy.JudyAdapterTableFactory.createTableRow;
+import static org.impressivecode.depress.mr.MRAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mr.MRAdapterTableFactory.createTableRow;
 import static org.impressivecode.depress.mr.judy.JudyAdapterTableFactory.createTableSpec;
 import static org.impressivecode.depress.mr.judy.JudyEntriesParser.unmarshalResults;
 

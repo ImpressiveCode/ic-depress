@@ -22,6 +22,7 @@ import javax.swing.JFileChooser;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
+import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
@@ -42,7 +43,8 @@ public class SVNOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
                 SVNOfflineAdapterNodeModel.CFG_FILENAME, SVNOfflineAdapterNodeModel.FILENAME_DEFAULT),
                 SVNOfflineAdapterNodeModel.FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
 
-        addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_EXTENSION, SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT),"Extension pattern: (* = any extension)", false, 30));  
+        addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_EXTENSION, SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT),"Extension pattern:", false, 30));  
+        addDialogComponent(new DialogComponentLabel(" (* = any extension, any string, ? = any character)"));
 
         createNewTab(ADVANCED_TAB_NAME);
   

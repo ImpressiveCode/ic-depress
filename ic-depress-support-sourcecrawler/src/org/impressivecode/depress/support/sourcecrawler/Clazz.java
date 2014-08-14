@@ -29,9 +29,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Clazz {
     private String type;
     private String name;
+    private String access;
     private boolean isException;
     private boolean isInner;
     private boolean isTest;
+    private boolean isFinal;
 
     @XmlElement
     public String getType() {
@@ -77,5 +79,23 @@ public class Clazz {
     public void setTest(final boolean isTest) {
         this.isTest = isTest;
     }
+
+    @XmlElement(name = "access")
+	public String getAccess() {
+		return access;
+	}
+
+	public void setAccess(final String access) {
+		this.access = access;
+	}
+
+	@XmlElement(name = "final")
+	public boolean isFinal() {
+		return isFinal;
+	}
+
+	public void setFinal(final boolean isFinal) {
+		this.isFinal = isFinal;
+	}
 
 }

@@ -24,6 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -50,15 +51,26 @@ import com.google.common.collect.ImmutableSet.Builder;
 import com.google.common.collect.Lists;
 
 /**
- * 
  * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class JiraEntriesParser {
     private static final String JIRA_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z";
+    private final HashMap<String, String[]> settings;
+    private boolean priorityEnabled;
+    private boolean typeEnabled;
+    private boolean resolutionEnabled;
+
+    public JiraEntriesParser(final HashMap<String, String[]> settings, final boolean priorityEnabled,
+            final boolean typeEnabled, final boolean resolutionEnabled) {
+        this.settings = settings;
+        this.priorityEnabled = priorityEnabled;
+        this.typeEnabled = typeEnabled;
+        this.resolutionEnabled = resolutionEnabled;
+    }
 
     public List<ITSDataType> parseEntries(final String path) throws ParserConfigurationException, SAXException,
-    IOException, ParseException {
+            IOException, ParseException {
         Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -133,30 +145,22 @@ public class JiraEntriesParser {
         if (resolution == null) {
             return ITSResolution.UNKNOWN;
         }
-        switch (resolution) {
-        case "Unresolved":
-            return ITSResolution.UNRESOLVED;
-        case "Fixed":
-            return ITSResolution.FIXED;
-        case "Wont't Fix":
-            return ITSResolution.WONT_FIX;
-        case "Duplicate":
-            return ITSResolution.DUPLICATE;
-        case "Invalid":
-            return ITSResolution.INVALID;
-        case "Incomplete":
-            return ITSResolution.INVALID;
-        case "Cannot Reproduce":
-            return ITSResolution.WONT_FIX;
-        case "Later":
-            return ITSResolution.WONT_FIX;
-        case "Not A Problem":
-            return ITSResolution.WONT_FIX;
-        case "Implemented":
-            return ITSResolution.FIXED;
-        default:
-            return ITSResolution.UNKNOWN;
+        if (resolutionEnabled) {
+            for (String key : settings.keySet()) {
+                for (String value : settings.get(key)) {
+                    if (resolution.equals(value))
+                        return ITSResolution.get(key);
+                }
+            }
+        } else {
+            for (String label : ITSResolution.labels()) {
+                if (label.equals(resolution)) {
+                    return ITSResolution.get(label);
+                }
+            }
         }
+
+        return ITSResolution.UNKNOWN;
     }
 
     private List<String> getVersion(final Element elem) {
@@ -172,19 +176,21 @@ public class JiraEntriesParser {
         if (type == null) {
             return ITSType.UNKNOWN;
         }
-        switch (type) {
-        case "Bug":
-            return ITSType.BUG;
-        case "Test":
-            return ITSType.TEST;
-        case "Improvement":
-        case "New Feature":
-        case "Task":
-        case "Wish":
-            return ITSType.ENHANCEMENT;
-        default:
-            return ITSType.UNKNOWN;
+        if (typeEnabled) {
+            for (String key : settings.keySet()) {
+                for (String value : settings.get(key)) {
+                    if (type.equals(value))
+                        return ITSType.get(key);
+                }
+            }
+        } else {
+            for (String label : ITSType.labels()) {
+                if (label.equals(type)) {
+                    return ITSType.get(label);
+                }
+            }
         }
+        return ITSType.UNKNOWN;
     }
 
     private String getSummary(final Element elem) {
@@ -221,20 +227,21 @@ public class JiraEntriesParser {
         if (priority == null) {
             return ITSPriority.UNKNOWN;
         }
-        switch (priority) {
-        case "Trivial":
-            return ITSPriority.TRIVIAL;
-        case "Minor":
-            return ITSPriority.MINOR;
-        case "Major":
-            return ITSPriority.MAJOR;
-        case "Critical":
-            return ITSPriority.CRITICAL;
-        case "Blocker":
-            return ITSPriority.BLOCKER;
-        default:
-            return ITSPriority.UNKNOWN;
+        if (priorityEnabled) {
+            for (String key : settings.keySet()) {
+                for (String value : settings.get(key)) {
+                    if (priority.equals(value))
+                        return ITSPriority.get(key);
+                }
+            }
+        } else {
+            for (String label : ITSPriority.labels()) {
+                if (label.equals(priority)) {
+                    return ITSPriority.get(label);
+                }
+            }
         }
+        return ITSPriority.UNKNOWN;
     }
 
     private String getLink(final Element elem) {

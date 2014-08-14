@@ -28,6 +28,7 @@
                 returns a table with the following data: <br />
                 <ul>
                     <li>name of class</li>
+					<li>file extension</li>
                     <li>marker</li>
                     <li>author of change</li>
                     <li>action</li>
@@ -48,10 +49,11 @@
         </intro>
 
         <option name="Selected file">File with Git log to analyze in offline version of plugin</option>
-        <option name="Package">Name of package</option>
+		<option name="Extension pattern: (* = any extension)">List of accepted file extensions</option>
+        <option name="Package">Name of accepted java packages</option>
     </fullDescription>
 
     <ports>
-        <outPort index="0" name="Change history data">Table with data read from Git log file or Git repository</outPort>
+        <outPort index="0" name="Data change history ">Table with data read from Git log file or Git repository</outPort>
     </ports>
 </knimeNode>

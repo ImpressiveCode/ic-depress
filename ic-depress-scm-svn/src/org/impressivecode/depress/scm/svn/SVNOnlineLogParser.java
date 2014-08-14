@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import static org.impressivecode.depress.scm.svn.SVNExtensionParser.isCorrectAccordingToFilterRules;
 import org.impressivecode.depress.scm.SCMOperation;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNLogEntry;
@@ -42,14 +42,13 @@ import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
 public class SVNOnlineLogParser {
-
+    
     private final Pattern PATTERN = Pattern.compile("^(.*)");
 
     public List<SVNCommit> parseEntries(final String path,
             final SCMParserOptions svnParserOptions) throws IOException,
             ParseException, SVNException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
-
         List<SVNCommit> commitsList = processRepo(path, svnParserOptions);
 
         return commitsList;
@@ -97,14 +96,17 @@ public class SVNOnlineLogParser {
             String transformed = logFile.getPath().replaceAll("/", ".");
             String origin = matcher.group(1);
 
-            if (include(svnParserOptions, transformed)) {
-
+            if (isCorrectAccordingToFilterRules(transformed, svnParserOptions)) {
                 SVNCommitFile commitFile = new SVNCommitFile();
-
+                if(transformed.endsWith(".java")){
+                	commitFile.setResourceName(parseJavaClass(svnParserOptions,transformed));
+                }
+                else{
+                	commitFile.setResourceName("");
+                }
+                
                 commitFile.setOperation(parseOperation(logFile));
                 commitFile.setPath(origin);
-                commitFile.setJavaClass(parseJavaClass(svnParserOptions,
-                        transformed));
 
                 commit.getFiles().add(commitFile);
             }
@@ -133,19 +135,6 @@ public class SVNOnlineLogParser {
             message = message.substring(0, message.length() - 1);
         }
         return message;
-    }
-
-    private boolean include(final SCMParserOptions svnParserOptions, final String path) {
-        boolean java = path.endsWith(".java");
-        if (java) {
-            if (svnParserOptions.hasPackagePrefix()) {
-                return path.indexOf(svnParserOptions.getPackagePrefix()) != -1;
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
     }
 
     private String parseJavaClass(final SCMParserOptions svnParserOptions,

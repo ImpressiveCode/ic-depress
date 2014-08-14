@@ -32,6 +32,7 @@ public class GitCommitFile {
     private String path;
     private String javaClass;
     private SCMOperation operation;
+    private String extension;
 
     public String getPath() {
         return path;
@@ -79,4 +80,13 @@ public class GitCommitFile {
     public String getJavaClass(){
         return this.javaClass;
     }
+
+	public String getExtension() {
+		return extension;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
+
 }

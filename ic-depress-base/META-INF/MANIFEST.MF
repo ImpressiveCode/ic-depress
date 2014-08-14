@@ -23,7 +23,8 @@ Export-Package: com.google.common.annotations,
  com.google.common.util.concurrent,
  org.impressivecode.depress.common,
  org.impressivecode.depress.its,
- org.impressivecode.depress.scm
+ org.impressivecode.depress.scm,
+ org.impressivecode.depress.mr
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Eclipse-RegisterBuddy: registered
 Bundle-ClassPath: lib/guava-14.0-rc3.jar, lib/shuttlelist-0.0.1.jar, lib/miglayout15-swing.jar,

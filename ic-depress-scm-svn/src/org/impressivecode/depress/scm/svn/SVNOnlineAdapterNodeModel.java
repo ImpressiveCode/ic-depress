@@ -24,11 +24,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.impressivecode.depress.common.OutputTransformer;
 import org.impressivecode.depress.scm.SCMAdapterTransformer;
 import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.scm.SCMParserOptions;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -44,10 +46,12 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import com.google.common.io.Files;
 
 /**
  * 
  * @author IcDepress
+ * @author Zuzanna Pacholczyk, Capgemini Poland
  */
 public class SVNOnlineAdapterNodeModel extends NodeModel {
 
@@ -60,11 +64,22 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
     public static String SVN_PACKAGENAME = "depress.scm.svnonline.package";
 
     public static String SVN_PACKAGENAME_DEFAULT = "org.";
+    
+    public static String EXTENSION_DEFAULT = ".java";
+    
+    public final static String SVN_EXTENSION = "depress.scm.svnonline.extension";
+    
 
     private final SettingsModelString svnRepositoryAddress = new SettingsModelString(
             SVNOnlineAdapterNodeModel.SVN_REPOSITORY_ADDRESS, SVNOnlineAdapterNodeModel.SVN_REPOSITORY_DEFAULT);
+    
     private final SettingsModelOptionalString svnPackageName = new SettingsModelOptionalString(
             SVNOnlineAdapterNodeModel.SVN_PACKAGENAME, SVNOnlineAdapterNodeModel.SVN_PACKAGENAME_DEFAULT, true);
+    
+    public final SettingsModelString extensions = new SettingsModelString(
+    		SVNOnlineAdapterNodeModel.SVN_EXTENSION, SVNOnlineAdapterNodeModel.EXTENSION_DEFAULT);
+    
+    private ArrayList<String> userExtensions;
 
     protected SVNOnlineAdapterNodeModel() {
         super(0, 1);
@@ -76,20 +91,26 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
+        try {
+	    	userExtensions = new ArrayList<String>(); 
+	        Collections.addAll( userExtensions, getExtensions());
+	        String svnPath = getSvnPath(this.svnRepositoryAddress.getStringValue());
+	
+	        logger.info("Reading logs from repository " + svnPath);
+	        SVNOnlineLogParser parser = new SVNOnlineLogParser();
+	        SCMParserOptions parserOptions = options(svnPackageName.getStringValue(), userExtensions);
+	        List<SVNCommit> commits = parser.parseEntries(svnPath, parserOptions);
 
-        String svnPath = getSvnPath(this.svnRepositoryAddress.getStringValue());
-
-        logger.info("Reading logs from repository " + svnPath);
-        SVNOnlineLogParser parser = new SVNOnlineLogParser();
-
-        List<SVNCommit> commits = parser.parseEntries(svnPath, options(svnPackageName.getStringValue(), new  ArrayList<String>()));
-
-        BufferedDataTable out = transform(commits, exec);
-        logger.info("Reading git logs finished.");
-
-        return new BufferedDataTable[] { out };
+	        logger.info("Reading git logs finished.");
+	        BufferedDataTable out = transform(commits, exec);	
+	        logger.info("Transforming logs finished.");
+	        return new BufferedDataTable[] { out };
+	    } catch (Exception ex) {
+	    	logger.error("Unable to parse SVN entries", ex);
+	        throw ex;
+        }
     }
-
+    
     private BufferedDataTable transform(final List<SVNCommit> commits, final ExecutionContext exec)
             throws CanceledExecutionException {
         List<SCMDataType> data = Lists.newLinkedList();
@@ -102,7 +123,7 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
         OutputTransformer<SCMDataType> transformer = new SCMAdapterTransformer(createDataColumnSpec());
         return transformer.transform(data, exec);
     }
-
+	
     private SCMDataType scm(final SVNCommit commit, final SVNCommitFile file) {
         SCMDataType scm = new SCMDataType();
         scm.setAuthor(commit.getAuthor());
@@ -111,7 +132,8 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
         scm.setMessage(commit.getMessage());
         scm.setOperation(file.getOperation());
         scm.setPath(file.getPath());
-        scm.setResourceName(file.getJavaClass());
+        scm.setExtension(Files.getFileExtension(file.getPath()));
+        scm.setResourceName(file.getResourceName());
         return scm;
     }
 
@@ -121,6 +143,7 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
 
     @Override
     protected void reset() {
+    	//NOOP
     }
 
     @Override
@@ -133,31 +156,50 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         svnRepositoryAddress.saveSettingsTo(settings);
         svnPackageName.saveSettingsTo(settings);
+        extensions.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         svnRepositoryAddress.loadSettingsFrom(settings);
         svnPackageName.loadSettingsFrom(settings);
+        extensions.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         svnRepositoryAddress.validateSettings(settings);
         svnPackageName.validateSettings(settings);
+        extensions.validateSettings(settings);
+        
     }
 
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
     CanceledExecutionException {
+    	//NOOP
     }
 
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
     CanceledExecutionException {
+    	//NOOP
     }
 
     private String getSvnPath(final String repositoryPath) {
         return URI.create(repositoryPath).toString();
     }
+    
+    // parsing user's extensions into a list
+	private String[] getExtensions() {
+		String ext = extensions.getStringValue();
+		String[] ext_ = ext.split("\\s*,\\s*");
+		for(String word : ext_){
+			if(word.equals("*")){
+				ext_[0] = "*";
+				break;
+			}			
+		}
+		return ext_;
+	}
 }
