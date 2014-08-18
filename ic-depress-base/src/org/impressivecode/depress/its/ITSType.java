@@ -24,6 +24,7 @@ import java.util.Map;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public enum ITSType {

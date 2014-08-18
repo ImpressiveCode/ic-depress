@@ -82,7 +82,6 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
         multiFilterComponentPriority = new MultiFilterComponent(JiraAdapterNodeModel.createSettingsModelBoolean(
                 JiraAdapterNodeModel.PRIORITY_BOOLEAN_CONFIG_NAME, false), JiraAdapterNodeModel.PRIORITY_CONFIG_NAME,
                 ITSPriority.labels(), new refreshPriorityCaller());
-
         tabbedPane.addTab("Priority", multiFilterComponentPriority.getPanel());
     }
 
@@ -90,7 +89,6 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
         multiFilterComponentType = new MultiFilterComponent(JiraAdapterNodeModel.createSettingsModelBoolean(
                 JiraAdapterNodeModel.TYPE_BOOLEAN_CONFIG_NAME, false), JiraAdapterNodeModel.TYPE_CONFIG_NAME,
                 ITSType.labels(), new refreshTypeCaller());
-
         tabbedPane.addTab("Type", multiFilterComponentType.getPanel());
 
     }
@@ -110,9 +108,10 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
     public final void loadSettingsFrom(final NodeSettingsRO settings, final PortObjectSpec[] specs)
             throws NotConfigurableException {
         chooser.loadSettingsFrom(settings, specs);
-        multiFilterComponentPriority.loadSettingsFrom(settings, specs, null);
-        multiFilterComponentType.loadSettingsFrom(settings, specs, null);
-        multiFilterComponentResolution.loadSettingsFrom(settings, specs, null);
+        oldFile = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
+        multiFilterComponentPriority.loadSettingsFrom(settings, specs);
+        multiFilterComponentType.loadSettingsFrom(settings, specs);
+        multiFilterComponentResolution.loadSettingsFrom(settings, specs);
     }
 
     @Override
@@ -152,37 +151,41 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
             return parser.parseXPath(file, expression);
         }
     }
-
-    private void addChangeListenerToTabs() {
+    
+    private JTabbedPane getTabbedPane() {
         Component[] components = getPanel().getComponents();
         Component component = null;
         for (int i = 0; i < components.length; i++) {
             component = components[i];
             if (component instanceof JTabbedPane) {
-                ((JTabbedPane) component).addChangeListener(new ChangeListener() {
-                    @Override
-                    public void stateChanged(ChangeEvent event) {
-                        JTabbedPane panel = (JTabbedPane) event.getSource();
-                        if (panel.getTitleAt(panel.getSelectedIndex()).equals("Advanced")) {
-                            File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
-                            if (null == file || !file.isFile()) {
-                                panel.setSelectedIndex(panel.indexOfTab("Settings"));
-                                JOptionPane.showMessageDialog(new JFrame(),
-                                        "Invalid settings.\nPlease specify a valid filename.");
-                            } else {
-                                if(!file.equals(oldFile)) {
-                                    multiFilterComponentPriority.setEnabled(false);
-                                    multiFilterComponentType.setEnabled(false);
-                                    multiFilterComponentResolution.setEnabled(false);
-                                }
-                                oldFile = file;
-                            }
-                        }
-                    }
-                });
-                break;
+                return (JTabbedPane) component;
             }
         }
+        return null;
+    }
+
+    private void addChangeListenerToTabs() {
+        getTabbedPane().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent event) {
+                JTabbedPane panel = (JTabbedPane) event.getSource();
+                if (panel.getTitleAt(panel.getSelectedIndex()).equals("Advanced")) {
+                    File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
+                    if (null == file || !file.isFile()) {
+                        panel.setSelectedIndex(panel.indexOfTab("Settings"));
+                        JOptionPane.showMessageDialog(new JFrame(),
+                                "Invalid settings.\nPlease specify a valid file.");
+                    } else {
+                        if(!file.equals(oldFile)) {
+                            multiFilterComponentPriority.setEnabled(false);
+                            multiFilterComponentType.setEnabled(false);
+                            multiFilterComponentResolution.setEnabled(false);
+                        }
+                        oldFile = file;
+                    }
+                }
+            }
+        });
     }
 
 }

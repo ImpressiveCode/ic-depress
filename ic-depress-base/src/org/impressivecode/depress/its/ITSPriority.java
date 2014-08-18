@@ -24,6 +24,7 @@ import java.util.Map;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public enum ITSPriority {
@@ -38,7 +39,7 @@ public enum ITSPriority {
 	
     @Override
     public String toString() {
-        return (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
+        return (this.name().substring(0, 1).toUpperCase() + this.name().substring(1).toLowerCase()).replaceAll("_", " ");
     }
     
     private static Map<String, ITSPriority> lookup = new HashMap<String, ITSPriority>();
