@@ -29,18 +29,19 @@ import java.util.Map;
  */
 public enum ITSType {
     BUG("Bug"), ENHANCEMENT("Enhancement"), TEST("Test"), UNKNOWN("Unknown");
-    
+
     private final String label;
-    
+
     private ITSType(final String label) {
         this.label = label;
     }
-    
+
     @Override
     public String toString() {
-        return (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
+        return (this.name().substring(0, 1).toUpperCase() + this.name().substring(1).toLowerCase())
+                .replaceAll("_", " ");
     };
-    
+
     private static Map<String, ITSType> lookup = new HashMap<String, ITSType>();
     static {
         for (ITSType type : ITSType.values()) {
@@ -51,11 +52,11 @@ public enum ITSType {
     public static ITSType get(final String label) {
         return lookup.get(label);
     }
-    
+
     public String getLabel() {
         return label;
     }
-    
+
     public static String[] labels() {
         return Arrays.toString(ITSType.values()).replaceAll("^.|.$", "").split(", ");
     }

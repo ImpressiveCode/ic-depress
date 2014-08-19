@@ -77,12 +77,14 @@ public class JiraAdapterNodeModel extends NodeModel {
     private final HashMap<String, SettingsModelStringArray> prioritySettings = new HashMap<String, SettingsModelStringArray>();
     private final HashMap<String, SettingsModelStringArray> typeSettings = new HashMap<String, SettingsModelStringArray>();
     private final HashMap<String, SettingsModelStringArray> resolutionSettings = new HashMap<String, SettingsModelStringArray>();
-    
-    private final SettingsModelStringArray excludedPriority = new SettingsModelStringArray(JiraAdapterNodeModel.PRIORITY_CONFIG_NAME + "excluded", new String[]{});
-    private final SettingsModelStringArray excludedType = new SettingsModelStringArray(JiraAdapterNodeModel.TYPE_CONFIG_NAME + "excluded", new String[]{});
-    private final SettingsModelStringArray excludedResolution = new SettingsModelStringArray(JiraAdapterNodeModel.RESOLUTION_CONFIG_NAME + "excluded", new String[]{});
-    
-    
+
+    private final SettingsModelStringArray excludedPriority = new SettingsModelStringArray(
+            JiraAdapterNodeModel.PRIORITY_CONFIG_NAME + "excluded", new String[] {});
+    private final SettingsModelStringArray excludedType = new SettingsModelStringArray(
+            JiraAdapterNodeModel.TYPE_CONFIG_NAME + "excluded", new String[] {});
+    private final SettingsModelStringArray excludedResolution = new SettingsModelStringArray(
+            JiraAdapterNodeModel.RESOLUTION_CONFIG_NAME + "excluded", new String[] {});
+
     protected JiraAdapterNodeModel() {
         super(0, 1);
         initializeSettings();
@@ -90,13 +92,15 @@ public class JiraAdapterNodeModel extends NodeModel {
 
     private void initializeSettings() {
         for (String label : ITSPriority.labels()) {
-            prioritySettings.put(label, new SettingsModelStringArray(PRIORITY_CONFIG_NAME + "." + label, new String[]{}));
+            prioritySettings.put(label, new SettingsModelStringArray(PRIORITY_CONFIG_NAME + "." + label,
+                    new String[] {}));
         }
         for (String label : ITSType.labels()) {
-            typeSettings.put(label, new SettingsModelStringArray(TYPE_CONFIG_NAME + "." + label, new String[]{}));
+            typeSettings.put(label, new SettingsModelStringArray(TYPE_CONFIG_NAME + "." + label, new String[] {}));
         }
         for (String label : ITSResolution.labels()) {
-            resolutionSettings.put(label, new SettingsModelStringArray(RESOLUTION_CONFIG_NAME + "." + label, new String[]{}));
+            resolutionSettings.put(label, new SettingsModelStringArray(RESOLUTION_CONFIG_NAME + "." + label,
+                    new String[] {}));
         }
     }
 
@@ -128,7 +132,8 @@ public class JiraAdapterNodeModel extends NodeModel {
 
     private List<ITSDataType> parseEntries(final String filePath) throws ParserConfigurationException, SAXException,
             IOException, ParseException {
-        return new JiraEntriesParser(getSettings(prioritySettings), getSettings(typeSettings), getSettings(resolutionSettings), priorityEnabled.getBooleanValue(), typeEnabled.getBooleanValue(),
+        return new JiraEntriesParser(getSettings(prioritySettings), getSettings(typeSettings),
+                getSettings(resolutionSettings), priorityEnabled.getBooleanValue(), typeEnabled.getBooleanValue(),
                 resolutionEnabled.getBooleanValue()).parseEntries(filePath);
     }
 

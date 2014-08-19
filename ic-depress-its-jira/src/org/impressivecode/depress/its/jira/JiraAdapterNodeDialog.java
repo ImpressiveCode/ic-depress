@@ -151,7 +151,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
             return parser.parseXPath(file, expression);
         }
     }
-    
+
     private JTabbedPane getTabbedPane() {
         Component[] components = getPanel().getComponents();
         Component component = null;
@@ -173,10 +173,9 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
                     File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
                     if (null == file || !file.isFile()) {
                         panel.setSelectedIndex(panel.indexOfTab("Settings"));
-                        JOptionPane.showMessageDialog(new JFrame(),
-                                "Invalid settings.\nPlease specify a valid file.");
+                        JOptionPane.showMessageDialog(new JFrame(), "Invalid settings.\nPlease specify a valid file.");
                     } else {
-                        if(!file.equals(oldFile)) {
+                        if (!file.equals(oldFile)) {
                             multiFilterComponentPriority.setEnabled(false);
                             multiFilterComponentType.setEnabled(false);
                             multiFilterComponentResolution.setEnabled(false);
