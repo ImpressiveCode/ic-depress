@@ -56,14 +56,19 @@ import com.google.common.collect.Lists;
  */
 public class JiraEntriesParser {
     private static final String JIRA_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z";
-    private final HashMap<String, String[]> settings;
+    private final HashMap<String, String[]> prioritySettings;
+    private final HashMap<String, String[]> typeSettings;
+    private final HashMap<String, String[]> resolutionSettings;
     private boolean priorityEnabled;
     private boolean typeEnabled;
     private boolean resolutionEnabled;
 
-    public JiraEntriesParser(final HashMap<String, String[]> settings, final boolean priorityEnabled,
-            final boolean typeEnabled, final boolean resolutionEnabled) {
-        this.settings = settings;
+    public JiraEntriesParser(final HashMap<String, String[]> prioritySettings,
+            final HashMap<String, String[]> typeSettings, final HashMap<String, String[]> resolutionSettings,
+            final boolean priorityEnabled, final boolean typeEnabled, final boolean resolutionEnabled) {
+        this.prioritySettings = prioritySettings;
+        this.typeSettings = typeSettings;
+        this.resolutionSettings = resolutionSettings;
         this.priorityEnabled = priorityEnabled;
         this.typeEnabled = typeEnabled;
         this.resolutionEnabled = resolutionEnabled;
@@ -146,8 +151,8 @@ public class JiraEntriesParser {
             return ITSResolution.UNKNOWN;
         }
         if (resolutionEnabled) {
-            for (String key : settings.keySet()) {
-                for (String value : settings.get(key)) {
+            for (String key : resolutionSettings.keySet()) {
+                for (String value : resolutionSettings.get(key)) {
                     if (resolution.equals(value))
                         return ITSResolution.get(key);
                 }
@@ -177,8 +182,8 @@ public class JiraEntriesParser {
             return ITSType.UNKNOWN;
         }
         if (typeEnabled) {
-            for (String key : settings.keySet()) {
-                for (String value : settings.get(key)) {
+            for (String key : typeSettings.keySet()) {
+                for (String value : typeSettings.get(key)) {
                     if (type.equals(value))
                         return ITSType.get(key);
                 }
@@ -228,8 +233,8 @@ public class JiraEntriesParser {
             return ITSPriority.UNKNOWN;
         }
         if (priorityEnabled) {
-            for (String key : settings.keySet()) {
-                for (String value : settings.get(key)) {
+            for (String key : prioritySettings.keySet()) {
+                for (String value : prioritySettings.get(key)) {
                     if (priority.equals(value))
                         return ITSPriority.get(key);
                 }

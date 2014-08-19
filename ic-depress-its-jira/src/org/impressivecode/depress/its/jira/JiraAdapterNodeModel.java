@@ -74,8 +74,15 @@ public class JiraAdapterNodeModel extends NodeModel {
     private final SettingsModelBoolean typeEnabled = createSettingsModelBoolean(TYPE_BOOLEAN_CONFIG_NAME, false);
     private final SettingsModelBoolean resolutionEnabled = createSettingsModelBoolean(RESOLUTION_BOOLEAN_CONFIG_NAME,
             false);
-    private final HashMap<String, SettingsModelStringArray> groupSettings = new HashMap<String, SettingsModelStringArray>();
-
+    private final HashMap<String, SettingsModelStringArray> prioritySettings = new HashMap<String, SettingsModelStringArray>();
+    private final HashMap<String, SettingsModelStringArray> typeSettings = new HashMap<String, SettingsModelStringArray>();
+    private final HashMap<String, SettingsModelStringArray> resolutionSettings = new HashMap<String, SettingsModelStringArray>();
+    
+    private final SettingsModelStringArray excludedPriority = new SettingsModelStringArray(JiraAdapterNodeModel.PRIORITY_CONFIG_NAME + "excluded", new String[]{});
+    private final SettingsModelStringArray excludedType = new SettingsModelStringArray(JiraAdapterNodeModel.TYPE_CONFIG_NAME + "excluded", new String[]{});
+    private final SettingsModelStringArray excludedResolution = new SettingsModelStringArray(JiraAdapterNodeModel.RESOLUTION_CONFIG_NAME + "excluded", new String[]{});
+    
+    
     protected JiraAdapterNodeModel() {
         super(0, 1);
         initializeSettings();
@@ -83,13 +90,13 @@ public class JiraAdapterNodeModel extends NodeModel {
 
     private void initializeSettings() {
         for (String label : ITSPriority.labels()) {
-            groupSettings.put(label, new SettingsModelStringArray(PRIORITY_CONFIG_NAME + "." + label, null));
+            prioritySettings.put(label, new SettingsModelStringArray(PRIORITY_CONFIG_NAME + "." + label, new String[]{}));
         }
         for (String label : ITSType.labels()) {
-            groupSettings.put(label, new SettingsModelStringArray(TYPE_CONFIG_NAME + "." + label, null));
+            typeSettings.put(label, new SettingsModelStringArray(TYPE_CONFIG_NAME + "." + label, new String[]{}));
         }
         for (String label : ITSResolution.labels()) {
-            groupSettings.put(label, new SettingsModelStringArray(RESOLUTION_CONFIG_NAME + "." + label, null));
+            resolutionSettings.put(label, new SettingsModelStringArray(RESOLUTION_CONFIG_NAME + "." + label, new String[]{}));
         }
     }
 
@@ -105,7 +112,7 @@ public class JiraAdapterNodeModel extends NodeModel {
         return new BufferedDataTable[] { out };
     }
 
-    private HashMap<String, String[]> getSettings() {
+    private HashMap<String, String[]> getSettings(HashMap<String, SettingsModelStringArray> groupSettings) {
         HashMap<String, String[]> currentSettings = new HashMap<String, String[]>();
         for (Entry<String, SettingsModelStringArray> entry : groupSettings.entrySet()) {
             currentSettings.put(entry.getKey(), entry.getValue().getStringArrayValue());
@@ -121,7 +128,7 @@ public class JiraAdapterNodeModel extends NodeModel {
 
     private List<ITSDataType> parseEntries(final String filePath) throws ParserConfigurationException, SAXException,
             IOException, ParseException {
-        return new JiraEntriesParser(getSettings(), priorityEnabled.getBooleanValue(), typeEnabled.getBooleanValue(),
+        return new JiraEntriesParser(getSettings(prioritySettings), getSettings(typeSettings), getSettings(resolutionSettings), priorityEnabled.getBooleanValue(), typeEnabled.getBooleanValue(),
                 resolutionEnabled.getBooleanValue()).parseEntries(filePath);
     }
 
@@ -141,8 +148,17 @@ public class JiraAdapterNodeModel extends NodeModel {
         priorityEnabled.saveSettingsTo(settings);
         typeEnabled.saveSettingsTo(settings);
         resolutionEnabled.saveSettingsTo(settings);
-        for (SettingsModelStringArray prioritySetting : groupSettings.values()) {
-            prioritySetting.saveSettingsTo(settings);
+        excludedPriority.saveSettingsTo(settings);
+        excludedType.saveSettingsTo(settings);
+        excludedResolution.saveSettingsTo(settings);
+        for (SettingsModelStringArray settingsArray : prioritySettings.values()) {
+            settingsArray.saveSettingsTo(settings);
+        }
+        for (SettingsModelStringArray settingsArray : typeSettings.values()) {
+            settingsArray.saveSettingsTo(settings);
+        }
+        for (SettingsModelStringArray settingsArray : resolutionSettings.values()) {
+            settingsArray.saveSettingsTo(settings);
         }
     }
 
@@ -152,8 +168,17 @@ public class JiraAdapterNodeModel extends NodeModel {
         priorityEnabled.loadSettingsFrom(settings);
         typeEnabled.loadSettingsFrom(settings);
         resolutionEnabled.loadSettingsFrom(settings);
-        for (SettingsModelStringArray prioritySetting : groupSettings.values()) {
-            prioritySetting.loadSettingsFrom(settings);
+        excludedPriority.loadSettingsFrom(settings);
+        excludedType.loadSettingsFrom(settings);
+        excludedResolution.loadSettingsFrom(settings);
+        for (SettingsModelStringArray settingsArray : prioritySettings.values()) {
+            settingsArray.loadSettingsFrom(settings);
+        }
+        for (SettingsModelStringArray settingsArray : typeSettings.values()) {
+            settingsArray.loadSettingsFrom(settings);
+        }
+        for (SettingsModelStringArray settingsArray : resolutionSettings.values()) {
+            settingsArray.loadSettingsFrom(settings);
         }
     }
 
@@ -163,8 +188,17 @@ public class JiraAdapterNodeModel extends NodeModel {
         priorityEnabled.validateSettings(settings);
         typeEnabled.validateSettings(settings);
         resolutionEnabled.validateSettings(settings);
-        for (SettingsModelStringArray prioritySetting : groupSettings.values()) {
-            prioritySetting.validateSettings(settings);
+        excludedPriority.validateSettings(settings);
+        excludedType.validateSettings(settings);
+        excludedResolution.validateSettings(settings);
+        for (SettingsModelStringArray settingsArray : prioritySettings.values()) {
+            settingsArray.validateSettings(settings);
+        }
+        for (SettingsModelStringArray settingsArray : typeSettings.values()) {
+            settingsArray.validateSettings(settings);
+        }
+        for (SettingsModelStringArray settingsArray : resolutionSettings.values()) {
+            settingsArray.validateSettings(settings);
         }
     }
 
