@@ -77,7 +77,12 @@ public class JiraAdapterNodeModel extends NodeModel {
     private final HashMap<String, SettingsModelStringArray> prioritySettings = new HashMap<String, SettingsModelStringArray>();
     private final HashMap<String, SettingsModelStringArray> typeSettings = new HashMap<String, SettingsModelStringArray>();
     private final HashMap<String, SettingsModelStringArray> resolutionSettings = new HashMap<String, SettingsModelStringArray>();
-
+    
+    private final SettingsModelStringArray excludedPriority = new SettingsModelStringArray(JiraAdapterNodeModel.PRIORITY_CONFIG_NAME + "excluded", new String[]{});
+    private final SettingsModelStringArray excludedType = new SettingsModelStringArray(JiraAdapterNodeModel.TYPE_CONFIG_NAME + "excluded", new String[]{});
+    private final SettingsModelStringArray excludedResolution = new SettingsModelStringArray(JiraAdapterNodeModel.RESOLUTION_CONFIG_NAME + "excluded", new String[]{});
+    
+    
     protected JiraAdapterNodeModel() {
         super(0, 1);
         initializeSettings();
@@ -143,6 +148,9 @@ public class JiraAdapterNodeModel extends NodeModel {
         priorityEnabled.saveSettingsTo(settings);
         typeEnabled.saveSettingsTo(settings);
         resolutionEnabled.saveSettingsTo(settings);
+        excludedPriority.saveSettingsTo(settings);
+        excludedType.saveSettingsTo(settings);
+        excludedResolution.saveSettingsTo(settings);
         for (SettingsModelStringArray settingsArray : prioritySettings.values()) {
             settingsArray.saveSettingsTo(settings);
         }
@@ -160,6 +168,9 @@ public class JiraAdapterNodeModel extends NodeModel {
         priorityEnabled.loadSettingsFrom(settings);
         typeEnabled.loadSettingsFrom(settings);
         resolutionEnabled.loadSettingsFrom(settings);
+        excludedPriority.loadSettingsFrom(settings);
+        excludedType.loadSettingsFrom(settings);
+        excludedResolution.loadSettingsFrom(settings);
         for (SettingsModelStringArray settingsArray : prioritySettings.values()) {
             settingsArray.loadSettingsFrom(settings);
         }
@@ -177,6 +188,9 @@ public class JiraAdapterNodeModel extends NodeModel {
         priorityEnabled.validateSettings(settings);
         typeEnabled.validateSettings(settings);
         resolutionEnabled.validateSettings(settings);
+        excludedPriority.validateSettings(settings);
+        excludedType.validateSettings(settings);
+        excludedResolution.validateSettings(settings);
         for (SettingsModelStringArray settingsArray : prioritySettings.values()) {
             settingsArray.validateSettings(settings);
         }
