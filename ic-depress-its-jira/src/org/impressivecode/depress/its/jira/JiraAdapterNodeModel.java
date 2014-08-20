@@ -22,7 +22,6 @@ import static org.impressivecode.depress.its.jira.JiraAdapterTableFactory.create
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -73,14 +72,6 @@ public class JiraAdapterNodeModel extends NodeModel {
 
     protected JiraAdapterNodeModel() {
         super(0, 1);
-    }
-
-    static HashMap<String, String[]> initializeSettings(final String[] labels) {
-        HashMap<String, String[]> map = new HashMap<String, String[]>();
-        for (String label : labels) {
-            map.put(label, new String[] {});
-        }
-        return map;
     }
 
     @Override
