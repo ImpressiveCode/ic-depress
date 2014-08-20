@@ -24,23 +24,24 @@ import java.util.Map;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public enum ITSPriority {
-    TRIVIAL("Trivial"), MINOR("Minor"), MAJOR("Major"),
-    CRITICAL("Critical"), BLOCKER("Blocker"), UNKNOWN("Unknown");
-    
+    TRIVIAL("Trivial"), MINOR("Minor"), MAJOR("Major"), CRITICAL("Critical"), BLOCKER("Blocker"), UNKNOWN("Unknown");
+
     private final String label;
-    
-	private ITSPriority(final String label) {
-    	this.label = label;
+
+    private ITSPriority(final String label) {
+        this.label = label;
     }
-	
+
     @Override
     public String toString() {
-        return (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
+        return (this.name().substring(0, 1).toUpperCase() + this.name().substring(1).toLowerCase())
+                .replaceAll("_", " ");
     }
-    
+
     private static Map<String, ITSPriority> lookup = new HashMap<String, ITSPriority>();
     static {
         for (ITSPriority priority : ITSPriority.values()) {
@@ -51,13 +52,13 @@ public enum ITSPriority {
     public static ITSPriority get(final String label) {
         return lookup.get(label);
     }
-    
-	public String getLabel() {
-		return label;
-	}
-	
-	public static String[] labels() {
-	    return Arrays.toString(ITSPriority.values()).replaceAll("^.|.$", "").split(", ");
-	}
+
+    public String getLabel() {
+        return label;
+    }
+
+    public static String[] labels() {
+        return Arrays.toString(ITSPriority.values()).replaceAll("^.|.$", "").split(", ");
+    }
 
 }

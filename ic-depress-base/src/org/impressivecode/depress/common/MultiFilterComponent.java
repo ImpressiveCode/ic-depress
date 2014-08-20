@@ -21,11 +21,12 @@ import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
@@ -48,6 +49,8 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
 import org.knime.core.node.util.ColumnFilterPanel;
 
+import com.google.common.collect.Lists;
+
 /**
  * @author Maciej Borkowski, Capgemini Poland
  */
@@ -57,58 +60,44 @@ public class MultiFilterComponent {
     private final ColumnFilterPanel filterPanel;
     private final DialogComponentBoolean filterEnabled;
 
-    private final SettingsModelString radioButtonModel;
-    private final SettingsModelBoolean filterEnabledModel;
+    private final SettingsModelMultiFilter model;
     private final String[] radioLabels;
-    private final String configName;
     private final Callable<List<String>> refreshCaller;
     private final Map<String, List<String>> includeLists = new LinkedHashMap<String, List<String>>();
-    private boolean active = true;
+    private ArrayList<String> excludeList;
+    private boolean active = false;
 
     /**
      * Creates a component that lets user put some input strings into multiple
      * groups. You can add this component to your dialog using getPanel().
      * 
-     * @param filterEnabledModel
-     *            gives state of panel - enabled or disabled.
-     * @param configName
-     *            the beggining of your chosen configuration String used by
-     *            SettingsModel, together with radioLabels it stores
-     *            data(configName+radioLabel) settings for
-     *            DialogComponentButtonGroup
-     * @param radioLabels
-     *            labels for DialogComponentButtonGroup
+     * @param SettingsModelMultiFilter
+     *            model used by this component
      * @param refreshCall
      *            function called after every Refresh button click, intended for
      *            loading input Strings
      */
-    public MultiFilterComponent(SettingsModelBoolean filterEnabledModel, final String configName,
-            final String[] radioLabels, Callable<List<String>> refreshCall) {
-        this.configName = configName;
-        this.radioLabels = radioLabels;
+    public MultiFilterComponent(final SettingsModelMultiFilter model, final Callable<List<String>> refreshCall) {
+        this.radioLabels = model.getRadio();
+        this.model = model;
         this.refreshCaller = refreshCall;
-        this.filterEnabledModel = filterEnabledModel;
-
         JPanel north = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        filterEnabledModel.addChangeListener(new EnabledListener());
-        filterEnabled = new DialogComponentBoolean(filterEnabledModel, "Customize types");
+        model.getEnabledModel().addChangeListener(new EnabledListener());
+        filterEnabled = new DialogComponentBoolean(model.getEnabledModel(), "Customized properties");
         north.add(filterEnabled.getComponentPanel());
 
-        radioButtonModel = new SettingsModelString(configName, radioLabels[0]);
-        radioButtonModel.addChangeListener(new RadioButtonChangeListener());
-        radioButton = new DialogComponentButtonGroup(radioButtonModel, null, false, radioLabels, radioLabels);
+        model.getRadioModel().addChangeListener(new RadioButtonChangeListener());
+        radioButton = new DialogComponentButtonGroup(model.getRadioModel(), null, false, radioLabels, radioLabels);
         north.add(radioButton.getComponentPanel());
 
         filterPanel = new ColumnFilterPanel(false);
         filterPanel.setExcludeTitle("Available");
-        filterPanel.setIncludeTitle(radioButtonModel.getStringValue());
+        filterPanel.setIncludeTitle(model.getRadioModel().getStringValue());
         filterPanel.addChangeListener(new FilteringChangeListener());
 
         panel.add(north, BorderLayout.NORTH);
         panel.add(filterPanel, BorderLayout.CENTER);
-
-        setEnabled(false);
     }
 
     public JPanel getPanel() {
@@ -116,52 +105,69 @@ public class MultiFilterComponent {
     }
 
     public void setEnabled(final boolean enabled) {
-        filterEnabledModel.setBooleanValue(enabled);
-        radioButtonModel.setEnabled(enabled);
+        radioButton.getModel().setEnabled(enabled);
         filterPanel.setEnabled(enabled);
     }
 
     public final void saveSettingsTo(final NodeSettingsWO settings) throws InvalidSettingsException {
         filterEnabled.saveSettingsTo(settings);
         radioButton.saveSettingsTo(settings);
-        List<String> list;
         for (String label : radioLabels) {
-            list = includeLists.get(label);
-            settings.addStringArray(configName + "." + label, list.toArray(new String[list.size()]));
+            List<String> value = includeLists.get(label);
+            model.setIncludedValue(label, value.toArray(new String[value.size()]));
         }
+        Set<String> value = filterPanel.getExcludedColumnSet();
+        model.setExcludedValue(value.toArray(new String[value.size()]));
+        model.saveSettingsTo(settings);
     }
 
-    public final void loadSettingsFrom(final NodeSettingsRO settings, final PortObjectSpec[] specs, List<String> list)
+    public final void loadSettingsFrom(final NodeSettingsRO settings, final PortObjectSpec[] specs)
             throws NotConfigurableException {
         filterEnabled.loadSettingsFrom(settings, specs);
         radioButton.loadSettingsFrom(settings, specs);
-        initFilter();
-    }
-
-    private void initFilter() {
-        LinkedList<String> all = new LinkedList<String>();
-        if (includeLists.isEmpty()) {
-            for (String action : radioLabels) {
-                includeLists.put(action, new LinkedList<String>());
-            }
-            filterPanel.update(createTableSpec(all), false, Collections.<String> emptySet());
-        } else {
-            all.addAll(filterPanel.getIncludedColumnSet());
-            all.addAll(filterPanel.getExcludedColumnSet());
-            filterPanel.update(createTableSpec(all), filterPanel.getIncludedColumnSet(),
-                    filterPanel.getExcludedColumnSet());
+        model.loadSettingsForDialog(settings, specs);
+        for (String label : radioLabels) {
+            includeLists.put(label, Lists.newArrayList(model.getIncludedValue(label)));
         }
+        excludeList = Lists.newArrayList(model.getExcludedValue());
+        initPanel(((SettingsModelBoolean) filterEnabled.getModel()).getBooleanValue());
     }
 
-    private void loadFilter(final List<String> initList) {
-        List<String> excluded = new LinkedList<String>(initList);
+    private void initPanel(final boolean enabled) {
+        setEnabled(enabled);
+        active = true;
+        if (!enabled) {
+            setDefault(null);
+        }
+        loadFilter();
+    }
+
+    private void setDefault(final List<String> valuePool) {
         for (List<String> include : includeLists.values()) {
-            excluded.removeAll(include);
+            include.clear();
         }
-        List<String> included = includeLists.get(radioButtonModel.getStringValue());
-        List<String> all = new LinkedList<String>(excluded);
-        all.addAll(included);
-        filterPanel.update(createTableSpec(all), included, excluded);
+        excludeList.clear();
+        if (null == valuePool) {
+            for (String label : radioLabels) {
+                includeLists.get(label).add(label);
+            }
+        } else {
+            for (String label : radioLabels) {
+                if (valuePool.remove(label)) {
+                    includeLists.get(label).add(label);
+                }
+            }
+            excludeList.addAll(valuePool);
+        }
+    }
+
+    private void loadFilter() {
+        List<String> included = includeLists.get(((SettingsModelString) radioButton.getModel()).getStringValue());
+        if (null != included) {
+            List<String> onScreen = new LinkedList<String>(excludeList);
+            onScreen.addAll(included);
+            filterPanel.update(createTableSpec(onScreen), included, excludeList);
+        }
     }
 
     private DataTableSpec createTableSpec(List<String> list) {
@@ -180,20 +186,37 @@ public class MultiFilterComponent {
         } else {
             panel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         }
-        filterEnabledModel.setEnabled(!refreshing);
+        filterEnabled.getModel().setEnabled(!refreshing);
         setEnabled(!refreshing);
         panel.paintImmediately(panel.getVisibleRect());
         active = true;
     }
 
+    private void refresh() {
+        setRefreshing(true);
+        try {
+            loadProperties();
+        } catch (Exception e) {
+            Logger.getLogger("Error").severe("File parsing error : " + e.getMessage());
+        }
+        setRefreshing(false);
+    }
+
+    private void loadProperties() throws Exception {
+        List<String> properties = refreshCaller.call();
+        setDefault(properties);
+        loadFilter();
+    }
+
     private class FilteringChangeListener implements ChangeListener {
         @Override
         public void stateChanged(ChangeEvent event) {
-            if (filterEnabledModel.getBooleanValue()) {
-                List<String> memorizedIncludeList = includeLists.get(radioButtonModel.getStringValue());
-                memorizedIncludeList.clear();
-                memorizedIncludeList.addAll(filterPanel.getIncludedColumnSet());
-            }
+            List<String> includeList = includeLists
+                    .get(((SettingsModelString) radioButton.getModel()).getStringValue());
+            includeList.clear();
+            includeList.addAll(filterPanel.getIncludedColumnSet());
+            excludeList.clear();
+            excludeList.addAll(filterPanel.getExcludedColumnSet());
         }
     }
 
@@ -201,35 +224,9 @@ public class MultiFilterComponent {
         @Override
         public void stateChanged(ChangeEvent event) {
             SettingsModelString radioSettings = (SettingsModelString) (event.getSource());
-            if (filterEnabledModel.getBooleanValue()) {
-                filterPanel.setIncludeTitle(radioSettings.getStringValue());
-                List<String> newIncludeList = includeLists.get(radioSettings.getStringValue());
-                List<String> list = new LinkedList<String>();
-                list.addAll(newIncludeList);
-                list.addAll(filterPanel.getExcludedColumnSet());
-                filterPanel.update(createTableSpec(list), newIncludeList, filterPanel.getExcludedColumnSet());
-            }
+            filterPanel.setIncludeTitle(radioSettings.getStringValue());
+            loadFilter();
         }
-    }
-
-    private void refresh() {
-        setRefreshing(true);
-        List<String> list = null;
-        try {
-            list = refreshCaller.call();
-        } catch (Exception e) {
-            Logger.getLogger("Error").severe("File parsing error : " + e.getMessage());
-        }
-        for (List<String> include : includeLists.values()) {
-            include.clear();
-        }
-        for (String label : radioLabels) {
-            if (list.contains(label)) {
-                includeLists.get(label).add(label);
-            }
-        }
-        loadFilter(list);
-        setRefreshing(false);
     }
 
     private class EnabledListener implements ChangeListener {
@@ -239,6 +236,8 @@ public class MultiFilterComponent {
             if (enabledModel.getBooleanValue() && active) {
                 refresh();
             } else if (!enabledModel.getBooleanValue()) {
+                setDefault(null);
+                loadFilter();
                 setEnabled(false);
             }
         }
