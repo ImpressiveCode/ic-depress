@@ -29,108 +29,113 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
+
 /**
  * @author Pawel Nosal, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
  */
 public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
-	
-	private static final String ADVANCED_TAB_NAME = "Advanced";
-	 
+
+    private static final String ADVANCED_TAB_NAME = "Advanced";
+
     private static final String FILE_EXTENSION = ".xml";
     private static final String HISTORY_ID_XML = "depress.sourcecrawler.historyidxml";
     private static final String HISTORY_ID_DIR = "depress.sourcecrawler.historyiddir";
-     
+
     private static final int booleanComponentWidth = 40;
     private static final int booleanComponentHeight = 25;
-    
-    private final DialogComponentButtonGroup radioButton = new DialogComponentButtonGroup(CrawlerAdapterNodeModel.createRadioSettings(),
-    				null, false, CrawlerAdapterNodeModel.actions, CrawlerAdapterNodeModel.actions);
-    private final DialogComponentFileChooser fileChooser = new DialogComponentFileChooser(CrawlerAdapterNodeModel.createFileSettingsXML(),
-    				HISTORY_ID_XML, JFileChooser.OPEN_DIALOG, false, FILE_EXTENSION);
-    private final DialogComponentFileChooser directoryChooser = new DialogComponentFileChooser(CrawlerAdapterNodeModel.createFileSettingsDIR(),
-    				HISTORY_ID_DIR, JFileChooser.OPEN_DIALOG, true);
-    
+
+    private final DialogComponentButtonGroup radioButton = new DialogComponentButtonGroup(
+            CrawlerAdapterNodeModel.createRadioSettings(), null, false, CrawlerAdapterNodeModel.actions,
+            CrawlerAdapterNodeModel.actions);
+    private final DialogComponentFileChooser fileChooser = new DialogComponentFileChooser(
+            CrawlerAdapterNodeModel.createFileSettingsXML(), HISTORY_ID_XML, JFileChooser.OPEN_DIALOG, false,
+            FILE_EXTENSION);
+    private final DialogComponentFileChooser directoryChooser = new DialogComponentFileChooser(
+            CrawlerAdapterNodeModel.createFileSettingsDIR(), HISTORY_ID_DIR, JFileChooser.OPEN_DIALOG, true);
+
     protected CrawlerAdapterNodeDialog() {
-    	createOptionsTab();
-    	createNewTab(ADVANCED_TAB_NAME);
+        createOptionsTab();
+        createNewTab(ADVANCED_TAB_NAME);
         createAdvancedTab();
     }
-    
+
     private void createOptionsTab() {
-    	createNewGroup("Input:");
-    	addDialogComponent(radioButton);
-    	addDialogComponent(fileChooser);
+        createNewGroup("Input:");
+        addDialogComponent(radioButton);
+        addDialogComponent(fileChooser);
         addDialogComponent(directoryChooser);
         directoryChooser.getComponentPanel().setVisible(false);
         radioButton.getModel().addChangeListener(new RadioButtonChangeListener());
         closeCurrentGroup();
     }
-    
+
     private void createAdvancedTab() {
-    	setHorizontalPlacement(true);
+        setHorizontalPlacement(true);
         createNewGroup("Acces:");
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PUBLIC, CrawlerAdapterNodeModel.PUBLIC_CONFIG, 
-        		true, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PRIVATE, CrawlerAdapterNodeModel.PRIVATE_CONFIG, 
-        		true, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PROTECTED, CrawlerAdapterNodeModel.PROTECTED_CONFIG, 
-        		true, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PACKAGE, CrawlerAdapterNodeModel.PACKAGE_CONFIG, 
-        		true, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PUBLIC,
+                CrawlerAdapterNodeModel.PUBLIC_CONFIG, true, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PRIVATE,
+                CrawlerAdapterNodeModel.PRIVATE_CONFIG, true, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PROTECTED,
+                CrawlerAdapterNodeModel.PROTECTED_CONFIG, true, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.PACKAGE,
+                CrawlerAdapterNodeModel.PACKAGE_CONFIG, true, booleanComponentWidth, booleanComponentHeight));
         closeCurrentGroup();
-        
+
         createNewGroup("Type:");
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.CLASS, CrawlerAdapterNodeModel.CLASS_CONFIG, 
-        		true, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.INTERFACE, CrawlerAdapterNodeModel.INTERFACE_CONFIG, 
-        		true, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.ABSTRACT, CrawlerAdapterNodeModel.ABSTRACT_CONFIG, 
-        		true, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.ENUM, CrawlerAdapterNodeModel.ENUM_CONFIG, 
-        		true, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.CLASS, CrawlerAdapterNodeModel.CLASS_CONFIG,
+                true, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.INTERFACE,
+                CrawlerAdapterNodeModel.INTERFACE_CONFIG, true, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.ABSTRACT,
+                CrawlerAdapterNodeModel.ABSTRACT_CONFIG, true, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.ENUM, CrawlerAdapterNodeModel.ENUM_CONFIG,
+                true, booleanComponentWidth, booleanComponentHeight));
         closeCurrentGroup();
-        
+
         createNewGroup("Other:");
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.EXCEPTION, CrawlerAdapterNodeModel.EXCEPTION_CONFIG, 
-        		true, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.INNER, CrawlerAdapterNodeModel.INNER_CONFIG, 
-        		true, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.TEST, CrawlerAdapterNodeModel.TEST_CONFIG, 
-        		true, booleanComponentWidth, booleanComponentHeight));
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.FINAL, CrawlerAdapterNodeModel.FINAL_CONFIG, 
-        		true, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.EXCEPTION,
+                CrawlerAdapterNodeModel.EXCEPTION_CONFIG, true, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.INNER, CrawlerAdapterNodeModel.INNER_CONFIG,
+                true, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.TEST, CrawlerAdapterNodeModel.TEST_CONFIG,
+                true, booleanComponentWidth, booleanComponentHeight));
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.FINAL, CrawlerAdapterNodeModel.FINAL_CONFIG,
+                true, booleanComponentWidth, booleanComponentHeight));
         setHorizontalPlacement(false);
-        addDialogComponent(new DialogComponentString(CrawlerAdapterNodeModel.createPackageSettings(), "Package: ", false, 40));
+        addDialogComponent(new DialogComponentString(CrawlerAdapterNodeModel.createPackageSettings(), "Package: ",
+                false, 40));
         closeCurrentGroup();
-        
-        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.CREATE_XML, CrawlerAdapterNodeModel.CREATE_XML_CONFIG, 
-        		false, booleanComponentWidth, booleanComponentHeight));
-    }
-    
-    private DialogComponentBoolean createBooleanComponent(final String label, final String configLabel,
-    		final boolean defaultValue, int width, int height) {
-    	DialogComponentBoolean component = new DialogComponentBoolean(new SettingsModelBoolean(configLabel, defaultValue), label);
-    	component.getComponentPanel().setPreferredSize(new Dimension(width, height));
-    	return component;
+
+        addDialogComponent(createBooleanComponent(CrawlerAdapterNodeModel.CREATE_XML,
+                CrawlerAdapterNodeModel.CREATE_XML_CONFIG, false, booleanComponentWidth, booleanComponentHeight));
     }
 
-   private class RadioButtonChangeListener implements ChangeListener {
-		@Override
-		public void stateChanged(ChangeEvent event) {
-			SettingsModelString radioSettings = (SettingsModelString)(event.getSource());
-			if(radioSettings.getStringValue().equals(CrawlerAdapterNodeModel.FILE)) {
-				fileChooser.getComponentPanel().setVisible(true);
-				directoryChooser.getComponentPanel().setVisible(false);
-				fileChooser.getModel().setEnabled(true);
-				directoryChooser.getModel().setEnabled(false);
-			} else {
-				fileChooser.getComponentPanel().setVisible(false);
-				directoryChooser.getComponentPanel().setVisible(true);
-				fileChooser.getModel().setEnabled(false);
-				directoryChooser.getModel().setEnabled(true);
-			}
-		}
-	}
-   
+    private DialogComponentBoolean createBooleanComponent(final String label, final String configLabel,
+            final boolean defaultValue, int width, int height) {
+        DialogComponentBoolean component = new DialogComponentBoolean(new SettingsModelBoolean(configLabel,
+                defaultValue), label);
+        component.getComponentPanel().setPreferredSize(new Dimension(width, height));
+        return component;
+    }
+
+    private class RadioButtonChangeListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent event) {
+            SettingsModelString radioSettings = (SettingsModelString) (event.getSource());
+            if (radioSettings.getStringValue().equals(CrawlerAdapterNodeModel.FILE)) {
+                fileChooser.getComponentPanel().setVisible(true);
+                directoryChooser.getComponentPanel().setVisible(false);
+                fileChooser.getModel().setEnabled(true);
+                directoryChooser.getModel().setEnabled(false);
+            } else {
+                fileChooser.getComponentPanel().setVisible(false);
+                directoryChooser.getComponentPanel().setVisible(true);
+                fileChooser.getModel().setEnabled(false);
+                directoryChooser.getModel().setEnabled(true);
+            }
+        }
+    }
+
 }

@@ -31,9 +31,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.impressivecode.depress.common.MultiFilterComponent;
-import org.impressivecode.depress.its.ITSPriority;
-import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.ITSResolution;
 
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeDialogPane;
@@ -54,9 +51,9 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
     private static final String HISTORY_ID = "depress.its.jira.historyid";
 
     private DialogComponentFileChooser chooser;
-    private MultiFilterComponent multiFilterComponentPriority;
-    private MultiFilterComponent multiFilterComponentType;
-    private MultiFilterComponent multiFilterComponentResolution;
+    private MultiFilterComponent multiFilterPriority;
+    private MultiFilterComponent multiFilterType;
+    private MultiFilterComponent multiFilterResolution;
     private File oldFile = null;
 
     protected JiraAdapterNodeDialog() {
@@ -79,25 +76,22 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
     }
 
     private void createPriorityTab(final JTabbedPane tabbedPane) {
-        multiFilterComponentPriority = new MultiFilterComponent(JiraAdapterNodeModel.createSettingsModelBoolean(
-                JiraAdapterNodeModel.PRIORITY_BOOLEAN_CONFIG_NAME, false), JiraAdapterNodeModel.PRIORITY_CONFIG_NAME,
-                ITSPriority.labels(), new refreshPriorityCaller());
-        tabbedPane.addTab("Priority", multiFilterComponentPriority.getPanel());
+        multiFilterPriority = new MultiFilterComponent(JiraAdapterNodeModel.createMultiFilterPriorityModel(),
+                new refreshPriorityCaller());
+        tabbedPane.addTab("Priority", multiFilterPriority.getPanel());
     }
 
     private void createTypeTab(final JTabbedPane tabbedPane) {
-        multiFilterComponentType = new MultiFilterComponent(JiraAdapterNodeModel.createSettingsModelBoolean(
-                JiraAdapterNodeModel.TYPE_BOOLEAN_CONFIG_NAME, false), JiraAdapterNodeModel.TYPE_CONFIG_NAME,
-                ITSType.labels(), new refreshTypeCaller());
-        tabbedPane.addTab("Type", multiFilterComponentType.getPanel());
+        multiFilterType = new MultiFilterComponent(JiraAdapterNodeModel.createMultiFilterTypeModel(),
+                new refreshTypeCaller());
+        tabbedPane.addTab("Type", multiFilterType.getPanel());
 
     }
 
     private void createResolutionTab(final JTabbedPane tabbedPane) {
-        multiFilterComponentResolution = new MultiFilterComponent(JiraAdapterNodeModel.createSettingsModelBoolean(
-                JiraAdapterNodeModel.RESOLUTION_BOOLEAN_CONFIG_NAME, false),
-                JiraAdapterNodeModel.RESOLUTION_CONFIG_NAME, ITSResolution.labels(), new refreshResolutionCaller());
-        tabbedPane.addTab("Resolution", multiFilterComponentResolution.getPanel());
+        multiFilterResolution = new MultiFilterComponent(JiraAdapterNodeModel.createMultiFilterResolutionModel(),
+                new refreshResolutionCaller());
+        tabbedPane.addTab("Resolution", multiFilterResolution.getPanel());
     }
 
     private DialogComponentFileChooser createFileChooserComponent(final String historyId, final String fileExtension) {
@@ -109,17 +103,17 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
             throws NotConfigurableException {
         chooser.loadSettingsFrom(settings, specs);
         oldFile = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
-        multiFilterComponentPriority.loadSettingsFrom(settings, specs);
-        multiFilterComponentType.loadSettingsFrom(settings, specs);
-        multiFilterComponentResolution.loadSettingsFrom(settings, specs);
+        multiFilterPriority.loadSettingsFrom(settings, specs);
+        multiFilterType.loadSettingsFrom(settings, specs);
+        multiFilterResolution.loadSettingsFrom(settings, specs);
     }
 
     @Override
     public final void saveSettingsTo(final NodeSettingsWO settings) throws InvalidSettingsException {
         chooser.saveSettingsTo(settings);
-        multiFilterComponentPriority.saveSettingsTo(settings);
-        multiFilterComponentType.saveSettingsTo(settings);
-        multiFilterComponentResolution.saveSettingsTo(settings);
+        multiFilterPriority.saveSettingsTo(settings);
+        multiFilterType.saveSettingsTo(settings);
+        multiFilterResolution.saveSettingsTo(settings);
     }
 
     private class refreshPriorityCaller implements Callable<List<String>> {
@@ -176,9 +170,9 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
                         JOptionPane.showMessageDialog(new JFrame(), "Invalid settings.\nPlease specify a valid file.");
                     } else {
                         if (!file.equals(oldFile)) {
-                            multiFilterComponentPriority.setEnabled(false);
-                            multiFilterComponentType.setEnabled(false);
-                            multiFilterComponentResolution.setEnabled(false);
+                            multiFilterPriority.setEnabled(false);
+                            multiFilterType.setEnabled(false);
+                            multiFilterResolution.setEnabled(false);
                         }
                         oldFile = file;
                     }
