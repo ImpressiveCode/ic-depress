@@ -21,6 +21,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -48,7 +49,8 @@ public class BugzillaEntriesParserTest {
     }
 
     private List<ITSDataType> parse() throws ParserConfigurationException, SAXException, IOException, ParseException {
-        BugzillaEntriesParser parser = new BugzillaEntriesParser();
+        HashMap<String, String[]> settings = new HashMap<String, String[]>();
+        BugzillaEntriesParser parser = new BugzillaEntriesParser(settings, settings);
         String path = getClass().getResource("bugzilla.xml").getPath();
         List<ITSDataType> entries = parser.parseEntries(path);
         return entries;

@@ -31,6 +31,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.impressivecode.depress.common.MultiFilterComponent;
+import org.impressivecode.depress.its.FileParser;
 
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeDialogPane;
@@ -61,6 +62,11 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
         createAdvancedTab();
     }
 
+    private void createSettingsTab() {
+        chooser = createFileChooserComponent(HISTORY_ID, FILE_EXTENSION);
+        addTab("Settings", chooser.getComponentPanel());
+    }
+    
     private void createAdvancedTab() {
         JTabbedPane tabbedPane = new JTabbedPane();
         createPriorityTab(tabbedPane);
@@ -68,11 +74,6 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
         createResolutionTab(tabbedPane);
         addTab("Advanced", tabbedPane);
         addChangeListenerToTabs();
-    }
-
-    private void createSettingsTab() {
-        chooser = createFileChooserComponent(HISTORY_ID, FILE_EXTENSION);
-        addTab("Settings", chooser.getComponentPanel());
     }
 
     private void createPriorityTab(final JTabbedPane tabbedPane) {
@@ -119,7 +120,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
     private class refreshPriorityCaller implements Callable<List<String>> {
         @Override
         public List<String> call() throws Exception {
-            JiraFileParser parser = new JiraFileParser();
+            FileParser parser = new FileParser();
             File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
             String expression = "/rss/channel/item/priority[not(preceding::priority/. = .)]";
             return parser.parseXPath(file, expression);
@@ -129,7 +130,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
     private class refreshTypeCaller implements Callable<List<String>> {
         @Override
         public List<String> call() throws Exception {
-            JiraFileParser parser = new JiraFileParser();
+            FileParser parser = new FileParser();
             File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
             String expression = "/rss/channel/item/type[not(preceding::type/. = .)]";
             return parser.parseXPath(file, expression);
@@ -139,7 +140,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
     private class refreshResolutionCaller implements Callable<List<String>> {
         @Override
         public List<String> call() throws Exception {
-            JiraFileParser parser = new JiraFileParser();
+            FileParser parser = new FileParser();
             File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
             String expression = "/rss/channel/item/resolution[not(preceding::resolution/. = .)]";
             return parser.parseXPath(file, expression);

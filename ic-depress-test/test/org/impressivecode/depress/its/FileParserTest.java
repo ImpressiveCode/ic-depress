@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jira;
+package org.impressivecode.depress.its;
 
 import static org.junit.Assert.assertTrue;
 
@@ -34,15 +34,15 @@ import org.xml.sax.SAXException;
 /**
  * @author Maciej Borkowski, Capgemini Poland
  */
-public class JiraFileParserTest {
-    private final static String testedFilePath = JiraFileParserTest.class.getResource("test.xml").getPath();
-    private JiraFileParser parser;
+public class FileParserTest {
+    private final static String testedFilePath = FileParserTest.class.getResource("test.xml").getPath();
+    private FileParser parser;
     private File file;
     private String expression;
 
     @Before
     public void setUp() throws JAXBException {
-        parser = new JiraFileParser();
+        parser = new FileParser();
         file = new File(testedFilePath);
         expression = "/rss/channel/item/priority[not(preceding::priority/. = .)]";
     }

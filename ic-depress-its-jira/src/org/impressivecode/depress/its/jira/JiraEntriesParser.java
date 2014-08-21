@@ -149,7 +149,6 @@ public class JiraEntriesParser {
                     return ITSResolution.get(key);
             }
         }
-
         return ITSResolution.UNKNOWN;
     }
 
@@ -172,7 +171,6 @@ public class JiraEntriesParser {
                     return ITSType.get(key);
             }
         }
-
         return ITSType.UNKNOWN;
     }
 
@@ -216,7 +214,6 @@ public class JiraEntriesParser {
                     return ITSPriority.get(key);
             }
         }
-
         return ITSPriority.UNKNOWN;
     }
 

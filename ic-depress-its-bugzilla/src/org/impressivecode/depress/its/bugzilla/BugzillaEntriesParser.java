@@ -24,6 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -50,15 +51,22 @@ import com.google.common.collect.ImmutableSet.Builder;
 import com.google.common.collect.Lists;
 
 /**
- * 
  * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class BugzillaEntriesParser {
     private static final String BUGZILLA_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss Z";
+    private final HashMap<String, String[]> prioritySettings;
+    private final HashMap<String, String[]> resolutionSettings;
+
+    public BugzillaEntriesParser(final HashMap<String, String[]> prioritySettings,
+            final HashMap<String, String[]> resolutionSettings) {
+        this.prioritySettings = prioritySettings;
+        this.resolutionSettings = resolutionSettings;
+    }
 
     public List<ITSDataType> parseEntries(final String path) throws ParserConfigurationException, SAXException,
-    IOException, ParseException {
+            IOException, ParseException {
         Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -83,7 +91,7 @@ public class BugzillaEntriesParser {
     }
 
     private String getUrlBase(final Document doc) {
-        return  doc.getDocumentElement().getAttribute("urlbase") + "show_bug.cgi?id=";
+        return doc.getDocumentElement().getAttribute("urlbase") + "show_bug.cgi?id=";
     }
 
     private NodeList getItemNodes(final Document doc) {
@@ -98,8 +106,10 @@ public class BugzillaEntriesParser {
         data.setDescription(getDescription(elem));
         data.setFixVersion(getFixVersion(elem));
         data.setPriority(getPriority(elem));
-        data.setResolved(getResolved(elem)); // no proper history in offline version
-        data.setUpdated(getResolved(elem));// no proper history in offline version
+        data.setResolved(getResolved(elem)); // no proper history in offline
+                                             // version
+        data.setUpdated(getResolved(elem));// no proper history in offline
+                                           // version
         data.setStatus(getStatus(elem));
         data.setSummary(getSummary(elem));
         data.setType(getType(elem));
@@ -115,7 +125,7 @@ public class BugzillaEntriesParser {
     private Set<String> getCommentAuthors(final Element elem) {
         NodeList nodeList = elem.getElementsByTagName("long_desc");
         Builder<String> authors = ImmutableSet.builder();
-        if(nodeList.getLength() <= 1) {
+        if (nodeList.getLength() <= 1) {
             return authors.build();
         }
         for (int i = 1; i < nodeList.getLength(); i++) {
@@ -127,7 +137,7 @@ public class BugzillaEntriesParser {
 
     private Set<String> getAssinees(final Element elem) {
         String value = extractValue(elem, "assigned_to");
-        return value == null ? Collections.<String>emptySet() : ImmutableSet.of(value);
+        return value == null ? Collections.<String> emptySet() : ImmutableSet.of(value);
     }
 
     private String getReporter(final Element elem) {
@@ -136,7 +146,16 @@ public class BugzillaEntriesParser {
 
     private ITSResolution getResolution(final Element elem) {
         String resolution = extractValue(elem, "resolution");
-        return BugzillaCommonUtils.getResolution(resolution);
+        if (resolution == null) {
+            return ITSResolution.UNKNOWN;
+        }
+        for (String key : resolutionSettings.keySet()) {
+            for (String value : resolutionSettings.get(key)) {
+                if (resolution.equalsIgnoreCase(value))
+                    return ITSResolution.get(key);
+            }
+        }
+        return ITSResolution.UNKNOWN;
     }
 
     private List<String> getVersion(final Element elem) {
@@ -148,7 +167,7 @@ public class BugzillaEntriesParser {
     }
 
     private ITSType getType(final Element elem) {
-        return ITSType.BUG; //TODO consider to use bug_severity enhancement indicator
+        return ITSType.BUG;
     }
 
     private String getSummary(final Element elem) {
@@ -166,7 +185,17 @@ public class BugzillaEntriesParser {
 
     private ITSPriority getPriority(final Element elem) {
         String priority = extractValue(elem, "bug_severity");
-        return BugzillaCommonUtils.getPriority(priority);
+        if (priority == null) {
+            return ITSPriority.UNKNOWN;
+        }
+        for (String key : prioritySettings.keySet()) {
+            for (String value : prioritySettings.get(key)) {
+                if (priority.equalsIgnoreCase(value)) {
+                    return ITSPriority.get(key);
+                }
+            }
+        }
+        return ITSPriority.UNKNOWN;
     }
 
     private List<String> getFixVersion(final Element elem) {
@@ -183,7 +212,7 @@ public class BugzillaEntriesParser {
 
     private List<String> getComments(final Element elem) {
         List<String> values = extractValues(elem, "thetext");
-        if(values.size() > 1){
+        if (values.size() > 1) {
             return values.subList(1, values.size());
         } else {
             return Collections.emptyList();
@@ -219,7 +248,7 @@ public class BugzillaEntriesParser {
 
     private Date parseDate(final String nodeValue) throws ParseException {
         // Mon, 16 Feb 2004 00:29:19 +0000
-        //FIXME majchmar: fix time parsing, timezone
+        // FIXME majchmar: fix time parsing, timezone
         SimpleDateFormat sdf = new SimpleDateFormat(BUGZILLA_DATE_FORMAT, Locale.US);
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+000"));
         sdf.setLenient(true);

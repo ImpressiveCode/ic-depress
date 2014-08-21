@@ -23,9 +23,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.impressivecode.depress.common.SettingsModelMultiFilter;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSPriority;
+import org.impressivecode.depress.its.ITSResolution;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -41,19 +44,23 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import com.google.common.base.Preconditions;
 
 /**
- * 
  * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class BugzillaAdapterNodeModel extends NodeModel {
-
-    private static final String DEFAULT_VALUE = "";
-
-    private static final String CONFIG_NAME = "depress.its.bugzilla.confname";
-
     private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaAdapterNodeModel.class);
 
+    private static final String CHOOSER_DEFAULT_VALUE = "";
+
+    private static final String CONFIG_NAME = "depress.its.bugzilla.";
+    static final String CHOOSER_CONFIG_NAME = CONFIG_NAME + "chooser";
+    static final String PRIORITY_CONFIG_NAME = CONFIG_NAME + "priority";
+    static final String RESOLUTION_CONFIG_NAME = CONFIG_NAME + "resolution";
+
     private final SettingsModelString fileSettings = createFileChooserSettings();
+
+    private final SettingsModelMultiFilter priorityModel = createMultiFilterPriorityModel();
+    private final SettingsModelMultiFilter resolutionModel = createMultiFilterResolutionModel();
 
     protected BugzillaAdapterNodeModel() {
         super(0, 1);
@@ -71,14 +78,16 @@ public class BugzillaAdapterNodeModel extends NodeModel {
         return new BufferedDataTable[] { out };
     }
 
-    private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
+    private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
+            throws CanceledExecutionException {
         ITSAdapterTransformer transformer = new ITSAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
         return transformer.transform(entries, exec);
     }
 
     private List<ITSDataType> parseEntries(final String filePath) throws Exception {
         try {
-            return new BugzillaEntriesParser().parseEntries(filePath);
+            return new BugzillaEntriesParser(priorityModel.getIncluded(), resolutionModel.getIncluded())
+                    .parseEntries(filePath);
         } catch (Exception e) {
             LOGGER.error("Error during parsing data", e);
             throw e;
@@ -98,31 +107,45 @@ public class BugzillaAdapterNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         fileSettings.saveSettingsTo(settings);
+        priorityModel.saveSettingsTo(settings);
+        resolutionModel.saveSettingsTo(settings);
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileSettings.loadSettingsFrom(settings);
+        priorityModel.loadSettingsFrom(settings);
+        resolutionModel.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         fileSettings.validateSettings(settings);
+        priorityModel.validateSettings(settings);
+        resolutionModel.validateSettings(settings);
     }
 
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
     static SettingsModelString createFileChooserSettings() {
-        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
+        return new SettingsModelString(CHOOSER_CONFIG_NAME, CHOOSER_DEFAULT_VALUE);
+    }
+
+    static SettingsModelMultiFilter createMultiFilterPriorityModel() {
+        return new SettingsModelMultiFilter(PRIORITY_CONFIG_NAME, false, ITSPriority.labels());
+    }
+
+    static SettingsModelMultiFilter createMultiFilterResolutionModel() {
+        return new SettingsModelMultiFilter(RESOLUTION_CONFIG_NAME, false, ITSResolution.labels());
     }
 }
