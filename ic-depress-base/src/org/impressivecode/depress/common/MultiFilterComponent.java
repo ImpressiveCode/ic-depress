@@ -22,6 +22,7 @@ import java.awt.Cursor;
 import java.awt.FlowLayout;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -153,8 +154,12 @@ public class MultiFilterComponent {
             }
         } else {
             for (String label : radioLabels) {
-                if (valuePool.remove(label)) {
-                    includeLists.get(label).add(label);
+                for (Iterator<String> iter = valuePool.listIterator(); iter.hasNext();) {
+                    String value = iter.next();
+                    if (label.equalsIgnoreCase(value)) {
+                        includeLists.get(label).add(value);
+                        iter.remove();
+                    }
                 }
             }
             excludeList.addAll(valuePool);
