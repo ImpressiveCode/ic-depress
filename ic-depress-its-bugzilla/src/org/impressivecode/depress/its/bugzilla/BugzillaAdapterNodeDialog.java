@@ -53,6 +53,7 @@ public class BugzillaAdapterNodeDialog extends NodeDialogPane {
     private DialogComponentFileChooser chooser;
     private MultiFilterComponent multiFilterPriority;
     private MultiFilterComponent multiFilterResolution;
+    private MultiFilterComponent multiFilterStatus;
     private File oldFile = null;
 
     protected BugzillaAdapterNodeDialog() {
@@ -69,6 +70,7 @@ public class BugzillaAdapterNodeDialog extends NodeDialogPane {
         JTabbedPane tabbedPane = new JTabbedPane();
         createPriorityTab(tabbedPane);
         createResolutionTab(tabbedPane);
+        createStatusTab(tabbedPane);
         addTab("Advanced", tabbedPane);
         addChangeListenerToTabs();
     }
@@ -83,6 +85,12 @@ public class BugzillaAdapterNodeDialog extends NodeDialogPane {
         multiFilterResolution = new MultiFilterComponent(BugzillaAdapterNodeModel.createMultiFilterResolutionModel(),
                 new refreshResolutionCaller());
         tabbedPane.addTab("Resolution", multiFilterResolution.getPanel());
+    }
+
+    private void createStatusTab(final JTabbedPane tabbedPane) {
+        multiFilterStatus = new MultiFilterComponent(BugzillaAdapterNodeModel.createMultiFilterStatusModel(),
+                new refreshStatusCaller());
+        tabbedPane.addTab("Status", multiFilterStatus.getPanel());
     }
 
     private DialogComponentFileChooser createFileChooserComponent(final String historyId, final String fileExtension) {
@@ -109,13 +117,25 @@ public class BugzillaAdapterNodeDialog extends NodeDialogPane {
         }
     }
 
+    private class refreshStatusCaller implements Callable<List<String>> {
+        @Override
+        public List<String> call() throws Exception {
+            FileParser parser = new FileParser();
+            File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
+            String expression = "/bugzilla/bug/bug_status[not(preceding::bug_status/. = .)]";
+            return parser.parseXPath(file, expression);
+        }
+    }
+
     @Override
     public final void loadSettingsFrom(final NodeSettingsRO settings, final PortObjectSpec[] specs)
             throws NotConfigurableException {
+        setTab("Settings");
         chooser.loadSettingsFrom(settings, specs);
         oldFile = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
         multiFilterPriority.loadSettingsFrom(settings, specs);
         multiFilterResolution.loadSettingsFrom(settings, specs);
+        multiFilterStatus.loadSettingsFrom(settings, specs);
     }
 
     @Override
@@ -123,6 +143,12 @@ public class BugzillaAdapterNodeDialog extends NodeDialogPane {
         chooser.saveSettingsTo(settings);
         multiFilterPriority.saveSettingsTo(settings);
         multiFilterResolution.saveSettingsTo(settings);
+        multiFilterStatus.saveSettingsTo(settings);
+    }
+    
+    private void setTab(final String tabName) {
+        JTabbedPane pane = getTabbedPane();
+        pane.setSelectedIndex(pane.indexOfTab("Settings"));
     }
 
     private JTabbedPane getTabbedPane() {
@@ -151,6 +177,7 @@ public class BugzillaAdapterNodeDialog extends NodeDialogPane {
                         if (!file.equals(oldFile)) {
                             multiFilterPriority.setEnabled(false);
                             multiFilterResolution.setEnabled(false);
+                            multiFilterStatus.setEnabled(false);
                         }
                         oldFile = file;
                     }

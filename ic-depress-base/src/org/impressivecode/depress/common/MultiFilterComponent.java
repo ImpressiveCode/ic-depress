@@ -154,7 +154,7 @@ public class MultiFilterComponent {
             }
         } else {
             for (String label : radioLabels) {
-                for (Iterator<String> iter = valuePool.listIterator(); iter.hasNext(); ) {
+                for (Iterator<String> iter = valuePool.listIterator(); iter.hasNext();) {
                     String value = iter.next();
                     if (label.equalsIgnoreCase(value)) {
                         includeLists.get(label).add(value);
@@ -203,7 +203,6 @@ public class MultiFilterComponent {
             loadProperties();
         } catch (Exception e) {
             Logger.getLogger("Error").severe("File parsing error : " + e.getMessage());
-            e.printStackTrace();
         }
         setRefreshing(false);
     }

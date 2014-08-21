@@ -58,11 +58,13 @@ public class BugzillaEntriesParser {
     private static final String BUGZILLA_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss Z";
     private final HashMap<String, String[]> prioritySettings;
     private final HashMap<String, String[]> resolutionSettings;
+    private final HashMap<String, String[]> statusSettings;
 
     public BugzillaEntriesParser(final HashMap<String, String[]> prioritySettings,
-            final HashMap<String, String[]> resolutionSettings) {
+            final HashMap<String, String[]> resolutionSettings, final HashMap<String, String[]> statusSettings) {
         this.prioritySettings = prioritySettings;
         this.resolutionSettings = resolutionSettings;
+        this.statusSettings = statusSettings;
     }
 
     public List<ITSDataType> parseEntries(final String path) throws ParserConfigurationException, SAXException,
@@ -167,7 +169,8 @@ public class BugzillaEntriesParser {
     }
 
     private ITSType getType(final Element elem) {
-        return ITSType.BUG;
+        return ITSType.BUG; // TODO consider to use bug_severity enhancement
+                            // indicator
     }
 
     private String getSummary(final Element elem) {
@@ -176,7 +179,17 @@ public class BugzillaEntriesParser {
 
     private ITSStatus getStatus(final Element elem) {
         String status = extractValue(elem, "bug_status");
-        return BugzillaCommonUtils.getStatus(status);
+        if (status == null) {
+            return ITSStatus.UNKNOWN;
+        }
+        for (String key : statusSettings.keySet()) {
+            for (String value : statusSettings.get(key)) {
+                if (status.equalsIgnoreCase(value)) {
+                    return ITSStatus.get(key);
+                }
+            }
+        }
+        return ITSStatus.UNKNOWN;
     }
 
     private Date getResolved(final Element elem) throws ParseException {

@@ -55,6 +55,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
     private MultiFilterComponent multiFilterPriority;
     private MultiFilterComponent multiFilterType;
     private MultiFilterComponent multiFilterResolution;
+    private MultiFilterComponent multiFilterStatus;
     private File oldFile = null;
 
     protected JiraAdapterNodeDialog() {
@@ -66,12 +67,13 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
         chooser = createFileChooserComponent(HISTORY_ID, FILE_EXTENSION);
         addTab("Settings", chooser.getComponentPanel());
     }
-    
+
     private void createAdvancedTab() {
         JTabbedPane tabbedPane = new JTabbedPane();
         createPriorityTab(tabbedPane);
         createTypeTab(tabbedPane);
         createResolutionTab(tabbedPane);
+        createStatusTab(tabbedPane);
         addTab("Advanced", tabbedPane);
         addChangeListenerToTabs();
     }
@@ -95,26 +97,14 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
         tabbedPane.addTab("Resolution", multiFilterResolution.getPanel());
     }
 
+    private void createStatusTab(final JTabbedPane tabbedPane) {
+        multiFilterStatus = new MultiFilterComponent(JiraAdapterNodeModel.createMultiFilterStatusModel(),
+                new refreshStatusCaller());
+        tabbedPane.addTab("Status", multiFilterStatus.getPanel());
+    }
+
     private DialogComponentFileChooser createFileChooserComponent(final String historyId, final String fileExtension) {
         return new DialogComponentFileChooser(createFileChooserSettings(), historyId, fileExtension);
-    }
-
-    @Override
-    public final void loadSettingsFrom(final NodeSettingsRO settings, final PortObjectSpec[] specs)
-            throws NotConfigurableException {
-        chooser.loadSettingsFrom(settings, specs);
-        oldFile = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
-        multiFilterPriority.loadSettingsFrom(settings, specs);
-        multiFilterType.loadSettingsFrom(settings, specs);
-        multiFilterResolution.loadSettingsFrom(settings, specs);
-    }
-
-    @Override
-    public final void saveSettingsTo(final NodeSettingsWO settings) throws InvalidSettingsException {
-        chooser.saveSettingsTo(settings);
-        multiFilterPriority.saveSettingsTo(settings);
-        multiFilterType.saveSettingsTo(settings);
-        multiFilterResolution.saveSettingsTo(settings);
     }
 
     private class refreshPriorityCaller implements Callable<List<String>> {
@@ -147,6 +137,42 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
         }
     }
 
+    private class refreshStatusCaller implements Callable<List<String>> {
+        @Override
+        public List<String> call() throws Exception {
+            FileParser parser = new FileParser();
+            File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
+            String expression = "/rss/channel/item/status[not(preceding::status/. = .)]";
+            return parser.parseXPath(file, expression);
+        }
+    }
+
+    @Override
+    public final void loadSettingsFrom(final NodeSettingsRO settings, final PortObjectSpec[] specs)
+            throws NotConfigurableException {
+        setTab("Settings");
+        chooser.loadSettingsFrom(settings, specs);
+        oldFile = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
+        multiFilterPriority.loadSettingsFrom(settings, specs);
+        multiFilterType.loadSettingsFrom(settings, specs);
+        multiFilterResolution.loadSettingsFrom(settings, specs);
+        multiFilterStatus.loadSettingsFrom(settings, specs);
+    }
+
+    @Override
+    public final void saveSettingsTo(final NodeSettingsWO settings) throws InvalidSettingsException {
+        chooser.saveSettingsTo(settings);
+        multiFilterPriority.saveSettingsTo(settings);
+        multiFilterType.saveSettingsTo(settings);
+        multiFilterResolution.saveSettingsTo(settings);
+        multiFilterStatus.saveSettingsTo(settings);
+    }
+
+    private void setTab(final String tabName) {
+        JTabbedPane pane = getTabbedPane();
+        pane.setSelectedIndex(pane.indexOfTab("Settings"));
+    }
+
     private JTabbedPane getTabbedPane() {
         Component[] components = getPanel().getComponents();
         Component component = null;
@@ -174,6 +200,7 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
                             multiFilterPriority.setEnabled(false);
                             multiFilterType.setEnabled(false);
                             multiFilterResolution.setEnabled(false);
+                            multiFilterStatus.setEnabled(false);
                         }
                         oldFile = file;
                     }

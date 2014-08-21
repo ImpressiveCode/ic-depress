@@ -50,7 +50,7 @@ public class BugzillaEntriesParserTest {
 
     private List<ITSDataType> parse() throws ParserConfigurationException, SAXException, IOException, ParseException {
         HashMap<String, String[]> settings = new HashMap<String, String[]>();
-        BugzillaEntriesParser parser = new BugzillaEntriesParser(settings, settings);
+        BugzillaEntriesParser parser = new BugzillaEntriesParser(settings, settings, settings);
         String path = getClass().getResource("bugzilla.xml").getPath();
         List<ITSDataType> entries = parser.parseEntries(path);
         return entries;

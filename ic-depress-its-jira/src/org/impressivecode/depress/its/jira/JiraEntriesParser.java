@@ -59,12 +59,15 @@ public class JiraEntriesParser {
     private final HashMap<String, String[]> prioritySettings;
     private final HashMap<String, String[]> typeSettings;
     private final HashMap<String, String[]> resolutionSettings;
+    private final HashMap<String, String[]> statusSettings;
 
     public JiraEntriesParser(final HashMap<String, String[]> prioritySettings,
-            final HashMap<String, String[]> typeSettings, final HashMap<String, String[]> resolutionSettings) {
+            final HashMap<String, String[]> typeSettings, final HashMap<String, String[]> resolutionSettings,
+            final HashMap<String, String[]> statusSettings) {
         this.prioritySettings = prioritySettings;
         this.typeSettings = typeSettings;
         this.resolutionSettings = resolutionSettings;
+        this.statusSettings = statusSettings;
     }
 
     public List<ITSDataType> parseEntries(final String path) throws ParserConfigurationException, SAXException,
@@ -145,7 +148,7 @@ public class JiraEntriesParser {
         }
         for (String key : resolutionSettings.keySet()) {
             for (String value : resolutionSettings.get(key)) {
-                if (resolution.equals(value))
+                if (resolution.equalsIgnoreCase(value))
                     return ITSResolution.get(key);
             }
         }
@@ -167,7 +170,7 @@ public class JiraEntriesParser {
         }
         for (String key : typeSettings.keySet()) {
             for (String value : typeSettings.get(key)) {
-                if (type.equals(value))
+                if (type.equalsIgnoreCase(value))
                     return ITSType.get(key);
             }
         }
@@ -183,20 +186,13 @@ public class JiraEntriesParser {
         if (status == null) {
             return ITSStatus.UNKNOWN;
         }
-        switch (status) {
-        case "Open":
-            return ITSStatus.OPEN;
-        case "Reopened":
-            return ITSStatus.REOPENED;
-        case "In Progress":
-            return ITSStatus.IN_PROGRESS;
-        case "Resolved":
-            return ITSStatus.RESOLVED;
-        case "Closed":
-            return ITSStatus.CLOSED;
-        default:
-            return ITSStatus.UNKNOWN;
+        for (String key : statusSettings.keySet()) {
+            for (String value : statusSettings.get(key)) {
+                if (status.equalsIgnoreCase(value))
+                    return ITSStatus.get(key);
+            }
         }
+        return ITSStatus.UNKNOWN;
     }
 
     private Date getResolved(final Element elem) throws ParseException {
@@ -210,7 +206,7 @@ public class JiraEntriesParser {
         }
         for (String key : prioritySettings.keySet()) {
             for (String value : prioritySettings.get(key)) {
-                if (priority.equals(value))
+                if (priority.equalsIgnoreCase(value))
                     return ITSPriority.get(key);
             }
         }

@@ -29,6 +29,7 @@ import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
+import org.impressivecode.depress.its.ITSStatus;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -56,11 +57,13 @@ public class BugzillaAdapterNodeModel extends NodeModel {
     static final String CHOOSER_CONFIG_NAME = CONFIG_NAME + "chooser";
     static final String PRIORITY_CONFIG_NAME = CONFIG_NAME + "priority";
     static final String RESOLUTION_CONFIG_NAME = CONFIG_NAME + "resolution";
+    static final String STATUS_CONFIG_NAME = CONFIG_NAME + "status";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
 
     private final SettingsModelMultiFilter priorityModel = createMultiFilterPriorityModel();
     private final SettingsModelMultiFilter resolutionModel = createMultiFilterResolutionModel();
+    private final SettingsModelMultiFilter statusModel = createMultiFilterStatusModel();
 
     protected BugzillaAdapterNodeModel() {
         super(0, 1);
@@ -86,8 +89,8 @@ public class BugzillaAdapterNodeModel extends NodeModel {
 
     private List<ITSDataType> parseEntries(final String filePath) throws Exception {
         try {
-            return new BugzillaEntriesParser(priorityModel.getIncluded(), resolutionModel.getIncluded())
-                    .parseEntries(filePath);
+            return new BugzillaEntriesParser(priorityModel.getIncluded(), resolutionModel.getIncluded(),
+                    statusModel.getIncluded()).parseEntries(filePath);
         } catch (Exception e) {
             LOGGER.error("Error during parsing data", e);
             throw e;
@@ -109,6 +112,7 @@ public class BugzillaAdapterNodeModel extends NodeModel {
         fileSettings.saveSettingsTo(settings);
         priorityModel.saveSettingsTo(settings);
         resolutionModel.saveSettingsTo(settings);
+        statusModel.saveSettingsTo(settings);
     }
 
     @Override
@@ -116,6 +120,7 @@ public class BugzillaAdapterNodeModel extends NodeModel {
         fileSettings.loadSettingsFrom(settings);
         priorityModel.loadSettingsFrom(settings);
         resolutionModel.loadSettingsFrom(settings);
+        statusModel.loadSettingsFrom(settings);
     }
 
     @Override
@@ -123,6 +128,7 @@ public class BugzillaAdapterNodeModel extends NodeModel {
         fileSettings.validateSettings(settings);
         priorityModel.validateSettings(settings);
         resolutionModel.validateSettings(settings);
+        statusModel.validateSettings(settings);
     }
 
     @Override
@@ -147,5 +153,9 @@ public class BugzillaAdapterNodeModel extends NodeModel {
 
     static SettingsModelMultiFilter createMultiFilterResolutionModel() {
         return new SettingsModelMultiFilter(RESOLUTION_CONFIG_NAME, false, ITSResolution.labels());
+    }
+
+    static SettingsModelMultiFilter createMultiFilterStatusModel() {
+        return new SettingsModelMultiFilter(STATUS_CONFIG_NAME, false, ITSStatus.labels());
     }
 }
