@@ -33,6 +33,7 @@ import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSType;
 import org.impressivecode.depress.its.ITSResolution;
+import org.impressivecode.depress.its.ITSStatus;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -63,12 +64,14 @@ public class JiraAdapterNodeModel extends NodeModel {
     static final String PRIORITY_CONFIG_NAME = CONFIG_NAME + "priority";
     static final String TYPE_CONFIG_NAME = CONFIG_NAME + "type";
     static final String RESOLUTION_CONFIG_NAME = CONFIG_NAME + "resolution";
+    static final String STATUS_CONFIG_NAME = CONFIG_NAME + "status";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
 
     private final SettingsModelMultiFilter priorityModel = createMultiFilterPriorityModel();
     private final SettingsModelMultiFilter typeModel = createMultiFilterTypeModel();
     private final SettingsModelMultiFilter resolutionModel = createMultiFilterResolutionModel();
+    private final SettingsModelMultiFilter statusModel = createMultiFilterStatusModel();
 
     protected JiraAdapterNodeModel() {
         super(0, 1);
@@ -95,7 +98,7 @@ public class JiraAdapterNodeModel extends NodeModel {
     private List<ITSDataType> parseEntries(final String filePath) throws ParserConfigurationException, SAXException,
             IOException, ParseException {
         return new JiraEntriesParser(priorityModel.getIncluded(), typeModel.getIncluded(),
-                resolutionModel.getIncluded()).parseEntries(filePath);
+                resolutionModel.getIncluded(), statusModel.getIncluded()).parseEntries(filePath);
     }
 
     @Override
@@ -114,6 +117,7 @@ public class JiraAdapterNodeModel extends NodeModel {
         priorityModel.saveSettingsTo(settings);
         typeModel.saveSettingsTo(settings);
         resolutionModel.saveSettingsTo(settings);
+        statusModel.saveSettingsTo(settings);
     }
 
     @Override
@@ -122,6 +126,7 @@ public class JiraAdapterNodeModel extends NodeModel {
         priorityModel.loadSettingsFrom(settings);
         typeModel.loadSettingsFrom(settings);
         resolutionModel.loadSettingsFrom(settings);
+        statusModel.loadSettingsFrom(settings);
     }
 
     @Override
@@ -130,6 +135,7 @@ public class JiraAdapterNodeModel extends NodeModel {
         priorityModel.validateSettings(settings);
         typeModel.validateSettings(settings);
         resolutionModel.validateSettings(settings);
+        statusModel.validateSettings(settings);
     }
 
     @Override
@@ -158,6 +164,10 @@ public class JiraAdapterNodeModel extends NodeModel {
 
     static SettingsModelMultiFilter createMultiFilterResolutionModel() {
         return new SettingsModelMultiFilter(RESOLUTION_CONFIG_NAME, false, ITSResolution.labels());
+    }
+
+    static SettingsModelMultiFilter createMultiFilterStatusModel() {
+        return new SettingsModelMultiFilter(STATUS_CONFIG_NAME, false, ITSStatus.labels());
     }
 
 }

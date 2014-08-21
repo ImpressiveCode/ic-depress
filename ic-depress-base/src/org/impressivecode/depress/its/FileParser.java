@@ -1,4 +1,4 @@
-package org.impressivecode.depress.its.jira;
+package org.impressivecode.depress.its;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,9 +18,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class JiraFileParser {
+public class FileParser {
     
-    JiraFileParser() {
+    public FileParser() {
     }
     
     public List<String> parseXPath(final File file, final String expression) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException {
