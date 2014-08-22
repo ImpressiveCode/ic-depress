@@ -26,7 +26,7 @@ import java.util.Map;
  * @author Maciej Borkowski, Capgemini Poland
  */
 public enum ITSStatus {
-    OPEN("Bug"), IN_PROGRESS("In progress"), REOPENED("Reopened"), CLOSED("Closed"), RESOLVED("Resolved"), UNKNOWN("Unknown");
+    OPEN("New"), IN_PROGRESS("In progress"), REOPENED("Reopened"), CLOSED("Closed"), RESOLVED("Resolved"), UNKNOWN("Unknown");
     
     private final String label;
 

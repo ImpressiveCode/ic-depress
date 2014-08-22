@@ -17,8 +17,6 @@
  */
 package org.impressivecode.depress.its.jira;
 
-import static org.impressivecode.depress.its.jira.JiraAdapterTableFactory.createTableSpec;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -108,7 +106,7 @@ public class JiraAdapterNodeModel extends NodeModel {
     @Override
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         Preconditions.checkArgument(inSpecs.length == 0);
-        return createTableSpec();
+        return JiraAdapterTableFactory.createTableSpec();
     }
 
     @Override

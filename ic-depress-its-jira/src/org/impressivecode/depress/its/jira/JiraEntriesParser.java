@@ -110,7 +110,29 @@ public class JiraEntriesParser {
         data.setReporter(getReporter(elem));
         data.setAssignees(getAssinees(elem));
         data.setCommentAuthors(getCommentAuthors(elem));
+        data.setTimeEstimate(getTimeEstimate(elem));
+        data.setTimeSpent(getTimeSpent(elem));
         return data;
+    }
+
+    private Integer getTimeSpent(final Element elem) {
+        NodeList nodeList = elem.getElementsByTagName("timespent");
+        if (null == nodeList.item(0)) {
+            return null;
+        }
+        String stringTime = nodeList.item(0).getAttributes().getNamedItem("seconds").getTextContent();
+        Integer time = Integer.valueOf(stringTime) / 60;
+        return time;
+    }
+
+    private Integer getTimeEstimate(final Element elem) {
+        NodeList nodeList = elem.getElementsByTagName("timeoriginalestimate");
+        if (null == nodeList.item(0)) {
+            return null;
+        }
+        String stringTime = nodeList.item(0).getAttributes().getNamedItem("seconds").getTextContent();
+        int time = Integer.valueOf(stringTime) / 60;
+        return time;
     }
 
     private Set<String> getCommentAuthors(final Element elem) {
@@ -125,7 +147,7 @@ public class JiraEntriesParser {
 
     private Set<String> getAssinees(final Element elem) {
         NodeList nodeList = elem.getElementsByTagName("assignee");
-        Preconditions.checkArgument(nodeList.getLength() == 1, "Reporter has to be set");
+        Preconditions.checkArgument(nodeList.getLength() == 1, "Assignee has to be set");
         String username = nodeList.item(0).getAttributes().getNamedItem("username").getTextContent();
         if ("-1".equals(username)) {
             return Collections.emptySet();

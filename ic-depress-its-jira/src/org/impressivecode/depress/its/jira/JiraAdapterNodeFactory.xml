@@ -53,10 +53,11 @@
 			previously read file from the drop-down list, or select a file from
 			the "Browse..." dialog.
 		</option>
-		<option name="Advanced"> You can load your custom priority, type and
-			resolution properties from previosly selected file. You are able to
-			put any property, which has been found in your file into predefined
-			groups available by clicking on the radio button
+		<option name="Advanced"> You can load your custom priority, type,
+			resolution and status properties from previosly selected file. You
+			are able to put any property, which has been found in your file into
+			predefined groups available by clicking on the radio buttons.
+			Properties without a group will be automatically put into unknown.
 		</option>
 	</fullDescription>
 
