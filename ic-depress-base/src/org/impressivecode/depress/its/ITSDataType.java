@@ -23,9 +23,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 
  * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class ITSDataType {
     private String issueId;
@@ -43,6 +42,8 @@ public class ITSDataType {
     private List<String> comments = Collections.emptyList();
     private ITSResolution resolution;
     private String reporter;
+    private Integer timeEstimate;
+    private Integer timeSpent;
     /**
      * It is possible to have more assignees.
      */
@@ -185,12 +186,29 @@ public class ITSDataType {
         this.commentAuthors = commentAuthors;
     }
 
+    public Integer getTimeEstimate() {
+        return timeEstimate;
+    }
+
+    public void setTimeEstimate(final Integer timeEstimate) {
+        this.timeEstimate = timeEstimate;
+    }
+
+    public Integer getTimeSpent() {
+        return timeSpent;
+    }
+
+    public void setTimeSpent(final Integer timeSpent) {
+        this.timeSpent = timeSpent;
+    }
+
     @Override
     public String toString() {
         return String
-                .format("ITSDataType [issueId=%s, created=%s, updated=%s, resolved=%s, status=%s, type=%s, version=%s, fixVersion=%s, priority=%s, summary=%s, link=%s, description=%s, comments=%s, resolution=%s, reporter=%s, assignees=%s, commentAuthors=%s]",
+                .format("ITSDataType [issueId=%s, created=%s, updated=%s, resolved=%s, status=%s, type=%s, version=%s, fixVersion=%s, priority=%s, summary=%s, link=%s, description=%s, comments=%s, resolution=%s, reporter=%s, assignees=%s, commentAuthors=%s, timeEstimate=%d, timeSpent=%d]",
                         issueId, created, updated, resolved, status, type, version, fixVersion, priority, summary,
-                        link, description, comments, resolution, reporter, assignees, commentAuthors);
+                        link, description, comments, resolution, reporter, assignees, commentAuthors, timeEstimate,
+                        timeSpent);
     }
 
     @Override
@@ -214,6 +232,8 @@ public class ITSDataType {
         result = prime * result + ((type == null) ? 0 : type.hashCode());
         result = prime * result + ((updated == null) ? 0 : updated.hashCode());
         result = prime * result + ((version == null) ? 0 : version.hashCode());
+        result = prime * result + ((version == null) ? 0 : timeEstimate.hashCode());
+        result = prime * result + ((version == null) ? 0 : timeSpent.hashCode());
         return result;
     }
 
@@ -298,6 +318,10 @@ public class ITSDataType {
             if (other.version != null)
                 return false;
         } else if (!version.equals(other.version))
+            return false;
+        if (timeEstimate != other.timeEstimate)
+            return false;
+        if (timeSpent != other.timeSpent)
             return false;
         return true;
     }

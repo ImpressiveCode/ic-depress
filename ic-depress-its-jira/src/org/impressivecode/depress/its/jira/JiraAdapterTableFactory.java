@@ -18,18 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.its.jira;
 
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
-
 import org.knime.core.data.DataTableSpec;
 
 /**
- * 
  * @author Marek Majchrzak, ImpressiveCode
- * 
  */
 public class JiraAdapterTableFactory {
-
+    
     private JiraAdapterTableFactory() {
-
     }
 
     public static DataTableSpec[] createTableSpec() {
