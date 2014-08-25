@@ -3,19 +3,17 @@
       id="DePress"
       label="DePress"
       version="2.0.0.SNAPSHOT">
-      provider-name="ImpressiveCode">
-      version="2.0.0.SNAPSHOT">
 
    <description url="http://impressivecode.github.io/ic-depress/">
       Defect Prediction in Software Systems (DePress) Extensible Framework allows building workflows in graphical manner. DePress is based on the KNIME project. The main aim of the DePress Framework is support for empirical software analysis. It allows you to collect, combine and analyse data from various data sources like software repositories or software metrics.
-
    </description>
 
    <copyright url="http://www.gnu.org/licenses/gpl.html/">
       %copyright
    </copyright>
-      <license url='http://www.gnu.org/licenses/gpl.html'>
-         Preamble
+
+   <license url="http://www.gnu.org/licenses/gpl.html">
+      Preamble
 
 The GNU General Public License is a free, copyleft license for software and other kinds of works.
 
@@ -195,7 +193,7 @@ IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY C
 If the disclaimer of warranty and limitation of liability provided above cannot be given local legal effect according to their terms, reviewing courts shall apply local law that most closely approximates an absolute waiver of all civil liability in connection with the Program, unless a warranty or assumption of liability accompanies a copy of the Program in return for a fee.
 
 END OF TERMS AND CONDITIONS
-	</license>
+   </license>
 
    <requires>
       <import plugin="org.eclipse.core.runtime" version="3.7.0" match="greaterOrEqual"/>
