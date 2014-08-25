@@ -14,7 +14,7 @@
    <extension
          point="org.knime.workbench.repository.nodes">
       <node
-            category-path="depress/depress.scm"
+            category-path="depress/depress.experimental"
             factory-class="org.impressivecode.depress.scm.svn.SVNOnlineAdapterNodeFactory"
             id="org.impressivecode.depress.scm.svnonline"/>
    </extension>

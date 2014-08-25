@@ -5,7 +5,7 @@
    <extension
          point="org.knime.workbench.repository.nodes">
       <node
-            category-path="depress"
+            category-path="depress/depress.experimental"
             factory-class="org.impressivecode.depress.mr.astcompare.AstComparePluginNodeFactory"
             id="org.impressivecode.depress.metric.astcompare"/>
    </extension>
