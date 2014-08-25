@@ -41,7 +41,6 @@ import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentOptionalString;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
-import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
@@ -190,11 +189,6 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
         }
 
         return strings;
-    }
-
-    @Override
-    protected SettingsModelInteger createThreadsCountSettings() {
-        return BugzillaOnlineAdapterNodeModel.createThreadsCountSettings();
     }
 
     @Override

@@ -45,7 +45,6 @@ public class JiraOnlineAdapterRsClient {
     public String getJSON(URI uri) throws Exception {
         Response response = getReponse(uri);
         isDataFetchSuccessful(response);
-
         return reponseToString(response);
     }
 
@@ -61,6 +60,7 @@ public class JiraOnlineAdapterRsClient {
 
     private boolean isDataFetchSuccessful(Response response) throws Exception {
         if (response.getStatus() != 200) {
+            System.out.println(response.toString());
             throw new Exception("Failed to fetch data.");
         }
 
@@ -72,6 +72,7 @@ public class JiraOnlineAdapterRsClient {
     }
 
     private Response getReponse(URI uri) {
+        System.out.println(uri.toString());
         return client.target(uri).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get();
     }
 

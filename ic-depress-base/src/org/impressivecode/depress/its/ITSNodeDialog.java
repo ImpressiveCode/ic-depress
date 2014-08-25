@@ -33,10 +33,8 @@ import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentColumnFilter;
 import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
-import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
-import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
@@ -63,7 +61,6 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     public static final String CHECK_PROJECTS_INIT_LABEL = "After the check you should be able to choose available projects from the project list.";
     public static final String CHECK_PROJECTS_SUCCESS_LABEL = "Projects list updated.";
     public static final String CHECK_PROJECTS_FAILURE_LABEL = "Connection failed.";
-    public static final String THREADS_COUNT_LABEL = "Threads:";
     public static final int COMPONENT_WIDTH = 32;
 
     /**
@@ -92,8 +89,6 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     /**
      * Advanced components
      */
-    protected DialogComponentNumberEdit threadsCount;
-
     protected ITSFiltersDialogComponent filterSelection;
 
     private JPanel filterPanel;
@@ -229,16 +224,9 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     protected Component createAdvancedTab() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(createThreadsCountComponent());
+
         return panel;
     }
-
-    protected Component createThreadsCountComponent() {
-        threadsCount = new DialogComponentNumberEdit(createThreadsCountSettings(), THREADS_COUNT_LABEL, COMPONENT_WIDTH);
-        return threadsCount.getComponentPanel();
-    }
-
-    protected abstract SettingsModelInteger createThreadsCountSettings();
 
     @Override
     protected void addFlowVariablesTab() {
@@ -250,7 +238,6 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         url.loadSettingsFrom(settings, specs);
         login.loadSettingsFrom(settings, specs);
         password.loadSettingsFrom(settings, specs);
-        threadsCount.loadSettingsFrom(settings, specs);
 
         if (filterSelection != null) {
             filterSelection.loadSettingsFrom(settings, specs);
@@ -273,7 +260,6 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         url.saveSettingsTo(settings);
         login.saveSettingsTo(settings);
         password.saveSettingsTo(settings);
-        threadsCount.saveSettingsTo(settings);
 
         if (filterSelection != null) {
             filterSelection.saveSettingsTo(settings);

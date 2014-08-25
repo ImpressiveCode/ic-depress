@@ -29,11 +29,12 @@ import org.impressivecode.depress.its.ITSFilter;
  * 
  * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public class JiraOnlineAdapterUriBuilder {
 
-    public static final int ISSUES_PER_BATCH = 100;
+    public static final int ISSUES_PER_BATCH = 50;
     public static final String JIRA_DATE_FORMAT = "yyyy-MM-dd";
 
     private static final String SIMPLE_URI_PATH = "{protocol}://{hostname}/";
@@ -141,7 +142,7 @@ public class JiraOnlineAdapterUriBuilder {
         // @formatter:off
         URI result = UriBuilder.fromPath(QUERY_URI_PATH)
                 .resolveTemplate("protocol", protocol)
-                .resolveTemplate("hostname", hostname)
+                .resolveTemplateFromEncoded("hostname", hostname)
                 .queryParam(FIELDS_PARAM, "*all")
                 .queryParam(START_AT, startingIndex)
                 .queryParam(MAX_RESULTS, ISSUES_PER_BATCH)
@@ -157,7 +158,7 @@ public class JiraOnlineAdapterUriBuilder {
         // @formatter:off
         URI result = UriBuilder.fromPath(ISSUE_HISTORY_URI_PATH)
                 .resolveTemplate("protocol", protocol)
-                .resolveTemplate("hostname", hostname)
+                .resolveTemplateFromEncoded("hostname", hostname)
                 .resolveTemplate("issueKey", issueKey)
                 .queryParam(FIELDS_PARAM, "changelog")
                 .queryParam(EXPAND_PARAM, "changelog")
@@ -172,7 +173,7 @@ public class JiraOnlineAdapterUriBuilder {
         // @formatter:off
         URI result = UriBuilder.fromPath(BASIC_URI_PATH)
                 .resolveTemplate("protocol", protocol)
-                .resolveTemplate("hostname", hostname)
+                .resolveTemplateFromEncoded("hostname", hostname)
                 .resolveTemplate("command", jiraCommand)
                 .build();
         // @formatter:on
