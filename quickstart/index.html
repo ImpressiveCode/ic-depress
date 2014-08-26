@@ -27,7 +27,6 @@
 							<li><a href="../">Home</a></li>
 							<li class="hidden-sm  active"><a href="../quickstart/">Quickstart</a></li>
 							<li><a href="../whatsnew/">What's New</a></li>
-							<li><a href="../downloads/">Downloads</a></li>
 							<li><a href="../examples/">Examples</a></li>
 							<li><a href="../contribute/">Contribute</a></li>
 							<li><a href="../about/">About</a></li>
@@ -36,7 +35,7 @@
 						
 						<ul class="nav navbar-nav navbar-right">
 							<div class="actions">
-								<a class="btn btn-success btn-lg" href="https://github.com/ImpressiveCode/ic-depress">Github Page</a>
+								<a class="btn btn-success btn-lg" href="https://github.com/ImpressiveCode/ic-depress">GitHub Page</a>
 							</div>
 						</ul>
 						
@@ -67,19 +66,47 @@
 					<li>You can switch to KNIME perspective by clicking on the table icon on the top right corner of Eclipse window. Choose KNIME(if you can not see it, click <i>Other...</i> - it should be there somewhere).</li>
  					<li>In case of any problem, you can look for help at the <a href="http://tech.knime.org/installation-0">KNIME's website</a>.
  					</ol><br>
+							
+					<h4>Running plugins</h4>
+					<ol>
+					<li>Setup your KNIME as described in <a href="../quiuckstart">Quickstart</a></li>
+					<li>After configuring SDK, run <i>eclipse.exe</i></li>
+					<li>Click <i>Help</i> -> <i>Install New Software</i>.</li>
+					<li>Next to the box <i>Work with</i> click <i>Add</i>.</li>
+					<li>Name your plugins source as you want and as the <i>Location</i> insert <i>http://impressivecode.github.io/ic-depress/update</i>. Click <i>OK</i>.</li>
+					<li>DePress plugin appeared below. Click <i>Select all</i> to choose plugins to install and click <i>Next</i> twice.
+					<li>Read the license and when you agree with it, tick it and finish.</i>
+					<li>Restart Eclipse application.</i>
+					<li>When you switch the perspective into KNIME, you will see DePress's plugins in the <i>Node Repository</i>. Click to check -> <a href="./plugins.jpg"><img src="./plugins.jpg" height="40" width="20"></a> </li>
+					</ol><br>
 					
-					After configuring this setup:
-					<h4>Users</h4>
-					Should use update manager in Eclipse to automatically install DePress plugin-pack - <a href="../downloads/">Eclipse updatesite for users</a>.
-					<h4>Developers</h4>
-					Should download the newest DePress version from GitHub. More info available <a href="../downloads/">here</a>. Remember to check our <a href="../contribute">contribution rules</a>!
-					<br><br>
-					
- 					Have a nice time using DePress. Good luck! 
+					If you would like to add any new feature, please use JIRA as written <a href="../contribute/">here</a>. <br>
+					To inform us about a bug or to report a CR, also use JIRA. It is really important for us to keep all information about changes in DePress in one place.<br>
+					Please do not use GitHub Issues for enhancement request and bugs.<br><br>
+					 <center>
+			    </p>
+				<p  class="lead">
+					Check out examples of using plugins made by DePress.
+					<div class="actions">
+						<a class="btn btn-primary btn-xl" onclick="_gaq.push(['_trackEvent', 'Outbound Link', 'Examples']);" href="../examples/">Examples</a><br>
+					</div>
+					<br>Have a nice time using DePress. Good luck! 
+				</center>
 				</p>
+				
 			</div>
 		</div>
-
+		<footer id="footer" class="footer hidden-print">
+			<div class="container text-center">
+				<div>
+					This work is licensed under a <a href="http://www.gnu.org/licenses/gpl.html">GPL v3 </a>license.
+				</div>
+				<div class="project">
+					· <a href="../">home</a> ·
+					<a href="../about/">about</a> ·
+				</div>
+			</div>
+		</footer>
 		<script src="../assets/js/jquery-1.10.2.min.js"></script>
 		<script src="../assets/js/bootstrap-3.1.1.min.js"></script>
 
