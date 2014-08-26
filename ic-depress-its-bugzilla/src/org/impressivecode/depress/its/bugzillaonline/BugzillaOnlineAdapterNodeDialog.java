@@ -242,4 +242,10 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     protected Collection<ITSFilter> getFilters() {
         return new ArrayList<>();
     }
+
+    @Override
+    protected SettingsModelString createSelectionSettings() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -59,6 +59,10 @@ public class JiraOnlineAdapterRsClient {
     }
 
     private boolean isDataFetchSuccessful(Response response) throws Exception {
+        if (response.getStatus() == 401) {
+            System.out.println(response.toString());
+            throw new SecurityException("Unauthorized.");
+        }
         if (response.getStatus() != 200) {
             System.out.println(response.toString());
             throw new Exception("Failed to fetch data.");

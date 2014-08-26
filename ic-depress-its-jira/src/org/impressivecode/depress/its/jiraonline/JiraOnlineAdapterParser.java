@@ -30,7 +30,6 @@ import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineComment;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssue;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChange;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
@@ -38,6 +37,7 @@ import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChanges;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueHistory;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueVersion;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssuesList;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineProjectListItem;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -137,16 +137,36 @@ public class JiraOnlineAdapterParser {
         return issueList.getTotal();
     }
 
-    public static List<JiraOnlineFilterListItem> getCustomFieldList(String source) {
+    public static <T> List<T> getCustomList(String source, Class<?> elem) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
         JsonParser jp = null;
-        List<JiraOnlineFilterListItem> fieldList = null;
+        List<T> fieldList = null;
 
         try {
             jp = jsonFactory.createJsonParser(source);
-            fieldList = objectMapper.readValue(jp, new TypeReference<List<JiraOnlineFilterListItem>>() {
+            fieldList = objectMapper.readValue(jp, objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, elem));
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (UnrecognizedPropertyException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fieldList;
+    }
+
+    public static List<JiraOnlineProjectListItem> getProjectList(String source) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonFactory jsonFactory = new JsonFactory();
+        JsonParser jp = null;
+        List<JiraOnlineProjectListItem> projectList = null;
+
+        try {
+            jp = jsonFactory.createJsonParser(source);
+            projectList = objectMapper.readValue(jp, new TypeReference<List<JiraOnlineProjectListItem>>() {
             });
         } catch (JsonParseException e) {
             e.printStackTrace();
@@ -156,7 +176,7 @@ public class JiraOnlineAdapterParser {
             e.printStackTrace();
         }
 
-        return fieldList;
+        return projectList;
     }
 
     private List<ITSDataType> parseData(final JiraOnlineIssuesList issueList, final String hostname) {
@@ -186,6 +206,9 @@ public class JiraOnlineAdapterParser {
                 valueToParse = null == issue.getFields().getResolution() ? null : issue.getFields().getResolution()
                         .getName();
                 data.setResolution(parseResolutionFromMap(valueToParse));
+
+                data.setTimeEstimate(issue.getFields().getTimeTracking().getEstimate());
+                data.setTimeSpent(issue.getFields().getTimeTracking().getSpent());
 
                 data.setCreated(issue.getFields().getCreated());
                 data.setUpdated(issue.getFields().getUpdated());

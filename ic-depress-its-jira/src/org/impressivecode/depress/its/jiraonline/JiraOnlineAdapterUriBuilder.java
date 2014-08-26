@@ -47,6 +47,7 @@ public class JiraOnlineAdapterUriBuilder {
     private static final String PRIORITY_LIST_PARAM = "priority";
     private static final String RESOLUTION_LIST_PARAM = "resolution";
     private static final String TYPE_LIST_PARAM = "issuetype";
+    private static final String PROJECT_LIST_PARAM = "project";
     private static final String QUERY_PARAM = "jql";
     private static final String FIELDS_PARAM = "fields";
     private static final String EXPAND_PARAM = "expand";
@@ -109,6 +110,8 @@ public class JiraOnlineAdapterUriBuilder {
             return buildStateListURI();
         case TYPE_LIST:
             return buildTypeListURI();
+        case PROJECT_LIST:
+            return buildProjectListURI();
         default:
             throw new RuntimeException("This should never happen. URI builder failed");
         }
@@ -135,6 +138,7 @@ public class JiraOnlineAdapterUriBuilder {
         String uriJQL = null;
         if (jqlBuilder.toString().endsWith(CONJUNCTION)) {
             uriJQL = jqlBuilder.substring(0, jqlBuilder.length() - 5);
+            System.out.println(uriJQL);
         } else {
             uriJQL = jqlBuilder.toString();
         }
@@ -149,7 +153,6 @@ public class JiraOnlineAdapterUriBuilder {
                 .queryParam(QUERY_PARAM, uriJQL)
                 .build();
         // @formatter:on
-
         return result;
     }
 
@@ -167,7 +170,6 @@ public class JiraOnlineAdapterUriBuilder {
 
         return result;
     }
-
     private URI buildListURI(String jiraCommand) {
 
         // @formatter:off
@@ -195,6 +197,10 @@ public class JiraOnlineAdapterUriBuilder {
 
     private URI buildPriorityListURI() {
         return buildListURI(PRIORITY_LIST_PARAM);
+    }
+    
+    private URI buildProjectListURI() {
+        return buildListURI(PROJECT_LIST_PARAM);
     }
 
     public URI testHost() {
@@ -258,6 +264,6 @@ public class JiraOnlineAdapterUriBuilder {
     }
 
     public enum Mode {
-        SINGLE_ISSUE_WITH_HISTORY, MULTIPLE_ISSUES, STATE_LIST, PRIORITY_LIST, RESOLUTION_LIST, TYPE_LIST;
+        SINGLE_ISSUE_WITH_HISTORY, MULTIPLE_ISSUES, STATE_LIST, PRIORITY_LIST, RESOLUTION_LIST, TYPE_LIST, PROJECT_LIST;
     }
 }

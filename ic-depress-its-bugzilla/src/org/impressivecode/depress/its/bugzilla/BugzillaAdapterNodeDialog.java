@@ -77,52 +77,38 @@ public class BugzillaAdapterNodeDialog extends NodeDialogPane {
 
     private void createPriorityTab(final JTabbedPane tabbedPane) {
         multiFilterPriority = new MultiFilterComponent(BugzillaAdapterNodeModel.createMultiFilterPriorityModel(),
-                new refreshPriorityCaller());
+                new RefreshCaller("bug_severity"));
         tabbedPane.addTab("Priority", multiFilterPriority.getPanel());
     }
 
     private void createResolutionTab(final JTabbedPane tabbedPane) {
         multiFilterResolution = new MultiFilterComponent(BugzillaAdapterNodeModel.createMultiFilterResolutionModel(),
-                new refreshResolutionCaller());
+                new RefreshCaller("resolution"));
         tabbedPane.addTab("Resolution", multiFilterResolution.getPanel());
     }
 
     private void createStatusTab(final JTabbedPane tabbedPane) {
         multiFilterStatus = new MultiFilterComponent(BugzillaAdapterNodeModel.createMultiFilterStatusModel(),
-                new refreshStatusCaller());
+                new RefreshCaller("bug_status"));
         tabbedPane.addTab("Status", multiFilterStatus.getPanel());
     }
 
     private DialogComponentFileChooser createFileChooserComponent(final String historyId, final String fileExtension) {
         return new DialogComponentFileChooser(createFileChooserSettings(), historyId, fileExtension);
     }
-
-    private class refreshPriorityCaller implements Callable<List<String>> {
-        @Override
-        public List<String> call() throws Exception {
-            FileParser parser = new FileParser();
-            File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
-            String expression = "/bugzilla/bug/bug_severity[not(preceding::bug_severity/. = .)]";
-            return parser.parseXPath(file, expression);
+    
+    private class RefreshCaller implements Callable<List<String>> {
+        private final String property;
+        
+        RefreshCaller(final String property) {
+            this.property = property;
         }
-    }
-
-    private class refreshResolutionCaller implements Callable<List<String>> {
+        
         @Override
         public List<String> call() throws Exception {
             FileParser parser = new FileParser();
             File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
-            String expression = "/bugzilla/bug/resolution[not(preceding::resolution/. = .)]";
-            return parser.parseXPath(file, expression);
-        }
-    }
-
-    private class refreshStatusCaller implements Callable<List<String>> {
-        @Override
-        public List<String> call() throws Exception {
-            FileParser parser = new FileParser();
-            File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
-            String expression = "/bugzilla/bug/bug_status[not(preceding::bug_status/. = .)]";
+            String expression = "/rss/channel/item/" + property + "[not(preceding::" + property + "/. = .)]";
             return parser.parseXPath(file, expression);
         }
     }

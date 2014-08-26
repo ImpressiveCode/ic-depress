@@ -33,11 +33,11 @@ import org.impressivecode.depress.its.ITSStatus;
  * @author Maciej Borkowski, Capgemini Poland
  */
 public class JiraOnlineMapperManager {
-    private SettingsModelMultiFilter priorityModel; 
-    private SettingsModelMultiFilter statusModel; 
-    private SettingsModelMultiFilter typeModel; 
-    private SettingsModelMultiFilter resolutionModel; 
-    
+    private SettingsModelMultiFilter priorityModel;
+    private SettingsModelMultiFilter statusModel;
+    private SettingsModelMultiFilter typeModel;
+    private SettingsModelMultiFilter resolutionModel;
+
     private MultiFilterComponent multiFilterPriority;
     private MultiFilterComponent multiFilterStatus;
     private MultiFilterComponent multiFilterType;
@@ -57,19 +57,19 @@ public class JiraOnlineMapperManager {
     public void createFilterPriority(final Callable<List<String>> refreshCall) {
         multiFilterPriority = new MultiFilterComponent(priorityModel, refreshCall);
     }
-    
+
     public void createFilterStatus(final Callable<List<String>> refreshCall) {
         multiFilterStatus = new MultiFilterComponent(statusModel, refreshCall);
     }
-    
+
     public void createFilterType(final Callable<List<String>> refreshCall) {
         multiFilterType = new MultiFilterComponent(typeModel, refreshCall);
     }
-    
+
     public void createFilterResolution(final Callable<List<String>> refreshCall) {
         multiFilterResolution = new MultiFilterComponent(resolutionModel, refreshCall);
     }
-    
+
     public List<MultiFilterComponent> getComponents() {
         List<MultiFilterComponent> list = new ArrayList<>();
         list.add(multiFilterPriority);
@@ -78,7 +78,7 @@ public class JiraOnlineMapperManager {
         list.add(multiFilterResolution);
         return list;
     }
-    
+
     public List<SettingsModelMultiFilter> getModels() {
         List<SettingsModelMultiFilter> list = new ArrayList<>();
         list.add(priorityModel);

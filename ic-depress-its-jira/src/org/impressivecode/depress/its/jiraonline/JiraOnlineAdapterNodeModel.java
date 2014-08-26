@@ -84,17 +84,20 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private static final String JIRA_START_DATE = "depress.its.jiraonline.startDate";
     private static final String JIRA_END_DATE = "depress.its.jiraonline.endDate";
     private static final String JIRA_JQL = "depress.its.jiraonline.jql";
+    private static final String JIRA_SELECTION = "depress.its.jiraonline.selection";
     private static final String JIRA_STATUS = "depress.its.jiraonline.status";
     private static final String JIRA_HISTORY = "depress.its.jiraonline.history";
     private static final String FILTERS_SETTING = "depress.its.jiraonline.filters";
-
+    
     private final SettingsModelString jiraSettingsURL = createSettingsURL();
     private final SettingsModelString jiraSettingsLogin = createSettingsLogin();
     private final SettingsModelString jiraSettingsPass = createSettingsPass();
     private final SettingsModelString jiraSettingsJQL = createSettingsJQL();
+    private final SettingsModelString jiraSettingsSelection = createSettingsSelection();
     private final SettingsModelBoolean jiraSettingsHistory = createSettingsHistory();
     private final SettingsModelStringArray jiraSettingsFilter = createSettingsFilters();
-
+    
+    
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraOnlineAdapterNodeModel.class);
 
     private JiraOnlineAdapterUriBuilder builder;
@@ -133,6 +136,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
         builder = prepareBuilder();
         client = new JiraOnlineAdapterRsClient();
+        client.registerCredentials(jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
         executorService = Executors.newFixedThreadPool(getThreadCount());
 
         List<URI> issueBatchLinks = prepareIssueBatchesLinks();
@@ -327,6 +331,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsLogin.saveSettingsTo(settings);
         jiraSettingsPass.saveSettingsTo(settings);
         jiraSettingsJQL.saveSettingsTo(settings);
+        jiraSettingsSelection.saveSettingsTo(settings);
         jiraSettingsHistory.saveSettingsTo(settings);
         jiraSettingsFilter.saveSettingsTo(settings);
 
@@ -355,6 +360,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsLogin.loadSettingsFrom(settings);
         jiraSettingsPass.loadSettingsFrom(settings);
         jiraSettingsJQL.loadSettingsFrom(settings);
+        jiraSettingsSelection.loadSettingsFrom(settings);
         jiraSettingsHistory.loadSettingsFrom(settings);
         jiraSettingsFilter.loadSettingsFrom(settings);
 
@@ -383,6 +389,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsLogin.validateSettings(settings);
         jiraSettingsPass.validateSettings(settings);
         jiraSettingsJQL.validateSettings(settings);
+        jiraSettingsSelection.validateSettings(settings);
         jiraSettingsHistory.validateSettings(settings);
         jiraSettingsFilter.loadSettingsFrom(settings);
 
@@ -443,6 +450,10 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     static SettingsModelString createSettingsDateFilterStatusChooser() {
         return new SettingsModelString(JIRA_STATUS, DEFAULT_VALUE);
+    }
+    
+    static SettingsModelString createSettingsSelection() {
+        return new SettingsModelString(JIRA_SELECTION, DEFAULT_VALUE);
     }
 
     static SettingsModelBoolean createSettingsHistory() {
