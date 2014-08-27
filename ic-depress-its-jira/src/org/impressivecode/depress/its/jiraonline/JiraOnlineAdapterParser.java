@@ -235,8 +235,10 @@ public class JiraOnlineAdapterParser {
                     }
                 }
                 data.setFixVersion(fixVersions);
-
-                data.setReporter(issue.getFields().getReporter().getName());
+                
+                if(issue.getFields().getReporter() != null) {
+                    data.setReporter(issue.getFields().getReporter().getName());
+                }
 
                 data.setSummary(issue.getFields().getSummary());
                 data.setDescription(issue.getFields().getDescription());
