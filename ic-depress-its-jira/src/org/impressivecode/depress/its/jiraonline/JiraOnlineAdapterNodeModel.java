@@ -175,7 +175,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     }
 
     private int getIssuesCount() throws Exception {
-        String rawData = client.getJSON(builder.build());
+        String rawData = client.getJSON(builder.build(), jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
         return JiraOnlineAdapterParser.getTotalIssuesCount(rawData);
     }
 
@@ -492,7 +492,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         public List<ITSDataType> call() throws Exception {
             checkForCancel();
 
-            String rawData = client.getJSON(uri);
+            String rawData = client.getJSON(uri, jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
             String hostname = builder.getHostname();
 
             markProgressForIssue();
@@ -519,7 +519,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         public List<JiraOnlineIssueChangeRowItem> call() throws Exception {
             checkForCancel();
 
-            String rawIssue = client.getJSON(uri);
+            String rawIssue = client.getJSON(uri, jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
 
             markProgressForHistory();
             checkForCancel();

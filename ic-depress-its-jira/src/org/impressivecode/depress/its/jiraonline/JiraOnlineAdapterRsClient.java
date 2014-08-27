@@ -42,17 +42,26 @@ public class JiraOnlineAdapterRsClient {
         client.register(new HttpBasicAuthFilter(username, password));
     }
 
-    public String getJSON(URI uri) throws Exception {
+    public String getJSONUnauthorized(URI uri) throws Exception {
         Response response = getReponse(uri);
         isDataFetchSuccessful(response);
         return reponseToString(response);
     }
-    
-    public String getJSONAuthorized(URI uri, String username, String password) throws Exception {
-        registerCredentials(username, password);
-        return getJSON(uri);
-    }
 
+    public String getJSON(URI uri, String username, String password) throws Exception {
+        //FIXME get rid of eclipse login window
+        String rawData = null;
+        try {
+            registerCredentials(username, password);
+            rawData = getJSONUnauthorized(uri);
+        } catch (SecurityException se) {
+                client.close();
+                createClient();
+                rawData = getJSONUnauthorized(uri);
+        }
+        return rawData;
+    }
+    
     public boolean testConnection(URI uri) throws Exception {
         Response response = getReponse(uri);
 

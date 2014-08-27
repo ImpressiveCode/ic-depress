@@ -88,7 +88,7 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
         JiraOnlineAdapterParser parser = new JiraOnlineAdapterParser(priority, type, resolution, status);
 
         // when
-        List<ITSDataType> entries = parser.parseSingleIssueBatch(client.getJSON(springUriBuilder.build()),
+        List<ITSDataType> entries = parser.parseSingleIssueBatch(client.getJSON(springUriBuilder.build(), "", ""),
                 springUriBuilder.getHostname());
 
         // then

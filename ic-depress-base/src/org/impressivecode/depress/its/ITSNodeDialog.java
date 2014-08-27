@@ -180,7 +180,6 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     protected Component createAvailableFiltersComponent() {
 
         filterSelection = new ITSFiltersDialogComponent(getFilters(), createFilterSettings());
-
         filterSelection.addListItemSelectionListener(new ITSFiltersDialogComponent.ListItemSelectedListener() {
 
             @Override

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -118,31 +119,17 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         }
     }
     
-    private <T> List<T> getList(Mode mode, Class<?> elem) {
+    private <T> List<T> getList(Mode mode, Class<?> elem) throws Exception {
         JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
         builder.setHostname(hostnameComponent.getStringValue());
         builder.setMode(mode);
         JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient();
-        
-        //FIXME get rid of eclipse login window
         URI uri = builder.build();
         String login =((SettingsModelString)(loginComponent.getModel())).getStringValue();
         String password = ((SettingsModelString)(passwordComponent.getModel())).getStringValue();
         String rawData = null;
         
-        try {
-            rawData = client.getJSONAuthorized(uri, login, password);
-        } catch (SecurityException se) {
-            try {
-                client.getClient().close();
-                client = new JiraOnlineAdapterRsClient();
-                rawData = client.getJSON(uri);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        rawData = client.getJSON(uri, login, password);
         return JiraOnlineAdapterParser.getCustomList(rawData, elem);
     }
     
@@ -175,13 +162,19 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         public void actionPerformed(ActionEvent event) {
             checkProjectsButton.getModel().setEnabled(false);
 
-            List<JiraOnlineProjectListItem> list = getList(Mode.PROJECT_LIST, JiraOnlineProjectListItem.class);
-            
             ArrayList<String> projects = new ArrayList<String>();
-            projectSelection.getModel().setEnabled(true);
-            for(JiraOnlineProjectListItem item : list) {
-                projects.add(item.getName());
+            List<JiraOnlineProjectListItem> list;
+            try {
+                list = getList(Mode.PROJECT_LIST, JiraOnlineProjectListItem.class);
+                projectSelection.getModel().setEnabled(true);
+                for(JiraOnlineProjectListItem item : list) {
+                    projects.add(item.getName());
+                }
+            } catch (Exception e) {
+                Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
+                projects.add("error");
             }
+            
             projectSelection.replaceListItems(projects, null);
             checkProjectsButton.getModel().setEnabled(true);
         }
