@@ -70,6 +70,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
 	public static final int DEFAULT_BUGS_PER_TASK_VALUE = 1000;
 	
+    public static final int THREAD_COUNT = 10;
+    
 	public static final String DEFAULT_COMBOBOX_ANY_VALUE = "Any";
 
 	public static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
@@ -125,8 +127,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	private final SettingsModelOptionalString versionSettings = createVersionSettings();
 	
 	private final SettingsModelString prioritySettings = createPrioritySettings();
-
-	private final SettingsModelInteger threadsCountSettings = createThreadsCountSettings();
 
 	private final SettingsModelInteger bugsPerTaskSettings = createBugsPerTaskSettings();
 
@@ -246,7 +246,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 	
 	private Integer getThreadsCount() {
-		return threadsCountSettings.getIntValue();
+		return THREAD_COUNT;
 	}
 
 	private Integer getBugsPerTask() {
@@ -290,7 +290,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		reporterSettings.saveSettingsTo(settings);
 		versionSettings.saveSettingsTo(settings);
 		prioritySettings.saveSettingsTo(settings);
-		threadsCountSettings.saveSettingsTo(settings);
 		bugsPerTaskSettings.saveSettingsTo(settings);
 	}
 
@@ -307,7 +306,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		reporterSettings.loadSettingsFrom(settings);
 		versionSettings.loadSettingsFrom(settings);
 		prioritySettings.loadSettingsFrom(settings);
-		threadsCountSettings.loadSettingsFrom(settings);
 		bugsPerTaskSettings.loadSettingsFrom(settings);
 	}
 
@@ -324,7 +322,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		reporterSettings.validateSettings(settings);
 		prioritySettings.validateSettings(settings);
 		versionSettings.validateSettings(settings);
-		threadsCountSettings.validateSettings(settings);
 		bugsPerTaskSettings.validateSettings(settings);
 
 		SettingsModelString url = urlSettings.createCloneWithValidatedValue(settings);

@@ -18,99 +18,106 @@
 package org.impressivecode.depress.its.jiraonline;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Callable;
 
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
-import org.knime.core.node.defaultnodesettings.DialogComponent;
+import org.impressivecode.depress.common.MultiFilterComponent;
+import org.impressivecode.depress.common.SettingsModelMultiFilter;
+import org.impressivecode.depress.its.ITSPriority;
+import org.impressivecode.depress.its.ITSType;
+import org.impressivecode.depress.its.ITSResolution;
+import org.impressivecode.depress.its.ITSStatus;
 
 /**
- * 
  * @author Krzysztof Kwoka, Wroclaw University of Technology
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class JiraOnlineMapperManager {
+    private SettingsModelMultiFilter priorityModel;
+    private SettingsModelMultiFilter statusModel;
+    private SettingsModelMultiFilter typeModel;
+    private SettingsModelMultiFilter resolutionModel;
 
-    private JiraOnlineMapperState mapperState;
-    private JiraOnlineMapperPriority mapperPriority;
-    private JiraOnlineMapperResolution mapperResolution;
-    private JiraOnlineMapperType mapperType;
-
-    private HashMap<String, String> mapperStateMap;
-    private HashMap<String, String> mapperPriorityMap;
-    private HashMap<String, String> mapperResolutionMap;
-    private HashMap<String, String> mapperTypeMap;
+    private MultiFilterComponent multiFilterPriority;
+    private MultiFilterComponent multiFilterStatus;
+    private MultiFilterComponent multiFilterType;
+    private MultiFilterComponent multiFilterResolution;
 
     public JiraOnlineMapperManager() {
-        refreshMaps();
+        String configName = "depress.its.jiraonline.priority";
+        priorityModel = new SettingsModelMultiFilter(configName, false, ITSPriority.labels());
+        configName = "depress.its.jiraonline.status";
+        statusModel = new SettingsModelMultiFilter(configName, false, ITSStatus.labels());
+        configName = "depress.its.jiraonline.type";
+        typeModel = new SettingsModelMultiFilter(configName, false, ITSType.labels());
+        configName = "depress.its.jiraonline.resolution";
+        resolutionModel = new SettingsModelMultiFilter(configName, false, ITSResolution.labels());
     }
 
-    public List<DialogComponent> getDialogComponents() {
-        ArrayList<DialogComponent> componentList = new ArrayList<DialogComponent>();
-        componentList.addAll(getComponentsMapperState());
-        componentList.addAll(getComponentsMapperPriority());
-        componentList.addAll(getComponentsMapperResolution());
-        componentList.addAll(getComponentsMapperType());
-        return componentList;
+    public void createFilterPriority(final Callable<List<String>> refreshCall) {
+        multiFilterPriority = new MultiFilterComponent(priorityModel, refreshCall);
     }
 
-    public void createMapperState(List<JiraOnlineFilterListItem> fieldList) {
-        mapperState = new JiraOnlineMapperState(fieldList);
-        mapperState.createDialogComponents();
+    public void createFilterStatus(final Callable<List<String>> refreshCall) {
+        multiFilterStatus = new MultiFilterComponent(statusModel, refreshCall);
     }
 
-    public void createMapperPrioryty(List<JiraOnlineFilterListItem> fieldList) {
-        mapperPriority = new JiraOnlineMapperPriority(fieldList);
-        mapperPriority.createDialogComponents();
+    public void createFilterType(final Callable<List<String>> refreshCall) {
+        multiFilterType = new MultiFilterComponent(typeModel, refreshCall);
     }
 
-    public void createMapperResolution(List<JiraOnlineFilterListItem> fieldList) {
-        mapperResolution = new JiraOnlineMapperResolution(fieldList);
-        mapperResolution.createDialogComponents();
+    public void createFilterResolution(final Callable<List<String>> refreshCall) {
+        multiFilterResolution = new MultiFilterComponent(resolutionModel, refreshCall);
     }
 
-    public void createMapperType(List<JiraOnlineFilterListItem> fieldList) {
-        mapperType = new JiraOnlineMapperType(fieldList);
-        mapperType.createDialogComponents();
+    public List<MultiFilterComponent> getComponents() {
+        List<MultiFilterComponent> list = new ArrayList<>();
+        list.add(multiFilterPriority);
+        list.add(multiFilterStatus);
+        list.add(multiFilterType);
+        list.add(multiFilterResolution);
+        return list;
     }
 
-    public List<DialogComponent> getComponentsMapperState() {
-        return mapperState == null ? new ArrayList<DialogComponent>() : mapperState.getDialogComponents();
+    public List<SettingsModelMultiFilter> getModels() {
+        List<SettingsModelMultiFilter> list = new ArrayList<>();
+        list.add(priorityModel);
+        list.add(statusModel);
+        list.add(typeModel);
+        list.add(resolutionModel);
+        return list;
     }
 
-    public List<DialogComponent> getComponentsMapperPriority() {
-        return mapperPriority == null ? new ArrayList<DialogComponent>() : mapperPriority.getDialogComponents();
+    public MultiFilterComponent getMultiFilterPriority() {
+        return multiFilterPriority;
     }
 
-    public List<DialogComponent> getComponentsMapperResolution() {
-        return mapperResolution == null ? new ArrayList<DialogComponent>() : mapperResolution.getDialogComponents();
+    public MultiFilterComponent getMultiFilterStatus() {
+        return multiFilterStatus;
     }
 
-    public List<DialogComponent> getComponentsMapperType() {
-        return mapperType == null ? new ArrayList<DialogComponent>() : mapperType.getDialogComponents();
+    public MultiFilterComponent getMultiFilterType() {
+        return multiFilterType;
     }
 
-    public HashMap<String, String> getMapMapperState() {
-        return mapperStateMap;
+    public MultiFilterComponent getMultiFilterResolution() {
+        return multiFilterResolution;
     }
 
-    public HashMap<String, String> getMapMapperPriority() {
-        return mapperPriorityMap;
+    public SettingsModelMultiFilter getPriorityModel() {
+        return priorityModel;
     }
 
-    public HashMap<String, String> getMapMapperResolution() {
-        return mapperResolutionMap;
+    public SettingsModelMultiFilter getStatusModel() {
+        return statusModel;
     }
 
-    public HashMap<String, String> getMapMapperType() {
-        return mapperTypeMap;
+    public SettingsModelMultiFilter getTypeModel() {
+        return typeModel;
     }
 
-    public void refreshMaps() {
-        mapperStateMap = mapperState == null ? new HashMap<String, String>() : mapperState.getMappingMap();
-        mapperPriorityMap = mapperPriority == null ? new HashMap<String, String>() : mapperPriority.getMappingMap();
-        mapperTypeMap = mapperType == null ? new HashMap<String, String>() : mapperType.getMappingMap();
-        mapperResolutionMap = mapperResolution == null ? new HashMap<String, String>() : mapperResolution
-                .getMappingMap();
+    public SettingsModelMultiFilter getResolutionModel() {
+        return resolutionModel;
     }
+
 }

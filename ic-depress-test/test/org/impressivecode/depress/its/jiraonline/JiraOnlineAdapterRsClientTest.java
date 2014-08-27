@@ -74,14 +74,14 @@ public class JiraOnlineAdapterRsClientTest {
     public void should_not_throw_exception_when_get_issues() throws Exception {
         when(mockedResponse.getStatus()).thenReturn(HTTP_OK);
 
-        jiraOnlineClient.getJSON(dummyURL);
+        jiraOnlineClient.getJSON(dummyURL, "", "");
     }
 
     @Test(expected = Exception.class)
     public void should_throw_exception_when_get_issues() throws Exception {
         when(mockedResponse.getStatus()).thenReturn(HTTP_NO_CONNECTION);
 
-        jiraOnlineClient.getJSON(dummyURL);
+        jiraOnlineClient.getJSON(dummyURL, "", "");
     }
 
     private void prepareMocks() {

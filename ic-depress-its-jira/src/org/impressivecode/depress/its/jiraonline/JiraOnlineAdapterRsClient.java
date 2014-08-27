@@ -28,7 +28,7 @@ import org.glassfish.jersey.client.filter.HttpBasicAuthFilter;
 /**
  * @author Marcin Kunert, Wroclaw University of Technology
  * @author Dawid Rutowicz, Wroclaw University of Technology
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class JiraOnlineAdapterRsClient {
 
@@ -37,18 +37,31 @@ public class JiraOnlineAdapterRsClient {
     public JiraOnlineAdapterRsClient() {
         createClient();
     }
-
+    
     public void registerCredentials(String username, String password) {
         client.register(new HttpBasicAuthFilter(username, password));
     }
 
-    public String getJSON(URI uri) throws Exception {
+    public String getJSONUnauthorized(URI uri) throws Exception {
         Response response = getReponse(uri);
         isDataFetchSuccessful(response);
-
         return reponseToString(response);
     }
 
+    public String getJSON(URI uri, String username, String password) throws Exception {
+        //FIXME get rid of eclipse login window
+        String rawData = null;
+        try {
+            registerCredentials(username, password);
+            rawData = getJSONUnauthorized(uri);
+        } catch (SecurityException se) {
+                client.close();
+                createClient();
+                rawData = getJSONUnauthorized(uri);
+        }
+        return rawData;
+    }
+    
     public boolean testConnection(URI uri) throws Exception {
         Response response = getReponse(uri);
 
@@ -60,7 +73,12 @@ public class JiraOnlineAdapterRsClient {
     }
 
     private boolean isDataFetchSuccessful(Response response) throws Exception {
+        if (response.getStatus() == 401) {
+            System.out.println(response.toString());
+            throw new SecurityException("Unauthorized.");
+        }
         if (response.getStatus() != 200) {
+            System.out.println(response.toString());
             throw new Exception("Failed to fetch data.");
         }
 
@@ -72,6 +90,7 @@ public class JiraOnlineAdapterRsClient {
     }
 
     private Response getReponse(URI uri) {
+        System.out.println(uri.toString());
         return client.target(uri).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get();
     }
 
