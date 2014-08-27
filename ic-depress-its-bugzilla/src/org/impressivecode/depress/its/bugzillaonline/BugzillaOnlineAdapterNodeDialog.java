@@ -84,7 +84,6 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
         return BugzillaOnlineAdapterNodeModel.createProductSettings();
     }
 
-
     @Override
     protected Component createConnectionTab() {
         JPanel panel = (JPanel) super.createConnectionTab();
@@ -184,7 +183,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
                 BUGS_PER_TASK_LABEL, COMPONENT_WIDTH);
         return bugsPerTask.getComponentPanel();
     }
-    
+
     @Override
     protected SettingsModelString createSelectionSettings() {
         return BugzillaOnlineAdapterNodeModel.createSettingsSelection();
@@ -194,7 +193,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     protected ActionListener getButtonConnectionCheckListener() {
         return new CheckConnectionButtonListener();
     }
-    
+
     class CheckConnectionButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
@@ -202,7 +201,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 
             BugzillaOnlineClientAdapter adapter = null;
             try {
-                adapter = new BugzillaOnlineClientAdapter(((SettingsModelString)(url.getModel())).getStringValue());
+                adapter = new BugzillaOnlineClientAdapter(((SettingsModelString) (url.getModel())).getStringValue());
             } catch (MalformedURLException e1) {
                 e1.printStackTrace();
             }
@@ -212,7 +211,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
             } catch (XmlRpcException e) {
                 e.printStackTrace();
             }
-            
+
             projectSelection.replaceListItems(projects, null);
             checkProjectsButton.getModel().setEnabled(true);
         }

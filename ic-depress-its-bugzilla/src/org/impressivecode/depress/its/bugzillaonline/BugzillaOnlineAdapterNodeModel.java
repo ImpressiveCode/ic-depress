@@ -65,314 +65,318 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     private static final String DEFAULT_STRING_VALUE = "";
     private static final int DEFAULT_BUGS_PER_TASK_VALUE = 1000;
     private static final int THREAD_COUNT = 10;
-    
-	public static final String DEFAULT_COMBOBOX_ANY_VALUE = "Any";
-	
-	private static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
-	private static final String BUGZILLA_USERNAME = "depress.its.bugzillaonline.username";
-	private static final String BUGZILLA_PASSWORD = "depress.its.bugzillaonline.password";
-	private static final String BUGZILLA_PRODUCT = "depress.its.bugzillaonline.product";
-	private static final String BUGZILLA_DATE = "depress.its.bugzillaonline.date";
-	private static final String BUGZILLA_LIMIT = "depress.its.bugzillaonline.limit";
-	private static final String BUGZILLA_OFFSET = "depress.its.bugzillaonline.offset";
-	private static final String BUGZILLA_ASSIGNED_TO = "depress.its.bugzillaonline.assignedTo";
-	private static final String BUGZILLA_REPORTER = "depress.its.bugzillaonline.creator";
-	private static final String BUGZILLA_VERSION = "depress.its.bugzillaonline.version";
-	private static final String BUGZILLA_PRIORITY = "depress.its.bugzillaonline.priority";
+
+    public static final String DEFAULT_COMBOBOX_ANY_VALUE = "Any";
+
+    private static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
+    private static final String BUGZILLA_USERNAME = "depress.its.bugzillaonline.username";
+    private static final String BUGZILLA_PASSWORD = "depress.its.bugzillaonline.password";
+    private static final String BUGZILLA_PRODUCT = "depress.its.bugzillaonline.product";
+    private static final String BUGZILLA_DATE = "depress.its.bugzillaonline.date";
+    private static final String BUGZILLA_LIMIT = "depress.its.bugzillaonline.limit";
+    private static final String BUGZILLA_OFFSET = "depress.its.bugzillaonline.offset";
+    private static final String BUGZILLA_ASSIGNED_TO = "depress.its.bugzillaonline.assignedTo";
+    private static final String BUGZILLA_REPORTER = "depress.its.bugzillaonline.creator";
+    private static final String BUGZILLA_VERSION = "depress.its.bugzillaonline.version";
+    private static final String BUGZILLA_PRIORITY = "depress.its.bugzillaonline.priority";
     private static final String BUGZILLA_SELECTION = "depress.its.bugzillaonline.selection";
     private static final String BUGZILLA_THREADS_COUNT = "depress.its.bugzillaonline.threadsCount";
     private static final String BUGZILLA_BUGS_PER_TASK = "depress.its.bugzillaonline.bugsPerTask";
-	
-	private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
 
-	private final SettingsModelString urlSettings = createURLSettings();
-	private final SettingsModelDate dateFromSettings = createDateSettings();
-	private final SettingsModelString usernameSettings = createUsernameSettings();
-	private final SettingsModelString passwordSettings = createPasswordSettings();
-	private final SettingsModelOptionalString limitSettings = createLimitSettings();
-	private final SettingsModelOptionalString offsetSettings = createOffsetSettings();
-	private final SettingsModelOptionalString assignedToSettings = createAssignedToSettings();
-	private final SettingsModelOptionalString reporterSettings = createReporterSettings();
-	private final SettingsModelOptionalString versionSettings = createVersionSettings();
-	private final SettingsModelString prioritySettings = createPrioritySettings();
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
+
+    private final SettingsModelString urlSettings = createURLSettings();
+    private final SettingsModelDate dateFromSettings = createDateSettings();
+    private final SettingsModelString usernameSettings = createUsernameSettings();
+    private final SettingsModelString passwordSettings = createPasswordSettings();
+    private final SettingsModelOptionalString limitSettings = createLimitSettings();
+    private final SettingsModelOptionalString offsetSettings = createOffsetSettings();
+    private final SettingsModelOptionalString assignedToSettings = createAssignedToSettings();
+    private final SettingsModelOptionalString reporterSettings = createReporterSettings();
+    private final SettingsModelOptionalString versionSettings = createVersionSettings();
+    private final SettingsModelString prioritySettings = createPrioritySettings();
     private final SettingsModelString selectionSettings = createSettingsSelection();
-	private final SettingsModelInteger bugsPerTaskSettings = createBugsPerTaskSettings();
+    private final SettingsModelInteger bugsPerTaskSettings = createBugsPerTaskSettings();
 
-	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
-	protected BugzillaOnlineAdapterNodeModel() {
-		super(NUMBER_OF_INPUT_PORTS, NUMBER_OF_OUTPUT_PORTS);
-	}
+    protected BugzillaOnlineAdapterNodeModel() {
+        super(NUMBER_OF_INPUT_PORTS, NUMBER_OF_OUTPUT_PORTS);
+    }
 
-	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext context) throws Exception {
-		LOGGER.info("Preparing to read bugzilla entries.");
-		BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(getURL(), context);
+    @Override
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext context)
+            throws Exception {
+        LOGGER.info("Preparing to read bugzilla entries.");
+        BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(getURL(), context);
 
-		if (isUsernameProvided(getUsername())) {
-			LOGGER.info("Logging to bugzilla as: " + getUsername());
-			clientAdapter.login(getUsername(), getPassword());
-		}
+        if (isUsernameProvided(getUsername())) {
+            LOGGER.info("Logging to bugzilla as: " + getUsername());
+            clientAdapter.login(getUsername(), getPassword());
+        }
 
-		LOGGER.info("Reading entries from bugzilla instance: " + getURL() + " and product: " + getProductName());
-		List<ITSDataType> entries = clientAdapter.listEntries(getBugzillaOptions());
+        LOGGER.info("Reading entries from bugzilla instance: " + getURL() + " and product: " + getProductName());
+        List<ITSDataType> entries = clientAdapter.listEntries(getBugzillaOptions());
 
-		LOGGER.info("Transforming to bugzilla entries.");
-		BufferedDataTable out = transform(entries, context);
+        LOGGER.info("Transforming to bugzilla entries.");
+        BufferedDataTable out = transform(entries, context);
 
-		LOGGER.info("Bugzilla table created.");
-		return new BufferedDataTable[] { out };
-	}
+        LOGGER.info("Bugzilla table created.");
+        return new BufferedDataTable[] { out };
+    }
 
-	private String getURL() {
-		return urlSettings.getStringValue();
-	}
+    private String getURL() {
+        return urlSettings.getStringValue();
+    }
 
-	private boolean isUsernameProvided(String username) {
-		return !isNullOrEmpty(username);
-	}
-	
-	private String getPassword() throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, IOException {
-		return decrypt(passwordSettings.getStringValue());
-	}
+    private boolean isUsernameProvided(String username) {
+        return !isNullOrEmpty(username);
+    }
 
-	private String getUsername() {
-		return usernameSettings.getStringValue();
-	}
-	
-	private BugzillaOnlineOptions getBugzillaOptions() {
-		BugzillaOnlineOptions options = new BugzillaOnlineOptions();
-		options.setProductName(getProductName());
-		options.setDateFrom(getDateFrom());
-		options.setAssignedTo(getAssignedTo());
-		options.setReporter(getReporter());
-		options.setVersion(getVersion());
-		options.setPriority(getPriority());
-		options.setLimit(getLimit());
-		options.setOffset(getOffset());
-		options.setThreadsCount(getThreadsCount());
-		options.setBugsPerTask(getBugsPerTask());
-		return options;
-	}
+    private String getPassword() throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException,
+            UnsupportedEncodingException, IOException {
+        return decrypt(passwordSettings.getStringValue());
+    }
 
-	private String getProductName() {
-		return selectionSettings.getStringValue();
-	}
+    private String getUsername() {
+        return usernameSettings.getStringValue();
+    }
 
-	private Date getDateFrom() {
-		return dateFromSettings.getDate();
-	}
-	
-	private String getAssignedTo() {
-		return returnActiveStringSetting(assignedToSettings);
-	}
+    private BugzillaOnlineOptions getBugzillaOptions() {
+        BugzillaOnlineOptions options = new BugzillaOnlineOptions();
+        options.setProductName(getProductName());
+        options.setDateFrom(getDateFrom());
+        options.setAssignedTo(getAssignedTo());
+        options.setReporter(getReporter());
+        options.setVersion(getVersion());
+        options.setPriority(getPriority());
+        options.setLimit(getLimit());
+        options.setOffset(getOffset());
+        options.setThreadsCount(getThreadsCount());
+        options.setBugsPerTask(getBugsPerTask());
+        return options;
+    }
 
-	private String getReporter() {
-		return returnActiveStringSetting(reporterSettings);
-	}
+    private String getProductName() {
+        return selectionSettings.getStringValue();
+    }
 
-	private String getVersion() {
-		return returnActiveStringSetting(versionSettings);
-	}
-	
-	private String returnActiveStringSetting(SettingsModelOptionalString model) {
-		if (model.isActive()) {
-			return !isNullOrEmpty(model.getStringValue()) ? model
-					.getStringValue() : null;
-		} else {
-			return null;
-		}
-	}
-	
-	private String getPriority() {
-		return isComboboxChoosen(prioritySettings.getStringValue()) ? prioritySettings.getStringValue() : null;
-	}
+    private Date getDateFrom() {
+        return dateFromSettings.getDate();
+    }
 
-	private boolean isComboboxChoosen(String value) {
-		return !DEFAULT_COMBOBOX_ANY_VALUE.equals(value);
-	}
-	
-	private Integer getLimit() {
-		return getOptionalIntegerValue(limitSettings);
-	}
-	
-	private Integer getOffset() {
-		return getOptionalIntegerValue(offsetSettings);
-	}
+    private String getAssignedTo() {
+        return returnActiveStringSetting(assignedToSettings);
+    }
 
-	private Integer getOptionalIntegerValue(SettingsModelOptionalString settings) {
-		Integer result = null;
-		if(settings.isActive()){
-			try {
-				result = parseInt(settings.getStringValue());
-			} catch (NumberFormatException e) {
-			}
-		}
-		return result;
-	}
-	
-	private Integer getThreadsCount() {
-		return THREAD_COUNT;
-	}
+    private String getReporter() {
+        return returnActiveStringSetting(reporterSettings);
+    }
 
-	private Integer getBugsPerTask() {
-		return bugsPerTaskSettings.getIntValue();
-	}
+    private String getVersion() {
+        return returnActiveStringSetting(versionSettings);
+    }
 
-	private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec) throws CanceledExecutionException {
-		ITSAdapterTransformer transformer = new ITSAdapterTransformer(createDataColumnSpec());
-		return transformer.transform(entries, exec);
-	}
+    private String returnActiveStringSetting(SettingsModelOptionalString model) {
+        if (model.isActive()) {
+            return !isNullOrEmpty(model.getStringValue()) ? model.getStringValue() : null;
+        } else {
+            return null;
+        }
+    }
 
-	@Override
-	protected void reset() {
-		// NOOP
-	}
+    private String getPriority() {
+        return isComboboxChoosen(prioritySettings.getStringValue()) ? prioritySettings.getStringValue() : null;
+    }
 
-	@Override
-	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
-		checkArgument(inSpecs.length == 0);
-		return createTableSpec();
-	}
+    private boolean isComboboxChoosen(String value) {
+        return !DEFAULT_COMBOBOX_ANY_VALUE.equals(value);
+    }
 
-	@Override
-	protected void saveSettingsTo(final NodeSettingsWO settings) {
-		urlSettings.saveSettingsTo(settings);
-		usernameSettings.saveSettingsTo(settings);
+    private Integer getLimit() {
+        return getOptionalIntegerValue(limitSettings);
+    }
 
-		try {
-			String password = encrypt(passwordSettings.getStringValue().toCharArray());
-			passwordSettings.setStringValue(password);
-			passwordSettings.saveSettingsTo(settings);
-		} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | UnsupportedEncodingException e) {
-			LOGGER.error("Could not encrypt password, reason: " + e.getMessage(), e);
-		}
-		
-		selectionSettings.saveSettingsTo(settings);
-		dateFromSettings.saveSettingsTo(settings);
-		limitSettings.saveSettingsTo(settings);
-		offsetSettings.saveSettingsTo(settings);
-		assignedToSettings.saveSettingsTo(settings);
-		reporterSettings.saveSettingsTo(settings);
-		versionSettings.saveSettingsTo(settings);
-		prioritySettings.saveSettingsTo(settings);
-		bugsPerTaskSettings.saveSettingsTo(settings);
-		selectionSettings.saveSettingsTo(settings);
-	}
+    private Integer getOffset() {
+        return getOptionalIntegerValue(offsetSettings);
+    }
 
-	@Override
-	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-		urlSettings.loadSettingsFrom(settings);
-		usernameSettings.loadSettingsFrom(settings);
-		passwordSettings.loadSettingsFrom(settings);
-		selectionSettings.loadSettingsFrom(settings);
-		dateFromSettings.loadSettingsFrom(settings);
-		limitSettings.loadSettingsFrom(settings);
-		offsetSettings.loadSettingsFrom(settings);
-		assignedToSettings.loadSettingsFrom(settings);
-		reporterSettings.loadSettingsFrom(settings);
-		versionSettings.loadSettingsFrom(settings);
-		prioritySettings.loadSettingsFrom(settings);
-		bugsPerTaskSettings.loadSettingsFrom(settings);
-	    selectionSettings.loadSettingsFrom(settings);
-	}
+    private Integer getOptionalIntegerValue(SettingsModelOptionalString settings) {
+        Integer result = null;
+        if (settings.isActive()) {
+            try {
+                result = parseInt(settings.getStringValue());
+            } catch (NumberFormatException e) {
+            }
+        }
+        return result;
+    }
 
-	@Override
-	protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-		urlSettings.validateSettings(settings); 
-		usernameSettings.validateSettings(settings);
-		passwordSettings.validateSettings(settings);
-		selectionSettings.validateSettings(settings);
-		dateFromSettings.validateSettings(settings);
-		limitSettings.validateSettings(settings);
-		offsetSettings.validateSettings(settings);
-		assignedToSettings.validateSettings(settings);
-		reporterSettings.validateSettings(settings);
-		prioritySettings.validateSettings(settings);
-		versionSettings.validateSettings(settings);
-		bugsPerTaskSettings.validateSettings(settings);
-	    selectionSettings.validateSettings(settings);
+    private Integer getThreadsCount() {
+        return THREAD_COUNT;
+    }
 
-		SettingsModelString url = urlSettings.createCloneWithValidatedValue(settings);
-		if (!isNullOrEmpty(url.getStringValue()) && !url.getStringValue().matches(URL_PATTERN)) {
-			throw new InvalidSettingsException("Invalid URL address. Valid example: 'https://website.com'");
-		}
+    private Integer getBugsPerTask() {
+        return bugsPerTaskSettings.getIntValue();
+    }
 
-		SettingsModelString username = usernameSettings.createCloneWithValidatedValue(settings);
-		if (!isNullOrEmpty(username.getStringValue()) && !username.getStringValue().matches(EMAIL_PATTERN)) {
-			throw new InvalidSettingsException("Invalid username");
-		}
-	}
+    private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
+            throws CanceledExecutionException {
+        ITSAdapterTransformer transformer = new ITSAdapterTransformer(createDataColumnSpec());
+        return transformer.transform(entries, exec);
+    }
 
-	@Override
-	protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException, CanceledExecutionException {
-		// NOOP
-	}
+    @Override
+    protected void reset() {
+        // NOOP
+    }
 
-	@Override
-	protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException, CanceledExecutionException {
-		// NOOP
-	}
+    @Override
+    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
+        checkArgument(inSpecs.length == 0);
+        return createTableSpec();
+    }
 
-	static SettingsModelString createURLSettings() {
-		return new SettingsModelString(BUGZILLA_URL, DEFAULT_STRING_VALUE);
-	}
+    @Override
+    protected void saveSettingsTo(final NodeSettingsWO settings) {
+        urlSettings.saveSettingsTo(settings);
+        usernameSettings.saveSettingsTo(settings);
 
-	static SettingsModelString createUsernameSettings() {
-		return new SettingsModelString(BUGZILLA_USERNAME, DEFAULT_STRING_VALUE);
-	}
+        try {
+            String password = encrypt(passwordSettings.getStringValue().toCharArray());
+            passwordSettings.setStringValue(password);
+            passwordSettings.saveSettingsTo(settings);
+        } catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | UnsupportedEncodingException e) {
+            LOGGER.error("Could not encrypt password, reason: " + e.getMessage(), e);
+        }
 
-	static SettingsModelString createPasswordSettings() {
-		return new SettingsModelString(BUGZILLA_PASSWORD, DEFAULT_STRING_VALUE);
-	}
-	
-	static SettingsModelString createProductSettings() {
-		return new SettingsModelString(BUGZILLA_PRODUCT, DEFAULT_STRING_VALUE);
-	}
+        selectionSettings.saveSettingsTo(settings);
+        dateFromSettings.saveSettingsTo(settings);
+        limitSettings.saveSettingsTo(settings);
+        offsetSettings.saveSettingsTo(settings);
+        assignedToSettings.saveSettingsTo(settings);
+        reporterSettings.saveSettingsTo(settings);
+        versionSettings.saveSettingsTo(settings);
+        prioritySettings.saveSettingsTo(settings);
+        bugsPerTaskSettings.saveSettingsTo(settings);
+        selectionSettings.saveSettingsTo(settings);
+    }
+
+    @Override
+    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+        urlSettings.loadSettingsFrom(settings);
+        usernameSettings.loadSettingsFrom(settings);
+        passwordSettings.loadSettingsFrom(settings);
+        selectionSettings.loadSettingsFrom(settings);
+        dateFromSettings.loadSettingsFrom(settings);
+        limitSettings.loadSettingsFrom(settings);
+        offsetSettings.loadSettingsFrom(settings);
+        assignedToSettings.loadSettingsFrom(settings);
+        reporterSettings.loadSettingsFrom(settings);
+        versionSettings.loadSettingsFrom(settings);
+        prioritySettings.loadSettingsFrom(settings);
+        bugsPerTaskSettings.loadSettingsFrom(settings);
+        selectionSettings.loadSettingsFrom(settings);
+    }
+
+    @Override
+    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+        urlSettings.validateSettings(settings);
+        usernameSettings.validateSettings(settings);
+        passwordSettings.validateSettings(settings);
+        selectionSettings.validateSettings(settings);
+        dateFromSettings.validateSettings(settings);
+        limitSettings.validateSettings(settings);
+        offsetSettings.validateSettings(settings);
+        assignedToSettings.validateSettings(settings);
+        reporterSettings.validateSettings(settings);
+        prioritySettings.validateSettings(settings);
+        versionSettings.validateSettings(settings);
+        bugsPerTaskSettings.validateSettings(settings);
+        selectionSettings.validateSettings(settings);
+
+        SettingsModelString url = urlSettings.createCloneWithValidatedValue(settings);
+        if (!isNullOrEmpty(url.getStringValue()) && !url.getStringValue().matches(URL_PATTERN)) {
+            throw new InvalidSettingsException("Invalid URL address. Valid example: 'https://website.com'");
+        }
+
+        SettingsModelString username = usernameSettings.createCloneWithValidatedValue(settings);
+        if (!isNullOrEmpty(username.getStringValue()) && !username.getStringValue().matches(EMAIL_PATTERN)) {
+            throw new InvalidSettingsException("Invalid username");
+        }
+    }
+
+    @Override
+    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+            CanceledExecutionException {
+        // NOOP
+    }
+
+    @Override
+    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+            CanceledExecutionException {
+        // NOOP
+    }
+
+    static SettingsModelString createURLSettings() {
+        return new SettingsModelString(BUGZILLA_URL, DEFAULT_STRING_VALUE);
+    }
+
+    static SettingsModelString createUsernameSettings() {
+        return new SettingsModelString(BUGZILLA_USERNAME, DEFAULT_STRING_VALUE);
+    }
+
+    static SettingsModelString createPasswordSettings() {
+        return new SettingsModelString(BUGZILLA_PASSWORD, DEFAULT_STRING_VALUE);
+    }
+
+    static SettingsModelString createProductSettings() {
+        return new SettingsModelString(BUGZILLA_PRODUCT, DEFAULT_STRING_VALUE);
+    }
 
     static SettingsModelString createSettingsSelection() {
         return new SettingsModelString(BUGZILLA_SELECTION, DEFAULT_STRING_VALUE);
     }
 
-	static SettingsModelDate createDateSettings() {
-		return new SettingsModelDate(BUGZILLA_DATE);
-	}
+    static SettingsModelDate createDateSettings() {
+        return new SettingsModelDate(BUGZILLA_DATE);
+    }
 
-	static SettingsModelOptionalString createLimitSettings() {
-		return new SettingsModelOptionalString(BUGZILLA_LIMIT, DEFAULT_STRING_VALUE, false);
-	}
-	
-	static SettingsModelOptionalString createOffsetSettings() {
-		return new SettingsModelOptionalString(BUGZILLA_OFFSET, DEFAULT_STRING_VALUE, false);
-	}
+    static SettingsModelOptionalString createLimitSettings() {
+        return new SettingsModelOptionalString(BUGZILLA_LIMIT, DEFAULT_STRING_VALUE, false);
+    }
 
-	static SettingsModelOptionalString createAssignedToSettings() {
-		return new SettingsModelOptionalString(BUGZILLA_ASSIGNED_TO, DEFAULT_STRING_VALUE, false);
-	}
+    static SettingsModelOptionalString createOffsetSettings() {
+        return new SettingsModelOptionalString(BUGZILLA_OFFSET, DEFAULT_STRING_VALUE, false);
+    }
 
-	static SettingsModelOptionalString createReporterSettings() {
-		return new SettingsModelOptionalString(BUGZILLA_REPORTER, DEFAULT_STRING_VALUE, false);
-	}
-	
-	static SettingsModelOptionalString createVersionSettings() {
-		return new SettingsModelOptionalString(BUGZILLA_VERSION, DEFAULT_STRING_VALUE, false);
-	}
-	
-	static SettingsModelString createPrioritySettings() {
-		return new SettingsModelString(BUGZILLA_PRIORITY, DEFAULT_COMBOBOX_ANY_VALUE);
-	}
+    static SettingsModelOptionalString createAssignedToSettings() {
+        return new SettingsModelOptionalString(BUGZILLA_ASSIGNED_TO, DEFAULT_STRING_VALUE, false);
+    }
 
-	static SettingsModelInteger createThreadsCountSettings() {
-		return new SettingsModelInteger(BUGZILLA_THREADS_COUNT, getOptimalThreadsCount());
-	}
+    static SettingsModelOptionalString createReporterSettings() {
+        return new SettingsModelOptionalString(BUGZILLA_REPORTER, DEFAULT_STRING_VALUE, false);
+    }
 
-	static SettingsModelInteger createBugsPerTaskSettings() {
-		return new SettingsModelInteger(BUGZILLA_BUGS_PER_TASK, DEFAULT_BUGS_PER_TASK_VALUE);
-	}
+    static SettingsModelOptionalString createVersionSettings() {
+        return new SettingsModelOptionalString(BUGZILLA_VERSION, DEFAULT_STRING_VALUE, false);
+    }
 
-	static private int getOptimalThreadsCount() {
-		return Runtime.getRuntime().availableProcessors() + 1;
-	}
+    static SettingsModelString createPrioritySettings() {
+        return new SettingsModelString(BUGZILLA_PRIORITY, DEFAULT_COMBOBOX_ANY_VALUE);
+    }
+
+    static SettingsModelInteger createThreadsCountSettings() {
+        return new SettingsModelInteger(BUGZILLA_THREADS_COUNT, getOptimalThreadsCount());
+    }
+
+    static SettingsModelInteger createBugsPerTaskSettings() {
+        return new SettingsModelInteger(BUGZILLA_BUGS_PER_TASK, DEFAULT_BUGS_PER_TASK_VALUE);
+    }
+
+    static private int getOptimalThreadsCount() {
+        return Runtime.getRuntime().availableProcessors() + 1;
+    }
 
 }

@@ -112,7 +112,7 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         panel.add(createPasswordComponent());
         return panel;
     }
-    
+
     protected Component createHostnameComponent() {
         url = new DialogComponentString(createURLSettings(), URL_LABEL, true, COMPONENT_WIDTH);
         return url.getComponentPanel();
@@ -121,7 +121,7 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     protected abstract SettingsModelString createURLSettings();
 
     protected abstract SettingsModelString createProjectSettings();
-    
+
     protected abstract SettingsModelString createSelectionSettings();
 
     protected Component createCheckProjectsButton() {
@@ -129,15 +129,16 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         checkProjectsButton.addActionListener(getButtonConnectionCheckListener());
         return checkProjectsButton.getComponentPanel();
     }
-    
+
     protected Component createComponentStringSelection() {
         ArrayList<String> projects = new ArrayList<String>();
         projects.add("");
-        projectSelection = new DialogComponentStringSelection(createSelectionSettings(), PROJECTS_SELECTION_LABEL, projects, false);
+        projectSelection = new DialogComponentStringSelection(createSelectionSettings(), PROJECTS_SELECTION_LABEL,
+                projects, false);
         projectSelection.getModel().setEnabled(false);
         return projectSelection.getComponentPanel();
     }
-    
+
     protected abstract ActionListener getButtonConnectionCheckListener();
 
     protected Component createProjectSelection() {

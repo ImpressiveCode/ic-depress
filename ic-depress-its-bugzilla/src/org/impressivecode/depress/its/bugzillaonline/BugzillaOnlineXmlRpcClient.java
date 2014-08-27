@@ -32,44 +32,46 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
  */
 public class BugzillaOnlineXmlRpcClient {
 
-	private static final String SLASH = "/";
+    private static final String SLASH = "/";
 
-	private static final String ENDPOINT_INTERFACE = "xmlrpc.cgi";
+    private static final String ENDPOINT_INTERFACE = "xmlrpc.cgi";
 
-	private XmlRpcClient client;
+    private XmlRpcClient client;
 
-	public BugzillaOnlineXmlRpcClient(String url) throws MalformedURLException {
-		client = buildAndConfigureClient(getEndpointURL(url));
-	}
+    public BugzillaOnlineXmlRpcClient(String url) throws MalformedURLException {
+        client = buildAndConfigureClient(getEndpointURL(url));
+    }
 
-	private XmlRpcClient buildAndConfigureClient(URL url) {
-		XmlRpcClient client = new XmlRpcClient();
+    private XmlRpcClient buildAndConfigureClient(URL url) {
+        XmlRpcClient client = new XmlRpcClient();
 
-		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-		config.setServerURL(url);
+        XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+        config.setServerURL(url);
 
-		client.setConfig(config);
-		client.setTransportFactory(new XmlRpcTransportFactoryWithCookies(client));
+        client.setConfig(config);
+        client.setTransportFactory(new XmlRpcTransportFactoryWithCookies(client));
 
-		return client;
-	}
+        return client;
+    }
 
-	private URL getEndpointURL(String url) throws MalformedURLException {
-		if (!url.endsWith(ENDPOINT_INTERFACE)) {
-			if (!url.endsWith(SLASH)) {
-				url += SLASH;
-			}
-			url += ENDPOINT_INTERFACE;
-		}
-		return new URL(url);
-	}
+    private URL getEndpointURL(String url) throws MalformedURLException {
+        if (!url.endsWith(ENDPOINT_INTERFACE)) {
+            if (!url.endsWith(SLASH)) {
+                url += SLASH;
+            }
+            url += ENDPOINT_INTERFACE;
+        }
+        return new URL(url);
+    }
 
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> execute(String method, Map<String, Object> parameters) throws XmlRpcException {
-		// All Bugzilla functions use named parameters and this is realized by Map object. 
-		// To execute method with Map by the client, we need to wrap it into single element array.
-		Object[] parametersWrapper = new Object[] { parameters };
-		return (Map<String, Object>) client.execute(method, parametersWrapper);
-	}
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> execute(String method, Map<String, Object> parameters) throws XmlRpcException {
+        // All Bugzilla functions use named parameters and this is realized by
+        // Map object.
+        // To execute method with Map by the client, we need to wrap it into
+        // single element array.
+        Object[] parametersWrapper = new Object[] { parameters };
+        return (Map<String, Object>) client.execute(method, parametersWrapper);
+    }
 
 }
