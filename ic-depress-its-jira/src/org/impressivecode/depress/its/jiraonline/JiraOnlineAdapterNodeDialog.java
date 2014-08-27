@@ -20,6 +20,7 @@ package org.impressivecode.depress.its.jiraonline;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -122,16 +123,20 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         builder.setHostname(hostnameComponent.getStringValue());
         builder.setMode(mode);
         JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient();
-        client.registerCredentials(((SettingsModelString)(login.getModel())).getStringValue(), ((SettingsModelString)(password.getModel())).getStringValue());
-        String rawData = null;
+        
         //FIXME get rid of eclipse login window
+        URI uri = builder.build();
+        String login =((SettingsModelString)(loginComponent.getModel())).getStringValue();
+        String password = ((SettingsModelString)(passwordComponent.getModel())).getStringValue();
+        String rawData = null;
+        
         try {
-            rawData = client.getJSON(builder.build());
+            rawData = client.getJSONAuthorized(uri, login, password);
         } catch (SecurityException se) {
             try {
                 client.getClient().close();
                 client = new JiraOnlineAdapterRsClient();
-                rawData = client.getJSON(builder.build());
+                rawData = client.getJSON(uri);
             } catch (Exception e) {
                 e.printStackTrace();
             }

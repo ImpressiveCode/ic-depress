@@ -155,7 +155,7 @@ public class JiraOnlineAdapterUriBuilder {
         // @formatter:on
         return result;
     }
-
+    
     private URI buildIssueHistoryURI() {
 
         // @formatter:off
@@ -170,6 +170,7 @@ public class JiraOnlineAdapterUriBuilder {
 
         return result;
     }
+    
     private URI buildListURI(String jiraCommand) {
 
         // @formatter:off

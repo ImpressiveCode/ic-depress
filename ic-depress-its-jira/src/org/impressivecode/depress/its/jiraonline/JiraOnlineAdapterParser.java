@@ -146,7 +146,8 @@ public class JiraOnlineAdapterParser {
 
         try {
             jp = jsonFactory.createJsonParser(source);
-            fieldList = objectMapper.readValue(jp, objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, elem));
+            fieldList = objectMapper.readValue(jp,
+                    objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, elem));
         } catch (JsonParseException e) {
             e.printStackTrace();
         } catch (UnrecognizedPropertyException e) {
@@ -191,38 +192,47 @@ public class JiraOnlineAdapterParser {
 
                 Set<String> assignees = new HashSet<>();
                 if (issue.getFields().getAssignee() != null) {
-                    assignees.add(issue.getFields().getAssignee().getName());
+                    assignees.add(issue.getFields().getAssignee().getName()); 
                 }
                 data.setAssignees(assignees);
-
+                
                 String valueToParse = null == issue.getFields().getPriority() ? null : issue.getFields().getPriority()
                         .getName();
                 data.setPriority(parsePriorityFromMap(valueToParse));
+
                 valueToParse = null == issue.getFields().getIssueType() ? null : issue.getFields().getIssueType()
                         .getName();
                 data.setType(parseTypeFromMap(valueToParse));
+
                 valueToParse = null == issue.getFields().getStatus() ? null : issue.getFields().getStatus().getName();
                 data.setStatus(parseStatusFromMap(valueToParse));
+
                 valueToParse = null == issue.getFields().getResolution() ? null : issue.getFields().getResolution()
                         .getName();
                 data.setResolution(parseResolutionFromMap(valueToParse));
 
-                data.setTimeEstimate(issue.getFields().getTimeTracking().getEstimate());
-                data.setTimeSpent(issue.getFields().getTimeTracking().getSpent());
+                if (issue.getFields().getTimeTracking() != null) {
+                    data.setTimeEstimate(issue.getFields().getTimeTracking().getEstimate() / 60);
+                    data.setTimeSpent(issue.getFields().getTimeTracking().getSpent() / 60);
+                }
 
                 data.setCreated(issue.getFields().getCreated());
                 data.setUpdated(issue.getFields().getUpdated());
                 data.setResolved(issue.getFields().getResolved());
 
                 List<String> versions = new ArrayList<>();
-                for (JiraOnlineIssueVersion version : issue.getFields().getVersions()) {
-                    versions.add(version.getName());
+                if (issue.getFields().getVersions() != null) {
+                    for (JiraOnlineIssueVersion version : issue.getFields().getVersions()) {
+                        versions.add(version.getName());
+                    }
                 }
                 data.setVersion(versions);
 
                 List<String> fixVersions = new ArrayList<>();
-                for (JiraOnlineIssueVersion version : issue.getFields().getFixVersions()) {
-                    fixVersions.add(version.getName());
+                if (issue.getFields().getFixVersions() != null) {
+                    for (JiraOnlineIssueVersion version : issue.getFields().getFixVersions()) {
+                        fixVersions.add(version.getName());
+                    }
                 }
                 data.setFixVersion(fixVersions);
 
@@ -237,13 +247,14 @@ public class JiraOnlineAdapterParser {
                     comments.add(comment.getBody());
                     commentAuthors.add(comment.getAuthor().getName());
                 }
-
                 data.setComments(comments);
                 data.setCommentAuthors(commentAuthors);
 
                 resultList.add(data);
             } catch (Exception e) {
                 System.out.println("Failed to parse issue: " + issue.getKey());
+                System.out.println("Failed to parse issue: " + issue.getLink());
+                e.printStackTrace();
             }
         }
         return resultList;
@@ -302,7 +313,6 @@ public class JiraOnlineAdapterParser {
     }
 
     private static List<JiraOnlineIssueChangeRowItem> parseIssueHistory(final JiraOnlineIssueHistory issue) {
-
         List<JiraOnlineIssueChangeRowItem> issueList = new ArrayList<>();
 
         for (int i = 0; i < issue.getChangelog().getHistories().size(); i++) {

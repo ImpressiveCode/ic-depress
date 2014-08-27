@@ -136,7 +136,6 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
         builder = prepareBuilder();
         client = new JiraOnlineAdapterRsClient();
-        client.registerCredentials(jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
         executorService = Executors.newFixedThreadPool(getThreadCount());
 
         List<URI> issueBatchLinks = prepareIssueBatchesLinks();

@@ -24,6 +24,7 @@ import static org.junit.Assert.assertThat;
 
 import java.net.URISyntaxException;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSDataType;
@@ -50,7 +51,7 @@ import org.mockito.Mockito;
 public class JiraOnlineAdapterRsClientIntegrationTest {
 
     private final String HOSTNAME_HIBERNATE = "hibernate.atlassian.net";
-    private final String HOSTNAME_SPRING = "jira.springsource.org";
+    private final String HOSTNAME_SPRING = "jira.spring.io";
 
     private JiraOnlineAdapterRsClient client;
     private JiraOnlineAdapterUriBuilder hibernateUriBuilder;
@@ -78,8 +79,14 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
 
         springUriBuilder.setFilters(filters);
 
-        JiraOnlineAdapterParser parser = new JiraOnlineAdapterParser(null, null, null, null);
-        
+        HashMap<String, String[]> priority = new HashMap<>();
+        priority.put("Major", new String[] { "Major" });
+        HashMap<String, String[]> type = new HashMap<>();
+        HashMap<String, String[]> resolution = new HashMap<>();
+        HashMap<String, String[]> status = new HashMap<>();
+        status.put("Resolved", new String[] { "Resolved" });
+        JiraOnlineAdapterParser parser = new JiraOnlineAdapterParser(priority, type, resolution, status);
+
         // when
         List<ITSDataType> entries = parser.parseSingleIssueBatch(client.getJSON(springUriBuilder.build()),
                 springUriBuilder.getHostname());
@@ -116,7 +123,7 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
         assertThat(entry.getPriority(), is(ITSPriority.MAJOR));
         assertThat(entry.getSummary(),
                 is("Improve extendability of RandomValueTokenServices by keeping storage separate from token creation"));
-        assertThat(entry.getLink(), is("https://jira.springsource.org/browse/SECOAUTH-179"));
+        assertThat(entry.getLink(), is("https://jira.spring.io/browse/SECOAUTH-179"));
         assertNull(entry.getDescription());
         assertThat(entry.getComments().size(), is(0));
         assertThat(entry.getResolution(), is(ITSResolution.UNKNOWN));

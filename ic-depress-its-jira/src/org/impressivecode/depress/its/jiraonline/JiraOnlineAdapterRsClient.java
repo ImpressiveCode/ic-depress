@@ -28,7 +28,7 @@ import org.glassfish.jersey.client.filter.HttpBasicAuthFilter;
 /**
  * @author Marcin Kunert, Wroclaw University of Technology
  * @author Dawid Rutowicz, Wroclaw University of Technology
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class JiraOnlineAdapterRsClient {
 
@@ -37,7 +37,7 @@ public class JiraOnlineAdapterRsClient {
     public JiraOnlineAdapterRsClient() {
         createClient();
     }
-
+    
     public void registerCredentials(String username, String password) {
         client.register(new HttpBasicAuthFilter(username, password));
     }
@@ -46,6 +46,11 @@ public class JiraOnlineAdapterRsClient {
         Response response = getReponse(uri);
         isDataFetchSuccessful(response);
         return reponseToString(response);
+    }
+    
+    public String getJSONAuthorized(URI uri, String username, String password) throws Exception {
+        registerCredentials(username, password);
+        return getJSON(uri);
     }
 
     public boolean testConnection(URI uri) throws Exception {

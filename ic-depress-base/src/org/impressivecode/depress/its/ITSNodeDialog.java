@@ -77,8 +77,8 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     /**
      * Login components
      */
-    protected DialogComponentString login;
-    protected DialogComponentPasswordField password;
+    protected DialogComponentString loginComponent;
+    protected DialogComponentPasswordField passwordComponent;
     /**
      * Filter components
      */
@@ -149,14 +149,14 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     }
 
     protected Component createLoginComponent() {
-        login = new DialogComponentString(createLoginSettings(), LOGIN_LABEL, false, LOGIN_WIDTH);
+        loginComponent = new DialogComponentString(createLoginSettings(), LOGIN_LABEL, false, LOGIN_WIDTH);
 
-        return login.getComponentPanel();
+        return loginComponent.getComponentPanel();
     }
 
     protected Component createPasswordComponent() {
-        password = new DialogComponentPasswordField(createPasswordSettings(), PASSWORD_LABEL, PASSWORD_WIDTH);
-        return password.getComponentPanel();
+        passwordComponent = new DialogComponentPasswordField(createPasswordSettings(), PASSWORD_LABEL, PASSWORD_WIDTH);
+        return passwordComponent.getComponentPanel();
     }
 
     protected abstract SettingsModelString createLoginSettings();
@@ -237,8 +237,8 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     @Override
     protected void loadSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs) throws NotConfigurableException {
         url.loadSettingsFrom(settings, specs);
-        login.loadSettingsFrom(settings, specs);
-        password.loadSettingsFrom(settings, specs);
+        loginComponent.loadSettingsFrom(settings, specs);
+        passwordComponent.loadSettingsFrom(settings, specs);
         projectSelection.loadSettingsFrom(settings, specs);
 
         if (filterSelection != null) {
@@ -260,8 +260,8 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     @Override
     protected void saveSettingsTo(NodeSettingsWO settings) throws InvalidSettingsException {
         url.saveSettingsTo(settings);
-        login.saveSettingsTo(settings);
-        password.saveSettingsTo(settings);
+        loginComponent.saveSettingsTo(settings);
+        passwordComponent.saveSettingsTo(settings);
         projectSelection.saveSettingsTo(settings);
 
         if (filterSelection != null) {
