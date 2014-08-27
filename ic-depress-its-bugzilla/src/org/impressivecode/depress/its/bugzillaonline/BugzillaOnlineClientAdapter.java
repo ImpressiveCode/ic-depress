@@ -37,7 +37,9 @@ import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser
 import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.VERSION;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -51,60 +53,49 @@ import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionMonitor;
 
 /**
- * 
  * @author Michał Negacz, Wrocław University of Technology
  * @author Piotr Wróblewski, Wrocław University of Technology
+ * @author Maciej Borkowski, Cagepmini Poland
  */
 public class BugzillaOnlineClientAdapter {
-
 	public static final String BUGZILLA_VERSION_THAT_SUPPORT_INCLUSION_IN_GET = "3.6";
-
 	public static final String BUGZILLA_VERSION_THAT_SUPPORT_INCLUSION_IN_SEARCH = "4.0";
 
 	public static final String VERSION_SEPARATOR = "\\.";
-
 	public static final String BUGZILLA_VERSION_METHOD = "Bugzilla.version";
-
 	public static final String USER_LOGIN_METHOD = "User.login";
-
 	public static final String BUG_SEARCH_METHOD = "Bug.search";
-
+    public static final String PRODUCT_SEARCH_METHOD = "Product.get_accessible_products";
+    public static final String PRODUCT_GET_METHOD = "Product.get";
 	public static final String BUG_GET_METHOD = "Bug.get";
-
 	public static final String BUG_HISTORY_METHOD = "Bug.history";
-
 	public static final String BUG_COMMENT_METHOD = "Bug.comments";
-
 	public static final String BUG_ATTACHMENT_METHOD = "Bug.attachments";
-
 	public static final String LIMIT = "limit";
-
 	public static final String OFFSET = "offset";
-
 	public static final String PRODUCT_NAME = "product";
-
 	public static final String PASSWORD = "password";
-
 	public static final String LOGIN = "login";
-
 	public static final String BUGS = "bugs";
-
 	public static final String IDS = "ids";
-
+	public static final String PRODUCTS = "products";
 	public static final String INCLUDE_FIELDS = "include_fields";
-
+	
 	private static final int TASK_STEPS_COUNT = 4;
 
 	private BugzillaOnlineXmlRpcClient bugzillaClient;
-
 	private BugzillaOnlineParser parser;
-
 	private ExecutionMonitor monitor;
 
 	private double progressStep;
-
 	private String bugzillaVersion;
 
+   public BugzillaOnlineClientAdapter(String url) throws MalformedURLException {
+        checkNotNull(url);
+        bugzillaClient = buildClient(url);
+        parser = buildParser();
+    }
+	   
 	public BugzillaOnlineClientAdapter(String url, ExecutionMonitor monitor) throws MalformedURLException {
 		checkNotNull(url);
 		checkNotNull(monitor);
@@ -131,13 +122,30 @@ public class BugzillaOnlineClientAdapter {
 		bugzillaVersion = getBugzillaVersion();
 
 		Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options));
-		List<String> bugsIds = parser.extractBugsIds(simpleBugsInformation);
+		List<String> bugsIds = parser.extractIds(simpleBugsInformation);
 
 		List<Callable<List<ITSDataType>>> tasks = partitionTasks(bugsIds, options.getBugsPerTask());
 		setProgressStep(tasks.size());
 		List<Future<List<ITSDataType>>> partialResults = executeTasks(tasks, options.getThreadsCount());
 		return combinePartialResults(partialResults);
 	}
+	
+   public List<String> listProjects() throws XmlRpcException {
+        Object[] ids = searchProjects(new HashMap<String, Object>());
+        Map<String, Object> info = new HashMap<String, Object>();
+        info.put(IDS, ids);
+        
+        Object[] products = getProjects(info);
+        
+        List<String> projects = new ArrayList<String>();
+        for(Object object : products) {
+            @SuppressWarnings("unchecked")
+            
+            Map<String, Object> map = (Map<String, Object>) object;
+            projects.add((String) map.get("name"));
+        }
+        return projects;
+    }
 
 	private void checkIfIsCanceledAndMarkProgress(double value) throws CanceledExecutionException {
 		monitor.checkCanceled();
@@ -163,6 +171,16 @@ public class BugzillaOnlineClientAdapter {
 		Map<String, Object> result = bugzillaClient.execute(BUG_HISTORY_METHOD, parameters);
 		return (Object[]) result.get(BUGS);
 	}
+	
+   Object[] searchProjects(Map<String, Object> parameters) throws XmlRpcException {
+        Map<String, Object> result = bugzillaClient.execute(PRODUCT_SEARCH_METHOD, parameters);
+        return (Object[]) result.get(IDS);
+    }
+   
+   Object[] getProjects(Map<String, Object> parameters) throws XmlRpcException {
+        Map<String, Object> result = bugzillaClient.execute(PRODUCT_GET_METHOD, parameters);
+        return (Object[]) result.get(PRODUCTS);
+    }
 
 	@SuppressWarnings("unchecked")
 	Map<String, Object> getBugsComments(Map<String, Object> parameters) throws XmlRpcException {
@@ -315,7 +333,7 @@ public class BugzillaOnlineClientAdapter {
 			Map<String, Object> comments = getBugsComments(prepareBugsIdsParameters(bugsIds));
 
 			checkIfIsCanceledAndMarkProgress();
-			return parser.parseEntries(bugs, histories, comments);
+		    return parser.parseEntries(bugs, histories, comments);
 		}
 
 	}

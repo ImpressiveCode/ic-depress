@@ -53,85 +53,52 @@ import org.knime.core.node.defaultnodesettings.SettingsModelOptionalString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
- * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Michał Negacz, Wrocław University of Technology
  * @author Piotr Wróblewski, Wrocław University of Technology
  * @author Bartosz Skuza, Wrocław University of Technology
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class BugzillaOnlineAdapterNodeModel extends NodeModel {
-
-	public static final int NUMBER_OF_INPUT_PORTS = 0;
-
-	public static final int NUMBER_OF_OUTPUT_PORTS = 1;
-
-	public static final String DEFAULT_STRING_VALUE = "";
-
-	public static final int DEFAULT_BUGS_PER_TASK_VALUE = 1000;
-	
-    public static final int THREAD_COUNT = 10;
+    private static final int NUMBER_OF_INPUT_PORTS = 0;
+    private static final int NUMBER_OF_OUTPUT_PORTS = 1;
+    private static final String DEFAULT_STRING_VALUE = "";
+    private static final int DEFAULT_BUGS_PER_TASK_VALUE = 1000;
+    private static final int THREAD_COUNT = 10;
     
 	public static final String DEFAULT_COMBOBOX_ANY_VALUE = "Any";
-
-	public static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
-
-	public static final String BUGZILLA_USERNAME = "depress.its.bugzillaonline.username";
-
-	public static final String BUGZILLA_PASSWORD = "depress.its.bugzillaonline.password";
-
-	public static final String BUGZILLA_PRODUCT = "depress.its.bugzillaonline.product";
-
-	public static final String BUGZILLA_DATE = "depress.its.bugzillaonline.date";
-
-	public static final String BUGZILLA_HISTORY = "depress.its.bugzillaonline.history";
-
-	public static final String BUGZILLA_COMMENT = "depress.its.bugzillaonline.comment";
-
-	public static final String BUGZILLA_LIMIT = "depress.its.bugzillaonline.limit";
-
-	public static final String BUGZILLA_OFFSET = "depress.its.bugzillaonline.offset";
 	
-	public static final String BUGZILLA_ASSIGNED_TO = "depress.its.bugzillaonline.assignedTo";
-
-	public static final String BUGZILLA_REPORTER = "depress.its.bugzillaonline.creator";
+	private static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
+	private static final String BUGZILLA_USERNAME = "depress.its.bugzillaonline.username";
+	private static final String BUGZILLA_PASSWORD = "depress.its.bugzillaonline.password";
+	private static final String BUGZILLA_PRODUCT = "depress.its.bugzillaonline.product";
+	private static final String BUGZILLA_DATE = "depress.its.bugzillaonline.date";
+	private static final String BUGZILLA_LIMIT = "depress.its.bugzillaonline.limit";
+	private static final String BUGZILLA_OFFSET = "depress.its.bugzillaonline.offset";
+	private static final String BUGZILLA_ASSIGNED_TO = "depress.its.bugzillaonline.assignedTo";
+	private static final String BUGZILLA_REPORTER = "depress.its.bugzillaonline.creator";
+	private static final String BUGZILLA_VERSION = "depress.its.bugzillaonline.version";
+	private static final String BUGZILLA_PRIORITY = "depress.its.bugzillaonline.priority";
+    private static final String BUGZILLA_SELECTION = "depress.its.bugzillaonline.selection";
+    private static final String BUGZILLA_THREADS_COUNT = "depress.its.bugzillaonline.threadsCount";
+    private static final String BUGZILLA_BUGS_PER_TASK = "depress.its.bugzillaonline.bugsPerTask";
 	
-	public static final String BUGZILLA_VERSION = "depress.its.bugzillaonline.version";
-	
-	public static final String BUGZILLA_PRIORITY = "depress.its.bugzillaonline.priority";
-
-	public static final String BUGZILLA_THREADS_COUNT = "depress.its.bugzillaonline.threadsCount";
-
-	public static final String BUGZILLA_BUGS_PER_TASK = "depress.its.bugzillaonline.bugsPerTask";
-
 	private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
 
 	private final SettingsModelString urlSettings = createURLSettings();
-
 	private final SettingsModelDate dateFromSettings = createDateSettings();
-
 	private final SettingsModelString usernameSettings = createUsernameSettings();
-
 	private final SettingsModelString passwordSettings = createPasswordSettings();
-
-	private final SettingsModelString productSettings = createProductSettings();
-
 	private final SettingsModelOptionalString limitSettings = createLimitSettings();
-	
 	private final SettingsModelOptionalString offsetSettings = createOffsetSettings();
-
 	private final SettingsModelOptionalString assignedToSettings = createAssignedToSettings();
-
 	private final SettingsModelOptionalString reporterSettings = createReporterSettings();
-	
 	private final SettingsModelOptionalString versionSettings = createVersionSettings();
-	
 	private final SettingsModelString prioritySettings = createPrioritySettings();
-
+    private final SettingsModelString selectionSettings = createSettingsSelection();
 	private final SettingsModelInteger bugsPerTaskSettings = createBugsPerTaskSettings();
 
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
 	private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
 	protected BugzillaOnlineAdapterNodeModel() {
@@ -190,7 +157,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	}
 
 	private String getProductName() {
-		return productSettings.getStringValue();
+		return selectionSettings.getStringValue();
 	}
 
 	private Date getDateFrom() {
@@ -282,7 +249,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 			LOGGER.error("Could not encrypt password, reason: " + e.getMessage(), e);
 		}
 		
-		productSettings.saveSettingsTo(settings);
+		selectionSettings.saveSettingsTo(settings);
 		dateFromSettings.saveSettingsTo(settings);
 		limitSettings.saveSettingsTo(settings);
 		offsetSettings.saveSettingsTo(settings);
@@ -291,6 +258,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		versionSettings.saveSettingsTo(settings);
 		prioritySettings.saveSettingsTo(settings);
 		bugsPerTaskSettings.saveSettingsTo(settings);
+		selectionSettings.saveSettingsTo(settings);
 	}
 
 	@Override
@@ -298,7 +266,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		urlSettings.loadSettingsFrom(settings);
 		usernameSettings.loadSettingsFrom(settings);
 		passwordSettings.loadSettingsFrom(settings);
-		productSettings.loadSettingsFrom(settings);
+		selectionSettings.loadSettingsFrom(settings);
 		dateFromSettings.loadSettingsFrom(settings);
 		limitSettings.loadSettingsFrom(settings);
 		offsetSettings.loadSettingsFrom(settings);
@@ -307,6 +275,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		versionSettings.loadSettingsFrom(settings);
 		prioritySettings.loadSettingsFrom(settings);
 		bugsPerTaskSettings.loadSettingsFrom(settings);
+	    selectionSettings.loadSettingsFrom(settings);
 	}
 
 	@Override
@@ -314,7 +283,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		urlSettings.validateSettings(settings); 
 		usernameSettings.validateSettings(settings);
 		passwordSettings.validateSettings(settings);
-		productSettings.validateSettings(settings);
+		selectionSettings.validateSettings(settings);
 		dateFromSettings.validateSettings(settings);
 		limitSettings.validateSettings(settings);
 		offsetSettings.validateSettings(settings);
@@ -323,6 +292,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 		prioritySettings.validateSettings(settings);
 		versionSettings.validateSettings(settings);
 		bugsPerTaskSettings.validateSettings(settings);
+	    selectionSettings.validateSettings(settings);
 
 		SettingsModelString url = urlSettings.createCloneWithValidatedValue(settings);
 		if (!isNullOrEmpty(url.getStringValue()) && !url.getStringValue().matches(URL_PATTERN)) {
@@ -360,6 +330,10 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 	static SettingsModelString createProductSettings() {
 		return new SettingsModelString(BUGZILLA_PRODUCT, DEFAULT_STRING_VALUE);
 	}
+
+    static SettingsModelString createSettingsSelection() {
+        return new SettingsModelString(BUGZILLA_SELECTION, DEFAULT_STRING_VALUE);
+    }
 
 	static SettingsModelDate createDateSettings() {
 		return new SettingsModelDate(BUGZILLA_DATE);
