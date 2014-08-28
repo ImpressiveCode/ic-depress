@@ -21,12 +21,14 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapterNodeModel.DEFAULT_COMBOBOX_ANY_VALUE;
 
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -64,6 +66,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     public static final String REPORTER_LABEL = "Reporter:";
     public static final String PRIORITY_LABEL = "Priority:";
     public static final String VERSION_LABEL = "Version:";
+    public static final String CONNECTING = "Connecting...";
 
     private DialogComponentOptionalString limit;
     private DialogComponentOptionalString offset;
@@ -198,22 +201,27 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
         @Override
         public void actionPerformed(ActionEvent event) {
             checkProjectsButton.getModel().setEnabled(false);
-
-            BugzillaOnlineClientAdapter adapter = null;
-            try {
-                adapter = new BugzillaOnlineClientAdapter(((SettingsModelString) (url.getModel())).getStringValue());
-            } catch (MalformedURLException e1) {
-                e1.printStackTrace();
-            }
-            List<String> projects = null;
-            try {
-                projects = adapter.listProjects();
-            } catch (XmlRpcException e) {
-                e.printStackTrace();
-            }
-
-            projectSelection.replaceListItems(projects, null);
+            checkProjectsButton.setText(CONNECTING);
+            getPanel().paintImmediately(getPanel().getVisibleRect());
+            getPanel().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            updateProjectsList();
+            getPanel().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            checkProjectsButton.setText(CHECK_PROJECTS_BUTTON);
             checkProjectsButton.getModel().setEnabled(true);
+        }
+    }
+
+    private void updateProjectsList() {
+        try {
+            BugzillaOnlineClientAdapter adapter = new BugzillaOnlineClientAdapter(
+                    ((SettingsModelString) (url.getModel())).getStringValue());
+            String login = ((SettingsModelString) loginComponent.getModel()).getStringValue();
+            String password = ((SettingsModelString) passwordComponent.getModel()).getStringValue();
+            adapter.setCredentials(login, password);
+            List<String> projects = adapter.listProjects();
+            projectSelection.replaceListItems(projects, null);
+        } catch (MalformedURLException | XmlRpcException e) {
+            Logger.getLogger("Error").severe(e.getMessage());
         }
     }
 

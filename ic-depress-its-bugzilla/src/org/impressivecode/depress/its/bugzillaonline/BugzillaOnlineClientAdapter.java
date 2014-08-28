@@ -35,6 +35,8 @@ import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser
 import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.SUMMARY;
 import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.UPDATED;
 import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.VERSION;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.ACTUAL_TIME;
+import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineParser.ESTIMATED_TIME;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -63,7 +65,6 @@ public class BugzillaOnlineClientAdapter {
 
     public static final String VERSION_SEPARATOR = "\\.";
     public static final String BUGZILLA_VERSION_METHOD = "Bugzilla.version";
-    public static final String USER_LOGIN_METHOD = "User.login";
     public static final String BUG_SEARCH_METHOD = "Bug.search";
     public static final String PRODUCT_SEARCH_METHOD = "Product.get_accessible_products";
     public static final String PRODUCT_GET_METHOD = "Product.get";
@@ -75,11 +76,11 @@ public class BugzillaOnlineClientAdapter {
     public static final String OFFSET = "offset";
     public static final String PRODUCT_NAME = "product";
     public static final String PASSWORD = "password";
-    public static final String LOGIN = "login";
     public static final String BUGS = "bugs";
     public static final String IDS = "ids";
     public static final String PRODUCTS = "products";
     public static final String INCLUDE_FIELDS = "include_fields";
+    public static final String NAME = "name";
 
     private static final int TASK_STEPS_COUNT = 4;
 
@@ -135,6 +136,7 @@ public class BugzillaOnlineClientAdapter {
         Object[] ids = searchProjects(new HashMap<String, Object>());
         Map<String, Object> info = new HashMap<String, Object>();
         info.put(IDS, ids);
+        info.put(INCLUDE_FIELDS, new String[] { NAME });
 
         Object[] products = getProjects(info);
 
@@ -142,7 +144,7 @@ public class BugzillaOnlineClientAdapter {
         for (Object object : products) {
             @SuppressWarnings("unchecked")
             Map<String, Object> map = (Map<String, Object>) object;
-            projects.add((String) map.get("name"));
+            projects.add((String) map.get(NAME));
         }
         return projects;
     }
@@ -266,7 +268,6 @@ public class BugzillaOnlineClientAdapter {
         if (isFilterProvided(filter.getVersion())) {
             parameters.put(VERSION, filter.getVersion());
         }
-
         return parameters;
     }
 
@@ -295,7 +296,7 @@ public class BugzillaOnlineClientAdapter {
         Map<String, Object> parameters = prepareBugsIdsParameters(ids);
         if (bugzillaInstanceSupportFieldsInclusionInGet()) {
             parameters.put(INCLUDE_FIELDS, new String[] { ID, CREATED, UPDATED, STATUS, ASSIGNEE, FIX_VERSION, VERSION,
-                    REPORTER, PRIORITY, SUMMARY, LINK, RESOLUTION });
+                    REPORTER, PRIORITY, SUMMARY, LINK, RESOLUTION, ACTUAL_TIME, ESTIMATED_TIME });
         }
         return parameters;
     }
@@ -308,14 +309,6 @@ public class BugzillaOnlineClientAdapter {
         Map<String, Object> parameters = newHashMap();
         parameters.put(IDS, ids);
         return parameters;
-    }
-
-    public void login(String username, String password) throws XmlRpcException {
-        Map<String, Object> params = newHashMap();
-        params.put(LOGIN, username);
-        params.put(PASSWORD, password);
-
-        bugzillaClient.execute(USER_LOGIN_METHOD, params);
     }
 
     private class Task implements Callable<List<ITSDataType>> {
@@ -341,6 +334,10 @@ public class BugzillaOnlineClientAdapter {
             return parser.parseEntries(bugs, histories, comments);
         }
 
+    }
+
+    public void setCredentials(final String login, final String password) {
+        bugzillaClient.setAuthentificator(login, password);
     }
 
 }

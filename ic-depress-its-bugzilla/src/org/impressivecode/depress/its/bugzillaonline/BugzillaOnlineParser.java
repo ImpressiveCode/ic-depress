@@ -64,7 +64,9 @@ public class BugzillaOnlineParser {
     public static final String WHEN = "when";
     public static final String CHANGES = "changes";
     public static final String HISTORY = "history";
-    private static final String AUTHOR = "author";
+    public static final String AUTHOR = "author";
+    public static final String ESTIMATED_TIME = "estimated_time";
+    public static final String ACTUAL_TIME = "actual_time";
 
     public List<ITSDataType> parseEntries(final Object[] bugs, final Object[] histories,
             final Map<String, Object> comments) {
@@ -99,6 +101,8 @@ public class BugzillaOnlineParser {
         entry.setResolution(getResolution(details));
         entry.setReporter(getReporter(details));
         entry.setAssignees(getAssignee(details));
+        entry.setTimeEstimate(getTimeEstimate(details));
+        entry.setTimeSpent(getTimeSpent(details));
 
         return entry;
     }
@@ -161,6 +165,14 @@ public class BugzillaOnlineParser {
 
     private HashSet<String> getAssignee(Map<String, Object> details) {
         return newHashSet(details.get(ASSIGNEE).toString());
+    }
+
+    private Integer getTimeEstimate(Map<String, Object> details) {
+        return details.containsKey(ESTIMATED_TIME) ? (int) (((double) details.get(ESTIMATED_TIME)) * 60) : null;
+    }
+
+    private Integer getTimeSpent(Map<String, Object> details) {
+        return details.containsKey(ACTUAL_TIME) ? (int) (((double) details.get(ACTUAL_TIME)) * 60) : null;
     }
 
     @SuppressWarnings("unchecked")

@@ -98,7 +98,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     private final SettingsModelString selectionSettings = createSettingsSelection();
     private final SettingsModelInteger bugsPerTaskSettings = createBugsPerTaskSettings();
 
-    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
     protected BugzillaOnlineAdapterNodeModel() {
@@ -113,7 +112,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
         if (isUsernameProvided(getUsername())) {
             LOGGER.info("Logging to bugzilla as: " + getUsername());
-            clientAdapter.login(getUsername(), getPassword());
+            clientAdapter.setCredentials(getUsername(), getPassword());
         }
 
         LOGGER.info("Reading entries from bugzilla instance: " + getURL() + " and product: " + getProductName());
@@ -159,6 +158,9 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     }
 
     private String getProductName() {
+        if (selectionSettings.getStringValue() == "") {
+            throw new IllegalArgumentException("You have to chose a project.");
+        }
         return selectionSettings.getStringValue();
     }
 
@@ -299,11 +301,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         SettingsModelString url = urlSettings.createCloneWithValidatedValue(settings);
         if (!isNullOrEmpty(url.getStringValue()) && !url.getStringValue().matches(URL_PATTERN)) {
             throw new InvalidSettingsException("Invalid URL address. Valid example: 'https://website.com'");
-        }
-
-        SettingsModelString username = usernameSettings.createCloneWithValidatedValue(settings);
-        if (!isNullOrEmpty(username.getStringValue()) && !username.getStringValue().matches(EMAIL_PATTERN)) {
-            throw new InvalidSettingsException("Invalid username");
         }
     }
 

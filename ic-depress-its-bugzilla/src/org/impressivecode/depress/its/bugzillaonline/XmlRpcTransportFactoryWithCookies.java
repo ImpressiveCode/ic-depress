@@ -63,9 +63,7 @@ public class XmlRpcTransportFactoryWithCookies extends XmlRpcSunHttpTransportFac
     private class XmlRpcTransportWithCookies extends XmlRpcSunHttpTransport {
 
         private static final String RESPONSE_COOKIE_HEADER = "Set-Cookie";
-
         private static final String REQUEST_COOKIE_HEADER = "Cookie";
-
         private static final String REQUEST_COOKIE_DELIMITER = "; ";
 
         private URLConnection connection;
