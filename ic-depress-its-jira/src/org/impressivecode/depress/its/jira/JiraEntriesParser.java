@@ -20,6 +20,7 @@ package org.impressivecode.depress.its.jira;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -33,6 +34,12 @@ import java.util.TimeZone;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSPriority;
@@ -110,7 +117,29 @@ public class JiraEntriesParser {
         data.setReporter(getReporter(elem));
         data.setAssignees(getAssinees(elem));
         data.setCommentAuthors(getCommentAuthors(elem));
+        data.setTimeEstimate(getTimeEstimate(elem));
+        data.setTimeSpent(getTimeSpent(elem));
         return data;
+    }
+
+    private Integer getTimeSpent(final Element elem) {
+        NodeList nodeList = elem.getElementsByTagName("timespent");
+        if (null == nodeList.item(0)) {
+            return null;
+        }
+        String stringTime = nodeList.item(0).getAttributes().getNamedItem("seconds").getTextContent();
+        Integer time = Integer.valueOf(stringTime) / 60;
+        return time;
+    }
+
+    private Integer getTimeEstimate(final Element elem) {
+        NodeList nodeList = elem.getElementsByTagName("timeoriginalestimate");
+        if (null == nodeList.item(0)) {
+            return null;
+        }
+        String stringTime = nodeList.item(0).getAttributes().getNamedItem("seconds").getTextContent();
+        int time = Integer.valueOf(stringTime) / 60;
+        return time;
     }
 
     private Set<String> getCommentAuthors(final Element elem) {
@@ -125,7 +154,7 @@ public class JiraEntriesParser {
 
     private Set<String> getAssinees(final Element elem) {
         NodeList nodeList = elem.getElementsByTagName("assignee");
-        Preconditions.checkArgument(nodeList.getLength() == 1, "Reporter has to be set");
+        Preconditions.checkArgument(nodeList.getLength() == 1, "Assignee has to be set");
         String username = nodeList.item(0).getAttributes().getNamedItem("username").getTextContent();
         if ("-1".equals(username)) {
             return Collections.emptySet();
@@ -238,12 +267,25 @@ public class JiraEntriesParser {
         int size = nodeList.getLength();
         List<String> values = Lists.newLinkedList();
         for (int i = 0; i < size; i++) {
-            String value = nodeList.item(i).getFirstChild().getNodeValue().trim();
+            String value = nodeToString(nodeList.item(i)).replaceAll("\\<.*?>","");
             values.add(value);
         }
         return values;
     }
 
+    private static String nodeToString(Node node) {
+        StringWriter sw = new StringWriter();
+        try {
+          Transformer t = TransformerFactory.newInstance().newTransformer();
+          t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+          t.setOutputProperty(OutputKeys.INDENT, "yes");
+          t.transform(new DOMSource(node), new StreamResult(sw));
+        } catch (TransformerException te) {
+          System.out.println("nodeToString Transformer Exception");
+        }
+        return sw.toString();
+      }
+    
     private String getKey(final Element elem) {
         return extractValue(elem, "key");
     }
@@ -253,10 +295,9 @@ public class JiraEntriesParser {
         if (nodeList.getLength() == 0) {
             return null;
         }
-        Node firstChild = elem.getElementsByTagName(tagName).item(0).getFirstChild();
-        return firstChild == null ? null : firstChild.getNodeValue().trim();
+        String value = nodeToString(nodeList.item(0)).replaceAll("\\<.*?>","");
+        return value == null ? null : value;
     }
-
     private Date parseDate(final String nodeValue) throws ParseException {
         // Mon, 16 Feb 2004 00:29:19 +0000
         // FIXME majchmar: fix time parsing, timezone

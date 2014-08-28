@@ -29,11 +29,12 @@ import org.impressivecode.depress.its.ITSFilter;
  * 
  * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public class JiraOnlineAdapterUriBuilder {
 
-    public static final int ISSUES_PER_BATCH = 100;
+    public static final int ISSUES_PER_BATCH = 50;
     public static final String JIRA_DATE_FORMAT = "yyyy-MM-dd";
 
     private static final String SIMPLE_URI_PATH = "{protocol}://{hostname}/";
@@ -46,6 +47,7 @@ public class JiraOnlineAdapterUriBuilder {
     private static final String PRIORITY_LIST_PARAM = "priority";
     private static final String RESOLUTION_LIST_PARAM = "resolution";
     private static final String TYPE_LIST_PARAM = "issuetype";
+    private static final String PROJECT_LIST_PARAM = "project";
     private static final String QUERY_PARAM = "jql";
     private static final String FIELDS_PARAM = "fields";
     private static final String EXPAND_PARAM = "expand";
@@ -56,6 +58,8 @@ public class JiraOnlineAdapterUriBuilder {
     private Mode mode = Mode.MULTIPLE_ISSUES;
     private int startingIndex = 0;
     private String issueKey;
+    private String projectName;
+
     private String hostname;
     private String jql;
     private String protocol;
@@ -90,7 +94,6 @@ public class JiraOnlineAdapterUriBuilder {
     }
 
     public URI build() {
-
         if (isTest) {
             return testHost();
         }
@@ -108,6 +111,8 @@ public class JiraOnlineAdapterUriBuilder {
             return buildStateListURI();
         case TYPE_LIST:
             return buildTypeListURI();
+        case PROJECT_LIST:
+            return buildProjectListURI();
         default:
             throw new RuntimeException("This should never happen. URI builder failed");
         }
@@ -118,6 +123,11 @@ public class JiraOnlineAdapterUriBuilder {
 
         if (jql != null) {
             jqlBuilder.append(jql);
+            jqlBuilder.append(CONJUNCTION);
+        }
+
+        if (projectName != null) {
+            jqlBuilder.append("project = \"" + projectName + "\"");
             jqlBuilder.append(CONJUNCTION);
         }
 
@@ -141,23 +151,21 @@ public class JiraOnlineAdapterUriBuilder {
         // @formatter:off
         URI result = UriBuilder.fromPath(QUERY_URI_PATH)
                 .resolveTemplate("protocol", protocol)
-                .resolveTemplate("hostname", hostname)
+                .resolveTemplateFromEncoded("hostname", hostname)
                 .queryParam(FIELDS_PARAM, "*all")
                 .queryParam(START_AT, startingIndex)
                 .queryParam(MAX_RESULTS, ISSUES_PER_BATCH)
                 .queryParam(QUERY_PARAM, uriJQL)
                 .build();
         // @formatter:on
-
         return result;
     }
 
     private URI buildIssueHistoryURI() {
-
         // @formatter:off
         URI result = UriBuilder.fromPath(ISSUE_HISTORY_URI_PATH)
                 .resolveTemplate("protocol", protocol)
-                .resolveTemplate("hostname", hostname)
+                .resolveTemplateFromEncoded("hostname", hostname)
                 .resolveTemplate("issueKey", issueKey)
                 .queryParam(FIELDS_PARAM, "changelog")
                 .queryParam(EXPAND_PARAM, "changelog")
@@ -168,11 +176,10 @@ public class JiraOnlineAdapterUriBuilder {
     }
 
     private URI buildListURI(String jiraCommand) {
-
         // @formatter:off
         URI result = UriBuilder.fromPath(BASIC_URI_PATH)
                 .resolveTemplate("protocol", protocol)
-                .resolveTemplate("hostname", hostname)
+                .resolveTemplateFromEncoded("hostname", hostname)
                 .resolveTemplate("command", jiraCommand)
                 .build();
         // @formatter:on
@@ -194,6 +201,10 @@ public class JiraOnlineAdapterUriBuilder {
 
     private URI buildPriorityListURI() {
         return buildListURI(PRIORITY_LIST_PARAM);
+    }
+
+    private URI buildProjectListURI() {
+        return buildListURI(PROJECT_LIST_PARAM);
     }
 
     public URI testHost() {
@@ -248,6 +259,14 @@ public class JiraOnlineAdapterUriBuilder {
         this.issueKey = issueKey;
     }
 
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
     public void setMode(Mode mode) {
         this.mode = mode;
     }
@@ -257,6 +276,6 @@ public class JiraOnlineAdapterUriBuilder {
     }
 
     public enum Mode {
-        SINGLE_ISSUE_WITH_HISTORY, MULTIPLE_ISSUES, STATE_LIST, PRIORITY_LIST, RESOLUTION_LIST, TYPE_LIST;
+        SINGLE_ISSUE_WITH_HISTORY, MULTIPLE_ISSUES, STATE_LIST, PRIORITY_LIST, RESOLUTION_LIST, TYPE_LIST, PROJECT_LIST;
     }
 }

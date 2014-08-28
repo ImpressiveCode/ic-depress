@@ -24,14 +24,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * custom field list item.
  * 
  * @author Krzysztof Kwoka, Wroc³aw University of Technology
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JiraOnlineFilterListItem {
-
     private String name;
-    private String description;
 
     public String getName() {
         return name;
@@ -39,14 +38,6 @@ public class JiraOnlineFilterListItem {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
 }

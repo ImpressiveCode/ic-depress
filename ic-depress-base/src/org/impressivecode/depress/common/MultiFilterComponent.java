@@ -75,7 +75,7 @@ public class MultiFilterComponent {
      * @param SettingsModelMultiFilter
      *            model used by this component
      * @param refreshCall
-     *            function called after every Refresh button click, intended for
+     *            function called after every enabled click, intended for
      *            loading input Strings
      */
     public MultiFilterComponent(final SettingsModelMultiFilter model, final Callable<List<String>> refreshCall) {
@@ -100,13 +100,16 @@ public class MultiFilterComponent {
         panel.add(north, BorderLayout.NORTH);
         panel.add(filterPanel, BorderLayout.CENTER);
     }
+    
+    public SettingsModelMultiFilter getModel() {
+        return model;
+    }
 
     public JPanel getPanel() {
         return panel;
     }
 
     public void setEnabled(final boolean enabled) {
-        radioButton.getModel().setEnabled(enabled);
         filterPanel.setEnabled(enabled);
     }
 

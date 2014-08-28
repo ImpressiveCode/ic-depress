@@ -21,14 +21,16 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapterNodeModel.DEFAULT_COMBOBOX_ANY_VALUE;
 
 import java.awt.Component;
-import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import org.apache.xmlrpc.XmlRpcException;
 import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.ITSPriority;
@@ -39,42 +41,30 @@ import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentOptionalString;
-import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
-import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
 
 /**
- * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author MichaÅ‚ Negacz, WrocÅ‚aw University of Technology
  * @author Piotr WrÃ³blewski, WrocÅ‚aw University of Technology
  * @author Bartosz Skuza, WrocÅ‚aw University of Technology
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
-
     public static final String UNKNOWN_ENUM_NAME = "UNKNOWN";
-
     public static final String BUGS_PER_TASK_LABEL = "Bugs per thread:";
-
     public static final String DATE_FROM_LABEL = "Date from:";
-
     public static final String ASSIGNED_TO_LABEL = "Assigned to:";
-
     public static final String LIMIT_LABEL = "Limit:";
-
     public static final String OFFSET_LABEL = "Offset:";
-
     public static final String REPORTER_LABEL = "Reporter:";
-
     public static final String PRIORITY_LABEL = "Priority:";
-
     public static final String VERSION_LABEL = "Version:";
 
-    private DialogComponentString projectName;
     private DialogComponentOptionalString limit;
     private DialogComponentOptionalString offset;
     private DialogComponentDate date;
@@ -95,21 +85,10 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     @Override
-    protected ActionListener getButtonConnectionCheckListener() {
-        return null;
-    }
-
-    @Override
     protected Component createConnectionTab() {
         JPanel panel = (JPanel) super.createConnectionTab();
-        panel.add(createProjectChooser());
         return panel;
     }
-
-    protected Component createProjectChooser() {
-        projectName = new DialogComponentString(createProjectSettings(), PROJECT_LABEL, true, COMPONENT_WIDTH);
-        return projectName.getComponentPanel();
-    };
 
     @Override
     protected SettingsModelString createLoginSettings() {
@@ -193,11 +172,6 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     @Override
-    protected SettingsModelInteger createThreadsCountSettings() {
-        return BugzillaOnlineAdapterNodeModel.createThreadsCountSettings();
-    }
-
-    @Override
     protected Component createAdvancedTab() {
         JPanel panel = (JPanel) super.createAdvancedTab();
         panel.add(createAndAddBugsPerTaskComponent());
@@ -211,8 +185,32 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     @Override
+    protected SettingsModelString createSelectionSettings() {
+        return BugzillaOnlineAdapterNodeModel.createSettingsSelection();
+    }
+
+    @Override
+    protected SettingsModelBoolean createCheckAllProjectsSettings() {
+        return BugzillaOnlineAdapterNodeModel.createSettingsCheckAllProjects();
+    }
+
+    @Override
+    protected void updateProjectsList() {
+        try {
+            BugzillaOnlineClientAdapter adapter = new BugzillaOnlineClientAdapter(
+                    ((SettingsModelString) (url.getModel())).getStringValue());
+            String login = ((SettingsModelString) loginComponent.getModel()).getStringValue();
+            String password = ((SettingsModelString) passwordComponent.getModel()).getStringValue();
+            adapter.setCredentials(login, password);
+            List<String> projects = adapter.listProjects();
+            projectSelection.replaceListItems(projects, null);
+        } catch (MalformedURLException | XmlRpcException e) {
+            Logger.getLogger("Error").severe(e.getMessage());
+        }
+    }
+
+    @Override
     protected void saveSpecificSettingsTo(NodeSettingsWO settings) throws InvalidSettingsException {
-        projectName.saveSettingsTo(settings);
         limit.saveSettingsTo(settings);
         offset.saveSettingsTo(settings);
         date.saveSettingsTo(settings);
@@ -226,8 +224,6 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     @Override
     protected void loadSpecificSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs)
             throws NotConfigurableException {
-
-        projectName.loadSettingsFrom(settings, specs);
         limit.loadSettingsFrom(settings, specs);
         offset.loadSettingsFrom(settings, specs);
         date.loadSettingsFrom(settings, specs);
@@ -248,4 +244,5 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     protected Collection<ITSFilter> getFilters() {
         return new ArrayList<>();
     }
+
 }

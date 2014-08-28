@@ -122,7 +122,7 @@ public class Cells {
 
     public static DataCell dateTimeCell(final Date date) {
         Calendar calendar = GregorianCalendar.getInstance();
-        //FIXME: check if time zone assumption is correct
+        // FIXME: check if time zone assumption is correct
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+0"));
         calendar.setTime(date);
         return new DateAndTimeCell(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),

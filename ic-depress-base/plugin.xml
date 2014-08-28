@@ -47,6 +47,12 @@
              name="Data"
              path="depress/">
        </category>
+       <category
+             description="Experimental"
+             level-id="depress.experimental"
+             name="Experimental"
+             path="depress/">
+       </category>
    </extension>
     
 </plugin>

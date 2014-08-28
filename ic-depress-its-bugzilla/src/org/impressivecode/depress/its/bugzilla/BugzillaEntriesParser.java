@@ -121,7 +121,21 @@ public class BugzillaEntriesParser {
         data.setReporter(getReporter(elem));
         data.setAssignees(getAssinees(elem));
         data.setCommentAuthors(getCommentAuthors(elem));
+        data.setTimeEstimate(getTimeEstimate(elem));
+        data.setTimeSpent(getTimeSpent(elem));
         return data;
+    }
+
+    private Integer getTimeSpent(final Element elem) {
+        String stringTime = extractValue(elem, "actual_time");
+        Integer time = (int) (Double.valueOf(stringTime) * 60);
+        return time;
+    }
+
+    private Integer getTimeEstimate(final Element elem) {
+        String stringTime = extractValue(elem, "estimated_time");
+        Integer time = (int) (Double.valueOf(stringTime) * 60);
+        return time;
     }
 
     private Set<String> getCommentAuthors(final Element elem) {
