@@ -87,16 +87,18 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private static final String JIRA_SELECTION = "depress.its.jiraonline.selection";
     private static final String JIRA_STATUS = "depress.its.jiraonline.status";
     private static final String JIRA_HISTORY = "depress.its.jiraonline.history";
+    private static final String JIRA_ALL_PROJECTS = "depress.its.jiraonline.allprojects";
     private static final String FILTERS_SETTING = "depress.its.jiraonline.filters";
-    
+
     private final SettingsModelString jiraSettingsURL = createSettingsURL();
     private final SettingsModelString jiraSettingsLogin = createSettingsLogin();
     private final SettingsModelString jiraSettingsPass = createSettingsPass();
     private final SettingsModelString jiraSettingsJQL = createSettingsJQL();
     private final SettingsModelString jiraSettingsSelection = createSettingsSelection();
     private final SettingsModelBoolean jiraSettingsHistory = createSettingsHistory();
+    private final SettingsModelBoolean jiraSettingsAllProjects = createSettingsCheckAllProjects();
     private final SettingsModelStringArray jiraSettingsFilter = createSettingsFilters();
-    
+
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraOnlineAdapterNodeModel.class);
 
     private JiraOnlineAdapterUriBuilder builder;
@@ -134,6 +136,13 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         prepareProgressMonitors();
 
         builder = prepareBuilder();
+        
+        if(!jiraSettingsAllProjects.getBooleanValue()) {
+            builder.setProjectName(jiraSettingsSelection.getStringValue());
+        } else {
+            builder.setProjectName(null);
+        }
+        
         client = new JiraOnlineAdapterRsClient();
         executorService = Executors.newFixedThreadPool(getThreadCount());
 
@@ -175,7 +184,8 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     private int getIssuesCount() throws Exception {
         String rawData = null;
-        rawData = client.getJSON(builder.build(), jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
+        rawData = client
+                .getJSON(builder.build(), jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
         return JiraOnlineAdapterParser.getTotalIssuesCount(rawData);
     }
 
@@ -333,6 +343,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsSelection.saveSettingsTo(settings);
         jiraSettingsHistory.saveSettingsTo(settings);
         jiraSettingsFilter.saveSettingsTo(settings);
+        jiraSettingsAllProjects.saveSettingsTo(settings);
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
@@ -362,6 +373,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsSelection.loadSettingsFrom(settings);
         jiraSettingsHistory.loadSettingsFrom(settings);
         jiraSettingsFilter.loadSettingsFrom(settings);
+        jiraSettingsAllProjects.loadSettingsFrom(settings);
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
@@ -390,7 +402,8 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.validateSettings(settings);
         jiraSettingsSelection.validateSettings(settings);
         jiraSettingsHistory.validateSettings(settings);
-        jiraSettingsFilter.loadSettingsFrom(settings);
+        jiraSettingsFilter.validateSettings(settings);
+        jiraSettingsAllProjects.validateSettings(settings);
 
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
@@ -450,7 +463,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     static SettingsModelString createSettingsDateFilterStatusChooser() {
         return new SettingsModelString(JIRA_STATUS, DEFAULT_VALUE);
     }
-    
+
     static SettingsModelString createSettingsSelection() {
         return new SettingsModelString(JIRA_SELECTION, DEFAULT_VALUE);
     }
@@ -461,6 +474,10 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     static SettingsModelStringArray createSettingsFilters() {
         return new SettingsModelStringArray(FILTERS_SETTING, new String[] {});
+    }
+
+    static SettingsModelBoolean createSettingsCheckAllProjects() {
+        return new SettingsModelBoolean(JIRA_ALL_PROJECTS, true);
     }
 
     private static List<ITSFilter> createFilters() {
@@ -518,7 +535,8 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         public List<JiraOnlineIssueChangeRowItem> call() throws Exception {
             checkForCancel();
 
-            String rawIssue = client.getJSON(uri, jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
+            String rawIssue = client
+                    .getJSON(uri, jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
 
             markProgressForHistory();
             checkForCancel();

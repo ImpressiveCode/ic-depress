@@ -58,6 +58,8 @@ public class JiraOnlineAdapterUriBuilder {
     private Mode mode = Mode.MULTIPLE_ISSUES;
     private int startingIndex = 0;
     private String issueKey;
+    private String projectName;
+
     private String hostname;
     private String jql;
     private String protocol;
@@ -92,7 +94,6 @@ public class JiraOnlineAdapterUriBuilder {
     }
 
     public URI build() {
-
         if (isTest) {
             return testHost();
         }
@@ -125,6 +126,11 @@ public class JiraOnlineAdapterUriBuilder {
             jqlBuilder.append(CONJUNCTION);
         }
 
+        if (projectName != null) {
+            jqlBuilder.append("project = \"" + projectName + "\"");
+            jqlBuilder.append(CONJUNCTION);
+        }
+
         if (filters != null) {
             for (ITSFilter filter : filters) {
                 String filterJQL = filter.getFilterValue();
@@ -138,7 +144,6 @@ public class JiraOnlineAdapterUriBuilder {
         String uriJQL = null;
         if (jqlBuilder.toString().endsWith(CONJUNCTION)) {
             uriJQL = jqlBuilder.substring(0, jqlBuilder.length() - 5);
-            System.out.println(uriJQL);
         } else {
             uriJQL = jqlBuilder.toString();
         }
@@ -155,9 +160,8 @@ public class JiraOnlineAdapterUriBuilder {
         // @formatter:on
         return result;
     }
-    
-    private URI buildIssueHistoryURI() {
 
+    private URI buildIssueHistoryURI() {
         // @formatter:off
         URI result = UriBuilder.fromPath(ISSUE_HISTORY_URI_PATH)
                 .resolveTemplate("protocol", protocol)
@@ -170,9 +174,8 @@ public class JiraOnlineAdapterUriBuilder {
 
         return result;
     }
-    
-    private URI buildListURI(String jiraCommand) {
 
+    private URI buildListURI(String jiraCommand) {
         // @formatter:off
         URI result = UriBuilder.fromPath(BASIC_URI_PATH)
                 .resolveTemplate("protocol", protocol)
@@ -199,7 +202,7 @@ public class JiraOnlineAdapterUriBuilder {
     private URI buildPriorityListURI() {
         return buildListURI(PRIORITY_LIST_PARAM);
     }
-    
+
     private URI buildProjectListURI() {
         return buildListURI(PROJECT_LIST_PARAM);
     }
@@ -254,6 +257,14 @@ public class JiraOnlineAdapterUriBuilder {
 
     public void setIssueKey(String issueKey) {
         this.issueKey = issueKey;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     public void setMode(Mode mode) {
