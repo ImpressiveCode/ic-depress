@@ -115,16 +115,23 @@ public class BugzillaOnlineClientAdapter {
 
     public List<ITSDataType> listEntries(BugzillaOnlineOptions options) throws XmlRpcException,
             CanceledExecutionException, InterruptedException, ExecutionException {
-        checkNotNull(options.getProductName());
         checkNotNull(options.getThreadsCount());
         checkNotNull(options.getBugsPerTask());
-
         checkIfIsCanceledAndMarkProgress(0);
 
         bugzillaVersion = getBugzillaVersion();
 
-        Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options));
-        List<String> bugsIds = parser.extractIds(simpleBugsInformation);
+        List<String> bugsIds = new ArrayList<String>();
+        if (options.getProductName() == null) {
+            for (String name : listProjects()) {
+                options.setProductName(name);
+                Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options));
+                bugsIds.addAll(parser.extractIds(simpleBugsInformation));
+            }
+        } else {
+            Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options));
+            bugsIds = parser.extractIds(simpleBugsInformation);
+        }
 
         List<Callable<List<ITSDataType>>> tasks = partitionTasks(bugsIds, options.getBugsPerTask());
         setProgressStep(tasks.size());
@@ -133,8 +140,8 @@ public class BugzillaOnlineClientAdapter {
     }
 
     public List<String> listProjects() throws XmlRpcException {
-        Object[] ids = searchProjects(new HashMap<String, Object>());
         Map<String, Object> info = new HashMap<String, Object>();
+        Object[] ids = listProjectsIds();
         info.put(IDS, ids);
         info.put(INCLUDE_FIELDS, new String[] { NAME });
 
@@ -147,6 +154,10 @@ public class BugzillaOnlineClientAdapter {
             projects.add((String) map.get(NAME));
         }
         return projects;
+    }
+
+    private Object[] listProjectsIds() throws XmlRpcException {
+        return searchProjects(new HashMap<String, Object>());
     }
 
     private void checkIfIsCanceledAndMarkProgress(double value) throws CanceledExecutionException {

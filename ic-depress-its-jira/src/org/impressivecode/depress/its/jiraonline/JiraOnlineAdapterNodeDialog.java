@@ -18,8 +18,6 @@
 package org.impressivecode.depress.its.jiraonline;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,6 +42,7 @@ import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentMultiLineString;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
@@ -58,7 +57,7 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     private static final String JQL = "JQL:";
     private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
     private static final String MAPPING = "Mapping";
-    
+
     private static final String STATUS = "Status";
     private static final String PRIORITY = "Priority";
     private static final String RESOLUTION = "Resolution";
@@ -68,9 +67,9 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     private DialogComponentBoolean history;
     private DialogComponentMultiLineString jql;
     private JTabbedPane mappingTab;
-    
+
     private JiraOnlineMapperManager mapperManager = new JiraOnlineMapperManager();
-    
+
     public JiraOnlineAdapterNodeDialog() {
         super();
         addTab(MAPPING, createMappersTab());
@@ -101,39 +100,39 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         mappingTab.addTab(STATUS, mapperManager.getMultiFilterStatus().getPanel());
         return mappingTab;
     }
-    
+
     private class RefreshCaller implements Callable<List<String>> {
         private final Mode mode;
-        
+
         RefreshCaller(final Mode mode) {
             this.mode = mode;
         }
+
         @Override
         public List<String> call() throws Exception {
             List<String> list = new ArrayList<>();
             List<JiraOnlineFilterListItem> items = getList(mode, JiraOnlineFilterListItem.class);
-            for(JiraOnlineFilterListItem item : items) {
+            for (JiraOnlineFilterListItem item : items) {
                 list.add(item.getName());
             }
             return list;
         }
     }
-    
+
     private <T> List<T> getList(Mode mode, Class<?> elem) throws Exception {
         JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
         builder.setHostname(hostnameComponent.getStringValue());
         builder.setMode(mode);
         JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient();
         URI uri = builder.build();
-        String login =((SettingsModelString)(loginComponent.getModel())).getStringValue();
-        String password = ((SettingsModelString)(passwordComponent.getModel())).getStringValue();
+        String login = ((SettingsModelString) (loginComponent.getModel())).getStringValue();
+        String password = ((SettingsModelString) (passwordComponent.getModel())).getStringValue();
         String rawData = null;
-        
+
         rawData = client.getJSON(uri, login, password);
         return JiraOnlineAdapterParser.getCustomList(rawData, elem);
     }
-    
-    
+
     @Override
     protected SettingsModelString createURLSettings() {
         hostnameComponent = JiraOnlineAdapterNodeModel.createSettingsURL();
@@ -146,37 +145,25 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     @Override
-    protected ActionListener getButtonConnectionCheckListener() {
-        return new CheckConnectionButtonListener();
-    }
-
-    @Override
     protected void addLargestFilter(JPanel panel) {
         for (DialogComponent component : new JiraOnlineFilterCreationDate().getDialogComponents()) {
             panel.add(component.getComponentPanel());
         }
     }
 
-    class CheckConnectionButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            checkProjectsButton.getModel().setEnabled(false);
-
-            ArrayList<String> projects = new ArrayList<String>();
-            List<JiraOnlineProjectListItem> list;
-            try {
-                list = getList(Mode.PROJECT_LIST, JiraOnlineProjectListItem.class);
-                projectSelection.getModel().setEnabled(true);
-                for(JiraOnlineProjectListItem item : list) {
-                    projects.add(item.getName());
-                }
-            } catch (Exception e) {
-                Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
-                projects.add("error");
+    @Override
+    protected void updateProjectsList() {
+        ArrayList<String> projects = new ArrayList<String>();
+        List<JiraOnlineProjectListItem> list;
+        try {
+            list = getList(Mode.PROJECT_LIST, JiraOnlineProjectListItem.class);
+            projectSelection.getModel().setEnabled(true);
+            for (JiraOnlineProjectListItem item : list) {
+                projects.add(item.getName());
             }
-            
             projectSelection.replaceListItems(projects, null);
-            checkProjectsButton.getModel().setEnabled(true);
+        } catch (Exception e) {
+            Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
         }
     }
 
@@ -199,10 +186,15 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     protected Collection<ITSFilter> getFilters() {
         return JiraOnlineAdapterNodeModel.getFilters();
     }
-    
+
     @Override
     protected SettingsModelString createSelectionSettings() {
         return JiraOnlineAdapterNodeModel.createSettingsSelection();
+    }
+
+    @Override
+    protected SettingsModelBoolean createCheckAllProjectsSettings() {
+        return JiraOnlineAdapterNodeModel.createSettingsCheckAllProjects();
     }
 
     @Override
@@ -223,7 +215,5 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         history.saveSettingsTo(settings);
         jql.saveSettingsTo(settings);
     }
-
-
 
 }

@@ -18,12 +18,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.its;
 
 import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeDialogPane;
@@ -31,11 +35,13 @@ import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
+import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentButton;
 import org.knime.core.node.defaultnodesettings.DialogComponentColumnFilter;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
@@ -60,10 +66,12 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     public static final String PASSWORD_LABEL = "Password:";
     public static final String LOGIN_LABEL = "Login:";
     public static final String CHECK_PROJECTS_BUTTON = "Check projects";
+    public static final String CONNECTING = "Connecting...";
     public static final String CHECK_PROJECTS_INIT_LABEL = "After the check you should be able to choose available projects from the project list.";
     public static final String CHECK_PROJECTS_SUCCESS_LABEL = "Projects list updated.";
     public static final String CHECK_PROJECTS_FAILURE_LABEL = "Connection failed.";
     public static final String PROJECTS_SELECTION_LABEL = "Projects:";
+    public static final String ALL_PROJECTS = "All projects";
     public static final int COMPONENT_WIDTH = 32;
     public static final int LOGIN_WIDTH = 16;
     public static final int PASSWORD_WIDTH = 16;
@@ -74,6 +82,7 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     protected DialogComponentString url;
     protected DialogComponentButton checkProjectsButton;
     protected DialogComponentStringSelection projectSelection;
+    protected DialogComponentBoolean checkAllProjects;
     /**
      * Login components
      */
@@ -113,36 +122,62 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         return panel;
     }
 
+    private Component createCheckAllProjectsComponent() {
+        checkAllProjects = new DialogComponentBoolean(createCheckAllProjectsSettings(), ALL_PROJECTS);
+        checkAllProjects.getModel().addChangeListener(new ChangeListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void stateChanged(ChangeEvent event) {
+                boolean value = ((SettingsModelBoolean) event.getSource()).getBooleanValue();
+                checkProjectsButton.setEnabled(!value);
+                projectSelection.setEnabled(!value);
+                getPanel().paintImmediately(getPanel().getVisibleRect());
+            }
+        });
+        return checkAllProjects.getComponentPanel();
+    }
+
     protected Component createHostnameComponent() {
         url = new DialogComponentString(createURLSettings(), URL_LABEL, true, COMPONENT_WIDTH);
         return url.getComponentPanel();
     }
 
-    protected abstract SettingsModelString createURLSettings();
-
-    protected abstract SettingsModelString createProjectSettings();
-
-    protected abstract SettingsModelString createSelectionSettings();
-
+    @SuppressWarnings("deprecation")
     protected Component createCheckProjectsButton() {
         checkProjectsButton = new DialogComponentButton(CHECK_PROJECTS_BUTTON);
-        checkProjectsButton.addActionListener(getButtonConnectionCheckListener());
+        checkProjectsButton.addActionListener(new CheckConnectionButtonListener() {});
+        checkProjectsButton.setEnabled(false);
         return checkProjectsButton.getComponentPanel();
     }
 
+    @SuppressWarnings("deprecation")
     protected Component createComponentStringSelection() {
         ArrayList<String> projects = new ArrayList<String>();
         projects.add("");
         projectSelection = new DialogComponentStringSelection(createSelectionSettings(), PROJECTS_SELECTION_LABEL,
                 projects, false);
-        projectSelection.getModel().setEnabled(false);
+        projectSelection.setEnabled(false);
         return projectSelection.getComponentPanel();
     }
 
-    protected abstract ActionListener getButtonConnectionCheckListener();
+    class CheckConnectionButtonListener implements ActionListener {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            checkProjectsButton.setEnabled(false);
+            checkProjectsButton.setText(CONNECTING);
+            getPanel().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            getPanel().paintImmediately(getPanel().getVisibleRect());
+            updateProjectsList();
+            getPanel().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            checkProjectsButton.setText(CHECK_PROJECTS_BUTTON);
+            checkProjectsButton.setEnabled(true);
+        }
+    }
 
     protected Component createProjectSelection() {
         JPanel panel = new JPanel();
+        panel.add(createCheckAllProjectsComponent());
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(createCheckProjectsButton());
         panel.add(createComponentStringSelection());
@@ -160,14 +195,6 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         return passwordComponent.getComponentPanel();
     }
 
-    protected abstract SettingsModelString createLoginSettings();
-
-    protected abstract SettingsModelString createPasswordSettings();
-
-    protected abstract SettingsModelStringArray createFilterSettings();
-
-    protected abstract Collection<ITSFilter> getFilters();
-
     protected Component createFiltersTab() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -179,7 +206,6 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     }
 
     protected Component createAvailableFiltersComponent() {
-
         filterSelection = new ITSFiltersDialogComponent(getFilters(), createFilterSettings());
         filterSelection.addListItemSelectionListener(new ITSFiltersDialogComponent.ListItemSelectedListener() {
 
@@ -240,6 +266,7 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         loginComponent.loadSettingsFrom(settings, specs);
         passwordComponent.loadSettingsFrom(settings, specs);
         projectSelection.loadSettingsFrom(settings, specs);
+        checkAllProjects.loadSettingsFrom(settings, specs);
 
         if (filterSelection != null) {
             filterSelection.loadSettingsFrom(settings, specs);
@@ -254,15 +281,13 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         loadSpecificSettingsFrom(settings, specs);
     }
 
-    protected abstract void loadSpecificSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs)
-            throws NotConfigurableException;
-
     @Override
     protected void saveSettingsTo(NodeSettingsWO settings) throws InvalidSettingsException {
         url.saveSettingsTo(settings);
         loginComponent.saveSettingsTo(settings);
         passwordComponent.saveSettingsTo(settings);
         projectSelection.saveSettingsTo(settings);
+        checkAllProjects.saveSettingsTo(settings);
 
         if (filterSelection != null) {
             filterSelection.saveSettingsTo(settings);
@@ -280,6 +305,29 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
 
         saveSpecificSettingsTo(settings);
     }
+    
+
+    protected abstract void updateProjectsList();
+
+    protected abstract SettingsModelBoolean createCheckAllProjectsSettings();
+
+    protected abstract SettingsModelString createURLSettings();
+
+    protected abstract SettingsModelString createProjectSettings();
+
+    protected abstract SettingsModelString createSelectionSettings();
+
+    protected abstract SettingsModelString createLoginSettings();
+
+    protected abstract SettingsModelString createPasswordSettings();
+
+    protected abstract SettingsModelStringArray createFilterSettings();
+
+    protected abstract Collection<ITSFilter> getFilters();
+
+    protected abstract void loadSpecificSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs)
+            throws NotConfigurableException;
 
     protected abstract void saveSpecificSettingsTo(NodeSettingsWO settings) throws InvalidSettingsException;
+
 }
