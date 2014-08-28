@@ -17,13 +17,13 @@
  */
 package org.impressivecode.depress.its.jiraonline;
 
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
 import java.net.URI;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
-
-import org.glassfish.jersey.client.filter.HttpBasicAuthFilter;
 
 /**
  * @author Marcin Kunert, Wroclaw University of Technology
@@ -38,28 +38,20 @@ public class JiraOnlineAdapterRsClient {
         createClient();
     }
     
-    public void registerCredentials(String username, String password) {
-        client.register(new HttpBasicAuthFilter(username, password));
-    }
-
-    public String getJSONUnauthorized(URI uri) throws Exception {
-        Response response = getReponse(uri);
-        isDataFetchSuccessful(response);
-        return reponseToString(response);
+    public void registerCredentials(final String username, final String password) {
+        Authenticator.setDefault(new Authenticator() {
+            @Override
+            public PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password.toCharArray());
+            }
+        });
     }
 
     public String getJSON(URI uri, String username, String password) throws Exception {
-        //FIXME get rid of eclipse login window
-        String rawData = null;
-        try {
-            registerCredentials(username, password);
-            rawData = getJSONUnauthorized(uri);
-        } catch (SecurityException se) {
-                client.close();
-                createClient();
-                rawData = getJSONUnauthorized(uri);
-        }
-        return rawData;
+        registerCredentials(username, password);
+        Response response = getReponse(uri);
+        isDataFetchSuccessful(response);
+        return reponseToString(response);
     }
     
     public boolean testConnection(URI uri) throws Exception {

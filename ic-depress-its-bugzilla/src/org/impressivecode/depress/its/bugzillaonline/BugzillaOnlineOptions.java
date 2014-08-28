@@ -27,114 +27,114 @@ import java.util.Date;
  */
 public class BugzillaOnlineOptions {
 
-	private String productName;
+    private String productName;
 
-	private Date dateFrom;
-	
-	private String assignedTo;
-	
-	private String reporter;
-	
-	private String quickSearch;
-	
-	private String priority;
+    private Date dateFrom;
 
-	private Integer limit;
+    private String assignedTo;
 
-	private Integer offset;
-	
-	private Integer threadsCount;
+    private String reporter;
 
-	private Integer bugsPerTask;
-	
-	private String version;
+    private String quickSearch;
 
-	public String getProductName() {
-		return productName;
-	}
+    private String priority;
 
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
+    private Integer limit;
 
-	public Date getDateFrom() {
-		return dateFrom;
-	}
+    private Integer offset;
 
-	public void setDateFrom(Date dateFrom) {
-		this.dateFrom = dateFrom;
-	}
+    private Integer threadsCount;
 
-	public String getAssignedTo() {
-		return assignedTo;
-	}
+    private Integer bugsPerTask;
 
-	public void setAssignedTo(String assignedTo) {
-		this.assignedTo = assignedTo;
-	}
+    private String version;
 
-	public String getReporter() {
-		return reporter;
-	}
+    public String getProductName() {
+        return productName;
+    }
 
-	public void setReporter(String reporter) {
-		this.reporter = reporter;
-	}
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
-	public String getQuickSearch() {
-		return quickSearch;
-	}
+    public Date getDateFrom() {
+        return dateFrom;
+    }
 
-	public void setQuickSearch(String quickSearch) {
-		this.quickSearch = quickSearch;
-	}
+    public void setDateFrom(Date dateFrom) {
+        this.dateFrom = dateFrom;
+    }
 
-	public String getPriority() {
-		return priority;
-	}
+    public String getAssignedTo() {
+        return assignedTo;
+    }
 
-	public void setPriority(String priority) {
-		this.priority = priority;
-	}
+    public void setAssignedTo(String assignedTo) {
+        this.assignedTo = assignedTo;
+    }
 
-	public Integer getLimit() {
-		return limit;
-	}
+    public String getReporter() {
+        return reporter;
+    }
 
-	public void setLimit(Integer limit) {
-		this.limit = limit;
-	}
+    public void setReporter(String reporter) {
+        this.reporter = reporter;
+    }
 
-	public Integer getOffset() {
-		return offset;
-	}
+    public String getQuickSearch() {
+        return quickSearch;
+    }
 
-	public void setOffset(Integer offset) {
-		this.offset = offset;
-	}
+    public void setQuickSearch(String quickSearch) {
+        this.quickSearch = quickSearch;
+    }
 
-	public Integer getThreadsCount() {
-		return threadsCount;
-	}
+    public String getPriority() {
+        return priority;
+    }
 
-	public void setThreadsCount(Integer threadsCount) {
-		this.threadsCount = threadsCount;
-	}
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
 
-	public Integer getBugsPerTask() {
-		return bugsPerTask;
-	}
+    public Integer getLimit() {
+        return limit;
+    }
 
-	public void setBugsPerTask(Integer bugsPerTask) {
-		this.bugsPerTask = bugsPerTask;
-	}
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public Integer getOffset() {
+        return offset;
+    }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
-	
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+
+    public Integer getThreadsCount() {
+        return threadsCount;
+    }
+
+    public void setThreadsCount(Integer threadsCount) {
+        this.threadsCount = threadsCount;
+    }
+
+    public Integer getBugsPerTask() {
+        return bugsPerTask;
+    }
+
+    public void setBugsPerTask(Integer bugsPerTask) {
+        this.bugsPerTask = bugsPerTask;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
 }

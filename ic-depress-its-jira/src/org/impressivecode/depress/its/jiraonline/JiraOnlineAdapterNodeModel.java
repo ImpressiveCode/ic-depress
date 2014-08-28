@@ -96,7 +96,6 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private final SettingsModelString jiraSettingsSelection = createSettingsSelection();
     private final SettingsModelBoolean jiraSettingsHistory = createSettingsHistory();
     private final SettingsModelStringArray jiraSettingsFilter = createSettingsFilters();
-    private boolean authorized;
     
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraOnlineAdapterNodeModel.class);
 
@@ -176,16 +175,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
 
     private int getIssuesCount() throws Exception {
         String rawData = null;
-        try {
-            authorized = true;
-            client.registerCredentials(jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
-            rawData = client.getJSONUnauthorized(builder.build());
-        } catch (SecurityException se) {
-                authorized = false;
-                client.getClient().close();
-                client = new JiraOnlineAdapterRsClient();
-                rawData = client.getJSONUnauthorized(builder.build());
-        }
+        rawData = client.getJSON(builder.build(), jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
         return JiraOnlineAdapterParser.getTotalIssuesCount(rawData);
     }
 
@@ -501,12 +491,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         @Override
         public List<ITSDataType> call() throws Exception {
             checkForCancel();
-            String rawData = null;
-            if(authorized) {
-                rawData = client.getJSON(uri, jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
-            } else {
-                rawData = client.getJSONUnauthorized(uri);
-            }
+            String rawData = client.getJSON(uri, jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
             String hostname = builder.getHostname();
 
             markProgressForIssue();
@@ -533,12 +518,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         public List<JiraOnlineIssueChangeRowItem> call() throws Exception {
             checkForCancel();
 
-            String rawIssue = null;
-            if(authorized) {
-                rawIssue = client.getJSON(uri, jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
-            } else {
-                rawIssue = client.getJSONUnauthorized(uri);
-            }
+            String rawIssue = client.getJSON(uri, jiraSettingsLogin.getStringValue(), jiraSettingsPass.getStringValue());
 
             markProgressForHistory();
             checkForCancel();
