@@ -136,13 +136,13 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         prepareProgressMonitors();
 
         builder = prepareBuilder();
-        
-        if(!jiraSettingsAllProjects.getBooleanValue()) {
+
+        if (!jiraSettingsAllProjects.getBooleanValue()) {
             builder.setProjectName(jiraSettingsSelection.getStringValue());
         } else {
             builder.setProjectName(null);
         }
-        
+
         client = new JiraOnlineAdapterRsClient();
         executorService = Executors.newFixedThreadPool(getThreadCount());
 
@@ -344,23 +344,13 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsHistory.saveSettingsTo(settings);
         jiraSettingsFilter.saveSettingsTo(settings);
         jiraSettingsAllProjects.saveSettingsTo(settings);
-
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
-                try {
-                    component.getModel().saveSettingsTo(settings);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
+                component.getModel().saveSettingsTo(settings);
             }
         }
-
         for (SettingsModelMultiFilter model : mapperManager.getModels()) {
-            try {
-                model.saveSettingsTo(settings);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            model.saveSettingsTo(settings);
         }
     }
 
@@ -374,23 +364,13 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsHistory.loadSettingsFrom(settings);
         jiraSettingsFilter.loadSettingsFrom(settings);
         jiraSettingsAllProjects.loadSettingsFrom(settings);
-
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
-                try {
-                    component.getModel().loadSettingsFrom(settings);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
+                component.getModel().loadSettingsFrom(settings);
             }
         }
-
         for (SettingsModelMultiFilter model : mapperManager.getModels()) {
-            try {
-                model.loadSettingsFrom(settings);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            model.loadSettingsFrom(settings);
         }
     }
 
@@ -404,23 +384,13 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsHistory.validateSettings(settings);
         jiraSettingsFilter.validateSettings(settings);
         jiraSettingsAllProjects.validateSettings(settings);
-
         for (ITSFilter filter : getFilters()) {
             for (DialogComponent component : filter.getDialogComponents()) {
-                try {
-                    component.getModel().validateSettings(settings);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
+                component.getModel().validateSettings(settings);
             }
         }
-
         for (SettingsModelMultiFilter model : mapperManager.getModels()) {
-            try {
-                model.validateSettings(settings);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            model.validateSettings(settings);
         }
     }
 
