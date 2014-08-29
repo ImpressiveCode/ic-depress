@@ -20,31 +20,27 @@ package org.impressivecode.depress.its.jiraonline;
 import java.awt.Component;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.impressivecode.depress.common.MultiFilterComponent;
-import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
-import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterCreationDate;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineProjectListItem;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.NotConfigurableException;
-import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentMultiLineString;
 import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
-import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
 
 /**
@@ -56,7 +52,6 @@ import org.knime.core.node.port.PortObjectSpec;
 public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     private static final String JQL = "JQL:";
     private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
-    private static final String MAPPING = "Mapping";
 
     private static final String STATUS = "Status";
     private static final String PRIORITY = "Priority";
@@ -66,29 +61,24 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     private SettingsModelString hostnameComponent;
     private DialogComponentBoolean history;
     private DialogComponentMultiLineString jql;
-    private JTabbedPane mappingTab;
-
-    private JiraOnlineMapperManager mapperManager = new JiraOnlineMapperManager();
-
-    public JiraOnlineAdapterNodeDialog() {
-        super();
-        addTab(MAPPING, createMappersTab());
-    }
+    private JiraOnlineMapperManager mapperManager;
 
     @Override
     protected Component createAdvancedTab() {
-        JPanel panel = (JPanel) super.createAdvancedTab();
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         history = new DialogComponentBoolean(JiraOnlineAdapterNodeModel.createSettingsHistory(), DOWNLOAD_HISTORY);
         jql = new DialogComponentMultiLineString(JiraOnlineAdapterNodeModel.createSettingsJQL(), JQL, false, 50, 10);
 
         panel.add(history.getComponentPanel());
         panel.add(jql.getComponentPanel());
-
         return panel;
     }
 
-    private Component createMappersTab() {
-        mappingTab = new JTabbedPane();
+    @Override
+    protected Component createMappingTab() {
+        JTabbedPane mappingTab = new JTabbedPane();
+        mapperManager = new JiraOnlineMapperManager();
         mapperManager.createFilterPriority(new RefreshCaller(Mode.PRIORITY_LIST));
         mapperManager.createFilterType(new RefreshCaller(Mode.TYPE_LIST));
         mapperManager.createFilterResolution(new RefreshCaller(Mode.RESOLUTION_LIST));
@@ -134,24 +124,6 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     @Override
-    protected SettingsModelString createURLSettings() {
-        hostnameComponent = JiraOnlineAdapterNodeModel.createSettingsURL();
-        return hostnameComponent;
-    }
-
-    @Override
-    protected SettingsModelString createProjectSettings() {
-        return new SettingsModelString("createProjectSettings", "");
-    }
-
-    @Override
-    protected void addLargestFilter(JPanel panel) {
-        for (DialogComponent component : new JiraOnlineFilterCreationDate().getDialogComponents()) {
-            panel.add(component.getComponentPanel());
-        }
-    }
-
-    @Override
     protected void updateProjectsList() {
         ArrayList<String> projects = new ArrayList<String>();
         List<JiraOnlineProjectListItem> list;
@@ -168,6 +140,17 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     @Override
+    protected SettingsModelString createURLSettings() {
+        hostnameComponent = JiraOnlineAdapterNodeModel.createSettingsURL();
+        return hostnameComponent;
+    }
+
+    @Override
+    protected SettingsModelString createProjectSettings() {
+        return new SettingsModelString("createProjectSettings", "");
+    }
+
+    @Override
     protected SettingsModelString createLoginSettings() {
         return JiraOnlineAdapterNodeModel.createSettingsLogin();
     }
@@ -175,16 +158,6 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     @Override
     protected SettingsModelString createPasswordSettings() {
         return JiraOnlineAdapterNodeModel.createSettingsPass();
-    }
-
-    @Override
-    protected SettingsModelStringArray createFilterSettings() {
-        return JiraOnlineAdapterNodeModel.createSettingsFilters();
-    }
-
-    @Override
-    protected Collection<ITSFilter> getFilters() {
-        return JiraOnlineAdapterNodeModel.getFilters();
     }
 
     @Override

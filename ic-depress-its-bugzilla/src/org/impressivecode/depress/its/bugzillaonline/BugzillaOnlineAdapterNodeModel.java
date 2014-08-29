@@ -49,7 +49,6 @@ import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
-import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelOptionalString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
@@ -81,8 +80,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     private static final String BUGZILLA_VERSION = "depress.its.bugzillaonline.version";
     private static final String BUGZILLA_PRIORITY = "depress.its.bugzillaonline.priority";
     private static final String BUGZILLA_SELECTION = "depress.its.bugzillaonline.selection";
-    private static final String BUGZILLA_THREADS_COUNT = "depress.its.bugzillaonline.threadsCount";
-    private static final String BUGZILLA_BUGS_PER_TASK = "depress.its.bugzillaonline.bugsPerTask";
     private static final String BUGZILLA_ALL_PROJECTS = "depress.its.bugzillaonline.allprojects";
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
@@ -98,7 +95,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     private final SettingsModelOptionalString versionSettings = createVersionSettings();
     private final SettingsModelString prioritySettings = createPrioritySettings();
     private final SettingsModelString selectionSettings = createSettingsSelection();
-    private final SettingsModelInteger bugsPerTaskSettings = createBugsPerTaskSettings();
     private final SettingsModelBoolean allProjectsSettings = createSettingsCheckAllProjects();
 
     private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
@@ -223,7 +219,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     }
 
     private Integer getBugsPerTask() {
-        return bugsPerTaskSettings.getIntValue();
+        return DEFAULT_BUGS_PER_TASK_VALUE;
     }
 
     private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
@@ -264,7 +260,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         reporterSettings.saveSettingsTo(settings);
         versionSettings.saveSettingsTo(settings);
         prioritySettings.saveSettingsTo(settings);
-        bugsPerTaskSettings.saveSettingsTo(settings);
         selectionSettings.saveSettingsTo(settings);
         allProjectsSettings.saveSettingsTo(settings);
     }
@@ -282,7 +277,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         reporterSettings.loadSettingsFrom(settings);
         versionSettings.loadSettingsFrom(settings);
         prioritySettings.loadSettingsFrom(settings);
-        bugsPerTaskSettings.loadSettingsFrom(settings);
         selectionSettings.loadSettingsFrom(settings);
         allProjectsSettings.loadSettingsFrom(settings);
     }
@@ -300,7 +294,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         reporterSettings.validateSettings(settings);
         prioritySettings.validateSettings(settings);
         versionSettings.validateSettings(settings);
-        bugsPerTaskSettings.validateSettings(settings);
         selectionSettings.validateSettings(settings);
         allProjectsSettings.validateSettings(settings);
 
@@ -370,20 +363,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         return new SettingsModelString(BUGZILLA_PRIORITY, DEFAULT_COMBOBOX_ANY_VALUE);
     }
 
-    static SettingsModelInteger createThreadsCountSettings() {
-        return new SettingsModelInteger(BUGZILLA_THREADS_COUNT, getOptimalThreadsCount());
-    }
-
-    static SettingsModelInteger createBugsPerTaskSettings() {
-        return new SettingsModelInteger(BUGZILLA_BUGS_PER_TASK, DEFAULT_BUGS_PER_TASK_VALUE);
-    }
-
     static SettingsModelBoolean createSettingsCheckAllProjects() {
         return new SettingsModelBoolean(BUGZILLA_ALL_PROJECTS, true);
-    }
-
-    static private int getOptimalThreadsCount() {
-        return Runtime.getRuntime().availableProcessors() + 1;
     }
 
 }

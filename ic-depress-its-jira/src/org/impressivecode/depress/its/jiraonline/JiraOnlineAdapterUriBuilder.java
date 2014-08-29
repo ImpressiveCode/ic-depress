@@ -18,12 +18,8 @@
 package org.impressivecode.depress.its.jiraonline;
 
 import java.net.URI;
-import java.util.Collection;
 
 import javax.ws.rs.core.UriBuilder;
-
-import org.impressivecode.depress.its.ITSFilter;
-
 /**
  * Builder for JIRA REST API
  * 
@@ -33,7 +29,6 @@ import org.impressivecode.depress.its.ITSFilter;
  * 
  */
 public class JiraOnlineAdapterUriBuilder {
-
     public static final int ISSUES_PER_BATCH = 50;
     public static final String JIRA_DATE_FORMAT = "yyyy-MM-dd";
 
@@ -63,7 +58,6 @@ public class JiraOnlineAdapterUriBuilder {
     private String hostname;
     private String jql;
     private String protocol;
-    private Collection<ITSFilter> filters;
     private boolean isTest;
 
     public JiraOnlineAdapterUriBuilder setHostname(String hostname) {
@@ -75,11 +69,6 @@ public class JiraOnlineAdapterUriBuilder {
 
     public JiraOnlineAdapterUriBuilder setJQL(String jql) {
         this.jql = jql;
-        return this;
-    }
-
-    public JiraOnlineAdapterUriBuilder setFilters(Collection<ITSFilter> filters) {
-        this.filters = filters;
         return this;
     }
 
@@ -129,16 +118,6 @@ public class JiraOnlineAdapterUriBuilder {
         if (projectName != null) {
             jqlBuilder.append("project = \"" + projectName + "\"");
             jqlBuilder.append(CONJUNCTION);
-        }
-
-        if (filters != null) {
-            for (ITSFilter filter : filters) {
-                String filterJQL = filter.getFilterValue();
-                if (filterJQL != null && !filterJQL.isEmpty()) {
-                    jqlBuilder.append(filterJQL);
-                    jqlBuilder.append(CONJUNCTION);
-                }
-            }
         }
 
         String uriJQL = null;

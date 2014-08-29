@@ -22,7 +22,6 @@ import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapte
 
 import java.awt.Component;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
@@ -31,7 +30,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import org.apache.xmlrpc.XmlRpcException;
-import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.ITSPriority;
 import org.knime.core.node.InvalidSettingsException;
@@ -39,12 +37,10 @@ import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
-import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentOptionalString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
 import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
-import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
 
 /**
@@ -56,7 +52,6 @@ import org.knime.core.node.port.PortObjectSpec;
  */
 public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     public static final String UNKNOWN_ENUM_NAME = "UNKNOWN";
-    public static final String BUGS_PER_TASK_LABEL = "Bugs per thread:";
     public static final String DATE_FROM_LABEL = "Date from:";
     public static final String ASSIGNED_TO_LABEL = "Assigned to:";
     public static final String LIMIT_LABEL = "Limit:";
@@ -72,36 +67,9 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     private DialogComponentOptionalString reporter;
     private DialogComponentOptionalString version;
     private DialogComponentStringSelection priority;
-    private DialogComponentNumberEdit bugsPerTask;
 
     @Override
-    protected SettingsModelString createURLSettings() {
-        return BugzillaOnlineAdapterNodeModel.createURLSettings();
-    }
-
-    @Override
-    protected SettingsModelString createProjectSettings() {
-        return BugzillaOnlineAdapterNodeModel.createProductSettings();
-    }
-
-    @Override
-    protected Component createConnectionTab() {
-        JPanel panel = (JPanel) super.createConnectionTab();
-        return panel;
-    }
-
-    @Override
-    protected SettingsModelString createLoginSettings() {
-        return BugzillaOnlineAdapterNodeModel.createUsernameSettings();
-    }
-
-    @Override
-    protected SettingsModelString createPasswordSettings() {
-        return BugzillaOnlineAdapterNodeModel.createPasswordSettings();
-    }
-
-    @Override
-    protected Component createFiltersTab() {
+    protected Component createAdvancedTab() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -112,8 +80,12 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
         panel.add(createAndAddReporterFilter());
         panel.add(createAndAddVersionFilter());
         panel.add(createAndAddPriorityFilter());
-
         return panel;
+    }
+
+    @Override
+    protected Component createMappingTab() {
+        return new JPanel();
     }
 
     private Component createAndAddLimitFilter() {
@@ -172,29 +144,6 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     @Override
-    protected Component createAdvancedTab() {
-        JPanel panel = (JPanel) super.createAdvancedTab();
-        panel.add(createAndAddBugsPerTaskComponent());
-        return panel;
-    }
-
-    private Component createAndAddBugsPerTaskComponent() {
-        bugsPerTask = new DialogComponentNumberEdit(BugzillaOnlineAdapterNodeModel.createBugsPerTaskSettings(),
-                BUGS_PER_TASK_LABEL, COMPONENT_WIDTH);
-        return bugsPerTask.getComponentPanel();
-    }
-
-    @Override
-    protected SettingsModelString createSelectionSettings() {
-        return BugzillaOnlineAdapterNodeModel.createSettingsSelection();
-    }
-
-    @Override
-    protected SettingsModelBoolean createCheckAllProjectsSettings() {
-        return BugzillaOnlineAdapterNodeModel.createSettingsCheckAllProjects();
-    }
-
-    @Override
     protected void updateProjectsList() {
         try {
             BugzillaOnlineClientAdapter adapter = new BugzillaOnlineClientAdapter(
@@ -208,6 +157,36 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
             Logger.getLogger("Error").severe(e.getMessage());
         }
     }
+    
+    @Override
+    protected SettingsModelString createSelectionSettings() {
+        return BugzillaOnlineAdapterNodeModel.createSettingsSelection();
+    }
+
+    @Override
+    protected SettingsModelBoolean createCheckAllProjectsSettings() {
+        return BugzillaOnlineAdapterNodeModel.createSettingsCheckAllProjects();
+    }
+    
+    @Override
+    protected SettingsModelString createURLSettings() {
+        return BugzillaOnlineAdapterNodeModel.createURLSettings();
+    }
+
+    @Override
+    protected SettingsModelString createProjectSettings() {
+        return BugzillaOnlineAdapterNodeModel.createProductSettings();
+    }
+
+    @Override
+    protected SettingsModelString createLoginSettings() {
+        return BugzillaOnlineAdapterNodeModel.createUsernameSettings();
+    }
+
+    @Override
+    protected SettingsModelString createPasswordSettings() {
+        return BugzillaOnlineAdapterNodeModel.createPasswordSettings();
+    }
 
     @Override
     protected void saveSpecificSettingsTo(NodeSettingsWO settings) throws InvalidSettingsException {
@@ -218,7 +197,6 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
         reporter.saveSettingsTo(settings);
         version.saveSettingsTo(settings);
         priority.saveSettingsTo(settings);
-        bugsPerTask.saveSettingsTo(settings);
     }
 
     @Override
@@ -231,18 +209,6 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
         reporter.loadSettingsFrom(settings, specs);
         version.loadSettingsFrom(settings, specs);
         priority.loadSettingsFrom(settings, specs);
-        bugsPerTask.loadSettingsFrom(settings, specs);
-    }
-
-    @Override
-    protected SettingsModelStringArray createFilterSettings() {
-        // NOOP
-        return new SettingsModelStringArray("noop", new String[] {});
-    }
-
-    @Override
-    protected Collection<ITSFilter> getFilters() {
-        return new ArrayList<>();
     }
 
 }
