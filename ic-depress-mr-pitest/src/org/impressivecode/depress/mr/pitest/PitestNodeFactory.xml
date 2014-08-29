@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <knimeNode icon="./pitest.png" type="Source" xmlns="http://knime.org/node/v2.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://knime.org/node/v2.8 http://knime.org/node/v2.8.xsd">
-    <name>Pitest (Offline)</name>
+    <name>Pitest</name>
     
     <shortDescription>
         Pitest Metric Adapter, ImpressiveCode DePress Plugin Framework.
@@ -18,7 +18,8 @@
         
         </p>
         
-                    <p>
+                    <p>   Please check workflow examples
+                <a href="http://impressivecode.github.io/ic-depress/update">here</a>.
              Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
             </p>
 		</intro>

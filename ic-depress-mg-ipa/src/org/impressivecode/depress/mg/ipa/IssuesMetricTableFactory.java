@@ -20,9 +20,6 @@ package org.impressivecode.depress.mg.ipa;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.impressivecode.depress.common.Cells.integerCell;
 import static org.impressivecode.depress.common.Cells.stringListOrMissingCell;
-import static org.impressivecode.depress.common.Cells.integerOrMissingCell;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSDataType;
