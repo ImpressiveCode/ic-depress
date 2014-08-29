@@ -42,7 +42,7 @@ public class IssuesMetricMetricProcessor {
     public IssuesMetricMetricProcessor(final List<ITSDataType> issues, final List<MarkerDataType> changes) {
         this.issues = convert2Map(checkNotNull(issues, "Issues has to be set"));
         this.changes = checkNotNull(changes, "Changes has to be set");
-        this.metricResult = Maps.newHashMapWithExpectedSize(1500);
+        this.metricResult = Maps.newHashMap();
     }
 
     public List<IssuesMetricType> computeMetric() {
@@ -60,7 +60,7 @@ public class IssuesMetricMetricProcessor {
     private void updateNoI(final MarkerDataType markers, final IssuesMetricType noi) {
         for (String marker : markers.getAllMarkers()) {
             if (issues.containsKey(marker)) {
-                noi.getIssues().add(issues.get(marker));
+                noi.getIssues().add(issues.get(marker.toString()));
             }
         }
     }
@@ -78,9 +78,9 @@ public class IssuesMetricMetricProcessor {
     }
 
     private static Map<String, ITSDataType> convert2Map(final List<ITSDataType> listOfIssues) {
-        Map<String, ITSDataType> issuesMap = Maps.newHashMapWithExpectedSize(250);
+        Map<String, ITSDataType> issuesMap = Maps.newHashMap();//WithExpectedSize(250);
         for (ITSDataType its : listOfIssues) {
-            issuesMap.put(its.getIssueId(), its);
+            issuesMap.put(its.getIssueId().trim(), its);
         }
 
         return issuesMap;
