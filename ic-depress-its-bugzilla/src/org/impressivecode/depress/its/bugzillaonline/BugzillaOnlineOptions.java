@@ -20,33 +20,20 @@ package org.impressivecode.depress.its.bugzillaonline;
 import java.util.Date;
 
 /**
- * 
  * @author Michał Negacz, Wrocław University of Technology
  * @author Piotr Wróblewski, Wrocław University of Technology
- * 
  */
 public class BugzillaOnlineOptions {
-
     private String productName;
-
     private Date dateFrom;
-
     private String assignedTo;
-
     private String reporter;
-
     private String quickSearch;
-
     private String priority;
-
     private Integer limit;
-
     private Integer offset;
-
     private Integer threadsCount;
-
     private Integer bugsPerTask;
-
     private String version;
 
     public String getProductName() {

@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSPriority;
@@ -37,14 +38,11 @@ import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChanges;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueHistory;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueVersion;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssuesList;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineProjectListItem;
 
 import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 /**
  * Parser from Jira JSON answer to {@link ITSDataType}
@@ -55,7 +53,6 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
  * 
  */
 public class JiraOnlineAdapterParser {
-
     private static final String LINK_PATH = "browse/";
     private static final String UNKNOWN_NAME = "unknown";
     private final HashMap<String, String[]> priorityMap;
@@ -82,19 +79,14 @@ public class JiraOnlineAdapterParser {
             jp = jsonFactory.createJsonParser(source);
             issueList = objectMapper.readValue(jp, new TypeReference<JiraOnlineIssuesList>() {
             });
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (UnrecognizedPropertyException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger("Error").severe(e.getMessage());
         }
 
         return parseData(issueList, hostname);
     }
 
     public static List<JiraOnlineIssueChangeRowItem> parseSingleIssue(final String json) {
-
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
         JsonParser jp = null;
@@ -104,19 +96,14 @@ public class JiraOnlineAdapterParser {
             jp = jsonFactory.createJsonParser(json);
             issue = objectMapper.readValue(jp, new TypeReference<JiraOnlineIssueHistory>() {
             });
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (UnrecognizedPropertyException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger("Error").severe(e.getMessage());
         }
 
         return parseIssueHistory(issue);
     }
 
     public static int getTotalIssuesCount(String source) {
-
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
         JsonParser jp = null;
@@ -126,19 +113,14 @@ public class JiraOnlineAdapterParser {
             jp = jsonFactory.createJsonParser(source);
             issueList = objectMapper.readValue(jp, new TypeReference<JiraOnlineIssuesList>() {
             });
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (UnrecognizedPropertyException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger("Error").severe(e.getMessage());
         }
 
         return issueList.getTotal();
     }
 
     public static <T> List<T> getCustomList(String source, Class<?> elem) {
-
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
         JsonParser jp = null;
@@ -148,36 +130,10 @@ public class JiraOnlineAdapterParser {
             jp = jsonFactory.createJsonParser(source);
             fieldList = objectMapper.readValue(jp,
                     objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, elem));
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (UnrecognizedPropertyException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger("Error").severe(e.getMessage());
         }
         return fieldList;
-    }
-
-    public static List<JiraOnlineProjectListItem> getProjectList(String source) {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonFactory jsonFactory = new JsonFactory();
-        JsonParser jp = null;
-        List<JiraOnlineProjectListItem> projectList = null;
-
-        try {
-            jp = jsonFactory.createJsonParser(source);
-            projectList = objectMapper.readValue(jp, new TypeReference<List<JiraOnlineProjectListItem>>() {
-            });
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (UnrecognizedPropertyException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return projectList;
     }
 
     private List<ITSDataType> parseData(final JiraOnlineIssuesList issueList, final String hostname) {
@@ -192,10 +148,10 @@ public class JiraOnlineAdapterParser {
 
                 Set<String> assignees = new HashSet<>();
                 if (issue.getFields().getAssignee() != null) {
-                    assignees.add(issue.getFields().getAssignee().getName()); 
+                    assignees.add(issue.getFields().getAssignee().getName());
                 }
                 data.setAssignees(assignees);
-                
+
                 String valueToParse = null == issue.getFields().getPriority() ? null : issue.getFields().getPriority()
                         .getName();
                 data.setPriority(parsePriorityFromMap(valueToParse));
@@ -235,8 +191,8 @@ public class JiraOnlineAdapterParser {
                     }
                 }
                 data.setFixVersion(fixVersions);
-                
-                if(issue.getFields().getReporter() != null) {
+
+                if (issue.getFields().getReporter() != null) {
                     data.setReporter(issue.getFields().getReporter().getName());
                 }
 
@@ -254,14 +210,12 @@ public class JiraOnlineAdapterParser {
 
                 resultList.add(data);
             } catch (Exception e) {
-                System.out.println("Failed to parse issue: " + issue.getKey());
                 System.out.println("Failed to parse issue: " + issue.getLink());
-                e.printStackTrace();
             }
         }
         return resultList;
     }
-
+    
     private ITSResolution parseResolutionFromMap(final String valueToParse) {
         if (valueToParse == null) {
             return ITSResolution.UNKNOWN;

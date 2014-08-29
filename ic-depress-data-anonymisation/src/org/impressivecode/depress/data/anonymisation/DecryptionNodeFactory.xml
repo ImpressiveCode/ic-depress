@@ -16,7 +16,8 @@
             <i>Preferences->Knime->Master Key</i>
             .
                <p>
-             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-data-anonymisation/examples">here</a> or inside plugin jar. 
+               Please check workflow examples
+                <a href="http://impressivecode.github.io/ic-depress/update">here</a>.
              <br/> 
              Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
             </p>

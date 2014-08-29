@@ -20,7 +20,6 @@ package org.impressivecode.depress.mg.ipa;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.impressivecode.depress.common.Cells.integerCell;
 import static org.impressivecode.depress.common.Cells.stringListOrMissingCell;
-
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSDataType;
@@ -67,14 +66,18 @@ public final class IssuesMetricTableFactory {
         return outputSpec;
     }
 
-    public static DataRow createTableRow(final IssuesMetricType noi) {
+    public static DataRow  createTableRow(final IssuesMetricType noi) {
+       
         List<String> ids = transform(noi.getIssues());
+
+        DataRow row;
         DataCell[] cells = { 
                 stringListOrMissingCell(ids), 
                 integerCell(ids.size()),
                 integerCell(newHashSet(ids).size()),
-                integerCell(!ids.isEmpty()) };
-        DataRow row = new DefaultRow(noi.getResourceName(), cells);
+                integerCell(!ids.isEmpty()) 
+                };
+        row = new DefaultRow(noi.getResourceName(), cells);
         return row;
     }
 
