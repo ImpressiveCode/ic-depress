@@ -53,7 +53,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 
  */
 public class JiraOnlineAdapterParser {
-
     private static final String LINK_PATH = "browse/";
     private static final String UNKNOWN_NAME = "unknown";
     private final HashMap<String, String[]> priorityMap;

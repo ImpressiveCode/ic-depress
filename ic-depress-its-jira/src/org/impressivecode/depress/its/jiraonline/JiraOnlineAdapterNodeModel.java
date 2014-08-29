@@ -24,7 +24,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -36,12 +35,7 @@ import org.impressivecode.depress.common.SettingsModelMultiFilter;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
-import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterCreationDate;
-import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterLastUpdateDate;
-import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterProjectName;
-import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterResolvedDate;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
@@ -53,22 +47,17 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
-import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
-import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
-import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
 
 import com.google.common.base.Preconditions;
 
 /**
- * 
  * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
  * @author Dawid Rutowicz, Wroclaw University of Technology
  * @author Maciej Borkowski, Capgemini Poland
- * 
  */
 public class JiraOnlineAdapterNodeModel extends NodeModel {
 
@@ -81,14 +70,10 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private static final String JIRA_URL = "depress.its.jiraonline.url";
     private static final String JIRA_LOGIN = "depress.its.jiraonline.login";
     private static final String JIRA_PASS = "depress.its.jiraonline.password";
-    private static final String JIRA_START_DATE = "depress.its.jiraonline.startDate";
-    private static final String JIRA_END_DATE = "depress.its.jiraonline.endDate";
     private static final String JIRA_JQL = "depress.its.jiraonline.jql";
     private static final String JIRA_SELECTION = "depress.its.jiraonline.selection";
-    private static final String JIRA_STATUS = "depress.its.jiraonline.status";
     private static final String JIRA_HISTORY = "depress.its.jiraonline.history";
     private static final String JIRA_ALL_PROJECTS = "depress.its.jiraonline.allprojects";
-    private static final String FILTERS_SETTING = "depress.its.jiraonline.filters";
 
     private final SettingsModelString jiraSettingsURL = createSettingsURL();
     private final SettingsModelString jiraSettingsLogin = createSettingsLogin();
@@ -97,7 +82,6 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private final SettingsModelString jiraSettingsSelection = createSettingsSelection();
     private final SettingsModelBoolean jiraSettingsHistory = createSettingsHistory();
     private final SettingsModelBoolean jiraSettingsAllProjects = createSettingsCheckAllProjects();
-    private final SettingsModelStringArray jiraSettingsFilter = createSettingsFilters();
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraOnlineAdapterNodeModel.class);
 
@@ -116,7 +100,6 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private int issueTaskStepsCompleted;
     private int historyTaskStepsCompleted;
 
-    private static List<ITSFilter> filters = createFilters();
     private static JiraOnlineMapperManager mapperManager = new JiraOnlineMapperManager();
 
     protected JiraOnlineAdapterNodeModel() {
@@ -291,23 +274,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         if (jiraSettingsJQL.getStringValue() != null && !jiraSettingsJQL.getStringValue().equals("")) {
             builder.setJQL(jiraSettingsJQL.getStringValue());
         }
-
-        builder.setFilters(getEnabledFilters());
-
         return builder;
-    }
-
-    private Collection<ITSFilter> getEnabledFilters() {
-        ArrayList<ITSFilter> enabledFiters = new ArrayList<>();
-        for (ITSFilter filter : getFilters()) {
-            for (String enabledFilterName : jiraSettingsFilter.getStringArrayValue()) {
-                if (enabledFilterName.equals(filter.getFilterModelId())) {
-                    enabledFiters.add(filter);
-                    break;
-                }
-            }
-        }
-        return enabledFiters;
     }
 
     private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
@@ -342,13 +309,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.saveSettingsTo(settings);
         jiraSettingsSelection.saveSettingsTo(settings);
         jiraSettingsHistory.saveSettingsTo(settings);
-        jiraSettingsFilter.saveSettingsTo(settings);
         jiraSettingsAllProjects.saveSettingsTo(settings);
-        for (ITSFilter filter : getFilters()) {
-            for (DialogComponent component : filter.getDialogComponents()) {
-                component.getModel().saveSettingsTo(settings);
-            }
-        }
         for (SettingsModelMultiFilter model : mapperManager.getModels()) {
             model.saveSettingsTo(settings);
         }
@@ -362,13 +323,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.loadSettingsFrom(settings);
         jiraSettingsSelection.loadSettingsFrom(settings);
         jiraSettingsHistory.loadSettingsFrom(settings);
-        jiraSettingsFilter.loadSettingsFrom(settings);
         jiraSettingsAllProjects.loadSettingsFrom(settings);
-        for (ITSFilter filter : getFilters()) {
-            for (DialogComponent component : filter.getDialogComponents()) {
-                component.getModel().loadSettingsFrom(settings);
-            }
-        }
         for (SettingsModelMultiFilter model : mapperManager.getModels()) {
             model.loadSettingsFrom(settings);
         }
@@ -382,13 +337,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsJQL.validateSettings(settings);
         jiraSettingsSelection.validateSettings(settings);
         jiraSettingsHistory.validateSettings(settings);
-        jiraSettingsFilter.validateSettings(settings);
         jiraSettingsAllProjects.validateSettings(settings);
-        for (ITSFilter filter : getFilters()) {
-            for (DialogComponent component : filter.getDialogComponents()) {
-                component.getModel().validateSettings(settings);
-            }
-        }
         for (SettingsModelMultiFilter model : mapperManager.getModels()) {
             model.validateSettings(settings);
         }
@@ -417,21 +366,9 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     static SettingsModelString createSettingsPass() {
         return new SettingsModelString(JIRA_PASS, DEFAULT_VALUE);
     }
-
-    static SettingsModelDate createSettingsDateStart() {
-        return new SettingsModelDate(JIRA_START_DATE);
-    }
-
-    static SettingsModelDate createSettingsDateEnd() {
-        return new SettingsModelDate(JIRA_END_DATE);
-    }
-
+    
     static SettingsModelString createSettingsJQL() {
         return new SettingsModelString(JIRA_JQL, DEFAULT_VALUE);
-    }
-
-    static SettingsModelString createSettingsDateFilterStatusChooser() {
-        return new SettingsModelString(JIRA_STATUS, DEFAULT_VALUE);
     }
 
     static SettingsModelString createSettingsSelection() {
@@ -442,29 +379,12 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         return new SettingsModelBoolean(JIRA_HISTORY, false);
     }
 
-    static SettingsModelStringArray createSettingsFilters() {
-        return new SettingsModelStringArray(FILTERS_SETTING, new String[] {});
-    }
-
     static SettingsModelBoolean createSettingsCheckAllProjects() {
         return new SettingsModelBoolean(JIRA_ALL_PROJECTS, true);
     }
 
-    private static List<ITSFilter> createFilters() {
-        filters = new ArrayList<>();
-        filters.add(new JiraOnlineFilterCreationDate());
-        filters.add(new JiraOnlineFilterProjectName());
-        filters.add(new JiraOnlineFilterLastUpdateDate());
-        filters.add(new JiraOnlineFilterResolvedDate());
-        return filters;
-    }
-
     public static JiraOnlineMapperManager getMapperManager() {
         return mapperManager;
-    }
-
-    public static List<ITSFilter> getFilters() {
-        return filters;
     }
 
     private class DownloadAndParseIssuesTask implements Callable<List<ITSDataType>> {

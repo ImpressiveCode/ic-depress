@@ -17,7 +17,6 @@
  */
 package org.impressivecode.depress.its.jiraonline;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -28,15 +27,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterCreationDate;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
  * Integration test for RESTful Client and JQL filters.<br />
@@ -46,6 +42,7 @@ import org.mockito.Mockito;
  * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
  * @author Dawid Rutowicz, Wroclaw University of Technology
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public class JiraOnlineAdapterRsClientIntegrationTest {
@@ -66,18 +63,9 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
     @Test
     public void shouldDownloadParseAndCheckSpecificIssue() throws Exception {
         // given
-        JiraOnlineFilterCreationDate filter = new JiraOnlineFilterCreationDate();
-        JiraOnlineFilterCreationDate filterSpy = Mockito.spy(filter);
+        String jql = "created > 2012-1-1 and created < 2012-1-2";
 
-        Mockito.when(filterSpy.isFromEnabled()).thenReturn(true);
-        Mockito.when(filterSpy.getFrom()).thenReturn("2012-1-1");
-        Mockito.when(filterSpy.isToEnabled()).thenReturn(true);
-        Mockito.when(filterSpy.getTo()).thenReturn("2012-1-2");
-
-        List<ITSFilter> filters = newArrayList();
-        filters.add(filterSpy);
-
-        springUriBuilder.setFilters(filters);
+        springUriBuilder.setJQL(jql);
 
         HashMap<String, String[]> priority = new HashMap<>();
         priority.put("Major", new String[] { "Major" });
