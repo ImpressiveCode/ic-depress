@@ -81,7 +81,8 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     private static final String BUGZILLA_PRIORITY = "depress.its.bugzillaonline.priority";
     private static final String BUGZILLA_SELECTION = "depress.its.bugzillaonline.selection";
     private static final String BUGZILLA_ALL_PROJECTS = "depress.its.bugzillaonline.allprojects";
-
+    public static final String BUGZILLA_MAPPING = "depress.its.bugzillaonline.mapping";;
+    
     private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
 
     private final SettingsModelString urlSettings = createURLSettings();
@@ -98,6 +99,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     private final SettingsModelBoolean allProjectsSettings = createSettingsCheckAllProjects();
 
     private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+
 
     protected BugzillaOnlineAdapterNodeModel() {
         super(NUMBER_OF_INPUT_PORTS, NUMBER_OF_OUTPUT_PORTS);

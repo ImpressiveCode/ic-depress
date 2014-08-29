@@ -22,14 +22,17 @@ import static org.impressivecode.depress.its.bugzillaonline.BugzillaOnlineAdapte
 
 import java.awt.Component;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import org.apache.xmlrpc.XmlRpcException;
+import org.impressivecode.depress.its.ITSMappingManager;
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.ITSPriority;
 import org.knime.core.node.InvalidSettingsException;
@@ -59,6 +62,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     public static final String REPORTER_LABEL = "Reporter:";
     public static final String PRIORITY_LABEL = "Priority:";
     public static final String VERSION_LABEL = "Version:";
+    public static final String BUG = "Bug";
 
     private DialogComponentOptionalString limit;
     private DialogComponentOptionalString offset;
@@ -82,12 +86,64 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
         panel.add(createAndAddPriorityFilter());
         return panel;
     }
-
+    
     @Override
-    protected Component createMappingTab() {
-        return new JPanel();
+    protected void createMappingManager() {
+        mappingManager = new ITSMappingManager(BugzillaOnlineAdapterNodeModel.BUGZILLA_MAPPING);
+        mappingManager.createFilterPriority(new RefreshCaller(BugzillaOnlineParser.PRIORITY));
+        mappingManager.createFilterType(new RefreshCaller(BUG));
+        mappingManager.createFilterResolution(new RefreshCaller(BugzillaOnlineParser.RESOLUTION));
+        mappingManager.createFilterStatus(new RefreshCaller(BugzillaOnlineParser.STATUS));
+    }
+    
+    private class RefreshCaller implements Callable<List<String>> {
+        private final String property;
+
+        RefreshCaller(final String property) {
+            this.property = property;
+        }
+
+        @Override
+        public List<String> call() throws Exception {
+            List<String> list = new ArrayList<>();
+            if(property.equals(BUG)) {
+                list.add(BUG);
+            } else {
+                
+            }
+            return list;
+        }
     }
 
+    @Override
+    protected void updateProjectsList() {
+        try {
+            BugzillaOnlineClientAdapter adapter = new BugzillaOnlineClientAdapter(
+                    ((SettingsModelString) (url.getModel())).getStringValue());
+            String login = ((SettingsModelString) loginComponent.getModel()).getStringValue();
+            String password = ((SettingsModelString) passwordComponent.getModel()).getStringValue();
+            adapter.setCredentials(login, password);
+            List<String> projects = adapter.listProjects();
+            projectSelection.replaceListItems(projects, null);
+        } catch (MalformedURLException | XmlRpcException e) {
+            Logger.getLogger("Error").severe(e.getMessage());
+        }
+    }
+    
+    private Collection<String> prepareEnumValuesToComboBox(Enum<?>[] enums) {
+        List<String> strings = newArrayList();
+
+        for (Enum<?> value : enums) {
+            if (UNKNOWN_ENUM_NAME.equals(value.name())) {
+                strings.add(DEFAULT_COMBOBOX_ANY_VALUE);
+            } else {
+                strings.add(value.name());
+            }
+        }
+
+        return strings;
+    }
+    
     private Component createAndAddLimitFilter() {
         limit = new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createLimitSettings(), LIMIT_LABEL,
                 COMPONENT_WIDTH);
@@ -127,35 +183,6 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
         priority = new DialogComponentStringSelection(BugzillaOnlineAdapterNodeModel.createPrioritySettings(),
                 PRIORITY_LABEL, prepareEnumValuesToComboBox(ITSPriority.values()));
         return priority.getComponentPanel();
-    }
-
-    private Collection<String> prepareEnumValuesToComboBox(Enum<?>[] enums) {
-        List<String> strings = newArrayList();
-
-        for (Enum<?> value : enums) {
-            if (UNKNOWN_ENUM_NAME.equals(value.name())) {
-                strings.add(DEFAULT_COMBOBOX_ANY_VALUE);
-            } else {
-                strings.add(value.name());
-            }
-        }
-
-        return strings;
-    }
-
-    @Override
-    protected void updateProjectsList() {
-        try {
-            BugzillaOnlineClientAdapter adapter = new BugzillaOnlineClientAdapter(
-                    ((SettingsModelString) (url.getModel())).getStringValue());
-            String login = ((SettingsModelString) loginComponent.getModel()).getStringValue();
-            String password = ((SettingsModelString) passwordComponent.getModel()).getStringValue();
-            adapter.setCredentials(login, password);
-            List<String> projects = adapter.listProjects();
-            projectSelection.replaceListItems(projects, null);
-        } catch (MalformedURLException | XmlRpcException e) {
-            Logger.getLogger("Error").severe(e.getMessage());
-        }
     }
     
     @Override

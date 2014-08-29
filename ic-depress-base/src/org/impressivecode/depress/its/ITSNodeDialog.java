@@ -25,9 +25,11 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.impressivecode.depress.common.MultiFilterComponent;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeSettingsRO;
@@ -55,29 +57,28 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     public static final String ADVANCED_TAB_NAME = "Advanced";
     public static final String MAPPING_TAB_NAME = "Mapping";
     public static final String URL_LABEL = "URL:";
-    public static final String PROJECT_LABEL = "Project:";
     public static final String PASSWORD_LABEL = "Password:";
     public static final String LOGIN_LABEL = "Login:";
     public static final String CHECK_PROJECTS_BUTTON = "Check projects";
     public static final String CONNECTING = "Connecting...";
     public static final String PROJECTS_SELECTION_LABEL = "Projects:";
     public static final String ALL_PROJECTS = "All projects";
+    private static final String STATUS = "Status";
+    private static final String PRIORITY = "Priority";
+    private static final String RESOLUTION = "Resolution";
+    private static final String TYPE = "Type";
     public static final int COMPONENT_WIDTH = 32;
     public static final int LOGIN_WIDTH = 16;
     public static final int PASSWORD_WIDTH = 16;
-
-    /**
-     * Connection components
-     */
+    
     protected DialogComponentString url;
     protected DialogComponentButton checkProjectsButton;
     protected DialogComponentStringSelection projectSelection;
     protected DialogComponentBoolean checkAllProjects;
-    /**
-     * Login components
-     */
     protected DialogComponentString loginComponent;
     protected DialogComponentPasswordField passwordComponent;
+    
+    protected ITSMappingManager mappingManager;
 
     public ITSNodeDialog() {
         addTab(CONNECTION_TAB_NAME, createConnectionTab());
@@ -175,6 +176,17 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         panel.add(createComponentStringSelection());
         return panel;
     }
+    
+
+    protected Component createMappingTab() {
+        JTabbedPane mappingTab = new JTabbedPane();
+        createMappingManager();
+        mappingTab.addTab(PRIORITY, mappingManager.getMultiFilterPriority().getPanel());
+        mappingTab.addTab(TYPE, mappingManager.getMultiFilterType().getPanel());
+        mappingTab.addTab(RESOLUTION, mappingManager.getMultiFilterResolution().getPanel());
+        mappingTab.addTab(STATUS, mappingManager.getMultiFilterStatus().getPanel());
+        return mappingTab;
+    }
 
     @Override
     protected void addFlowVariablesTab() {
@@ -188,6 +200,9 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         passwordComponent.loadSettingsFrom(settings, specs);
         projectSelection.loadSettingsFrom(settings, specs);
         checkAllProjects.loadSettingsFrom(settings, specs);
+        for (MultiFilterComponent component : mappingManager.getComponents()) {
+            component.loadSettingsFrom(settings, specs);
+        }
         loadSpecificSettingsFrom(settings, specs);
     }
 
@@ -198,14 +213,17 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         passwordComponent.saveSettingsTo(settings);
         projectSelection.saveSettingsTo(settings);
         checkAllProjects.saveSettingsTo(settings);
+        for (MultiFilterComponent component : mappingManager.getComponents()) {
+            component.saveSettingsTo(settings);
+        }
         saveSpecificSettingsTo(settings);
     }
 
     protected abstract void updateProjectsList();
 
-    protected abstract Component createAdvancedTab();
+    protected abstract void createMappingManager();
 
-    protected abstract Component createMappingTab();
+    protected abstract Component createAdvancedTab();
 
     protected abstract SettingsModelBoolean createCheckAllProjectsSettings();
 

@@ -26,9 +26,8 @@ import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 
-import org.impressivecode.depress.common.MultiFilterComponent;
+import org.impressivecode.depress.its.ITSMappingManager;
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
@@ -53,15 +52,9 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     private static final String JQL = "JQL:";
     private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
 
-    private static final String STATUS = "Status";
-    private static final String PRIORITY = "Priority";
-    private static final String RESOLUTION = "Resolution";
-    private static final String TYPE = "Type";
-
     private SettingsModelString hostnameComponent;
     private DialogComponentBoolean history;
     private DialogComponentMultiLineString jql;
-    private JiraOnlineMapperManager mapperManager;
 
     @Override
     protected Component createAdvancedTab() {
@@ -76,21 +69,14 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     }
 
     @Override
-    protected Component createMappingTab() {
-        JTabbedPane mappingTab = new JTabbedPane();
-        mapperManager = new JiraOnlineMapperManager();
-        mapperManager.createFilterPriority(new RefreshCaller(Mode.PRIORITY_LIST));
-        mapperManager.createFilterType(new RefreshCaller(Mode.TYPE_LIST));
-        mapperManager.createFilterResolution(new RefreshCaller(Mode.RESOLUTION_LIST));
-        mapperManager.createFilterStatus(new RefreshCaller(Mode.STATE_LIST));
-
-        mappingTab.addTab(PRIORITY, mapperManager.getMultiFilterPriority().getPanel());
-        mappingTab.addTab(TYPE, mapperManager.getMultiFilterType().getPanel());
-        mappingTab.addTab(RESOLUTION, mapperManager.getMultiFilterResolution().getPanel());
-        mappingTab.addTab(STATUS, mapperManager.getMultiFilterStatus().getPanel());
-        return mappingTab;
+    protected void createMappingManager() {
+        mappingManager = new ITSMappingManager(JiraOnlineAdapterNodeModel.JIRA_MAPPING);
+        mappingManager.createFilterPriority(new RefreshCaller(Mode.PRIORITY_LIST));
+        mappingManager.createFilterType(new RefreshCaller(Mode.TYPE_LIST));
+        mappingManager.createFilterResolution(new RefreshCaller(Mode.RESOLUTION_LIST));
+        mappingManager.createFilterStatus(new RefreshCaller(Mode.STATE_LIST));
     }
-
+    
     private class RefreshCaller implements Callable<List<String>> {
         private final Mode mode;
 
@@ -173,18 +159,12 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
     @Override
     protected void loadSpecificSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs)
             throws NotConfigurableException {
-        for (MultiFilterComponent component : mapperManager.getComponents()) {
-            component.loadSettingsFrom(settings, specs);
-        }
         history.loadSettingsFrom(settings, specs);
         jql.loadSettingsFrom(settings, specs);
     }
 
     @Override
     protected void saveSpecificSettingsTo(NodeSettingsWO settings) throws InvalidSettingsException {
-        for (MultiFilterComponent component : mapperManager.getComponents()) {
-            component.saveSettingsTo(settings);
-        }
         history.saveSettingsTo(settings);
         jql.saveSettingsTo(settings);
     }

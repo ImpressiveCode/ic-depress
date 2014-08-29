@@ -35,6 +35,7 @@ import org.impressivecode.depress.common.SettingsModelMultiFilter;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSMappingManager;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataTableSpec;
@@ -59,8 +60,8 @@ import com.google.common.base.Preconditions;
  * @author Dawid Rutowicz, Wroclaw University of Technology
  * @author Maciej Borkowski, Capgemini Poland
  */
+//TODO: Refactorize ITSNodeModel
 public class JiraOnlineAdapterNodeModel extends NodeModel {
-
     private static final String DEFAULT_VALUE = "";
     private static final int INPUT_NODE_COUNT = 0;
     private static final int OUTPUT_NODE_COUNT = 2;
@@ -74,6 +75,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private static final String JIRA_SELECTION = "depress.its.jiraonline.selection";
     private static final String JIRA_HISTORY = "depress.its.jiraonline.history";
     private static final String JIRA_ALL_PROJECTS = "depress.its.jiraonline.allprojects";
+    static final String JIRA_MAPPING = "depress.its.jiraonline.mapping";
 
     private final SettingsModelString jiraSettingsURL = createSettingsURL();
     private final SettingsModelString jiraSettingsLogin = createSettingsLogin();
@@ -100,7 +102,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private int issueTaskStepsCompleted;
     private int historyTaskStepsCompleted;
 
-    private static JiraOnlineMapperManager mapperManager = new JiraOnlineMapperManager();
+    private static ITSMappingManager mapperManager = new ITSMappingManager(JIRA_MAPPING);
 
     protected JiraOnlineAdapterNodeModel() {
         super(INPUT_NODE_COUNT, OUTPUT_NODE_COUNT);
@@ -383,9 +385,6 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         return new SettingsModelBoolean(JIRA_ALL_PROJECTS, true);
     }
 
-    public static JiraOnlineMapperManager getMapperManager() {
-        return mapperManager;
-    }
 
     private class DownloadAndParseIssuesTask implements Callable<List<ITSDataType>> {
 
