@@ -81,7 +81,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     private static final String BUGZILLA_PRIORITY = "depress.its.bugzillaonline.priority";
     private static final String BUGZILLA_SELECTION = "depress.its.bugzillaonline.selection";
     private static final String BUGZILLA_ALL_PROJECTS = "depress.its.bugzillaonline.allprojects";
-    public static final String BUGZILLA_MAPPING = "depress.its.bugzillaonline.mapping";;
+    static final String BUGZILLA_MAPPING = "depress.its.bugzillaonline.mapping";
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
 

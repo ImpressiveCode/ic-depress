@@ -122,7 +122,6 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
                 Set<String> propertiesSet = new HashSet<String>(properties);
                 properties = new ArrayList<String>(propertiesSet);
                 properties.remove("");
-                System.out.println(properties.toString());
             }
             return properties;
         }
