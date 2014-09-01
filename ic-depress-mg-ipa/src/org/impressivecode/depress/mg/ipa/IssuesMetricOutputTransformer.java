@@ -23,6 +23,7 @@ import static org.impressivecode.depress.mg.ipa.IssuesMetricTableFactory.createT
 import java.util.List;
 
 import org.impressivecode.depress.common.OutputTransformer;
+import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
@@ -53,6 +54,7 @@ public class IssuesMetricOutputTransformer implements OutputTransformer<IssuesMe
 
         BufferedDataContainer container = createDataContainer(exec);
         for (IssuesMetricType metric : data) {
+
             progress(exec);
 
             if (LOGGER.isDebugEnabled()) {
@@ -62,8 +64,11 @@ public class IssuesMetricOutputTransformer implements OutputTransformer<IssuesMe
             if (LOGGER.isEnabledFor(LEVEL.ALL)) {
                 LOGGER.debug("Transforming metric:" + metric.toString());
             }
-            container.addRowToTable(createTableRow(metric));
+            
+            DataRow row = createTableRow(metric);
+            container.addRowToTable(row);            	
         }
+        
         container.close();
         BufferedDataTable out = container.getTable();
         return out;
