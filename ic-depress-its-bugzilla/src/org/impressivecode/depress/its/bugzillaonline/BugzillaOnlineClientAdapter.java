@@ -83,6 +83,8 @@ public class BugzillaOnlineClientAdapter {
     public static final String NAME = "name";
 
     private static final int TASK_STEPS_COUNT = 4;
+    private static final int BUGS_PER_TASK = 1000;
+    private static final int THREAD_COUNT = Runtime.getRuntime().availableProcessors();
 
     private BugzillaOnlineXmlRpcClient bugzillaClient;
     private BugzillaOnlineParser parser;
@@ -115,27 +117,13 @@ public class BugzillaOnlineClientAdapter {
 
     public List<ITSDataType> listEntries(BugzillaOnlineOptions options) throws XmlRpcException,
             CanceledExecutionException, InterruptedException, ExecutionException {
-        checkNotNull(options.getThreadsCount());
-        checkNotNull(options.getBugsPerTask());
         checkIfIsCanceledAndMarkProgress(0);
 
         bugzillaVersion = getBugzillaVersion();
-
-        List<String> bugsIds = new ArrayList<String>();
-        if (options.getProductName() == null) {
-            for (String name : listProjects()) {
-                options.setProductName(name);
-                Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options));
-                bugsIds.addAll(parser.extractIds(simpleBugsInformation));
-            }
-        } else {
-            Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options));
-            bugsIds = parser.extractIds(simpleBugsInformation);
-        }
-
-        List<Callable<List<ITSDataType>>> tasks = partitionTasks(bugsIds, options.getBugsPerTask());
+        List<String> bugsIds = listBugsIds(options);
+        List<Callable<List<ITSDataType>>> tasks = partitionTasks(bugsIds);
         setProgressStep(tasks.size());
-        List<Future<List<ITSDataType>>> partialResults = executeTasks(tasks, options.getThreadsCount());
+        List<Future<List<ITSDataType>>> partialResults = executeTasks(tasks);
         return combinePartialResults(partialResults);
     }
 
@@ -144,7 +132,6 @@ public class BugzillaOnlineClientAdapter {
         Object[] ids = listProjectsIds();
         info.put(IDS, ids);
         info.put(INCLUDE_FIELDS, new String[] { NAME });
-
         Object[] products = getProjects(info);
 
         List<String> projects = new ArrayList<String>();
@@ -156,8 +143,36 @@ public class BugzillaOnlineClientAdapter {
         return projects;
     }
 
+    public List<String> listProperties(BugzillaOnlineOptions options, String propertyName) throws XmlRpcException {
+        bugzillaVersion = getBugzillaVersion();
+        List<String> bugsIds = listBugsIds(options);
+        List<String> propertyList = new ArrayList<String>();
+        Object[] bugs = getBugs(prepareGetBugsPropertiesParameters(bugsIds, propertyName));
+        for (Object object : bugs) {
+            @SuppressWarnings("unchecked")
+            Map<String, String> map = (Map<String, String>) object;
+            propertyList.add(map.get(propertyName));
+        }
+        return propertyList;
+    }
+
     private Object[] listProjectsIds() throws XmlRpcException {
         return searchProjects(new HashMap<String, Object>());
+    }
+
+    private List<String> listBugsIds(BugzillaOnlineOptions options) throws XmlRpcException {
+        List<String> bugsIds = new ArrayList<String>();
+        if (options.getProductName() == null || options.getProductName() == "") {
+            for (String name : listProjects()) {
+                options.setProductName(name);
+                Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options));
+                bugsIds.addAll(parser.extractIds(simpleBugsInformation));
+            }
+        } else {
+            Object[] simpleBugsInformation = searchBugs(prepareSearchBugsParameters(options));
+            bugsIds = parser.extractIds(simpleBugsInformation);
+        }
+        return bugsIds;
     }
 
     private void checkIfIsCanceledAndMarkProgress(double value) throws CanceledExecutionException {
@@ -202,14 +217,14 @@ public class BugzillaOnlineClientAdapter {
         return (Map<String, Object>) result.get(BUGS);
     }
 
-    private List<Callable<List<ITSDataType>>> partitionTasks(List<String> bugsIds, int bugsPerTask) {
+    private List<Callable<List<ITSDataType>>> partitionTasks(List<String> bugsIds) {
         List<Callable<List<ITSDataType>>> tasks = newArrayList();
 
-        int taskCount = (int) ceil((double) bugsIds.size() / bugsPerTask);
+        int taskCount = (int) ceil((double) bugsIds.size() / BUGS_PER_TASK);
 
         for (int taskNo = 0; taskNo < taskCount; taskNo++) {
-            int chunkLowerIndex = taskNo * bugsPerTask;
-            int chunkUpperIndex = (taskNo + 1) * bugsPerTask;
+            int chunkLowerIndex = taskNo * BUGS_PER_TASK;
+            int chunkUpperIndex = (taskNo + 1) * BUGS_PER_TASK;
             if (chunkUpperIndex > bugsIds.size()) {
                 chunkUpperIndex = bugsIds.size();
             }
@@ -220,9 +235,9 @@ public class BugzillaOnlineClientAdapter {
         return tasks;
     }
 
-    private List<Future<List<ITSDataType>>> executeTasks(List<Callable<List<ITSDataType>>> tasks, int threadsCount)
+    private List<Future<List<ITSDataType>>> executeTasks(List<Callable<List<ITSDataType>>> tasks)
             throws InterruptedException {
-        ExecutorService executorService = newFixedThreadPool(threadsCount);
+        ExecutorService executorService = newFixedThreadPool(THREAD_COUNT);
         List<Future<List<ITSDataType>>> partialResults = executorService.invokeAll(tasks);
         executorService.shutdown();
         return partialResults;
@@ -312,6 +327,14 @@ public class BugzillaOnlineClientAdapter {
         return parameters;
     }
 
+    private Map<String, Object> prepareGetBugsPropertiesParameters(List<String> ids, String property) {
+        Map<String, Object> parameters = prepareBugsIdsParameters(ids);
+        if (bugzillaInstanceSupportFieldsInclusionInGet()) {
+            parameters.put(INCLUDE_FIELDS, new String[] { property });
+        }
+        return parameters;
+    }
+
     private boolean bugzillaInstanceSupportFieldsInclusionInGet() {
         return isVersionGreaterOrEqual(BUGZILLA_VERSION_THAT_SUPPORT_INCLUSION_IN_GET, bugzillaVersion);
     }
@@ -323,7 +346,6 @@ public class BugzillaOnlineClientAdapter {
     }
 
     private class Task implements Callable<List<ITSDataType>> {
-
         private List<String> bugsIds;
 
         public Task(List<String> bugsIds) {

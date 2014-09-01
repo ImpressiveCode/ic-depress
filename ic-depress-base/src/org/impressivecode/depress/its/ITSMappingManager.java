@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline;
+package org.impressivecode.depress.its;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +23,11 @@ import java.util.concurrent.Callable;
 
 import org.impressivecode.depress.common.MultiFilterComponent;
 import org.impressivecode.depress.common.SettingsModelMultiFilter;
-import org.impressivecode.depress.its.ITSPriority;
-import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.ITSResolution;
-import org.impressivecode.depress.its.ITSStatus;
 
 /**
- * @author Krzysztof Kwoka, Wroclaw University of Technology
  * @author Maciej Borkowski, Capgemini Poland
  */
-public class JiraOnlineMapperManager {
+public class ITSMappingManager {
     private SettingsModelMultiFilter priorityModel;
     private SettingsModelMultiFilter statusModel;
     private SettingsModelMultiFilter typeModel;
@@ -43,15 +38,11 @@ public class JiraOnlineMapperManager {
     private MultiFilterComponent multiFilterType;
     private MultiFilterComponent multiFilterResolution;
 
-    public JiraOnlineMapperManager() {
-        String configName = "depress.its.jiraonline.priority";
-        priorityModel = new SettingsModelMultiFilter(configName, false, ITSPriority.labels());
-        configName = "depress.its.jiraonline.status";
-        statusModel = new SettingsModelMultiFilter(configName, false, ITSStatus.labels());
-        configName = "depress.its.jiraonline.type";
-        typeModel = new SettingsModelMultiFilter(configName, false, ITSType.labels());
-        configName = "depress.its.jiraonline.resolution";
-        resolutionModel = new SettingsModelMultiFilter(configName, false, ITSResolution.labels());
+    public ITSMappingManager(final String configName) {
+        priorityModel = new SettingsModelMultiFilter(configName + ".priority", false, ITSPriority.labels());
+        statusModel = new SettingsModelMultiFilter(configName + ".status", false, ITSStatus.labels());
+        typeModel = new SettingsModelMultiFilter(configName + ".type", false, ITSType.labels());
+        resolutionModel = new SettingsModelMultiFilter(configName + ".resolution", false, ITSResolution.labels());
     }
 
     public void createFilterPriority(final Callable<List<String>> refreshCall) {

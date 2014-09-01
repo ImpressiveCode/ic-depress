@@ -22,12 +22,15 @@ import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.impressivecode.depress.common.MultiFilterComponent;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeSettingsRO;
@@ -55,29 +58,28 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     public static final String ADVANCED_TAB_NAME = "Advanced";
     public static final String MAPPING_TAB_NAME = "Mapping";
     public static final String URL_LABEL = "URL:";
-    public static final String PROJECT_LABEL = "Project:";
     public static final String PASSWORD_LABEL = "Password:";
     public static final String LOGIN_LABEL = "Login:";
     public static final String CHECK_PROJECTS_BUTTON = "Check projects";
     public static final String CONNECTING = "Connecting...";
     public static final String PROJECTS_SELECTION_LABEL = "Projects:";
     public static final String ALL_PROJECTS = "All projects";
+    private static final String STATUS = "Status";
+    private static final String PRIORITY = "Priority";
+    private static final String RESOLUTION = "Resolution";
+    private static final String TYPE = "Type";
     public static final int COMPONENT_WIDTH = 32;
     public static final int LOGIN_WIDTH = 16;
     public static final int PASSWORD_WIDTH = 16;
 
-    /**
-     * Connection components
-     */
     protected DialogComponentString url;
     protected DialogComponentButton checkProjectsButton;
     protected DialogComponentStringSelection projectSelection;
     protected DialogComponentBoolean checkAllProjects;
-    /**
-     * Login components
-     */
     protected DialogComponentString loginComponent;
     protected DialogComponentPasswordField passwordComponent;
+
+    protected ITSMappingManager mappingManager;
 
     public ITSNodeDialog() {
         addTab(CONNECTION_TAB_NAME, createConnectionTab());
@@ -94,17 +96,17 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         return panel;
     }
 
+    protected Component createHostnameComponent() {
+        url = new DialogComponentString(createURLSettings(), URL_LABEL, true, COMPONENT_WIDTH);
+        return url.getComponentPanel();
+    }
+
     protected Component createLoginPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(createLoginComponent());
         panel.add(createPasswordComponent());
         return panel;
-    }
-
-    protected Component createHostnameComponent() {
-        url = new DialogComponentString(createURLSettings(), URL_LABEL, true, COMPONENT_WIDTH);
-        return url.getComponentPanel();
     }
 
     protected Component createLoginComponent() {
@@ -118,6 +120,23 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         return passwordComponent.getComponentPanel();
     }
 
+    protected Component createProjectSelection() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(createCheckAllProjectsComponent());
+        panel.add(createProjectsPanel());
+
+        return panel;
+    }
+
+    private Component createProjectsPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(createCheckProjectsButton());
+        panel.add(createComponentStringSelection());
+        return panel;
+    }
+
     private Component createCheckAllProjectsComponent() {
         checkAllProjects = new DialogComponentBoolean(createCheckAllProjectsSettings(), ALL_PROJECTS);
         checkAllProjects.getModel().addChangeListener(new ChangeListener() {
@@ -126,7 +145,10 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
             public void stateChanged(ChangeEvent event) {
                 boolean value = ((SettingsModelBoolean) event.getSource()).getBooleanValue();
                 checkProjectsButton.setEnabled(!value);
-                projectSelection.setEnabled(!value);
+                if (value) {
+                    projectSelection.getComponentPanel().setVisible(false);
+                    projectSelection.replaceListItems(Arrays.asList(""), "");
+                }
                 getPanel().paintImmediately(getPanel().getVisibleRect());
             }
         });
@@ -142,13 +164,12 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         return checkProjectsButton.getComponentPanel();
     }
 
-    @SuppressWarnings("deprecation")
     protected Component createComponentStringSelection() {
         ArrayList<String> projects = new ArrayList<String>();
         projects.add("");
         projectSelection = new DialogComponentStringSelection(createSelectionSettings(), PROJECTS_SELECTION_LABEL,
                 projects, false);
-        projectSelection.setEnabled(false);
+        projectSelection.getComponentPanel().setVisible(false);
         return projectSelection.getComponentPanel();
     }
 
@@ -161,19 +182,21 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
             getPanel().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             getPanel().paintImmediately(getPanel().getVisibleRect());
             updateProjectsList();
+            projectSelection.getComponentPanel().setVisible(true);
             getPanel().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             checkProjectsButton.setText(CHECK_PROJECTS_BUTTON);
             checkProjectsButton.setEnabled(true);
         }
     }
 
-    protected Component createProjectSelection() {
-        JPanel panel = new JPanel();
-        panel.add(createCheckAllProjectsComponent());
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(createCheckProjectsButton());
-        panel.add(createComponentStringSelection());
-        return panel;
+    protected Component createMappingTab() {
+        JTabbedPane mappingTab = new JTabbedPane();
+        createMappingManager();
+        mappingTab.addTab(PRIORITY, mappingManager.getMultiFilterPriority().getPanel());
+        mappingTab.addTab(TYPE, mappingManager.getMultiFilterType().getPanel());
+        mappingTab.addTab(RESOLUTION, mappingManager.getMultiFilterResolution().getPanel());
+        mappingTab.addTab(STATUS, mappingManager.getMultiFilterStatus().getPanel());
+        return mappingTab;
     }
 
     @Override
@@ -188,6 +211,9 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         passwordComponent.loadSettingsFrom(settings, specs);
         projectSelection.loadSettingsFrom(settings, specs);
         checkAllProjects.loadSettingsFrom(settings, specs);
+        for (MultiFilterComponent component : mappingManager.getComponents()) {
+            component.loadSettingsFrom(settings, specs);
+        }
         loadSpecificSettingsFrom(settings, specs);
     }
 
@@ -198,14 +224,17 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         passwordComponent.saveSettingsTo(settings);
         projectSelection.saveSettingsTo(settings);
         checkAllProjects.saveSettingsTo(settings);
+        for (MultiFilterComponent component : mappingManager.getComponents()) {
+            component.saveSettingsTo(settings);
+        }
         saveSpecificSettingsTo(settings);
     }
 
     protected abstract void updateProjectsList();
 
-    protected abstract Component createAdvancedTab();
+    protected abstract void createMappingManager();
 
-    protected abstract Component createMappingTab();
+    protected abstract Component createAdvancedTab();
 
     protected abstract SettingsModelBoolean createCheckAllProjectsSettings();
 
