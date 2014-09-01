@@ -102,7 +102,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
     private int issueTaskStepsCompleted;
     private int historyTaskStepsCompleted;
 
-    private static ITSMappingManager mapperManager = new ITSMappingManager(JIRA_MAPPING);
+    private static ITSMappingManager mappingManager = new ITSMappingManager(JIRA_MAPPING);
 
     protected JiraOnlineAdapterNodeModel() {
         super(INPUT_NODE_COUNT, OUTPUT_NODE_COUNT);
@@ -243,11 +243,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         List<JiraOnlineIssueChangeRowItem> result = newArrayList();
 
         for (Future<List<JiraOnlineIssueChangeRowItem>> partialResult : partialResults) {
-            try {
-                result.addAll(partialResult.get());
-            } catch (Exception e) {
-                System.out.println("pause here");
-            }
+            result.addAll(partialResult.get());
         }
 
         return result;
@@ -312,7 +308,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsSelection.saveSettingsTo(settings);
         jiraSettingsHistory.saveSettingsTo(settings);
         jiraSettingsAllProjects.saveSettingsTo(settings);
-        for (SettingsModelMultiFilter model : mapperManager.getModels()) {
+        for (SettingsModelMultiFilter model : mappingManager.getModels()) {
             model.saveSettingsTo(settings);
         }
     }
@@ -326,7 +322,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsSelection.loadSettingsFrom(settings);
         jiraSettingsHistory.loadSettingsFrom(settings);
         jiraSettingsAllProjects.loadSettingsFrom(settings);
-        for (SettingsModelMultiFilter model : mapperManager.getModels()) {
+        for (SettingsModelMultiFilter model : mappingManager.getModels()) {
             model.loadSettingsFrom(settings);
         }
     }
@@ -340,7 +336,7 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
         jiraSettingsSelection.validateSettings(settings);
         jiraSettingsHistory.validateSettings(settings);
         jiraSettingsAllProjects.validateSettings(settings);
-        for (SettingsModelMultiFilter model : mapperManager.getModels()) {
+        for (SettingsModelMultiFilter model : mappingManager.getModels()) {
             model.validateSettings(settings);
         }
     }
@@ -403,8 +399,8 @@ public class JiraOnlineAdapterNodeModel extends NodeModel {
             markProgressForIssue();
             checkForCancel();
             JiraOnlineAdapterParser parser = new JiraOnlineAdapterParser(
-                    mapperManager.getPriorityModel().getIncluded(), mapperManager.getTypeModel().getIncluded(),
-                    mapperManager.getResolutionModel().getIncluded(), mapperManager.getStatusModel().getIncluded());
+                    mappingManager.getPriorityModel().getIncluded(), mappingManager.getTypeModel().getIncluded(),
+                    mappingManager.getResolutionModel().getIncluded(), mappingManager.getStatusModel().getIncluded());
             List<ITSDataType> list = parser.parseSingleIssueBatch(rawData, hostname);
             markProgressForIssue();
 

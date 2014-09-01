@@ -122,8 +122,6 @@ public class BugzillaOnlineClientAdapterIntegrationTest {
         options.setProductName("Socorro");
         options.setDateFrom(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("10-02-2010 19:19:59"));
         options.setLimit(1);
-        options.setThreadsCount(1);
-        options.setBugsPerTask(1);
 
         // when
         List<ITSDataType> entries = clientAdapter.listEntries(options);

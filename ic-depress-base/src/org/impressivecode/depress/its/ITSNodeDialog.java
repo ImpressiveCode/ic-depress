@@ -22,6 +22,7 @@ import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -70,14 +71,14 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     public static final int COMPONENT_WIDTH = 32;
     public static final int LOGIN_WIDTH = 16;
     public static final int PASSWORD_WIDTH = 16;
-    
+
     protected DialogComponentString url;
     protected DialogComponentButton checkProjectsButton;
     protected DialogComponentStringSelection projectSelection;
     protected DialogComponentBoolean checkAllProjects;
     protected DialogComponentString loginComponent;
     protected DialogComponentPasswordField passwordComponent;
-    
+
     protected ITSMappingManager mappingManager;
 
     public ITSNodeDialog() {
@@ -95,17 +96,17 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         return panel;
     }
 
+    protected Component createHostnameComponent() {
+        url = new DialogComponentString(createURLSettings(), URL_LABEL, true, COMPONENT_WIDTH);
+        return url.getComponentPanel();
+    }
+
     protected Component createLoginPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(createLoginComponent());
         panel.add(createPasswordComponent());
         return panel;
-    }
-
-    protected Component createHostnameComponent() {
-        url = new DialogComponentString(createURLSettings(), URL_LABEL, true, COMPONENT_WIDTH);
-        return url.getComponentPanel();
     }
 
     protected Component createLoginComponent() {
@@ -119,6 +120,23 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         return passwordComponent.getComponentPanel();
     }
 
+    protected Component createProjectSelection() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(createCheckAllProjectsComponent());
+        panel.add(createProjectsPanel());
+
+        return panel;
+    }
+
+    private Component createProjectsPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(createCheckProjectsButton());
+        panel.add(createComponentStringSelection());
+        return panel;
+    }
+
     private Component createCheckAllProjectsComponent() {
         checkAllProjects = new DialogComponentBoolean(createCheckAllProjectsSettings(), ALL_PROJECTS);
         checkAllProjects.getModel().addChangeListener(new ChangeListener() {
@@ -127,7 +145,10 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
             public void stateChanged(ChangeEvent event) {
                 boolean value = ((SettingsModelBoolean) event.getSource()).getBooleanValue();
                 checkProjectsButton.setEnabled(!value);
-                projectSelection.setEnabled(!value);
+                if (value) {
+                    projectSelection.getComponentPanel().setVisible(false);
+                    projectSelection.replaceListItems(Arrays.asList(""), "");
+                }
                 getPanel().paintImmediately(getPanel().getVisibleRect());
             }
         });
@@ -143,13 +164,12 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         return checkProjectsButton.getComponentPanel();
     }
 
-    @SuppressWarnings("deprecation")
     protected Component createComponentStringSelection() {
         ArrayList<String> projects = new ArrayList<String>();
         projects.add("");
         projectSelection = new DialogComponentStringSelection(createSelectionSettings(), PROJECTS_SELECTION_LABEL,
                 projects, false);
-        projectSelection.setEnabled(false);
+        projectSelection.getComponentPanel().setVisible(false);
         return projectSelection.getComponentPanel();
     }
 
@@ -162,21 +182,12 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
             getPanel().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             getPanel().paintImmediately(getPanel().getVisibleRect());
             updateProjectsList();
+            projectSelection.getComponentPanel().setVisible(true);
             getPanel().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             checkProjectsButton.setText(CHECK_PROJECTS_BUTTON);
             checkProjectsButton.setEnabled(true);
         }
     }
-
-    protected Component createProjectSelection() {
-        JPanel panel = new JPanel();
-        panel.add(createCheckAllProjectsComponent());
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(createCheckProjectsButton());
-        panel.add(createComponentStringSelection());
-        return panel;
-    }
-    
 
     protected Component createMappingTab() {
         JTabbedPane mappingTab = new JTabbedPane();

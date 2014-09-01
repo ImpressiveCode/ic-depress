@@ -24,7 +24,9 @@ import java.awt.Component;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
@@ -86,7 +88,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
         panel.add(createAndAddPriorityFilter());
         return panel;
     }
-    
+
     @Override
     protected void createMappingManager() {
         mappingManager = new ITSMappingManager(BugzillaOnlineAdapterNodeModel.BUGZILLA_MAPPING);
@@ -95,23 +97,34 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
         mappingManager.createFilterResolution(new RefreshCaller(BugzillaOnlineParser.RESOLUTION));
         mappingManager.createFilterStatus(new RefreshCaller(BugzillaOnlineParser.STATUS));
     }
-    
-    private class RefreshCaller implements Callable<List<String>> {
-        private final String property;
 
-        RefreshCaller(final String property) {
-            this.property = property;
+    private class RefreshCaller implements Callable<List<String>> {
+        private final String propertyName;
+
+        RefreshCaller(final String propertyName) {
+            this.propertyName = propertyName;
         }
 
         @Override
         public List<String> call() throws Exception {
-            List<String> list = new ArrayList<>();
-            if(property.equals(BUG)) {
-                list.add(BUG);
+            List<String> properties = new ArrayList<>();
+            if (propertyName.equals(BUG)) {
+                properties.add(BUG);
             } else {
-                
+                BugzillaOnlineClientAdapter adapter = new BugzillaOnlineClientAdapter(
+                        ((SettingsModelString) (url.getModel())).getStringValue());
+                String login = ((SettingsModelString) loginComponent.getModel()).getStringValue();
+                String password = ((SettingsModelString) passwordComponent.getModel()).getStringValue();
+                adapter.setCredentials(login, password);
+                BugzillaOnlineOptions options = new BugzillaOnlineOptions();
+                options.setProductName(((SettingsModelString) (projectSelection.getModel())).getStringValue());
+                properties = adapter.listProperties(options, propertyName);
+                Set<String> propertiesSet = new HashSet<String>(properties);
+                properties = new ArrayList<String>(propertiesSet);
+                properties.remove("");
+                System.out.println(properties.toString());
             }
-            return list;
+            return properties;
         }
     }
 
@@ -129,7 +142,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
             Logger.getLogger("Error").severe(e.getMessage());
         }
     }
-    
+
     private Collection<String> prepareEnumValuesToComboBox(Enum<?>[] enums) {
         List<String> strings = newArrayList();
 
@@ -143,7 +156,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 
         return strings;
     }
-    
+
     private Component createAndAddLimitFilter() {
         limit = new DialogComponentOptionalString(BugzillaOnlineAdapterNodeModel.createLimitSettings(), LIMIT_LABEL,
                 COMPONENT_WIDTH);
@@ -184,7 +197,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
                 PRIORITY_LABEL, prepareEnumValuesToComboBox(ITSPriority.values()));
         return priority.getComponentPanel();
     }
-    
+
     @Override
     protected SettingsModelString createSelectionSettings() {
         return BugzillaOnlineAdapterNodeModel.createSettingsSelection();
@@ -194,7 +207,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
     protected SettingsModelBoolean createCheckAllProjectsSettings() {
         return BugzillaOnlineAdapterNodeModel.createSettingsCheckAllProjects();
     }
-    
+
     @Override
     protected SettingsModelString createURLSettings() {
         return BugzillaOnlineAdapterNodeModel.createURLSettings();

@@ -35,8 +35,10 @@ import java.util.List;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 
+import org.impressivecode.depress.common.SettingsModelMultiFilter;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
+import org.impressivecode.depress.its.ITSMappingManager;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -63,8 +65,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     private static final int NUMBER_OF_INPUT_PORTS = 0;
     private static final int NUMBER_OF_OUTPUT_PORTS = 1;
     private static final String DEFAULT_STRING_VALUE = "";
-    private static final int DEFAULT_BUGS_PER_TASK_VALUE = 1000;
-    private static final int THREAD_COUNT = 10;
 
     public static final String DEFAULT_COMBOBOX_ANY_VALUE = "Any";
 
@@ -82,7 +82,7 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     private static final String BUGZILLA_SELECTION = "depress.its.bugzillaonline.selection";
     private static final String BUGZILLA_ALL_PROJECTS = "depress.its.bugzillaonline.allprojects";
     public static final String BUGZILLA_MAPPING = "depress.its.bugzillaonline.mapping";;
-    
+
     private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
 
     private final SettingsModelString urlSettings = createURLSettings();
@@ -98,8 +98,9 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     private final SettingsModelString selectionSettings = createSettingsSelection();
     private final SettingsModelBoolean allProjectsSettings = createSettingsCheckAllProjects();
 
-    private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+    private static ITSMappingManager mappingManager = new ITSMappingManager(BUGZILLA_MAPPING);
 
+    private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
     protected BugzillaOnlineAdapterNodeModel() {
         super(NUMBER_OF_INPUT_PORTS, NUMBER_OF_OUTPUT_PORTS);
@@ -153,8 +154,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         options.setPriority(getPriority());
         options.setLimit(getLimit());
         options.setOffset(getOffset());
-        options.setThreadsCount(getThreadsCount());
-        options.setBugsPerTask(getBugsPerTask());
         return options;
     }
 
@@ -216,14 +215,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         return result;
     }
 
-    private Integer getThreadsCount() {
-        return THREAD_COUNT;
-    }
-
-    private Integer getBugsPerTask() {
-        return DEFAULT_BUGS_PER_TASK_VALUE;
-    }
-
     private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
             throws CanceledExecutionException {
         ITSAdapterTransformer transformer = new ITSAdapterTransformer(createDataColumnSpec());
@@ -264,6 +255,9 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         prioritySettings.saveSettingsTo(settings);
         selectionSettings.saveSettingsTo(settings);
         allProjectsSettings.saveSettingsTo(settings);
+        for (SettingsModelMultiFilter model : mappingManager.getModels()) {
+            model.saveSettingsTo(settings);
+        }
     }
 
     @Override
@@ -281,6 +275,9 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         prioritySettings.loadSettingsFrom(settings);
         selectionSettings.loadSettingsFrom(settings);
         allProjectsSettings.loadSettingsFrom(settings);
+        for (SettingsModelMultiFilter model : mappingManager.getModels()) {
+            model.loadSettingsFrom(settings);
+        }
     }
 
     @Override
@@ -298,6 +295,9 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         versionSettings.validateSettings(settings);
         selectionSettings.validateSettings(settings);
         allProjectsSettings.validateSettings(settings);
+        for (SettingsModelMultiFilter model : mappingManager.getModels()) {
+            model.validateSettings(settings);
+        }
 
         SettingsModelString url = urlSettings.createCloneWithValidatedValue(settings);
         if (!isNullOrEmpty(url.getStringValue()) && !url.getStringValue().matches(URL_PATTERN)) {
