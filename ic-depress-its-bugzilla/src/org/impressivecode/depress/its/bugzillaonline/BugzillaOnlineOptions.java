@@ -32,8 +32,6 @@ public class BugzillaOnlineOptions {
     private String priority;
     private Integer limit;
     private Integer offset;
-    private Integer threadsCount;
-    private Integer bugsPerTask;
     private String version;
 
     public String getProductName() {
@@ -98,22 +96,6 @@ public class BugzillaOnlineOptions {
 
     public void setOffset(Integer offset) {
         this.offset = offset;
-    }
-
-    public Integer getThreadsCount() {
-        return threadsCount;
-    }
-
-    public void setThreadsCount(Integer threadsCount) {
-        this.threadsCount = threadsCount;
-    }
-
-    public Integer getBugsPerTask() {
-        return bugsPerTask;
-    }
-
-    public void setBugsPerTask(Integer bugsPerTask) {
-        this.bugsPerTask = bugsPerTask;
     }
 
     public String getVersion() {
