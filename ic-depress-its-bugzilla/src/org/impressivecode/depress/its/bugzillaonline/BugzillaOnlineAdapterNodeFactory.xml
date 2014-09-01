@@ -4,35 +4,52 @@
 	<name>Bugzilla Adapter (Online)</name>
 
 	<shortDescription>
-		Bugzilla Online Adapter, ImpressiveCode DePress Plugin Framework.
+		Bugzilla Online Adapter, ImpressiveCode DePress
+		Plugin Framework.
 	</shortDescription>
 
 	<fullDescription>
 		<intro>
 			<p>
-				This node can be used to read data from Bugzilla online installation.
-				In order to use this plugin please place Bugzilla installation address in configuration windows as well as name of Project, from which you want to retrieve bugs data.
-				If your Bugzilla is restricted to logged users only, please fill appropriate fields in Authentication tab.<br />
+				This node can be used to read data from Bugzilla online
+				installation.
+				In order to use this plugin please place Bugzilla
+				installation address in configuration windows as well as name of
+				Project, from which you want to retrieve bugs data.
+				If your Bugzilla
+				is restricted to logged users only, please fill appropriate fields.
+				<br />
 				The following data are fetched:
 			</p>
 			<ul>
-				<li>Id - The numeric id of a bug, unique within installation of Bugzilla.</li>
+				<li>Id - The numeric id of a bug, unique within installation of
+					Bugzilla.</li>
 				<li>Created - When the bug was reported.</li>
 				<li>Resolved - When the bug was finally resolved.</li>
 				<li>Updated - When the bug was last updated.</li>
 				<li>Status - The status field indicates the current state of a bug.</li>
 				<li>Type - All entries from Bugzilla has type BUG.</li>
-				<li>Resolution - The resolution field indicates what happened to this bug.</li>
-				<li>Version - The version field defines the version of the software the bug was found in.</li>
-				<li>FixVersion - The fix version field reflect Target Milestone in Bugzilla. It is used to define when the bug is expected to be fixed.</li>
-				<li>Priority - The priority field reflect Severity in Bugzilla. This field describes the impact of a bug.</li>
-				<li>Summary - The bug summary is a short sentence which succinctly describes what the bug is about.</li>
+				<li>Resolution - The resolution field indicates what happened to
+					this bug.</li>
+				<li>Version - The version field defines the version of the software
+					the bug was found in.</li>
+				<li>FixVersion - The fix version field reflect Target Milestone in
+					Bugzilla. It is used to define when the bug is expected to be
+					fixed.</li>
+				<li>Priority - The priority field reflect Severity in Bugzilla. This
+					field describes the impact of a bug.</li>
+				<li>Summary - The bug summary is a short sentence which succinctly
+					describes what the bug is about.</li>
 				<li>Reporter - The person who filed this bug.</li>
 				<li>Assignees - The person in charge of resolving the bug.</li>
 				<li>CommentAuthors - People which added comments to the bug.</li>
 				<li>Link - Bugs can have a URL associated with them.</li>
 				<li>Description - Bug description.</li>
 				<li>Comments - Bugs have comments added to them by Bugzilla users.</li>
+				<li>Time estimated - The number of hours that it was estimated that
+					this bug would take.</li>
+				<li>Time spent - The total number of hours that this bug has taken
+					(so far)</li>
 			</ul>
 			<p>
 				Status can be:
@@ -68,29 +85,38 @@
 				<li>UNKNOWN</li>
 			</ul>
 			<p>
-				In filters tab you can specify, which bug will be fetched. 
+				In filters tab you can specify, which bug will be fetched.
 				We support filters such as:
 				<ul>
 					<li>Date from - fetch bugs that were created after this date</li>
-					<li>Assigned to - fetch bugs that are currently assigned to this person</li>
+					<li>Assigned to - fetch bugs that are currently assigned to this
+						person</li>
 					<li>Reporter - fetch bugs that were created by this person</li>
 					<li>Version - fetch bugs that were assigned to this version</li>
 					<li>Priority - fetch bugs that have this severity in Bugzilla</li>
 				</ul>
-				This plugin also allow you to limit the number of fetched bugs and set offset which to begin.
+				This plugin also allow you to limit the number of fetched bugs and
+				set offset which to begin.
 			</p>
 			<p>
-				In order to speed up retrieval of bugs plugin use threads. In advanced tab you can set how many threads plugin will use and how many bugs will by fetched in one task. 
+				In order to speed up retrieval of bugs plugin use threads. In
+				advanced tab you can set how many threads plugin will use and how
+				many bugs will by fetched in one task.
 				Tasks after partitioning are submited to threads.
 			</p>
 			<p>
-            	Please check <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-its-bugzilla/examples">here</a> for workflow examples. 
-             	<br/> 
-             	Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
-            </p>
+				Please check
+				<a
+					href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-its-bugzilla/examples">here</a>
+				for workflow examples.
+				<br />
+				Copyright (c) ImpressiveCode,
+				<a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>
+			</p>
 		</intro>
 		<option name="URL">Enter a Bugzilla installation address.</option>
-		<option name="Project">Enter a Product name, from which you want to retrieve bugs.</option>
+		<option name="Project">Product name, from which you want to retrieve
+			bugs, click Check projects button to update the list.</option>
 		<option name="Login">Your login to Bugzilla installation.</option>
 		<option name="Password">Your password to Bugzilla installation.</option>
 		<option name="Limit">Optional numbers of bug you want to fetch.</option>
@@ -100,7 +126,6 @@
 		<option name="Reporter">Optional person who created bugs.</option>
 		<option name="Version">Optional project version of bug.</option>
 		<option name="Priority">Optional priority of bug.</option>
-		<option name="Threads">In how many threads bugs are fetched.</option>
 		<option name="Bugs per thread">Size of task, which is submitted to thread.</option>
 	</fullDescription>
 

@@ -80,26 +80,26 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
 
     private void createPriorityTab(final JTabbedPane tabbedPane) {
         multiFilterPriority = new MultiFilterComponent(JiraAdapterNodeModel.createMultiFilterPriorityModel(),
-                new refreshPriorityCaller());
+                new RefreshCaller("priority"));
         tabbedPane.addTab("Priority", multiFilterPriority.getPanel());
     }
 
     private void createTypeTab(final JTabbedPane tabbedPane) {
         multiFilterType = new MultiFilterComponent(JiraAdapterNodeModel.createMultiFilterTypeModel(),
-                new refreshTypeCaller());
+                new RefreshCaller("type"));
         tabbedPane.addTab("Type", multiFilterType.getPanel());
 
     }
 
     private void createResolutionTab(final JTabbedPane tabbedPane) {
         multiFilterResolution = new MultiFilterComponent(JiraAdapterNodeModel.createMultiFilterResolutionModel(),
-                new refreshResolutionCaller());
+                new RefreshCaller("resolution"));
         tabbedPane.addTab("Resolution", multiFilterResolution.getPanel());
     }
 
     private void createStatusTab(final JTabbedPane tabbedPane) {
         multiFilterStatus = new MultiFilterComponent(JiraAdapterNodeModel.createMultiFilterStatusModel(),
-                new refreshStatusCaller());
+                new RefreshCaller("status"));
         tabbedPane.addTab("Status", multiFilterStatus.getPanel());
     }
 
@@ -107,42 +107,18 @@ public class JiraAdapterNodeDialog extends NodeDialogPane {
         return new DialogComponentFileChooser(createFileChooserSettings(), historyId, fileExtension);
     }
 
-    private class refreshPriorityCaller implements Callable<List<String>> {
-        @Override
-        public List<String> call() throws Exception {
-            FileParser parser = new FileParser();
-            File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
-            String expression = "/rss/channel/item/priority[not(preceding::priority/. = .)]";
-            return parser.parseXPath(file, expression);
+    private class RefreshCaller implements Callable<List<String>> {
+        private final String property;
+        
+        RefreshCaller(final String property) {
+            this.property = property;
         }
-    }
-
-    private class refreshTypeCaller implements Callable<List<String>> {
+        
         @Override
         public List<String> call() throws Exception {
             FileParser parser = new FileParser();
             File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
-            String expression = "/rss/channel/item/type[not(preceding::type/. = .)]";
-            return parser.parseXPath(file, expression);
-        }
-    }
-
-    private class refreshResolutionCaller implements Callable<List<String>> {
-        @Override
-        public List<String> call() throws Exception {
-            FileParser parser = new FileParser();
-            File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
-            String expression = "/rss/channel/item/resolution[not(preceding::resolution/. = .)]";
-            return parser.parseXPath(file, expression);
-        }
-    }
-
-    private class refreshStatusCaller implements Callable<List<String>> {
-        @Override
-        public List<String> call() throws Exception {
-            FileParser parser = new FileParser();
-            File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
-            String expression = "/rss/channel/item/status[not(preceding::status/. = .)]";
+            String expression = "/rss/channel/item/" + property + "[not(preceding::" + property + "/. = .)]";
             return parser.parseXPath(file, expression);
         }
     }

@@ -212,12 +212,6 @@ END OF TERMS AND CONDITIONS
    </requires>
 
    <plugin
-         id="org.impressivecode.depress.base"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.SNAPSHOT"/>
-
-   <plugin
          id="org.impressivecode.depress.data.anonymisation"
          download-size="0"
          install-size="0"
@@ -246,6 +240,12 @@ END OF TERMS AND CONDITIONS
          download-size="0"
          install-size="0"
          version="2.0.0.SNAPSHOT"/>
+
+   <plugin
+         id="org.impressivecode.depress.metric.im"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
    <plugin
          id="org.impressivecode.depress.mg.ipa"
