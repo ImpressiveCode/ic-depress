@@ -33,7 +33,7 @@ import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSMappingManager;
-import org.impressivecode.depress.its.ITSNodeModel;
+import org.impressivecode.depress.its.ITSOnlineNodeModel;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataTableSpec;
@@ -56,7 +56,7 @@ import com.google.common.base.Preconditions;
  * @author Dawid Rutowicz, Wroclaw University of Technology
  * @author Maciej Borkowski, Capgemini Poland
  */
-public class JiraOnlineAdapterNodeModel extends ITSNodeModel {
+public class JiraOnlineAdapterNodeModel extends ITSOnlineNodeModel {
     private static final String DEFAULT_VALUE = "";
     private static final int INPUT_NODE_COUNT = 0;
     private static final int OUTPUT_NODE_COUNT = 2;

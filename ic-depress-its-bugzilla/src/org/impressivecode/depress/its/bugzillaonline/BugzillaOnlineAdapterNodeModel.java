@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.ITSNodeModel;
+import org.impressivecode.depress.its.ITSOnlineNodeModel;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -47,7 +47,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * @author Bartosz Skuza, Wrocław University of Technology
  * @author Maciej Borkowski, Capgemini Poland
  */
-public class BugzillaOnlineAdapterNodeModel extends ITSNodeModel {
+public class BugzillaOnlineAdapterNodeModel extends ITSOnlineNodeModel {
     private static final int NUMBER_OF_INPUT_PORTS = 0;
     private static final int NUMBER_OF_OUTPUT_PORTS = 1;
 

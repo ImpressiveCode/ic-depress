@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import org.impressivecode.depress.its.ITSNodeDialog;
+import org.impressivecode.depress.its.ITSOnlineNodeDialog;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineProjectListItem;
@@ -46,7 +46,7 @@ import org.knime.core.node.port.PortObjectSpec;
  * @author Dawid Rutowicz, Wroclaw University of Technology
  * @author Maciej Borkowski, Capgemini Poland
  */
-public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
+public class JiraOnlineAdapterNodeDialog extends ITSOnlineNodeDialog {
     private static final String JQL = "JQL:";
     private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
 
