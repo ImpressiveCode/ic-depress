@@ -43,8 +43,8 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 /**
  * @author Maciej Borkowski, Capgemini Poland
  */
-public abstract class ITSNodeModel extends NodeModel {
-    protected static final NodeLogger LOGGER = NodeLogger.getLogger(ITSNodeModel.class);
+public abstract class ITSOnlineNodeModel extends NodeModel {
+    protected static final NodeLogger LOGGER = NodeLogger.getLogger(ITSOnlineNodeModel.class);
 
     private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
     protected static final String DEFAULT_STRING_VALUE = "";
@@ -63,7 +63,7 @@ public abstract class ITSNodeModel extends NodeModel {
     private final SettingsModelBoolean allProjectsSettings = createSettingsCheckAllProjects();
     protected static ITSMappingManager mappingManager = createMapping();
 
-    protected ITSNodeModel(final int inputPorts, final int outputPorts) {
+    protected ITSOnlineNodeModel(final int inputPorts, final int outputPorts) {
         super(inputPorts, outputPorts);
     }
 

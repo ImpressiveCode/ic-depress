@@ -34,7 +34,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import org.apache.xmlrpc.XmlRpcException;
-import org.impressivecode.depress.its.ITSNodeDialog;
+import org.impressivecode.depress.its.ITSOnlineNodeDialog;
 import org.impressivecode.depress.its.ITSPriority;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
@@ -53,7 +53,7 @@ import org.knime.core.node.port.PortObjectSpec;
  * @author Bartosz Skuza, Wrocław University of Technology
  * @author Maciej Borkowski, Capgemini Poland
  */
-public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
+public class BugzillaOnlineAdapterNodeDialog extends ITSOnlineNodeDialog {
     public static final String UNKNOWN_ENUM_NAME = "UNKNOWN";
     public static final String DATE_FROM_LABEL = "Date from:";
     public static final String ASSIGNED_TO_LABEL = "Assigned to:";

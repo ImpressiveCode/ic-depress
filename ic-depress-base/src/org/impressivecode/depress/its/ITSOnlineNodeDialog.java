@@ -53,7 +53,7 @@ import org.knime.core.node.port.PortObjectSpec;
  * @author Bartosz Skuza, Wrocław University of Technology
  * @author Maciej Borkowski, Capgemini Poland
  */
-public abstract class ITSNodeDialog extends NodeDialogPane {
+public abstract class ITSOnlineNodeDialog extends NodeDialogPane {
     public static final String CONNECTION_TAB_NAME = "Connection";
     public static final String ADVANCED_TAB_NAME = "Advanced";
     public static final String MAPPING_TAB_NAME = "Mapping";
@@ -81,7 +81,7 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
 
     protected ITSMappingManager mappingManager;
 
-    public ITSNodeDialog() {
+    public ITSOnlineNodeDialog() {
         addTab(CONNECTION_TAB_NAME, createConnectionTab());
         addTab(ADVANCED_TAB_NAME, createAdvancedTab());
         addTab(MAPPING_TAB_NAME, createMappingTab());
@@ -231,23 +231,23 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
     }
 
     protected SettingsModelString createURLSettings() {
-        return ITSNodeModel.createURLSettings();
+        return ITSOnlineNodeModel.createURLSettings();
     }
 
     protected SettingsModelString createLoginSettings() {
-        return ITSNodeModel.createLoginSettings();
+        return ITSOnlineNodeModel.createLoginSettings();
     }
 
     protected SettingsModelString createPasswordSettings() {
-        return ITSNodeModel.createPasswordSettings();
+        return ITSOnlineNodeModel.createPasswordSettings();
     }
 
     protected SettingsModelString createSelectionSettings() {
-        return ITSNodeModel.createSettingsSelection();
+        return ITSOnlineNodeModel.createSettingsSelection();
     }
 
     protected SettingsModelBoolean createCheckAllProjectsSettings() {
-        return ITSNodeModel.createSettingsCheckAllProjects();
+        return ITSOnlineNodeModel.createSettingsCheckAllProjects();
     }
 
     protected abstract void updateProjectsList();

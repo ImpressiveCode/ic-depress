@@ -61,7 +61,7 @@ public class BugzillaEntriesParser {
     private final HashMap<String, String[]> statusSettings;
 
     public BugzillaEntriesParser(final HashMap<String, String[]> prioritySettings,
-            final HashMap<String, String[]> resolutionSettings, final HashMap<String, String[]> statusSettings) {
+            final HashMap<String, String[]> resolutionSettings, HashMap<String, String[]> statusSettings) {
         this.prioritySettings = prioritySettings;
         this.resolutionSettings = resolutionSettings;
         this.statusSettings = statusSettings;
@@ -183,8 +183,7 @@ public class BugzillaEntriesParser {
     }
 
     private ITSType getType(final Element elem) {
-        return ITSType.BUG; // TODO consider to use bug_severity enhancement
-                            // indicator
+        return ITSType.BUG;
     }
 
     private String getSummary(final Element elem) {

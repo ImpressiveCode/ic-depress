@@ -17,32 +17,21 @@
  */
 package org.impressivecode.depress.its.jira;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.impressivecode.depress.common.SettingsModelMultiFilter;
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
-import org.impressivecode.depress.its.ITSPriority;
-import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.ITSResolution;
-import org.impressivecode.depress.its.ITSStatus;
+import org.impressivecode.depress.its.ITSOfflineNodeModel;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
-import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
-import org.knime.core.node.NodeLogger;
-import org.knime.core.node.NodeModel;
-import org.knime.core.node.NodeSettingsRO;
-import org.knime.core.node.NodeSettingsWO;
-import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Preconditions;
@@ -51,26 +40,10 @@ import com.google.common.base.Preconditions;
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
  */
-public class JiraAdapterNodeModel extends NodeModel {
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraAdapterNodeModel.class);
-
-    private static final String CHOOSER_DEFAULT_VALUE = "";
-
-    static final String CHOOSER_CONFIG_NAME = "file chooser";
-    static final String PRIORITY_CONFIG_NAME = "priority";
-    static final String TYPE_CONFIG_NAME = "type";
-    static final String RESOLUTION_CONFIG_NAME = "resolution";
-    static final String STATUS_CONFIG_NAME = "status";
-
-    private final SettingsModelString fileSettings = createFileChooserSettings();
-
-    private final SettingsModelMultiFilter priorityModel = createMultiFilterPriorityModel();
-    private final SettingsModelMultiFilter typeModel = createMultiFilterTypeModel();
-    private final SettingsModelMultiFilter resolutionModel = createMultiFilterResolutionModel();
-    private final SettingsModelMultiFilter statusModel = createMultiFilterStatusModel();
+public class JiraAdapterNodeModel extends ITSOfflineNodeModel {
 
     protected JiraAdapterNodeModel() {
-        super(0, 1);
+        super();
     }
 
     @Override
@@ -93,77 +66,16 @@ public class JiraAdapterNodeModel extends NodeModel {
 
     private List<ITSDataType> parseEntries(final String filePath) throws ParserConfigurationException, SAXException,
             IOException, ParseException {
-        return new JiraEntriesParser(priorityModel.getIncluded(), typeModel.getIncluded(),
-                resolutionModel.getIncluded(), statusModel.getIncluded()).parseEntries(filePath);
+        return new JiraEntriesParser(mappingManager.getPriorityModel().getIncluded(), mappingManager.getTypeModel()
+                .getIncluded(), mappingManager.getResolutionModel().getIncluded(), mappingManager.getStatusModel()
+                .getIncluded()).parseEntries(filePath);
     }
 
-    @Override
-    protected void reset() {
-    }
-
+    // FIXME: refactorize this function
     @Override
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         Preconditions.checkArgument(inSpecs.length == 0);
         return JiraAdapterTableFactory.createTableSpec();
-    }
-
-    @Override
-    protected void saveSettingsTo(final NodeSettingsWO settings) {
-        fileSettings.saveSettingsTo(settings);
-        priorityModel.saveSettingsTo(settings);
-        typeModel.saveSettingsTo(settings);
-        resolutionModel.saveSettingsTo(settings);
-        statusModel.saveSettingsTo(settings);
-    }
-
-    @Override
-    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.loadSettingsFrom(settings);
-        priorityModel.loadSettingsFrom(settings);
-        typeModel.loadSettingsFrom(settings);
-        resolutionModel.loadSettingsFrom(settings);
-        statusModel.loadSettingsFrom(settings);
-    }
-
-    @Override
-    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.validateSettings(settings);
-        priorityModel.validateSettings(settings);
-        typeModel.validateSettings(settings);
-        resolutionModel.validateSettings(settings);
-        statusModel.validateSettings(settings);
-    }
-
-    @Override
-    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
-        // NOOP
-    }
-
-    @Override
-    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
-        // NOOP
-    }
-
-    static SettingsModelString createFileChooserSettings() {
-        return new SettingsModelString(CHOOSER_CONFIG_NAME, CHOOSER_DEFAULT_VALUE);
-    }
-
-    static SettingsModelMultiFilter createMultiFilterPriorityModel() {
-        return new SettingsModelMultiFilter(PRIORITY_CONFIG_NAME, false, ITSPriority.labels());
-    }
-
-    static SettingsModelMultiFilter createMultiFilterTypeModel() {
-        return new SettingsModelMultiFilter(TYPE_CONFIG_NAME, false, ITSType.labels());
-    }
-
-    static SettingsModelMultiFilter createMultiFilterResolutionModel() {
-        return new SettingsModelMultiFilter(RESOLUTION_CONFIG_NAME, false, ITSResolution.labels());
-    }
-
-    static SettingsModelMultiFilter createMultiFilterStatusModel() {
-        return new SettingsModelMultiFilter(STATUS_CONFIG_NAME, false, ITSStatus.labels());
     }
 
 }
