@@ -47,13 +47,12 @@ import com.google.common.base.Preconditions;
  */
 public class SyntacticAnalysisNodeModel extends NodeModel {
 
-    static final String CFG_REGEXP_KEYWORDS = "depress.support.matcher.syntacticanalysis.keywordsregexp";
-    static final String REGEXP_KEYWORDS_DEFAULT = "(?i)^.*\\b(bugs?|fix(e[ds])?|defects?|patch|pr)\\b.*$";
+    static final String CFG_REGEXP_KEYWORDS = "keywords regexp";
+    static final String CFG_KEYWORDS = "keywords";
+    static final String CFG_REGEXP_ONLYIDS = "only ids";
 
-    static final String CFG_KEYWORDS = "depress.support.matcher.syntacticanalysis.keywords";
     static final String KEYWORDS_DEFAULT = "exception";
-
-    static final String CFG_REGEXP_ONLYIDS = "depress.support.matcher.syntacticanalysis.onlyids";
+    static final String REGEXP_KEYWORDS_DEFAULT = "(?i)^.*\\b(bugs?|fix(e[ds])?|defects?|patch|pr)\\b.*$";
     static final String REGEXP_ONLYIDS_DEFAULT = "^[,0-9 ]+$";
 
     private final SettingsModelString regExpKeywords = new SettingsModelString(CFG_REGEXP_KEYWORDS,

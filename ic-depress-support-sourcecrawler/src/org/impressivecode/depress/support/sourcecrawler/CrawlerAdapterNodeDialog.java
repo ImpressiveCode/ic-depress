@@ -39,8 +39,8 @@ public class CrawlerAdapterNodeDialog extends DefaultNodeSettingsPane {
     private static final String ADVANCED_TAB_NAME = "Advanced";
 
     private static final String FILE_EXTENSION = ".xml";
-    private static final String HISTORY_ID_XML = "depress.sourcecrawler.historyidxml";
-    private static final String HISTORY_ID_DIR = "depress.sourcecrawler.historyiddir";
+    private static final String HISTORY_ID_XML = "historyidxml";
+    private static final String HISTORY_ID_DIR = "historyiddir";
 
     private static final int booleanComponentWidth = 40;
     private static final int booleanComponentHeight = 25;

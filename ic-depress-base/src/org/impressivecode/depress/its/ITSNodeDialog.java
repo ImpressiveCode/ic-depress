@@ -230,23 +230,31 @@ public abstract class ITSNodeDialog extends NodeDialogPane {
         saveSpecificSettingsTo(settings);
     }
 
+    protected SettingsModelString createURLSettings() {
+        return ITSNodeModel.createURLSettings();
+    }
+
+    protected SettingsModelString createLoginSettings() {
+        return ITSNodeModel.createLoginSettings();
+    }
+
+    protected SettingsModelString createPasswordSettings() {
+        return ITSNodeModel.createPasswordSettings();
+    }
+
+    protected SettingsModelString createSelectionSettings() {
+        return ITSNodeModel.createSettingsSelection();
+    }
+
+    protected SettingsModelBoolean createCheckAllProjectsSettings() {
+        return ITSNodeModel.createSettingsCheckAllProjects();
+    }
+
     protected abstract void updateProjectsList();
 
     protected abstract void createMappingManager();
 
     protected abstract Component createAdvancedTab();
-
-    protected abstract SettingsModelBoolean createCheckAllProjectsSettings();
-
-    protected abstract SettingsModelString createURLSettings();
-
-    protected abstract SettingsModelString createProjectSettings();
-
-    protected abstract SettingsModelString createSelectionSettings();
-
-    protected abstract SettingsModelString createLoginSettings();
-
-    protected abstract SettingsModelString createPasswordSettings();
 
     protected abstract void loadSpecificSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs)
             throws NotConfigurableException;

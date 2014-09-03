@@ -55,7 +55,7 @@ public class PitestAdapterNodeModel extends NodeModel {
             .getLogger(PitestAdapterNodeModel.class);
         
     public static final String DEFAULT_VALUE = "";
-    public static final String CONFIG_NAME = "depress.mr.pitest.confname";  
+    public static final String CONFIG_NAME = "file chooser";  
     public static final String FILE_EXTENSION = ".xml";
    
     private final SettingsModelString fileSettings = createFileChooserSettings();

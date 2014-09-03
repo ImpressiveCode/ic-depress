@@ -52,17 +52,15 @@ import com.google.common.base.Preconditions;
  * @author Maciej Borkowski, Capgemini Poland
  */
 public class JiraAdapterNodeModel extends NodeModel {
-
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraAdapterNodeModel.class);
 
     private static final String CHOOSER_DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.its.jira.";
-    static final String CHOOSER_CONFIG_NAME = CONFIG_NAME + "chooser";
-    static final String PRIORITY_CONFIG_NAME = CONFIG_NAME + "priority";
-    static final String TYPE_CONFIG_NAME = CONFIG_NAME + "type";
-    static final String RESOLUTION_CONFIG_NAME = CONFIG_NAME + "resolution";
-    static final String STATUS_CONFIG_NAME = CONFIG_NAME + "status";
+    static final String CHOOSER_CONFIG_NAME = "file chooser";
+    static final String PRIORITY_CONFIG_NAME = "priority";
+    static final String TYPE_CONFIG_NAME = "type";
+    static final String RESOLUTION_CONFIG_NAME = "resolution";
+    static final String STATUS_CONFIG_NAME = "status";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
 

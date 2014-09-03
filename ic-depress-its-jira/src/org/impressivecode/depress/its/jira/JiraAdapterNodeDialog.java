@@ -49,7 +49,7 @@ import org.knime.core.node.port.PortObjectSpec;
 public class JiraAdapterNodeDialog extends NodeDialogPane {
 
     private static final String FILE_EXTENSION = ".xml";
-    private static final String HISTORY_ID = "depress.its.jira.historyid";
+    private static final String HISTORY_ID = "history";
 
     private DialogComponentFileChooser chooser;
     private MultiFilterComponent multiFilterPriority;

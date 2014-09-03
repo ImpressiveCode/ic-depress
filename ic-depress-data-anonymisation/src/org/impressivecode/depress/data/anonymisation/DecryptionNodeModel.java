@@ -45,7 +45,7 @@ import com.google.common.base.Preconditions;
 public class DecryptionNodeModel extends CryptoNodeModel {
     private static final NodeLogger LOGGER = NodeLogger.getLogger(DecryptionNodeModel.class);
 
-    public static final String CFG_DECRYPTION_KEY_FILTER = "depress.data.anondecryption";
+    public static final String CFG_DECRYPTION_KEY_FILTER = "data column";
 
     protected DecryptionNodeModel() {
         super(CFG_DECRYPTION_KEY_FILTER);
