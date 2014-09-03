@@ -50,7 +50,7 @@ public class JaCoCoAdapterNodeModel extends NodeModel {
 
     private static final String DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.mr.jacoco.confname";
+    private static final String CONFIG_NAME = "file chooser";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
 

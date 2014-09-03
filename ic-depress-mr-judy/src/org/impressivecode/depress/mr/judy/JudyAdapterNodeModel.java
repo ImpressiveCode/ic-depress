@@ -50,7 +50,7 @@ public class JudyAdapterNodeModel extends NodeModel {
 
     private static final String DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.mr.judy.confname";
+    private static final String CONFIG_NAME = "file chooser";
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(JudyAdapterNodeModel.class);
 

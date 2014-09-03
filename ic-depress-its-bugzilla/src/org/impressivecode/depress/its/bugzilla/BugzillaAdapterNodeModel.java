@@ -53,11 +53,10 @@ public class BugzillaAdapterNodeModel extends NodeModel {
 
     private static final String CHOOSER_DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.its.bugzilla.";
-    static final String CHOOSER_CONFIG_NAME = CONFIG_NAME + "chooser";
-    static final String PRIORITY_CONFIG_NAME = CONFIG_NAME + "priority";
-    static final String RESOLUTION_CONFIG_NAME = CONFIG_NAME + "resolution";
-    static final String STATUS_CONFIG_NAME = CONFIG_NAME + "status";
+    static final String CHOOSER_CONFIG_NAME = "file chooser";
+    static final String PRIORITY_CONFIG_NAME = "priority";
+    static final String RESOLUTION_CONFIG_NAME = "resolution";
+    static final String STATUS_CONFIG_NAME = "status";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
 

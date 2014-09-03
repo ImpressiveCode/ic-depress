@@ -57,10 +57,10 @@ import com.google.common.base.Preconditions;
  */
 public class ActivityMatcherParserNodeModel extends NodeModel {
 
-    static final String CFG_INTERVAL = "depress.support.matcher.activitymatcher.idregexp";
+    static final String CFG_INTERVAL = "regexp";
+    static final String CFG_IDBUILDER = "builder";
+    
     static final Integer INTERVAL_DEFAULT = 15;
-
-    static final String CFG_IDBUILDER = "depress.support.matcher.activitymatcher.builder";
     static final String IDBUILDER_DEFAULT = "%s";
 
     private final SettingsModelInteger interval = new SettingsModelInteger(CFG_INTERVAL, INTERVAL_DEFAULT);

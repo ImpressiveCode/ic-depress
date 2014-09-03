@@ -22,34 +22,23 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.lang.Integer.parseInt;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
 import static org.impressivecode.depress.its.bugzilla.BugzillaAdapterTableFactory.createTableSpec;
-import static org.knime.core.util.KnimeEncryption.decrypt;
-import static org.knime.core.util.KnimeEncryption.encrypt;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
 import java.util.Date;
 import java.util.List;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-
-import org.impressivecode.depress.common.SettingsModelMultiFilter;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.ITSMappingManager;
+import org.impressivecode.depress.its.ITSNodeModel;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
-import org.knime.core.node.NodeLogger;
-import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
-import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelDate;
 import org.knime.core.node.defaultnodesettings.SettingsModelOptionalString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
@@ -61,46 +50,27 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * @author Bartosz Skuza, Wrocław University of Technology
  * @author Maciej Borkowski, Capgemini Poland
  */
-public class BugzillaOnlineAdapterNodeModel extends NodeModel {
+public class BugzillaOnlineAdapterNodeModel extends ITSNodeModel {
     private static final int NUMBER_OF_INPUT_PORTS = 0;
     private static final int NUMBER_OF_OUTPUT_PORTS = 1;
-    private static final String DEFAULT_STRING_VALUE = "";
 
     public static final String DEFAULT_COMBOBOX_ANY_VALUE = "Any";
 
-    private static final String BUGZILLA_URL = "depress.its.bugzillaonline.url";
-    private static final String BUGZILLA_USERNAME = "depress.its.bugzillaonline.username";
-    private static final String BUGZILLA_PASSWORD = "depress.its.bugzillaonline.password";
-    private static final String BUGZILLA_PRODUCT = "depress.its.bugzillaonline.product";
-    private static final String BUGZILLA_DATE = "depress.its.bugzillaonline.date";
-    private static final String BUGZILLA_LIMIT = "depress.its.bugzillaonline.limit";
-    private static final String BUGZILLA_OFFSET = "depress.its.bugzillaonline.offset";
-    private static final String BUGZILLA_ASSIGNED_TO = "depress.its.bugzillaonline.assignedTo";
-    private static final String BUGZILLA_REPORTER = "depress.its.bugzillaonline.creator";
-    private static final String BUGZILLA_VERSION = "depress.its.bugzillaonline.version";
-    private static final String BUGZILLA_PRIORITY = "depress.its.bugzillaonline.priority";
-    private static final String BUGZILLA_SELECTION = "depress.its.bugzillaonline.selection";
-    private static final String BUGZILLA_ALL_PROJECTS = "depress.its.bugzillaonline.allprojects";
-    static final String BUGZILLA_MAPPING = "depress.its.bugzillaonline.mapping";
+    private static final String BUGZILLA_DATE = "date";
+    private static final String BUGZILLA_LIMIT = "limit";
+    private static final String BUGZILLA_OFFSET = "offset";
+    private static final String BUGZILLA_ASSIGNED_TO = "assignedTo";
+    private static final String BUGZILLA_REPORTER = "creator";
+    private static final String BUGZILLA_VERSION = "version";
+    private static final String BUGZILLA_PRIORITY = "priority";
 
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(BugzillaOnlineAdapterNodeModel.class);
-
-    private final SettingsModelString urlSettings = createURLSettings();
     private final SettingsModelDate dateFromSettings = createDateSettings();
-    private final SettingsModelString usernameSettings = createUsernameSettings();
-    private final SettingsModelString passwordSettings = createPasswordSettings();
     private final SettingsModelOptionalString limitSettings = createLimitSettings();
     private final SettingsModelOptionalString offsetSettings = createOffsetSettings();
     private final SettingsModelOptionalString assignedToSettings = createAssignedToSettings();
     private final SettingsModelOptionalString reporterSettings = createReporterSettings();
     private final SettingsModelOptionalString versionSettings = createVersionSettings();
     private final SettingsModelString prioritySettings = createPrioritySettings();
-    private final SettingsModelString selectionSettings = createSettingsSelection();
-    private final SettingsModelBoolean allProjectsSettings = createSettingsCheckAllProjects();
-
-    private static ITSMappingManager mappingManager = new ITSMappingManager(BUGZILLA_MAPPING);
-
-    private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
     protected BugzillaOnlineAdapterNodeModel() {
         super(NUMBER_OF_INPUT_PORTS, NUMBER_OF_OUTPUT_PORTS);
@@ -112,9 +82,9 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         LOGGER.info("Preparing to read bugzilla entries.");
         BugzillaOnlineClientAdapter clientAdapter = new BugzillaOnlineClientAdapter(getURL(), context);
 
-        if (isUsernameProvided(getUsername())) {
-            LOGGER.info("Logging to bugzilla as: " + getUsername());
-            clientAdapter.setCredentials(getUsername(), getPassword());
+        if (isUsernameProvided(getLogin())) {
+            LOGGER.info("Logging to bugzilla as: " + getLogin());
+            clientAdapter.setCredentials(getLogin(), getPassword());
         }
 
         LOGGER.info("Reading entries from bugzilla instance: " + getURL() + " and product: " + getProductName());
@@ -125,23 +95,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
         LOGGER.info("Bugzilla table created.");
         return new BufferedDataTable[] { out };
-    }
-
-    private String getURL() {
-        return urlSettings.getStringValue();
-    }
-
-    private boolean isUsernameProvided(String username) {
-        return !isNullOrEmpty(username);
-    }
-
-    private String getPassword() throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException,
-            UnsupportedEncodingException, IOException {
-        return decrypt(passwordSettings.getStringValue());
-    }
-
-    private String getUsername() {
-        return usernameSettings.getStringValue();
     }
 
     private BugzillaOnlineOptions getBugzillaOptions() {
@@ -155,13 +108,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         options.setLimit(getLimit());
         options.setOffset(getOffset());
         return options;
-    }
-
-    private String getProductName() {
-        if (allProjectsSettings.getBooleanValue() || selectionSettings.getStringValue() == "") {
-            return null;
-        }
-        return selectionSettings.getStringValue();
     }
 
     private Date getDateFrom() {
@@ -234,18 +180,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
-        urlSettings.saveSettingsTo(settings);
-        usernameSettings.saveSettingsTo(settings);
-
-        try {
-            String password = encrypt(passwordSettings.getStringValue().toCharArray());
-            passwordSettings.setStringValue(password);
-            passwordSettings.saveSettingsTo(settings);
-        } catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | UnsupportedEncodingException e) {
-            LOGGER.error("Could not encrypt password, reason: " + e.getMessage(), e);
-        }
-
-        selectionSettings.saveSettingsTo(settings);
         dateFromSettings.saveSettingsTo(settings);
         limitSettings.saveSettingsTo(settings);
         offsetSettings.saveSettingsTo(settings);
@@ -253,19 +187,10 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         reporterSettings.saveSettingsTo(settings);
         versionSettings.saveSettingsTo(settings);
         prioritySettings.saveSettingsTo(settings);
-        selectionSettings.saveSettingsTo(settings);
-        allProjectsSettings.saveSettingsTo(settings);
-        for (SettingsModelMultiFilter model : mappingManager.getModels()) {
-            model.saveSettingsTo(settings);
-        }
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        urlSettings.loadSettingsFrom(settings);
-        usernameSettings.loadSettingsFrom(settings);
-        passwordSettings.loadSettingsFrom(settings);
-        selectionSettings.loadSettingsFrom(settings);
         dateFromSettings.loadSettingsFrom(settings);
         limitSettings.loadSettingsFrom(settings);
         offsetSettings.loadSettingsFrom(settings);
@@ -273,19 +198,10 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         reporterSettings.loadSettingsFrom(settings);
         versionSettings.loadSettingsFrom(settings);
         prioritySettings.loadSettingsFrom(settings);
-        selectionSettings.loadSettingsFrom(settings);
-        allProjectsSettings.loadSettingsFrom(settings);
-        for (SettingsModelMultiFilter model : mappingManager.getModels()) {
-            model.loadSettingsFrom(settings);
-        }
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        urlSettings.validateSettings(settings);
-        usernameSettings.validateSettings(settings);
-        passwordSettings.validateSettings(settings);
-        selectionSettings.validateSettings(settings);
         dateFromSettings.validateSettings(settings);
         limitSettings.validateSettings(settings);
         offsetSettings.validateSettings(settings);
@@ -293,16 +209,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
         reporterSettings.validateSettings(settings);
         prioritySettings.validateSettings(settings);
         versionSettings.validateSettings(settings);
-        selectionSettings.validateSettings(settings);
-        allProjectsSettings.validateSettings(settings);
-        for (SettingsModelMultiFilter model : mappingManager.getModels()) {
-            model.validateSettings(settings);
-        }
-
-        SettingsModelString url = urlSettings.createCloneWithValidatedValue(settings);
-        if (!isNullOrEmpty(url.getStringValue()) && !url.getStringValue().matches(URL_PATTERN)) {
-            throw new InvalidSettingsException("Invalid URL address. Valid example: 'https://website.com'");
-        }
     }
 
     @Override
@@ -315,26 +221,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
             CanceledExecutionException {
         // NOOP
-    }
-
-    static SettingsModelString createURLSettings() {
-        return new SettingsModelString(BUGZILLA_URL, DEFAULT_STRING_VALUE);
-    }
-
-    static SettingsModelString createUsernameSettings() {
-        return new SettingsModelString(BUGZILLA_USERNAME, DEFAULT_STRING_VALUE);
-    }
-
-    static SettingsModelString createPasswordSettings() {
-        return new SettingsModelString(BUGZILLA_PASSWORD, DEFAULT_STRING_VALUE);
-    }
-
-    static SettingsModelString createProductSettings() {
-        return new SettingsModelString(BUGZILLA_PRODUCT, DEFAULT_STRING_VALUE);
-    }
-
-    static SettingsModelString createSettingsSelection() {
-        return new SettingsModelString(BUGZILLA_SELECTION, DEFAULT_STRING_VALUE);
     }
 
     static SettingsModelDate createDateSettings() {
@@ -363,10 +249,6 @@ public class BugzillaOnlineAdapterNodeModel extends NodeModel {
 
     static SettingsModelString createPrioritySettings() {
         return new SettingsModelString(BUGZILLA_PRIORITY, DEFAULT_COMBOBOX_ANY_VALUE);
-    }
-
-    static SettingsModelBoolean createSettingsCheckAllProjects() {
-        return new SettingsModelBoolean(BUGZILLA_ALL_PROJECTS, true);
     }
 
 }

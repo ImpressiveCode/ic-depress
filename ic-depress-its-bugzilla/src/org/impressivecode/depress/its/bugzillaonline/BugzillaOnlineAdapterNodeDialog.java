@@ -34,7 +34,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import org.apache.xmlrpc.XmlRpcException;
-import org.impressivecode.depress.its.ITSMappingManager;
 import org.impressivecode.depress.its.ITSNodeDialog;
 import org.impressivecode.depress.its.ITSPriority;
 import org.knime.core.node.InvalidSettingsException;
@@ -91,7 +90,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 
     @Override
     protected void createMappingManager() {
-        mappingManager = new ITSMappingManager(BugzillaOnlineAdapterNodeModel.BUGZILLA_MAPPING);
+        mappingManager = BugzillaOnlineAdapterNodeModel.createMapping();
         mappingManager.createFilterPriority(new RefreshCaller(BugzillaOnlineParser.PRIORITY));
         mappingManager.createFilterType(new RefreshCaller(BUG));
         mappingManager.createFilterResolution(new RefreshCaller(BugzillaOnlineParser.RESOLUTION));
@@ -219,7 +218,7 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
 
     @Override
     protected SettingsModelString createLoginSettings() {
-        return BugzillaOnlineAdapterNodeModel.createUsernameSettings();
+        return BugzillaOnlineAdapterNodeModel.createLoginSettings();
     }
 
     @Override

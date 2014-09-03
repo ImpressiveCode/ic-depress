@@ -171,7 +171,7 @@ public class JiraEntriesParser {
     }
 
     private ITSResolution getResolution(final Element elem) {
-        String resolution = extractValue(elem, "resolution");
+        String resolution = extractValue(elem, "resolution").trim();
         if (resolution == null) {
             return ITSResolution.UNKNOWN;
         }
@@ -193,7 +193,7 @@ public class JiraEntriesParser {
     }
 
     private ITSType getType(final Element elem) {
-        String type = extractValue(elem, "type");
+        String type = extractValue(elem, "type").trim();
         if (type == null) {
             return ITSType.UNKNOWN;
         }
@@ -211,7 +211,7 @@ public class JiraEntriesParser {
     }
 
     private ITSStatus getStatus(final Element elem) {
-        String status = extractValue(elem, "status");
+        String status = extractValue(elem, "status").trim();
         if (status == null) {
             return ITSStatus.UNKNOWN;
         }
@@ -229,7 +229,7 @@ public class JiraEntriesParser {
     }
 
     private ITSPriority getPriority(final Element elem) {
-        String priority = extractValue(elem, "priority");
+        String priority = extractValue(elem, "priority").trim();
         if (priority == null) {
             return ITSPriority.UNKNOWN;
         }
@@ -296,7 +296,7 @@ public class JiraEntriesParser {
             return null;
         }
         String value = nodeToString(nodeList.item(0)).replaceAll("\\<.*?>","");
-        return value == null ? null : value;
+        return value == null ? null : value.trim();
     }
     private Date parseDate(final String nodeValue) throws ParseException {
         // Mon, 16 Feb 2004 00:29:19 +0000
