@@ -60,8 +60,8 @@ public class BugzillaEntriesParser {
     private final HashMap<String, String[]> resolutionSettings;
     private final HashMap<String, String[]> statusSettings;
 
-    public BugzillaEntriesParser(final HashMap<String, String[]> prioritySettings, final HashMap<String, String[]> resolutionSettings,
-            HashMap<String, String[]> statusSettings) {
+    public BugzillaEntriesParser(final HashMap<String, String[]> prioritySettings,
+            final HashMap<String, String[]> resolutionSettings, HashMap<String, String[]> statusSettings) {
         this.prioritySettings = prioritySettings;
         this.resolutionSettings = resolutionSettings;
         this.statusSettings = statusSettings;

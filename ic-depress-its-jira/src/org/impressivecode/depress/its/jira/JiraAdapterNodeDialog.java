@@ -33,7 +33,7 @@ public class JiraAdapterNodeDialog extends ITSOfflineNodeDialog {
     protected JiraAdapterNodeDialog() {
         super();
     }
-    
+
     @Override
     protected void createMappingManager() {
         mappingManager.createFilterPriority(new RefreshCaller("priority"));
@@ -44,11 +44,11 @@ public class JiraAdapterNodeDialog extends ITSOfflineNodeDialog {
 
     private class RefreshCaller implements Callable<List<String>> {
         private final String property;
-        
+
         RefreshCaller(final String property) {
             this.property = property;
         }
-        
+
         @Override
         public List<String> call() throws Exception {
             FileParser parser = new FileParser();

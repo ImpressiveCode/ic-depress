@@ -48,13 +48,13 @@ public abstract class ITSOfflineNodeDialog extends NodeDialogPane {
     private static final String PRIORITY = "Priority";
     private static final String RESOLUTION = "Resolution";
     private static final String TYPE = "Type";
-    
+
     private static final String FILE_EXTENSION = ".xml";
     private static final String HISTORY_ID = "history";
-    
+
     protected DialogComponentFileChooser chooser;
     protected ITSMappingManager mappingManager;
-    
+
     private File oldFile = null;
 
     protected ITSOfflineNodeDialog() {
@@ -141,6 +141,6 @@ public abstract class ITSOfflineNodeDialog extends NodeDialogPane {
             }
         });
     }
-    
+
     protected abstract void createMappingManager();
 }
