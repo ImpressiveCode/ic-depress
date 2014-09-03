@@ -277,7 +277,6 @@ public class JiraOnlineAdapterNodeModel extends ITSNodeModel {
     protected void loadSpecificSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         jqlSettings.loadSettingsFrom(settings);
         historySettings.loadSettingsFrom(settings);
-
     }
 
     @Override
@@ -322,7 +321,6 @@ public class JiraOnlineAdapterNodeModel extends ITSNodeModel {
     }
 
     private class DownloadAndParseIssueHistoryTask implements Callable<List<JiraOnlineIssueChangeRowItem>> {
-
         private URI uri;
 
         public DownloadAndParseIssueHistoryTask(final URI uri) {
