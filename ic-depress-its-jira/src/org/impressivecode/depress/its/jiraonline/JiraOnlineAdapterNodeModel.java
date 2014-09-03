@@ -20,8 +20,6 @@ package org.impressivecode.depress.its.jiraonline;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -243,7 +241,6 @@ public class JiraOnlineAdapterNodeModel extends ITSNodeModel {
 
     private JiraOnlineAdapterUriBuilder prepareBuilder() {
         JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
-
         builder.setHostname(getURL());
         if (jqlSettings.getStringValue() != null && !jqlSettings.getStringValue().equals("")) {
             builder.setJQL(jqlSettings.getStringValue());
@@ -265,45 +262,28 @@ public class JiraOnlineAdapterNodeModel extends ITSNodeModel {
     }
 
     @Override
-    protected void reset() {
-        // NOOP
-    }
-
-    @Override
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         Preconditions.checkArgument(inSpecs.length == 0);
         return new DataTableSpec[] { createDataColumnSpec() };
     }
 
     @Override
-    protected void saveSettingsTo(final NodeSettingsWO settings) {
+    protected void saveSpecificSettingsTo(final NodeSettingsWO settings) {
         jqlSettings.saveSettingsTo(settings);
         historySettings.saveSettingsTo(settings);
     }
 
     @Override
-    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+    protected void loadSpecificSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         jqlSettings.loadSettingsFrom(settings);
         historySettings.loadSettingsFrom(settings);
 
     }
 
     @Override
-    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+    protected void validateSpecificSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         jqlSettings.validateSettings(settings);
         historySettings.validateSettings(settings);
-    }
-
-    @Override
-    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
-        // NOOP
-    }
-
-    @Override
-    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
-        // NOOP
     }
 
     static SettingsModelString createSettingsJQL() {

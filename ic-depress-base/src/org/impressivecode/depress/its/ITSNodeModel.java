@@ -43,7 +43,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 /**
  * @author Maciej Borkowski, Capgemini Poland
  */
-public class ITSNodeModel extends NodeModel {
+public abstract class ITSNodeModel extends NodeModel {
     protected static final NodeLogger LOGGER = NodeLogger.getLogger(ITSNodeModel.class);
 
     private static final String URL_PATTERN = "^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
@@ -52,8 +52,7 @@ public class ITSNodeModel extends NodeModel {
     private static final String CFG_ITS_URL = "url";
     private static final String CFG_ITS_Login = "login";
     private static final String CFG_ITS_PASSWORD = "password";
-    private static final String CFG_ITS_PRODUCT = "product";
-    private static final String CFG_ITS_SELECTION = "selection";
+    private static final String CFG_ITS_SELECTION = "project";
     private static final String CFG_ITS_ALL_PROJECTS = "allprojects check";
     protected static final String CFG_ITS_MAPPING = "mapping";
 
@@ -104,10 +103,6 @@ public class ITSNodeModel extends NodeModel {
         return new SettingsModelString(CFG_ITS_PASSWORD, DEFAULT_STRING_VALUE);
     }
 
-    public static SettingsModelString createProductSettings() {
-        return new SettingsModelString(CFG_ITS_PRODUCT, DEFAULT_STRING_VALUE);
-    }
-
     public static SettingsModelString createSettingsSelection() {
         return new SettingsModelString(CFG_ITS_SELECTION, DEFAULT_STRING_VALUE);
     }
@@ -124,7 +119,6 @@ public class ITSNodeModel extends NodeModel {
     protected void saveSettingsTo(NodeSettingsWO settings) {
         urlSettings.saveSettingsTo(settings);
         loginSettings.saveSettingsTo(settings);
-
         try {
             String password = encrypt(passwordSettings.getStringValue().toCharArray());
             passwordSettings.setStringValue(password);
@@ -132,13 +126,12 @@ public class ITSNodeModel extends NodeModel {
         } catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | UnsupportedEncodingException e) {
             LOGGER.error("Could not encrypt password, reason: " + e.getMessage(), e);
         }
-
-        selectionSettings.saveSettingsTo(settings);
         selectionSettings.saveSettingsTo(settings);
         allProjectsSettings.saveSettingsTo(settings);
         for (SettingsModelMultiFilter model : mappingManager.getModels()) {
             model.saveSettingsTo(settings);
         }
+        saveSpecificSettingsTo(settings);
     }
 
     @Override
@@ -146,7 +139,6 @@ public class ITSNodeModel extends NodeModel {
         urlSettings.validateSettings(settings);
         loginSettings.validateSettings(settings);
         passwordSettings.validateSettings(settings);
-        selectionSettings.validateSettings(settings);
         selectionSettings.validateSettings(settings);
         allProjectsSettings.validateSettings(settings);
         for (SettingsModelMultiFilter model : mappingManager.getModels()) {
@@ -156,6 +148,7 @@ public class ITSNodeModel extends NodeModel {
         if (!isNullOrEmpty(url.getStringValue()) && !url.getStringValue().matches(URL_PATTERN)) {
             throw new InvalidSettingsException("Invalid URL address. Valid example: 'https://website.com'");
         }
+        validateSpecificSettings(settings);
     }
 
     @Override
@@ -164,11 +157,11 @@ public class ITSNodeModel extends NodeModel {
         loginSettings.loadSettingsFrom(settings);
         passwordSettings.loadSettingsFrom(settings);
         selectionSettings.loadSettingsFrom(settings);
-        selectionSettings.loadSettingsFrom(settings);
         allProjectsSettings.loadSettingsFrom(settings);
         for (SettingsModelMultiFilter model : mappingManager.getModels()) {
             model.loadSettingsFrom(settings);
         }
+        loadSpecificSettingsFrom(settings);
     }
 
     @Override
@@ -184,4 +177,11 @@ public class ITSNodeModel extends NodeModel {
     protected void saveInternals(File nodeInternDir, ExecutionMonitor exec) throws IOException,
             CanceledExecutionException {
     }
+
+    protected abstract void saveSpecificSettingsTo(NodeSettingsWO settings);
+
+    protected abstract void validateSpecificSettings(NodeSettingsRO settings) throws InvalidSettingsException;
+
+    protected abstract void loadSpecificSettingsFrom(NodeSettingsRO settings) throws InvalidSettingsException;
+
 }

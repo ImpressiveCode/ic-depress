@@ -43,15 +43,14 @@ import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponentDate;
 import org.knime.core.node.defaultnodesettings.DialogComponentOptionalString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
-import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
- * @author MichaÅ‚ Negacz, WrocÅ‚aw University of Technology
- * @author Piotr WrÃ³blewski, WrocÅ‚aw University of Technology
- * @author Bartosz Skuza, WrocÅ‚aw University of Technology
+ * @author Michał‚ Negacz, Wrocław University of Technology
+ * @author Piotr Wróblewski, Wrocław University of Technology
+ * @author Bartosz Skuza, Wrocław University of Technology
  * @author Maciej Borkowski, Capgemini Poland
  */
 public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
@@ -194,36 +193,6 @@ public class BugzillaOnlineAdapterNodeDialog extends ITSNodeDialog {
         priority = new DialogComponentStringSelection(BugzillaOnlineAdapterNodeModel.createPrioritySettings(),
                 PRIORITY_LABEL, prepareEnumValuesToComboBox(ITSPriority.values()));
         return priority.getComponentPanel();
-    }
-
-    @Override
-    protected SettingsModelString createSelectionSettings() {
-        return BugzillaOnlineAdapterNodeModel.createSettingsSelection();
-    }
-
-    @Override
-    protected SettingsModelBoolean createCheckAllProjectsSettings() {
-        return BugzillaOnlineAdapterNodeModel.createSettingsCheckAllProjects();
-    }
-
-    @Override
-    protected SettingsModelString createURLSettings() {
-        return BugzillaOnlineAdapterNodeModel.createURLSettings();
-    }
-
-    @Override
-    protected SettingsModelString createProjectSettings() {
-        return BugzillaOnlineAdapterNodeModel.createProductSettings();
-    }
-
-    @Override
-    protected SettingsModelString createLoginSettings() {
-        return BugzillaOnlineAdapterNodeModel.createLoginSettings();
-    }
-
-    @Override
-    protected SettingsModelString createPasswordSettings() {
-        return BugzillaOnlineAdapterNodeModel.createPasswordSettings();
     }
 
     @Override

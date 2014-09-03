@@ -23,8 +23,6 @@ import static java.lang.Integer.parseInt;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
 import static org.impressivecode.depress.its.bugzilla.BugzillaAdapterTableFactory.createTableSpec;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +33,6 @@ import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
-import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
@@ -168,59 +165,9 @@ public class BugzillaOnlineAdapterNodeModel extends ITSNodeModel {
     }
 
     @Override
-    protected void reset() {
-        // NOOP
-    }
-
-    @Override
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         checkArgument(inSpecs.length == 0);
         return createTableSpec();
-    }
-
-    @Override
-    protected void saveSettingsTo(final NodeSettingsWO settings) {
-        dateFromSettings.saveSettingsTo(settings);
-        limitSettings.saveSettingsTo(settings);
-        offsetSettings.saveSettingsTo(settings);
-        assignedToSettings.saveSettingsTo(settings);
-        reporterSettings.saveSettingsTo(settings);
-        versionSettings.saveSettingsTo(settings);
-        prioritySettings.saveSettingsTo(settings);
-    }
-
-    @Override
-    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        dateFromSettings.loadSettingsFrom(settings);
-        limitSettings.loadSettingsFrom(settings);
-        offsetSettings.loadSettingsFrom(settings);
-        assignedToSettings.loadSettingsFrom(settings);
-        reporterSettings.loadSettingsFrom(settings);
-        versionSettings.loadSettingsFrom(settings);
-        prioritySettings.loadSettingsFrom(settings);
-    }
-
-    @Override
-    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        dateFromSettings.validateSettings(settings);
-        limitSettings.validateSettings(settings);
-        offsetSettings.validateSettings(settings);
-        assignedToSettings.validateSettings(settings);
-        reporterSettings.validateSettings(settings);
-        prioritySettings.validateSettings(settings);
-        versionSettings.validateSettings(settings);
-    }
-
-    @Override
-    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
-        // NOOP
-    }
-
-    @Override
-    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
-        // NOOP
     }
 
     static SettingsModelDate createDateSettings() {
@@ -249,6 +196,39 @@ public class BugzillaOnlineAdapterNodeModel extends ITSNodeModel {
 
     static SettingsModelString createPrioritySettings() {
         return new SettingsModelString(BUGZILLA_PRIORITY, DEFAULT_COMBOBOX_ANY_VALUE);
+    }
+
+    @Override
+    protected void saveSpecificSettingsTo(final NodeSettingsWO settings) {
+        dateFromSettings.saveSettingsTo(settings);
+        limitSettings.saveSettingsTo(settings);
+        offsetSettings.saveSettingsTo(settings);
+        assignedToSettings.saveSettingsTo(settings);
+        reporterSettings.saveSettingsTo(settings);
+        versionSettings.saveSettingsTo(settings);
+        prioritySettings.saveSettingsTo(settings);
+    }
+
+    @Override
+    protected void loadSpecificSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+        dateFromSettings.loadSettingsFrom(settings);
+        limitSettings.loadSettingsFrom(settings);
+        offsetSettings.loadSettingsFrom(settings);
+        assignedToSettings.loadSettingsFrom(settings);
+        reporterSettings.loadSettingsFrom(settings);
+        versionSettings.loadSettingsFrom(settings);
+        prioritySettings.loadSettingsFrom(settings);
+    }
+
+    @Override
+    protected void validateSpecificSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+        dateFromSettings.validateSettings(settings);
+        limitSettings.validateSettings(settings);
+        offsetSettings.validateSettings(settings);
+        assignedToSettings.validateSettings(settings);
+        reporterSettings.validateSettings(settings);
+        prioritySettings.validateSettings(settings);
+        versionSettings.validateSettings(settings);
     }
 
 }
