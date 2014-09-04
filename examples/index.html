@@ -9,7 +9,7 @@
 
 		<link rel="stylesheet" href="../assets/css/site.css">
 		<link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.css">
-
+		<link rel="stylesheet" href="../assets/css/popup.css">
 	</head>
 	<body>
 		<div id="wrap">
@@ -55,7 +55,61 @@
 
 			<div class="container">
 				<p class="lead">
-					Defect Prediction in Software Systems (DePress) Extensible Framework allows building workflows in graphical manner. DePress is based on the KNIME project. The main aim of the DePress Framework is support for empirical software analysis. It allows you to collect, combine and analyse data from various data sources like software repositories or software metrics.
+					<h3>Release notes for Git/SVN files with Jira</h3>
+					<ol>
+						<li><a href="../quickstart">Set up</a> your DePress and download workflow for either <a href="./release/gitworkflow.zip">Git</a> or <a href="./release/svnworkflow.zip">SVN</a>.
+							<a href="./release/example.zip">Example files</a> used in this tutorial.</li>
+						<li>Import KNIME workflow as archive file. You should see a workflow similar to this:
+							<center>
+							<a class="image-popup-vertical-fit" href="./release/pre_init.png">
+								<img src="./release/pre_init.png" width="300" height="200" />
+							</a> </br>
+							</center>
+						</li>
+						<li>Select your Git/SVN log files. To do this select configure on List Files node and choose your directory.
+							<center>
+								<a class="image-popup-vertical-fit" href="./release/files.png">
+									<img src="./release/files.png" width="150" height="50" />
+								</a> </br>
+							</center>
+							Generation of valid Git/SVN logs is included in Git/SVN Offline node description.</br>
+							Files should have names describing their version e.g. "1.0.0.xml" and "1.1.2.xml".
+							You need at least two distinct log files to create release notes.</li>
+						<li>Execute Java Edit Variable (simple) node.
+							<center>
+								<a class="image-popup-vertical-fit" href="./release/init.png">
+									<img src="./release/init.png" width="250" height="75" />
+								</a> </br>
+							</center>
+						</li>
+						<li>Select your Jira log file.
+							<center>
+								<a class="image-popup-vertical-fit" href="./release/jira.png">
+									<img src="./release/jira.png"  width="175" height="50" />
+								</a> </br>	
+							</center></li>
+						<li>Optionally you can configure Jira mapping of nonstandard values. </br>
+							Following this example: Go to Mapping tab, then Resolution and enable "Customized properties". 
+							Select "Unresolved" radio button.
+							<center>					
+								<a class="image-popup-vertical-fit" href="./release/mapping1.png">
+									<img src="./release/mapping1.png" width="350" height="250" />
+								</a> </br>
+							</center>
+							Then select "Later" property and click "add" button. 
+							<center>
+								<a class="image-popup-vertical-fit" href="./release/mapping2.png">
+									<img src="./release/mapping2.png" width="350" height="250" />
+								</a> </br>
+							</center>
+							From now on all resolution properties found in Jira log file will be shown as "Unresolved"</li>
+						<li>By now everything should be configured. Execute XLS Writer node.
+							<center>
+							<a class="image-popup-vertical-fit" href="./release/start.png">
+								<img src="./release/start.png" width="225" height="75" />
+							</a>
+						</center></li>
+					</ol>
 				</p>
 			</div>
 		</div>
@@ -70,8 +124,20 @@
 				</div>
 			</div>
 		</footer>
-		<script src="../assets/js/jquery-1.10.2.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script src="../assets/js/bootstrap-3.1.1.min.js"></script>
-
+		<script src="../assets/js/popup.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('.image-popup-vertical-fit').magnificPopup({
+					type: 'image',
+					closeOnContentClick: true,
+					mainClass: 'mfp-img-mobile',
+					image: {
+						verticalFit: true
+					}
+				});
+			});
+		</script>
 	</body>
 </html>
