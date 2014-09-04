@@ -29,7 +29,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 public class ChidamberKemererJavaMetricsNodeDialog extends DefaultNodeSettingsPane {
 
     private static final String FILE_EXTENSION = ".xml";
-    private static final String HISTORY_ID = "depress.mr.ckjm.historyid";
+    private static final String HISTORY_ID = "history";
 
     protected ChidamberKemererJavaMetricsNodeDialog() {
         addDialogComponent(getFileChooserComponent());

@@ -57,7 +57,7 @@ import com.google.common.collect.Sets;
  */
 public class MarkerParserNodeModel extends NodeModel {
 
-    static final String CFG_REGEXP = "depress.support.matcher.markerparser";
+    static final String CFG_REGEXP = "regexp";
     static final String REGEXP_DEFAULT = "";
 
     private final SettingsModelString regExp = new SettingsModelString(CFG_REGEXP, REGEXP_DEFAULT);

@@ -53,7 +53,7 @@ public class ChidamberKemererJavaMetricsNodeModel extends NodeModel {
         
     private static final String DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.mr.ckjm.confname";
+    private static final String CONFIG_NAME = "file chooser";
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(ChidamberKemererJavaMetricsNodeModel.class);
 

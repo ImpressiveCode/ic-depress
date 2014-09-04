@@ -57,18 +57,13 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
 
     private static final NodeLogger logger = NodeLogger.getLogger(SVNOnlineAdapterNodeModel.class);
 
-    public static String SVN_REPOSITORY_DEFAULT = "";
-
-    public static String SVN_REPOSITORY_ADDRESS = "depress.scm.svnonline.remoteaddress";
-
-    public static String SVN_PACKAGENAME = "depress.scm.svnonline.package";
+    public static String SVN_REPOSITORY_ADDRESS = "remote address";
+    public final static String SVN_EXTENSION = "extension";
+    public static String SVN_PACKAGENAME = "package";
 
     public static String SVN_PACKAGENAME_DEFAULT = "org.";
-    
     public static String EXTENSION_DEFAULT = ".java";
-    
-    public final static String SVN_EXTENSION = "depress.scm.svnonline.extension";
-    
+    public static String SVN_REPOSITORY_DEFAULT = "";
 
     private final SettingsModelString svnRepositoryAddress = new SettingsModelString(
             SVNOnlineAdapterNodeModel.SVN_REPOSITORY_ADDRESS, SVNOnlineAdapterNodeModel.SVN_REPOSITORY_DEFAULT);

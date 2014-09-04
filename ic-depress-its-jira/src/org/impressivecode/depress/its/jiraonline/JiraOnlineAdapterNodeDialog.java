@@ -27,8 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import org.impressivecode.depress.its.ITSMappingManager;
-import org.impressivecode.depress.its.ITSNodeDialog;
+import org.impressivecode.depress.its.ITSOnlineNodeDialog;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineProjectListItem;
@@ -38,7 +37,6 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentMultiLineString;
-import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
 
@@ -48,11 +46,10 @@ import org.knime.core.node.port.PortObjectSpec;
  * @author Dawid Rutowicz, Wroclaw University of Technology
  * @author Maciej Borkowski, Capgemini Poland
  */
-public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
+public class JiraOnlineAdapterNodeDialog extends ITSOnlineNodeDialog {
     private static final String JQL = "JQL:";
     private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
 
-    private SettingsModelString hostnameComponent;
     private DialogComponentBoolean history;
     private DialogComponentMultiLineString jql;
 
@@ -70,13 +67,13 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
 
     @Override
     protected void createMappingManager() {
-        mappingManager = new ITSMappingManager(JiraOnlineAdapterNodeModel.JIRA_MAPPING);
+        mappingManager = JiraOnlineAdapterNodeModel.createMapping();
         mappingManager.createFilterPriority(new RefreshCaller(Mode.PRIORITY_LIST));
         mappingManager.createFilterType(new RefreshCaller(Mode.TYPE_LIST));
         mappingManager.createFilterResolution(new RefreshCaller(Mode.RESOLUTION_LIST));
         mappingManager.createFilterStatus(new RefreshCaller(Mode.STATE_LIST));
     }
-    
+
     private class RefreshCaller implements Callable<List<String>> {
         private final Mode mode;
 
@@ -97,7 +94,8 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
 
     private <T> List<T> getList(Mode mode, Class<?> elem) throws Exception {
         JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
-        builder.setHostname(hostnameComponent.getStringValue());
+        String urlString = ((SettingsModelString) (url.getModel())).getStringValue();
+        builder.setHostname(urlString);
         builder.setMode(mode);
         JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient();
         URI uri = builder.build();
@@ -123,37 +121,6 @@ public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
         } catch (Exception e) {
             Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
         }
-    }
-
-    @Override
-    protected SettingsModelString createURLSettings() {
-        hostnameComponent = JiraOnlineAdapterNodeModel.createSettingsURL();
-        return hostnameComponent;
-    }
-
-    @Override
-    protected SettingsModelString createProjectSettings() {
-        return new SettingsModelString("createProjectSettings", "");
-    }
-
-    @Override
-    protected SettingsModelString createLoginSettings() {
-        return JiraOnlineAdapterNodeModel.createSettingsLogin();
-    }
-
-    @Override
-    protected SettingsModelString createPasswordSettings() {
-        return JiraOnlineAdapterNodeModel.createSettingsPass();
-    }
-
-    @Override
-    protected SettingsModelString createSelectionSettings() {
-        return JiraOnlineAdapterNodeModel.createSettingsSelection();
-    }
-
-    @Override
-    protected SettingsModelBoolean createCheckAllProjectsSettings() {
-        return JiraOnlineAdapterNodeModel.createSettingsCheckAllProjects();
     }
 
     @Override

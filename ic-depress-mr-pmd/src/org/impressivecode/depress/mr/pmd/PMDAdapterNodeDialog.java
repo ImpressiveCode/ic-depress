@@ -25,14 +25,14 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 /**
  * 
  * @author Tomasz Banach
- * @author �ukasz Waga
+ * @author Łukasz Waga
  * @author Monika Pruszkowska
  * 
  */
 public class PMDAdapterNodeDialog extends DefaultNodeSettingsPane {
 
     private static final String FILE_EXTENSION = ".xml";
-    private static final String HISTORY_ID = "depress.metric.pmd.historyid";
+    private static final String HISTORY_ID = "history";
 
     protected PMDAdapterNodeDialog() {
         addDialogComponent(getFileChooserComponent());
