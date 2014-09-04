@@ -42,10 +42,8 @@ import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
- * 
  * @author Pawel Nosal, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
- * 
  */
 public class CrawlerAdapterNodeModel extends NodeModel {
 	static final String FILE = "File";
@@ -71,23 +69,23 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     static final String CREATE_XML = "Create XML file";
     static final String RADIO_DEFAULT = "File";
     
-    static final String PACKAGE_NAME_CONFIG = "depress.sourcecrawler.package";
-    static final String CREATE_XML_CONFIG = "depress.sourcecrawler.xml";
-    static final String PUBLIC_CONFIG = "depress.sourcecrawler.public";
-    static final String PRIVATE_CONFIG = "depress.sourcecrawler.private";
-    static final String PROTECTED_CONFIG = "depress.sourcecrawler.protected";
-    static final String PACKAGE_CONFIG = "depress.sourcecrawler.packageprivate";
-    static final String CLASS_CONFIG = "depress.sourcecrawler.class";
-    static final String INTERFACE_CONFIG = "depress.sourcecrawler.interface";
-    static final String ABSTRACT_CONFIG = "depress.sourcecrawler.abstract";
-    static final String ENUM_CONFIG = "depress.sourcecrawler.enum";
-    static final String EXCEPTION_CONFIG = "depress.sourcecrawler.exception";
-	static final String INNER_CONFIG = "depress.sourcecrawler.inner";
-	static final String TEST_CONFIG = "depress.sourcecrawler.test";
-	static final String FINAL_CONFIG = "depress.sourcecrawler.final";	
-	static final String RADIO_CONFIG = "depress.sourcecrawler.radio";
-	static final String FILE_NAME_CONFIG_XML = "depress.sourcecrawler.fileXML";
-	static final String FILE_NAME_CONFIG_DIR = "depress.sourcecrawler.fileDIR";
+    static final String PACKAGE_NAME_CONFIG = "package";
+    static final String CREATE_XML_CONFIG = "create xml";
+    static final String PUBLIC_CONFIG = "public";
+    static final String PRIVATE_CONFIG = "private";
+    static final String PROTECTED_CONFIG = "protected";
+    static final String PACKAGE_CONFIG = "packageprivate";
+    static final String CLASS_CONFIG = "class";
+    static final String INTERFACE_CONFIG = "interface";
+    static final String ABSTRACT_CONFIG = "abstract";
+    static final String ENUM_CONFIG = "enum";
+    static final String EXCEPTION_CONFIG = "exception";
+	static final String INNER_CONFIG = "inner";
+	static final String TEST_CONFIG = "test";
+	static final String FINAL_CONFIG = "final";	
+	static final String RADIO_CONFIG = "radio";
+	static final String FILE_NAME_CONFIG_XML = "fileXML";
+	static final String FILE_NAME_CONFIG_DIR = "fileDIR";
 	
 	
 	private final SettingsModelString fileSettingsXML = createFileSettingsXML();

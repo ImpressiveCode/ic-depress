@@ -48,22 +48,21 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 /**
- * 
  * @author Tomasz Kuzemko
  * @author Sławomir Kapłoński
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
  */
 public class GitOfflineAdapterNodeModel extends NodeModel {
-
     // the logger instance
     private static final NodeLogger logger = NodeLogger.getLogger(GitOfflineAdapterNodeModel.class);
     
-    static final String GIT_FILENAME = "depress.scm.git.filename";
+    static final String GIT_FILENAME = "filename";
+    static final String EXTENSION_STR = "extension";
+    static final String GIT_PACKAGENAME = "package";
+    
     static final String GIT_FILENAME_DEFAULT = "";
-    static final String GIT_PACKAGENAME = "depress.scm.git.package";
     static final String GIT_PACKAGENAME_DEFAULT = "org.";
-    static final String EXTENSION_STR = "depress.scm.svn.string";
     static final String EXTENSION_DEFAULT = ".java";
     
     static final Boolean GIT_PACKAGENAME_ACTIVE_STATE = false;

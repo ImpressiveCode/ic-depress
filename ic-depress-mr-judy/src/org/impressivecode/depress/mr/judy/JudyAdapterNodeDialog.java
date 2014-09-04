@@ -30,7 +30,7 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 public class JudyAdapterNodeDialog extends DefaultNodeSettingsPane {
 
     private static final String FILE_EXTENSION = ".xml";
-    private static final String HISTORY_ID = "depress.mr.judy.historyid";
+    private static final String HISTORY_ID = "history";
 
     protected JudyAdapterNodeDialog() {
         addDialogComponent(getFileChooserComponent());

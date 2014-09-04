@@ -52,7 +52,7 @@ public class CheckStyleAdapterNodeModel extends NodeModel {
 
     private static final String DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.mr.checkstyle.confname";
+    private static final String CONFIG_NAME = "file chooser";
 
     private final SettingsModelString fileSettings = createFileChooserSettings();
 

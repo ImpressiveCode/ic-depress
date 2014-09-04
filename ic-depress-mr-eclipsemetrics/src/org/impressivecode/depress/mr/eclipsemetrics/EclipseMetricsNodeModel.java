@@ -50,7 +50,7 @@ public class EclipseMetricsNodeModel extends NodeModel {
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(EclipseMetricsNodeModel.class);
     private static final String DEFAULT_VALUE = "";
-    private static final String CONFIG_NAME = "depress.mr.eclipsemetrics.confname";
+    private static final String CONFIG_NAME = "file chooser";
     private final SettingsModelString fileSettings = createFileChooserSettings();
 
     protected EclipseMetricsNodeModel() {

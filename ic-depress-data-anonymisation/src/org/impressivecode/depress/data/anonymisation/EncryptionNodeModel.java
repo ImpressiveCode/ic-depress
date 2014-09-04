@@ -24,7 +24,7 @@ import com.google.common.base.Preconditions;
 public class EncryptionNodeModel extends CryptoNodeModel {
     private static final NodeLogger LOGGER = NodeLogger.getLogger(EncryptionNodeModel.class);
 
-    public static final String CFG_ENCRYPTION_KEY_FILTER = "depress.data.anonencryption";
+    public static final String CFG_ENCRYPTION_KEY_FILTER = "data column";
 
     protected EncryptionNodeModel() {
         super(CFG_ENCRYPTION_KEY_FILTER);
