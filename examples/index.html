@@ -125,6 +125,51 @@
 						</li>
 					</ol>
 				</p>
+				
+				<p class="lead">
+					<h3>Analysing project release using Jira, CKJM and JaCoCo.</h3>
+					<ol>
+						<li><a href="../quickstart">Set up</a> your DePress and download workflow <a href="./project_analysis/workflow_jira_example.zip">Here</a>.
+							<a href="./project_analysis/jira_example_data.zip">Here you can find example input files</a> used in this tutorial.
+							You can use either them or your own log files. Import Knime workflow as shown in above tutorial.</li>
+						<li>Your workflow should look similar to this:
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/whole_example.png">
+										<img src="./project_analysis/whole_example.png" width="457" height="400" />
+									</a> </br>
+							</center>
+						</li>
+						<li>There are four parts of data analysis. First is pre release version. Select your Jira and Git log files and 
+						configure appropriate nodes seen in this part by clicking on them with the right button. Add also list of developers.
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/pre_rel_conf.png">
+										<img src="./project_analysis/pre_rel_conf.png" width="338" height="300" />
+									</a> </br>
+							</center>
+						</li>
+						<li>Now focus on release part. There you use your JaCoCo and CKJM log files. Configure these two orange nodes the same way as said above.
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/release.png">
+										<img src="./project_analysis/release.png" width="373" height="280" />
+									</a> </br>
+							</center>
+						</li>
+						<li>In this part you look at post release version of your project. Use Git and Jira log files.
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/post_release.png">
+										<img src="./project_analysis/post_release.png" width="460" height="300" />
+									</a> </br>
+							</center>						
+						</li>
+						<li>Now you can get information about the result of data analysis. You can get a xls file or a diagram. Click with right button of the mouse on either XLS Writer node or Data Tree Learner and choose execute. When you get a green circle under your node, your result is ready. You can check it clicking with right button on node and choosing the last option. Instruction of XLS Writer configuration is shown in above tutorial.
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/analysis.png">
+										<img src="./project_analysis/analysis.png" width="305" height="300" />
+									</a> </br>
+							</center>	
+						</li>
+					</ol>
+				</p>
 			</div>
 		</div>
 		<footer id="footer" class="footer hidden-print">
