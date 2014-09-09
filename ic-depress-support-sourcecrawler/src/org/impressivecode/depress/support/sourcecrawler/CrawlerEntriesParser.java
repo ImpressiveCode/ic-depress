@@ -33,74 +33,76 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.impressivecode.utils.sourcecrawler.SourceCrawlerScanner;
 import org.impressivecode.utils.sourcecrawler.model.JavaClazz;
 import org.impressivecode.utils.sourcecrawler.model.JavaFile;
+
 /**
  * @author Pawel Nosal, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
  */
 public class CrawlerEntriesParser {
-	public SourceCrawlerOutput parseFromExecutableJar(final String path, boolean createXML) throws IOException, MojoExecutionException, JAXBException {
-		SourceCrawlerScanner sourceCrawlerScanner = new SourceCrawlerScanner();
-    	List<JavaFile> javaFiles;
-		try {
-			javaFiles = sourceCrawlerScanner.executeCleanly(path);
-		} catch (IOException e) {
-			throw new IOException("Could not find java files");
-		}
-    	if(createXML){
-    		String output = new File(path).getName() + ".xml";
-    		sourceCrawlerScanner.writeXMLDocument(javaFiles, output);
-    	}
-    	
-    	SourceCrawlerOutput result = new SourceCrawlerOutput();
-    	ArrayList<SourceFile> sourceFiles = new ArrayList<SourceFile>();
-    	for(JavaFile javaFile : javaFiles){
-    		 sourceFiles.add(parseJavaFile(javaFile));
-    	}
-    	result.setSourceFiles(sourceFiles);
-    	
-    	return result;
-	}
-	
-	private SourceFile parseJavaFile(final JavaFile javaFile) {
-		SourceFile sourceFile = new SourceFile();
-		ArrayList<Clazz> clazzes = new ArrayList<Clazz>();
-		for(JavaClazz javaClazz : javaFile.getClasses()) {
-			clazzes.add(parseJavaClazz(javaClazz));
-		}
-		sourceFile.setClasses(clazzes);
-		sourceFile.setPath(javaFile.getFilePath());
-		sourceFile.setSourcePackage(javaFile.getPackageName());
-		return sourceFile;
-	}
+    public SourceCrawlerOutput parseFromExecutableJar(final String path, boolean createXML) throws IOException,
+            MojoExecutionException, JAXBException {
+        SourceCrawlerScanner sourceCrawlerScanner = new SourceCrawlerScanner();
+        List<JavaFile> javaFiles;
+        try {
+            javaFiles = sourceCrawlerScanner.executeCleanly(path);
+        } catch (IOException e) {
+            throw new IOException("Could not find java files");
+        }
+        if (createXML) {
+            String output = new File(path).getName() + ".xml";
+            sourceCrawlerScanner.writeXMLDocument(javaFiles, output);
+        }
 
-	private Clazz parseJavaClazz(final JavaClazz javaClazz) {
-		Clazz clazz = new Clazz();
-		clazz.setAccess(javaClazz.getClassAccess().getAccess());
-		clazz.setException(javaClazz.isException());
-		clazz.setFinal(javaClazz.isFinal());
-		clazz.setInner(javaClazz.isInner());
-		clazz.setName(javaClazz.getClassName());
-		clazz.setTest(javaClazz.isTest());
-		clazz.setType(javaClazz.getClassType().getName());
-		return clazz;
-	}
-	
+        SourceCrawlerOutput result = new SourceCrawlerOutput();
+        ArrayList<SourceFile> sourceFiles = new ArrayList<SourceFile>();
+        for (JavaFile javaFile : javaFiles) {
+            sourceFiles.add(parseJavaFile(javaFile));
+        }
+        result.setSourceFiles(sourceFiles);
+
+        return result;
+    }
+
+    private SourceFile parseJavaFile(final JavaFile javaFile) {
+        SourceFile sourceFile = new SourceFile();
+        ArrayList<Clazz> clazzes = new ArrayList<Clazz>();
+        for (JavaClazz javaClazz : javaFile.getClasses()) {
+            clazzes.add(parseJavaClazz(javaClazz));
+        }
+        sourceFile.setClasses(clazzes);
+        sourceFile.setPath(javaFile.getFilePath());
+        sourceFile.setSourcePackage(javaFile.getPackageName());
+        return sourceFile;
+    }
+
+    private Clazz parseJavaClazz(final JavaClazz javaClazz) {
+        Clazz clazz = new Clazz();
+        clazz.setAccess(javaClazz.getClassAccess().getAccess());
+        clazz.setException(javaClazz.isException());
+        clazz.setFinal(javaClazz.isFinal());
+        clazz.setInner(javaClazz.isInner());
+        clazz.setName(javaClazz.getClassName());
+        clazz.setTest(javaClazz.isTest());
+        clazz.setType(javaClazz.getClassType().getName());
+        return clazz;
+    }
+
     public SourceCrawlerOutput parseFromXML(final String path) throws JAXBException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
         JAXBContext jaxbContext;
-		jaxbContext = JAXBContext.newInstance(SourceCrawlerOutput.class);
+        jaxbContext = JAXBContext.newInstance(SourceCrawlerOutput.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-    	SourceCrawlerOutput result;
-		try {
-			result = (SourceCrawlerOutput) unmarshaller.unmarshal(new File(path));
-		} catch (JAXBException e) {
-			throw new JAXBException("Could not parse file, unmarshaller failed");
-		}
+        SourceCrawlerOutput result;
+        try {
+            result = (SourceCrawlerOutput) unmarshaller.unmarshal(new File(path));
+        } catch (JAXBException e) {
+            throw new JAXBException("Could not parse file, unmarshaller failed");
+        }
         return result;
-    }   
+    }
 
-	public List<Clazz> parseClassesFromFile(SourceFile sourceFile) {
-		return sourceFile.getClasses();
-	}
+    public List<Clazz> parseClassesFromFile(SourceFile sourceFile) {
+        return sourceFile.getClasses();
+    }
 
 }

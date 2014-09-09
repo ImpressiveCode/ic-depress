@@ -55,16 +55,14 @@ import com.google.common.io.LineProcessor;
  */
 public class GitOfflineLogParser {
     final SCMParserOptions parserOptions;
-    
+
     public GitOfflineLogParser(final SCMParserOptions parserOptions) {
         this.parserOptions = checkNotNull(parserOptions, "Options has to be set");
     }
-	
-    public List<GitCommit> parseEntries(final String path) throws IOException,
-    ParseException {
+
+    public List<GitCommit> parseEntries(final String path) throws IOException, ParseException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
-        return Files.readLines(new File(path), Charsets.UTF_8,
-                new GitLineProcessor(parserOptions));
+        return Files.readLines(new File(path), Charsets.UTF_8, new GitLineProcessor(parserOptions));
     }
 
     static class GitLineProcessor implements LineProcessor<List<GitCommit>> {
@@ -167,29 +165,29 @@ public class GitOfflineLogParser {
             String operationCode = matcher.group(1);
             String origin = matcher.group(2);
             String transformed = origin.replaceAll("/", ".");
-            
+
             String parseJavaClass = "";
             SCMExtensionsParser parser = new SCMExtensionsParser();
-            if(parser.extensionFits(transformed, options.getExtensionsNamesToFilter())){
-            	if(transformed.endsWith(".java")){
-    				if(packagePrefixValidate(transformed)){
-    					parseJavaClass = parseJavaClass(transformed);
-    				}
-    			}
-				GitCommitFile gitFile = new GitCommitFile();
+            if (parser.extensionFits(transformed, options.getExtensionsNamesToFilter())) {
+                if (transformed.endsWith(".java")) {
+                    if (packagePrefixValidate(transformed)) {
+                        parseJavaClass = parseJavaClass(transformed);
+                    }
+                }
+                GitCommitFile gitFile = new GitCommitFile();
                 gitFile.setRawOperation(operationCode.charAt(0));
                 gitFile.setPath(origin);
                 gitFile.setExtension(FilenameUtils.getExtension(transformed));
                 gitFile.setJavaClass(parseJavaClass);
-    			commit.getFiles().add(gitFile);
+                commit.getFiles().add(gitFile);
             }
         }
 
         private boolean packagePrefixValidate(final String path) {
-			if(options.hasPackagePrefix()) {
-				return path.indexOf(options.getPackagePrefix()) != -1;
-			}
-			return false;
+            if (options.hasPackagePrefix()) {
+                return path.indexOf(options.getPackagePrefix()) != -1;
+            }
+            return false;
         }
 
         private String parseJavaClass(final String path) {

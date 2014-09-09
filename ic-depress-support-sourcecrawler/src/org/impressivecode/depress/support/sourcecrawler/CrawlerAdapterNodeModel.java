@@ -46,15 +46,15 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
  * @author Maciej Borkowski, Capgemini Poland
  */
 public class CrawlerAdapterNodeModel extends NodeModel {
-	static final String FILE = "File";
-	static final String DIRECTORY = "Directory";
-	static final String[] actions = {FILE, DIRECTORY};
-	
-	static final String FILE_DEFAULT_VALUE_DIR = "";
-	static final String FILE_DEFAULT_VALUE_XML = "";
+    static final String FILE = "File";
+    static final String DIRECTORY = "Directory";
+    static final String[] actions = { FILE, DIRECTORY };
+
+    static final String FILE_DEFAULT_VALUE_DIR = "";
+    static final String FILE_DEFAULT_VALUE_XML = "";
     private static final String PACKAGE_DEFAULT_VALUE = "org.";
-    
-	static final String PUBLIC = "Public";
+
+    static final String PUBLIC = "Public";
     static final String PRIVATE = "Private";
     static final String PROTECTED = "Protected";
     static final String PACKAGE = "Package-private";
@@ -68,7 +68,7 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     static final String FINAL = "Final";
     static final String CREATE_XML = "Create XML file";
     static final String RADIO_DEFAULT = "File";
-    
+
     static final String PACKAGE_NAME_CONFIG = "package";
     static final String CREATE_XML_CONFIG = "create xml";
     static final String PUBLIC_CONFIG = "public";
@@ -80,46 +80,45 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     static final String ABSTRACT_CONFIG = "abstract";
     static final String ENUM_CONFIG = "enum";
     static final String EXCEPTION_CONFIG = "exception";
-	static final String INNER_CONFIG = "inner";
-	static final String TEST_CONFIG = "test";
-	static final String FINAL_CONFIG = "final";	
-	static final String RADIO_CONFIG = "radio";
-	static final String FILE_NAME_CONFIG_XML = "fileXML";
-	static final String FILE_NAME_CONFIG_DIR = "fileDIR";
-	
-	
-	private final SettingsModelString fileSettingsXML = createFileSettingsXML();
-	private final SettingsModelString fileSettingsDIR = createFileSettingsDIR();
-	private final SettingsModelString packageSettings = createPackageSettings();
-	private final SettingsModelString radioSettings = createRadioSettings();
+    static final String INNER_CONFIG = "inner";
+    static final String TEST_CONFIG = "test";
+    static final String FINAL_CONFIG = "final";
+    static final String RADIO_CONFIG = "radio";
+    static final String FILE_NAME_CONFIG_XML = "fileXML";
+    static final String FILE_NAME_CONFIG_DIR = "fileDIR";
+
+    private final SettingsModelString fileSettingsXML = createFileSettingsXML();
+    private final SettingsModelString fileSettingsDIR = createFileSettingsDIR();
+    private final SettingsModelString packageSettings = createPackageSettings();
+    private final SettingsModelString radioSettings = createRadioSettings();
     private final HashMap<String, SettingsModelBoolean> booleanSettings = new HashMap<String, SettingsModelBoolean>();
-    
+
     private final CrawlerEntriesParser entriesParser = new CrawlerEntriesParser();
-    
+
     protected CrawlerAdapterNodeModel() {
         super(0, 1);
         initializeSettings();
     }
 
-	@Override
-    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
-		String path = null;
-		File file = null;
-		if(radioSettings.getStringValue().equals(FILE)) {
-			path = fileSettingsXML.getStringValue();
-	        file = new File(fileSettingsXML.getStringValue());
-		}
-        else if(radioSettings.getStringValue().equals(DIRECTORY)) {
-			path = fileSettingsDIR.getStringValue();
-	        file = new File(fileSettingsDIR.getStringValue());
-		}
+    @Override
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
+            throws Exception {
+        String path = null;
+        File file = null;
+        if (radioSettings.getStringValue().equals(FILE)) {
+            path = fileSettingsXML.getStringValue();
+            file = new File(fileSettingsXML.getStringValue());
+        } else if (radioSettings.getStringValue().equals(DIRECTORY)) {
+            path = fileSettingsDIR.getStringValue();
+            file = new File(fileSettingsDIR.getStringValue());
+        }
         SourceCrawlerOutput result = null;
-        if(file.isDirectory()){
-       		result = entriesParser.parseFromExecutableJar(path, booleanSettings.get(CREATE_XML).getBooleanValue());
-        } else if(file.isFile()){
-        	result = entriesParser.parseFromXML(path);
-        } else 
-        	throw new IOException("Path does not point at any file or directory");
+        if (file.isDirectory()) {
+            result = entriesParser.parseFromExecutableJar(path, booleanSettings.get(CREATE_XML).getBooleanValue());
+        } else if (file.isFile()) {
+            result = entriesParser.parseFromXML(path);
+        } else
+            throw new IOException("Path does not point at any file or directory");
         optionsFilter(result);
         BufferedDataContainer container = createDataContainer(exec);
         BufferedDataTable out = transformIntoTable(container, result, exec);
@@ -127,16 +126,16 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     }
 
     private void optionsFilter(SourceCrawlerOutput result) {
-    	HashMap<String, Boolean> currentSettings = new HashMap<String, Boolean>();  	
-    	for(Entry<String, SettingsModelBoolean> entry: booleanSettings.entrySet()){
-    		currentSettings.put(entry.getKey(), entry.getValue().getBooleanValue());
-    	}
+        HashMap<String, Boolean> currentSettings = new HashMap<String, Boolean>();
+        for (Entry<String, SettingsModelBoolean> entry : booleanSettings.entrySet()) {
+            currentSettings.put(entry.getKey(), entry.getValue().getBooleanValue());
+        }
         CrawlerOptionsParser optionsParser = new CrawlerOptionsParser(currentSettings, packageSettings.getStringValue());
         optionsParser.checkRequirements(result);
-	}
+    }
 
-	private BufferedDataTable transformIntoTable(final BufferedDataContainer container, final SourceCrawlerOutput classes,
-            final ExecutionContext exec) throws CanceledExecutionException {
+    private BufferedDataTable transformIntoTable(final BufferedDataContainer container,
+            final SourceCrawlerOutput classes, final ExecutionContext exec) throws CanceledExecutionException {
         List<SourceFile> sourceFiles = classes.getSourceFiles();
         fillTable(container, exec, sourceFiles);
         container.close();
@@ -146,11 +145,11 @@ public class CrawlerAdapterNodeModel extends NodeModel {
 
     private void fillTable(final BufferedDataContainer container, final ExecutionContext exec,
             final List<SourceFile> sourceFiles) throws CanceledExecutionException {
-    	AtomicInteger counter = new AtomicInteger(0);
-    	int size = sourceFiles.size();
-    	for(int i = 0; i < size; i++) {
+        AtomicInteger counter = new AtomicInteger(0);
+        int size = sourceFiles.size();
+        for (int i = 0; i < size; i++) {
             progress(exec, size, i);
-        	List<Clazz> clazzes = entriesParser.parseClassesFromFile(sourceFiles.get(i));
+            List<Clazz> clazzes = entriesParser.parseClassesFromFile(sourceFiles.get(i));
             addClassesToDatatable(container, sourceFiles.get(i), clazzes, counter);
         }
     }
@@ -158,16 +157,17 @@ public class CrawlerAdapterNodeModel extends NodeModel {
     private void addClassesToDatatable(final BufferedDataContainer container, final SourceFile sourceFile,
             final List<Clazz> classesInSource, AtomicInteger counter) {
         for (Clazz clazz : classesInSource) {
-            addRowToTable(container, Long.toString(counter.getAndIncrement()), clazz.getName(),
-            		clazz.getAccess(), clazz.getType(), clazz.isException(), clazz.isInner(),
-            		clazz.isTest(), clazz.isFinal(), sourceFile.getSourcePackage(), sourceFile.getPath());
+            addRowToTable(container, Long.toString(counter.getAndIncrement()), clazz.getName(), clazz.getAccess(),
+                    clazz.getType(), clazz.isException(), clazz.isInner(), clazz.isTest(), clazz.isFinal(),
+                    sourceFile.getSourcePackage(), sourceFile.getPath());
         }
     }
 
     private void addRowToTable(final BufferedDataContainer container, final String counter, final String name,
-    		final String type, String access, final boolean exception, final boolean inner, final boolean test,
-    		boolean finals, final String sourcePackage, final String path) {
-        container.addRowToTable(createTableRow(counter, name, access, type, exception, inner, test, finals, sourcePackage, path));
+            final String type, String access, final boolean exception, final boolean inner, final boolean test,
+            boolean finals, final String sourcePackage, final String path) {
+        container.addRowToTable(createTableRow(counter, name, access, type, exception, inner, test, finals,
+                sourcePackage, path));
     }
 
     private void progress(final ExecutionContext exec, final int size, final int i) throws CanceledExecutionException {
@@ -192,65 +192,65 @@ public class CrawlerAdapterNodeModel extends NodeModel {
 
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
-    	fileSettingsXML.saveSettingsTo(settings);
-    	fileSettingsDIR.saveSettingsTo(settings);
-    	radioSettings.saveSettingsTo(settings);
-    	packageSettings.saveSettingsTo(settings);
-    	for(SettingsModelBoolean settingsModelBoolean : booleanSettings.values()){
-    		settingsModelBoolean.saveSettingsTo(settings);
-    	}
+        fileSettingsXML.saveSettingsTo(settings);
+        fileSettingsDIR.saveSettingsTo(settings);
+        radioSettings.saveSettingsTo(settings);
+        packageSettings.saveSettingsTo(settings);
+        for (SettingsModelBoolean settingsModelBoolean : booleanSettings.values()) {
+            settingsModelBoolean.saveSettingsTo(settings);
+        }
     }
 
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-    	fileSettingsXML.loadSettingsFrom(settings);
-    	fileSettingsDIR.loadSettingsFrom(settings);
-    	radioSettings.loadSettingsFrom(settings);
-    	packageSettings.loadSettingsFrom(settings);
-    	for(SettingsModelBoolean settingsModelBoolean : booleanSettings.values()){
-    		settingsModelBoolean.loadSettingsFrom(settings);
-    	}
+        fileSettingsXML.loadSettingsFrom(settings);
+        fileSettingsDIR.loadSettingsFrom(settings);
+        radioSettings.loadSettingsFrom(settings);
+        packageSettings.loadSettingsFrom(settings);
+        for (SettingsModelBoolean settingsModelBoolean : booleanSettings.values()) {
+            settingsModelBoolean.loadSettingsFrom(settings);
+        }
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-    	fileSettingsXML.validateSettings(settings);
-    	fileSettingsDIR.validateSettings(settings);
-    	radioSettings.validateSettings(settings);
-    	packageSettings.validateSettings(settings);
-    	for(SettingsModelBoolean settingsModelBoolean : booleanSettings.values()){
-    		settingsModelBoolean.validateSettings(settings);
-    	}
+        fileSettingsXML.validateSettings(settings);
+        fileSettingsDIR.validateSettings(settings);
+        radioSettings.validateSettings(settings);
+        packageSettings.validateSettings(settings);
+        for (SettingsModelBoolean settingsModelBoolean : booleanSettings.values()) {
+            settingsModelBoolean.validateSettings(settings);
+        }
     }
 
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
-	static SettingsModelString createFileSettingsDIR() {
-		return new SettingsModelString(FILE_NAME_CONFIG_DIR, FILE_DEFAULT_VALUE_DIR);
-	}
+    static SettingsModelString createFileSettingsDIR() {
+        return new SettingsModelString(FILE_NAME_CONFIG_DIR, FILE_DEFAULT_VALUE_DIR);
+    }
 
-	static SettingsModelString createFileSettingsXML() {
-		return new SettingsModelString(FILE_NAME_CONFIG_XML, FILE_DEFAULT_VALUE_XML);
-	}
-    
-	static SettingsModelString createRadioSettings() {
-		return new SettingsModelString(RADIO_CONFIG, RADIO_DEFAULT);
-	}
-    
-	static SettingsModelString createPackageSettings() {
-		return new SettingsModelString(PACKAGE_NAME_CONFIG, PACKAGE_DEFAULT_VALUE);
-	}
-   
+    static SettingsModelString createFileSettingsXML() {
+        return new SettingsModelString(FILE_NAME_CONFIG_XML, FILE_DEFAULT_VALUE_XML);
+    }
+
+    static SettingsModelString createRadioSettings() {
+        return new SettingsModelString(RADIO_CONFIG, RADIO_DEFAULT);
+    }
+
+    static SettingsModelString createPackageSettings() {
+        return new SettingsModelString(PACKAGE_NAME_CONFIG, PACKAGE_DEFAULT_VALUE);
+    }
+
     private void initializeSettings() {
         booleanSettings.put(PUBLIC, new SettingsModelBoolean(PUBLIC_CONFIG, true));
         booleanSettings.put(PRIVATE, new SettingsModelBoolean(PRIVATE_CONFIG, true));
@@ -265,7 +265,6 @@ public class CrawlerAdapterNodeModel extends NodeModel {
         booleanSettings.put(TEST, new SettingsModelBoolean(TEST_CONFIG, true));
         booleanSettings.put(FINAL, new SettingsModelBoolean(FINAL_CONFIG, true));
         booleanSettings.put(CREATE_XML, new SettingsModelBoolean(CREATE_XML_CONFIG, false));
-	}
+    }
 
-    
 }
