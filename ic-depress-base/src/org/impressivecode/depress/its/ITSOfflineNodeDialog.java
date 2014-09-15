@@ -60,6 +60,7 @@ public abstract class ITSOfflineNodeDialog extends NodeDialogPane {
     protected ITSOfflineNodeDialog() {
         createSettingsTab();
         createMappingTab();
+        addChangeListenerToTabs();
     }
 
     private void createSettingsTab() {
@@ -75,7 +76,6 @@ public abstract class ITSOfflineNodeDialog extends NodeDialogPane {
         mappingTab.addTab(TYPE, mappingManager.getMultiFilterType().getPanel());
         mappingTab.addTab(RESOLUTION, mappingManager.getMultiFilterResolution().getPanel());
         mappingTab.addTab(STATUS, mappingManager.getMultiFilterStatus().getPanel());
-        addChangeListenerToTabs();
         addTab(MAPPING_TAB_NAME, mappingTab);
     }
 
@@ -131,9 +131,7 @@ public abstract class ITSOfflineNodeDialog extends NodeDialogPane {
                         JOptionPane.showMessageDialog(new JFrame(), "Invalid settings.\nPlease specify a valid file.");
                     } else {
                         if (!file.equals(oldFile)) {
-                            for (MultiFilterComponent component : mappingManager.getComponents()) {
-                                component.setEnabled(false);
-                            }
+                            mappingManager.reset();
                         }
                         oldFile = file;
                     }

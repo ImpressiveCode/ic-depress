@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -81,10 +83,13 @@ public abstract class ITSOnlineNodeDialog extends NodeDialogPane {
 
     protected ITSMappingManager mappingManager;
 
+    private String oldUrl = null;
+
     public ITSOnlineNodeDialog() {
         addTab(CONNECTION_TAB_NAME, createConnectionTab());
         addTab(ADVANCED_TAB_NAME, createAdvancedTab());
         addTab(MAPPING_TAB_NAME, createMappingTab());
+        addChangeListenerToTabs();
     }
 
     protected Component createConnectionTab() {
@@ -125,7 +130,6 @@ public abstract class ITSOnlineNodeDialog extends NodeDialogPane {
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(createCheckAllProjectsComponent());
         panel.add(createProjectsPanel());
-
         return panel;
     }
 
@@ -200,11 +204,6 @@ public abstract class ITSOnlineNodeDialog extends NodeDialogPane {
     }
 
     @Override
-    protected void addFlowVariablesTab() {
-        // NOOP the flow variables tab is not needed
-    }
-
-    @Override
     protected void loadSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs) throws NotConfigurableException {
         url.loadSettingsFrom(settings, specs);
         loginComponent.loadSettingsFrom(settings, specs);
@@ -248,6 +247,39 @@ public abstract class ITSOnlineNodeDialog extends NodeDialogPane {
 
     protected SettingsModelBoolean createCheckAllProjectsSettings() {
         return ITSOnlineNodeModel.createSettingsCheckAllProjects();
+    }
+
+    protected JTabbedPane getTabbedPane() {
+        Component[] components = getPanel().getComponents();
+        Component component = null;
+        for (int i = 0; i < components.length; i++) {
+            component = components[i];
+            if (component instanceof JTabbedPane) {
+                return (JTabbedPane) component;
+            }
+        }
+        return null;
+    }
+
+    protected void addChangeListenerToTabs() {
+        getTabbedPane().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent event) {
+                JTabbedPane panel = (JTabbedPane) event.getSource();
+                if (panel.getTitleAt(panel.getSelectedIndex()).equals(MAPPING_TAB_NAME)) {
+                    String urlString = ((SettingsModelString) (url.getModel())).getStringValue();
+                    if (null == urlString || urlString.isEmpty()) {
+                        panel.setSelectedIndex(panel.indexOfTab(CONNECTION_TAB_NAME));
+                        JOptionPane.showMessageDialog(new JFrame(), "Invalid settings.\nPlease specify a valid URL.");
+                    } else {
+                        if (!urlString.equals(oldUrl)) {
+                            mappingManager.reset();
+                        }
+                        oldUrl = urlString;
+                    }
+                }
+            }
+        });
     }
 
     protected abstract void updateProjectsList();
