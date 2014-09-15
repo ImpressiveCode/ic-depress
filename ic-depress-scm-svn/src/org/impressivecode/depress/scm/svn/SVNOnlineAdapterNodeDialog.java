@@ -20,6 +20,7 @@ package org.impressivecode.depress.scm.svn;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
+import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
@@ -32,16 +33,24 @@ public class SVNOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 	public static final String ADVANCED_TAB_NAME = "Advanced";
     private final SettingsModelString remoteRepo = new SettingsModelString(
             SVNOnlineAdapterNodeModel.SVN_REPOSITORY_ADDRESS, SVNOnlineAdapterNodeModel.SVN_REPOSITORY_DEFAULT);
+    private final SettingsModelString remoteLogin = new SettingsModelString(
+            SVNOnlineAdapterNodeModel.SVN_LOGIN, SVNOnlineAdapterNodeModel.SVN_LOGIN_DEFAULT);
+    private final SettingsModelString remotePassword = new SettingsModelString(
+            SVNOnlineAdapterNodeModel.SVN_PASSWORD, SVNOnlineAdapterNodeModel.SVN_PASSWORD_DEFAULT);
 
     protected SVNOnlineAdapterNodeDialog() {
         super();
 
-        final DialogComponentString remoteRepoAddress = new DialogComponentString(remoteRepo, "Repository address: ", false, 30);
-
+        final DialogComponentString remoteRepoAddress = new DialogComponentString(remoteRepo, "Repository address: ", false, 20);
+        final DialogComponentString remoteLoginSVN = new DialogComponentString(remoteLogin, "Login: ", false, 30);
+        
+        final DialogComponentPasswordField remotePasswordSVN = new DialogComponentPasswordField(remotePassword, "Password: ", 20);
         addDialogComponent(remoteRepoAddress);
+        addDialogComponent(remoteLoginSVN);
+        addDialogComponent(remotePasswordSVN);
         
         addDialogComponent(new DialogComponentString(new SettingsModelString(SVNOnlineAdapterNodeModel.SVN_EXTENSION, SVNOnlineAdapterNodeModel.EXTENSION_DEFAULT),"Extension pattern:", false, 30)); 
-        addDialogComponent(new DialogComponentLabel(" (* = any extension, any string, ? = any character)"));
+        addDialogComponent(new DialogComponentLabel(" (* = any extension, any string, ? = any character, split many extensions by comma)"));
 
         createNewTab(ADVANCED_TAB_NAME);
   
