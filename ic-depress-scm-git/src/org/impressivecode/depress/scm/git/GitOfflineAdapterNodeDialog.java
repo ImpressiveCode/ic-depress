@@ -37,7 +37,7 @@ public class GitOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
         super();
         addDialogComponent(new DialogComponentFileChooser(new SettingsModelString(GitOfflineAdapterNodeModel.GIT_FILENAME,
                 GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT), GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
-        addDialogComponent(new DialogComponentString(GitOfflineAdapterNodeModel.extensions, "Extension pattern: (* = any extension)", false, 30)); 
+        addDialogComponent(new DialogComponentString(GitOfflineAdapterNodeModel.extensions, "Extension pattern: (* = any extension, any string, ? = any character, split many extensions by comma)", false, 30)); 
         createNewTab(ADVANCED_TAB_NAME);
         addDialogComponent(new DialogComponentString(GitOfflineAdapterNodeModel.gitPackageName, "Package: ", false, 30));  
     }
