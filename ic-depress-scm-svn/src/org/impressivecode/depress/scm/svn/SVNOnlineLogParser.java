@@ -45,26 +45,26 @@ public class SVNOnlineLogParser {
     
     private final Pattern PATTERN = Pattern.compile("^(.*)");
 
-    public List<SVNCommit> parseEntries(final String path,
+    public List<SVNCommit> parseEntries(final String path, final String login, final String password,
             final SCMParserOptions svnParserOptions) throws IOException,
             ParseException, SVNException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
-        List<SVNCommit> commitsList = processRepo(path, svnParserOptions);
+        List<SVNCommit> commitsList = processRepo(path, login, password, svnParserOptions);
 
         return commitsList;
     }
 
-    private List<SVNCommit> processRepo(final String path,
+    private List<SVNCommit> processRepo(final String path, final String login, final String password,
             final SCMParserOptions svnParserOptions) throws IOException,
             SVNException {
 
-        SVNRepository svn = initializeSvn(path);
+        SVNRepository svn = initializeSvn(path, login, password);
 
         List<SVNCommit> analyzedCommits = new ArrayList<SVNCommit>();
 
         List<SVNLogEntry> entries = new ArrayList<SVNLogEntry>();
 
-        svn.log(new String[] { svnParserOptions.getPackagePrefix() }, entries,
+        svn.log(new String[] { "" }, entries,			
                 1, -1, true, false);
 
         for (SVNLogEntry svnLogEntry : entries) {
@@ -161,7 +161,7 @@ public class SVNOnlineLogParser {
         }
     }
 
-    private SVNRepository initializeSvn(final String path) throws SVNException {
+    private SVNRepository initializeSvn(final String path, final String login, final String password) throws SVNException {
 
         DAVRepositoryFactory.setup();
         FSRepositoryFactory.setup();
@@ -170,7 +170,7 @@ public class SVNOnlineLogParser {
                 .parseURIEncoded(path));
 
         ISVNAuthenticationManager authManager = SVNWCUtil
-                .createDefaultAuthenticationManager("", "");
+                .createDefaultAuthenticationManager(login, password);
         repo.setAuthenticationManager(authManager);
 
         return repo;
