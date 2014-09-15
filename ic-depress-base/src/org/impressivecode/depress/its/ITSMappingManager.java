@@ -40,7 +40,7 @@ public class ITSMappingManager {
 
     public ITSMappingManager() {
         String configName = "mapping";
-        priorityModel = new SettingsModelMultiFilter(configName + "priority", false, ITSPriority.labels());
+        priorityModel = new SettingsModelMultiFilter(configName + ".priority", false, ITSPriority.labels());
         statusModel = new SettingsModelMultiFilter(configName + ".status", false, ITSStatus.labels());
         typeModel = new SettingsModelMultiFilter(configName + ".type", false, ITSType.labels());
         resolutionModel = new SettingsModelMultiFilter(configName + ".resolution", false, ITSResolution.labels());
