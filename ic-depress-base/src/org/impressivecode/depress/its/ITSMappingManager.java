@@ -38,8 +38,9 @@ public class ITSMappingManager {
     private MultiFilterComponent multiFilterType;
     private MultiFilterComponent multiFilterResolution;
 
-    public ITSMappingManager(final String configName) {
-        priorityModel = new SettingsModelMultiFilter(configName + ".priority", false, ITSPriority.labels());
+    public ITSMappingManager() {
+        String configName = "mapping";
+        priorityModel = new SettingsModelMultiFilter(configName + "priority", false, ITSPriority.labels());
         statusModel = new SettingsModelMultiFilter(configName + ".status", false, ITSStatus.labels());
         typeModel = new SettingsModelMultiFilter(configName + ".type", false, ITSType.labels());
         resolutionModel = new SettingsModelMultiFilter(configName + ".resolution", false, ITSResolution.labels());
@@ -59,6 +60,13 @@ public class ITSMappingManager {
 
     public void createFilterResolution(final Callable<List<String>> refreshCall) {
         multiFilterResolution = new MultiFilterComponent(resolutionModel, refreshCall);
+    }
+    
+    public void reset() { 
+        multiFilterPriority.reset();
+        multiFilterStatus.reset();
+        multiFilterType.reset();
+        multiFilterResolution.reset();
     }
 
     public List<MultiFilterComponent> getComponents() {

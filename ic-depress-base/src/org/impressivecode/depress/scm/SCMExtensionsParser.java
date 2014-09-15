@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 */
 public class SCMExtensionsParser {
 
-	public ArrayList<String> parseExtensions(final String extensions){
+	public static ArrayList<String> parseExtensions(final String extensions){
   		String[] ext = extensions.split("\\s*,\\s*");
   		ArrayList<String> arr = new ArrayList<String>();
   		for(String word : ext){
@@ -41,7 +41,7 @@ public class SCMExtensionsParser {
   		return arr;
   	}
 	
-	public boolean extensionFits(final String str, final List<String> extensions){
+	public static boolean extensionFits(final String str, final List<String> extensions){
 		for (String extension : extensions) {
 			int idx = str.lastIndexOf(".");
 			if(idx == -1 && extension.equals(""))

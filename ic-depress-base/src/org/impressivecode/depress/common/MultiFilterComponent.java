@@ -109,10 +109,14 @@ public class MultiFilterComponent {
         return panel;
     }
 
+    public void reset() {
+        model.getEnabledModel().setBooleanValue(false);
+    }
+    
     public void setEnabled(final boolean enabled) {
         filterPanel.setEnabled(enabled);
     }
-
+    
     public final void saveSettingsTo(final NodeSettingsWO settings) throws InvalidSettingsException {
         filterEnabled.saveSettingsTo(settings);
         radioButton.saveSettingsTo(settings);

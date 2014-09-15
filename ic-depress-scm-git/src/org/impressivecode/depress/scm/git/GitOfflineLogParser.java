@@ -167,8 +167,7 @@ public class GitOfflineLogParser {
             String transformed = origin.replaceAll("/", ".");
 
             String parseJavaClass = "";
-            SCMExtensionsParser parser = new SCMExtensionsParser();
-            if (parser.extensionFits(transformed, options.getExtensionsNamesToFilter())) {
+            if (SCMExtensionsParser.extensionFits(transformed, options.getExtensionsNamesToFilter())) {
                 if (transformed.endsWith(".java")) {
                     if (packagePrefixValidate(transformed)) {
                         parseJavaClass = parseJavaClass(transformed);

@@ -88,8 +88,7 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
     	
         try {
             logger.info("Reading git logs from file " + this.gitFileName.getStringValue());
-            SCMExtensionsParser extensionsParser = new SCMExtensionsParser();
-            ArrayList<String> userExtensions = extensionsParser.parseExtensions(extensions.getStringValue()); 
+            ArrayList<String> userExtensions = SCMExtensionsParser.parseExtensions(extensions.getStringValue()); 
             String packageNameToFilter = Strings.emptyToNull(gitPackageName.getStringValue());
             SCMParserOptions parserOptions = options(packageNameToFilter, userExtensions);
             GitOfflineLogParser parser = new GitOfflineLogParser(parserOptions);
