@@ -25,9 +25,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * 
  * @author Pawel Nosal, ImpressiveCode
- * 
  */
 @XmlRootElement(name = "file")
 public class SourceFile {
@@ -35,7 +33,7 @@ public class SourceFile {
     private String sourcePackage;
     private List<Clazz> classes = new ArrayList<Clazz>();
 
-    @XmlElementWrapper(name="classes")
+    @XmlElementWrapper(name = "classes")
     @XmlElement(name = "class")
     public List<Clazz> getClasses() {
         return classes;

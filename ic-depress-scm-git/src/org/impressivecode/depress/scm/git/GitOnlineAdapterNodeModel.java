@@ -60,7 +60,7 @@ public class GitOnlineAdapterNodeModel extends NodeModel {
     static final String GIT_REPOSITORY_DEFAULT = "";
     static final String GIT_REMOTE_REPOSITORY_DEFAULT = "";
     static final String GIT_BRANCH_DEFAULT = "";
-    static final String GIT_PACKAGENAME_DEFAULT = "org.";
+    static final String GIT_PACKAGENAME_DEFAULT = "";
     static final Boolean GIT_PACKAGENAME_ACTIVE_STATE = false;
 
     // example value: the models count variable filled from the dialog
