@@ -50,6 +50,6 @@ public class EncryptionNodeFactory extends NodeFactory<CryptoNodeModel> {
 
     @Override
     public NodeDialogPane createNodeDialogPane() {
-        return new CryptoNodeDialog("Column Encryption", EncryptionNodeModel.CFG_ENCRYPTION_KEY_FILTER);
+        return new CryptoNodeDialog("Column Encryption");
     }
 }
