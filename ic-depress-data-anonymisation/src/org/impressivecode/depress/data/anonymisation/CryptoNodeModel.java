@@ -41,14 +41,12 @@ import com.google.common.base.Preconditions;
  * 
  */
 public abstract class CryptoNodeModel extends NodeModel {
-
-    private final String configString;
+    static final String CFG_KEY_FILTER = "columns";
 
     private DataColumnSpecFilterConfiguration configuration;
 
-    protected CryptoNodeModel(final String configString) {
+    protected CryptoNodeModel() {
         super(1, 1);
-        this.configString = configString;
     }
 
     @Override
@@ -94,7 +92,7 @@ public abstract class CryptoNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         if (configuration == null) {
-            configuration = ConfigurationFactory.configuration(configString);
+            configuration = ConfigurationFactory.configuration(CFG_KEY_FILTER);
         }
         configuration.saveConfiguration(settings);
     }
@@ -102,14 +100,14 @@ public abstract class CryptoNodeModel extends NodeModel {
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         if (configuration == null) {
-            configuration = ConfigurationFactory.configuration(configString);
+            configuration = ConfigurationFactory.configuration(CFG_KEY_FILTER);
         }
         configuration.loadConfigurationInModel(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(configString);
+        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(CFG_KEY_FILTER);
         config.loadConfigurationInModel(settings);
     }
 }
