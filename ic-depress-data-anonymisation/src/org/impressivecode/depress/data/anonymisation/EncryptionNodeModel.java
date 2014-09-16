@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.RowKey;
 import org.knime.core.data.collection.CollectionCellFactory;
 import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.collection.SetCell;
@@ -94,6 +95,16 @@ public class EncryptionNodeModel extends CryptoNodeModel {
                     transformedList.add(transformed);
                 }
                 return CollectionCellFactory.createListCell(transformedList);
+            }
+
+            @Override
+            protected String transformKey(final RowKey key) {
+                try {
+                    return KnimeEncryption.encrypt(key.getString().toCharArray());
+                } catch (Exception e) {
+                    LOGGER.error("Unable to proceed due to invalid cryptography settings", e);
+                    throw new IllegalStateException("Unable to proceed due to invalid cryptography settings");
+                }
             }
         };
     }

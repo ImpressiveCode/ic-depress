@@ -20,6 +20,8 @@
 package org.impressivecode.depress.data.anonymisation;
 
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.DataType;
+import org.knime.core.data.def.StringCell;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeSettingsRO;
@@ -30,13 +32,13 @@ import org.knime.core.node.util.filter.column.DataColumnSpecFilterPanel;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class CryptoNodeDialog extends NodeDialogPane {
     private final DataColumnSpecFilterPanel filterPanel;
 
     CryptoNodeDialog(final String tabName) {
-        filterPanel = new DataColumnSpecFilterPanel(true,  ConfigurationFactory.filter());
+        filterPanel = new DataColumnSpecFilterPanel(true, ConfigurationFactory.filter());
         super.addTab(tabName, filterPanel);
     }
 
@@ -49,8 +51,13 @@ public class CryptoNodeDialog extends NodeDialogPane {
         }
 
         DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(CryptoNodeModel.CFG_KEY_FILTER);
-        config.loadConfigurationInDialog(settings, specs[0]);
-        filterPanel.loadConfiguration(config, specs[0]);
+        config.loadConfigurationInDialog(settings, addRowId(specs[0]));
+        filterPanel.loadConfiguration(config, addRowId(specs[0]));
+    }
+
+    private DataTableSpec addRowId(final DataTableSpec dataTableSpec) {
+        DataTableSpec rowIdSpec = new DataTableSpec(new String[] { "Row ID" }, new DataType[] { StringCell.TYPE });
+        return new DataTableSpec(dataTableSpec, rowIdSpec);
     }
 
     @Override
