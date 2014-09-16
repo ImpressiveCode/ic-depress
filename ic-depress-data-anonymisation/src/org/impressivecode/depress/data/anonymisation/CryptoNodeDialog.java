@@ -33,13 +33,10 @@ import org.knime.core.node.util.filter.column.DataColumnSpecFilterPanel;
  * 
  */
 public class CryptoNodeDialog extends NodeDialogPane {
-
     private final DataColumnSpecFilterPanel filterPanel;
-    private final String cfg;
 
-    CryptoNodeDialog(final String tabName, final String configRoot) {
+    CryptoNodeDialog(final String tabName) {
         filterPanel = new DataColumnSpecFilterPanel(true,  ConfigurationFactory.filter());
-        this.cfg = configRoot;
         super.addTab(tabName, filterPanel);
     }
 
@@ -51,14 +48,14 @@ public class CryptoNodeDialog extends NodeDialogPane {
             throw new NotConfigurableException("No columns available for " + "selection.");
         }
 
-        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(cfg);
+        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(CryptoNodeModel.CFG_KEY_FILTER);
         config.loadConfigurationInDialog(settings, specs[0]);
         filterPanel.loadConfiguration(config, specs[0]);
     }
 
     @Override
     public void saveSettingsTo(final NodeSettingsWO settings) throws InvalidSettingsException {
-        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(cfg);
+        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(CryptoNodeModel.CFG_KEY_FILTER);
         filterPanel.saveConfiguration(config);
         config.saveConfiguration(settings);
     }

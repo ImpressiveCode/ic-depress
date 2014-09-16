@@ -165,20 +165,22 @@ public class GitOfflineLogParser {
             String operationCode = matcher.group(1);
             String origin = matcher.group(2);
             String transformed = origin.replaceAll("/", ".");
-
+            
             String parseJavaClass = "";
             if (SCMExtensionsParser.extensionFits(transformed, options.getExtensionsNamesToFilter())) {
-                if (transformed.endsWith(".java")) {
-                    if (packagePrefixValidate(transformed)) {
-                        parseJavaClass = parseJavaClass(transformed);
-                    }
-                }
                 GitCommitFile gitFile = new GitCommitFile();
                 gitFile.setRawOperation(operationCode.charAt(0));
                 gitFile.setPath(origin);
                 gitFile.setExtension(FilenameUtils.getExtension(transformed));
                 gitFile.setJavaClass(parseJavaClass);
-                commit.getFiles().add(gitFile);
+                if (transformed.endsWith(".java")) {
+                    if (packagePrefixValidate(transformed)) {
+                        gitFile.setJavaClass(parseJavaClass(transformed));
+                        commit.getFiles().add(gitFile);
+                    }
+                } else {
+                    commit.getFiles().add(gitFile);
+                }
             }
         }
 
