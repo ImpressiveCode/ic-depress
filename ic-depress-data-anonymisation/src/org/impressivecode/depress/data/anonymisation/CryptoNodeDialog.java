@@ -20,6 +20,8 @@
 package org.impressivecode.depress.data.anonymisation;
 
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.DataType;
+import org.knime.core.data.def.StringCell;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeSettingsRO;
@@ -30,16 +32,13 @@ import org.knime.core.node.util.filter.column.DataColumnSpecFilterPanel;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class CryptoNodeDialog extends NodeDialogPane {
-
     private final DataColumnSpecFilterPanel filterPanel;
-    private final String cfg;
 
-    CryptoNodeDialog(final String tabName, final String configRoot) {
-        filterPanel = new DataColumnSpecFilterPanel(true,  ConfigurationFactory.filter());
-        this.cfg = configRoot;
+    CryptoNodeDialog(final String tabName) {
+        filterPanel = new DataColumnSpecFilterPanel(true, ConfigurationFactory.filter());
         super.addTab(tabName, filterPanel);
     }
 
@@ -51,14 +50,19 @@ public class CryptoNodeDialog extends NodeDialogPane {
             throw new NotConfigurableException("No columns available for " + "selection.");
         }
 
-        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(cfg);
-        config.loadConfigurationInDialog(settings, specs[0]);
-        filterPanel.loadConfiguration(config, specs[0]);
+        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(CryptoNodeModel.CFG_KEY_FILTER);
+        config.loadConfigurationInDialog(settings, addRowId(specs[0]));
+        filterPanel.loadConfiguration(config, addRowId(specs[0]));
+    }
+
+    private DataTableSpec addRowId(final DataTableSpec dataTableSpec) {
+        DataTableSpec rowIdSpec = new DataTableSpec(new String[] { "Row ID" }, new DataType[] { StringCell.TYPE });
+        return new DataTableSpec(dataTableSpec, rowIdSpec);
     }
 
     @Override
     public void saveSettingsTo(final NodeSettingsWO settings) throws InvalidSettingsException {
-        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(cfg);
+        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(CryptoNodeModel.CFG_KEY_FILTER);
         filterPanel.saveConfiguration(config);
         config.saveConfiguration(settings);
     }

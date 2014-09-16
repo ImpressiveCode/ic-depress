@@ -40,7 +40,6 @@ public abstract class ITSOfflineNodeModel extends NodeModel {
     protected static final String CHOOSER_DEFAULT_VALUE = "";
 
     static final String CHOOSER_CONFIG_NAME = "file chooser";
-    static final String MAPPING_CONFIG_NAME = "mapping";
 
     protected final SettingsModelString fileSettings = createFileChooserSettings();
     protected static ITSMappingManager mappingManager = createMapping();
@@ -94,7 +93,7 @@ public abstract class ITSOfflineNodeModel extends NodeModel {
     }
 
     static ITSMappingManager createMapping() {
-        return new ITSMappingManager(MAPPING_CONFIG_NAME);
+        return new ITSMappingManager();
     }
 
 }

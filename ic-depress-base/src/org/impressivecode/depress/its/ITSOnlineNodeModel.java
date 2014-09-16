@@ -54,7 +54,6 @@ public abstract class ITSOnlineNodeModel extends NodeModel {
     private static final String CFG_ITS_PASSWORD = "password";
     private static final String CFG_ITS_SELECTION = "project";
     private static final String CFG_ITS_ALL_PROJECTS = "allprojects check";
-    protected static final String CFG_ITS_MAPPING = "mapping";
 
     private final SettingsModelString urlSettings = createURLSettings();
     private final SettingsModelString loginSettings = createLoginSettings();
@@ -112,7 +111,7 @@ public abstract class ITSOnlineNodeModel extends NodeModel {
     }
 
     public static ITSMappingManager createMapping() {
-        return new ITSMappingManager(CFG_ITS_MAPPING);
+        return new ITSMappingManager();
     }
 
     @Override

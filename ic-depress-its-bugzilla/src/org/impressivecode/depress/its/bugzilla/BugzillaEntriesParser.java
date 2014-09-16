@@ -128,14 +128,18 @@ public class BugzillaEntriesParser {
 
     private Integer getTimeSpent(final Element elem) {
         String stringTime = extractValue(elem, "actual_time");
-        Integer time = (int) (Double.valueOf(stringTime) * 60);
-        return time;
+        if (null == stringTime) {
+            return null;
+        }
+        return (int) (Double.valueOf(stringTime) * 60);
     }
 
     private Integer getTimeEstimate(final Element elem) {
         String stringTime = extractValue(elem, "estimated_time");
-        Integer time = (int) (Double.valueOf(stringTime) * 60);
-        return time;
+        if (null == stringTime) {
+            return null;
+        }
+        return (int) (Double.valueOf(stringTime) * 60);
     }
 
     private Set<String> getCommentAuthors(final Element elem) {

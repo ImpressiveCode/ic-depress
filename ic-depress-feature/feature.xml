@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="DePress"
+      id="depress"
       label="DePress"
       version="2.0.0.SNAPSHOT">
 
@@ -224,13 +224,6 @@ END OF TERMS AND CONDITIONS
          version="2.0.0.SNAPSHOT"/>
 
    <plugin
-         id="org.impressivecode.depress.examples"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.SNAPSHOT"
-         unpack="false"/>
-
-   <plugin
          id="org.impressivecode.depress.its.bugzilla"
          download-size="0"
          install-size="0"
@@ -334,12 +327,6 @@ END OF TERMS AND CONDITIONS
 
    <plugin
          id="org.impressivecode.depress.support.matcher"
-         download-size="0"
-         install-size="0"
-         version="2.0.0.SNAPSHOT"/>
-
-   <plugin
-         id="org.impressivecode.depress.tests"
          download-size="0"
          install-size="0"
          version="2.0.0.SNAPSHOT"/>
