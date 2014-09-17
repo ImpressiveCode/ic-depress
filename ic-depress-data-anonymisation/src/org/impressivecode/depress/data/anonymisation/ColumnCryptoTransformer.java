@@ -79,7 +79,10 @@ public abstract class ColumnCryptoTransformer {
     }
 
     private DataRow transformRow(final DataRow row) {
-        return new DefaultRow(transformKey(row.getKey()), transformCells(row));
+        if (colToBeTransformed.contains(-1)) {
+            return new DefaultRow(transformKey(row.getKey()), transformCells(row));
+        }
+        return new DefaultRow(row.getKey().getString(), transformCells(row));
     }
 
     private List<DataCell> transformCells(final DataRow row) {
