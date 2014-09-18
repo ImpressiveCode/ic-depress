@@ -111,7 +111,7 @@
 				<h4>JaCoCo</h4>
 				JaCoCo is an open source toolkit for measuring and reporting Java code coverage.<br>
 				You can use it as Maven tool(about Maven read more <a href="http://maven.apache.org/">here</a>). You have to change pom.xml file as written <a href="http://www.eclemma.org/jacoco/trunk/doc/maven.html">here</a>.
-				Run JaCoCo typing in a command line <i>mvn org.jacoco:jacoco-maven-plugin<i> (you have to be in the folder where pom.xml is). If you have any problem with Maven, try typing "mvn clean", then "mvn install" and run your task again. To have needed by DePress xml file, your JaCoCo configuration should look similar to this: <br> <br>
+				Run JaCoCo typing in a command line <i>mvn org.jacoco:jacoco-maven-plugin</i> (you have to be in the folder where pom.xml is). If you have any problem with Maven, try typing "mvn clean", then "mvn install" and run your task again. To have needed by DePress xml file, your JaCoCo configuration should look similar to this: <br> <br>
 				<i> 
 				&lt;plugin&gt; <br>
 					&lt;groupId&gt;org.jacoco&lt;/groupId&gt; <br>
@@ -124,7 +124,27 @@
 					&lt;/configuration&gt; <br>
 				&lt;/plugin&gt;
 				</i>
-				</p>
+				
+				<br><br>
+				<h3>Help</h3>	
+				Solve most popular problems
+				<ul>
+				<li><b>Missing XLS node</b><br>
+				You have to install needed plugin. To do so go in Knime to Help -> Install new software -> In the list next to Work with choose KNIME Update Site -> in the filter below type xls -> uncheck "Show only the latest version" and choose from the list Knime Extension XLS Support with the same version as yours Knime. Then click on finish and follow Knime instructions.
+				</li>
+				<li><b>Missing DePress's node</b><br>
+				Check the version of your DePress plugin. Some nodes are only available in the newest version.</li>
+				<li><b>Can not choose older version of DePress</b><br>
+				During the installation checkout the option "Show only the latest version"</li>
+				<li><b>DePress installation takes forever</b><br>
+				During installation checkout the option "Contact all update sites...".</li>
+				<li><b>Jira node throws error about jqlQuery</b><br>
+				Go to your report file. In one of the first lines you should see the link to your Jira website. Remove from this link everything which goes after "jqlQuery"(together with "jqlQuery" word). Save the file and run the node again.</li>				
+				<li><b>JaCoCo node throws an error</b><br>
+				Check if there is an report.dtd file next to your result file.</li>
+				<li><b>Running Pitest Maven founds no mutation</b><br>
+				Type "mvn clean" then "mvn install" and try again.</li>
+				</ul>
 			</div>
 		</div>
 		<footer id="footer" class="footer hidden-print">
