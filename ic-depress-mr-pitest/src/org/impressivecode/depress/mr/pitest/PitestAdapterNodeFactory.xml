@@ -13,7 +13,8 @@
         PIT is a state of the art mutation testing system, providing gold standard test coverage 
         for Java and the jvm. Its fast, scalable and integrates with modern test and build tooling.
         		Running Pitest - refer to
-				<a href="http://pitest.org/">http://pitest.org/</a>
+				<a href="http://pitest.org/">http://pitest.org/</a>. In Maven you can run it using: mvn org.pitest:pitest-maven:mutationCoverage <br/>
+				Remember about choosing xml as result file format.
 				<br />
         
         </p>
