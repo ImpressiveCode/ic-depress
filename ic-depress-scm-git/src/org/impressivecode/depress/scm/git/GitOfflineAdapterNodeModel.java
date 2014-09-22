@@ -62,7 +62,7 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
     static final String GIT_PACKAGENAME = "package";
     
     static final String GIT_FILENAME_DEFAULT = "";
-    static final String GIT_PACKAGENAME_DEFAULT = "org.";
+    static final String GIT_PACKAGENAME_DEFAULT = "";
     static final String EXTENSION_DEFAULT = ".java";
     
     static final Boolean GIT_PACKAGENAME_ACTIVE_STATE = false;

@@ -56,13 +56,11 @@
 		</intro>
 		<option name="Jira URL">Jira repository address (e.g.
 			"https://hibernate.atlassian.net")</option>
-		<option name="Status">Which date to filter (issue creation or
-			resolution)</option>
-		<option name="Date from">Lower date limit for the request</option>
-		<option name="Date to">Upper date limit for the request</option>
-		<option name="JQL">Jira Query Language query for the request</option>
-		<option name="Login">Login for a user with acces to repository</option>
-		<option name="Password">Password for this user</option>
+		<option name="Login">Login to an account in JIRA project's page.</option>
+		<option name="Password">Password to the account</option>
+		<option name="All projects">If there are many projects on JIRA page and you would like
+		to focus on one of them, checkout this button and choose the right project on the right.</option>
+		<option name="Advanced tab">In JQL - Jira Query Language query for the request</option>
 		<option name="Mapping"> You can load your custom priority, type,
 			resolution and status properties from previosly selected file. You
 			are able to put any property, which has been in your repository into

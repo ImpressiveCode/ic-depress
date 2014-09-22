@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<knimeNode icon="./default.png" type="Source" xmlns="http://knime.org/node/v2.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://knime.org/node/v2.8 http://knime.org/node/v2.8.xsd">
-    <name>ChidamberKemererMetrics</name>
+<knimeNode icon="./ck.png" type="Source" xmlns="http://knime.org/node/v2.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://knime.org/node/v2.8 http://knime.org/node/v2.8.xsd">
+    <name>CKJM</name>
     
     <shortDescription>
-        Chidamber and Kemerer Metrics Adapter, ImpressiveCode DePress Plugin Framework.
+       CKJM Adapter, ImpressiveCode DePress Plugin Framework.
     </shortDescription>
     
     <fullDescription>
@@ -33,8 +33,9 @@
 				</ul>
 				<br />
 				
-				Running Ckjm - refer to
+				Running Ckjm (we suggest using it as a Ant task) - refer to
 				<a href="http://www.spinellis.gr/sw/ckjm/doc/anttask.html">http://www.spinellis.gr/sw/ckjm/doc/anttask.html</a>
+				Remember about choosing the xml file format.
 				<br />
 
 			</p>

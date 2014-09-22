@@ -64,7 +64,7 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     static final String CFG_EXTENSION = "extension";
     
     static final String FILENAME_DEFAULT = "";
-    static final String PACKAGENAME_DEFAULT = "org.";
+    static final String PACKAGENAME_DEFAULT = "";
     static final String EXTENSION_DEFAULT = ".java";
 
 
