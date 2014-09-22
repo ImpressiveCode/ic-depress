@@ -7,27 +7,7 @@
   <version>2.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>ic-depress-base</module>
-    <module>ic-depress-data-anonymisation</module>
     <module>ic-depress-feature</module>
-    <module>ic-depress-its-bugzilla</module>
-    <module>ic-depress-its-clearquest</module>
-    <module>ic-depress-its-hpqc</module>
-    <module>ic-depress-its-jira</module>
-    <module>ic-depress-metric-astcompare</module>
-    <module>ic-depress-mg-ipa</module>
-    <module>ic-depress-mg-po</module>
-    <module>ic-depress-mr-checkstyle</module>
-    <module>ic-depress-mr-ckjm</module>
-    <module>ic-depress-mr-eclipsemetrics</module>
-    <module>ic-depress-mr-jacoco</module>
-    <module>ic-depress-mr-judy</module>
-    <module>ic-depress-mr-pitest</module>
-    <module>ic-depress-mr-pmd</module>
-    <module>ic-depress-scm-git</module>
-    <module>ic-depress-scm-svn</module>
-    <module>ic-depress-support-matcher</module>
-    <module>ic-depress-support-sourcecrawler</module>
     <module>ic-depress-updatesite</module>
   </modules>
   
