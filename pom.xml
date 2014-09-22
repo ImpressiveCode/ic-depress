@@ -36,6 +36,7 @@
     <eclipse.url>http://download.eclipse.org/releases/indigo</eclipse.url>
   </properties>
 
+  
   <repositories>
     <repository>
       <id>indigo</id>
