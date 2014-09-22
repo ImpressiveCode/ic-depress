@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>DePress</groupId>
   <artifactId>ic-depress</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>2.0.0.SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>ic-depress-base</module>
@@ -30,10 +30,11 @@
     <module>ic-depress-support-sourcecrawler</module>
     <module>ic-depress-updatesite</module>
   </modules>
+  
    <properties>
     <tycho.version>0.21.0</tycho.version>
+	<eclipse.url>http://download.eclipse.org/releases/indigo</eclipse.url>
 	<knime.url>http://www.knime.org/update/2.8</knime.url>
-    <eclipse.url>http://download.eclipse.org/releases/indigo</eclipse.url>
   </properties>
 
   <repositories>
