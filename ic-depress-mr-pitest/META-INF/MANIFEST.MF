@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ic-depress-mr-pitest
 Bundle-SymbolicName: org.impressivecode.depress.mr.pitest; singleton:=true
-Bundle-Version: 2.0.0
+Bundle-Version: 2.0.0.qualifier
 Bundle-ClassPath: plugin.jar
 Bundle-Vendor: ImpressiveCode
 Require-Bundle: org.impressivecode.depress.base;bundle-version="1.0.0",
