@@ -55,32 +55,81 @@
 
 			<div class="container">
 				<p class="lead">
-					<h3>Release notes for Git/SVN files with Jira</h3>
+					<h3>Analysing project release using Jira, CKJM and JaCoCo.</h3>
 					<ol>
-						<li><a href="../quickstart">Set up</a> your DePress and download workflow for either <a href="./release/gitworkflow.zip">Git</a> or <a href="./release/svnworkflow.zip">SVN</a>.
-							<a href="./release/example.zip">Example Git files</a> used in this tutorial.</li>
-						<li>Import KNIME workflow as archive file: 
+						<li><a href="../quickstart">Set up</a> your DePress and download workflow <a href="./project_analysis/workflow_jira_example.zip">Here</a>.
+							<a href="./project_analysis/jira_example_data.zip">Here you can find example input files</a> used in this tutorial.
+							You can use either them or your own log files. Import Knime workflow as shown in above tutorial.</li>
+						<li>Your workflow should look similar to this:
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/whole_example.png">
+										<img src="./project_analysis/whole_example.png" width="457" height="400" />
+									</a> </br>
+							</center>
+						</li>
+						<li>There are four parts of data analysis. First is pre release version. Select your Jira and Git log files and 
+						configure appropriate nodes seen in this part by clicking on them with the right button. Add also list of developers.
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/pre_rel_conf.png">
+										<img src="./project_analysis/pre_rel_conf.png" width="338" height="300" />
+									</a> </br>
+							</center>
+						</li>
+						<li>Now focus on release part. There you use your JaCoCo and CKJM log files. Configure these two orange nodes the same way as said above.
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/release.png">
+										<img src="./project_analysis/release.png" width="373" height="280" />
+									</a> </br>
+							</center>
+						</li>
+						<li>In this part you look at post release version of your project. Use Git and Jira log files.
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/post_release.png">
+										<img src="./project_analysis/post_release.png" width="460" height="300" />
+									</a> </br>
+							</center>						
+						</li>
+						<li>Now you can get information about the result of data analysis. You can get a xls file or a diagram. Click with right button of the mouse on either XLS Writer node or Data Tree Learner and choose execute. When you get a green circle under your node, your result is ready. You can check it clicking with right button on node and choosing the last option. Instruction of XLS Writer configuration is shown in above tutorial.
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/analysis.png">
+										<img src="./project_analysis/analysis.png" width="305" height="300" />
+									</a> </br>
+							</center>	
+						</li>
+					</ol>
+				</p>
+				<p class="lead">
+					<h3>Release notes for Git/SVN files with Jira</h3>
+					If you need any help with using the analysis tools or just with generating needed results, check this site.<br>
+					<center><div class="actions">
+							<a class="btn btn-primary btn-l" onclick="_gaq.push(['_trackEvent', 'Outbound Link', 'Additional']);" href="../additional/">Additional information</a><br>
+						</div></center><br>
+					<ol>
+						<li><a href="../quickstart">Set up</a> your DePress and download workflow for either <a href="./release/gitworkflow.zip">Git</a> or <a href="./release/svnworkflow.zip">SVN</a>(click on name).
+							If it's needed, check <a href="./release/example.zip">Example Git files</a> used in this tutorial.</li>
+						<li>Import (previously downloaded) KNIME workflow as an archive file: 
 							<center>
 								<a class="image-popup-vertical-fit" href="./release/import.png">
 									<img src="./release/import.png" width="200" height="150" />
 								</a> </br>
 							</center>
-							You should see a workflow similar to this:
+							You should see a workflow similar to this(it's name is either git or svn):
 							<center>
 								<a class="image-popup-vertical-fit" href="./release/pre_init.png">
 									<img src="./release/pre_init.png" width="300" height="200" />
 								</a> </br>
 							</center>
+							<b>If you get an error about missing XLS node, click on the blue button above and solve the problem.</b>
 						</li>
-						<li>Select your Git/SVN log files. To do this select configure on List Files node and choose your directory.
+						<li>Select your Git/SVN log files(if you don't know how to generate them, click on the blue button above). To do this select configure on List Files node and choose your directory where both files are placed.
 							<center>
 								<a class="image-popup-vertical-fit" href="./release/files.png">
 									<img src="./release/files.png" width="150" height="50" />
 								</a> </br>
 							</center>
-							Generation of valid Git/SVN logs is included in Git/SVN Offline node description.</br>
+							Generation of valid Git/SVN logs is also included in Git/SVN Offline node description.</br>
 							Files should have names describing their version e.g. "1.0.0.xml" and "1.1.2.xml".
-							You need at least two distinct log files to create release notes.</li>
+							You need at least two distinct log files to create release notes(to compare versions of your project).</li>
 						<li>Execute Java Edit Variable (simple) node.
 							<center>
 								<a class="image-popup-vertical-fit" href="./release/init.png">
@@ -116,7 +165,8 @@
 								</a>
 							</center>
 						</li>
-						<li>By now everything should be configured. Execute XLS Writer node.
+						<li>By now everything should be configured. Execute XLS Writer node. Clicking on it with the right mouse button and choosing the last option, you can see the result table.
+						It will also be dispayed as a XLS file.
 							<center>
 								<a class="image-popup-vertical-fit" href="./release/start.png">
 									<img src="./release/start.png" width="225" height="75" />

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="shortcut icon" href="../assets/ico/icon.ico">
+
+		<title>DePress</title>
+
+		<link rel="stylesheet" href="../assets/css/site.css">
+		<link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.css">
+		<link rel="stylesheet" href="../assets/css/popup.css">
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<i class="fa fa-bars fa-lg"></i>
+						</button>
+						<a class="navbar-brand" href="../"> DePress</a>
+					</div>
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-nav">
+							<li><a href="../">Home</a></li>
+							<li><a href="../quickstart/">Quickstart</a></li>
+							<li><a href="../whatsnew/">What's New</a></li>
+							<li><a href="../examples/">Examples</a></li>
+							<li><a href="../contribute/">Contribute</a></li>
+							<li><a href="../about/">About</a></li>
+							<li>
+						</ul>
+						
+						<ul class="nav navbar-nav navbar-right">
+							<div class="actions">
+								<a class="btn btn-success btn-lg" href="https://github.com/ImpressiveCode/ic-depress">GitHub Page</a>
+							</div>
+						</ul>
+						
+						<div id="social-buttons" class="hidden-print">
+							<ul class="list-inline center-block text-center">
+								<li>
+									<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=ImpressiveCode&repo=ic-depress&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+								</li>
+								<li>
+									<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=ImpressiveCode&repo=ic-depress&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="102px" height="20px"></iframe>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="container">
+				<p class="lead">
+				<h3>Information about using analysis tools</h3>	
+				Every node in Knime has its help page. It can be seen after clicking on choosen node or you can display it choosing <i>Configure</i> and then <i>?</i> in the bottom of the window.
+				This is the place where you can find a lot of useful tips and information as well as gain knowledge about the tool you are using.<br><br>
+				
+				<h4>SVN</h4>
+				SVN is a software versioning and revision control system. <br>
+				<ul>
+				<li><b>Offline</b><br>SVN is a command line tool. To generate a needed report, you need an offline copy of your project on your computer.
+				DePress uses a xml file generated using command like this: <i>svn log --xml --verbose --use-merge-history repository_url > result.xml </i>(where <i>repository_url</i> is a path to your local folder
+				with your project). You can add any needed additional commands
+				when you would like to get more specified report. For example command <i>svn log --xml --verbose -r {2014-01-01}:{2014-03-01} --use-merge-history repository_url > result.xml </i> extracts data
+				about changes made between 1.01.2014 and 1.03.2014. For more information visit the<a href="https://subversion.apache.org/"> SVN's page</a>.</li>
+				<li><b>Online</b><br>
+				In an online version of node it is needed to insert a direct link to the repository with your project and also add information about login and password. If you can retrieve data without logging
+				you can leave these boxes empty. In some cases there could appear a problem with the link. It happens when there is <i>viewvc</i> in your link. Change it then to <i>svn</i>, it should help.
+				</li></ul>
+				In both cases you can choose which information should appear in the result of node's work. You can type formats of files which you're interested in. For example when you would like to get information
+				only about changes made on xml files, you can get it just by typing <i>xml</i>. If you leave this box empty or with a <i>*</i> in it, in the result all formats will be displayed. You can also choose
+				a package in the <i>Advanced</i> tab. If you don't know what it is, leave it empty.<br>
+				Information which you get depends only on your choise or interests. You can switch options as you want. Only you know what is needed in your project's analysis.<br> <br>
+				
+				<h4>GIT</h4>
+				GIT is a distributed revision control and source code management (SCM) system.<br>
+				In DePress you can use it in as well offline as online version.
+				<ul>
+				<li><b>Offline</b><br>
+				First of all, to generate a needed report, you need an offline copy of your project on your computer. Then visit the <a href="http://git-scm.com/">GIT page</a> and download the tool. In this tool
+				go into your folder(command line commands).	Here you can generate needed report typing a command <i>git log --pretty=format:"%H%n%ct%n%an%n%B%n%H" --raw --no-merges --abbrev=40</i>.
+				The txt file with the result is all you need to use the GIT's node in Knime.</li>
+				<li><b>Online</b><br>
+				As an url insert a link to your online repository. In GitHub it can be found in the left column. It ends with <i>.git</i>.</li>
+				</ul>
+				In both cases you can choose which information should appear in the result of node's work. You can type formats of files which you're interested in. For example when you would like to get information
+				only about changes made on xml files, you can get it just by typing <i>xml</i>. If you leave this box empty or with a <i>*</i> in it, in the result all formats will be displayed. You can also choose
+				a package in the <i>Advanced</i> tab. If you don't know what it is, leave it empty.<br>
+				Information which you get depends only on your choise or interests. You can switch options as you want. Only you know what is needed in your project's analysis.<br> <br>
+				
+				<h4>JIRA</h4>
+				JIRA is a proprietary issue tracking product, developed by Atlassian. It provides bug tracking, issue tracking, and project management functions.<br>
+				<ul>
+				<li><b>Offline</b><br>In DePress you use a xml report showing changes made in your project. To obtain such file, you need to visit yours project JIRA page and switch view to XML in Issue Navigator section, and save the XML shown to a file on your local disk. Here you can first use a filter if you would like to specify the report(it depends on your requirement). What is important, JIRA by default limits the number of events to 100. You can switch this manually in the link to your result(change the number 100 to 200), but to
+				get more, you have to use admin view(for more information look in the Internet). <br>
+				Then enter path to the file into node’s input field in configuration dialog.</li>
+				<li><b>Online</b><br>
+				You only have to insert JIRA repository url (e.g. "https://depress.atlassian.net").</li></ul><br>
+
+				<h4>CKJM</h4>
+				The program ckjm calculates Chidamber and Kemerer object-oriented metrics by processing the bytecode of compiled Java files. <br>
+				In DePress you need the report generated using ckjm program. To get it, you can run ckjm as a Ant task(about Ant read more <a href="http://ant.apache.org/">here</a>. To do so, add needed information
+				to the build.xml file as written <a href ="http://www.spinellis.gr/sw/ckjm/doc/anttask.html">here</a> and run Ant using command line. If you have problem and Ant fails, check if you have the right class directory
+				(it has to lead to .class files (not .java)). <br>
+				When you have needed report, just add the path in the node's options.<br> <br>
+				
+				<h4>JaCoCo</h4>
+				JaCoCo is an open source toolkit for measuring and reporting Java code coverage.<br>
+				You can use it as Maven tool(about Maven read more <a href="http://maven.apache.org/">here</a>). You have to change pom.xml file as written <a href="http://www.eclemma.org/jacoco/trunk/doc/maven.html">here</a>.
+				Run JaCoCo typing in a command line <i>mvn org.jacoco:jacoco-maven-plugin</i> (you have to be in the folder where pom.xml is). If you have any problem with Maven, try typing "mvn clean", then "mvn install" and run your task again. To have needed by DePress xml file, your JaCoCo configuration should look similar to this: <br> <br>
+				<i> 
+				&lt;plugin&gt; <br>
+					&lt;groupId&gt;org.jacoco&lt;/groupId&gt; <br>
+					&lt;artifactId&gt;jacoco-maven-plugin&lt;/artifactId&gt; <br>
+					&lt;version&gt;0.7.3-SNAPSHOT&lt;/version&gt; <br>
+					&lt;configuration&gt; <br>
+						&lt;formats&gt; <br>
+							&lt;format&gt;xml&lt;/format&gt; <br>
+						&lt;/formats&gt; <br>
+					&lt;/configuration&gt; <br>
+				&lt;/plugin&gt;
+				</i>
+				
+				<br><br>
+				<h3>Help</h3>	
+				Solve most popular problems
+				<ul>
+				<li><b>Missing XLS node</b><br>
+				You have to install needed plugin. To do so go in Knime to Help -> Install new software -> In the list next to Work with choose KNIME Update Site -> in the filter below type xls -> uncheck "Show only the latest version" and choose from the list Knime Extension XLS Support with the same version as yours Knime. Then click on finish and follow Knime instructions.
+				</li>
+				<li><b>Missing DePress's node</b><br>
+				Check the version of your DePress plugin. Some nodes are only available in the newest version.</li>
+				<li><b>Can not choose older version of DePress</b><br>
+				During the installation checkout the option "Show only the latest version"</li>
+				<li><b>DePress installation takes forever</b><br>
+				During installation checkout the option "Contact all update sites...".</li>
+				<li><b>Jira node throws error about jqlQuery</b><br>
+				Go to your report file. In one of the first lines you should see the link to your Jira website. Remove from this link everything which goes after "jqlQuery"(together with "jqlQuery" word). Save the file and run the node again.</li>				
+				<li><b>JaCoCo node throws an error</b><br>
+				Check if there is an report.dtd file next to your result file.</li>
+				<li><b>Running Pitest Maven founds no mutation</b><br>
+				Type "mvn clean" then "mvn install" and try again.</li>
+				</ul>
+			</div>
+		</div>
+		<footer id="footer" class="footer hidden-print">
+			<div class="container text-center">
+				<div>
+					This work is licensed under a <a href="http://www.gnu.org/licenses/gpl.html">GPL v3 </a>license.
+				</div>
+				<div class="project">
+					· <a href="../">home</a> ·
+					<a href="../about/">about</a> ·
+				</div>
+			</div>
+		</footer>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="../assets/js/bootstrap-3.1.1.min.js"></script>
+		<script src="../assets/js/popup.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('.image-popup-vertical-fit').magnificPopup({
+					type: 'image',
+					closeOnContentClick: true,
+					mainClass: 'mfp-img-mobile',
+					image: {
+						verticalFit: true
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
