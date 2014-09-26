@@ -26,6 +26,7 @@ import java.util.Set;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.RowKey;
 import org.knime.core.data.container.CloseableRowIterator;
 import org.knime.core.data.def.DefaultRow;
 import org.knime.core.node.BufferedDataContainer;
@@ -73,11 +74,15 @@ public abstract class ColumnCryptoTransformer {
             int index = tableSpec.findColumnIndex(transforms[i]);
             colIndices.add(index);
         }
+
         return colIndices;
     }
 
     private DataRow transformRow(final DataRow row) {
-        return new DefaultRow(row.getKey(), transformCells(row));
+        if (colToBeTransformed.contains(-1)) {
+            return new DefaultRow(transformKey(row.getKey()), transformCells(row));
+        }
+        return new DefaultRow(row.getKey().getString(), transformCells(row));
     }
 
     private List<DataCell> transformCells(final DataRow row) {
@@ -95,6 +100,8 @@ public abstract class ColumnCryptoTransformer {
 
         return cells;
     }
+
+    protected abstract String transformKey(final RowKey key);
 
     protected abstract DataCell transformCell(final DataCell dataCell);
 

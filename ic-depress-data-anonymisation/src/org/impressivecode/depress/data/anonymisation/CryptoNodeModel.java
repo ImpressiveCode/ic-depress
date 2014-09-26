@@ -35,6 +35,7 @@ import org.knime.core.node.util.filter.NameFilterConfiguration.FilterResult;
 import org.knime.core.node.util.filter.column.DataColumnSpecFilterConfiguration;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ObjectArrays;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
@@ -82,7 +83,7 @@ public abstract class CryptoNodeModel extends NodeModel {
     private ColumnCryptoTransformer createTransformer(final DataTableSpec spec) {
         Preconditions.checkNotNull(configuration, "Configuration has to be initialized first");
         final FilterResult filter = configuration.applyTo(spec);
-        final String[] transforms = filter.getIncludes();
+        final String[] transforms = ObjectArrays.concat(filter.getIncludes(), filter.getRemovedFromIncludes(), String.class);
         final ColumnCryptoTransformer transfomer = transformer(spec, transforms);
         return transfomer;
     }
