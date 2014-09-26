@@ -1,4 +1,5 @@
 #!/bin/sh
+
 echo Building update-site
 mvn clean verify
 
@@ -14,8 +15,8 @@ git clone $REPO_URL -b gh-pages --single-branch
 cd ic-depress
 
 echo Copying update-site directory
-rm -R update
-cp -R $DEV_DIR/ic-depress-updatesite/target/site update
+rm -R update/v2
+cp -R $DEV_DIR/ic-depress-updatesite/target/site update/v2
 
 echo Pushing update-site branch
 git add .
