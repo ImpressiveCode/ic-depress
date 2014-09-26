@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ic-depress-mr-googlemetrics
+Bundle-SymbolicName: org.impressivecode.depress.mr.googlemetrics; singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Bundle-Vendor: 
+ ImpressiveCode
+Require-Bundle: org.eclipse.core.runtime,
+ org.knime.workbench.core,
+ org.knime.workbench.repository,
+ org.knime.base,
+ org.impressivecode.depress.base;bundle-version="2.0.0"
+Export-Package: org.impressivecode.depress.mr.googlemetrics
+Bundle-ClassPath: plugin.jar
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+
