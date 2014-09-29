@@ -33,8 +33,9 @@
 				</ul>
 				<br />
 				
-				Running Ckjm - refer to
+				Running Ckjm (we suggest using it as a Ant task) - refer to
 				<a href="http://www.spinellis.gr/sw/ckjm/doc/anttask.html">http://www.spinellis.gr/sw/ckjm/doc/anttask.html</a>
+				Remember about choosing the xml file format.
 				<br />
 
 			</p>

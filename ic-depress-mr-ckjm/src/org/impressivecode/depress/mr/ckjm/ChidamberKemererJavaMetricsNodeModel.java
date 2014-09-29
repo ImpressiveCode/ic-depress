@@ -46,10 +46,6 @@ import org.knime.core.node.NodeSettingsWO;
  * @author Zuzanna Pacholczyk, Capgemini Poland
  */
 public class ChidamberKemererJavaMetricsNodeModel extends NodeModel {
-    
-    // the logger instance
-    private static final NodeLogger logger = NodeLogger
-            .getLogger(ChidamberKemererJavaMetricsNodeModel.class);
         
     private static final String DEFAULT_VALUE = "";
 
