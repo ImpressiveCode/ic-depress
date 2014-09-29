@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>DePress</title>
+
+		<meta name="description" content="An Extensible Software Measurement & Defect Prediction Platform">
+		<meta name="author" content="ImpressiveCode">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../../assets/reveal.js/css/reveal.min.css">
+		<link rel="stylesheet" href="../../assets/reveal.js/css/theme/serif.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../../assets/reveal.js/lib/css/zenburn.css">
+				
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>DePress</h1>
+					<h3>Defect Prediction in Software Systems</h3>
+					<p>
+						An Extensible Software Measurement & Defect Prediction Platform
+					</p>
+					<br><br>
+					<p>
+						Lech Madeyski, Marek Majchrzak
+					</p>
+				</section>
+				
+				<section>
+					<h3>Motivation</h3>
+					<p>
+						A standardized, intuitive and extensible framework would make it possible to include predictive modelling in general,
+						and defect prediction analyses in particular, as one of the common QA or SPI tasks, such as code review or software testing.
+					</p>
+				</section>
+				
+				<section>
+					<p>
+						Support for versioning repositories like SVN and GIT, bug and issue trackers like JIRA or Bugzilla and other measurement using simple configuration without need of custom development. 
+					</p>
+				</section>
+				
+				<section>
+					<p>
+						Reuse of techniques offered by the most widely used platforms, such as R, Weka or KNIME.
+					</p>
+				</section>
+				
+				<section>
+					<p>
+						Open Source and open for collaboration.
+					</p>
+				</section>
+				
+				<section>
+					<h3>DePress Concept</h3>
+
+					<div style="position:relative; top:0px; left:-250px;">
+						<img src="dataflow.png">
+						<small>Conceptual workflow for pre-release data collection</small>
+					</div>
+					<div style="position:relative; top:-450px; left:400px;">
+						<p><small>
+							<ul>
+								<li>Workflow visualization and usability</li>
+								<li>Support for collaboration</li>
+								<li>Extensible</li>
+								<li>Language and Technology Independent</li>
+								<li>Standalone</li>
+								<li>Export/import support</li>
+								<li>Ready for commercial user</li>
+								<li>Open Source with clear licensing rules</li>
+							</ul>
+						</small></p>
+					</div>
+
+				</section>
+				
+				<section>
+					<h3>DePress Architecture</h3>
+					<ul>
+						<li>KNIME* as an integration backbone</li>
+						<li>Independent Plugins
+							<ul>
+								<li><small>Separate PDE** projects for each plugin group</small></li>
+								<li><small>Simple data exchange (via KNIME tables)</small></li>
+								<li><small>Reused KNIME components and guideline's</small></li>
+							</ul>
+						</li>
+						<li>Online and offline work mode</li>
+					<ul>
+					<br>
+					<small>* KNIME Framework is an integration backbone which allows one to use various external statistical and machine learning tools.</small>
+					<small>** The Plug-in Development Environment (PDE) provides tools to create, develop, test, debug, build and deploy Eclipse plug-ins.</small>
+				</section>
+				
+				<section>
+					<div>
+						<p><img style="margin-left:10px" src="architecture1.png"></p>
+						<p>
+							<img src="architecture2.png">
+							<img style="margin-left:50px" src="architecture3.png">
+						</p>
+					</div>
+				</section>
+			
+				<section>
+					<h3>DePress Plugins V2 (ongoing)</h3>
+					<p><img src="plugins.png"></p>
+				</section>
+				
+				<section>
+					<h3>Example</h3>
+					<h3>Commons Math 3.1 Post Release Defects</h3>
+					<img src="postreleasedefects.png">
+				</section>
+				
+				<section>
+					<img style="position:relative; top:-200px;" src="postreleasedefects.png">
+					<p class="fragment current-visible">
+						<img style="position:absolute; top:-50px; left:134px; z-index:1 border-width:0px" src="arrow.png">
+						<img style="position:absolute; top:150px; left:-150px;" src="gitoffline.png">
+					</p>
+					<p class="fragment current-visible">
+						<img style="position:absolute; top:0px; left:476px; z-index:1" border="0" src="arrowshort.png">
+						<img style="position:absolute; top:150px; left:120px;" src="issuesperartifact.png">
+					</p>
+					<p class="fragment current-visible">
+						<img style="position:absolute; top:0px; left:683px; z-index:1" border="0" src="arrowshort.png">
+						<img style="position:absolute; top:150px; left:500px;" src="encryption.png">
+					</p>
+				</section>
+				
+				<section>
+					<h3>Open Source and Collaborative Development Model</h3>
+				</section>
+				
+				<section>
+					<small>GitHub: <a href="https://github.com/ImpressiveCode/ic-depress">https://github.com/ImpressiveCode/ic-depress</a></small><br>
+					<small>Licensing Policy: <a href="http://www.gnu.org/licenses/gpl.html">GPL v3 License</a></small><br>
+					<small>Contribution: <a href="http://www.pwr.wroc.pl/index.dhtml">Wroclaw University of Technology</a>, <a href="http://www.pl.capgemini.com">Capgemini Poland</a></small><br>
+					<p><img style="position:absolute; top:150px; left:-100px;" src="repository.png"></p>
+					<p><img style="position:relative; top:0px; left:250px;" src="repositorygit.png"></p>
+					<p><img style="position:absolute; top:430px; left:-180px; z-index:1;" src="repositoryforks.png"></p>
+				</section>
+				
+				<section>
+					<small>Homepage: <a href="https://www.depress.io">www.depress.io</a></small><br>
+					<p><img src="webpage.png"></p>
+				</section>
+			
+				<section>
+					<h3>Summary</h3>
+					<p>
+						DePress is a  visual and workflow-oriented framework based on KNIME framework.
+					</p>
+				</section>
+				
+				<section>
+					<p>
+						DePress supports software defect prediction but also, to some extent, other areas of predictive modelling in software engineering where the collected metrics can serve as predictors.
+					</p>
+				</section>
+				
+				<section>
+					<p>
+						Developed under GPL v3 on GitHub platform.
+					</p>
+				</section>
+				
+				<section>
+					<h3>Future work</h3>
+					<ul>
+						<li>Support for new data sources</li>
+						<li>Support for code churn and burst change related metrics</li>
+						<li>Evaluate the effectiveness of DePress usage by QA Engineers in commercial software projects</li>
+						<li>Open to wider group of contributors and researchers</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="../../assets/reveal.js/lib/js/head.min.js"></script>
+		<script src="../../assets/reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
