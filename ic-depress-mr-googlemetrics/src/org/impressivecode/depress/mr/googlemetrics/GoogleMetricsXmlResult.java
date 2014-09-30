@@ -24,7 +24,6 @@ package org.impressivecode.depress.mr.googlemetrics;
  * 
  */
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -37,7 +36,26 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
+/**
+ * <p>Java class for anonymous complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType>
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element ref="{}metric-result-scope" maxOccurs="unbounded"/>
+ *       &lt;/sequence>
+ *       &lt;attribute name="title" use="required" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "metricResultScope"
@@ -103,354 +121,183 @@ public class GoogleMetricsXmlResult {
     public void setTitle(String value) {
         this.title = value;
     }
-
-
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "metricResult"
-})
-@XmlRootElement(name = "metric-result-scope")
-public class MetricResultScope {
-
-    @XmlElement(name = "metric-result", required = true)
-    protected List<MetricResult> metricResult;
-    @XmlAttribute(name = "scope", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "NCName")
-    protected String scope;
-
+    
     /**
-     * Gets the value of the metricResult property.
+     * <p>Java class for anonymous complex type.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the metricResult property.
+     * <p>The following schema fragment specifies the expected content contained within this class.
      * 
-     * <p>
-     * For example, to add a new item, do as follows:
      * <pre>
-     *    getMetricResult().add(newItem);
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *       &lt;sequence>
+     *         &lt;element ref="{}metric-result" maxOccurs="unbounded"/>
+     *       &lt;/sequence>
+     *       &lt;attribute name="scope" use="required" type="{http://www.w3.org/2001/XMLSchema}NCName" />
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
      * </pre>
      * 
      * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link MetricResult }
-     * 
-     * 
      */
-    public List<MetricResult> getMetricResult() {
-        if (metricResult == null) {
-            metricResult = new ArrayList<MetricResult>();
-        }
-        return this.metricResult;
-    }
-
-    /**
-     * Gets the value of the scope property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getScope() {
-        return scope;
-    }
-
-    /**
-     * Sets the value of the scope property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setScope(String value) {
-        this.scope = value;
-    }
-    
-    /**
-    * <p>Java class for anonymous complex type.
-    * 
-    * <p>The following schema fragment specifies the expected content contained within this class.
-    * 
-    * <pre>
-    * &lt;complexType>
-    *   &lt;complexContent>
-    *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-    *       &lt;sequence>
-    *         &lt;element ref="{}metric-detail" maxOccurs="unbounded" minOccurs="0"/>
-    *       &lt;/sequence>
-    *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
-    *       &lt;attribute name="value" use="required" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
-    *     &lt;/restriction>
-    *   &lt;/complexContent>
-    * &lt;/complexType>
-    * </pre>
-    * 
-    * 
-    */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-     "metricDetail"
+        "metricResult"
     })
-    @XmlRootElement(name = "metric-result")
-    public class MetricResult {
+    @XmlRootElement(name = "metric-result-scope")
+    public static class MetricResultScope {
 
-     @XmlElement(name = "metric-detail")
-     protected List<MetricDetail> metricDetail;
-     @XmlAttribute(name = "name", required = true)
-     @XmlSchemaType(name = "anySimpleType")
-     protected String name;
-     @XmlAttribute(name = "value", required = true)
-     @XmlSchemaType(name = "anySimpleType")
-     protected String value;
-
-     /**
-      * Gets the value of the metricDetail property.
-      * 
-      * <p>
-      * This accessor method returns a reference to the live list,
-      * not a snapshot. Therefore any modification you make to the
-      * returned list will be present inside the JAXB object.
-      * This is why there is not a <CODE>set</CODE> method for the metricDetail property.
-      * 
-      * <p>
-      * For example, to add a new item, do as follows:
-      * <pre>
-      *    getMetricDetail().add(newItem);
-      * </pre>
-      * 
-      * 
-      * <p>
-      * Objects of the following type(s) are allowed in the list
-      * {@link MetricDetail }
-      * 
-      * 
-      */
-     public List<MetricDetail> getMetricDetail() {
-         if (metricDetail == null) {
-             metricDetail = new ArrayList<MetricDetail>();
-         }
-         return this.metricDetail;
-     }
-
-     /**
-      * Gets the value of the name property.
-      * 
-      * @return
-      *     possible object is
-      *     {@link String }
-      *     
-      */
-     public String getName() {
-         return name;
-     }
-
-     /**
-      * Sets the value of the name property.
-      * 
-      * @param value
-      *     allowed object is
-      *     {@link String }
-      *     
-      */
-     public void setName(String value) {
-         this.name = value;
-     }
-
-     /**
-      * Gets the value of the value property.
-      * 
-      * @return
-      *     possible object is
-      *     {@link String }
-      *     
-      */
-     public String getValue() {
-         return value;
-     }
-
-     /**
-      * Sets the value of the value property.
-      * 
-      * @param value
-      *     allowed object is
-      *     {@link String }
-      *     
-      */
-     public void setValue(String value) {
-         this.value = value;
-     }
-
-    }
-    
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "metricSubDetail"
-    })
-    @XmlRootElement(name = "metric-detail")
-    public class MetricDetail {
-
-        @XmlElement(name = "metric-sub-detail")
-        protected List<MetricSubDetail> metricSubDetail;
-        @XmlAttribute(name = "name", required = true)
-        @XmlSchemaType(name = "anySimpleType")
-        protected String name;
-        @XmlAttribute(name = "value", required = true)
-        protected BigInteger value;
+        @XmlElement(name = "metric-result", required = true)
+        protected List<MetricResult> metricResult;
+        @XmlAttribute(name = "scope", required = true)
+        @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+        @XmlSchemaType(name = "NCName")
+        protected String scope;
 
         /**
-         * Gets the value of the metricSubDetail property.
+         * Gets the value of the metricResult property.
          * 
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the metricSubDetail property.
+         * This is why there is not a <CODE>set</CODE> method for the metricResult property.
          * 
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
-         *    getMetricSubDetail().add(newItem);
+         *    getMetricResult().add(newItem);
          * </pre>
          * 
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link MetricSubDetail }
+         * {@link MetricResult }
          * 
          * 
          */
-        public List<MetricSubDetail> getMetricSubDetail() {
-            if (metricSubDetail == null) {
-                metricSubDetail = new ArrayList<MetricSubDetail>();
+        public List<MetricResult> getMetricResult() {
+            if (metricResult == null) {
+                metricResult = new ArrayList<MetricResult>();
             }
-            return this.metricSubDetail;
+            return this.metricResult;
         }
 
         /**
-         * Gets the value of the name property.
+         * Gets the value of the scope property.
          * 
          * @return
          *     possible object is
          *     {@link String }
          *     
          */
-        public String getName() {
-            return name;
+        public String getScope() {
+            return scope;
         }
 
         /**
-         * Sets the value of the name property.
+         * Sets the value of the scope property.
          * 
          * @param value
          *     allowed object is
          *     {@link String }
          *     
          */
-        public void setName(String value) {
-            this.name = value;
+        public void setScope(String value) {
+            this.scope = value;
+        }
+        
+        /**
+         * <p>Java class for anonymous complex type.
+         * 
+         * <p>The following schema fragment specifies the expected content contained within this class.
+         * 
+         * <pre>
+         * &lt;complexType>
+         *   &lt;complexContent>
+         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+         *       &lt;sequence>
+         *         &lt;element ref="{}metric-detail" maxOccurs="unbounded" minOccurs="0"/>
+         *       &lt;/sequence>
+         *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
+         *       &lt;attribute name="value" use="required" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
+         *     &lt;/restriction>
+         *   &lt;/complexContent>
+         * &lt;/complexType>
+         * </pre>
+         * 
+         * 
+         */
+        @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(name = "", propOrder = {
+        })
+        @XmlRootElement(name = "metric-result")
+        public static class MetricResult {
+
+            @XmlAttribute(name = "name", required = true)
+            @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+            @XmlSchemaType(name = "NCName")
+            protected String name;
+            @XmlAttribute(name = "value", required = true)
+            @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+            @XmlSchemaType(name = "value")
+            protected String value;
+
+
+            /**
+             * Gets the value of the name property.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getName() {
+                return name;
+            }
+
+            /**
+             * Sets the value of the name property.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setName(String value) {
+                this.name = value;
+            }
+
+            /**
+             * Gets the value of the value property.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getValue() {
+                return value;
+            }
+
+            /**
+             * Sets the value of the value property.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setValue(String value) {
+                this.value = value;
+            }
+
         }
 
-        /**
-         * Gets the value of the value property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link BigInteger }
-         *     
-         */
-        public BigInteger getValue() {
-            return value;
-        }
-
-        /**
-         * Sets the value of the value property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link BigInteger }
-         *     
-         */
-        public void setValue(BigInteger value) {
-            this.value = value;
-        }
 
     }
-    
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "")
-    @XmlRootElement(name = "metric-sub-detail")
-    public class MetricSubDetail {
-
-        @XmlAttribute(name = "name", required = true)
-        @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-        @XmlSchemaType(name = "NCName")
-        protected String name;
-        @XmlAttribute(name = "value", required = true)
-        protected BigInteger value;
-
-        /**
-         * Gets the value of the name property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getName() {
-            return name;
-        }
-
-        /**
-         * Sets the value of the name property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setName(String value) {
-            this.name = value;
-        }
-
-        /**
-         * Gets the value of the value property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link BigInteger }
-         *     
-         */
-        public BigInteger getValue() {
-            return value;
-        }
-
-        /**
-         * Sets the value of the value property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link BigInteger }
-         *     
-         */
-        public void setValue(BigInteger value) {
-            this.value = value;
-        }
-
-    }
-
-}
 
 
 }
-
-
-
-
-
-
