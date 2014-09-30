@@ -36,7 +36,7 @@ import org.xml.sax.SAXException;
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public class BugzillaEntriesParserTest {
 
@@ -49,10 +49,8 @@ public class BugzillaEntriesParserTest {
     }
 
     private List<ITSDataType> parse() throws ParserConfigurationException, SAXException, IOException, ParseException {
-        HashMap<String, String[]> settings = new HashMap<String, String[]>();
-        BugzillaEntriesParser parser = new BugzillaEntriesParser(settings, settings, settings);
         String path = getClass().getResource("bugzilla.xml").getPath();
-        List<ITSDataType> entries = parser.parseEntries(path);
+        List<ITSDataType> entries = createBugzillaParser().parseEntries(path);
         return entries;
     }
 
@@ -74,5 +72,15 @@ public class BugzillaEntriesParserTest {
         assertThat(its.getAssignees()).containsOnly("bent.mozilla1");
         assertThat(its.getReporter()).isEqualTo("bent.mozilla");
         assertThat(its.getCommentAuthors()).containsOnly("bent.mozilla","jorendorff", "jst", "samuel.sidler+old","dveditz", "hskupin", "dolske");
+    }
+    
+    private BugzillaEntriesParser createBugzillaParser() {
+        HashMap<String, String[]> priority = new HashMap<String, String[]>();
+        priority.put(ITSPriority.CRITICAL.getLabel(), new String[] {ITSPriority.CRITICAL.getLabel()});
+        HashMap<String, String[]> resolution = new HashMap<String, String[]>();
+        resolution.put(ITSResolution.FIXED.getLabel(), new String[] {ITSResolution.FIXED.getLabel()});
+        HashMap<String, String[]> status = new HashMap<String, String[]>();
+        status.put(ITSStatus.RESOLVED.getLabel(), new String[] {ITSStatus.RESOLVED.getLabel()});
+    	return new BugzillaEntriesParser(priority, resolution, status);
     }
 }
