@@ -124,17 +124,18 @@ public class GoogleMetricsNodeModel extends NodeModel {
     private BufferedDataTable transform(final BufferedDataContainer container, final List<MetricResultScope> classes,
             final ExecutionContext exec) throws CanceledExecutionException {
         int size = classes.size();
+        Long counter = 0l;
         for (int i = 0; i < size; i++) {
             progress(exec, size, i);
 
             MetricResultScope clazz = classes.get(i);
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Transforming googlemetrics log, class: " + clazz.getScope() + ", score: " + clazz.getMetricResult());
+                LOGGER.debug("Transforming googlemetrics log, class: " + clazz.getScope());
             }
 
             List<MetricResult> score = clazz.getMetricResult();
             String className = clazz.getScope();
-            addRowToTable(container, className, score);
+            addRowToTable(container, className, score, counter++);
         }
         container.close();
         BufferedDataTable out = container.getTable();
@@ -152,8 +153,8 @@ public class GoogleMetricsNodeModel extends NodeModel {
         return container;
     }
 
-    private void addRowToTable(final BufferedDataContainer container, final String className, final List<MetricResult> score) {
-        container.addRowToTable(createTableRow(className, score));
+    private void addRowToTable(final BufferedDataContainer container, final String className, final List<MetricResult> score, final Long counter) {
+        container.addRowToTable(createTableRow(className, score, counter));
     }
 
     static SettingsModelString createFileChooserSettings() {
