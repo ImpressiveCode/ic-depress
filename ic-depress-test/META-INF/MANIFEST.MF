@@ -33,5 +33,6 @@ Bundle-ClassPath: bin/,
  lib/fest-util-1.1.6.jar,
  lib/mockito-all-1.9.5.jar
 Import-Package: org.apache.log4j;version="1.2.15",
+ org.impressivecode.depress.mr.googlemetrics,
  org.impressivecode.depress.support.sourcecrawler
 
