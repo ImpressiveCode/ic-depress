@@ -48,108 +48,106 @@ import com.google.common.base.Joiner;
  */
 public class XmlRpcTransportFactoryWithCookies extends XmlRpcSunHttpTransportFactory {
 
-	private Set<HttpCookie> cookies;
+    private Set<HttpCookie> cookies;
 
-	public XmlRpcTransportFactoryWithCookies(XmlRpcClient client) {
-		super(client);
-		cookies = newSetFromMap(new ConcurrentHashMap<HttpCookie, Boolean>());
-	}
+    public XmlRpcTransportFactoryWithCookies(XmlRpcClient client) {
+        super(client);
+        cookies = newSetFromMap(new ConcurrentHashMap<HttpCookie, Boolean>());
+    }
 
-	@Override
-	public XmlRpcTransport getTransport() {
-		return new XmlRpcTransportWithCookies(getClient());
-	}
+    @Override
+    public XmlRpcTransport getTransport() {
+        return new XmlRpcTransportWithCookies(getClient());
+    }
 
-	private class XmlRpcTransportWithCookies extends XmlRpcSunHttpTransport {
+    private class XmlRpcTransportWithCookies extends XmlRpcSunHttpTransport {
 
-		private static final String RESPONSE_COOKIE_HEADER = "Set-Cookie";
+        private static final String RESPONSE_COOKIE_HEADER = "Set-Cookie";
+        private static final String REQUEST_COOKIE_HEADER = "Cookie";
+        private static final String REQUEST_COOKIE_DELIMITER = "; ";
 
-		private static final String REQUEST_COOKIE_HEADER = "Cookie";
+        private URLConnection connection;
 
-		private static final String REQUEST_COOKIE_DELIMITER = "; ";
+        public XmlRpcTransportWithCookies(XmlRpcClient client) {
+            super(client);
+        }
 
-		private URLConnection connection;
+        @Override
+        protected void initHttpHeaders(XmlRpcRequest request) throws XmlRpcClientException {
+            super.initHttpHeaders(request);
+            if (!cookies.isEmpty()) {
+                addCookiesToRequest();
+            }
+        }
 
-		public XmlRpcTransportWithCookies(XmlRpcClient client) {
-			super(client);
-		}
+        private void addCookiesToRequest() {
+            setRequestHeader(REQUEST_COOKIE_HEADER, Joiner.on(REQUEST_COOKIE_DELIMITER).join(cookies));
+        }
 
-		@Override
-		protected void initHttpHeaders(XmlRpcRequest request) throws XmlRpcClientException {
-			super.initHttpHeaders(request);
-			if (!cookies.isEmpty()) {
-				addCookiesToRequest();
-			}
-		}
+        @Override
+        protected URLConnection newURLConnection(URL url) throws IOException {
+            connection = super.newURLConnection(url);
+            return connection;
+        }
 
-		private void addCookiesToRequest() {
-			setRequestHeader(REQUEST_COOKIE_HEADER, Joiner.on(REQUEST_COOKIE_DELIMITER).join(cookies));
-		}
+        @Override
+        protected void close() throws XmlRpcClientException {
+            retrieveAndStoreCookiesFromConnection();
+            super.close();
+        }
 
-		@Override
-		protected URLConnection newURLConnection(URL url) throws IOException {
-			connection = super.newURLConnection(url);
-			return connection;
-		}
+        private void retrieveAndStoreCookiesFromConnection() {
+            Map<String, List<String>> headers = connection.getHeaderFields();
 
-		@Override
-		protected void close() throws XmlRpcClientException {
-			retrieveAndStoreCookiesFromConnection();
-			super.close();
-		}
+            if (headers.containsKey(RESPONSE_COOKIE_HEADER)) {
+                List<String> cookiesHeader = headers.get(RESPONSE_COOKIE_HEADER);
 
-		private void retrieveAndStoreCookiesFromConnection() {
-			Map<String, List<String>> headers = connection.getHeaderFields();
+                for (String cookieHeader : cookiesHeader) {
+                    cookies.addAll(HttpCookie.parse(cookieHeader));
+                }
+            }
+        }
 
-			if (headers.containsKey(RESPONSE_COOKIE_HEADER)) {
-				List<String> cookiesHeader = headers.get(RESPONSE_COOKIE_HEADER);
+        @Override
+        protected InputStream getInputStream() throws XmlRpcException {
+            return new XmlInvalidCharacterFilterInputStream(super.getInputStream());
+        }
 
-				for (String cookieHeader : cookiesHeader) {
-					cookies.addAll(HttpCookie.parse(cookieHeader));
-				}
-			}
-		}
+    }
 
-		@Override
-		protected InputStream getInputStream() throws XmlRpcException {
-			return new XmlInvalidCharacterFilterInputStream(super.getInputStream());
-		}
+    private class XmlInvalidCharacterFilterInputStream extends FilterInputStream {
 
-	}
+        private static final int BYTE_MASK = 0xFF;
 
-	private class XmlInvalidCharacterFilterInputStream extends FilterInputStream {
+        private static final byte SPACE = ' ';
 
-		private static final int BYTE_MASK = 0xFF;
+        protected XmlInvalidCharacterFilterInputStream(InputStream inputStream) {
+            super(inputStream);
+        }
 
-		private static final byte SPACE = ' ';
+        @Override
+        public int read(byte[] buffer, int offset, int length) throws IOException {
+            int numberOfBytesRead = super.read(buffer, offset, length);
+            filterInvalidCharacterOutOfTheBuffer(buffer, numberOfBytesRead);
+            return numberOfBytesRead;
+        }
 
-		protected XmlInvalidCharacterFilterInputStream(InputStream inputStream) {
-			super(inputStream);
-		}
+        private void filterInvalidCharacterOutOfTheBuffer(byte[] buffer, int numberOfBytes) {
+            for (int byteNo = 0; byteNo < numberOfBytes; byteNo++) {
+                if (isAnInvalidCharacterInXML(buffer[byteNo])) {
+                    buffer[byteNo] = SPACE;
+                }
+            }
+        }
 
-		@Override
-		public int read(byte[] buffer, int offset, int length) throws IOException {
-			int numberOfBytesRead = super.read(buffer, offset, length);
-			filterInvalidCharacterOutOfTheBuffer(buffer, numberOfBytesRead);
-			return numberOfBytesRead;
-		}
+        private boolean isAnInvalidCharacterInXML(byte value) {
+            return isInvalid(convertByteToInt(value));
+        }
 
-		private void filterInvalidCharacterOutOfTheBuffer(byte[] buffer, int numberOfBytes) {
-			for (int byteNo = 0; byteNo < numberOfBytes; byteNo++) {
-				if (isAnInvalidCharacterInXML(buffer[byteNo])) {
-					buffer[byteNo] = SPACE;
-				}
-			}
-		}
+        private int convertByteToInt(byte value) {
+            return value & BYTE_MASK;
+        }
 
-		private boolean isAnInvalidCharacterInXML(byte value) {
-			return isInvalid(convertByteToInt(value));
-		}
-
-		private int convertByteToInt(byte value) {
-			return value & BYTE_MASK;
-		}
-		
-	}
+    }
 
 }

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ic-depress-support-matcher
 Bundle-SymbolicName: org.impressivecode.depress.support.matcher;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-ClassPath: plugin.jar,
  lib/simmetrics_jar_v1_6_2_d07_02_07.jar
 Bundle-Vendor: ImpressiveCode

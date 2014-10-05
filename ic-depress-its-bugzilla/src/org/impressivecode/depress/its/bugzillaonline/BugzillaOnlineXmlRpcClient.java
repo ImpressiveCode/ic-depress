@@ -17,7 +17,9 @@
  */
 package org.impressivecode.depress.its.bugzillaonline;
 
+import java.net.Authenticator;
 import java.net.MalformedURLException;
+import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.util.Map;
 
@@ -26,50 +28,53 @@ import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 
 /**
- * 
  * @author Michał Negacz, Wrocław University of Technology
- * 
+ * @author Maciej Borkowski, Cagepmini Poland
  */
 public class BugzillaOnlineXmlRpcClient {
+    private static final String SLASH = "/";
+    private static final String ENDPOINT_INTERFACE = "xmlrpc.cgi";
+    private XmlRpcClient client;
 
-	private static final String SLASH = "/";
+    public void setAuthentificator(final String login, final String password) {
+        Authenticator.setDefault(new Authenticator() {
+            @Override
+            public PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(login, password.toCharArray());
+            }
+        });
+    }
 
-	private static final String ENDPOINT_INTERFACE = "xmlrpc.cgi";
+    public BugzillaOnlineXmlRpcClient(String url) throws MalformedURLException {
+        client = buildAndConfigureClient(getEndpointURL(url));
+    }
 
-	private XmlRpcClient client;
+    private XmlRpcClient buildAndConfigureClient(URL url) {
+        XmlRpcClient client = new XmlRpcClient();
 
-	public BugzillaOnlineXmlRpcClient(String url) throws MalformedURLException {
-		client = buildAndConfigureClient(getEndpointURL(url));
-	}
+        XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+        config.setServerURL(url);
 
-	private XmlRpcClient buildAndConfigureClient(URL url) {
-		XmlRpcClient client = new XmlRpcClient();
+        client.setConfig(config);
+        client.setTransportFactory(new XmlRpcTransportFactoryWithCookies(client));
 
-		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-		config.setServerURL(url);
+        return client;
+    }
 
-		client.setConfig(config);
-		client.setTransportFactory(new XmlRpcTransportFactoryWithCookies(client));
+    private URL getEndpointURL(String url) throws MalformedURLException {
+        if (!url.endsWith(ENDPOINT_INTERFACE)) {
+            if (!url.endsWith(SLASH)) {
+                url += SLASH;
+            }
+            url += ENDPOINT_INTERFACE;
+        }
+        return new URL(url);
+    }
 
-		return client;
-	}
-
-	private URL getEndpointURL(String url) throws MalformedURLException {
-		if (!url.endsWith(ENDPOINT_INTERFACE)) {
-			if (!url.endsWith(SLASH)) {
-				url += SLASH;
-			}
-			url += ENDPOINT_INTERFACE;
-		}
-		return new URL(url);
-	}
-
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> execute(String method, Map<String, Object> parameters) throws XmlRpcException {
-		// All Bugzilla functions use named parameters and this is realized by Map object. 
-		// To execute method with Map by the client, we need to wrap it into single element array.
-		Object[] parametersWrapper = new Object[] { parameters };
-		return (Map<String, Object>) client.execute(method, parametersWrapper);
-	}
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> execute(String method, Map<String, Object> parameters) throws XmlRpcException {
+        Object[] parametersWrapper = new Object[] { parameters };
+        return (Map<String, Object>) client.execute(method, parametersWrapper);
+    }
 
 }

@@ -61,10 +61,9 @@ public class JiraEntriesParserTest {
     }
 
     private List<ITSDataType> parse() throws ParserConfigurationException, SAXException, IOException, ParseException {
-        HashMap<String, String[]> settings = new HashMap<String, String[]>();
-        JiraEntriesParser parser = new JiraEntriesParser(settings, false, false, false);
+
         String path = getClass().getResource("jira.xml").getPath();
-        List<ITSDataType> entries = parser.parseEntries(path);
+        List<ITSDataType> entries = createJiraParser().parseEntries(path);
         return entries;
     }
 
@@ -86,5 +85,17 @@ public class JiraEntriesParserTest {
         assertThat(its.getAssignees()).containsOnly("garydgregory");
         assertThat(its.getReporter()).isEqualTo("garydgregory");
         assertThat(its.getCommentAuthors()).containsOnly("bayard", "mbenson", "garydgregory");
+    }
+    
+    private JiraEntriesParser createJiraParser() {
+        HashMap<String, String[]> priority = new HashMap<String, String[]>();
+        priority.put(ITSPriority.MAJOR.getLabel(), new String[] {ITSPriority.MAJOR.getLabel()});
+        HashMap<String, String[]> type = new HashMap<String, String[]>();
+        type.put(ITSType.BUG.getLabel(), new String[] {ITSType.BUG.getLabel()});
+        HashMap<String, String[]> resolution = new HashMap<String, String[]>();
+        resolution.put(ITSResolution.FIXED.getLabel(), new String[] {ITSResolution.FIXED.getLabel()});
+        HashMap<String, String[]> status = new HashMap<String, String[]>();
+        status.put(ITSStatus.CLOSED.getLabel(), new String[] {ITSStatus.CLOSED.getLabel()});
+    	return new JiraEntriesParser(priority, type, resolution, status);
     }
 }

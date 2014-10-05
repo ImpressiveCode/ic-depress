@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode type="Source" icon="./ClearQuest.png">
-	<name>IBM Rational ClearQuest Adapter</name>
+	<name>IBM Rational ClearQuest Adapter (Offline)</name>
 
 	<shortDescription>
 		Reads a data table from a file output right out of IBM Clear Quest application.

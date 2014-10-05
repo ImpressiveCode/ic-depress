@@ -35,20 +35,19 @@ import org.knime.core.node.util.filter.NameFilterConfiguration.FilterResult;
 import org.knime.core.node.util.filter.column.DataColumnSpecFilterConfiguration;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ObjectArrays;
 
 /**
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
 public abstract class CryptoNodeModel extends NodeModel {
-
-    private final String configString;
+    static final String CFG_KEY_FILTER = "columns";
 
     private DataColumnSpecFilterConfiguration configuration;
 
-    protected CryptoNodeModel(final String configString) {
+    protected CryptoNodeModel() {
         super(1, 1);
-        this.configString = configString;
     }
 
     @Override
@@ -84,7 +83,7 @@ public abstract class CryptoNodeModel extends NodeModel {
     private ColumnCryptoTransformer createTransformer(final DataTableSpec spec) {
         Preconditions.checkNotNull(configuration, "Configuration has to be initialized first");
         final FilterResult filter = configuration.applyTo(spec);
-        final String[] transforms = filter.getIncludes();
+        final String[] transforms = ObjectArrays.concat(filter.getIncludes(), filter.getRemovedFromIncludes(), String.class);
         final ColumnCryptoTransformer transfomer = transformer(spec, transforms);
         return transfomer;
     }
@@ -94,7 +93,7 @@ public abstract class CryptoNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         if (configuration == null) {
-            configuration = ConfigurationFactory.configuration(configString);
+            configuration = ConfigurationFactory.configuration(CFG_KEY_FILTER);
         }
         configuration.saveConfiguration(settings);
     }
@@ -102,14 +101,14 @@ public abstract class CryptoNodeModel extends NodeModel {
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         if (configuration == null) {
-            configuration = ConfigurationFactory.configuration(configString);
+            configuration = ConfigurationFactory.configuration(CFG_KEY_FILTER);
         }
         configuration.loadConfigurationInModel(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(configString);
+        DataColumnSpecFilterConfiguration config = ConfigurationFactory.configuration(CFG_KEY_FILTER);
         config.loadConfigurationInModel(settings);
     }
 }

@@ -4,7 +4,8 @@
 	<name>Jira Adapter (Offline)</name>
 
 	<shortDescription>
-		Jira Adapter, ImpressiveCode DePress Plugin Framework.
+		Jira Adapter, ImpressiveCode DePress Plugin
+		Framework.
 	</shortDescription>
 
 	<fullDescription>
@@ -12,27 +13,54 @@
 			This node can be used to read data from Jira entries file.
 
 			<p>
-            Jira is defect tracking software, developed by <a href="http://www.atlassian.com/software/jira/">Atlassian</a>. It uses web-based user interface, 
-			which allows gathering all previously registered software defects, filtering them using custom settings and export in various formats, 
-			also in XML format which is required for using this node.<br/>
-			To obtain such file, you need to switch view to XML in Issue Navigator section of Jira, and save the XML shown to a file on your local disk. 
-			Then enter path to the file into node’s input field in configuration dialog.<br/>
-			When executed, Jira Adapter node parses the file and return information collected in standard table form. When some of the required information is missing, 
-			for example due to Jira customization, node will generate appropriate warning message in the console.
+				Jira is defect tracking software, developed by
+				<a href="http://www.atlassian.com/software/jira/">Atlassian</a>
+				. It uses web-based user interface,
+				which allows gathering all
+				previously registered software defects,
+				filtering them using custom
+				settings and export in various formats,
+				also in XML format which is
+				required for using this node.
+				<br />
+				To obtain such file, you need to switch view to XML in Issue
+				Navigator section of Jira, and save the XML shown to a file on your
+				local disk.
+				Then enter path to the file into node’s input field in
+				configuration
+				dialog.
+				<br />
+				When executed, Jira Adapter node parses the file and return
+				information collected in standard table form. When some of the
+				required information is missing,
+				for example due to Jira
+				customization, node will generate appropriate
+				warning message in the
+				console.
 			</p>
-            <p>
-             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-its-jira/examples">here</a> or inside plugin jar. 
-             <br/> 
-             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
-            </p>
+			<p>
+				   Please check workflow examples
+                <a href="http://impressivecode.github.io/ic-depress/update">here</a>.
+				<br />
+				Copyright (c) ImpressiveCode,
+				<a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>
+			</p>
 		</intro>
 		<option name="Jira file location">Enter a valid file. When you press ENTER, the file
 			is analyzed and the settings pre-set. You can also choose a
 			previously read file from the drop-down list, or select a file from
-			the "Browse..." dialog. </option>
+			the "Browse..." dialog.
+		</option>
+		<option name="Advanced"> You can load your custom priority, type,
+			resolution and status properties from previosly selected file. You
+			are able to put any property, which has been found in your file into
+			predefined groups available by clicking on the radio buttons.
+			Properties without a group will be automatically put into unknown.
+		</option>
 	</fullDescription>
 
 	<ports>
-		<outPort index="0" name="Issue Tracking System Data Table">Datatable just read from the jira entries file</outPort>
+		<outPort index="0" name="Issue Tracking System Data Table">Datatable just read from the jira
+			entries file</outPort>
 	</ports>
 </knimeNode>

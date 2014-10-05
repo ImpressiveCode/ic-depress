@@ -57,21 +57,26 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
 
     private static final NodeLogger logger = NodeLogger.getLogger(SVNOnlineAdapterNodeModel.class);
 
-    public static String SVN_REPOSITORY_DEFAULT = "";
+    public static String SVN_REPOSITORY_ADDRESS = "remote address";
+    public static String SVN_LOGIN = "login";
+    public static String SVN_PASSWORD = "password";
+    public final static String SVN_EXTENSION = "extension";
+    public static String SVN_PACKAGENAME = "package";
 
-    public static String SVN_REPOSITORY_ADDRESS = "depress.scm.svnonline.remoteaddress";
-
-    public static String SVN_PACKAGENAME = "depress.scm.svnonline.package";
-
-    public static String SVN_PACKAGENAME_DEFAULT = "org.";
-    
+    public static String SVN_PACKAGENAME_DEFAULT = "";
     public static String EXTENSION_DEFAULT = ".java";
-    
-    public final static String SVN_EXTENSION = "depress.scm.svnonline.extension";
-    
+    public static String SVN_REPOSITORY_DEFAULT = "";
+    public static String SVN_LOGIN_DEFAULT = "";
+    public static String SVN_PASSWORD_DEFAULT = "";
 
     private final SettingsModelString svnRepositoryAddress = new SettingsModelString(
             SVNOnlineAdapterNodeModel.SVN_REPOSITORY_ADDRESS, SVNOnlineAdapterNodeModel.SVN_REPOSITORY_DEFAULT);
+    
+    private final SettingsModelString svnLogin = new SettingsModelString(
+            SVNOnlineAdapterNodeModel.SVN_LOGIN, SVNOnlineAdapterNodeModel.SVN_LOGIN_DEFAULT);
+    
+    private final SettingsModelString svnPassword = new SettingsModelString(
+            SVNOnlineAdapterNodeModel.SVN_PASSWORD, SVNOnlineAdapterNodeModel.SVN_PASSWORD_DEFAULT);
     
     private final SettingsModelOptionalString svnPackageName = new SettingsModelOptionalString(
             SVNOnlineAdapterNodeModel.SVN_PACKAGENAME, SVNOnlineAdapterNodeModel.SVN_PACKAGENAME_DEFAULT, true);
@@ -95,11 +100,13 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
 	    	userExtensions = new ArrayList<String>(); 
 	        Collections.addAll( userExtensions, getExtensions());
 	        String svnPath = getSvnPath(this.svnRepositoryAddress.getStringValue());
+	        String svnLog = this.svnLogin.getStringValue();
+	        String svnPass = this.svnPassword.getStringValue();
 	
 	        logger.info("Reading logs from repository " + svnPath);
 	        SVNOnlineLogParser parser = new SVNOnlineLogParser();
 	        SCMParserOptions parserOptions = options(svnPackageName.getStringValue(), userExtensions);
-	        List<SVNCommit> commits = parser.parseEntries(svnPath, parserOptions);
+	        List<SVNCommit> commits = parser.parseEntries(svnPath, svnLog, svnPass, parserOptions);
 
 	        logger.info("Reading git logs finished.");
 	        BufferedDataTable out = transform(commits, exec);	
@@ -155,6 +162,8 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         svnRepositoryAddress.saveSettingsTo(settings);
+        svnLogin.saveSettingsTo(settings);
+        svnPassword.saveSettingsTo(settings);
         svnPackageName.saveSettingsTo(settings);
         extensions.saveSettingsTo(settings);
     }
@@ -162,6 +171,8 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         svnRepositoryAddress.loadSettingsFrom(settings);
+        svnLogin.loadSettingsFrom(settings);
+        svnPassword.loadSettingsFrom(settings);
         svnPackageName.loadSettingsFrom(settings);
         extensions.loadSettingsFrom(settings);
     }
@@ -169,6 +180,8 @@ public class SVNOnlineAdapterNodeModel extends NodeModel {
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         svnRepositoryAddress.validateSettings(settings);
+        svnLogin.validateSettings(settings);
+        svnPassword.validateSettings(settings);
         svnPackageName.validateSettings(settings);
         extensions.validateSettings(settings);
         

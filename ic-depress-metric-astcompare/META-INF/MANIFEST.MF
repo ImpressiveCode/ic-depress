@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ic-depress-mr-astcompare
 Bundle-SymbolicName: org.impressivecode.depress.mr.astcompare;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-ClassPath: plugin.jar,
  lib/changedistiller-0.0.1-SNAPSHOT-jar-with-dependencies.jar,
  lib/jsoup-1.7.3.jar,

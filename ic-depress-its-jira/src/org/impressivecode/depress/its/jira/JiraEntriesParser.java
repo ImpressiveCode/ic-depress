@@ -20,6 +20,7 @@ package org.impressivecode.depress.its.jira;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -33,6 +34,12 @@ import java.util.TimeZone;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSPriority;
@@ -56,17 +63,18 @@ import com.google.common.collect.Lists;
  */
 public class JiraEntriesParser {
     private static final String JIRA_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z";
-    private final HashMap<String, String[]> settings;
-    private boolean priorityEnabled;
-    private boolean typeEnabled;
-    private boolean resolutionEnabled;
+    private final HashMap<String, String[]> prioritySettings;
+    private final HashMap<String, String[]> typeSettings;
+    private final HashMap<String, String[]> resolutionSettings;
+    private final HashMap<String, String[]> statusSettings;
 
-    public JiraEntriesParser(final HashMap<String, String[]> settings, final boolean priorityEnabled,
-            final boolean typeEnabled, final boolean resolutionEnabled) {
-        this.settings = settings;
-        this.priorityEnabled = priorityEnabled;
-        this.typeEnabled = typeEnabled;
-        this.resolutionEnabled = resolutionEnabled;
+    public JiraEntriesParser(final HashMap<String, String[]> prioritySettings,
+            final HashMap<String, String[]> typeSettings, final HashMap<String, String[]> resolutionSettings,
+            final HashMap<String, String[]> statusSettings) {
+        this.prioritySettings = prioritySettings;
+        this.typeSettings = typeSettings;
+        this.resolutionSettings = resolutionSettings;
+        this.statusSettings = statusSettings;
     }
 
     public List<ITSDataType> parseEntries(final String path) throws ParserConfigurationException, SAXException,
@@ -109,7 +117,29 @@ public class JiraEntriesParser {
         data.setReporter(getReporter(elem));
         data.setAssignees(getAssinees(elem));
         data.setCommentAuthors(getCommentAuthors(elem));
+        data.setTimeEstimate(getTimeEstimate(elem));
+        data.setTimeSpent(getTimeSpent(elem));
         return data;
+    }
+
+    private Integer getTimeSpent(final Element elem) {
+        NodeList nodeList = elem.getElementsByTagName("timespent");
+        if (null == nodeList.item(0)) {
+            return null;
+        }
+        String stringTime = nodeList.item(0).getAttributes().getNamedItem("seconds").getTextContent();
+        Integer time = Integer.valueOf(stringTime) / 60;
+        return time;
+    }
+
+    private Integer getTimeEstimate(final Element elem) {
+        NodeList nodeList = elem.getElementsByTagName("timeoriginalestimate");
+        if (null == nodeList.item(0)) {
+            return null;
+        }
+        String stringTime = nodeList.item(0).getAttributes().getNamedItem("seconds").getTextContent();
+        int time = Integer.valueOf(stringTime) / 60;
+        return time;
     }
 
     private Set<String> getCommentAuthors(final Element elem) {
@@ -124,7 +154,7 @@ public class JiraEntriesParser {
 
     private Set<String> getAssinees(final Element elem) {
         NodeList nodeList = elem.getElementsByTagName("assignee");
-        Preconditions.checkArgument(nodeList.getLength() == 1, "Reporter has to be set");
+        Preconditions.checkArgument(nodeList.getLength() == 1, "Assignee has to be set");
         String username = nodeList.item(0).getAttributes().getNamedItem("username").getTextContent();
         if ("-1".equals(username)) {
             return Collections.emptySet();
@@ -141,25 +171,16 @@ public class JiraEntriesParser {
     }
 
     private ITSResolution getResolution(final Element elem) {
-        String resolution = extractValue(elem, "resolution");
+        String resolution = extractValue(elem, "resolution").trim();
         if (resolution == null) {
             return ITSResolution.UNKNOWN;
         }
-        if (resolutionEnabled) {
-            for (String key : settings.keySet()) {
-                for (String value : settings.get(key)) {
-                    if (resolution.equals(value))
-                        return ITSResolution.get(key);
-                }
-            }
-        } else {
-            for (String label : ITSResolution.labels()) {
-                if (label.equals(resolution)) {
-                    return ITSResolution.get(label);
-                }
+        for (String key : resolutionSettings.keySet()) {
+            for (String value : resolutionSettings.get(key)) {
+                if (resolution.equalsIgnoreCase(value))
+                    return ITSResolution.get(key);
             }
         }
-
         return ITSResolution.UNKNOWN;
     }
 
@@ -172,22 +193,14 @@ public class JiraEntriesParser {
     }
 
     private ITSType getType(final Element elem) {
-        String type = extractValue(elem, "type");
+        String type = extractValue(elem, "type").trim();
         if (type == null) {
             return ITSType.UNKNOWN;
         }
-        if (typeEnabled) {
-            for (String key : settings.keySet()) {
-                for (String value : settings.get(key)) {
-                    if (type.equals(value))
-                        return ITSType.get(key);
-                }
-            }
-        } else {
-            for (String label : ITSType.labels()) {
-                if (label.equals(type)) {
-                    return ITSType.get(label);
-                }
+        for (String key : typeSettings.keySet()) {
+            for (String value : typeSettings.get(key)) {
+                if (type.equalsIgnoreCase(value))
+                    return ITSType.get(key);
             }
         }
         return ITSType.UNKNOWN;
@@ -198,24 +211,17 @@ public class JiraEntriesParser {
     }
 
     private ITSStatus getStatus(final Element elem) {
-        String status = extractValue(elem, "status");
+        String status = extractValue(elem, "status").trim();
         if (status == null) {
             return ITSStatus.UNKNOWN;
         }
-        switch (status) {
-        case "Open":
-            return ITSStatus.OPEN;
-        case "Reopened":
-            return ITSStatus.REOPENED;
-        case "In Progress":
-            return ITSStatus.IN_PROGRESS;
-        case "Resolved":
-            return ITSStatus.RESOLVED;
-        case "Closed":
-            return ITSStatus.CLOSED;
-        default:
-            return ITSStatus.UNKNOWN;
+        for (String key : statusSettings.keySet()) {
+            for (String value : statusSettings.get(key)) {
+                if (status.equalsIgnoreCase(value))
+                    return ITSStatus.get(key);
+            }
         }
+        return ITSStatus.UNKNOWN;
     }
 
     private Date getResolved(final Element elem) throws ParseException {
@@ -223,22 +229,14 @@ public class JiraEntriesParser {
     }
 
     private ITSPriority getPriority(final Element elem) {
-        String priority = extractValue(elem, "priority");
+        String priority = extractValue(elem, "priority").trim();
         if (priority == null) {
             return ITSPriority.UNKNOWN;
         }
-        if (priorityEnabled) {
-            for (String key : settings.keySet()) {
-                for (String value : settings.get(key)) {
-                    if (priority.equals(value))
-                        return ITSPriority.get(key);
-                }
-            }
-        } else {
-            for (String label : ITSPriority.labels()) {
-                if (label.equals(priority)) {
-                    return ITSPriority.get(label);
-                }
+        for (String key : prioritySettings.keySet()) {
+            for (String value : prioritySettings.get(key)) {
+                if (priority.equalsIgnoreCase(value))
+                    return ITSPriority.get(key);
             }
         }
         return ITSPriority.UNKNOWN;
@@ -269,12 +267,25 @@ public class JiraEntriesParser {
         int size = nodeList.getLength();
         List<String> values = Lists.newLinkedList();
         for (int i = 0; i < size; i++) {
-            String value = nodeList.item(i).getFirstChild().getNodeValue().trim();
+            String value = nodeToString(nodeList.item(i)).replaceAll("\\<.*?>","");
             values.add(value);
         }
         return values;
     }
 
+    private static String nodeToString(Node node) {
+        StringWriter sw = new StringWriter();
+        try {
+          Transformer t = TransformerFactory.newInstance().newTransformer();
+          t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+          t.setOutputProperty(OutputKeys.INDENT, "yes");
+          t.transform(new DOMSource(node), new StreamResult(sw));
+        } catch (TransformerException te) {
+          System.out.println("nodeToString Transformer Exception");
+        }
+        return sw.toString();
+      }
+    
     private String getKey(final Element elem) {
         return extractValue(elem, "key");
     }
@@ -284,10 +295,9 @@ public class JiraEntriesParser {
         if (nodeList.getLength() == 0) {
             return null;
         }
-        Node firstChild = elem.getElementsByTagName(tagName).item(0).getFirstChild();
-        return firstChild == null ? null : firstChild.getNodeValue().trim();
+        String value = nodeToString(nodeList.item(0)).replaceAll("\\<.*?>","");
+        return value == null ? null : value.trim();
     }
-
     private Date parseDate(final String nodeValue) throws ParseException {
         // Mon, 16 Feb 2004 00:29:19 +0000
         // FIXME majchmar: fix time parsing, timezone

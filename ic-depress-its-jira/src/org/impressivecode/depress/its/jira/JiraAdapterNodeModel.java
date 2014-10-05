@@ -17,36 +17,21 @@
  */
 package org.impressivecode.depress.its.jira;
 
-import static org.impressivecode.depress.its.jira.JiraAdapterTableFactory.createTableSpec;
-
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
-import org.impressivecode.depress.its.ITSPriority;
-import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.ITSResolution;
+import org.impressivecode.depress.its.ITSOfflineNodeModel;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
-import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
-import org.knime.core.node.NodeLogger;
-import org.knime.core.node.NodeModel;
-import org.knime.core.node.NodeSettingsRO;
-import org.knime.core.node.NodeSettingsWO;
-import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
-import org.knime.core.node.defaultnodesettings.SettingsModelString;
-import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Preconditions;
@@ -55,42 +40,10 @@ import com.google.common.base.Preconditions;
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
  */
-public class JiraAdapterNodeModel extends NodeModel {
-
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(JiraAdapterNodeModel.class);
-
-    private static final String CHOOSER_DEFAULT_VALUE = "";
-
-    private static final String CONFIG_NAME = "depress.its.jira.";
-    static final String CHOOSER_CONFIG_NAME = CONFIG_NAME + "chooser";
-    static final String PRIORITY_CONFIG_NAME = CONFIG_NAME + "priority";
-    static final String TYPE_CONFIG_NAME = CONFIG_NAME + "type";
-    static final String RESOLUTION_CONFIG_NAME = CONFIG_NAME + "resolution";
-    static final String PRIORITY_BOOLEAN_CONFIG_NAME = CONFIG_NAME + "prioritybool";
-    static final String TYPE_BOOLEAN_CONFIG_NAME = CONFIG_NAME + "typebool";
-    static final String RESOLUTION_BOOLEAN_CONFIG_NAME = CONFIG_NAME + "resolutionbool";
-    private final SettingsModelString fileSettings = createFileChooserSettings();
-    private final SettingsModelBoolean priorityEnabled = createSettingsModelBoolean(PRIORITY_BOOLEAN_CONFIG_NAME, false);
-    private final SettingsModelBoolean typeEnabled = createSettingsModelBoolean(TYPE_BOOLEAN_CONFIG_NAME, false);
-    private final SettingsModelBoolean resolutionEnabled = createSettingsModelBoolean(RESOLUTION_BOOLEAN_CONFIG_NAME,
-            false);
-    private final HashMap<String, SettingsModelStringArray> groupSettings = new HashMap<String, SettingsModelStringArray>();
+public class JiraAdapterNodeModel extends ITSOfflineNodeModel {
 
     protected JiraAdapterNodeModel() {
-        super(0, 1);
-        initializeSettings();
-    }
-
-    private void initializeSettings() {
-        for (String label : ITSPriority.labels()) {
-            groupSettings.put(label, new SettingsModelStringArray(PRIORITY_CONFIG_NAME + "." + label, null));
-        }
-        for (String label : ITSType.labels()) {
-            groupSettings.put(label, new SettingsModelStringArray(TYPE_CONFIG_NAME + "." + label, null));
-        }
-        for (String label : ITSResolution.labels()) {
-            groupSettings.put(label, new SettingsModelStringArray(RESOLUTION_CONFIG_NAME + "." + label, null));
-        }
+        super();
     }
 
     @Override
@@ -105,14 +58,6 @@ public class JiraAdapterNodeModel extends NodeModel {
         return new BufferedDataTable[] { out };
     }
 
-    private HashMap<String, String[]> getSettings() {
-        HashMap<String, String[]> currentSettings = new HashMap<String, String[]>();
-        for (Entry<String, SettingsModelStringArray> entry : groupSettings.entrySet()) {
-            currentSettings.put(entry.getKey(), entry.getValue().getStringArrayValue());
-        }
-        return currentSettings;
-    }
-
     private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
             throws CanceledExecutionException {
         ITSAdapterTransformer transformer = new ITSAdapterTransformer(ITSAdapterTableFactory.createDataColumnSpec());
@@ -121,71 +66,16 @@ public class JiraAdapterNodeModel extends NodeModel {
 
     private List<ITSDataType> parseEntries(final String filePath) throws ParserConfigurationException, SAXException,
             IOException, ParseException {
-        return new JiraEntriesParser(getSettings(), priorityEnabled.getBooleanValue(), typeEnabled.getBooleanValue(),
-                resolutionEnabled.getBooleanValue()).parseEntries(filePath);
+        return new JiraEntriesParser(mappingManager.getPriorityModel().getIncluded(), mappingManager.getTypeModel()
+                .getIncluded(), mappingManager.getResolutionModel().getIncluded(), mappingManager.getStatusModel()
+                .getIncluded()).parseEntries(filePath);
     }
 
-    @Override
-    protected void reset() {
-    }
-
+    // FIXME: refactorize this function
     @Override
     protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
         Preconditions.checkArgument(inSpecs.length == 0);
-        return createTableSpec();
-    }
-
-    @Override
-    protected void saveSettingsTo(final NodeSettingsWO settings) {
-        fileSettings.saveSettingsTo(settings);
-        priorityEnabled.saveSettingsTo(settings);
-        typeEnabled.saveSettingsTo(settings);
-        resolutionEnabled.saveSettingsTo(settings);
-        for (SettingsModelStringArray prioritySetting : groupSettings.values()) {
-            prioritySetting.saveSettingsTo(settings);
-        }
-    }
-
-    @Override
-    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.loadSettingsFrom(settings);
-        priorityEnabled.loadSettingsFrom(settings);
-        typeEnabled.loadSettingsFrom(settings);
-        resolutionEnabled.loadSettingsFrom(settings);
-        for (SettingsModelStringArray prioritySetting : groupSettings.values()) {
-            prioritySetting.loadSettingsFrom(settings);
-        }
-    }
-
-    @Override
-    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.validateSettings(settings);
-        priorityEnabled.validateSettings(settings);
-        typeEnabled.validateSettings(settings);
-        resolutionEnabled.validateSettings(settings);
-        for (SettingsModelStringArray prioritySetting : groupSettings.values()) {
-            prioritySetting.validateSettings(settings);
-        }
-    }
-
-    @Override
-    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
-        // NOOP
-    }
-
-    @Override
-    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-            CanceledExecutionException {
-        // NOOP
-    }
-
-    static SettingsModelString createFileChooserSettings() {
-        return new SettingsModelString(CHOOSER_CONFIG_NAME, CHOOSER_DEFAULT_VALUE);
-    }
-
-    static SettingsModelBoolean createSettingsModelBoolean(final String config, final boolean defaultValue) {
-        return new SettingsModelBoolean(config, defaultValue);
+        return JiraAdapterTableFactory.createTableSpec();
     }
 
 }

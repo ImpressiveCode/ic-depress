@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./svn.png" type="Source">
-    <name>SVN (Online) SCM (Experimental)</name>
+    <name>SVN SCM (Online)</name>
     
     <shortDescription>
        Online SVN SCM, ImpressiveCode Depress
@@ -9,7 +9,7 @@
     
     <fullDescription>
         <intro>
-         	This node can be used to load SVN log directly from git repository (online version).
+         	This node can be used to load SVN log directly from remote address of a SVN's repository.
          		
          	<p>
                 To use this plugin You should only give Svn's repository address in configuration windows.
@@ -35,13 +35,21 @@
                         <li>D - deleted</li>
                     </ul>
             </p>
+                          <p>
+             Please check workflow examples <a href="http://impressivemerge.github.io/ic-depress/examples">here</a>. 
+             <br/> 
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
         </intro>
         
         
         <option name="Repository address">Address of remote SVN's repository which You want to analyze</option>
+        <option name="Login">Data needed to gain access to the repository.</option>
+        <option name="Password">Password to the account on the website with SVN's repository.</option>
 <option name="Extension pattern">It gives a possibility to filter files. Empty box or * means that files with any extension will be displayed. There could be typed more 
         than one extension, to do so, extensions should be splitted by coma.</option>        
-        <option name="Package prefix">Prefix of package. It is only used with java files. Empty box lets displaying files with any package prefix.</option>
+        <option name="Package prefix">Prefix of package. It is only used with java files. Empty box lets displaying files with 
+        any package prefix(it is used as default configuration).</option>
     </fullDescription>
     
     <ports>

@@ -4,7 +4,8 @@
 	<name>Bugzilla Adapter (Offline)</name>
 
 	<shortDescription>
-		Bugzilla Adapter, ImpressiveCode DePress Plugin Framework.
+		Bugzilla Adapter, ImpressiveCode DePress Plugin
+		Framework.
 	</shortDescription>
 
 	<fullDescription>
@@ -12,21 +13,33 @@
 			This node can be used to read data from Bugzilla entries file.
 
 			<p>
-            <!-- add help -->
+				Bugzilla is a Web-based general-purpose bugtracker and testing tool
 			</p>
-            <p>
-             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-its-jira/examples">here</a> or inside plugin jar. 
-             <br/> 
-             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
-            </p>
+			<p>
+				   Please check workflow examples
+                <a href="http://impressivecode.github.io/ic-depress/update">here</a>.
+				<br />
+				Copyright (c) ImpressiveCode,
+				<a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>
+			</p>
 		</intro>
+
+
 		<option name="Bugzilla file location">Enter a valid file. When you press ENTER, the file
 			is analyzed and the settings pre-set. You can also choose a
 			previously read file from the drop-down list, or select a file from
-			the "Browse..." dialog. </option>
+			the "Browse..." dialog.
+		</option>
+		<option name="Advanced"> You can load your custom priority, resolution and
+			status
+			properties from previosly selected file. You are able to
+			put any property, which has been found in your file into predefined
+			groups available by clicking on the radio buttons. Properties without
+			a group will be automatically put into unknown.
+		</option>	
 	</fullDescription>
-
 	<ports>
-		<outPort index="0" name="Issue Tracking System Data Table">Datatable just read from the jira entries file</outPort>
+		<outPort index="0" name="Issue Tracking System Data Table">Datatable just read from the jira
+			entries file</outPort>
 	</ports>
 </knimeNode>

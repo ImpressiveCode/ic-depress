@@ -27,11 +27,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Model class used by Jackson for Jira JSON parsing. Contains issue fields
  * 
  * @author Marcin Kunert, Wroclaw University of Technology
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JiraOnlineField {
-
     private Date created;
     private Date updated;
     @JsonProperty("resolutiondate")
@@ -48,6 +47,8 @@ public class JiraOnlineField {
     private JiraOnlineUser reporter;
     private JiraOnlineUser assignee;
     private JiraOnlineComments comment;
+    @JsonProperty("timetracking")
+    private TimeTracking timeTracking;
 
     public Date getCreated() {
         return created;
@@ -163,6 +164,15 @@ public class JiraOnlineField {
     }
 
 
+    public TimeTracking getTimeTracking() {
+        return timeTracking;
+    }
+
+    public void setTimeTracking(TimeTracking timeTracking) {
+        this.timeTracking = timeTracking;
+    }
+
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     public class Status {
         private String description;
@@ -196,7 +206,6 @@ public class JiraOnlineField {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public class Priority {
-
         private String name;
 
         public String getName() {
@@ -223,7 +232,6 @@ public class JiraOnlineField {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public class Resolution {
-
         private int id;
         private String name;
         private String description;
@@ -250,6 +258,27 @@ public class JiraOnlineField {
 
         public void setDescription(String description) {
             this.description = description;
+        }
+    }
+    
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class TimeTracking {
+        @JsonProperty("originalEstimateSeconds")
+        private int estimate;
+        @JsonProperty("timeSpentSeconds")
+        private int spent;
+        
+        public int getEstimate() {
+            return estimate;
+        }
+        public void setEstimate(int estimate) {
+            this.estimate = estimate;
+        }
+        public int getSpent() {
+            return spent;
+        }
+        public void setSpent(int spent) {
+            this.spent = spent;
         }
     }
 }

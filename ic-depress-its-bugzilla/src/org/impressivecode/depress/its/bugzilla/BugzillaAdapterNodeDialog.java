@@ -17,26 +17,52 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
-import static org.impressivecode.depress.its.bugzilla.BugzillaAdapterNodeModel.createFileChooserSettings;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
 
-import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
-import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
+import org.impressivecode.depress.its.FileParser;
+import org.impressivecode.depress.its.ITSOfflineNodeDialog;
+import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
- * 
- * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
-public class BugzillaAdapterNodeDialog extends DefaultNodeSettingsPane {
-
-    private static final String FILE_EXTENSION = ".xml";
-    private static final String HISTORY_ID = "depress.its.bugzilla.historyid";
+public class BugzillaAdapterNodeDialog extends ITSOfflineNodeDialog {
+    private final static String BUG = "bug";
 
     protected BugzillaAdapterNodeDialog() {
-        addDialogComponent(getFileChooserComponent());
+        super();
+    }
+    
+    @Override
+    protected void createMappingManager() {
+        mappingManager.createFilterPriority(new RefreshCaller("bug_severity"));
+        mappingManager.createFilterType(new RefreshCaller(BUG));
+        mappingManager.createFilterResolution(new RefreshCaller("resolution"));
+        mappingManager.createFilterStatus(new RefreshCaller("bug_status"));
     }
 
-    private DialogComponentFileChooser getFileChooserComponent() {
-        return new DialogComponentFileChooser(createFileChooserSettings(), HISTORY_ID, FILE_EXTENSION);
+    private class RefreshCaller implements Callable<List<String>> {
+        private final String property;
+        
+        RefreshCaller(final String property) {
+            this.property = property;
+        }
+        
+        @Override
+        public List<String> call() throws Exception {
+            if(property.equals(BUG)) {
+                List<String> list = new ArrayList<String>();
+                list.add(BUG);
+                return list;
+            }
+            FileParser parser = new FileParser();
+            File file = new File(((SettingsModelString) (chooser.getModel())).getStringValue());
+            String expression = "/rss/channel/item/" + property + "[not(preceding::" + property + "/. = .)]";
+            return parser.parseXPath(file, expression);
+        }
     }
+
 }

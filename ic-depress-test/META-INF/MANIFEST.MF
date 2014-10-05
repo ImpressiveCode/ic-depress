@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ic-depress-test
 Bundle-SymbolicName: org.impressivecode.depress.tests;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: ImpressiveCode
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.knime.workbench.core,
@@ -33,5 +33,6 @@ Bundle-ClassPath: bin/,
  lib/fest-util-1.1.6.jar,
  lib/mockito-all-1.9.5.jar
 Import-Package: org.apache.log4j;version="1.2.15",
+ org.impressivecode.depress.mr.googlemetrics,
  org.impressivecode.depress.support.sourcecrawler
 

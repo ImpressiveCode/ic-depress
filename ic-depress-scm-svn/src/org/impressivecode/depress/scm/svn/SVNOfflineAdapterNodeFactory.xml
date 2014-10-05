@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./svn.png" type="Source">
-    <name>SVN (Offline) SCM</name>
+    <name>SVN SCM (Offline)</name>
 
     <shortDescription>
        Offline SVN SCM, ImpressiveCode Depress
@@ -18,7 +18,7 @@
                 path needs to be given in "Selected file" field in configuration dialog.
             </p>
               <p>
-             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-scm-svn/examples">here</a> or inside plugin jar. 
+             Please check workflow examples <a href="http://impressivemerge.github.io/ic-depress/examples">here</a>.  
              <br/> 
              Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
             </p>

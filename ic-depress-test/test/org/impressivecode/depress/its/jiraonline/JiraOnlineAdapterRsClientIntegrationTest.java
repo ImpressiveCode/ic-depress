@@ -17,25 +17,22 @@
  */
 package org.impressivecode.depress.its.jiraonline;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 import java.net.URISyntaxException;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 
 import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.ITSFilter;
 import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterCreationDate;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
  * Integration test for RESTful Client and JQL filters.<br />
@@ -45,12 +42,13 @@ import org.mockito.Mockito;
  * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
  * @author Dawid Rutowicz, Wroclaw University of Technology
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
 public class JiraOnlineAdapterRsClientIntegrationTest {
 
     private final String HOSTNAME_HIBERNATE = "hibernate.atlassian.net";
-    private final String HOSTNAME_SPRING = "jira.springsource.org";
+    private final String HOSTNAME_SPRING = "jira.spring.io";
 
     private JiraOnlineAdapterRsClient client;
     private JiraOnlineAdapterUriBuilder hibernateUriBuilder;
@@ -65,22 +63,21 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
     @Test
     public void shouldDownloadParseAndCheckSpecificIssue() throws Exception {
         // given
-        JiraOnlineFilterCreationDate filter = new JiraOnlineFilterCreationDate();
-        JiraOnlineFilterCreationDate filterSpy = Mockito.spy(filter);
+        String jql = "created > 2012-1-1 and created < 2012-1-2";
 
-        Mockito.when(filterSpy.isFromEnabled()).thenReturn(true);
-        Mockito.when(filterSpy.getFrom()).thenReturn("2012-1-1");
-        Mockito.when(filterSpy.isToEnabled()).thenReturn(true);
-        Mockito.when(filterSpy.getTo()).thenReturn("2012-1-2");
+        springUriBuilder.setJQL(jql);
 
-        List<ITSFilter> filters = newArrayList();
-        filters.add(filterSpy);
-
-        springUriBuilder.setFilters(filters);
+        HashMap<String, String[]> priority = new HashMap<>();
+        priority.put("Major", new String[] { "Major" });
+        HashMap<String, String[]> type = new HashMap<>();
+        HashMap<String, String[]> resolution = new HashMap<>();
+        HashMap<String, String[]> status = new HashMap<>();
+        status.put("Resolved", new String[] { "Resolved" });
+        JiraOnlineAdapterParser parser = new JiraOnlineAdapterParser(priority, type, resolution, status);
 
         // when
-        List<ITSDataType> entries = JiraOnlineAdapterParser.parseSingleIssueBatch(
-                client.getJSON(springUriBuilder.build()), springUriBuilder.getHostname());
+        List<ITSDataType> entries = parser.parseSingleIssueBatch(client.getJSON(springUriBuilder.build(), "", ""),
+                springUriBuilder.getHostname());
 
         // then
         assertThat(entries.size(), is(2));
@@ -114,7 +111,7 @@ public class JiraOnlineAdapterRsClientIntegrationTest {
         assertThat(entry.getPriority(), is(ITSPriority.MAJOR));
         assertThat(entry.getSummary(),
                 is("Improve extendability of RandomValueTokenServices by keeping storage separate from token creation"));
-        assertThat(entry.getLink(), is("https://jira.springsource.org/browse/SECOAUTH-179"));
+        assertThat(entry.getLink(), is("https://jira.spring.io/browse/SECOAUTH-179"));
         assertNull(entry.getDescription());
         assertThat(entry.getComments().size(), is(0));
         assertThat(entry.getResolution(), is(ITSResolution.UNKNOWN));

@@ -18,243 +18,109 @@
 package org.impressivecode.depress.its.jiraonline;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Collection;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingWorker;
 
-import org.impressivecode.depress.its.ITSFilter;
-import org.impressivecode.depress.its.ITSNodeDialog;
+import org.impressivecode.depress.its.ITSOnlineNodeDialog;
 import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
-import org.impressivecode.depress.its.jiraonline.filter.JiraOnlineFilterCreationDate;
 import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
+import org.impressivecode.depress.its.jiraonline.model.JiraOnlineProjectListItem;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.NotConfigurableException;
-import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentMultiLineString;
-import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
-import org.knime.core.node.defaultnodesettings.SettingsModelStringArray;
 import org.knime.core.node.port.PortObjectSpec;
 
 /**
- * 
  * @author Marcin Kunert, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
  * @author Dawid Rutowicz, Wroclaw University of Technology
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
-public class JiraOnlineAdapterNodeDialog extends ITSNodeDialog {
-
+public class JiraOnlineAdapterNodeDialog extends ITSOnlineNodeDialog {
     private static final String JQL = "JQL:";
     private static final String DOWNLOAD_HISTORY = "Download issue history (this will make the processing A LOT longer)";
-    private static final String MAPPING = "Mapping";
 
-    private SettingsModelString hostnameComponent;
     private DialogComponentBoolean history;
     private DialogComponentMultiLineString jql;
-    private JPanel mappingTab;
-
-    public JiraOnlineAdapterNodeDialog() {
-        super();
-        addTab(MAPPING, createMappersTab());
-    }
 
     @Override
     protected Component createAdvancedTab() {
-        JPanel panel = (JPanel) super.createAdvancedTab();
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         history = new DialogComponentBoolean(JiraOnlineAdapterNodeModel.createSettingsHistory(), DOWNLOAD_HISTORY);
-        jql = new DialogComponentMultiLineString(JiraOnlineAdapterNodeModel.createSettingsJQL(), JQL, false, 100, 10);
+        jql = new DialogComponentMultiLineString(JiraOnlineAdapterNodeModel.createSettingsJQL(), JQL, false, 50, 10);
 
         panel.add(history.getComponentPanel());
         panel.add(jql.getComponentPanel());
-
         return panel;
     }
 
-    private Component createMappersTab() {
-        mappingTab = new JPanel();
-        // JTabbedPane mapTabs = new JTabbedPane();
-        // JScrollPane scrollPane = new JScrollPane();
-        // mapTabs.add(MAPPING, scrollPane);
-        //
-        // mappingTab.add(mapTabs);
-
-        mappingTab.setLayout(new BoxLayout(mappingTab, BoxLayout.Y_AXIS));
-        // mappingTab.
-        // repaintMappersTab();
-
-        return mappingTab;
-    }
-
-    private void repaintMappersTab(JTabbedPane tabs) {
-        mappingTab.removeAll();
-        mappingTab.add(tabs);
-    }
-
     @Override
-    protected SettingsModelString createURLSettings() {
-        hostnameComponent = JiraOnlineAdapterNodeModel.createSettingsURL();
-        return hostnameComponent;
+    protected void createMappingManager() {
+        mappingManager = JiraOnlineAdapterNodeModel.createMapping();
+        mappingManager.createFilterPriority(new RefreshCaller(Mode.PRIORITY_LIST));
+        mappingManager.createFilterType(new RefreshCaller(Mode.TYPE_LIST));
+        mappingManager.createFilterResolution(new RefreshCaller(Mode.RESOLUTION_LIST));
+        mappingManager.createFilterStatus(new RefreshCaller(Mode.STATE_LIST));
     }
 
-    @Override
-    protected SettingsModelString createProjectSettings() {
-        return new SettingsModelString("createProjectSettings", "");
-    }
+    private class RefreshCaller implements Callable<List<String>> {
+        private final Mode mode;
 
-    @Override
-    protected ActionListener getButtonConnectionCheckListener() {
-        return new CheckConnectionButtonListener();
-    }
-
-    @Override
-    protected void addLargestFilter(JPanel panel) {
-        for (DialogComponent component : new JiraOnlineFilterCreationDate().getDialogComponents()) {
-            panel.add(component.getComponentPanel());
-        }
-    }
-
-    @Override
-    protected void saveSettingsTo(NodeSettingsWO settings) throws InvalidSettingsException {
-        for (DialogComponent component : JiraOnlineAdapterNodeModel.getMapperManager().getDialogComponents()) {
-            try {
-                component.getModel().saveSettingsTo(settings);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        super.saveSettingsTo(settings);
-    }
-
-    class CheckConnectionButtonListener implements ActionListener {
-        private static final String TESTING_CONNECTION = "Testing connection...";
-
-        private ConnectionChecker worker;
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            worker = new ConnectionChecker();
-            checkProjectsLabel.setText(TESTING_CONNECTION);
-            checkProjectsButton.setEnabled(false);
-            worker.execute();
-        }
-    }
-
-    class ConnectionChecker extends SwingWorker<JTabbedPane, Void> {
-        private static final String CONNECTION_FAILED = "Connection failed.";
-        private static final String CONNECTION_OK = "Connection ok, Jira filters updated.";
-
-        private static final String STATE = "State";
-        private static final String PRIORITY = "Priority";
-        private static final String RESOLUTION = "Resolution";
-        private static final String TYPE = "Type";
-
-        private JiraOnlineAdapterUriBuilder builder;
-        private JiraOnlineAdapterRsClient client;
-        private JiraOnlineMapperManager mm;
-
-        public ConnectionChecker() {
-            mm = JiraOnlineAdapterNodeModel.getMapperManager();
-            builder = new JiraOnlineAdapterUriBuilder();
-            client = new JiraOnlineAdapterRsClient();
+        RefreshCaller(final Mode mode) {
+            this.mode = mode;
         }
 
         @Override
-        protected JTabbedPane doInBackground() throws Exception {
-            builder.setHostname(hostnameComponent.getStringValue());
-
-            mm.createMapperState(getMapperList(Mode.STATE_LIST));
-            mm.createMapperPrioryty(getMapperList(Mode.PRIORITY_LIST));
-            mm.createMapperResolution(getMapperList(Mode.RESOLUTION_LIST));
-            mm.createMapperType(getMapperList(Mode.TYPE_LIST));
-
-            return createTabs();
-        }
-
-        private List<JiraOnlineFilterListItem> getMapperList(Mode mode) {
-            builder.setMode(mode);
-            String rawData = null;
-            try {
-                rawData = client.getJSON(builder.build());
-            } catch (Exception e) {
-                e.printStackTrace();
+        public List<String> call() throws Exception {
+            List<String> list = new ArrayList<>();
+            List<JiraOnlineFilterListItem> items = getList(mode, JiraOnlineFilterListItem.class);
+            for (JiraOnlineFilterListItem item : items) {
+                list.add(item.getName());
             }
-            return JiraOnlineAdapterParser.getCustomFieldList(rawData);
+            return list;
         }
+    }
 
-        private JTabbedPane createTabs() {
-            JTabbedPane mapTabs = new JTabbedPane();
-            mapTabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-            mapTabs.add(STATE, createTab(mm.getComponentsMapperState()));
-            mapTabs.add(PRIORITY, createTab(mm.getComponentsMapperPriority()));
-            mapTabs.add(RESOLUTION, createTab(mm.getComponentsMapperResolution()));
-            mapTabs.add(TYPE, createTab(mm.getComponentsMapperType()));
-            return mapTabs;
-        }
+    private <T> List<T> getList(Mode mode, Class<?> elem) throws Exception {
+        JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+        String urlString = ((SettingsModelString) (url.getModel())).getStringValue();
+        builder.setHostname(urlString);
+        builder.setMode(mode);
+        JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient();
+        URI uri = builder.build();
+        String login = ((SettingsModelString) (loginComponent.getModel())).getStringValue();
+        String password = ((SettingsModelString) (passwordComponent.getModel())).getStringValue();
+        String rawData = null;
 
-        private Component createTab(List<DialogComponent> componentList) {
-            JPanel tabPanel = new JPanel();
-            JScrollPane scrollPane = new JScrollPane();
-            tabPanel.setLayout(new BoxLayout(tabPanel, BoxLayout.Y_AXIS));
-            for (DialogComponent dialogComponent : componentList) {
-                tabPanel.add(dialogComponent.getComponentPanel());
+        rawData = client.getJSON(uri, login, password);
+        return JiraOnlineAdapterParser.getCustomList(rawData, elem);
+    }
+
+    @Override
+    protected void updateProjectsList() {
+        ArrayList<String> projects = new ArrayList<String>();
+        List<JiraOnlineProjectListItem> list;
+        try {
+            list = getList(Mode.PROJECT_LIST, JiraOnlineProjectListItem.class);
+            projectSelection.getModel().setEnabled(true);
+            for (JiraOnlineProjectListItem item : list) {
+                projects.add(item.getName());
             }
-            scrollPane.setViewportView(tabPanel);
-            return scrollPane;
+            projectSelection.replaceListItems(projects, null);
+        } catch (Exception e) {
+            Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
         }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public void done() {
-            try {
-                JTabbedPane tabs = get();
-                repaintMappersTab(tabs);
-                checkProjectsLabel.setText(CONNECTION_OK);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                checkProjectsLabel.setText(CONNECTION_FAILED);
-            }
-
-            checkProjectsButton.setEnabled(true);
-        }
-
-    }
-
-    @Override
-    protected SettingsModelString createLoginSettings() {
-        return JiraOnlineAdapterNodeModel.createSettingsLogin();
-    }
-
-    @Override
-    protected SettingsModelString createPasswordSettings() {
-        return JiraOnlineAdapterNodeModel.createSettingsPass();
-    }
-
-    @Override
-    protected SettingsModelInteger createThreadsCountSettings() {
-        return JiraOnlineAdapterNodeModel.createSettingsThreadCount();
-    }
-
-    @Override
-    protected SettingsModelStringArray createFilterSettings() {
-        return JiraOnlineAdapterNodeModel.createSettingsFilters();
-    }
-
-    @Override
-    protected Collection<ITSFilter> getFilters() {
-        return JiraOnlineAdapterNodeModel.getFilters();
     }
 
     @Override

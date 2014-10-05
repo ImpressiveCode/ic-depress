@@ -22,10 +22,12 @@ import static org.impressivecode.depress.mr.jacoco.JaCoCoAdapterTableFactory.cre
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.io.FilenameUtils;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -46,81 +48,139 @@ import org.xml.sax.SAXException;
  */
 public class JaCoCoAdapterNodeModel extends NodeModel {
 
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(JaCoCoAdapterNodeModel.class);
+	private static final NodeLogger LOGGER = NodeLogger
+			.getLogger(JaCoCoAdapterNodeModel.class);
 
-    private static final String DEFAULT_VALUE = "";
+	static final String FILE = "File";
+	static final String DIRECTORY = "Directory";
+	static final String[] actions = { FILE, DIRECTORY };
+	static final String RADIO_DEFAULT = "File";
+	static final String FILE_NAME_CONFIG_XML = "fileXML";
+	static final String FILE_NAME_CONFIG_DIR = "fileDIR";
+	static final String FILE_DEFAULT_VALUE_DIR = "";
+	static final String FILE_DEFAULT_VALUE_XML = "";
+	static final String RADIO_CONFIG = "radio";
 
-    private static final String CONFIG_NAME = "depress.mr.jacoco.confname";
+	private final SettingsModelString fileSettingsXML = createFileSettingsXML();
+	private final SettingsModelString fileSettingsDIR = createFileSettingsDIR();
+	private final SettingsModelString radioSettings = createRadioSettings();
 
-    private final SettingsModelString fileSettings = createFileChooserSettings();
+	protected JaCoCoAdapterNodeModel() {
+		super(0, 1);
+	}
 
-    protected JaCoCoAdapterNodeModel() {
-        super(0, 1);
-    }
+	@Override
+	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
+			final ExecutionContext exec) throws Exception {
+		LOGGER.info("Preparing to read jacoco entries.");
+		File file = null;
+		if (radioSettings.getStringValue().equals(FILE)) {
+			file = new File(fileSettingsXML.getStringValue());
+		} else if (radioSettings.getStringValue().equals(DIRECTORY)) {
+			file = new File(fileSettingsDIR.getStringValue());
+		}
 
-    @Override
-    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
-            throws Exception {
+		List<JaCoCoEntry> entries;
+		if (file.isDirectory()) {
+			entries = parseEntriesFromDirectory(fileSettingsDIR
+					.getStringValue());
+		} else if (file.isFile()) {
+			entries = parseEntriesFromFile(fileSettingsXML.getStringValue());
+		} else
+			throw new IOException(
+					"Path does not point at any file or directory");
 
-        LOGGER.info("Preparing to read jacoco entries.");
-        String jacocoFilePath = fileSettings.getStringValue();
-        List<JaCoCoEntry> entries = parseEntries(jacocoFilePath);
-        LOGGER.info("Transforming to jacoco entries.");
-        BufferedDataTable out = transform(entries, exec);
-        LOGGER.info("JaCoCo table created.");
-        return new BufferedDataTable[] { out };
-    }
+		LOGGER.info("Transforming to jacoco entries.");
+		BufferedDataTable out = transform(entries, exec);
+		LOGGER.info("JaCoCo table created.");
+		return new BufferedDataTable[] { out };
+	}
 
-    private BufferedDataTable transform(final List<JaCoCoEntry> entries, final ExecutionContext exec)
-            throws CanceledExecutionException {
-        JaCoCoAdapterTransformer transformer = new JaCoCoAdapterTransformer(createDataColumnSpec());
-        return transformer.transform(entries, exec);
-    }
+	private BufferedDataTable transform(final List<JaCoCoEntry> entries,
+			final ExecutionContext exec) throws CanceledExecutionException {
+		JaCoCoAdapterTransformer transformer = new JaCoCoAdapterTransformer(
+				createDataColumnSpec());
+		return transformer.transform(entries, exec);
+	}
 
-    private List<JaCoCoEntry> parseEntries(final String jacocoFilePath) throws ParserConfigurationException,
-    SAXException, IOException {
-        JaCoCoEntriesParser parser = new JaCoCoEntriesParser();
-        return parser.parseEntries(jacocoFilePath);
-    }
+	private List<JaCoCoEntry> parseEntriesFromFile(final String filePath)
+			throws ParserConfigurationException, SAXException, IOException {
+		JaCoCoEntriesParser parser = new JaCoCoEntriesParser();
+		return parser.parseEntries(filePath);
+	}
 
-    @Override
-    protected void reset() {
-    }
+	private List<JaCoCoEntry> parseEntriesFromDirectory(
+			final String directoryPath) throws ParserConfigurationException,
+			SAXException, IOException {
+		JaCoCoEntriesParser parser = new JaCoCoEntriesParser();
+		List<JaCoCoEntry> list = new ArrayList<JaCoCoEntry>();
+		for (File file : new File(directoryPath).listFiles()) {
+			if (!FilenameUtils.getExtension(file.getName()).equals("dtd")) {
+				list.addAll(parser.parseEntries(file.getCanonicalPath()));
+			}
+		}
+		return list;
+	}
 
-    @Override
-    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
-        checkArgument(inSpecs.length == 0, "Invalid state");
-        return new DataTableSpec[] { createDataColumnSpec() };
-    }
+	@Override
+	protected void reset() {
+	}
 
-    @Override
-    protected void saveSettingsTo(final NodeSettingsWO settings) {
-        fileSettings.saveSettingsTo(settings);
-    }
+	@Override
+	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
+			throws InvalidSettingsException {
+		checkArgument(inSpecs.length == 0, "Invalid state");
+		return new DataTableSpec[] { createDataColumnSpec() };
+	}
 
-    @Override
-    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.loadSettingsFrom(settings);
-    }
+	@Override
+	protected void saveSettingsTo(final NodeSettingsWO settings) {
+		fileSettingsXML.saveSettingsTo(settings);
+		fileSettingsDIR.saveSettingsTo(settings);
+		radioSettings.saveSettingsTo(settings);
+	}
 
-    @Override
-    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.validateSettings(settings);
-    }
+	@Override
+	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
+			throws InvalidSettingsException {
+		fileSettingsXML.loadSettingsFrom(settings);
+		fileSettingsDIR.loadSettingsFrom(settings);
+		radioSettings.loadSettingsFrom(settings);
+	}
 
-    @Override
-    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
-        // NOOP
-    }
+	@Override
+	protected void validateSettings(final NodeSettingsRO settings)
+			throws InvalidSettingsException {
+		fileSettingsXML.validateSettings(settings);
+		fileSettingsDIR.validateSettings(settings);
+		radioSettings.validateSettings(settings);
+	}
 
-    @Override
-    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
-        // NOOP
-    }
+	@Override
+	protected void loadInternals(final File internDir,
+			final ExecutionMonitor exec) throws IOException,
+			CanceledExecutionException {
+		// NOOP
+	}
 
-    static SettingsModelString createFileChooserSettings() {
-        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
-    }
+	@Override
+	protected void saveInternals(final File internDir,
+			final ExecutionMonitor exec) throws IOException,
+			CanceledExecutionException {
+		// NOOP
+	}
+
+	static SettingsModelString createFileSettingsDIR() {
+		return new SettingsModelString(FILE_NAME_CONFIG_DIR,
+				FILE_DEFAULT_VALUE_DIR);
+	}
+
+	static SettingsModelString createFileSettingsXML() {
+		return new SettingsModelString(FILE_NAME_CONFIG_XML,
+				FILE_DEFAULT_VALUE_XML);
+	}
+
+	static SettingsModelString createRadioSettings() {
+		return new SettingsModelString(RADIO_CONFIG, RADIO_DEFAULT);
+	}
 }

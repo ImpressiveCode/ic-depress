@@ -18,19 +18,17 @@
             <a href="http://www.eclemma.org/jacoco/">http://www.eclemma.org/jacoco/</a>
             </p>
             <p>
-             Please check workflow examples <a href="https://github.com/ImpressiveCode/ic-depress/tree/master/ic-depress-metric-jacoco/examples">here</a> or inside plugin jar. 
+             
              <br/> 
              Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
             </p>
         </intro>
-        <option name="Jacoco file location">Enter a valid file. When you press ENTER, the file is analyzed and the settings pre-set.
-            You
-            can also choose a previously read file from the drop-down list, or select a file from the "Browse..."
-            dialog.
-        </option>
+        
+         <option name="Selected File or Directory"> Enter a valid xml report file from Jacoco or a directory containg many of them. 
+         File report.dtd has to be present in the same directory as your report(s). </option>
     </fullDescription>
 
     <ports>
-        <outPort index="0" name="Coverage Table">Datatable just read from the jacoco file.</outPort>
+        <outPort index="0" name="Coverage Table">Datatable just read from the jacoco file(s).</outPort>
     </ports>
 </knimeNode>

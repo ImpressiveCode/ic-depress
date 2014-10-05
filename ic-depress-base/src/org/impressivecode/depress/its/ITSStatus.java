@@ -17,16 +17,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.its;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * 
  * @author Marek Majchrzak, ImpressiveCode
- * 
+ * @author Maciej Borkowski, Capgemini Poland
  */
 public enum ITSStatus {
-    OPEN, IN_PROGRESS, REOPENED, CLOSED, RESOLVED, UNKNOWN;
+    OPEN("New"), IN_PROGRESS("In progress"), REOPENED("Reopened"), CLOSED("Closed"), RESOLVED("Resolved"), UNKNOWN("Unknown");
     
+    private final String label;
+
+    private ITSStatus(final String label) {
+        this.label = label;
+    }
+
     @Override
     public String toString() {
-        return (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
+        return (this.name().substring(0, 1).toUpperCase() + this.name().substring(1).toLowerCase())
+                .replaceAll("_", " ");
     };
+
+    private static Map<String, ITSStatus> lookup = new HashMap<String, ITSStatus>();
+    static {
+        for (ITSStatus type : ITSStatus.values()) {
+            lookup.put(type.getLabel(), type);
+        }
+    }
+
+    public static ITSStatus get(final String label) {
+        return lookup.get(label);
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public static String[] labels() {
+        return Arrays.toString(ITSStatus.values()).replaceAll("^.|.$", "").split(", ");
+    }
 }

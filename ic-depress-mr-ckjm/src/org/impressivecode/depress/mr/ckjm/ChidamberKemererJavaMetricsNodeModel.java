@@ -46,14 +46,10 @@ import org.knime.core.node.NodeSettingsWO;
  * @author Zuzanna Pacholczyk, Capgemini Poland
  */
 public class ChidamberKemererJavaMetricsNodeModel extends NodeModel {
-    
-    // the logger instance
-    private static final NodeLogger logger = NodeLogger
-            .getLogger(ChidamberKemererJavaMetricsNodeModel.class);
         
     private static final String DEFAULT_VALUE = "";
 
-    private static final String CONFIG_NAME = "depress.mr.ckjm.confname";
+    private static final String CONFIG_NAME = "file chooser";
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(ChidamberKemererJavaMetricsNodeModel.class);
 

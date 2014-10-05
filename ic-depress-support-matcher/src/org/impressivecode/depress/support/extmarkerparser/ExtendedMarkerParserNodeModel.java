@@ -47,10 +47,10 @@ import com.google.common.base.Preconditions;
  */
 public class ExtendedMarkerParserNodeModel extends NodeModel {
 
-    static final String CFG_REGEXP_ID = "depress.support.matcher.extmarkerparser.idregexp";
+    static final String CFG_REGEXP_ID = "regexp";
     static final String REGEXP_ID_DEFAULT = "([0-9]+)";
 
-    static final String CFG_IDBUILDER = "depress.support.matcher.extmarkerparser.builder";
+    static final String CFG_IDBUILDER = "builder";
     static final String IDBUILDER_DEFAULT = "%s";
 
     private final SettingsModelString regExpID = new SettingsModelString(CFG_REGEXP_ID, REGEXP_ID_DEFAULT);

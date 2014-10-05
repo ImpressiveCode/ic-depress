@@ -59,13 +59,14 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(SVNOfflineAdapterNodeModel.class);
 
-    static final String CFG_FILENAME = "depress.scm.svn.filename";
+    static final String CFG_FILENAME = "filename";
+    static final String CFG_PACKAGENAME = "package";
+    static final String CFG_EXTENSION = "extension";
+    
     static final String FILENAME_DEFAULT = "";
-    static final String CFG_PACKAGENAME = "depress.scm.svn.package";
-    static final String PACKAGENAME_DEFAULT = "org.";
+    static final String PACKAGENAME_DEFAULT = "";
     static final String EXTENSION_DEFAULT = ".java";
-    static final String CFG_EXTENSION = "depress.scm.svn.string";
-	
+
 
     private final SettingsModelString fileName = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_FILENAME,
             SVNOfflineAdapterNodeModel.FILENAME_DEFAULT);
@@ -133,7 +134,6 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
         fileName.saveSettingsTo(settings);
         packageName.saveSettingsTo(settings);
         extensions.saveSettingsTo(settings);
-
     }
 
     @Override
@@ -141,7 +141,6 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
         fileName.loadSettingsFrom(settings);
         packageName.loadSettingsFrom(settings);
         extensions.loadSettingsFrom(settings);
-
     }
 
     @Override
@@ -149,7 +148,6 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
         fileName.validateSettings(settings);
         packageName.validateSettings(settings);
         extensions.validateSettings(settings);
-
     }
 
     @Override

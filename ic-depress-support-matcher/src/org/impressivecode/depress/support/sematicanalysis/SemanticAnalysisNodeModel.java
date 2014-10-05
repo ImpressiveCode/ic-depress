@@ -62,24 +62,19 @@ public class SemanticAnalysisNodeModel extends NodeModel {
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(SemanticAnalysisNodeModel.class);
 
-    static final String CFG_RESOLUTION_WEIGHT = "depress.support.matcher.sematicanalysis.resolutionweight";
-    static final Integer RESOLUTION_WEIGHT_DEFAULT = 1;
-
-    static final String CFG_AUTHOR_WEIGHT = "depress.support.matcher.sematicanalysis.authorweight";
-    static final Integer AUTHOR_WEIGHT_DEFAULT = 1;
-
-    static final String CFG_COMPARSION_LIMIT = "depress.support.matcher.sematicanalysis.comparsionlimit";
-    static final Integer COMPARSION_LIMIT_DEFAULT = 60;
-
-    static final String CFG_MSC_COMPARSION_OBJECT = "depress.support.matcher.sematicanalysis.msccomparsionobject";
-    static final String MSC_COMPARSION_OBJECT_DEFAULT = Configuration.MSC_DT_SUMMARY;
-
-    static final String CFG_SELECTED_ALGORITHM = "depress.support.matcher.sematicanalysis.selectedalgorithm";
-    static final String CFG_SELECTED_ALGORITHM_DEFAULT = Configuration.LEVENSTHEIN_ALGHORITM;
+    static final String CFG_RESOLUTION_WEIGHT = "resolution weight";
+    static final String CFG_AUTHOR_WEIGHT = "author weight";
+    static final String CFG_COMPARSION_LIMIT = "comparsion limit";
+    static final String CFG_MSC_COMPARSION_OBJECT = "msc comparsion object";  
+    static final String CFG_SELECTED_ALGORITHM = "selected algorithm";
+    static final String CFG_SIMILARITY_WEIGHT = "similarity weight";
     
-    static final String CFG_SIMILARITY_WEIGHT = "depress.support.matcher.sematicanalysis.similarityweight";
+    static final Integer RESOLUTION_WEIGHT_DEFAULT = 1;
+    static final Integer AUTHOR_WEIGHT_DEFAULT = 1;
+    static final Integer COMPARSION_LIMIT_DEFAULT = 60;
+    static final String MSC_COMPARSION_OBJECT_DEFAULT = Configuration.MSC_DT_SUMMARY;
+    static final String CFG_SELECTED_ALGORITHM_DEFAULT = Configuration.LEVENSTHEIN_ALGHORITM;
     static final Integer SIMILARITY_WEIGHT_DEFAULT = 1;
-
     static final Integer SUM = RESOLUTION_WEIGHT_DEFAULT + AUTHOR_WEIGHT_DEFAULT + SIMILARITY_WEIGHT_DEFAULT;
     
     private final SettingsModelInteger resolutionWeight = new SettingsModelIntegerBounded(CFG_RESOLUTION_WEIGHT,

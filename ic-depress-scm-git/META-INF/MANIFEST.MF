@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ic-depress-scm-git
 Bundle-SymbolicName: org.impressivecode.depress.scm.git; singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-ClassPath: plugin.jar,
  lib/org.eclipse.jgit-2.3.1.201302201838-r.jar,
  lib/jsch-0.1.50.jar
