@@ -17,9 +17,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.endevor;
 
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataColumnSpec;
+
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
+import org.impressivecode.depress.common.OutputTransformer;
+import org.impressivecode.depress.scm.SCMAdapterTableFactory;
+import org.impressivecode.depress.scm.SCMAdapterTransformer;
+import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.scm.SCMOperation;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
@@ -42,6 +53,9 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
+
+import com.google.common.base.Preconditions;
+import com.google.common.io.Files;
 
 /**
  * 
@@ -67,24 +81,43 @@ public class EndevorParserNodeModel extends NodeModel {
     }
 
     @Override
-    protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
-            final ExecutionContext exec) throws Exception {
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
 
-        logger.info("Node Model Stub... this is not yet implemented !");
+        logger.info(String.format("Endevor log processing started from file %s...", smSelectedFilename.getStringValue()));
+        System.out.println(String.format("Endevor log processing started from file %s...", smSelectedFilename.getStringValue()));
+        
+        //TODO parser - parsowanie razem z wczytywaniem ploiku. GUAVA tylko do testow
+        String fileContent = loadTextFile(new File(smSelectedFilename.getStringValue()));
+        List<SCMDataType> commits = new LinkedList<SCMDataType>();
+        
+        //TODO delete test data
+        SCMDataType testData = new SCMDataType();
+        testData.setAuthor("Test author");
+        testData.setCommitDate(new Date(System.currentTimeMillis()));
+        testData.setResourceName("Test resource");
+        testData.setOperation(SCMOperation.OTHER);
+        testData.setPath(smSelectedFilename.getStringValue());
+        testData.setCommitID("testCommID");
+        testData.setExtension("test ext");
+        testData.setMessage("Test output");
+        commits.add(testData);
+        
+        BufferedDataTable out = transform(commits, exec);
 
-        //TODO wygenerowac schemat tabeli wyjsciowej patrz SVNOfflineAdapterNodeModel
-        DataColumnSpec[] allColSpecs = new DataColumnSpec[3];
-        allColSpecs[0] = 
-            new DataColumnSpecCreator("Column 0", StringCell.TYPE).createSpec();
-        allColSpecs[1] = 
-            new DataColumnSpecCreator("Column 1", DoubleCell.TYPE).createSpec();
-        allColSpecs[2] = 
-            new DataColumnSpecCreator("Column 2", IntCell.TYPE).createSpec();
-        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
+        return new BufferedDataTable[]{ out };
+    }
+    
+	private String loadTextFile(File sourceFile) {
+		try {
+			return Files.toString(sourceFile, Charset.forName("UTF-8"));
+		} catch (IOException e) {
+			return null;
+		}
+	}
 
-        BufferedDataContainer container = exec.createDataContainer(outputSpec);
-        BufferedDataTable out = container.getTable();
-        return new BufferedDataTable[]{out};
+	private BufferedDataTable transform(final List<SCMDataType> commits, final ExecutionContext exec) throws CanceledExecutionException {
+        OutputTransformer<SCMDataType> transformer = new SCMAdapterTransformer(createDataColumnSpec());
+        return transformer.transform(commits, exec);
     }
 
     @Override
@@ -92,18 +125,10 @@ public class EndevorParserNodeModel extends NodeModel {
     	//nothing
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
-            throws InvalidSettingsException {
-        
-    	//TODO uncomment
-//        Preconditions.checkArgument(inSpecs.length == 0);
-//        return SCMAdapterTableFactory.createTableSpec();
-
-        return new DataTableSpec[]{null};
+    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
+        Preconditions.checkArgument(inSpecs.length == 0);
+        return SCMAdapterTableFactory.createTableSpec();
     }
 
     @Override
@@ -132,4 +157,3 @@ public class EndevorParserNodeModel extends NodeModel {
     }
 
 }
-
