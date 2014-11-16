@@ -1,91 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="shortcut icon" href="./assets/ico/icon.ico">
+<!--[if lt IE 7]>
+<html lang="en" ng-app="depressApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="depressApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="depressApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="depressApp" class="no-js"> <!--<![endif]-->
+<head>
+    <link rel="shortcut icon" href="assets/ico/icon.ico">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>DePress</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>DePress</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
-		<link rel="stylesheet" href="./assets/css/site.css">
-		<link rel="stylesheet" href="./assets/font-awesome/css/font-awesome.css">
-		<link rel="stylesheet" href="./assets/css/popup.css">
-	</head>
-	<body>
-		<div id="wrap"> <!-- necessary for sticky footer. wrap all content except footer -->
-			<div class="navbar navbar-inverse navbar-fixed-top">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="sr-only">Menu</span>
-						<i class="fa fa-bars fa-lg"></i>
-						</button>
-						<a class="navbar-brand" href="./"> DePress</a>
-					</div>
-					<div class="navbar-collapse collapse">
-						<ul class="nav navbar-nav">
-							<li class="hidden-sm  active"><a href="./">Home</a></li>
-							<li><a href="./quickstart/">Quickstart</a></li>
-							<li><a href="./whatsnew/">What's New</a></li>
-							<li><a href="./examples/">Examples</a></li>
-							<li><a href="./contribute/">Contribute</a></li>
-							<li><a href="./about/">About</a></li>
-							<li>
-						</ul>
-						
-						<ul class="nav navbar-nav navbar-right">
-							<div class="actions">
-								<a class="btn btn-success btn-lg" href="https://github.com/ImpressiveCode/ic-depress">GitHub Page</a>
-							</div>
-						</ul>
-						
-						<div id="social-buttons" class="hidden-print">
-							<ul class="list-inline center-block text-center">
-								<li>
-									<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=ImpressiveCode&repo=ic-depress&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-								</li>
-								<li>
-									<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=ImpressiveCode&repo=ic-depress&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="102px" height="20px"></iframe>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
 
-			<div class="jumbotron-carousel hidden-print">
-				<div class="container">
-					<div class="row">
-						<div class="text-center">
-							<h1>DePress</h1>
-							<h2>Defect Prediction in Software Systems</h2>
-							<h4><font color="#68747F">Defect Prediction in Software Systems (DePress) Extensible Framework allows building workflows in graphical manner. DePress is based on the KNIME project. The main aim of the DePress Framework is support for empirical software analysis. It allows you to collect, combine and analyse data from various data sources like software repositories or software metrics.</font></h4>
-						</div>
-					</div>
-				</div>
-			</div>
+    <div ng-include src="'menu/menu.html'"></div>
+    <div ng-view></div>
 
-			<div class="actions"><br>
-				   <center> <a class="btn btn-primary btn-xl" onclick="_gaq.push(['_trackEvent', 'Outbound Link', 'Quickstart']);" href="./quickstart/">Get Started</a></center><br>
-			</div>
-			<div class="container text-center">
-			· <a href="https://depress.atlassian.net/browse/DEP/">Issues</a> · 
-			<a href="https://github.com/ImpressiveCode/ic-depress">Source</a> · 
-			</div>
-      
-		</div>
-		<footer id="footer" class="footer hidden-print">
-			<div class="container text-center">
-				<div>
-					This work is licensed under a <a href="http://www.gnu.org/licenses/gpl.html">GPL v3 </a>license.
-				</div>
-				<div class="project">
-					· <a href="./">home</a> ·
-					<a href="./about/">about</a> ·
-				</div>
-			</div>
-		</footer>
-				<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script src="./assets/js/bootstrap-3.1.1.min.js"></script>
-	</body>
+
+<!--
+<div ng-include src="'footer/footer.html'"></div>
+-->
+
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+<!-- endbower -->
+<!-- endbuild -->
+<script src="app.js"></script>
+<script src="main/main.js"></script>
+<script src="downloads/downloads.js"></script>
+<script src="quickstart/quickstart.js"></script>
+<script src="examples/examples.js"></script>
+<script src="contribute/contribute.js"></script>
+<script src="about/about.js"></script>
+<script src="additional/additional.js"></script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-56785561-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+</body>
 </html>
