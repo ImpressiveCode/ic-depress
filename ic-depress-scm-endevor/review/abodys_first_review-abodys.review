@@ -3,10 +3,10 @@
   <ReviewIssue id="I2JEX7HE">
     <ReviewIssueMeta>
       <CreationDate format="yyyy-MM-dd :: HH:mm:ss:SSS z">2014-11-15 :: 21:13:59:714 CET</CreationDate>
-      <LastModificationDate format="yyyy-MM-dd :: HH:mm:ss:SSS z">2014-11-15 :: 21:14:23:743 CET</LastModificationDate>
+      <LastModificationDate format="yyyy-MM-dd :: HH:mm:ss:SSS z">2014-11-16 :: 12:46:16:376 CET</LastModificationDate>
     </ReviewIssueMeta>
     <ReviewerId>abodys</ReviewerId>
-    <AssignedTo>abodys</AssignedTo>
+    <AssignedTo>msznurowski</AssignedTo>
     <File line="34">src/org/impressivecode/depress/scm/endevor/EndevorParserNodeModel.java</File>
     <Type>item.type.label.clarity</Type>
     <Severity>item.severity.label.trivial</Severity>
