@@ -1,0 +1,14 @@
+{
+  "name": "DePress",
+  "description": "DePress Home Page",
+  "version": "1.0.0",
+  "homepage": "http://impressivecode.github.io/ic-depress/",
+  "license": "GPL v3",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-route": "1.2.x",
+    "angular-loader": "1.2.x",
+    "angular-mocks": "~1.2.x"
+  }
+}
