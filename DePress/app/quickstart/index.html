@@ -1,0 +1,105 @@
+<div class="container">
+    <div class="page-header">
+        <h1>Quick start</h1>
+    </div>
+
+    <div class="alert alert-info" role="alert">
+        <i class="fa fa-cloud-download fa-2x"></i> <strong> Eclipse Project Update Sites:</strong> http://impressivecode.github.io/ic-depress/update/v2
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">KNIME SDK</div>
+        <div class="panel-body">
+            <ol>
+                <li><a href="http://www.knime.org/downloads/previous">Download</a> KNIME SDK in version 2.8.0 (it is
+                    just our
+                    suggestion, DePress should also work with newer versions but if not, use 2.8.0 as we mentioned).
+                </li>
+                <li>Extract files. You do not have to install anything. You can start using KNIME just by clicking
+                    executable
+                    file <i>eclipse.exe</i>.
+                </li>
+                <li>It is sometimes needed for DePress to increase KNIME's memory. To do so, go to the folder where
+                    KNIME has
+                    been extracted, find a file <i>eclipse.ini</i>. Click on it with the right mouse button and edit the
+                    file
+                    with eg. Notepad.
+                    At the end of the file add <i>-XX:MaxPermSize=256m</i> (you can choose any other value; 256m is
+                    usually
+                    enough).
+                </li>
+                <li>You can switch to KNIME perspective by clicking on the table icon on the top right corner of Eclipse
+                    window.
+                    Choose KNIME(if you can not see it, click <i>Other...</i> - it should be there somewhere).
+                </li>
+                <li>In case of any problem, you can look for help at the <a href="http://tech.knime.org/installation-0">KNIME's
+                    website</a>.
+            </ol>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Running plugins</div>
+        <div class="panel-body">
+            <ol>
+                <li>Setup your KNIME as described in <a href="#/quickstart">Quickstart</a></li>
+                <li>After configuring SDK, run <i>eclipse.exe</i></li>
+                <li>Click <i>Help</i> -> <i>Install New Software</i>.</li>
+                <li>Next to the box <i>Work with</i> click <i>Add</i>.</li>
+                <li>Name your plugins source as you want and as the <i>Location</i> insert
+                    <mark><i>http://impressivecode.github.io/ic-depress/update/v2</i></mark>
+                    (or <i>/v1</i> for older release). Click <i>OK</i>.
+                </li>
+                <li>DePress plugin appeared below. Click <i>Select all</i> to choose plugins to install and click <i>Next</i>
+                    twice.
+                </li>
+                <li>Read the license and when you agree with it, tick it and finish.</li>
+                <li>Restart Eclipse application.</li>
+                <li>When you switch the perspective into KNIME, you will see DePress's plugins in the <i>Node
+                    Repository</i>.
+                    Click to check ->
+                    <a class="image-popup-vertical-fit" href="quickstart/plugins.jpg"
+                       title="DePress plugins for you to use.">
+                        <img src="quickstart/plugins.jpg" width="20" height="40"/>
+                    </a>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Additional information</div>
+        <div class="panel-body">
+            If you need any help with using the analysis tools or just with generating needed results, check this site.<br>
+
+            <div class="text-center">
+                <div class="actions">
+                    <a class="btn btn-primary btn-xl" onclick="_gaq.push(['_trackEvent', 'Outbound Link', 'Additional']);"
+                       href="#/additional">Additional information</a><br>
+                </div>
+            </div>
+            <br>
+            <br>
+
+            If you would like to add any new feature, please use JIRA as written <a href="#/contribute">here</a>. <br>
+            To inform us about a bug or to report a CR, also use JIRA. It is really important for us to keep all information
+            about changes in DePress in one place.<br>
+            Please do not use GitHub Issues for enhancement request and bugs.<br><br>
+            </p>
+
+
+            <p class="lead">
+
+            <div class="text-center">
+                Check out examples of using plugins made by DePress.
+                <div class="actions">
+                    <a class="btn btn-primary btn-xl" onclick="_gaq.push(['_trackEvent', 'Outbound Link', 'Examples']);"
+                       href="#/examples">Examples</a><br>
+                </div>
+                <br>Have a nice time using DePress. Good luck!
+            </div>
+            </p>
+        </div>
+    </div>
+
+
+</div>
