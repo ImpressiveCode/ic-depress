@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="shortcut icon" href="../assets/ico/icon.ico">
+
+		<title>DePress</title>
+
+		<link rel="stylesheet" href="../assets/css/site.css">
+		<link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.css">
+		<link rel="stylesheet" href="../assets/css/popup.css">
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<i class="fa fa-bars fa-lg"></i>
+						</button>
+						<a class="navbar-brand" href="../"> DePress</a>
+					</div>
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-nav">
+							<li><a href="../">Home</a></li>
+							<li><a href="../quickstart/">Quickstart</a></li>
+							<li><a href="../whatsnew/">What's New</a></li>
+							<li class="hidden-sm  active"><a href="../examples/">Examples</a></li>
+							<li><a href="../contribute/">Contribute</a></li>
+							<li><a href="../about/">About</a></li>
+							<li>
+						</ul>
+						
+						<ul class="nav navbar-nav navbar-right">
+							<div class="actions">
+								<a class="btn btn-success btn-lg" href="https://github.com/ImpressiveCode/ic-depress">GitHub Page</a>
+							</div>
+						</ul>
+						
+						<div id="social-buttons" class="hidden-print">
+							<ul class="list-inline center-block text-center">
+								<li>
+									<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=ImpressiveCode&repo=ic-depress&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+								</li>
+								<li>
+									<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=ImpressiveCode&repo=ic-depress&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="102px" height="20px"></iframe>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="container">
+				If you need any help with using the analysis tools or just with generating needed results, check this site.<br>
+					<center><div class="actions">
+							<a class="btn btn-primary btn-l" onclick="_gaq.push(['_trackEvent', 'Outbound Link', 'Additional']);" href="../additional/">Additional information</a><br>
+						</div></center><br>
+				<p class="lead">
+					<h3>Analysing project release using Jira, CKJM and JaCoCo.</h3>
+					<ol>
+						<li><a href="../quickstart">Set up</a> your DePress and download workflow <a href="./project_analysis/workflow_jira_example.zip">Here</a>.
+							<a href="./project_analysis/jira_example_data.zip">Here you can find example input files</a> used in this tutorial.
+							You can use either them or your own log files. Import Knime workflow as shown in above tutorial.</li>
+						<li>Your workflow should look similar to this:
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/whole_example.png">
+										<img src="./project_analysis/whole_example.png" width="457" height="400" />
+									</a> </br>
+							</center>
+						</li>
+						<li>There are four parts of data analysis. First is pre release version. Select your Jira and Git log files and 
+						configure appropriate nodes seen in this part by clicking on them with the right button. Add also list of developers.
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/pre_rel_conf.png">
+										<img src="./project_analysis/pre_rel_conf.png" width="338" height="300" />
+									</a> </br>
+							</center>
+						</li>
+						<li>Now focus on release part. There you use your JaCoCo and CKJM log files. Configure these two orange nodes the same way as said above.
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/release.png">
+										<img src="./project_analysis/release.png" width="373" height="280" />
+									</a> </br>
+							</center>
+						</li>
+						<li>In this part you look at post release version of your project. Use Git and Jira log files.
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/post_release.png">
+										<img src="./project_analysis/post_release.png" width="460" height="300" />
+									</a> </br>
+							</center>						
+						</li>
+						<li>Now you can get information about the result of data analysis. You can get a xls file or a diagram. Click with right button of the mouse on either XLS Writer node or Data Tree Learner and choose execute. When you get a green circle under your node, your result is ready. You can check it clicking with right button on node and choosing the last option. Instruction of XLS Writer configuration is shown in above tutorial.
+							<center>
+									<a class="image-popup-vertical-fit" href="./project_analysis/analysis.png">
+										<img src="./project_analysis/analysis.png" width="305" height="300" />
+									</a> </br>
+							</center>	
+						</li>
+					</ol>
+				</p>
+				<p class="lead">
+					<h3>Release notes for Git/SVN files with Jira</h3>
+					<ol>
+						<li><a href="../quickstart">Set up</a> your DePress and download workflow for either <a href="./release/gitworkflow.zip">Git</a> or <a href="./release/svnworkflow.zip">SVN</a>(click on name).
+							If it's needed, check <a href="./release/example.zip">Example Git files</a> used in this tutorial.</li>
+						<li>Import (previously downloaded) KNIME workflow as an archive file: 
+							<center>
+								<a class="image-popup-vertical-fit" href="./release/import.png">
+									<img src="./release/import.png" width="200" height="150" />
+								</a> </br>
+							</center>
+							You should see a workflow similar to this(it's name is either git or svn):
+							<center>
+								<a class="image-popup-vertical-fit" href="./release/pre_init.png">
+									<img src="./release/pre_init.png" width="300" height="200" />
+								</a> </br>
+							</center>
+							<b>If you get an error about missing XLS node, click on the blue button above and solve the problem.</b>
+						</li>
+						<li>Select your Git/SVN log files(if you don't know how to generate them, click on the blue button above). To do this select configure on List Files node and choose your directory where both files are placed.
+							<center>
+								<a class="image-popup-vertical-fit" href="./release/files.png">
+									<img src="./release/files.png" width="150" height="50" />
+								</a> </br>
+							</center>
+							Generation of valid Git/SVN logs is also included in Git/SVN Offline node description.</br>
+							Files should have names describing their version e.g. "1.0.0.xml" and "1.1.2.xml".
+							You need at least two distinct log files to create release notes(to compare versions of your project).</li>
+						<li>Execute Java Edit Variable (simple) node.
+							<center>
+								<a class="image-popup-vertical-fit" href="./release/init.png">
+									<img src="./release/init.png" width="250" height="75" />
+								</a> </br>
+							</center>
+						</li>
+						<li>Select your Jira log file.
+							<center>
+								<a class="image-popup-vertical-fit" href="./release/jira.png">
+									<img src="./release/jira.png"  width="175" height="50" />
+								</a> </br>	
+							</center></li>
+						<li>Optionally you can configure Jira mapping of nonstandard values. </br>
+							Following this example: Go to Mapping tab, then Resolution and enable "Customized properties". 
+							Select "Unresolved" radio button.
+							<center>					
+								<a class="image-popup-vertical-fit" href="./release/mapping1.png">
+									<img src="./release/mapping1.png" width="350" height="250" />
+								</a> </br>
+							</center>
+							Then select "Later" property and click "add" button. 
+							<center>
+								<a class="image-popup-vertical-fit" href="./release/mapping2.png">
+									<img src="./release/mapping2.png" width="350" height="250" />
+								</a> </br>
+							</center>
+							From now on all resolution properties found in Jira log file will be shown as "Unresolved"</li>
+						<li>Configure XLS Writer - set output file name in appriopriate box. Click OK.
+							<center>
+								<a class="image-popup-vertical-fit" href="./release/writer.png">
+									<img src="./release/writer.png" width="250" height="50" />
+								</a>
+							</center>
+						</li>
+						<li>By now everything should be configured. Execute XLS Writer node. Clicking on it with the right mouse button and choosing the last option, you can see the result table.
+						It will also be dispayed as a XLS file.
+							<center>
+								<a class="image-popup-vertical-fit" href="./release/start.png">
+									<img src="./release/start.png" width="225" height="75" />
+								</a>
+							</center>
+						</li>
+					</ol>
+				</p>
+			</div>
+		</div>
+		<footer id="footer" class="footer hidden-print">
+			<div class="container text-center">
+				<div>
+					This work is licensed under a <a href="http://www.gnu.org/licenses/gpl.html">GPL v3 </a>license.
+				</div>
+				<div class="project">
+					· <a href="../">home</a> ·
+					<a href="../about/">about</a> ·
+				</div>
+			</div>
+		</footer>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="../assets/js/bootstrap-3.1.1.min.js"></script>
+		<script src="../assets/js/popup.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('.image-popup-vertical-fit').magnificPopup({
+					type: 'image',
+					closeOnContentClick: true,
+					mainClass: 'mfp-img-mobile',
+					image: {
+						verticalFit: true
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
