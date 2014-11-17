@@ -75,35 +75,15 @@ public class EndevorParserNodeModel extends NodeModel {
         logger.info(String.format("Endevor log processing started from file %s...", smSelectedFilename.getStringValue()));
         System.out.println(String.format("Endevor log processing started from file %s...", smSelectedFilename.getStringValue()));
         
-        //TODO parser - parsowanie razem z wczytywaniem ploiku. GUAVA tylko do testow
-        String fileContent = loadTextFile(new File(smSelectedFilename.getStringValue()));
-        List<SCMDataType> commits = new LinkedList<SCMDataType>();
-        
-        //TODO delete test data
-        SCMDataType testData = new SCMDataType();
-        testData.setAuthor("Test author");
-        testData.setCommitDate(new Date(System.currentTimeMillis()));
-        testData.setResourceName("Test resource");
-        testData.setOperation(SCMOperation.OTHER);
-        testData.setPath(smSelectedFilename.getStringValue());
-        testData.setCommitID("testCommID");
-        testData.setExtension("test ext");
-        testData.setMessage("Test output");
-        commits.add(testData);
+        EndevorLogParser parser = new EndevorLogParser(new File(smSelectedFilename.getStringValue()));
+        parser.parseLogFile();
+        List<SCMDataType> commits = parser.getParsedCommits();		//TODO parsowanie
         
         BufferedDataTable out = transform(commits, exec);
 
         return new BufferedDataTable[]{ out };
     }
     
-	private String loadTextFile(File sourceFile) {
-		try {
-			return Files.toString(sourceFile, Charset.forName("UTF-8"));
-		} catch (IOException e) {
-			return null;
-		}
-	}
-
 	private BufferedDataTable transform(final List<SCMDataType> commits, final ExecutionContext exec) throws CanceledExecutionException {
         OutputTransformer<SCMDataType> transformer = new SCMAdapterTransformer(createDataColumnSpec());
         return transformer.transform(commits, exec);
