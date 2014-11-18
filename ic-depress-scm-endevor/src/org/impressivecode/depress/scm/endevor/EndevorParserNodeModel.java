@@ -21,16 +21,12 @@ import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataCo
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.impressivecode.depress.common.OutputTransformer;
 import org.impressivecode.depress.scm.SCMAdapterTableFactory;
 import org.impressivecode.depress.scm.SCMAdapterTransformer;
 import org.impressivecode.depress.scm.SCMDataType;
-import org.impressivecode.depress.scm.SCMOperation;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -44,7 +40,6 @@ import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 
 import com.google.common.base.Preconditions;
-import com.google.common.io.Files;
 
 /**
  * 
