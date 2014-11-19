@@ -3,22 +3,61 @@
         <h1>Examples</h1>
     </div>
 
-    <div class="alert alert-info" role="alert">
-        <i class="fa fa-hand-o-right fa-2x"></i> If you need any help with using the analysis tools or just with generating needed results, check this <a
-            onclick="_gaq.push(['_trackEvent', 'Outbound Link', 'Additional']);"
-            href="#additional/">site</a>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Examples</h3>
+        </div>
+        <div class="panel-body">
+            <ol>
+                <li><a href="" ng-click="gotoAnchor('example1')"> Analysing project release using Jira, CKJM and
+                    JaCoCo.</a></li>
+                <li><a href="" ng-click="gotoAnchor('example2')"> Release notes for Git/SVN files with Jira.</a></li>
+            </ol>
+        </div>
     </div>
 
 
-    <p class="lead">
+    <h2 id="example1">Analysing project release using Jira, CKJM and JaCoCo.</h2>
 
-    <h3>Analysing project release using Jira, CKJM and JaCoCo.</h3>
+    <div class="alert alert-info" role="alert">
+        <p>
+            <i class="fa fa-hand-o-right fa-2x"></i> If you need any help with using the analysis tools or just with
+            generating needed input files, check this <a
+                onclick="_gaq.push(['_trackEvent', 'Outbound Link', 'Additional']);"
+                href="#additional/">site</a>
+        </p>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li><a
+                        href="examples/project_analysis/workflow_jira_example.zip"><i
+                        class="fa fa-file"></i> Download DePress workflow. </a>
+                </li>
+
+                <li><a
+                        href="examples/project_analysis/jira_example_data.zip"><i class="fa fa-file"></i> Download
+                    example input files used in this tutorial or you can use your own log files. </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-4">
+            <a href="examples/project_analysis/pre_rel_conf.png" id="link" data-toggle="lightbox" data-type="image"
+               data-title="A random title" data-footer="A custom footer text">
+                <img src="examples/project_analysis/pre_rel_conf.png" class="img-responsive thumbnail">
+            </a>
+        </div>
+    </div>
+
+    <p class="lead">
     <ol>
-        <li><a href="#/quickstart">Set up</a> your DePress and download workflow <a
-                href="examples/project_analysis/workflow_jira_example.zip">Here</a>.
-            <a href="examples/project_analysis/jira_example_data.zip">Here you can find example input files</a> used in this
-            tutorial.
-            You can use either them or your own log files. Import Knime workflow as shown in above tutorial.
+        <li>
         </li>
         <li>Your workflow should look similar to this:
             <center>
@@ -31,9 +70,7 @@
             configure appropriate nodes seen in this part by clicking on them with the right button. Add also list of
             developers.
             <center>
-                <a class="image-popup-vertical-fit" href="examples/project_analysis/pre_rel_conf.png">
-                    <img src="examples/project_analysis/pre_rel_conf.png" width="338" height="300"/>
-                </a> </br>
+                </br>
             </center>
         </li>
         <li>Now focus on release part. There you use your JaCoCo and CKJM log files. Configure these two orange nodes
@@ -65,10 +102,11 @@
     </p>
     <p class="lead">
 
-    <h3>Release notes for Git/SVN files with Jira</h3>
+    <h2 id="example2">Release notes for Git/SVN files with Jira</h2>
     <ol>
         <li><a href=".examples/quickstart">Set up</a> your DePress and download workflow for either <a
-                href="examples/release/gitworkflow.zip">Git</a> or <a href="examples/release/svnworkflow.zip">SVN</a>(click on name).
+                href="examples/release/gitworkflow.zip">Git</a> or <a href="examples/release/svnworkflow.zip">SVN</a>(click
+            on name).
             If it's needed, check <a href="examples/release/example.zip">Example Git files</a> used in this tutorial.
         </li>
         <li>Import (previously downloaded) KNIME workflow as an archive file:
