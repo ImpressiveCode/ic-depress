@@ -2,6 +2,7 @@ package org.impressivecode.depress.scm.endevor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -84,50 +85,120 @@ public class EndevorLogParser {
 	}
 
 	private void assignSCMRecordFieldValue(String columnHeader, String columnData, SCMDataType scmRecord) {
-		if (columnHeader.equals(EndevorLogKeywords.SCM_AUTHOR)) {
-			scmRecord.setAuthor(columnData);
-		}
-		else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_DATE)) {
-			if (scmRecord.getCommitDate() == null) {
-				Date date = new Date();
-				parseDate(columnData, date);
+		try {
+			if (columnHeader.equals(EndevorLogKeywords.SCM_AUTHOR)) {
+				scmRecord.setAuthor(columnData);
+			}
+			else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_DATE)) {
+				if (scmRecord.getCommitDate() == null) {
+					Date date = new Date(0);
+					date = parseDate(columnData, date);
+					scmRecord.setCommitDate(date);
+				}
+			} else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_TIME)) {
+				Date date = scmRecord.getCommitDate();
+				date = parseTime(columnData, date);
 				scmRecord.setCommitDate(date);
+			} else if (columnHeader.equals(EndevorLogKeywords.SCM_COMMITID)) {
+				scmRecord.setCommitID(columnData);
+			} else if (columnHeader.equals(EndevorLogKeywords.SCM_MESSAGE)) {
+				scmRecord.setMessage(columnData);
+			} else if (columnHeader.equals(EndevorLogKeywords.SCM_ACTION_DEL)) {
+				if (Integer.parseInt(columnData) > 0) {
+					//TODO tutaj ewentualna niescislosc -> w razie problemow, dopytac Volvo
+					//TODO INSERTS/DELETES trzeba bedzie analizowaæ par¹
+					scmRecord.setOperation(SCMOperation.DELETED);
+				}
+				else {
+					scmRecord.setOperation(SCMOperation.OTHER);
+				}
+			} else if (columnHeader.equals(EndevorLogKeywords.SCM_ACTION_INS)) {
+				if (Integer.parseInt(columnData) > 0) {
+					scmRecord.setOperation(SCMOperation.ADDED);
+				}
+				else {
+					scmRecord.setOperation(SCMOperation.OTHER);
+				}
 			}
-		} else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_TIME)) {
-			Date date = scmRecord.getCommitDate();
-			parseTime(columnData, date);
-			scmRecord.setCommitDate(date);
-		} else if (columnHeader.equals(EndevorLogKeywords.SCM_COMMITID)) {
-			scmRecord.setCommitID(columnData);
-		} else if (columnHeader.equals(EndevorLogKeywords.SCM_MESSAGE)) {
-			scmRecord.setMessage(columnData);
-		} else if (columnHeader.equals(EndevorLogKeywords.SCM_ACTION_DEL)) {
-			if (Integer.parseInt(columnData) > 0) {
-				//TODO tutaj ewentualna niescislosc -> w razie problemow, dopytac Volvo
-				//TODO INSERTS/DELETES trzeba bedzie analizowaæ par¹
-				scmRecord.setOperation(SCMOperation.DELETED);
-			}
-			else {
-				scmRecord.setOperation(SCMOperation.OTHER);
-			}
-		} if (columnHeader.equals(EndevorLogKeywords.SCM_ACTION_INS)) {
-			if (Integer.parseInt(columnData) > 0) {
-				scmRecord.setOperation(SCMOperation.ADDED);
-			}
-			else {
-				scmRecord.setOperation(SCMOperation.OTHER);
-			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
-	private void parseTime(String columnData, Date date) {
-		//TODO parsowanie czasu typu 08:20
-		date.setTime(System.currentTimeMillis());
+	@SuppressWarnings("deprecation")
+	private Date parseTime(String columnData, Date date) throws EndevorLogParserException {
+		try {
+			String[] time = columnData.split(":");
+			int hour = Integer.parseInt(time[0]);
+			int minutes = Integer.parseInt(time[1]);
+			date.setHours(hour);
+			date.setMinutes(minutes);
+			return date;
+		}
+		catch (Exception e) {
+			throw new EndevorLogParserException("Could not parse time: " + columnData + ".");
+		}
 	}
 
-	private void parseDate(String columnData, Date date) {
-		//TODO parsowanie daty typu 05JAN12
-		date.setTime(System.currentTimeMillis());
+	private Date parseDate(String columnData, Date date) throws EndevorLogParserException {
+		String day = columnData.substring(0, 2);
+		String month = columnData.substring(2, 5);
+		String year = columnData.substring(5, 7);
+		
+		try {
+			String monthParsed = parseMonth(month);
+			int yearInt = Integer.parseInt(year) > 40 ? 1900 + Integer.parseInt(year) : 2000 + Integer.parseInt(year);
+			
+			String yyyyMMddString = yearInt + "-" + monthParsed + "-" + day;
+			SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+			return dateFormat.parse(yyyyMMddString);
+		}
+		catch (Exception e) {
+			throw new EndevorLogParserException("Could not parse date value: " + columnData + ".");
+		}
+	}
+
+	private String parseMonth(String month) throws EndevorLogParserException {
+		if (month.equals("JAN")) {
+			return "01";
+		}
+		else if (month.equals("FEB")) {
+			return "02";
+		}
+		else if (month.equals("MAR")) {
+			return "03";
+		}
+		else if (month.equals("APR")) {
+			return "04";
+		}
+		else if (month.equals("MAY")) {
+			return "05";
+		}
+		else if (month.equals("JUN")) {
+			return "06";
+		}
+		else if (month.equals("JUL")) {
+			return "07";
+		}
+		else if (month.equals("AUG")) {
+			return "08";
+		}
+		else if (month.equals("SEP")) {
+			return "09";
+		}
+		else if (month.equals("OCT")) {
+			return "10";
+		}
+		else if (month.equals("NOV")) {
+			return "11";
+		}
+		else if (month.equals("DEC")) {
+			return "12";
+		}
+		else {
+			throw new EndevorLogParserException("Could not parse month signature: " + month + ".");
+		}
 	}
 
 	private boolean isLineASourceLevelInformationData(String currentLine) {
@@ -187,7 +258,5 @@ public class EndevorLogParser {
         else {
         	return this.parsedData;
         }
-	}
-	
-	
+	}	
 }
