@@ -19,4 +19,6 @@ public class EndevorLogKeywords {
 	public static final String PATH_ELEMENT = "ELEMENT";
 	public static final String PATH_TYPE = "TYPE";
 	public static final String PATH_STAGEID = "STAGE ID";
+	
+	public static final String USELESS_SYNC = "SYNC";
 }

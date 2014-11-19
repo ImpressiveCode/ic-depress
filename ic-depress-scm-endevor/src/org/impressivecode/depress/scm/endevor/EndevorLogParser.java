@@ -31,15 +31,25 @@ public class EndevorLogParser {
 						break;
 						
 					case SOURCE_INFO:
-						while (!isLineSensible(currentLine = scanner.nextLine()));
+						currentLine = skipUselessLogLines(scanner);
 						
 						String[] columnHeadersPolluted = currentLine.split(" ");
-						LinkedList<String> columnHeaders = removeEmptyEntriesFromColumnHeadersArray(columnHeadersPolluted);
-						SCMDataType newRecord = new SCMDataType();
-						for(String header : columnHeaders) {
-							//TODO nastêpne linie zawieraj¹ informacje do sparsowania!!!
-							//trzeba zmapowaæ nazwê kolumny do odpowiedniego pola klasy SCMDataType
+						String[] columnHeaders = removeEmptyOrUselessEntriesFromColumnHeadersOrDataArray(columnHeadersPolluted);
+						
+						currentLine = skipUselessLogLines(scanner);
+						
+						while(isLineASourceLevelInformationData(currentLine)) {
+							SCMDataType newRecord = new SCMDataType();
+							String[] columnDataPolluted = currentLine.split(" ");
+							String[] columnData = removeEmptyOrUselessEntriesFromColumnHeadersOrDataArray(columnDataPolluted);
+							for (int i = 0; i < columnData.length; i++) {
+								assignSCMRecordFieldValue(columnHeaders[i], columnData[i], newRecord);
+							}
+							
+							this.parsedData.add(newRecord);
+							currentLine = scanner.nextLine();
 						}
+						
 						break;
 						
 					case SUMMARY:
@@ -47,16 +57,94 @@ public class EndevorLogParser {
 				}
 			}
 		}
+		
+		//TODO delete
+		METHODTOREMOVE();
 	}
 
-	private LinkedList<String> removeEmptyEntriesFromColumnHeadersArray(String[] columnHeaders) {
+	/**
+	 * METODA WYPE£NIA PUSTE, ALE OBLIGATORYJNE POLA W SCMDataType, aby mozna bylo na biezaco testowac wtyczke
+	 */
+	private void METHODTOREMOVE() {
+		// TODO METODA DO USUNIÊCIA PO KOÑCOWYM PARSOWANIU
+		for (SCMDataType scm : this.parsedData) {
+			scm.setResourceName("TEST RESOURCE");
+			scm.setExtension("TEST EXTENSION <- NAPRAWIC BUG DePressa");
+			scm.setPath("TEST PATH");
+			if (scm.getOperation() == null) {
+				scm.setOperation(SCMOperation.RENAMED);
+			}
+		}
+	}
+
+	private String skipUselessLogLines(Scanner scanner) {
+		String currentLine;
+		while (!isLineSensible(currentLine = scanner.nextLine()));
+		return currentLine;
+	}
+
+	private void assignSCMRecordFieldValue(String columnHeader, String columnData, SCMDataType scmRecord) {
+		if (columnHeader.equals(EndevorLogKeywords.SCM_AUTHOR)) {
+			scmRecord.setAuthor(columnData);
+		}
+		else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_DATE)) {
+			if (scmRecord.getCommitDate() == null) {
+				Date date = new Date();
+				parseDate(columnData, date);
+				scmRecord.setCommitDate(date);
+			}
+		} else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_TIME)) {
+			Date date = scmRecord.getCommitDate();
+			parseTime(columnData, date);
+			scmRecord.setCommitDate(date);
+		} else if (columnHeader.equals(EndevorLogKeywords.SCM_COMMITID)) {
+			scmRecord.setCommitID(columnData);
+		} else if (columnHeader.equals(EndevorLogKeywords.SCM_MESSAGE)) {
+			scmRecord.setMessage(columnData);
+		} else if (columnHeader.equals(EndevorLogKeywords.SCM_ACTION_DEL)) {
+			if (Integer.parseInt(columnData) > 0) {
+				//TODO tutaj ewentualna niescislosc -> w razie problemow, dopytac Volvo
+				//TODO INSERTS/DELETES trzeba bedzie analizowaæ par¹
+				scmRecord.setOperation(SCMOperation.DELETED);
+			}
+			else {
+				scmRecord.setOperation(SCMOperation.OTHER);
+			}
+		} if (columnHeader.equals(EndevorLogKeywords.SCM_ACTION_INS)) {
+			if (Integer.parseInt(columnData) > 0) {
+				scmRecord.setOperation(SCMOperation.ADDED);
+			}
+			else {
+				scmRecord.setOperation(SCMOperation.OTHER);
+			}
+		}
+	}
+
+	private void parseTime(String columnData, Date date) {
+		//TODO parsowanie czasu typu 08:20
+		date.setTime(System.currentTimeMillis());
+	}
+
+	private void parseDate(String columnData, Date date) {
+		//TODO parsowanie daty typu 05JAN12
+		date.setTime(System.currentTimeMillis());
+	}
+
+	private boolean isLineASourceLevelInformationData(String currentLine) {
+		//TODO sprawdzic byc moze lepiej, czy ta linia to dane do tabeli, czyli dane do VVLL USER COSTAM CCID etc
+		return currentLine.startsWith("  ");
+	}
+
+	private String[] removeEmptyOrUselessEntriesFromColumnHeadersOrDataArray(String[] columnHeadersOrData) {
 		LinkedList<String> clearedHeaders = new LinkedList<String>();
-		for (String s : columnHeaders) {
-			if (s.length() > 0) {
+		for (String s : columnHeadersOrData) {
+			if (s.length() > 0 && !s.equals(EndevorLogKeywords.USELESS_SYNC)) {
 				clearedHeaders.add(s);
 			}
 		}
-		return clearedHeaders;
+		String[] clearedHeadersArray = new String[clearedHeaders.size()];
+		
+		return clearedHeaders.toArray(clearedHeadersArray);
 	}
 
 	private boolean isLineSensible(String currentLine) {
