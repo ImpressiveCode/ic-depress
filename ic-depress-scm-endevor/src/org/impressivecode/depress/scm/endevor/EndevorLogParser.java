@@ -16,6 +16,8 @@ public class EndevorLogParser {
 	private File logFile;
 	private LinkedList<SCMDataType> parsedData;
 	
+	public EndevorLogParser() {}
+	
 	public EndevorLogParser(File logFile) {
 		this.logFile = logFile;
 		this.parsedData = new LinkedList<SCMDataType>();
