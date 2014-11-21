@@ -56,6 +56,46 @@ public class EndevorLogParser {
 						break;
 						
 					case SUMMARY:
+						currentLine = skipUselessLogLines(scanner);
+						EndevorElementPathModel pathModel = new EndevorElementPathModel();
+						
+						while (	(currentLine.contains(EndevorLogKeywords.PATH_ENVIRONMENT) 
+								&& currentLine.contains(EndevorLogKeywords.PATH_SYSTEM) 
+								&& currentLine.contains(EndevorLogKeywords.PATH_SUBSYSTEM))
+								||
+								(currentLine.contains(EndevorLogKeywords.PATH_ELEMENT) 
+								&& currentLine.contains(EndevorLogKeywords.PATH_TYPE) 
+								&& currentLine.contains(EndevorLogKeywords.PATH_STAGEID))) {
+							
+							Scanner lineScanner = new Scanner(currentLine);
+							while(lineScanner.hasNext()) {
+								String currentPathElementName = lineScanner.next();
+								String currentPathElementValue = null;
+								if (currentPathElementName.contains(EndevorLogKeywords.PATH_ENVIRONMENT)) {
+									currentPathElementValue = lineScanner.next();
+									pathModel.setEnvironment(currentPathElementValue);
+								} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_SUBSYSTEM)) {
+									currentPathElementValue = lineScanner.next();
+									pathModel.setSubsystem(currentPathElementValue);
+								} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_SYSTEM)) {
+									currentPathElementValue = lineScanner.next();
+									pathModel.setSystem(currentPathElementValue);
+								} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_ELEMENT)) {
+									currentPathElementValue = lineScanner.next();
+									pathModel.setElement(currentPathElementValue);
+								} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_TYPE)) {
+									currentPathElementValue = lineScanner.next();
+									pathModel.setType(currentPathElementValue);
+								} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_STAGEID)) {
+									currentPathElementValue = lineScanner.next();
+									pathModel.setStageId(currentPathElementValue);
+								}
+							}
+							
+							currentLine = scanner.nextLine();
+						}
+						
+						applyPathModelToPathlessSCMEntries(pathModel);
 						break;
 				}
 			}
@@ -65,15 +105,22 @@ public class EndevorLogParser {
 		METHODTOREMOVE();
 	}
 
+	private void applyPathModelToPathlessSCMEntries(EndevorElementPathModel pathModel) {
+		for(SCMDataType scm : this.parsedData) {
+			if (scm.getPath() == null) {
+				scm.setPath(pathModel.toString());
+			}
+		}
+	}
+
 	/**
 	 * METODA WYPE£NIA PUSTE, ALE OBLIGATORYJNE POLA W SCMDataType, aby mozna bylo na biezaco testowac wtyczke
 	 */
 	private void METHODTOREMOVE() {
 		// TODO METODA DO USUNIÊCIA PO KOÑCOWYM PARSOWANIU
 		for (SCMDataType scm : this.parsedData) {
-			scm.setResourceName("TEST RESOURCE");
-			scm.setExtension("TEST EXTENSION <- NAPRAWIC BUG DePressa");
-			scm.setPath("TEST PATH");
+			scm.setResourceName("Endevor SCM");
+			scm.setExtension(".txt");
 			if (scm.getOperation() == null) {
 				scm.setOperation(SCMOperation.RENAMED);
 			}

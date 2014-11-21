@@ -14,7 +14,8 @@ public class EndevorElementPathModel {
 		
 	}
 	
-	public String getFullPath() {
+	@Override
+	public String toString() {
 		this.scmPath = new StringBuilder();
 		
 		scmPath.append(system);
