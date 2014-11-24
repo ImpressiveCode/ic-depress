@@ -1,14 +1,25 @@
 <div class="container">
-    <p class="lead">
+    <div class="page-header">
+        <h1>DePress Plugins</h1>
+    </div>
 
-    <h3>Information about using analysis tools</h3>
-    Every node in Knime has its help page. It can be seen after clicking on choosen node or you can display it choosing
-    <i>Configure</i> and then <i>?</i> in the bottom of the window.
-    This is the place where you can find a lot of useful tips and information as well as gain knowledge about the tool
-    you are using.<br><br>
+    <h2>Information about using analysis tools</h2>
 
-    <h4>SVN</h4>
-    SVN is a software versioning and revision control system. <br>
+    <p>
+        Every node in Knime has its help page. It can be seen after clicking on chosen node or you can display it
+        choosing
+        <i>Configure</i> and then <i>?</i> in the bottom of the window.
+        This is the place where you can find a lot of useful tips and information as well as gain knowledge about the
+        tool
+        you are using.
+    </p>
+
+    <h3>SVN</h3>
+
+    <p>
+        Apache Subversion (often abbreviated SVN, after the command name svn) is a software versioning and revision
+        control system.
+    </p>
     <ul>
         <li><b>Offline</b><br>SVN is a command line tool. To generate a needed report, you need an offline copy of your
             project on your computer.
@@ -27,17 +38,20 @@
             there is <i>viewvc</i> in your link. Change it then to <i>svn</i>, it should help.
         </li>
     </ul>
+    <p>
     In both cases you can choose which information should appear in the result of node's work. You can type formats of
     files which you're interested in. For example when you would like to get information
     only about changes made on xml files, you can get it just by typing <i>xml</i>. If you leave this box empty or with
     a <i>*</i> in it, in the result all formats will be displayed. You can also choose
     a package in the <i>Advanced</i> tab. If you don't know what it is, leave it empty.<br>
     Information which you get depends only on your choise or interests. You can switch options as you want. Only you
-    know what is needed in your project's analysis.<br> <br>
-
-    <h4>GIT</h4>
+    know what is needed in your project's analysis.
+    </p>
+    <h3>GIT</h3>
+    <p>
     GIT is a distributed revision control and source code management (SCM) system.<br>
     In DePress you can use it in as well offline as online version.
+    </p>
     <ul>
         <li><b>Offline</b><br>
             First of all, to generate a needed report, you need an offline copy of your project on your computer. Then
@@ -51,17 +65,21 @@
             with <i>.git</i>.
         </li>
     </ul>
+    <p>
     In both cases you can choose which information should appear in the result of node's work. You can type formats of
     files which you're interested in. For example when you would like to get information
     only about changes made on xml files, you can get it just by typing <i>xml</i>. If you leave this box empty or with
     a <i>*</i> in it, in the result all formats will be displayed. You can also choose
     a package in the <i>Advanced</i> tab. If you don't know what it is, leave it empty.<br>
     Information which you get depends only on your choise or interests. You can switch options as you want. Only you
-    know what is needed in your project's analysis.<br> <br>
+    know what is needed in your project's analysis.
+    </p>
 
-    <h4>JIRA</h4>
+    <h3>JIRA</h3>
+    <p>
     JIRA is a proprietary issue tracking product, developed by Atlassian. It provides bug tracking, issue tracking, and
-    project management functions.<br>
+    project management functions.
+    </p>
     <ul>
         <li><b>Offline</b><br>In DePress you use a xml report showing changes made in your project. To obtain such file,
             you need to visit yours project JIRA page and switch view to XML in Issue Navigator section, and save the
@@ -75,9 +93,9 @@
             You only have to insert JIRA repository url (e.g. "https://depress.atlassian.net").
         </li>
     </ul>
-    <br>
 
-    <h4>CKJM</h4>
+    <h3>CKJM</h3>
+    <p>
     The program ckjm calculates Chidamber and Kemerer object-oriented metrics by processing the bytecode of compiled
     Java files. <br>
     In DePress you need the report generated using ckjm program. To get it, you can run ckjm as a Ant task(about Ant
@@ -85,31 +103,32 @@
     to the build.xml file as written <a href="http://www.spinellis.gr/sw/ckjm/doc/anttask.html">here</a> and run Ant
     using command line. If you have problem and Ant fails, check if you have the right class directory
     (it has to lead to .class files (not .java)). <br>
-    When you have needed report, just add the path in the node's options.<br> <br>
+    When you have needed report, just add the path in the node's options.
+    </p>
 
-    <h4>JaCoCo</h4>
+    <h3>JaCoCo</h3>
+    <p>
     JaCoCo is an open source toolkit for measuring and reporting Java code coverage.<br>
     You can use it as Maven tool(about Maven read more <a href="http://maven.apache.org/">here</a>). You have to change
     pom.xml file as written <a href="http://www.eclemma.org/jacoco/trunk/doc/maven.html">here</a>.
     Run JaCoCo typing in a command line <i>mvn org.jacoco:jacoco-maven-plugin</i> (you have to be in the folder where
     pom.xml is). If you have any problem with Maven, try typing "mvn clean", then "mvn install" and run your task again.
-    To have needed by DePress xml file, your JaCoCo configuration should look similar to this: <br> <br>
-    <i>
-        &lt;plugin&gt; <br>
-        &lt;groupId&gt;org.jacoco&lt;/groupId&gt; <br>
-        &lt;artifactId&gt;jacoco-maven-plugin&lt;/artifactId&gt; <br>
-        &lt;version&gt;0.7.2.201409121644&lt;/version&gt; <br>
-        &lt;configuration&gt; <br>
-        &lt;formats&gt; <br>
-        &lt;format&gt;xml&lt;/format&gt; <br>
-        &lt;/formats&gt; <br>
-        &lt;/configuration&gt; <br>
+    To have needed by DePress xml file, your JaCoCo configuration should look similar to this: </p>
+    <pre>
+        &lt;plugin&gt;
+        &lt;groupId&gt;org.jacoco&lt;/groupId&gt;
+        &lt;artifactId&gt;jacoco-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;0.7.2.201409121644&lt;/version&gt;
+        &lt;configuration&gt;
+        &lt;formats&gt;
+        &lt;format&gt;xml&lt;/format&gt;
+        &lt;/formats&gt;
+        &lt;/configuration&gt; 
         &lt;/plugin&gt;
-    </i>
+    </pre>
 
-    <br><br>
 
-    <h3>Help</h3>
+    <h2>Help</h2>
     Solve most popular problems
     <ul>
         <li><b>Missing XLS node</b><br>

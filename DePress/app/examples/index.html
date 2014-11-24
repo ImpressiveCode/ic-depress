@@ -23,9 +23,7 @@
     <div class="alert alert-info" role="alert">
         <p>
             <i class="fa fa-hand-o-right fa-2x"></i> If you need any help with using the analysis tools or just with
-            generating needed input files, check this <a
-                onclick="_gaq.push(['_trackEvent', 'Outbound Link', 'Additional']);"
-                href="#additional/">site</a>
+            generating needed input files, check this <a href="#/plugins/">site</a>
         </p>
     </div>
     <div class="panel panel-default">
@@ -43,143 +41,246 @@
             </ul>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-8">
 
+    <div class="row">
+        <div class="col-md-6">
+            After importing your workflow should look similar to this.
         </div>
-        <div class="col-md-4">
-            <a href="examples/project_analysis/pre_rel_conf.png" id="link" data-toggle="lightbox" data-type="image"
-               data-title="A random title" data-footer="A custom footer text">
-                <img src="examples/project_analysis/pre_rel_conf.png" class="img-responsive thumbnail">
+        <div class="col-md-3">
+            <a data-toggle="lightbox" data-type="image" href="examples/project_analysis/whole_example.png">
+                <img src="examples/project_analysis/whole_example.png" class="img-responsive thumbnail"/>
             </a>
+        </div>
+        <div class="col-md-3">
         </div>
     </div>
 
-    <p class="lead">
-    <ol>
-        <li>
-        </li>
-        <li>Your workflow should look similar to this:
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/project_analysis/whole_example.png">
-                    <img src="examples/project_analysis/whole_example.png" width="457" height="400"/>
-                </a> </br>
-            </center>
-        </li>
-        <li>There are four parts of data analysis. First is pre release version. Select your Jira and Git log files and
+    <div class="row">
+        <div class="col-md-6">
+            There are four parts of data analysis. First is pre release version. Select your Jira and Git log files and
             configure appropriate nodes seen in this part by clicking on them with the right button. Add also list of
             developers.
-            <center>
-                </br>
-            </center>
-        </li>
-        <li>Now focus on release part. There you use your JaCoCo and CKJM log files. Configure these two orange nodes
+        </div>
+        <div class="col-md-3">
+            <a href="examples/project_analysis/pre_rel_conf.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/project_analysis/pre_rel_conf.png" class="img-responsive thumbnail">
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            Now focus on release part. There you use your JaCoCo and CKJM log files. Configure these two orange nodes
             the same way as said above.
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/project_analysis/release.png">
-                    <img src="examples/project_analysis/release.png" width="373" height="280"/>
-                </a> </br>
-            </center>
-        </li>
-        <li>In this part you look at post release version of your project. Use Git and Jira log files.
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/project_analysis/post_release.png">
-                    <img src="examples/project_analysis/post_release.png" width="460" height="300"/>
-                </a> </br>
-            </center>
-        </li>
-        <li>Now you can get information about the result of data analysis. You can get a xls file or a diagram. Click
+        </div>
+        <div class="col-md-3">
+            <a href="examples/project_analysis/release.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/project_analysis/release.png" class="img-responsive thumbnail">
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            In this part you look at post release version of your project. Use Git and Jira log files.
+        </div>
+        <div class="col-md-3">
+            <a href="examples/project_analysis/post_release.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/project_analysis/post_release.png" class="img-responsive thumbnail">
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            Now you can get information about the result of data analysis. You can get a xls file or a diagram. Click
             with right button of the mouse on either XLS Writer node or Data Tree Learner and choose execute. When you
             get a green circle under your node, your result is ready. You can check it clicking with right button on
             node and choosing the last option. Instruction of XLS Writer configuration is shown in above tutorial.
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/project_analysis/analysis.png">
-                    <img src="examples/project_analysis/analysis.png" width="305" height="300"/>
-                </a> </br>
-            </center>
-        </li>
-    </ol>
-    </p>
-    <p class="lead">
+        </div>
+        <div class="col-md-3">
+            <a href="examples/project_analysis/analysis.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/project_analysis/analysis.png" class="img-responsive thumbnail">
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
 
     <h2 id="example2">Release notes for Git/SVN files with Jira</h2>
-    <ol>
-        <li><a href=".examples/quickstart">Set up</a> your DePress and download workflow for either <a
-                href="examples/release/gitworkflow.zip">Git</a> or <a href="examples/release/svnworkflow.zip">SVN</a>(click
-            on name).
-            If it's needed, check <a href="examples/release/example.zip">Example Git files</a> used in this tutorial.
-        </li>
-        <li>Import (previously downloaded) KNIME workflow as an archive file:
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/release/import.png">
-                    <img src="examples/release/import.png" width="200" height="150"/>
-                </a> </br>
-            </center>
-            You should see a workflow similar to this(it's name is either git or svn):
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/release/pre_init.png">
-                    <img src="examples/release/pre_init.png" width="300" height="200"/>
-                </a> </br>
-            </center>
-            <b>If you get an error about missing XLS node, click on the blue button above and solve the problem.</b>
-        </li>
-        <li>Select your Git/SVN log files(if you don't know how to generate them, click on the blue button above). To do
+
+    <div class="alert alert-info" role="alert">
+        <p>
+            <i class="fa fa-hand-o-right fa-2x"></i> If you need any help with using the analysis tools or just with
+            generating needed input files, check this <a href="#/plugins/">site</a>
+        </p>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li><a href="examples/release/gitworkflow.zip"><i
+                        class="fa fa-file"></i> Download DePress workflow (GIT).</a>
+                </li>
+
+                <li><a href="examples/release/svnworkflow.zip"><i
+                        class="fa fa-file"></i> Download DePress workflow (SVN).</a>
+                </li>
+
+
+                <li><a href="examples/release/example.zip"><i class="fa fa-file"></i> Download
+                    example Git files used in this tutorial. </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            Import (previously downloaded) KNIME workflow as an archive file.
+        </div>
+        <div class="col-md-3">
+            <a href="examples/release/import.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/release/import.png" class="img-responsive thumbnail">
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            You should see a workflow similar to this(it's name is either git or svn).<br/>
+            If you get an error about missing XLS node, click on the blue button above and solve the problem.
+        </div>
+        <div class="col-md-3">
+            <a href="examples/release/pre_init.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/release/pre_init.png" class="img-responsive thumbnail">
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            Select your Git/SVN log files(if you don't know how to generate them, click on the blue button above). To do
             this select configure on List Files node and choose your directory where both files are placed.
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/release/files.png">
-                    <img src="examples/release/files.png" width="150" height="50"/>
-                </a> </br>
-            </center>
-            Generation of valid Git/SVN logs is also included in Git/SVN Offline node description.</br>
+            <br/>
+            Generation of valid Git/SVN logs is also included in Git/SVN Offline node description.
+            <br/>
             Files should have names describing their version e.g. "1.0.0.xml" and "1.1.2.xml".
             You need at least two distinct log files to create release notes(to compare versions of your project).
-        </li>
-        <li>Execute Java Edit Variable (simple) node.
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/release/init.png">
-                    <img src="examples/release/init.png" width="250" height="75"/>
-                </a> </br>
-            </center>
-        </li>
-        <li>Select your Jira log file.
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/release/jira.png">
-                    <img src="examples/release/jira.png" width="175" height="50"/>
-                </a> </br>
-            </center>
-        </li>
-        <li>Optionally you can configure Jira mapping of nonstandard values. </br>
+        </div>
+        <div class="col-md-3">
+            <a href="examples/release/files.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/release/files.png" class="img-responsive thumbnail"/>
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            Execute Java Edit Variable (simple) node.
+        </div>
+        <div class="col-md-3">
+            <a href="examples/release/init.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/release/init.png" class="img-responsive thumbnail">
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            Select your Jira log file.
+        </div>
+        <div class="col-md-3">
+            <a href="examples/release/jira.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/release/jira.png" class="img-responsive thumbnail">
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            Optionally you can configure Jira mapping of nonstandard values. <br/>
             Following this example: Go to Mapping tab, then Resolution and enable "Customized properties".
             Select "Unresolved" radio button.
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/release/mapping1.png">
-                    <img src="examples/release/mapping1.png" width="350" height="250"/>
-                </a> </br>
-            </center>
+        </div>
+        <div class="col-md-3">
+            <a href="examples/release/mapping1.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/release/mapping1.png" class="img-responsive thumbnail"/>
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
             Then select "Later" property and click "add" button.
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/release/mapping2.png">
-                    <img src="examples/release/mapping2.png" width="350" height="250"/>
-                </a> </br>
-            </center>
-            From now on all resolution properties found in Jira log file will be shown as "Unresolved"
-        </li>
-        <li>Configure XLS Writer - set output file name in appriopriate box. Click OK.
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/release/writer.png">
-                    <img src="examples/release/writer.png" width="250" height="50"/>
-                </a>
-            </center>
-        </li>
-        <li>By now everything should be configured. Execute XLS Writer node. Clicking on it with the right mouse button
+        </div>
+        <div class="col-md-3">
+            <a href="examples/release/mapping2.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/release/mapping2.png" class="img-responsive thumbnail">
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            From now on all resolution properties found in Jira log file will be shown as "Unresolved".
+        </div>
+        <div class="col-md-3">
+            <a href="examples/release/writer.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/release/writer.png" class="img-responsive thumbnail"/>
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            Configure XLS Writer - set output file name in appriopriate box. Click OK.
+        </div>
+        <div class="col-md-3">
+            <a href="examples/release/writer.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/release/writer.png" class="img-responsive thumbnail"/>
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            By now everything should be configured. Execute XLS Writer node. Clicking on it with the right mouse button
             and choosing the last option, you can see the result table.
             It will also be dispayed as a XLS file.
-            <center>
-                <a class="image-popup-vertical-fit" href="examples/release/start.png">
-                    <img src="examples/release/start.png" width="225" height="75"/>
-                </a>
-            </center>
-        </li>
-    </ol>
-    </p>
+        </div>
+        <div class="col-md-3">
+            <a href="examples/release/start.png" data-toggle="lightbox" data-type="image">
+                <img src="examples/release/start.png" class="img-responsive thumbnail"/>
+            </a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
 </div>
