@@ -1,0 +1,16 @@
+.depress-logo {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    padding: 0 1%;
+    border: 1px solid;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    color: rgba(180,180,180,1);
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    background: rgba(0,0,0,1);
+    font-weight: bold;
+    -webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+}
