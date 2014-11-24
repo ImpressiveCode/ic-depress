@@ -1,1 +1,1 @@
-this is released version,please check gh-pages-dev for developement sources
+this is the final version of DePress home page, please check gh-pages-dev for developement sources
