@@ -72,7 +72,7 @@ public class EndevorParserNodeModel extends NodeModel {
         
         EndevorLogParser parser = new EndevorLogParser(new File(smSelectedFilename.getStringValue()));
         parser.parseLogFile();
-        List<SCMDataType> commits = parser.getParsedCommits();		//TODO parsowanie
+        List<SCMDataType> commits = parser.getParsedCommits();
         
         BufferedDataTable out = transform(commits, exec);
 

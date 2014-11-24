@@ -14,6 +14,7 @@ import java.util.Scanner;
 
 import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.SCMOperation;
+import org.impressivecode.depress.scm.endevor.constants.EndevorParsingPhase;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package org.impressivecode.depress.scm.endevor;
+package org.impressivecode.depress.scm.endevor.constants;
 
 public class EndevorLogKeywords {
 	
@@ -20,5 +20,10 @@ public class EndevorLogKeywords {
 	public static final String PATH_TYPE = "TYPE";
 	public static final String PATH_STAGEID = "ID";
 	
-	public static final String USELESS_SYNC = "SYNC";
+	//non-scm keywords
+	public static final String VVLL = "VVLL";
+	public static final String VVLL_DOTTED = "VV.LL";
+	public static final String SYNC = "SYNC";
+	public static final String STMTS = "STMTS";
+	
 }

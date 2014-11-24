@@ -10,6 +10,9 @@ import java.util.Scanner;
 
 import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.SCMOperation;
+import org.impressivecode.depress.scm.endevor.constants.EndevorLogKeywords;
+import org.impressivecode.depress.scm.endevor.constants.EndevorParsingPhase;
+import org.impressivecode.depress.scm.endevor.models.EndevorElementPathModel;
 
 public class EndevorLogParser {
 	
@@ -258,7 +261,7 @@ public class EndevorLogParser {
 	private String[] removeEmptyOrUselessEntriesFromColumnHeadersOrDataArray(String[] columnHeadersOrData) {
 		LinkedList<String> clearedHeaders = new LinkedList<String>();
 		for (String s : columnHeadersOrData) {
-			if (s.length() > 0 && !s.equals(EndevorLogKeywords.USELESS_SYNC)) {
+			if (s.length() > 0 && !s.equals(EndevorLogKeywords.SYNC)) {
 				clearedHeaders.add(s);
 			}
 		}

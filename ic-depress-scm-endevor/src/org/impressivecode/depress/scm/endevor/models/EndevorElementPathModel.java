@@ -1,4 +1,4 @@
-package org.impressivecode.depress.scm.endevor;
+package org.impressivecode.depress.scm.endevor.models;
 
 public class EndevorElementPathModel {
 	
