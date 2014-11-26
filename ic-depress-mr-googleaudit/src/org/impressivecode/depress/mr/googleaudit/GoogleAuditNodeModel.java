@@ -92,13 +92,15 @@ public class GoogleAuditNodeModel extends NodeModel {
     private List<GoogleAuditEntryClassLevel> parseEntriesClassLevel(final String eclipsemetricsFilePath)
             throws ParserConfigurationException, SAXException, IOException {
         GoogleAuditEntriesParser parser = new GoogleAuditEntriesParser();
-        return parser.parseEntriesClassLevel(eclipsemetricsFilePath);
+        //return parser.parseEntriesClassLevel(eclipsemetricsFilePath);
+        return null;
     }
 
     private List<GoogleAuditEntryMethodLevel> parseEntriesMethodLevel(final String eclipsemetricsFilePath)
             throws ParserConfigurationException, SAXException, IOException {
         GoogleAuditEntriesParser parser = new GoogleAuditEntriesParser();
-        return parser.parseEntriesMethodLevel(eclipsemetricsFilePath);
+//        return parser.parseEntriesMethodLevel(eclipsemetricsFilePath);
+        return null;
     }
 
     @Override
