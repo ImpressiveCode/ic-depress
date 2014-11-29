@@ -17,18 +17,16 @@
  */
 package org.impressivecode.depress.mr.googleaudit;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import static org.impressivecode.depress.mr.googleaudit.GoogleAuditEntriesParser.unmarshalResults;
 import static org.impressivecode.depress.mr.googleaudit.GoogleAuditTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.mr.googleaudit.GoogleAuditTableFactory.createDataColumnSpecMethodLevel;
-import static org.impressivecode.depress.mr.googleaudit.GoogleAuditTableFactory.createTableSpec;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.xml.parsers.ParserConfigurationException;
-
+import org.impressivecode.depress.mr.googleaudit.GoogleAuditXmlResult.Resource;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
@@ -39,108 +37,101 @@ import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
-import org.xml.sax.SAXException;
 
 /**
- * 
- * @author Mateusz Kutyba, Wroclaw University of Technology
- * 
+ * @author Jadwiga Wozna, Wroclaw University of Technology
  */
 public class GoogleAuditNodeModel extends NodeModel {
 
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(GoogleAuditNodeModel.class);
-    private static final String DEFAULT_VALUE = "";
-    private static final String CONFIG_NAME = "file chooser";
-    private final SettingsModelString fileSettings = createFileChooserSettings();
+	private static final NodeLogger LOGGER = NodeLogger
+			.getLogger(GoogleAuditNodeModel.class);
+	private static final String DEFAULT_VALUE = "";
+	private static final String CONFIG_NAME = "file chooser";
+	private final SettingsModelString fileSettings = createFileChooserSettings();
 
-    protected GoogleAuditNodeModel() {
-        super(0, 2);
-    }
+	protected GoogleAuditNodeModel() {
+		super(0, 1);
+	}
 
-    @Override
-    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
-            throws Exception {
+	@Override
+	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
+			final ExecutionContext exec) throws Exception {
 
-        LOGGER.info("Preparing to read EclipseMetrics entries.");
-        String eclipsemetricsFilePath = fileSettings.getStringValue();
+		LOGGER.info("Preparing to read GoogleAudit logs.");
+		BufferedDataContainer container = createDataContainer(exec);
+		LOGGER.info("Reading file: " + fileSettings.getStringValue());
+		List<Resource> result = unmarshalResults(fileSettings.getStringValue());
+		BufferedDataTable out = transform(container, result, exec);
+		LOGGER.info("Reading googlemetrics logs finished.");
 
-        List<GoogleAuditEntryClassLevel> entriesClassLevel = parseEntriesClassLevel(eclipsemetricsFilePath);
-        LOGGER.info("Transforming to EclipseMetrics class-level entries.");
-        BufferedDataTable output1 = transformClassLevel(entriesClassLevel, exec);
-        LOGGER.info("EclipseMetrics class-level table created.");
+		return new BufferedDataTable[] { out };
+	}
 
-        List<GoogleAuditEntryMethodLevel> entriesMethodLevel = parseEntriesMethodLevel(eclipsemetricsFilePath);
-        LOGGER.info("Transforming to EclipseMetrics method-level entries.");
-        BufferedDataTable output2 = transformMethodLevel(entriesMethodLevel, exec);
-        LOGGER.info("EclipseMetrics method-level table created.");
+	private void progress(final ExecutionContext exec, final int size,
+			final int i) throws CanceledExecutionException {
+		exec.checkCanceled();
+		exec.setProgress(i / size);
+	}
 
-        return new BufferedDataTable[] { output1, output2 };
-    }
+	private BufferedDataTable transform(final BufferedDataContainer container,
+			final List<Resource> classes, final ExecutionContext exec)
+			throws CanceledExecutionException {
 
-    private BufferedDataTable transformClassLevel(final List<GoogleAuditEntryClassLevel> entries, final ExecutionContext exec)
-            throws CanceledExecutionException {
-        GoogleAuditTransformer transformer = new GoogleAuditTransformer(createDataColumnSpec());
-        return transformer.transformClassLevel(entries, exec);
-    }
+		// TODO: add method body analog to method 'transform' from
+		// GoogleMetricsNodeModel and GoogleAuditXmlResult
 
-    private BufferedDataTable transformMethodLevel(final List<GoogleAuditEntryMethodLevel> entries,
-            final ExecutionContext exec) throws CanceledExecutionException {
-        GoogleAuditTransformer transformer = new GoogleAuditTransformer(createDataColumnSpecMethodLevel());
-        return transformer.transformMethodLevel(entries, exec);
-    }
+		return null;
+	}
 
-    private List<GoogleAuditEntryClassLevel> parseEntriesClassLevel(final String eclipsemetricsFilePath)
-            throws ParserConfigurationException, SAXException, IOException {
-        GoogleAuditEntriesParser parser = new GoogleAuditEntriesParser();
-        //return parser.parseEntriesClassLevel(eclipsemetricsFilePath);
-        return null;
-    }
+	private BufferedDataContainer createDataContainer(
+			final ExecutionContext exec) {
+		DataTableSpec outputSpec = createDataColumnSpec();
+		BufferedDataContainer container = exec.createDataContainer(outputSpec);
+		return container;
+	}
 
-    private List<GoogleAuditEntryMethodLevel> parseEntriesMethodLevel(final String eclipsemetricsFilePath)
-            throws ParserConfigurationException, SAXException, IOException {
-        GoogleAuditEntriesParser parser = new GoogleAuditEntriesParser();
-//        return parser.parseEntriesMethodLevel(eclipsemetricsFilePath);
-        return null;
-    }
+	@Override
+	protected void loadInternals(File nodeInternDir, ExecutionMonitor exec)
+			throws IOException, CanceledExecutionException {
+		// TODO Auto-generated method stub
 
-    @Override
-    protected void reset() {
-    }
+	}
 
-    @Override
-    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
-        checkArgument(inSpecs.length == 0, "Invalid state");
-        return createTableSpec();
-    }
+	@Override
+	protected void saveInternals(File nodeInternDir, ExecutionMonitor exec)
+			throws IOException, CanceledExecutionException {
+		// TODO Auto-generated method stub
 
-    @Override
-    protected void saveSettingsTo(final NodeSettingsWO settings) {
-        fileSettings.saveSettingsTo(settings);
-    }
+	}
 
-    @Override
-    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.loadSettingsFrom(settings);
-    }
+	@Override
+	protected void saveSettingsTo(NodeSettingsWO settings) {
+		// TODO Auto-generated method stub
 
-    @Override
-    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
-        fileSettings.validateSettings(settings);
-    }
+	}
 
-    @Override
-    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
-        // NOOP
-    }
+	@Override
+	protected void validateSettings(NodeSettingsRO settings)
+			throws InvalidSettingsException {
+		// TODO Auto-generated method stub
 
-    @Override
-    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
-        // NOOP
-    }
+	}
 
-    static SettingsModelString createFileChooserSettings() {
-        return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
-    }
+	@Override
+	protected void loadValidatedSettingsFrom(NodeSettingsRO settings)
+			throws InvalidSettingsException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void reset() {
+		// TODO Auto-generated method stub
+
+	}
+
+	static SettingsModelString createFileChooserSettings() {
+		return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
+	}
+
 }

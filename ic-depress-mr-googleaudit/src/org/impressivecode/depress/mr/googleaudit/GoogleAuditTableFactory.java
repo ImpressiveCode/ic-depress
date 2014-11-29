@@ -24,56 +24,30 @@ import org.knime.core.data.def.DoubleCell;
 
 /**
  * 
- * @author Mateusz Kutyba, Wroclaw University of Technology
+ * @author Jadwiga Wozna, Wroclaw University of Technology
  * 
  */
 public class GoogleAuditTableFactory {
 
-    private static final String NORM = "NumberOfOverriddenMethods";
-    private static final String NOF = "NumberOfAttributes";
-    private static final String NSC = "NumberOfChildren";
-    private static final String NOM = "NumberOfMethods";
-    private static final String DIT = "DepthOfInheritanceTree";
-    private static final String LCOM = "LackOfCohesionOfMethods";
-    private static final String NSM = "NumberOfStaticMethods";
-    private static final String SIX = "SpecializationIndex";
-    private static final String WMC = "WeightedMethodsPerClass";
-    private static final String NSF = "NumberOfStaticAttributes";
+	private static final String LOW = "Low";
+	private static final String MEDIUM = "Medium";
+	private static final String HIGH = "High";
 
-    private static final String MLOC = "MethodLinesOfCode";
-    private static final String NBD = "NestedBlockDepth";
-    private static final String VG = "McCabeCyclomaticComplexity";
-    private static final String PAR = "NumberOfParameters";
+	private GoogleAuditTableFactory() {
 
-    private GoogleAuditTableFactory() {
+	}
 
-    }
+	static DataTableSpec[] createTableSpec() {
+		return new DataTableSpec[] { createDataColumnSpec() };
+	}
 
-    static DataTableSpec[] createTableSpec() {
-        return new DataTableSpec[] { createDataColumnSpec(), createDataColumnSpecMethodLevel() };
-    }
+	public static DataTableSpec createDataColumnSpec() {
+		DataColumnSpec[] allColSpecs = {
+				new DataColumnSpecCreator(LOW, DoubleCell.TYPE).createSpec(),
+				new DataColumnSpecCreator(MEDIUM, DoubleCell.TYPE).createSpec(),
+				new DataColumnSpecCreator(HIGH, DoubleCell.TYPE).createSpec(), };
+		DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
+		return outputSpec;
+	}
 
-    public static DataTableSpec createDataColumnSpec() {
-        DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(NORM, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(NOF, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(NSC, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(NOM, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(DIT, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(LCOM, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(NSM, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(SIX, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(WMC, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(NSF, DoubleCell.TYPE).createSpec() };
-        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
-        return outputSpec;
-    }
-
-    public static DataTableSpec createDataColumnSpecMethodLevel() {
-        DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(MLOC, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(NBD, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(VG, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(PAR, DoubleCell.TYPE).createSpec() };
-        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
-        return outputSpec;
-    }
 }
