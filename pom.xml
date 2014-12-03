@@ -14,6 +14,7 @@
     <module>ic-depress-its-clearquest</module>
     <module>ic-depress-its-hpqc</module>
     <module>ic-depress-its-jira</module>
+    <module>ic-depress-its-oschangemanagement</module>
     <module>ic-depress-metric-astcompare</module>
     <module>ic-depress-mg-ipa</module>
     <module>ic-depress-mg-po</module>
