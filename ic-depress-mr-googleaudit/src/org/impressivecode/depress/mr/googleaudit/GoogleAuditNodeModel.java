@@ -17,16 +17,17 @@
  */
 package org.impressivecode.depress.mr.googleaudit;
 
-import static org.impressivecode.depress.mr.googleaudit.GoogleAuditEntriesParser.unmarshalResults;
+import static com.google.common.base.Preconditions.checkArgument;
 import static org.impressivecode.depress.mr.googleaudit.GoogleAuditTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.mr.googleaudit.GoogleAuditTableFactory.createTableSpec;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.impressivecode.depress.mr.googleaudit.GoogleAuditXmlResult.Resource;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.knime.core.data.DataTableSpec;
-import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
@@ -37,14 +38,14 @@ import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
+import org.xml.sax.SAXException;
 
 /**
  * @author Jadwiga Wozna, Wroclaw University of Technology
  */
 public class GoogleAuditNodeModel extends NodeModel {
 
-	private static final NodeLogger LOGGER = NodeLogger
-			.getLogger(GoogleAuditNodeModel.class);
+	private static final NodeLogger LOGGER = NodeLogger.getLogger(GoogleAuditNodeModel.class);
 	private static final String DEFAULT_VALUE = "";
 	private static final String CONFIG_NAME = "file chooser";
 	private final SettingsModelString fileSettings = createFileChooserSettings();
@@ -54,43 +55,31 @@ public class GoogleAuditNodeModel extends NodeModel {
 	}
 
 	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
-			final ExecutionContext exec) throws Exception {
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
+            throws Exception {
+        LOGGER.info("Preparing to read GoogleAudit entries.");
+        String googleAuditFilePath = fileSettings.getStringValue();
+        List<GoogleAuditEntry> entries = parseEntries(googleAuditFilePath);
+        LOGGER.info("Transforming to GoogleAudit method-level entries.");
+        BufferedDataTable output = transform(entries, exec);
+        LOGGER.info("GoogleAudit method-level table created.");
 
-		LOGGER.info("Preparing to read GoogleAudit logs.");
-		BufferedDataContainer container = createDataContainer(exec);
-		LOGGER.info("Reading file: " + fileSettings.getStringValue());
-		List<Resource> result = unmarshalResults(fileSettings.getStringValue());
-		BufferedDataTable out = transform(container, result, exec);
-		LOGGER.info("Reading googlemetrics logs finished.");
-
-		return new BufferedDataTable[] { out };
+        return new BufferedDataTable[] { output };
 	}
 
-	private void progress(final ExecutionContext exec, final int size,
-			final int i) throws CanceledExecutionException {
-		exec.checkCanceled();
-		exec.setProgress(i / size);
-	}
+    private BufferedDataTable transform(final List<GoogleAuditEntry> entries, final ExecutionContext exec)
+            throws CanceledExecutionException {
+        GoogleAuditTransformer transformer = new GoogleAuditTransformer(createDataColumnSpec());
+        return transformer.transformMethodLevel(entries, exec);
+    }
 
-	private BufferedDataTable transform(final BufferedDataContainer container,
-			final List<Resource> classes, final ExecutionContext exec)
-			throws CanceledExecutionException {
+    private List<GoogleAuditEntry> parseEntries(final String googleAuditFilePath)
+            throws ParserConfigurationException, SAXException, IOException {
+        GoogleAuditEntriesParser parser = new GoogleAuditEntriesParser();
+        return parser.parseEntries(googleAuditFilePath);
+    }
 
-		// TODO: add method body analog to method 'transform' from
-		// GoogleMetricsNodeModel and GoogleAuditXmlResult
-
-		return null;
-	}
-
-	private BufferedDataContainer createDataContainer(
-			final ExecutionContext exec) {
-		DataTableSpec outputSpec = createDataColumnSpec();
-		BufferedDataContainer container = exec.createDataContainer(outputSpec);
-		return container;
-	}
-
-	@Override
+    @Override
 	protected void loadInternals(File nodeInternDir, ExecutionMonitor exec)
 			throws IOException, CanceledExecutionException {
 		// TODO Auto-generated method stub
@@ -105,30 +94,31 @@ public class GoogleAuditNodeModel extends NodeModel {
 	}
 
 	@Override
-	protected void saveSettingsTo(NodeSettingsWO settings) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void validateSettings(NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		// TODO Auto-generated method stub
-
-	}
+    protected void saveSettingsTo(final NodeSettingsWO settings) {
+        fileSettings.saveSettingsTo(settings);
+    }
 
 	@Override
-	protected void loadValidatedSettingsFrom(NodeSettingsRO settings)
-			throws InvalidSettingsException {
-		// TODO Auto-generated method stub
+    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+        fileSettings.validateSettings(settings);
+    }
 
-	}
+	@Override
+    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+        fileSettings.loadSettingsFrom(settings);
+    }
 
 	@Override
 	protected void reset() {
 		// TODO Auto-generated method stub
 
 	}
+
+    @Override
+    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
+        checkArgument(inSpecs.length == 0, "Invalid state");
+        return createTableSpec();
+    }
 
 	static SettingsModelString createFileChooserSettings() {
 		return new SettingsModelString(CONFIG_NAME, DEFAULT_VALUE);
