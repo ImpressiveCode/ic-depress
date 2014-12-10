@@ -23,9 +23,9 @@ import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.def.DoubleCell;
 
 /**
- * 
  * @author Jadwiga Wozna, Wroclaw University of Technology
- * 
+ * @author Katarzyna Debowa, Wroclaw University of Technology
+ * @author Pawel Krzos, Wroclaw University of Technology
  */
 public class GoogleAuditTableFactory {
 

@@ -34,9 +34,9 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeLogger.LEVEL;
 
 /**
- * 
- * @author Mateusz Kutyba, Wroclaw University of Technology
- * 
+ * @author Jadwiga Wozna, Wroclaw University of Technology
+ * @author Katarzyna Debowa, Wroclaw University of Technology
+ * @author Pawel Krzos, Wroclaw University of Technology
  */
 public class GoogleAuditTransformer {
 

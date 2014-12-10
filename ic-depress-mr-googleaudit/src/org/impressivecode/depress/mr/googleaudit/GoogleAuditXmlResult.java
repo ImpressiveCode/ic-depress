@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * @author Jadwiga Wozna, Wroclaw University of Technology
+ * @author Katarzyna Debowa, Wroclaw University of Technology
+ * @author Pawel Krzos, Wroclaw University of Technology
  */
 
 @XmlAccessorType(XmlAccessType.FIELD)

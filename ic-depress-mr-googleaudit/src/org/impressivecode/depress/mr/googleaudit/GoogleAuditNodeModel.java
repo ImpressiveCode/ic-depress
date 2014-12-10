@@ -42,6 +42,8 @@ import org.xml.sax.SAXException;
 
 /**
  * @author Jadwiga Wozna, Wroclaw University of Technology
+ * @author Katarzyna Debowa, Wroclaw University of Technology
+ * @author Pawel Krzos, Wroclaw University of Technology
  */
 public class GoogleAuditNodeModel extends NodeModel {
 

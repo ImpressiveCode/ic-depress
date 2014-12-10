@@ -17,14 +17,14 @@
  */
 package org.impressivecode.depress.mr.googleaudit;
 
-import org.impressivecode.depress.mr.googleaudit.GoogleAuditNodeDialog;
-import org.impressivecode.depress.mr.googleaudit.GoogleAuditNodeModel;
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 
 /**
- * @author Mateusz Kutyba, Wroclaw University of Technology
+ * @author Jadwiga Wozna, Wroclaw University of Technology
+ * @author Katarzyna Debowa, Wroclaw University of Technology
+ * @author Pawel Krzos, Wroclaw University of Technology
  */
 public class GoogleAuditNodeFactory extends NodeFactory<GoogleAuditNodeModel> {
 

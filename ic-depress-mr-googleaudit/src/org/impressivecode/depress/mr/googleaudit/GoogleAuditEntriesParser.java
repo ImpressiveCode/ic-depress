@@ -19,23 +19,16 @@ package org.impressivecode.depress.mr.googleaudit;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.impressivecode.depress.mr.googleaudit.GoogleAuditXmlResult.Resource;
 import org.knime.core.node.NodeLogger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,122 +40,136 @@ import com.google.common.base.Preconditions;
 
 /**
  * @author Jadwiga Wozna, Wroclaw University of Technology
+ * @author Katarzyna Debowa, Wroclaw University of Technology
+ * @author Pawel Krzos, Wroclaw University of Technology
  */
 public class GoogleAuditEntriesParser {
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(GoogleAuditEntriesParser.class);
-    private Document doc;
 
-/*	public static List<Resource> unmarshalResults(final String path) throws JAXBException {
-	        Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
-	        JAXBContext jaxbContext = JAXBContext.newInstance(GoogleAuditXmlResult.class);
-	        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+	private static final NodeLogger LOGGER = NodeLogger
+			.getLogger(GoogleAuditEntriesParser.class);
+	private Document doc;
 
-	        GoogleAuditXmlResult result = (GoogleAuditXmlResult) unmarshaller.unmarshal(new File(path));
-	        return result.getResource();
-	    }
-*/	
-    public List<GoogleAuditEntry> parseEntries(final String path)
-            throws ParserConfigurationException, SAXException, IOException {
-        init(path);
+	public List<GoogleAuditEntry> parseEntries(final String path)
+			throws ParserConfigurationException, SAXException, IOException {
+		init(path);
 
-        Map<String, GoogleAuditEntry> googleAuditEntriesMap = new LinkedHashMap<String, GoogleAuditEntry>();
-        NodeList resourceList = getAllResources();
-        for (int i = 0; i < resourceList.getLength(); i++) {
-            Node resourceNode = resourceList.item(i);
-            String resourceName = getResourceName(resourceNode);
-            NodeList auditViolationNodes = getAuditViolationSubnodes(resourceNode);
+		Map<String, GoogleAuditEntry> googleAuditEntriesMap = new LinkedHashMap<String, GoogleAuditEntry>();
+		NodeList resourceList = getAllResources();
+		for (int i = 0; i < resourceList.getLength(); i++) {
+			Node resourceNode = resourceList.item(i);
+			String resourceName = getResourceName(resourceNode);
+			NodeList auditViolationNodes = getAuditViolationSubnodes(resourceNode);
 
-            if (!googleAuditEntriesMap.containsKey(resourceName)) {
-                GoogleAuditEntry entry = new GoogleAuditEntry();
-                ((GoogleAuditEntry) entry).setResourceName(resourceName);
-                entry = updateGoogleAuditEntry(auditViolationNodes, entry);
-                googleAuditEntriesMap.put(resourceName, (GoogleAuditEntry) entry);
-            }
-        }
-        return new ArrayList<GoogleAuditEntry>(googleAuditEntriesMap.values());
-    }
+			if (!googleAuditEntriesMap.containsKey(resourceName)) {
+				GoogleAuditEntry entry = new GoogleAuditEntry();
+				// TODO: remove unecessary type cast to GoogleAuditEntry
+				((GoogleAuditEntry) entry).setResourceName(resourceName);
+				entry = updateGoogleAuditEntry(auditViolationNodes, entry);
+				// TODO: remove unecessary type cast to GoogleAuditEntry
+				googleAuditEntriesMap.put(resourceName,
+						(GoogleAuditEntry) entry);
+			}
+		}
+		return new ArrayList<GoogleAuditEntry>(googleAuditEntriesMap.values());
+	}
 
-    private String getResourceName(Node resource) {
-        String absolutePath = ((Element) resource).getAttribute("path");
-        String[] pathTable = absolutePath.split("/");
-        String name = pathTable[pathTable.length-1];
-        return name;
-    }
+	private String getResourceName(Node resource) {
+		// TODO: use members constants instead of strings
+		String absolutePath = ((Element) resource).getAttribute("path");
+		// TODO: use members constants instead of strings
+		String[] pathTable = absolutePath.split("/");
+		//TODO : 1 is magic number
+		String name = pathTable[pathTable.length - 1];
+		return name;
+	}
 
-    private GoogleAuditEntry updateGoogleAuditEntry(NodeList googleAuditNodes, GoogleAuditEntry entry) {
-    	String auditViolationType = "";
-    	Double high = 0.0;
-    	Double medium = 0.0;
-    	Double low = 0.0;
+	private GoogleAuditEntry updateGoogleAuditEntry(NodeList googleAuditNodes,
+			GoogleAuditEntry entry) {
+		// TODO : remove unused variable
+		String auditViolationType = "";
+		 //TODO: change Double to Integer
+		Double high = 0.0;
+		Double medium = 0.0;
+		Double low = 0.0;
 
-    	for (int i = 0; i < googleAuditNodes.getLength(); i++) {
-            if (googleAuditNodes.item(i).getNodeType() != Node.ELEMENT_NODE) {
-                continue;
-            }
-            Element elem = (Element) googleAuditNodes.item(i);
-            if (!elem.hasAttribute("severity")) {
-                continue;
-            }
-            auditViolationType = elem.getAttribute("severity");
-            try {
-                if(elem.getAttribute("severity").equals("High"))
-                	high++;
-                if(elem.getAttribute("severity").equals("Medium"))
-                	medium++;
-                if(elem.getAttribute("severity").equals("Low"))
-                	low++;
-            } catch (Exception e) {
-                LOGGER.error(e.getMessage());
-            }
-        }
-        entry.setValue("high", high);
-        entry.setValue("medium", medium);
-        entry.setValue("low", low);
-        return entry;
-    }
+		for (int i = 0; i < googleAuditNodes.getLength(); i++) {
+			if (googleAuditNodes.item(i).getNodeType() != Node.ELEMENT_NODE) {
+				continue;
+			}
 
-    private NodeList getAllResources() {
-        return doc.getElementsByTagName("resource");
-    }
+			// TODO: use members constants instead of strings "High", "Medium", "Low"
+			// private static final String HIGH = "High";)
 
-    private void init(final String path) throws ParserConfigurationException, SAXException, IOException {
-        Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        doc = dBuilder.parse(path);
+			Element elem = (Element) googleAuditNodes.item(i);
+			if (!elem.hasAttribute("severity")) {
+				continue;
+			}
+			// TODO : remove unused variable
+			auditViolationType = elem.getAttribute("severity");
 
-        if (!validXmlStructure()) {
-            throw new SAXException("Wrong or malformed file structure.");
-        }
-    }
+			try {
 
-    private boolean validXmlStructure() {
-    	boolean valid=false;
-        NodeList mainNodes = doc.getChildNodes();
-        for (int i = 0; i < mainNodes.getLength(); i++) {
-            if (mainNodes.item(i).getNodeType() != Node.ELEMENT_NODE)
-                continue;
-            Element elem = (Element) mainNodes.item(i);
-            if ("audit-violation-set".equals(elem.getTagName())) {
-                valid = true;
-            }
-        }
-        return valid;
-    }
+				// TODO: what if elem.getAttribute("...") is null
+				// change to: HIGH.equals(elem.getAttribute("..."))
+				
+				// TODO: use members constants instead of strings ("severity")
+				
+				if ((elem.getAttribute("severity").equals("High")))
+					high++;
+				if (elem.getAttribute("severity").equals("Medium"))
+					medium++;
+				if (elem.getAttribute("severity").equals("Low"))
+					low++;
 
-    private String extractPackageName(String subjectString) {
-        Pattern regexPackageName = Pattern.compile("(?<=<).+(?=\\{)");
-        Matcher regexMatcher = regexPackageName.matcher(subjectString);
-        String packageName = "";
-        while (regexMatcher.find()) {
-            packageName = regexMatcher.group();
-        }
-        return packageName;
-    }
+				// TODO : What kind of Exception is catch?
+			} catch (Exception e) {
+				LOGGER.error(e.getMessage());
+			}
+		}
 
-    private NodeList getAuditViolationSubnodes(Node node) {
-        Element elem = (Element) node;
-        return elem.getElementsByTagName("audit-violation");
-    }
+		// TODO: change method parameters: setValue(high, medium, low) and give appriopriate name
+		entry.setValue("high", high);
+		entry.setValue("medium", medium);
+		entry.setValue("low", low);
+		return entry;
+	}
+
+	private NodeList getAllResources() {
+		return doc.getElementsByTagName("resource");
+	}
+
+	private void init(final String path) throws ParserConfigurationException,
+			SAXException, IOException {
+		Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		doc = dBuilder.parse(path);
+
+		if (!validXmlStructure()) {
+			throw new SAXException("Wrong or malformed file structure.");
+		}
+	}
+
+	//TODO: validate all xml structure or change name of method
+	private boolean validXmlStructure() {
+		boolean valid = false;
+		NodeList mainNodes = doc.getChildNodes();
+		for (int i = 0; i < mainNodes.getLength(); i++) {
+			if (mainNodes.item(i).getNodeType() != Node.ELEMENT_NODE)
+				continue;
+			Element elem = (Element) mainNodes.item(i);
+			// TODO: use members constants instead of strings ("audit-violation-set")
+			if ("audit-violation-set".equals(elem.getTagName())) {
+				valid = true;
+			}
+		}
+		return valid;
+	}
+
+	private NodeList getAuditViolationSubnodes(Node node) {
+		Element elem = (Element) node;
+		// TODO: use members constants instead of strings ("audit-violation")
+		return elem.getElementsByTagName("audit-violation");
+	}
 
 }

@@ -18,19 +18,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.impressivecode.depress.mr.googleaudit;
 
 /**
- * 
- * @author Mateusz Kutyba, Wroclaw University of Technology
- * 
+ * @author Jadwiga Wozna, Wroclaw University of Technology
+ * @author Katarzyna Debowa, Wroclaw University of Technology
+ * @author Pawel Krzos, Wroclaw University of Technology
  */
 public class GoogleAuditEntry {
 
     private String resourceName;
+    
     private Double high;
     private Double medium;
     private Double low;
 
     @Override
     public int hashCode() {
+    	//TODO: (optional) use HashCodeBuilder from org.apache.commons    	
         final int prime = 31;
         int result = 1;
         result = prime * result + ((high == null) ? 0 : high.hashCode());
@@ -41,6 +43,8 @@ public class GoogleAuditEntry {
 
     @Override
     public boolean equals(Object obj) {
+    	//TODO: use (optional) HashCodeBuilder from org.apache.commons   
+    	
         if (this == obj)
             return true;
         if (obj == null)
@@ -89,6 +93,7 @@ public class GoogleAuditEntry {
                 + "low=%s]", resourceName, high, medium, low);
     }
 
+    //TODO: change method parameters: setValue(high, medium, low) instead of switch case
     public void setValue(String auditViolationType, Double value) {
         switch (auditViolationType) {
         case "high":
