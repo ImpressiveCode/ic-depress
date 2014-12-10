@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline;
+package org.impressivecode.depress.its.oschangemanagement;
 
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -23,7 +23,7 @@ import static org.impressivecode.depress.common.Cells.dateTimeCell;
 import static org.impressivecode.depress.common.Cells.stringCell;
 import static org.impressivecode.depress.common.Cells.stringOrMissingCell;
 
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
+import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;

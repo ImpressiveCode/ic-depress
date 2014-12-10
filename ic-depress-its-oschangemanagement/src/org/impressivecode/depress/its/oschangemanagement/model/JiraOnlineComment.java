@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline.model;
+package org.impressivecode.depress.its.oschangemanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -26,14 +26,25 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineUser {
-    private String name;
+public class JiraOnlineComment {
 
-    public String getName() {
-        return name;
+    private JiraOnlineUser author;
+    private String body;
+
+    public JiraOnlineUser getAuthor() {
+        return author;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAuthor(JiraOnlineUser author) {
+        this.author = author;
     }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
 }

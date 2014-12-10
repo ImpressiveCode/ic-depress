@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline;
+package org.impressivecode.depress.its.oschangemanagement;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
@@ -34,8 +34,8 @@ import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSMappingManager;
 import org.impressivecode.depress.its.ITSOnlineNodeModel;
-import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
+import org.impressivecode.depress.its.oschangemanagement.JiraOnlineAdapterUriBuilder.Mode;
+import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineIssueChangeRowItem;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;

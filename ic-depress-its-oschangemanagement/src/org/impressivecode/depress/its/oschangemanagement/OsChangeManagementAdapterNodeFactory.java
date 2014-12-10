@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline;
+package org.impressivecode.depress.its.oschangemanagement;
 
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
@@ -28,7 +28,7 @@ import org.knime.core.node.NodeView;
  * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
  */
-public class JiraOnlineAdapterNodeFactory extends NodeFactory<JiraOnlineAdapterNodeModel> {
+public class OsChangeManagementAdapterNodeFactory extends NodeFactory<JiraOnlineAdapterNodeModel> {
 
     @Override
     public JiraOnlineAdapterNodeModel createNodeModel() {

@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline;
+package org.impressivecode.depress.its.oschangemanagement;
 
 import java.awt.Component;
 import java.net.URI;
@@ -28,9 +28,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import org.impressivecode.depress.its.ITSOnlineNodeDialog;
-import org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterUriBuilder.Mode;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineFilterListItem;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineProjectListItem;
+import org.impressivecode.depress.its.oschangemanagement.JiraOnlineAdapterUriBuilder.Mode;
+import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineFilterListItem;
+import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineProjectListItem;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;

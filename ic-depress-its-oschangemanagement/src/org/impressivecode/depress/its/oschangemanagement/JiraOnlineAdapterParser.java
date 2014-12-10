@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline;
+package org.impressivecode.depress.its.oschangemanagement;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,14 +30,14 @@ import org.impressivecode.depress.its.ITSPriority;
 import org.impressivecode.depress.its.ITSResolution;
 import org.impressivecode.depress.its.ITSStatus;
 import org.impressivecode.depress.its.ITSType;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineComment;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssue;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChange;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChangeRowItem;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueChanges;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueHistory;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssueVersion;
-import org.impressivecode.depress.its.jiraonline.model.JiraOnlineIssuesList;
+import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineComment;
+import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineIssue;
+import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineIssueChange;
+import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineIssueChangeRowItem;
+import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineIssueChanges;
+import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineIssueHistory;
+import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineIssueVersion;
+import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineIssuesList;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;

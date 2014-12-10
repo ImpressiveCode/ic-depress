@@ -15,27 +15,38 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline.model;
+package org.impressivecode.depress.its.oschangemanagement.model;
+
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Model class used by Jackson for Jira JSON parsing. Contains issue version. It
- * has to be in another class because Jackson can't handle inner classes if they
- * are used as a List type
+ * Model class used by Jackson for Jira JSON parsing. Contains issue list
  * 
  * @author Marcin Kunert, Wroclaw University of Technology
+ * @author Krzysztof Kwoka, Wroclaw University of Technology
  * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineIssueVersion {
-    private String name;
+public class JiraOnlineIssuesList {
 
-    public String getName() {
-        return name;
+    private List<JiraOnlineIssue> issues;
+    private int total;
+
+    public List<JiraOnlineIssue> getIssues() {
+        return issues; 
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIssues(List<JiraOnlineIssue> issues) {
+        this.issues = issues;
     }
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
 }

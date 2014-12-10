@@ -15,7 +15,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline.model;
+package org.impressivecode.depress.its.oschangemanagement.model;
+
+import java.util.List;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,40 +31,41 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineIssueChange {
-    
-    @JsonProperty("field")
-    private String fieldName;
+public class JiraOnlineIssueHistory {
 
-    @JsonProperty("fromString")
-    private String from;
-    
-    @JsonProperty("toString")
-    private String to;
+    private String key;
+    private JiraOnlineIssueChangelog changelog;
 
-    public String getFieldName() {
-        return fieldName;
+    public String getKey() {
+        return key;
     }
 
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public String getFrom() {
-        return from;
+    public JiraOnlineIssueChangelog getChangelog() {
+        return changelog;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setChangelog(JiraOnlineIssueChangelog changelog) {
+        this.changelog = changelog;
     }
 
-    public String getTo() {
-        return to;
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class JiraOnlineIssueChangelog {
+
+        @JsonProperty("histories")
+        private List<JiraOnlineIssueChanges> histories;
+
+        public List<JiraOnlineIssueChanges> getHistories() {
+            return histories;
+        }
+
+        public void setHistories(List<JiraOnlineIssueChanges> histories) {
+            this.histories = histories;
+        }
+
     }
 
-    public void setTo(String to) {
-        this.to = to;
-    }
-    
-    
 }

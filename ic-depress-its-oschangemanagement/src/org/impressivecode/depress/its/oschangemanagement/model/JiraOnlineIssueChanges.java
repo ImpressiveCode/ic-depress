@@ -15,38 +15,56 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline.model;
+package org.impressivecode.depress.its.oschangemanagement.model;
 
+import java.util.Date;
 import java.util.List;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 /**
- * Model class used by Jackson for Jira JSON parsing. Contains issue list
+ * Model class used by Jackson for Jira JSON parsing.
  * 
  * @author Marcin Kunert, Wroclaw University of Technology
- * @author Krzysztof Kwoka, Wroclaw University of Technology
  * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineIssuesList {
+public class JiraOnlineIssueChanges {
 
-    private List<JiraOnlineIssue> issues;
-    private int total;
+    @JsonProperty("author")
+    private JiraOnlineUser author;
 
-    public List<JiraOnlineIssue> getIssues() {
-        return issues; 
+    @JsonProperty("items")
+    private List<JiraOnlineIssueChange> items;
+    
+    @JsonProperty("created")
+    private Date timestamp;
+
+    public JiraOnlineUser getAuthor() {
+        return author;
     }
 
-    public void setIssues(List<JiraOnlineIssue> issues) {
-        this.issues = issues;
+    public void setAuthor(JiraOnlineUser author) {
+        this.author = author;
     }
 
-	public int getTotal() {
-		return total;
-	}
+    public List<JiraOnlineIssueChange> getItems() {
+        return items;
+    }
 
-	public void setTotal(int total) {
-		this.total = total;
-	}
+    public void setItems(List<JiraOnlineIssueChange> items) {
+        this.items = items;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
 }

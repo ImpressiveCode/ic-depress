@@ -15,28 +15,29 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline.model;
-
-import java.util.List;
+package org.impressivecode.depress.its.oschangemanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Model class used by Jackson for Jira JSON parsing.
+ * Model class used by Jackson for Jira JSON parsing. Generalized type of JIRA
+ * custom field list item.
  * 
- * @author Marcin Kunert, Wroclaw University of Technology
+ * @author Krzysztof Kwoka, Wroc³aw University of Technology
+ * @author Maciej Borkowski, Capgemini Poland
  * 
  */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineComments {
+public class JiraOnlineFilterListItem {
+    private String name;
 
-    private List<JiraOnlineComment> comments;
-
-    public List<JiraOnlineComment> getComments() {
-        return comments;
+    public String getName() {
+        return name;
     }
 
-    public void setComments(List<JiraOnlineComment> comments) {
-        this.comments = comments;
+    public void setName(String name) {
+        this.name = name;
     }
+
 }

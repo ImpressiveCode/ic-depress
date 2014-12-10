@@ -15,14 +15,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.its.jiraonline.model;
+package org.impressivecode.depress.its.oschangemanagement.model;
 
 import java.util.List;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 
 /**
  * Model class used by Jackson for Jira JSON parsing.
@@ -31,41 +28,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JiraOnlineIssueHistory {
+public class JiraOnlineComments {
 
-    private String key;
-    private JiraOnlineIssueChangelog changelog;
+    private List<JiraOnlineComment> comments;
 
-    public String getKey() {
-        return key;
+    public List<JiraOnlineComment> getComments() {
+        return comments;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setComments(List<JiraOnlineComment> comments) {
+        this.comments = comments;
     }
-
-    public JiraOnlineIssueChangelog getChangelog() {
-        return changelog;
-    }
-
-    public void setChangelog(JiraOnlineIssueChangelog changelog) {
-        this.changelog = changelog;
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public class JiraOnlineIssueChangelog {
-
-        @JsonProperty("histories")
-        private List<JiraOnlineIssueChanges> histories;
-
-        public List<JiraOnlineIssueChanges> getHistories() {
-            return histories;
-        }
-
-        public void setHistories(List<JiraOnlineIssueChanges> histories) {
-            this.histories = histories;
-        }
-
-    }
-
 }
