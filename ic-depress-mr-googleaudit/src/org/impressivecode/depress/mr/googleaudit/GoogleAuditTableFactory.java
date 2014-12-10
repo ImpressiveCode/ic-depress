@@ -43,9 +43,9 @@ public class GoogleAuditTableFactory {
 
 	public static DataTableSpec createDataColumnSpec() {
 		DataColumnSpec[] allColSpecs = {
-				new DataColumnSpecCreator(LOW, DoubleCell.TYPE).createSpec(),
+				new DataColumnSpecCreator(HIGH, DoubleCell.TYPE).createSpec(),
 				new DataColumnSpecCreator(MEDIUM, DoubleCell.TYPE).createSpec(),
-				new DataColumnSpecCreator(HIGH, DoubleCell.TYPE).createSpec(), };
+				new DataColumnSpecCreator(LOW, DoubleCell.TYPE).createSpec(), };
 		DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
 		return outputSpec;
 	}
