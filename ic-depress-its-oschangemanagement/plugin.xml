@@ -9,7 +9,6 @@
             factory-class="org.impressivecode.depress.its.oschangemanagement.OsChangeManagementAdapterNodeFactory"
             id="org.impressivecode.depress.its.oschangemanagement">
       </node>
-     
    </extension>
 
 </plugin>
