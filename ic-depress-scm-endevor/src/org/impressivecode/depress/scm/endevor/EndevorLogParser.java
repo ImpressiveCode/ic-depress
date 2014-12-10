@@ -7,20 +7,20 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.impressivecode.depress.scm.SCMDataType;
-import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.endevor.constants.EndevorLogEntryType;
 import org.impressivecode.depress.scm.endevor.constants.EndevorLogKeywords;
 import org.impressivecode.depress.scm.endevor.constants.EndevorParsingPhase;
 import org.impressivecode.depress.scm.endevor.models.EndevorElementPathModel;
 import org.impressivecode.depress.scm.endevor.models.EndevorLogEntryBase;
-import org.impressivecode.depress.scm.endevor.models.EndevorLogNoSCMActionEntry;
-import org.impressivecode.depress.scm.endevor.models.EndevorLogSCMActionEntry;
+import org.impressivecode.depress.scm.endevor.models.EndevorLogNoInsertsDeletesActionEntry;
+import org.impressivecode.depress.scm.endevor.models.EndevorLogWithInsertsDeletesActionEntry;
 
 public class EndevorLogParser {
 	
 	private File logFile;
 	private LinkedList<SCMDataType> parsedData;
 	private LinkedList <EndevorLogEntryBase> rawEndevorData;
+	private EndevorElementPathModel currentlyProcessedElementSummary;
 	
 	public EndevorLogParser() {}
 	
@@ -40,83 +40,91 @@ public class EndevorLogParser {
 					case SEARCHING:
 						break;
 						
+					case SUMMARY:
+						currentLine = skipUselessLogLines(scanner);
+						
+						EndevorElementPathModel pathModel = processElementSummarySection(scanner, currentLine);
+						this.currentlyProcessedElementSummary = pathModel;
+						break;
+						
 					case SOURCE_INFO:
 						currentLine = skipUselessLogLines(scanner);
 						
-						EndevorLogEntryType currentLogType = determineLogEntriesTypeUsingColumnHeadersRow(currentLine);
-						EndevorLogEntryBase currentLogEntry;
-						
-						currentLine = skipUselessLogLines(scanner);
-						
-						while (isLineASourceLevelInformationData(currentLine)) {
-							switch (currentLogType) {
-							case NO_SCM_ACTION:
-								currentLogEntry = new EndevorLogNoSCMActionEntry(currentLine);
-								currentLogEntry.parseRow();
-								break;
-								
-							case WITH_SCM_ACTION:
-								currentLogEntry = new EndevorLogSCMActionEntry(currentLine);
-								currentLogEntry.parseRow();
-								break;
-								
-								default:
-									throw new EndevorLogParserException("Exception while parsing Source Level Information data. Current Line: " + currentLine);
-							}
-							
-							this.rawEndevorData.add(currentLogEntry);
-							currentLine = scanner.nextLine();
-						}
-						
-						break;
-						
-					case SUMMARY:
-						currentLine = skipUselessLogLines(scanner);
-						EndevorElementPathModel pathModel = new EndevorElementPathModel();
-						
-						while (	(currentLine.contains(EndevorLogKeywords.PATH_ENVIRONMENT) 
-								&& currentLine.contains(EndevorLogKeywords.PATH_SYSTEM) 
-								&& currentLine.contains(EndevorLogKeywords.PATH_SUBSYSTEM))
-								||
-								(currentLine.contains(EndevorLogKeywords.PATH_ELEMENT) 
-								&& currentLine.contains(EndevorLogKeywords.PATH_TYPE) 
-								&& currentLine.contains(EndevorLogKeywords.PATH_STAGEID))) {
-							
-							Scanner lineScanner = new Scanner(currentLine);
-							while(lineScanner.hasNext()) {
-								String currentPathElementName = lineScanner.next();
-								String currentPathElementValue = null;
-								if (currentPathElementName.contains(EndevorLogKeywords.PATH_ENVIRONMENT)) {
-									currentPathElementValue = lineScanner.next();
-									pathModel.setEnvironment(currentPathElementValue);
-								} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_SUBSYSTEM)) {
-									currentPathElementValue = lineScanner.next();
-									pathModel.setSubsystem(currentPathElementValue);
-								} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_SYSTEM)) {
-									currentPathElementValue = lineScanner.next();
-									pathModel.setSystem(currentPathElementValue);
-								} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_ELEMENT)) {
-									currentPathElementValue = lineScanner.next();
-									pathModel.setElement(currentPathElementValue);
-								} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_TYPE)) {
-									currentPathElementValue = lineScanner.next();
-									pathModel.setType(currentPathElementValue);
-								} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_STAGEID)) {
-									currentPathElementValue = lineScanner.next();
-									pathModel.setStageId(currentPathElementValue);
-								}
-							}
-							
-							currentLine = scanner.nextLine();
-						}
-						
-						applyPathModelToPathlessEntries(pathModel);
+						processSourceLevelInformationSection(scanner, currentLine);	
 						break;
 				}
 			}
 		}
 		
 		convertRawEntriesToSCMFormat();
+	}
+
+	private EndevorElementPathModel processElementSummarySection(Scanner scanner, String currentLine) {
+		EndevorElementPathModel pathModel = new EndevorElementPathModel();
+		
+		while (	(currentLine.contains(EndevorLogKeywords.PATH_ENVIRONMENT) 
+				&& currentLine.contains(EndevorLogKeywords.PATH_SYSTEM) 
+				&& currentLine.contains(EndevorLogKeywords.PATH_SUBSYSTEM))
+				||
+				(currentLine.contains(EndevorLogKeywords.PATH_ELEMENT) 
+				&& currentLine.contains(EndevorLogKeywords.PATH_TYPE) 
+				&& currentLine.contains(EndevorLogKeywords.PATH_STAGEID))) {
+			
+			Scanner lineScanner = new Scanner(currentLine);
+			while(lineScanner.hasNext()) {
+				String currentPathElementName = lineScanner.next();
+				String currentPathElementValue = null;
+				if (currentPathElementName.contains(EndevorLogKeywords.PATH_ENVIRONMENT)) {
+					currentPathElementValue = lineScanner.next();
+					pathModel.setEnvironment(currentPathElementValue);
+				} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_SUBSYSTEM)) {
+					currentPathElementValue = lineScanner.next();
+					pathModel.setSubsystem(currentPathElementValue);
+				} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_SYSTEM)) {
+					currentPathElementValue = lineScanner.next();
+					pathModel.setSystem(currentPathElementValue);
+				} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_ELEMENT)) {
+					currentPathElementValue = lineScanner.next();
+					pathModel.setElement(currentPathElementValue);
+				} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_TYPE)) {
+					currentPathElementValue = lineScanner.next();
+					pathModel.setType(currentPathElementValue);
+				} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_STAGEID)) {
+					currentPathElementValue = lineScanner.next();
+					pathModel.setStageId(currentPathElementValue);
+				}
+			}
+			
+			currentLine = scanner.nextLine();
+		}
+		
+		return pathModel;
+	}
+	
+	private void processSourceLevelInformationSection(Scanner scanner, String currentLine) throws EndevorLogParserException {
+		EndevorLogEntryType currentLogType = determineLogEntriesTypeUsingColumnHeadersRow(currentLine);
+		EndevorLogEntryBase currentLogEntry = null;
+		
+		currentLine = skipUselessLogLines(scanner);
+		
+		switch(currentLogType) {
+			case NO_INSERTS_DELETES:
+				while (isLineASourceLevelInformationData(currentLine)) {
+					currentLogEntry = new EndevorLogNoInsertsDeletesActionEntry(currentLine);
+					currentLogEntry.parseRow();
+					currentLogEntry.setPath(this.currentlyProcessedElementSummary.toString());
+					
+					this.rawEndevorData.add(currentLogEntry);
+					currentLine = scanner.nextLine();
+				}
+				break;
+				
+			case WITH_INSERTS_DELETES:
+				break;
+				
+			default:
+				throw new EndevorLogParserException("Exception while parsing Source Level Information data. Current Line: " + currentLine);
+		}
 	}
 	
 	private boolean isLineUsable(String currentLine) {
@@ -145,11 +153,11 @@ public class EndevorLogParser {
 	}
 	
 	private EndevorLogEntryType determineLogEntriesTypeUsingColumnHeadersRow(String currentLine) {
-		if (currentLine.matches(EndevorLogNoSCMActionEntry.ROW_HEADER_MATCHING_PATTERN)) {
-			return EndevorLogEntryType.NO_SCM_ACTION;
+		if (currentLine.matches(EndevorLogNoInsertsDeletesActionEntry.ROW_HEADER_MATCHING_PATTERN)) {
+			return EndevorLogEntryType.NO_INSERTS_DELETES;
 		}
-		else if (currentLine.matches(EndevorLogSCMActionEntry.ROW_HEADER_MATCHING_PATTERN)) {
-			return EndevorLogEntryType.WITH_SCM_ACTION;
+		else if (currentLine.matches(EndevorLogWithInsertsDeletesActionEntry.ROW_HEADER_MATCHING_PATTERN)) {
+			return EndevorLogEntryType.WITH_INSERTS_DELETES;
 		}
 		else {	
 			return null;
@@ -161,31 +169,18 @@ public class EndevorLogParser {
 		return currentLine.startsWith("  ");
 	}
 	
-	private void applyPathModelToPathlessEntries(EndevorElementPathModel pathModel) {
-		for(EndevorLogEntryBase rawScm : this.rawEndevorData) {
-			if (rawScm.getPath() == null) {
-				rawScm.setPath(pathModel.toString());
-			}
-		}
-	}
-
 	private void convertRawEntriesToSCMFormat() {
 		for (EndevorLogEntryBase rawBase : this.rawEndevorData) {
 			SCMDataType scm = new SCMDataType();
-			if (rawBase instanceof EndevorLogNoSCMActionEntry) {
-				EndevorLogNoSCMActionEntry rawNonBase = (EndevorLogNoSCMActionEntry)rawBase;
+			if (rawBase instanceof EndevorLogNoInsertsDeletesActionEntry) {
+				EndevorLogNoInsertsDeletesActionEntry rawNonBase = (EndevorLogNoInsertsDeletesActionEntry)rawBase;
 				rawNonBase.fillSCMDataTypeFields(scm);
 			}
-			if (rawBase instanceof EndevorLogSCMActionEntry) {
-				EndevorLogSCMActionEntry rawNonBase = (EndevorLogSCMActionEntry)rawBase;
+			if (rawBase instanceof EndevorLogWithInsertsDeletesActionEntry) {
+				EndevorLogWithInsertsDeletesActionEntry rawNonBase = (EndevorLogWithInsertsDeletesActionEntry)rawBase;
 				rawNonBase.fillSCMDataTypeFields(scm);
 			}
-			
-			//TODO byc moze do usuniecia, gdy bedzie joinowanie
-			if(scm.getOperation() == null) {
-				scm.setOperation(SCMOperation.OTHER);
-			}
-			
+						
 			this.parsedData.add(scm);
 		}
 	}

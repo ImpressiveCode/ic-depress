@@ -7,7 +7,7 @@ import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.endevor.EndevorLogParserException;
 import org.impressivecode.depress.scm.endevor.constants.EndevorLogKeywords;
 
-public class EndevorLogSCMActionEntry extends EndevorLogEntryBase {
+public class EndevorLogWithInsertsDeletesActionEntry extends EndevorLogEntryBase {
 	
 	public static String ROW_HEADER_MATCHING_PATTERN = "(\\s*)" 
 			+ EndevorLogKeywords.VVLL_DOTTED + "(\\s+)" 
@@ -28,7 +28,7 @@ public class EndevorLogSCMActionEntry extends EndevorLogEntryBase {
 	private int deletes;
 	private SCMOperation operation;
 	
-	public EndevorLogSCMActionEntry(String logRow) {
+	public EndevorLogWithInsertsDeletesActionEntry(String logRow) {
 		super(logRow);
 	}
 

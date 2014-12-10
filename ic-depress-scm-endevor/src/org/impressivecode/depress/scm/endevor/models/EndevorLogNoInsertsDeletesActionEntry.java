@@ -6,7 +6,7 @@ import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.endevor.EndevorLogParserException;
 import org.impressivecode.depress.scm.endevor.constants.EndevorLogKeywords;
 
-public class EndevorLogNoSCMActionEntry extends EndevorLogEntryBase {
+public class EndevorLogNoInsertsDeletesActionEntry extends EndevorLogEntryBase {
 
 	public static String ROW_HEADER_MATCHING_PATTERN = "(\\s*)" 
 			+ EndevorLogKeywords.VVLL + "(\\s+)" 
@@ -28,7 +28,7 @@ public class EndevorLogNoSCMActionEntry extends EndevorLogEntryBase {
 	private String sync;		//TODO zweryfikowac przydatnosc tego pola
 	private String comment;
 	
-	public EndevorLogNoSCMActionEntry(String logRow) {
+	public EndevorLogNoInsertsDeletesActionEntry(String logRow) {
 		super(logRow);
 	}
 

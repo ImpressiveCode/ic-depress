@@ -3,6 +3,7 @@ package org.impressivecode.depress.scm.endevor.models;
 import java.util.Date;
 
 import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.endevor.EndevorLogParserException;
 
 public abstract class EndevorLogEntryBase {
@@ -25,13 +26,23 @@ public abstract class EndevorLogEntryBase {
 	
 	public abstract void parseRow() throws EndevorLogParserException;
 	
-	public void fillSCMDataTypeFields(SCMDataType toFill) {
+	protected void fillSCMDataTypeFields(SCMDataType toFill) {
 		toFill.setAuthor(this.user);
 		toFill.setCommitDate(this.dateParsed);
 		toFill.setCommitID(this.ccid);
 		toFill.setPath(this.path);
 		toFill.setExtension(".txt");
 		toFill.setResourceName("Endevor SCM");
+		
+		if(this.stmts > 0) {
+			toFill.setOperation(SCMOperation.MODIFIED);
+		}
+		else if (this.stmts == 0) {
+			toFill.setOperation(SCMOperation.COPIED);
+		}
+		else {
+			toFill.setOperation(SCMOperation.OTHER);
+		}
 	}
 	
 	@SuppressWarnings("deprecation")
