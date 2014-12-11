@@ -1,10 +1,9 @@
 package org.impressivecode.depress.scm.endevor.models;
 
-import java.util.Scanner;
-
 import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.endevor.EndevorLogParserException;
 import org.impressivecode.depress.scm.endevor.constants.EndevorLogKeywords;
+import org.impressivecode.depress.scm.endevor.helpers.StringHelpers;
 
 public class EndevorLogNoInsertsDeletesActionEntry extends EndevorLogEntryBase {
 
@@ -18,50 +17,95 @@ public class EndevorLogNoInsertsDeletesActionEntry extends EndevorLogEntryBase {
 			+ EndevorLogKeywords.SCM_COMMITID + "(\\s+)"
 			+ EndevorLogKeywords.SCM_MESSAGE + "(\\s+)";
 	
-	private static String[] columnHeaders = new String[] {
+	private static String[] tableHeaders = new String[] {
 		EndevorLogKeywords.VVLL, 
-		//EndevorLogKeywords.SYNC,	//TODO tymczasowo, bo wiemy ze u nas to jest zawsze puste
+		EndevorLogKeywords.SYNC,
 		EndevorLogKeywords.SCM_AUTHOR, EndevorLogKeywords.SCM_DATE_DATE, EndevorLogKeywords.SCM_DATE_TIME,
 		EndevorLogKeywords.STMTS, EndevorLogKeywords.SCM_COMMITID, EndevorLogKeywords.SCM_MESSAGE
 	};
 	
-	private String sync;		//TODO zweryfikowac przydatnosc tego pola
+	private String sync;
 	private String comment;
 	
-	public EndevorLogNoInsertsDeletesActionEntry(String logRow) {
+	private String rowStringMask;
+	
+	public EndevorLogNoInsertsDeletesActionEntry(String logRow, String rowStringMask) {
 		super(logRow);
+		
+		this.rowStringMask = rowStringMask;
 	}
 
 	@Override
 	public void parseRow() throws EndevorLogParserException {
-		Scanner scanner = new Scanner(rawLogDataRow);
-		String cell;
-		String columnHeader;
-		int i = -1;
-		while(scanner.hasNext()) {
-			i++;
-			cell = scanner.next();
-			columnHeader = columnHeaders[i];
-			if (columnHeader.equals(EndevorLogKeywords.VVLL)) {
-				this.vvll = cell;
-			}
-			else if (columnHeader.equals(EndevorLogKeywords.SCM_AUTHOR)) {
-				this.user = cell;
-			}
-			else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_DATE)) {
-				this.date = cell;
-			} else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_TIME)) {
-				this.time = cell;
-			} else if (columnHeader.equals(EndevorLogKeywords.STMTS)) {
-				this.stmts = Integer.parseInt(cell);
-			} else if (columnHeader.equals(EndevorLogKeywords.SCM_COMMITID)) {
-				this.ccid = cell;
-			} else if (columnHeader.equals(EndevorLogKeywords.SCM_MESSAGE)) {
-				this.comment = cell;
-			}
-		}
+//		Scanner scanner = new Scanner(rawLogDataRow);
+//		String cell;
+//		String columnHeader;
+//		int i = -1;
+//		while(scanner.hasNext()) {
+//			i++;
+//			cell = scanner.next();
+//			columnHeader = columnHeaders[i];
+//			if (columnHeader.equals(EndevorLogKeywords.VVLL)) {
+//				this.vvll = cell;
+//			}
+//			else if (columnHeader.equals(EndevorLogKeywords.SCM_AUTHOR)) {
+//				this.user = cell;
+//			}
+//			else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_DATE)) {
+//				this.date = cell;
+//			} else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_TIME)) {
+//				this.time = cell;
+//			} else if (columnHeader.equals(EndevorLogKeywords.STMTS)) {
+//				this.stmts = Integer.parseInt(cell);
+//			} else if (columnHeader.equals(EndevorLogKeywords.SCM_COMMITID)) {
+//				this.ccid = cell;
+//			} else if (columnHeader.equals(EndevorLogKeywords.SCM_MESSAGE)) {
+//				this.comment = cell;
+//			}
+//		}
+//		
+//		this.parseDateTime();
 		
-		this.parseDateTime();
+		String[] arrayedLogRow = StringHelpers.applyMask(this.rawLogDataRow, this.rowStringMask);
+		if (arrayedLogRow.length == tableHeaders.length) {
+			String cell = null;
+			String columnHeader = null;
+			
+			for(int i = 0; i < tableHeaders.length; i++) {
+				cell = arrayedLogRow[i].trim();
+				columnHeader = tableHeaders[i];
+				
+				if (columnHeader.equals(EndevorLogKeywords.VVLL)) {
+					this.vvll = cell;
+				}
+				else if (columnHeader.equals(EndevorLogKeywords.SYNC)) {
+					this.sync = cell;
+				}
+				else if (columnHeader.equals(EndevorLogKeywords.SCM_AUTHOR)) {
+					this.user = cell;
+				}
+				else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_DATE)) {
+					this.date = cell;
+				}
+				else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_TIME)) {
+					this.time = cell;
+				}
+				else if (columnHeader.equals(EndevorLogKeywords.STMTS)) {
+					this.stmts = Integer.parseInt(cell);
+				}
+				else if (columnHeader.equals(EndevorLogKeywords.SCM_COMMITID)) {
+					this.ccid = cell;
+				}
+				else if (columnHeader.equals(EndevorLogKeywords.SCM_MESSAGE)) {
+					this.comment = cell;
+				}
+			}
+			
+			this.parseDateTime();
+		}
+		else {
+			throw new EndevorLogParserException(String.format("Parsed log row has different number of cells than column headers. Parsing row: %s", this.rawLogDataRow));
+		}
 	}
 	
 	public void fillSCMDataTypeFields(SCMDataType toFill) {

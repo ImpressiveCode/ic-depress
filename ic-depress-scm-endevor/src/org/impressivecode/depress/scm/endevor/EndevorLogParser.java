@@ -69,7 +69,7 @@ public class EndevorLogParser {
 				(currentLine.contains(EndevorLogKeywords.PATH_ELEMENT) 
 				&& currentLine.contains(EndevorLogKeywords.PATH_TYPE) 
 				&& currentLine.contains(EndevorLogKeywords.PATH_STAGEID))) {
-			
+		
 			Scanner lineScanner = new Scanner(currentLine);
 			while(lineScanner.hasNext()) {
 				String currentPathElementName = lineScanner.next();
@@ -105,12 +105,14 @@ public class EndevorLogParser {
 		EndevorLogEntryType currentLogType = determineLogEntriesTypeUsingColumnHeadersRow(currentLine);
 		EndevorLogEntryBase currentLogEntry = null;
 		
-		currentLine = skipUselessLogLines(scanner);
-		
 		switch(currentLogType) {
 			case NO_INSERTS_DELETES:
+				currentLine = scanner.nextLine();
+				String rowMask = new String(currentLine);
+				currentLine = scanner.nextLine();
+				
 				while (isLineASourceLevelInformationData(currentLine)) {
-					currentLogEntry = new EndevorLogNoInsertsDeletesActionEntry(currentLine);
+					currentLogEntry = new EndevorLogNoInsertsDeletesActionEntry(currentLine, rowMask);
 					currentLogEntry.parseRow();
 					currentLogEntry.setPath(this.currentlyProcessedElementSummary.toString());
 					

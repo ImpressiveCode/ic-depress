@@ -19,7 +19,7 @@ public class EndevorLogWithInsertsDeletesActionEntry extends EndevorLogEntryBase
 			+ EndevorLogKeywords.SCM_ACTION_DEL + "(\\s+)"
 			+ EndevorLogKeywords.SCM_COMMITID + "(\\s+)";
 	
-	private static String[] columnHeaders = new String[] {
+	private static String[] tableHeaders = new String[] {
 		EndevorLogKeywords.VVLL_DOTTED, EndevorLogKeywords.SCM_AUTHOR, EndevorLogKeywords.SCM_DATE_DATE, EndevorLogKeywords.SCM_DATE_TIME,
 		EndevorLogKeywords.STMTS, EndevorLogKeywords.SCM_ACTION_INS, EndevorLogKeywords.SCM_ACTION_DEL, EndevorLogKeywords.SCM_COMMITID
 	};
@@ -41,7 +41,7 @@ public class EndevorLogWithInsertsDeletesActionEntry extends EndevorLogEntryBase
 		while(scanner.hasNext()) {
 			i++;
 			cell = scanner.next();
-			columnHeader = columnHeaders[i];
+			columnHeader = tableHeaders[i];
 			if (columnHeader.equals(EndevorLogKeywords.VVLL_DOTTED)) {
 				this.vvll = cell;
 			}
