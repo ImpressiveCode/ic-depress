@@ -68,7 +68,7 @@ public class EndevorLogParser {
 				||
 				(currentLine.contains(EndevorLogKeywords.PATH_ELEMENT) 
 				&& currentLine.contains(EndevorLogKeywords.PATH_TYPE) 
-				&& currentLine.contains(EndevorLogKeywords.PATH_STAGEID))) {
+				&& currentLine.contains(EndevorLogKeywords.PATH_STAGEID_STAGE))) {
 		
 			Scanner lineScanner = new Scanner(currentLine);
 			while(lineScanner.hasNext()) {
@@ -89,9 +89,12 @@ public class EndevorLogParser {
 				} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_TYPE)) {
 					currentPathElementValue = lineScanner.next();
 					pathModel.setType(currentPathElementValue);
-				} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_STAGEID)) {
-					currentPathElementValue = lineScanner.next();
-					pathModel.setStageId(currentPathElementValue);
+				} else if (currentPathElementName.contains(EndevorLogKeywords.PATH_STAGEID_STAGE)) {
+					currentPathElementName = lineScanner.next();
+					if (currentPathElementName.contains(EndevorLogKeywords.PATH_STAGEID_ID)) {
+						currentPathElementValue = lineScanner.next();
+						pathModel.setStageId(currentPathElementValue);
+					}
 				}
 			}
 			

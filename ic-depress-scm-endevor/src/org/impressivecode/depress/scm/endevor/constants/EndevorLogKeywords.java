@@ -18,7 +18,8 @@ public class EndevorLogKeywords {
 	public static final String PATH_SUBSYSTEM = "SUBSYSTEM";
 	public static final String PATH_ELEMENT = "ELEMENT";
 	public static final String PATH_TYPE = "TYPE";
-	public static final String PATH_STAGEID = "ID";
+	public static final String PATH_STAGEID_STAGE = "STAGE";
+	public static final String PATH_STAGEID_ID = "ID";
 	
 	//non-scm keywords
 	public static final String VVLL = "VVLL";
