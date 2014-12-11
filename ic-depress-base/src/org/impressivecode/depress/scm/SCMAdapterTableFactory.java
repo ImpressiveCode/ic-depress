@@ -76,7 +76,7 @@ public class SCMAdapterTableFactory {
 
     public static DataRow createTableRow(final String rowId, final SCMDataType scmData) {
         assertData(scmData);
-        DataCell[] cells = { stringCell(scmData.getResourceName()), stringCell(scmData.getExtension()), stringOrMissingCell(scmData.getAuthor()),
+        DataCell[] cells = { stringCell(scmData.getResourceName()), stringOrMissingCell(scmData.getExtension()), stringOrMissingCell(scmData.getAuthor()),
                 stringCell(scmData.getOperation()), stringOrMissingCell(scmData.getMessage()),
                 stringCell(scmData.getPath()), dateTimeCell(scmData.getCommitDate()),
                 stringCell(scmData.getCommitID()), };
