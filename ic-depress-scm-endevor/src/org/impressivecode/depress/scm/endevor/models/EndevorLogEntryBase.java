@@ -31,7 +31,6 @@ public abstract class EndevorLogEntryBase {
 		toFill.setCommitDate(this.dateParsed);
 		toFill.setCommitID(this.ccid);
 		toFill.setPath(this.path);
-		toFill.setExtension(".txt");
 		toFill.setResourceName("Endevor SCM");
 		
 		if(this.stmts > 0) {
