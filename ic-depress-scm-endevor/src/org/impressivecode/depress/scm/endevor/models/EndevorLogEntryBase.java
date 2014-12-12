@@ -68,40 +68,40 @@ public abstract class EndevorLogEntryBase {
 	}
 	
 	private int parseMonth(String month) throws EndevorLogParserException {	
-		if (month.equals("JAN")) {
+		if (month.toUpperCase().equals("JAN")) {
 			return 0;
 		}
-		else if (month.equals("FEB")) {
+		else if (month.toUpperCase().equals("FEB")) {
 			return 1;
 		}
-		else if (month.equals("MAR")) {
+		else if (month.toUpperCase().equals("MAR")) {
 			return 2;
 		}
-		else if (month.equals("APR")) {
+		else if (month.toUpperCase().equals("APR")) {
 			return 3;
 		}
-		else if (month.equals("MAY")) {
+		else if (month.toUpperCase().equals("MAY")) {
 			return 4;
 		}
-		else if (month.equals("JUN")) {
+		else if (month.toUpperCase().equals("JUN")) {
 			return 5;
 		}
-		else if (month.equals("JUL")) {
+		else if (month.toUpperCase().equals("JUL")) {
 			return 6;
 		}
-		else if (month.equals("AUG")) {
+		else if (month.toUpperCase().equals("AUG")) {
 			return 7;
 		}
-		else if (month.equals("SEP")) {
+		else if (month.toUpperCase().equals("SEP")) {
 			return 8;
 		}
-		else if (month.equals("OCT")) {
+		else if (month.toUpperCase().equals("OCT")) {
 			return 9;
 		}
-		else if (month.equals("NOV")) {
+		else if (month.toUpperCase().equals("NOV")) {
 			return 10;
 		}
-		else if (month.equals("DEC")) {
+		else if (month.toUpperCase().equals("DEC")) {
 			return 11;
 		}
 		else {
@@ -132,7 +132,7 @@ public abstract class EndevorLogEntryBase {
 	public String getDate() {
 		return date;
 	}
-
+	
 	public Date getDateParsed() {
 		return dateParsed;
 	}
@@ -147,5 +147,15 @@ public abstract class EndevorLogEntryBase {
 
 	public String getCcid() {
 		return ccid;
+	}
+	
+	
+	
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
+	public void setTime(String time) {
+		this.time = time;
 	}
 }

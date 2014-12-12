@@ -152,8 +152,16 @@ public class EndevorLogParser {
 	}
 	
 	private String skipUselessLogLines(Scanner scanner) {
-		String currentLine;
-		while (!isLineUsable(currentLine = scanner.nextLine()));
+		String currentLine = scanner.nextLine();
+		while (!isLineUsable(currentLine)) {
+			if (scanner.hasNextLine()) {
+				currentLine = scanner.nextLine();
+			}
+			else {
+				currentLine = null;
+				break;
+			}
+		}
 		return currentLine;
 	}
 	
@@ -170,8 +178,7 @@ public class EndevorLogParser {
 	}
 	
 	private boolean isLineASourceLevelInformationData(String currentLine) {
-		//TODO sprawdzic byc moze lepiej, czy ta linia to dane do tabeli, czyli dane do VVLL USER COSTAM CCID etc
-		return currentLine.startsWith("  ");
+		return currentLine.startsWith("   ");
 	}
 	
 	private void convertRawEntriesToSCMFormat() {

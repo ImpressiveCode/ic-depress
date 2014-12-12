@@ -37,35 +37,6 @@ public class EndevorLogNoInsertsDeletesActionEntry extends EndevorLogEntryBase {
 
 	@Override
 	public void parseRow() throws EndevorLogParserException {
-//		Scanner scanner = new Scanner(rawLogDataRow);
-//		String cell;
-//		String columnHeader;
-//		int i = -1;
-//		while(scanner.hasNext()) {
-//			i++;
-//			cell = scanner.next();
-//			columnHeader = columnHeaders[i];
-//			if (columnHeader.equals(EndevorLogKeywords.VVLL)) {
-//				this.vvll = cell;
-//			}
-//			else if (columnHeader.equals(EndevorLogKeywords.SCM_AUTHOR)) {
-//				this.user = cell;
-//			}
-//			else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_DATE)) {
-//				this.date = cell;
-//			} else if (columnHeader.equals(EndevorLogKeywords.SCM_DATE_TIME)) {
-//				this.time = cell;
-//			} else if (columnHeader.equals(EndevorLogKeywords.STMTS)) {
-//				this.stmts = Integer.parseInt(cell);
-//			} else if (columnHeader.equals(EndevorLogKeywords.SCM_COMMITID)) {
-//				this.ccid = cell;
-//			} else if (columnHeader.equals(EndevorLogKeywords.SCM_MESSAGE)) {
-//				this.comment = cell;
-//			}
-//		}
-//		
-//		this.parseDateTime();
-		
 		String[] arrayedLogRow = StringHelpers.applyMask(this.rawLogDataRow, this.rowStringMask);
 		if (arrayedLogRow.length == tableHeaders.length) {
 			String cell = null;
@@ -91,7 +62,12 @@ public class EndevorLogNoInsertsDeletesActionEntry extends EndevorLogEntryBase {
 					this.time = cell;
 				}
 				else if (columnHeader.equals(EndevorLogKeywords.STMTS)) {
-					this.stmts = Integer.parseInt(cell);
+					try {
+						this.stmts = Integer.parseInt(cell);
+					}
+					catch (NumberFormatException e) {
+						this.stmts = 0;
+					}
 				}
 				else if (columnHeader.equals(EndevorLogKeywords.SCM_COMMITID)) {
 					this.ccid = cell;
