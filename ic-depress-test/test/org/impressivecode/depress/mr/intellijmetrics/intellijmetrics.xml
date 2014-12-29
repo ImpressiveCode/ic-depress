@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problems>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>3236</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit$4" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 4) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>3948</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit$7" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 7) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>3833</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit$6" />
+    <problem_class severity="TYPO" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 7) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>2942</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit$1" />
+    <problem_class severity="INFO" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 6) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/Buffer.java</file>
+    <line>233</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.Buffer$1" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 6) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/StatusBar.java</file>
+    <line>190</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.StatusBar$1" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 4) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/syntax/ModeProvider.java</file>
+    <line>186</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.syntax</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.syntax.ModeProvider$1" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/BrowserView.java</file>
+    <line>361</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.BrowserView$3" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/ShortcutsOptionPane.java</file>
+    <line>192</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.ShortcutsOptionPane$3" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/DisplayManager.java</file>
+    <line>40</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.DisplayManager" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;DisplayManager&lt;/code&gt; is overly complex (cyclomatic complexity = 121) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/TextArea.java</file>
+    <line>70</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.TextArea" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;TextArea&lt;/code&gt; is overly complex (cyclomatic complexity = 764) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/Interpreter.java</file>
+    <line>92</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.Interpreter" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;Interpreter&lt;/code&gt; is overly coupled (dependencies = 19) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/ClassGeneratorImpl.java</file>
+    <line>12</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.ClassGeneratorImpl" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;ClassGeneratorImpl&lt;/code&gt; is overly coupled (dependencies = 24) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/classpath/BshClassPath.java</file>
+    <line>67</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh.classpath</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.classpath.BshClassPath" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;BshClassPath&lt;/code&gt; has too many fields (field count = 14) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowFactory.java</file>
+    <line>189</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowFactory.DockableListHandler" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;DockableListHandler&lt;/code&gt; has too many fields (field count = 11) #loc</description>
+  </problem>
+</problems>
