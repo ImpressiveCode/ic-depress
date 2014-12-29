@@ -6,13 +6,20 @@
         <li>Setup your KNIME as described in <a href="../quiuckstart">Quickstart</a></li>
         <li>Download dev branch from GitHub repository. Decompress it if necessary.</li>
         <li>Run <i>eclipse.exe</i></li>
-        <li>Choose <i>File</i> -> <i>Import</i> and then in <i>General section</i>, choose <i>Existing Projects into
-            Workspace</i>. Click <i>Next</i>.
+        <li>Choose <i>File</i> -> <i>Import</i> and then in <i>Plug-in Development section</i>, choose <i>Plug-ins and Fragments
+            </i>. Click <i>Next</i>.
         </li>
-        <li>In next step, in <i>Select root directory</i> choose the directory of your git cloned repository. Numerous
-            projects should appear in a box under the name of chosen directory.
-            Select them all, select <i>Copy projects into workspace</i>, under the list and click <i>Finish</i>.
+        <li>In next step, in:
+            <ul>
+                <li><i>Import From</i> select <i>Directory</i> and choose the directory of your git cloned repository.</li>
+                <li><i>Plug-ins and Fragments to Import</i> select <i>Import plug-ins and fragments required by existing
+                    workspace plug-ins</i>
+                </li>
+                <li><i>Import As</i> select <i>Projects with source folders</i></li>
+            </ul>
+            Click <i>Next</i>.
         </li>
+        <li>Numerous projects should appear. Select them all, and click  <i>Finish</i>.</li>
         <li>Now you have to compile it. To do so, right-click on any of imported projects seen on the right (eg.
             ic-depress-examples) and choose <i>Run As</i> -> <i>Eclipse Application</i>. (The same thing you can do by
             clicking the button on the top with a white arrow in a green circle.)
