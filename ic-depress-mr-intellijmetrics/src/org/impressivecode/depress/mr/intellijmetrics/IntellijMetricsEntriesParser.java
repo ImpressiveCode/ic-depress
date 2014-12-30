@@ -67,23 +67,8 @@ public class IntellijMetricsEntriesParser {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(path);
         NodeList nList = getProblemNodes(doc);
-        int size = nList.getLength();
-        for (int i = 0; i < size; i++) {
-            Node item = nList.item(i);
-            SimpleEntry entry = parse(item);
-            String className = (String) entry.getKey();
-            String severity = (String) entry.getValue();
 
-            if (!intellijMetricsEntriesMap.containsKey(className)) {
-                IntellijMetricsEntry intellijEntry = new IntellijMetricsEntry();
-                intellijEntry.setClassName(className);
-                intellijEntry.setValue(severity, 1);
-                intellijMetricsEntriesMap.put(className, intellijEntry);
-            } else {
-                IntellijMetricsEntry existingEntry = intellijMetricsEntriesMap.get(className);
-                intellijMetricsEntriesMap.put(className, updateIntellijMetricsEntry(existingEntry, severity));
-            }
-        }
+        intellijMetricsEntriesMap = updateEntriesMap(nList, intellijMetricsEntriesMap);
 
         return intellijMetricsEntriesMap;
     }
@@ -94,31 +79,41 @@ public class IntellijMetricsEntriesParser {
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
         for (String file : listDirectory(dir)) {
             if (new File(file).getName().endsWith(".xml")) {
                 Document doc = dBuilder.parse(file);
                 NodeList nList = getProblemNodes(doc);
-                int size = nList.getLength();
-                for (int i = 0; i < size; i++) {
-                    Node item = nList.item(i);
-                    SimpleEntry entry = parse(item);
-                    String className = (String) entry.getKey();
-                    String severity = (String) entry.getValue();
 
-                    if (!intellijMetricsEntriesMap.containsKey(className)) {
-                        IntellijMetricsEntry intellijEntry = new IntellijMetricsEntry();
-                        intellijEntry.setClassName(className);
-                        intellijEntry.setValue(severity, 1);
-                        intellijMetricsEntriesMap.put(className, intellijEntry);
-                    } else {
-                        IntellijMetricsEntry existingEntry = intellijMetricsEntriesMap.get(className);
-                        intellijMetricsEntriesMap.put(className, updateIntellijMetricsEntry(existingEntry, severity));
-                    }
-                }
+                intellijMetricsEntriesMap = updateEntriesMap(nList, intellijMetricsEntriesMap);
             }
         }
 
         return intellijMetricsEntriesMap;
+    }
+
+    private Map<String, IntellijMetricsEntry> updateEntriesMap(NodeList nList,
+            Map<String, IntellijMetricsEntry> entriesMap) {
+        int size = nList.getLength();
+
+        for (int i = 0; i < size; i++) {
+            Node item = nList.item(i);
+            SimpleEntry entry = parse(item);
+            String className = (String) entry.getKey();
+            String severity = (String) entry.getValue();
+
+            if (!entriesMap.containsKey(className)) {
+                IntellijMetricsEntry intellijEntry = new IntellijMetricsEntry();
+                intellijEntry.setClassName(className);
+                intellijEntry.setValue(severity, 1);
+                entriesMap.put(className, intellijEntry);
+            } else {
+                IntellijMetricsEntry existingEntry = entriesMap.get(className);
+                entriesMap.put(className, updateIntellijMetricsEntry(existingEntry, severity));
+            }
+        }
+
+        return entriesMap;
     }
 
     private NodeList getProblemNodes(final Document doc) {
