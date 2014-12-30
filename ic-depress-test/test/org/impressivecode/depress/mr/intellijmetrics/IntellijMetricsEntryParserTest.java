@@ -52,7 +52,7 @@ public class IntellijMetricsEntryParserTest {
         List<IntellijMetricsEntry> results = parser.parseEntries(path);
         assertEntry(results.get(0));
     }
-    
+
     @Test
     public void shouldHaveValidResults2() throws ParserConfigurationException, SAXException, IOException {
         String path = getClass().getResource("intellijmetrics.xml").getPath();
@@ -60,7 +60,7 @@ public class IntellijMetricsEntryParserTest {
         List<IntellijMetricsEntry> results = parser.parseEntries(path);
         assertEntry2(results.get(3));
     }
-    
+
     private void assertEntry(final IntellijMetricsEntry intellijMetricsEntry) {
         assertThat(intellijMetricsEntry.getClassName()).isEqualTo("org.gjt.sp.jedit.jEdit");
         assertThat(intellijMetricsEntry.getSeverityErrorCounter()).isEqualTo(2);
@@ -70,7 +70,7 @@ public class IntellijMetricsEntryParserTest {
         assertThat(intellijMetricsEntry.getSeverityWarningCounter()).isNotNull();
         assertThat(intellijMetricsEntry.getSeverityWeakWarningCounter()).isNotNull();
     }
-    
+
     private void assertEntry2(final IntellijMetricsEntry intellijMetricsEntry) {
         assertThat(intellijMetricsEntry.getClassName()).isEqualTo("org.gjt.sp.jedit.syntax.ModeProvider");
         assertThat(intellijMetricsEntry.getValue("ERROR")).isEqualTo(0);
@@ -80,5 +80,5 @@ public class IntellijMetricsEntryParserTest {
         assertThat(intellijMetricsEntry.getValue("WARNING")).isEqualTo(0);
         assertThat(intellijMetricsEntry.getValue("WEAK WARNING")).isEqualTo(0);
     }
-	
+
 }

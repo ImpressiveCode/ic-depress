@@ -27,55 +27,51 @@ import org.knime.core.node.defaultnodesettings.DialogComponentFileChooser;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
- *
+ * 
  * @author Maciej Mickiewicz, Wroclaw University of Technology
- *
+ * 
  */
 public class IntellijMetricsNodeDialog extends DefaultNodeSettingsPane {
 
-  private static final String FILE_EXTENSION = ".xml";
-  private static final String HISTORY_ID_XML = "history_xml";
-  private static final String HISTORY_ID_DIR = "history_dir";
+    private static final String FILE_EXTENSION = ".xml";
+    private static final String HISTORY_ID_XML = "history_xml";
+    private static final String HISTORY_ID_DIR = "history_dir";
 
-  private final DialogComponentButtonGroup radioButton = new DialogComponentButtonGroup(
-      IntellijMetricsNodeModel.createRadioSettings(), null, false,
-      IntellijMetricsNodeModel.actions, IntellijMetricsNodeModel.actions);
-  private final DialogComponentFileChooser fileChooser = new DialogComponentFileChooser(
-      IntellijMetricsNodeModel.createFileSettingsXML(), HISTORY_ID_XML,
-      JFileChooser.OPEN_DIALOG, false, FILE_EXTENSION);
-  private final DialogComponentFileChooser directoryChooser = new DialogComponentFileChooser(
-      IntellijMetricsNodeModel.createFileSettingsDIR(), HISTORY_ID_DIR,
-      JFileChooser.OPEN_DIALOG, true);
+    private final DialogComponentButtonGroup radioButton = new DialogComponentButtonGroup(
+            IntellijMetricsNodeModel.createRadioSettings(), null, false, IntellijMetricsNodeModel.actions,
+            IntellijMetricsNodeModel.actions);
+    private final DialogComponentFileChooser fileChooser = new DialogComponentFileChooser(
+            IntellijMetricsNodeModel.createFileSettingsXML(), HISTORY_ID_XML, JFileChooser.OPEN_DIALOG, false,
+            FILE_EXTENSION);
+    private final DialogComponentFileChooser directoryChooser = new DialogComponentFileChooser(
+            IntellijMetricsNodeModel.createFileSettingsDIR(), HISTORY_ID_DIR, JFileChooser.OPEN_DIALOG, true);
 
-  protected IntellijMetricsNodeDialog() {
-    createNewGroup("Input:");
-    addDialogComponent(radioButton);
-    addDialogComponent(fileChooser);
-    addDialogComponent(directoryChooser);
-    directoryChooser.getComponentPanel().setVisible(false);
-    radioButton.getModel().addChangeListener(
-        new RadioButtonChangeListener());
-    closeCurrentGroup();
-  }
-
-  private class RadioButtonChangeListener implements ChangeListener {
-    @Override
-    public void stateChanged(ChangeEvent event) {
-      SettingsModelString radioSettings = (SettingsModelString) (event
-          .getSource());
-      if (radioSettings.getStringValue().equals(
-          IntellijMetricsNodeModel.FILE)) {
-        fileChooser.getComponentPanel().setVisible(true);
+    protected IntellijMetricsNodeDialog() {
+        createNewGroup("Input:");
+        addDialogComponent(radioButton);
+        addDialogComponent(fileChooser);
+        addDialogComponent(directoryChooser);
         directoryChooser.getComponentPanel().setVisible(false);
-        fileChooser.getModel().setEnabled(true);
-        directoryChooser.getModel().setEnabled(false);
-      } else {
-        fileChooser.getComponentPanel().setVisible(false);
-        directoryChooser.getComponentPanel().setVisible(true);
-        fileChooser.getModel().setEnabled(false);
-        directoryChooser.getModel().setEnabled(true);
-      }
+        radioButton.getModel().addChangeListener(new RadioButtonChangeListener());
+        closeCurrentGroup();
     }
-  }
+
+    private class RadioButtonChangeListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent event) {
+            SettingsModelString radioSettings = (SettingsModelString) (event.getSource());
+            if (radioSettings.getStringValue().equals(IntellijMetricsNodeModel.FILE)) {
+                fileChooser.getComponentPanel().setVisible(true);
+                directoryChooser.getComponentPanel().setVisible(false);
+                fileChooser.getModel().setEnabled(true);
+                directoryChooser.getModel().setEnabled(false);
+            } else {
+                fileChooser.getComponentPanel().setVisible(false);
+                directoryChooser.getComponentPanel().setVisible(true);
+                fileChooser.getModel().setEnabled(false);
+                directoryChooser.getModel().setEnabled(true);
+            }
+        }
+    }
 
 }

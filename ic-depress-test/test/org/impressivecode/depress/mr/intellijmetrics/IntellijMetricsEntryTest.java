@@ -29,11 +29,11 @@ import org.impressivecode.depress.mr.intellijmetrics.IntellijMetricsEntry;
  * 
  */
 public class IntellijMetricsEntryTest {
-	
-	@Test
-	public void shouldReturnSettedValue() {
-		IntellijMetricsEntry intellijEntry = new IntellijMetricsEntry();
-		
+
+    @Test
+    public void shouldReturnSettedValue() {
+        IntellijMetricsEntry intellijEntry = new IntellijMetricsEntry();
+
         String className = "org.some.package.ClassName$SubClass";
         intellijEntry.setClassName(className);
         assertEquals(className, intellijEntry.getClassName());
@@ -41,31 +41,31 @@ public class IntellijMetricsEntryTest {
         int expected = 1;
         intellijEntry.setSeverityErrorCounter(expected);
         assertEquals(expected, intellijEntry.getSeverityErrorCounter());
-        
+
         expected = 11;
         intellijEntry.setSeverityInfoCounter(expected);
         assertEquals(expected, intellijEntry.getSeverityInfoCounter());
-        
+
         expected = 111;
         intellijEntry.setSeverityServerProblemCounter(expected);
         assertEquals(expected, intellijEntry.getSeverityServerProblemCounter());
-        
+
         expected = 2;
         intellijEntry.setSeverityTypoCounter(expected);
         assertEquals(expected, intellijEntry.getSeverityTypoCounter());
-        
+
         expected = 22;
         intellijEntry.setSeverityWarningCounter(expected);
         assertEquals(expected, intellijEntry.getSeverityWarningCounter());
-        
+
         expected = 222;
         intellijEntry.setSeverityWeakWarningCounter(expected);
         assertEquals(expected, intellijEntry.getSeverityWeakWarningCounter());
-        
+
         String severityId = "ERROR";
         expected = 666;
         intellijEntry.setValue(severityId, expected);
         assertEquals(expected, intellijEntry.getValue(severityId));
-                       
-	}
+
+    }
 }

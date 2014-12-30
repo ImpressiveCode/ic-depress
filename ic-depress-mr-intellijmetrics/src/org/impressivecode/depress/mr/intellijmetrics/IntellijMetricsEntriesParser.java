@@ -38,157 +38,150 @@ import org.xml.sax.SAXException;
 import com.google.common.base.Preconditions;
 
 /**
- *
+ * 
  * @author Maciej Mickiewicz, Wroclaw University of Technology
- *
+ * 
  */
 public class IntellijMetricsEntriesParser {
 
-    public List<IntellijMetricsEntry> parseEntries(final String path) throws ParserConfigurationException, SAXException,
-    IOException {
-      Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
+    public List<IntellijMetricsEntry> parseEntries(final String path) throws ParserConfigurationException,
+            SAXException, IOException {
+        Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
 
-      Map<String, IntellijMetricsEntry> intellijMetricsEntriesMap;
+        Map<String, IntellijMetricsEntry> intellijMetricsEntriesMap;
 
-      if(new File(path).isDirectory())
-        intellijMetricsEntriesMap  = parseEntriesFromDirectory(path);
-      else
-        intellijMetricsEntriesMap  = parseEntriesFromFile(path);
+        if (new File(path).isDirectory())
+            intellijMetricsEntriesMap = parseEntriesFromDirectory(path);
+        else
+            intellijMetricsEntriesMap = parseEntriesFromFile(path);
 
-      return new ArrayList<IntellijMetricsEntry>(intellijMetricsEntriesMap.values());
+        return new ArrayList<IntellijMetricsEntry>(intellijMetricsEntriesMap.values());
 
     }
 
-    private Map<String, IntellijMetricsEntry> parseEntriesFromFile(final String path) throws ParserConfigurationException, SAXException,
-    IOException {
-      Map<String, IntellijMetricsEntry> intellijMetricsEntriesMap = new LinkedHashMap<>();
+    private Map<String, IntellijMetricsEntry> parseEntriesFromFile(final String path)
+            throws ParserConfigurationException, SAXException, IOException {
+        Map<String, IntellijMetricsEntry> intellijMetricsEntriesMap = new LinkedHashMap<>();
 
-      DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-      Document doc = dBuilder.parse(path);
-      NodeList nList = getProblemNodes(doc);
-      int size = nList.getLength();
-      for(int i = 0; i < size; i++){
-        Node item = nList.item(i);
-        SimpleEntry entry = parse(item);
-        String className = (String)entry.getKey();
-        String severity = (String)entry.getValue();
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(path);
+        NodeList nList = getProblemNodes(doc);
 
-        if(!intellijMetricsEntriesMap.containsKey(className)){
-          IntellijMetricsEntry intellijEntry = new IntellijMetricsEntry();
-          intellijEntry.setClassName(className);
-          intellijEntry.setValue(severity, 1);
-          intellijMetricsEntriesMap.put(className, intellijEntry);
-        }
-        else {
-          IntellijMetricsEntry existingEntry = intellijMetricsEntriesMap.get(className);
-          intellijMetricsEntriesMap.put(className, updateIntellijMetricsEntry(existingEntry, severity));
-        }
-      }
+        intellijMetricsEntriesMap = updateEntriesMap(nList, intellijMetricsEntriesMap);
 
-      return intellijMetricsEntriesMap;
+        return intellijMetricsEntriesMap;
     }
 
-    private Map<String, IntellijMetricsEntry> parseEntriesFromDirectory(final String dir) throws ParserConfigurationException, SAXException,
-    IOException{
-      Map<String, IntellijMetricsEntry> intellijMetricsEntriesMap = new LinkedHashMap<>();
+    private Map<String, IntellijMetricsEntry> parseEntriesFromDirectory(final String dir)
+            throws ParserConfigurationException, SAXException, IOException {
+        Map<String, IntellijMetricsEntry> intellijMetricsEntriesMap = new LinkedHashMap<>();
 
-      DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-      for(String file : listDirectory(dir)){
-        if(new File(file).getName().endsWith(".xml")) {
-          Document doc = dBuilder.parse(file);
-          NodeList nList = getProblemNodes(doc);
-          int size = nList.getLength();
-          for(int i = 0; i < size; i++){
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+        for (String file : listDirectory(dir)) {
+            if (new File(file).getName().endsWith(".xml")) {
+                Document doc = dBuilder.parse(file);
+                NodeList nList = getProblemNodes(doc);
+
+                intellijMetricsEntriesMap = updateEntriesMap(nList, intellijMetricsEntriesMap);
+            }
+        }
+
+        return intellijMetricsEntriesMap;
+    }
+
+    private Map<String, IntellijMetricsEntry> updateEntriesMap(NodeList nList,
+            Map<String, IntellijMetricsEntry> entriesMap) {
+        int size = nList.getLength();
+
+        for (int i = 0; i < size; i++) {
             Node item = nList.item(i);
             SimpleEntry entry = parse(item);
-            String className = (String)entry.getKey();
-            String severity = (String)entry.getValue();
+            String className = (String) entry.getKey();
+            String severity = (String) entry.getValue();
 
-            if(!intellijMetricsEntriesMap.containsKey(className)){
-              IntellijMetricsEntry intellijEntry = new IntellijMetricsEntry();
-              intellijEntry.setClassName(className);
-              intellijEntry.setValue(severity, 1);
-              intellijMetricsEntriesMap.put(className, intellijEntry);
+            if (!entriesMap.containsKey(className)) {
+                IntellijMetricsEntry intellijEntry = new IntellijMetricsEntry();
+                intellijEntry.setClassName(className);
+                intellijEntry.setValue(severity, 1);
+                entriesMap.put(className, intellijEntry);
+            } else {
+                IntellijMetricsEntry existingEntry = entriesMap.get(className);
+                entriesMap.put(className, updateIntellijMetricsEntry(existingEntry, severity));
             }
-            else {
-              IntellijMetricsEntry existingEntry = intellijMetricsEntriesMap.get(className);
-              intellijMetricsEntriesMap.put(className, updateIntellijMetricsEntry(existingEntry, severity));
-            }
-          }
         }
-      }
 
-      return intellijMetricsEntriesMap;
+        return entriesMap;
     }
 
     private NodeList getProblemNodes(final Document doc) {
-      return doc.getElementsByTagName("problem");
+        return doc.getElementsByTagName("problem");
     }
 
     private SimpleEntry parse(final Node node) {
-      NodeList childNodes = node.getChildNodes();
-      String className = "";
-      String severity = "";
+        NodeList childNodes = node.getChildNodes();
+        String className = "";
+        String severity = "";
 
-      for (int i = 0; i < childNodes.getLength(); i++) {
-        Node item = childNodes.item(i);
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            Node item = childNodes.item(i);
 
-        if(item.getNodeType() != Node.ELEMENT_NODE)
-          continue;
+            if (item.getNodeType() != Node.ELEMENT_NODE)
+                continue;
 
-        if (isClassNode(item)) {
-          className = getClassName(item);
-          continue;
+            if (isClassNode(item)) {
+                className = getClassName(item);
+                continue;
+            }
+
+            if (isProblemClassNode(item)) {
+                severity = getSeverit(item);
+                continue;
+            }
         }
 
-        if (isProblemClassNode(item)) {
-          severity = getSeverit(item);
-          continue;
-        }
-      }
-
-      return new SimpleEntry(className, severity);
+        return new SimpleEntry(className, severity);
     }
 
     private String getClassName(final Node node) {
-      return ((Element) node).getAttribute("FQNAME").replaceAll("(.*?)(\\$[0-9]?[0-9]?$)", "$1");
+        return ((Element) node).getAttribute("FQNAME").replaceAll("(.*?)(\\$[0-9]?[0-9]?$)", "$1");
     }
 
     private String getSeverit(final Node node) {
-      return ((Element) node).getAttribute("severity");
+        return ((Element) node).getAttribute("severity");
     }
 
-    private boolean isClassNode(final Node node){
-      return ((Element) node).getTagName().equals("entry_point");
+    private boolean isClassNode(final Node node) {
+        return ((Element) node).getTagName().equals("entry_point");
     }
 
-    private boolean isProblemClassNode(final Node node){
-      return ((Element) node).getTagName().equals("problem_class");
+    private boolean isProblemClassNode(final Node node) {
+        return ((Element) node).getTagName().equals("problem_class");
     }
 
     private IntellijMetricsEntry updateIntellijMetricsEntry(IntellijMetricsEntry entry, String severity) {
-      int currentSeverityValue = entry.getValue(severity);
-      entry.setValue(severity, currentSeverityValue + 1);
+        int currentSeverityValue = entry.getValue(severity);
+        entry.setValue(severity, currentSeverityValue + 1);
 
-      return entry;
+        return entry;
     }
 
     private List<String> listDirectory(final String dir) {
-      List<String> files = new ArrayList<>();
-      listDirectoryRecursively(new File(dir), files);
+        List<String> files = new ArrayList<>();
+        listDirectoryRecursively(new File(dir), files);
 
-      return files;
+        return files;
     }
 
     private void listDirectoryRecursively(File dir, List<String> filesContainer) {
-      for (final File fileEntry : dir.listFiles()) {
-        if (fileEntry.isDirectory()) {
-          listDirectoryRecursively(fileEntry, filesContainer);
-        } else {
-          filesContainer.add(fileEntry.getPath());
+        for (final File fileEntry : dir.listFiles()) {
+            if (fileEntry.isDirectory()) {
+                listDirectoryRecursively(fileEntry, filesContainer);
+            } else {
+                filesContainer.add(fileEntry.getPath());
+            }
         }
-      }
     }
 }
