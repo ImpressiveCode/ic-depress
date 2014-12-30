@@ -52,9 +52,8 @@ public class IntellijMetricsTransformerTest {
     public void shouldTransformIntellijMetricsEntriesList() throws CanceledExecutionException {
         // given
         IntellijMetricsTransformer transformer = new IntellijMetricsTransformer(createDataColumnSpec());
-        List<IntellijMetricsEntry> entries = Lists.newArrayList(
-        		createIntellijMetricsEntry("ClassA", 1, 2, 3, 4, 5, 6),
-        		createIntellijMetricsEntry("ClassB", 1, 2, 3, 4, 5, 6));
+        List<IntellijMetricsEntry> entries = Lists.newArrayList(createIntellijMetricsEntry("ClassA", 1, 2, 3, 4, 5, 6),
+                createIntellijMetricsEntry("ClassB", 1, 2, 3, 4, 5, 6));
         ExecutionContext exec = mock(ExecutionContext.class);
         BufferedDataContainer container = mock(BufferedDataContainer.class);
         when(exec.createDataContainer(Mockito.any(DataTableSpec.class))).thenReturn(container);
@@ -100,7 +99,7 @@ public class IntellijMetricsTransformerTest {
     }
 
     private IntellijMetricsEntry createIntellijMetricsEntry(final String className, final int error, final int info,
-    		final int serverProblem, final int typo, final int warning, final int weakWarning) {
+            final int serverProblem, final int typo, final int warning, final int weakWarning) {
         IntellijMetricsEntry entry = new IntellijMetricsEntry();
         entry.setClassName(className);
 
@@ -113,5 +112,5 @@ public class IntellijMetricsTransformerTest {
 
         return entry;
     }
-	
+
 }

@@ -22,9 +22,9 @@ import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 
 /**
- *
+ * 
  * @author Maciej Mickiewicz, Wroclaw University of Technology
- *
+ * 
  */
 public class IntellijMetricsNodeFactory extends NodeFactory<IntellijMetricsNodeModel> {
 
@@ -39,7 +39,8 @@ public class IntellijMetricsNodeFactory extends NodeFactory<IntellijMetricsNodeM
     }
 
     @Override
-    public NodeView<IntellijMetricsNodeModel> createNodeView(final int viewIndex, final IntellijMetricsNodeModel nodeModel) {
+    public NodeView<IntellijMetricsNodeModel> createNodeView(final int viewIndex,
+            final IntellijMetricsNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 

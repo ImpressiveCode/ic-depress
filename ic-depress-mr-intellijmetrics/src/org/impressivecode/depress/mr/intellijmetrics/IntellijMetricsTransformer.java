@@ -34,9 +34,9 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeLogger.LEVEL;
 
 /**
- *
+ * 
  * @author Maciej Mickiewicz, Wroclaw University of Technology
- *
+ * 
  */
 public class IntellijMetricsTransformer {
 
@@ -77,13 +77,12 @@ public class IntellijMetricsTransformer {
     }
 
     private DataCell[] getIntellijMetricsCells(final IntellijMetricsEntry value) {
-        DataCell[] cells = {        		
-        		integerOrMissingCell(value.getSeverityTypoCounter()),
-        		integerOrMissingCell(value.getSeverityInfoCounter()),
-        		integerOrMissingCell(value.getSeverityServerProblemCounter()),
-        		integerOrMissingCell(value.getSeverityWeakWarningCounter()),
-        		integerOrMissingCell(value.getSeverityWarningCounter()),
-        		integerOrMissingCell(value.getSeverityErrorCounter())};
+        DataCell[] cells = { integerOrMissingCell(value.getSeverityTypoCounter()),
+                integerOrMissingCell(value.getSeverityInfoCounter()),
+                integerOrMissingCell(value.getSeverityServerProblemCounter()),
+                integerOrMissingCell(value.getSeverityWeakWarningCounter()),
+                integerOrMissingCell(value.getSeverityWarningCounter()),
+                integerOrMissingCell(value.getSeverityErrorCounter()) };
         return cells;
     }
 

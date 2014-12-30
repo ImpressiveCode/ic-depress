@@ -23,9 +23,9 @@ import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.def.DoubleCell;
 
 /**
- *
+ * 
  * @author Maciej Mickiewicz, Wroclaw University of Technology
- *
+ * 
  */
 public class IntellijMetricsTableFactory {
 
@@ -45,13 +45,12 @@ public class IntellijMetricsTableFactory {
     }
 
     public static DataTableSpec createDataColumnSpec() {
-        DataColumnSpec[] allColSpecs = {
-                new DataColumnSpecCreator(TYPO_SEVERITY, DoubleCell.TYPE).createSpec(),
+        DataColumnSpec[] allColSpecs = { new DataColumnSpecCreator(TYPO_SEVERITY, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(INFO_SEVERITY, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(SERVERPROBLEM_SEVERITY, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(WEAKWARNING_SEVERITY, DoubleCell.TYPE).createSpec(),
                 new DataColumnSpecCreator(WARNING_SEVERITY, DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator(ERROR_SEVERITY, DoubleCell.TYPE).createSpec()};
+                new DataColumnSpecCreator(ERROR_SEVERITY, DoubleCell.TYPE).createSpec() };
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
         return outputSpec;
     }

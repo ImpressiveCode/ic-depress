@@ -42,131 +42,121 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.xml.sax.SAXException;
 
 /**
- *
+ * 
  * @author Maciej Mickiewicz, Wroclaw University of Technology
- *
+ * 
  */
 public class IntellijMetricsNodeModel extends NodeModel {
 
-  private static final NodeLogger LOGGER = NodeLogger
-      .getLogger(IntellijMetricsNodeModel.class);
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(IntellijMetricsNodeModel.class);
 
-  static final String FILE = "File";
-  static final String DIRECTORY = "Directory";
-  static final String[] actions = { FILE, DIRECTORY };
-  static final String RADIO_DEFAULT = "File";
-  static final String FILE_NAME_CONFIG_XML = "fileXML";
-  static final String FILE_NAME_CONFIG_DIR = "fileDIR";
-  static final String FILE_DEFAULT_VALUE_DIR = "";
-  static final String FILE_DEFAULT_VALUE_XML = "";
-  static final String RADIO_CONFIG = "radio";
+    static final String FILE = "File";
+    static final String DIRECTORY = "Directory";
+    static final String[] actions = { FILE, DIRECTORY };
+    static final String RADIO_DEFAULT = "File";
+    static final String FILE_NAME_CONFIG_XML = "fileXML";
+    static final String FILE_NAME_CONFIG_DIR = "fileDIR";
+    static final String FILE_DEFAULT_VALUE_DIR = "";
+    static final String FILE_DEFAULT_VALUE_XML = "";
+    static final String RADIO_CONFIG = "radio";
 
-  private final SettingsModelString fileSettingsXML = createFileSettingsXML();
-  private final SettingsModelString fileSettingsDIR = createFileSettingsDIR();
-  private final SettingsModelString radioSettings = createRadioSettings();
+    private final SettingsModelString fileSettingsXML = createFileSettingsXML();
+    private final SettingsModelString fileSettingsDIR = createFileSettingsDIR();
+    private final SettingsModelString radioSettings = createRadioSettings();
 
-  protected IntellijMetricsNodeModel() {
-    super(0, 1);
-  }
-
-  @Override
-  protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
-      final ExecutionContext exec) throws Exception {
-    LOGGER.info("Preparing to read Intellij entries.");
-    File file = null;
-    if (radioSettings.getStringValue().equals(FILE)) {
-      file = new File(fileSettingsXML.getStringValue());
-    } else if (radioSettings.getStringValue().equals(DIRECTORY)) {
-      file = new File(fileSettingsDIR.getStringValue());
+    protected IntellijMetricsNodeModel() {
+        super(0, 1);
     }
 
-    List<IntellijMetricsEntry> entries;
-    if (file.isDirectory()) {
-      entries = parseEntriesFromPath(fileSettingsDIR.getStringValue());
-    } else if (file.isFile()) {
-      entries = parseEntriesFromPath(fileSettingsXML.getStringValue());
-    } else
-      throw new IOException(
-          "Path does not point at any file or directory");
+    @Override
+    protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
+            throws Exception {
+        LOGGER.info("Preparing to read Intellij entries.");
+        File file = null;
+        if (radioSettings.getStringValue().equals(FILE)) {
+            file = new File(fileSettingsXML.getStringValue());
+        } else if (radioSettings.getStringValue().equals(DIRECTORY)) {
+            file = new File(fileSettingsDIR.getStringValue());
+        }
 
-    LOGGER.info("Transforming to Intellij entries.");
-    BufferedDataTable out = transform(entries, exec);
-    LOGGER.info("Intellij table created.");
-    return new BufferedDataTable[] { out };
-  }
+        List<IntellijMetricsEntry> entries;
+        if (file.isDirectory()) {
+            entries = parseEntriesFromPath(fileSettingsDIR.getStringValue());
+        } else if (file.isFile()) {
+            entries = parseEntriesFromPath(fileSettingsXML.getStringValue());
+        } else
+            throw new IOException("Path does not point at any file or directory");
 
-  private BufferedDataTable transform(final List<IntellijMetricsEntry> entries,
-      final ExecutionContext exec) throws CanceledExecutionException {
-    IntellijMetricsTransformer transformer = new IntellijMetricsTransformer(
-        createDataColumnSpec());
-    return transformer.transform(entries, exec);
-  }
+        LOGGER.info("Transforming to Intellij entries.");
+        BufferedDataTable out = transform(entries, exec);
+        LOGGER.info("Intellij table created.");
+        return new BufferedDataTable[] { out };
+    }
 
-  private List<IntellijMetricsEntry> parseEntriesFromPath(final String filePath)
-      throws ParserConfigurationException, SAXException, IOException {
-    IntellijMetricsEntriesParser parser = new IntellijMetricsEntriesParser();
-    return parser.parseEntries(filePath);
-  }
+    private BufferedDataTable transform(final List<IntellijMetricsEntry> entries, final ExecutionContext exec)
+            throws CanceledExecutionException {
+        IntellijMetricsTransformer transformer = new IntellijMetricsTransformer(createDataColumnSpec());
+        return transformer.transform(entries, exec);
+    }
 
-  @Override
-  protected void reset() {
-  }
+    private List<IntellijMetricsEntry> parseEntriesFromPath(final String filePath) throws ParserConfigurationException,
+            SAXException, IOException {
+        IntellijMetricsEntriesParser parser = new IntellijMetricsEntriesParser();
+        return parser.parseEntries(filePath);
+    }
 
-  @Override
-  protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
-      throws InvalidSettingsException {
-    checkArgument(inSpecs.length == 0, "Invalid state");
-    return new DataTableSpec[] { createDataColumnSpec() };
-  }
+    @Override
+    protected void reset() {
+    }
 
-  @Override
-  protected void saveSettingsTo(final NodeSettingsWO settings) {
-    fileSettingsXML.saveSettingsTo(settings);
-    fileSettingsDIR.saveSettingsTo(settings);
-    radioSettings.saveSettingsTo(settings);
-  }
+    @Override
+    protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) throws InvalidSettingsException {
+        checkArgument(inSpecs.length == 0, "Invalid state");
+        return new DataTableSpec[] { createDataColumnSpec() };
+    }
 
-  @Override
-  protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
-      throws InvalidSettingsException {
-    fileSettingsXML.loadSettingsFrom(settings);
-    fileSettingsDIR.loadSettingsFrom(settings);
-    radioSettings.loadSettingsFrom(settings);
-  }
+    @Override
+    protected void saveSettingsTo(final NodeSettingsWO settings) {
+        fileSettingsXML.saveSettingsTo(settings);
+        fileSettingsDIR.saveSettingsTo(settings);
+        radioSettings.saveSettingsTo(settings);
+    }
 
-  @Override
-  protected void validateSettings(final NodeSettingsRO settings)
-      throws InvalidSettingsException {
-    fileSettingsXML.validateSettings(settings);
-    fileSettingsDIR.validateSettings(settings);
-    radioSettings.validateSettings(settings);
-  }
+    @Override
+    protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
+        fileSettingsXML.loadSettingsFrom(settings);
+        fileSettingsDIR.loadSettingsFrom(settings);
+        radioSettings.loadSettingsFrom(settings);
+    }
 
-  @Override
-  protected void loadInternals(final File internDir,
-      final ExecutionMonitor exec) throws IOException,
-      CanceledExecutionException {
-    // NOOP
-  }
+    @Override
+    protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
+        fileSettingsXML.validateSettings(settings);
+        fileSettingsDIR.validateSettings(settings);
+        radioSettings.validateSettings(settings);
+    }
 
-  @Override
-  protected void saveInternals(final File internDir,
-      final ExecutionMonitor exec) throws IOException,
-      CanceledExecutionException {
-    // NOOP
-  }
+    @Override
+    protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+            CanceledExecutionException {
+        // NOOP
+    }
 
-  static SettingsModelString createFileSettingsDIR() {
-    return new SettingsModelString(FILE_NAME_CONFIG_DIR,
-        FILE_DEFAULT_VALUE_DIR);
-  }
+    @Override
+    protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
+            CanceledExecutionException {
+        // NOOP
+    }
 
-  static SettingsModelString createFileSettingsXML() {
-    return new SettingsModelString(FILE_NAME_CONFIG_XML,
-        FILE_DEFAULT_VALUE_XML);
-  }
+    static SettingsModelString createFileSettingsDIR() {
+        return new SettingsModelString(FILE_NAME_CONFIG_DIR, FILE_DEFAULT_VALUE_DIR);
+    }
 
-  static SettingsModelString createRadioSettings() {
-    return new SettingsModelString(RADIO_CONFIG, RADIO_DEFAULT);
-  }
+    static SettingsModelString createFileSettingsXML() {
+        return new SettingsModelString(FILE_NAME_CONFIG_XML, FILE_DEFAULT_VALUE_XML);
+    }
+
+    static SettingsModelString createRadioSettings() {
+        return new SettingsModelString(RADIO_CONFIG, RADIO_DEFAULT);
+    }
 }
