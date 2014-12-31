@@ -1,4 +1,5 @@
 *.class
+plugin.jar
 bin/
 gen/
 junit/

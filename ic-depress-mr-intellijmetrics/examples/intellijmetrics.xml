@@ -1,0 +1,2191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problems>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>3236</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit$4" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 4) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>3948</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit$7" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 7) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>3833</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit$6" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 7) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>2942</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit$1" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 6) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/Buffer.java</file>
+    <line>233</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.Buffer$1" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 6) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/StatusBar.java</file>
+    <line>190</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.StatusBar$1" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 4) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/ListModelEditor.java</file>
+    <line>24</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.ListModelEditor$1" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 11) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/FilteredListModel.java</file>
+    <line>107</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.FilteredListModel$2" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 4) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/BufferSetWidgetFactory.java</file>
+    <line>80</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.BufferSetWidgetFactory.BufferSetWidget$2" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 5) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/help/HelpSearchPanel.java</file>
+    <line>206</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.help</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.help.HelpSearchPanel.ActionHandler$1" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 9) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/search/SearchBar.java</file>
+    <line>104</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.search</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.search.SearchBar$1" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 4) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/search/HyperSearchResults.java</file>
+    <line>272</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.search</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.search.HyperSearchResults$2" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 5) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/VFSFileChooserDialog.java</file>
+    <line>180</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.VFSFileChooserDialog$1" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 7) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/pluginmgr/PluginManager.java</file>
+    <line>262</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.pluginmgr</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.pluginmgr.PluginManager$3" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Overly complex anonymous inner class</problem_class>
+    <description>Overly complex anonymous inner class (cyclomatic complexity = 4) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>2942</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit$1" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/SimpleNode.java</file>
+    <line>55</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.SimpleNode$1" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/CollectionManager.java</file>
+    <line>158</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.CollectionManager.BasicBshIterator$1" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/ActionBar.java</file>
+    <line>440</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.ActionBar.CompletionPopup$1" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/LogViewer.java</file>
+    <line>70</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.LogViewer$1" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/BufferSwitcher.java</file>
+    <line>47</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.BufferSwitcher$1" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/BufferSetWidgetFactory.java</file>
+    <line>62</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.BufferSetWidgetFactory.BufferSetWidget$1" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/menu/RecentDirectoriesProvider.java</file>
+    <line>61</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.menu</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.menu.RecentDirectoriesProvider$2" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/syntax/ModeProvider.java</file>
+    <line>186</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.syntax</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.syntax.ModeProvider$1" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/BrowserView.java</file>
+    <line>361</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.BrowserView$3" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/ShortcutsOptionPane.java</file>
+    <line>192</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.ShortcutsOptionPane$3" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/ShortcutsOptionPane.java</file>
+    <line>83</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.ShortcutsOptionPane$1" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/Gutter.java</file>
+    <line>117</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.Gutter$1" />
+    <problem_class severity="INFO" attribute_key="INFO_ATTRIBUTES">Anonymous inner class with too many methods</problem_class>
+    <description>Anonymous inner class with too many methods (method count = 3) #loc</description>
+  </problem>
+    <problem>
+    <file>file://$PROJECT_DIR$/com/microstar/xml/XmlParser.java</file>
+    <line>42</line>
+    <module>jEdit</module>
+    <package>com.microstar.xml</package>
+    <entry_point TYPE="class" FQNAME="com.microstar.xml.XmlParser" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;XmlParser&lt;/code&gt; is overly complex (cyclomatic complexity = 449) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/net/sourceforge/jarbundler/JarBundler.java</file>
+    <line>256</line>
+    <module>jEdit</module>
+    <package>net.sourceforge.jarbundler</package>
+    <entry_point TYPE="class" FQNAME="net.sourceforge.jarbundler.JarBundler" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;JarBundler&lt;/code&gt; is overly complex (cyclomatic complexity = 157) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/util/StandardUtilities.java</file>
+    <line>41</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.util</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.util.StandardUtilities" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;StandardUtilities&lt;/code&gt; is overly complex (cyclomatic complexity = 97) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/MiscUtilities.java</file>
+    <line>87</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.MiscUtilities" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;MiscUtilities&lt;/code&gt; is overly complex (cyclomatic complexity = 206) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/EditPane.java</file>
+    <line>93</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.EditPane" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;EditPane&lt;/code&gt; is overly complex (cyclomatic complexity = 158) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/View.java</file>
+    <line>140</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.View" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;View&lt;/code&gt; is overly complex (cyclomatic complexity = 248) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/TextUtilities.java</file>
+    <line>47</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.TextUtilities" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;TextUtilities&lt;/code&gt; is overly complex (cyclomatic complexity = 142) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/PluginJAR.java</file>
+    <line>127</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.PluginJAR" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;PluginJAR&lt;/code&gt; is overly complex (cyclomatic complexity = 146) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>75</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;jEdit&lt;/code&gt; is overly complex (cyclomatic complexity = 423) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/GUIUtilities.java</file>
+    <line>90</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.GUIUtilities" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;GUIUtilities&lt;/code&gt; is overly complex (cyclomatic complexity = 156) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/Buffer.java</file>
+    <line>89</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.Buffer" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;Buffer&lt;/code&gt; is overly complex (cyclomatic complexity = 223) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/io/VFS.java</file>
+    <line>106</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.io</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.io.VFS" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;VFS&lt;/code&gt; is overly complex (cyclomatic complexity = 82) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/Interpreter.java</file>
+    <line>92</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.Interpreter" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;Interpreter&lt;/code&gt; is overly complex (cyclomatic complexity = 123) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/JavaCharStream.java</file>
+    <line>9</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.JavaCharStream" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;JavaCharStream&lt;/code&gt; is overly complex (cyclomatic complexity = 86) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/Reflect.java</file>
+    <line>51</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.Reflect" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;Reflect&lt;/code&gt; is overly complex (cyclomatic complexity = 98) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/Primitive.java</file>
+    <line>49</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.Primitive" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;Primitive&lt;/code&gt; is overly complex (cyclomatic complexity = 222) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/NameSpace.java</file>
+    <line>65</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.NameSpace" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;NameSpace&lt;/code&gt; is overly complex (cyclomatic complexity = 199) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/ParserTokenManager.java</file>
+    <line>4</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.ParserTokenManager" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;ParserTokenManager&lt;/code&gt; is overly complex (cyclomatic complexity = 718) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/Name.java</file>
+    <line>95</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.Name" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;Name&lt;/code&gt; is overly complex (cyclomatic complexity = 118) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/Parser.java</file>
+    <line>31</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.Parser" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;Parser&lt;/code&gt; is overly complex (cyclomatic complexity = 1,653) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/JThis.java</file>
+    <line>60</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.JThis" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;JThis&lt;/code&gt; is overly complex (cyclomatic complexity = 89) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/ClassGeneratorUtil.java</file>
+    <line>80</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.ClassGeneratorUtil" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;ClassGeneratorUtil&lt;/code&gt; is overly complex (cyclomatic complexity = 116) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/org/objectweb/asm/CodeWriter.java</file>
+    <line>33</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh.org.objectweb.asm</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.org.objectweb.asm.CodeWriter" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;CodeWriter&lt;/code&gt; is overly complex (cyclomatic complexity = 229) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/org/objectweb/asm/Type.java</file>
+    <line>34</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh.org.objectweb.asm</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.org.objectweb.asm.Type" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;Type&lt;/code&gt; is overly complex (cyclomatic complexity = 97) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/CBZip2OutputStream.java</file>
+    <line>19</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.CBZip2OutputStream" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;CBZip2OutputStream&lt;/code&gt; is overly complex (cyclomatic complexity = 246) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/CBZip2InputStream.java</file>
+    <line>19</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.CBZip2InputStream" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;CBZip2InputStream&lt;/code&gt; is overly complex (cyclomatic complexity = 120) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/classpath/BshClassPath.java</file>
+    <line>67</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh.classpath</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.classpath.BshClassPath" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;BshClassPath&lt;/code&gt; is overly complex (cyclomatic complexity = 112) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/ExtendedGridLayout.java</file>
+    <line>136</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.ExtendedGridLayout" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;ExtendedGridLayout&lt;/code&gt; is overly complex (cyclomatic complexity = 136) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/VariableGridLayout.java</file>
+    <line>74</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.VariableGridLayout" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;VariableGridLayout&lt;/code&gt; is overly complex (cyclomatic complexity = 90) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowManagerImpl.java</file>
+    <line>75</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowManagerImpl" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;DockableWindowManagerImpl&lt;/code&gt; is overly complex (cyclomatic complexity = 100) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/buffer/JEditBuffer.java</file>
+    <line>68</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.buffer</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.buffer.JEditBuffer" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;JEditBuffer&lt;/code&gt; is overly complex (cyclomatic complexity = 307) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/search/SearchAndReplace.java</file>
+    <line>71</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.search</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.search.SearchAndReplace" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;SearchAndReplace&lt;/code&gt; is overly complex (cyclomatic complexity = 149) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/syntax/TokenMarker.java</file>
+    <line>47</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.syntax</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.syntax.TokenMarker" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;TokenMarker&lt;/code&gt; is overly complex (cyclomatic complexity = 100) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/VFSBrowser.java</file>
+    <line>54</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.VFSBrowser" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;VFSBrowser&lt;/code&gt; is overly complex (cyclomatic complexity = 163) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/ChunkCache.java</file>
+    <line>44</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.ChunkCache" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;ChunkCache&lt;/code&gt; is overly complex (cyclomatic complexity = 91) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/Gutter.java</file>
+    <line>54</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.Gutter" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;Gutter&lt;/code&gt; is overly complex (cyclomatic complexity = 99) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/DisplayManager.java</file>
+    <line>40</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.DisplayManager" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;DisplayManager&lt;/code&gt; is overly complex (cyclomatic complexity = 121) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/TextArea.java</file>
+    <line>70</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.TextArea" />
+    <problem_class severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Overly complex class</problem_class>
+    <description>&lt;code&gt;TextArea&lt;/code&gt; is overly complex (cyclomatic complexity = 764) #loc</description>
+  </problem>
+    <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/EditPane.java</file>
+    <line>93</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.EditPane" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;EditPane&lt;/code&gt; is overly coupled (dependencies = 28) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/View.java</file>
+    <line>140</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.View" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;View&lt;/code&gt; is overly coupled (dependencies = 31) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>75</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;jEdit&lt;/code&gt; is overly coupled (dependencies = 51) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/Buffer.java</file>
+    <line>89</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.Buffer" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;Buffer&lt;/code&gt; is overly coupled (dependencies = 22) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/BSHAllocationExpression.java</file>
+    <line>43</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.BSHAllocationExpression" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;BSHAllocationExpression&lt;/code&gt; is overly coupled (dependencies = 16) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/Interpreter.java</file>
+    <line>92</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.Interpreter" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;Interpreter&lt;/code&gt; is overly coupled (dependencies = 19) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/ClassGeneratorImpl.java</file>
+    <line>12</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.ClassGeneratorImpl" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;ClassGeneratorImpl&lt;/code&gt; is overly coupled (dependencies = 24) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/NameSpace.java</file>
+    <line>65</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.NameSpace" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;NameSpace&lt;/code&gt; is overly coupled (dependencies = 17) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/Parser.java</file>
+    <line>31</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.Parser" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;Parser&lt;/code&gt; is overly coupled (dependencies = 48) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/ClassGeneratorUtil.java</file>
+    <line>80</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.ClassGeneratorUtil" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;ClassGeneratorUtil&lt;/code&gt; is overly coupled (dependencies = 24) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowManagerImpl.java</file>
+    <line>75</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowManagerImpl" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;DockableWindowManagerImpl&lt;/code&gt; is overly coupled (dependencies = 16) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/buffer/JEditBuffer.java</file>
+    <line>68</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.buffer</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.buffer.JEditBuffer" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;JEditBuffer&lt;/code&gt; is overly coupled (dependencies = 19) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/search/SearchAndReplace.java</file>
+    <line>71</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.search</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.search.SearchAndReplace" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;SearchAndReplace&lt;/code&gt; is overly coupled (dependencies = 23) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/VFSBrowser.java</file>
+    <line>54</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.VFSBrowser" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;VFSBrowser&lt;/code&gt; is overly coupled (dependencies = 29) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/StandaloneTextArea.java</file>
+    <line>101</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.StandaloneTextArea" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;StandaloneTextArea&lt;/code&gt; is overly coupled (dependencies = 17) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/TextArea.java</file>
+    <line>70</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.TextArea" />
+    <problem_class severity="SERVER PROBLEM" attribute_key="GENERIC_SERVER_ERROR_OR_WARNING">Overly coupled class</problem_class>
+    <description>&lt;code&gt;TextArea&lt;/code&gt; is overly coupled (dependencies = 31) #loc</description>
+  </problem>
+    <problem>
+    <file>file://$PROJECT_DIR$/jars/MacOSX/macosx/MacOSXPlugin.java</file>
+    <line>38</line>
+    <module>MacOSX</module>
+    <package>macosx</package>
+    <entry_point TYPE="class" FQNAME="macosx.MacOSXPlugin" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;MacOSXPlugin&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/BeanShellAction.java</file>
+    <line>44</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.BeanShellAction" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;BeanShellAction&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/Macros.java</file>
+    <line>405</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.Macros.Macro" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;Macro&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>3236</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit$4" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;ActionContext&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/OperatingSystem.java</file>
+    <line>280</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.OperatingSystem.MacOS" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;MacOS&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/BeanShellErrorDialog.java</file>
+    <line>38</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.BeanShellErrorDialog" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;BeanShellErrorDialog&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowFactory.java</file>
+    <line>505</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowFactory.Window.ToggleAction" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;ToggleAction&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowFactory.java</file>
+    <line>477</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowFactory.Window.OpenAction" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;OpenAction&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowFactory.java</file>
+    <line>540</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowFactory.Window.FloatAction" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;FloatAction&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockingLayoutManager.java</file>
+    <line>139</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockingLayoutManager.LoadPerspectiveAction" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;LoadPerspectiveAction&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DefaultInputHandler.java</file>
+    <line>38</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DefaultInputHandler" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;DefaultInputHandler&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/msg/PositionChanging.java</file>
+    <line>28</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.msg</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.msg.PositionChanging" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;PositionChanging&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/msg/BufferChanging.java</file>
+    <line>40</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.msg</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.msg.BufferChanging" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;BufferChanging&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 4) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/VFSBrowser.java</file>
+    <line>1898</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.VFSBrowser.BrowserActionContext" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;BrowserActionContext&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/ContextOptionPane.java</file>
+    <line>37</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.ContextOptionPane" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;ContextOptionPane&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/GlobalOptions.java</file>
+    <line>33</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.GlobalOptions" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;GlobalOptions&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/PluginOptions.java</file>
+    <line>34</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.PluginOptions" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;PluginOptions&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bufferio/BufferAutosaveRequest.java</file>
+    <line>37</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bufferio</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bufferio.BufferAutosaveRequest" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;BufferAutosaveRequest&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bufferio/BufferInsertRequest.java</file>
+    <line>37</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bufferio</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bufferio.BufferInsertRequest" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;BufferInsertRequest&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bufferio/BufferSaveRequest.java</file>
+    <line>40</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bufferio</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bufferio.BufferSaveRequest" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;BufferSaveRequest&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bufferio/BufferLoadRequest.java</file>
+    <line>44</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bufferio</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bufferio.BufferLoadRequest" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;BufferLoadRequest&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/TextArea.java</file>
+    <line>172</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.TextArea$2" />
+    <problem_class severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Class too deep in inheritance tree</problem_class>
+    <description>&lt;code&gt;TextAreaInputHandler&lt;/code&gt; is too deep in inheritance tree (inheritance depth = 3) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/util/Log.java</file>
+    <line>513</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.util</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.util.Log.LogListModel$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/View.java</file>
+    <line>2174</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.View.WindowHandler$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/GUIUtilities.java</file>
+    <line>1217</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.GUIUtilities.UnixWorkaround.ComponentHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;ComponentHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/GUIUtilities.java</file>
+    <line>1263</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.GUIUtilities.UnixWorkaround.WindowHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;WindowHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/GUIUtilities.java</file>
+    <line>1425</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.GUIUtilities$2$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/GUIUtilities.java</file>
+    <line>1994</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.GUIUtilities.SizeSaver$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/GUIUtilities.java</file>
+    <line>2002</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.GUIUtilities.SizeSaver$2" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Thread&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/CollectionManager.java</file>
+    <line>158</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.CollectionManager.BasicBshIterator$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Enumeration&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/SwingInstall.java</file>
+    <line>586</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.SwingInstall.ChooseDirectory.ActionHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;ActionHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/SwingInstall.java</file>
+    <line>754</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.SwingInstall.SwingProgress$4" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/SwingInstall.java</file>
+    <line>725</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.SwingInstall.SwingProgress$2" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/SwingInstall.java</file>
+    <line>396</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.SwingInstall.DirVerifier$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/SwingInstall.java</file>
+    <line>742</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.SwingInstall.SwingProgress$3" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/SwingInstall.java</file>
+    <line>411</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.SwingInstall.DirVerifier$2" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/SwingInstall.java</file>
+    <line>770</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.SwingInstall.SwingProgress$5" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/SwingInstall.java</file>
+    <line>508</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.SwingInstall.ChooseDirectory$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;FocusAdapter&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/SwingInstall.java</file>
+    <line>712</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.SwingInstall.SwingProgress$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/OperatingSystem.java</file>
+    <line>310</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.OperatingSystem.Windows.JEditLauncherOSTask" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;JEditLauncherOSTask&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/OperatingSystem.java</file>
+    <line>212</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.OperatingSystem.Unix.ManPageOSTask" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;ManPageOSTask&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/OperatingSystem.java</file>
+    <line>140</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.OperatingSystem.Unix.ScriptOSTask" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;ScriptOSTask&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowFactory.java</file>
+    <line>505</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowFactory.Window.ToggleAction" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;ToggleAction&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowFactory.java</file>
+    <line>477</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowFactory.Window.OpenAction" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;OpenAction&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowFactory.java</file>
+    <line>540</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowFactory.Window.FloatAction" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;FloatAction&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowManager.java</file>
+    <line>696</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowManager.DockingLayout$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;FilenameFilter&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/HistoryTextField.java</file>
+    <line>343</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.HistoryTextField.MouseHandler$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/ActionBar.java</file>
+    <line>440</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.ActionBar.CompletionPopup$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;JPanel&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/ActionBar.java</file>
+    <line>507</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.ActionBar.CompletionPopup.CompletionList" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;CompletionList&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/ActionBar.java</file>
+    <line>523</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.ActionBar.CompletionPopup.KeyHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;KeyHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/ActionBar.java</file>
+    <line>410</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.ActionBar.ActionTextField$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/ActionBar.java</file>
+    <line>497</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.ActionBar.CompletionPopup.MouseHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/IOProgressMonitor.java</file>
+    <line>197</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.IOProgressMonitor.ThreadProgress.ActionHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;ActionHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/IOProgressMonitor.java</file>
+    <line>122</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.IOProgressMonitor.WorkThreadHandler$2" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/IOProgressMonitor.java</file>
+    <line>110</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.IOProgressMonitor.WorkThreadHandler$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/RegisterViewer.java</file>
+    <line>334</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.RegisterViewer.MouseHandler$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;ActionListener&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowManagerImpl.java</file>
+    <line>82</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowManagerImpl.DockableWindowConfig.PerspectiveHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;PerspectiveHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/MultiSelectWidgetFactory.java</file>
+    <line>65</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.MultiSelectWidgetFactory.MultiSelectWidget$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseAdapter&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/ErrorsWidgetFactory.java</file>
+    <line>276</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.ErrorsWidgetFactory.ErrorDialog.MyActionListener" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MyActionListener&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/ErrorsWidgetFactory.java</file>
+    <line>152</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.ErrorsWidgetFactory.ErrorHighlight.MyMouseAdapter" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MyMouseAdapter&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/ErrorsWidgetFactory.java</file>
+    <line>206</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.ErrorsWidgetFactory.ErrorDialog$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;ItemListener&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/MemoryStatusWidgetFactory.java</file>
+    <line>238</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.MemoryStatusWidgetFactory.MemoryStatus.MouseHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/ModeWidgetFactory.java</file>
+    <line>61</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.ModeWidgetFactory.ModeWidget$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseAdapter&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/RectSelectWidgetFactory.java</file>
+    <line>65</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.RectSelectWidgetFactory.RectSelectWidget$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseAdapter&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/WrapWidgetFactory.java</file>
+    <line>65</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.WrapWidgetFactory.WrapWidget$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseAdapter&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/OverwriteWidgetFactory.java</file>
+    <line>66</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.OverwriteWidgetFactory.OverwriteWidget$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseAdapter&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/SelectionLengthWidgetFactory.java</file>
+    <line>98</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.SelectionLengthWidgetFactory.SelectionLengthWidget.SelectionLength" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;SelectionLength&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/LineSepWidgetFactory.java</file>
+    <line>66</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.LineSepWidgetFactory.LineSepWidget$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseAdapter&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/FoldWidgetFactory.java</file>
+    <line>62</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.FoldWidgetFactory.FoldWidget$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseAdapter&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/BufferSetWidgetFactory.java</file>
+    <line>62</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.BufferSetWidgetFactory.BufferSetWidget$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;ToolTipLabel&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/BufferSetWidgetFactory.java</file>
+    <line>80</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.BufferSetWidgetFactory.BufferSetWidget$2" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseAdapter&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/statusbar/EncodingWidgetFactory.java</file>
+    <line>61</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui.statusbar</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.statusbar.EncodingWidgetFactory.EncodingWidget$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseAdapter&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/help/HelpIndex.java</file>
+    <line>358</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.help</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.help.HelpIndex.Word.Occurrence" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Occurrence&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/help/HelpSearchPanel.java</file>
+    <line>264</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.help</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.help.HelpSearchPanel.ActionHandler$2" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/help/HelpSearchPanel.java</file>
+    <line>206</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.help</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.help.HelpSearchPanel.ActionHandler$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/search/HyperSearchResults.java</file>
+    <line>1057</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.search</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.search.HyperSearchResults.ResultCellRenderer.CountNodes" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;CountNodes&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/search/HyperSearchResults.java</file>
+    <line>653</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.search</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.search.HyperSearchResults.KeyHandler$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/VFSBrowser.java</file>
+    <line>1706</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.VFSBrowser.FavoritesMenuButton.ActionHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;ActionHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/VFSBrowser.java</file>
+    <line>1604</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.VFSBrowser.PluginsMenuButton.MouseHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/VFSBrowser.java</file>
+    <line>1760</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.VFSBrowser.FavoritesMenuButton.MouseHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/VFSBrowser.java</file>
+    <line>1507</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.VFSBrowser.ActionHandler$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/VFSBrowser.java</file>
+    <line>1545</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.VFSBrowser.CommandsMenuButton.MouseHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;MouseHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/VFSFileChooserDialog.java</file>
+    <line>512</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.VFSFileChooserDialog.WorkThreadHandler$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/BrowserView.java</file>
+    <line>372</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.BrowserView$3$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/AbbrevsOptionPane.java</file>
+    <line>491</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.AbbrevsOptionPane.AbbrevsModel.Abbrev" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Abbrev&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/AbbrevsOptionPane.java</file>
+    <line>460</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.AbbrevsOptionPane.AbbrevsModel.AbbrevCompare" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;AbbrevCompare&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/StatusBarOptionPane.java</file>
+    <line>469</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.StatusBarOptionPane.WidgetSelectionDialog.ActionHandler" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;ActionHandler&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/PluginManagerOptionPane.java</file>
+    <line>322</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.PluginManagerOptionPane.UpdateMirrorsThread$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/ShortcutsOptionPane.java</file>
+    <line>422</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.ShortcutsOptionPane.ShortcutsModel.KeyCompare" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;KeyCompare&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/SyntaxHiliteOptionPane.java</file>
+    <line>261</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.SyntaxHiliteOptionPane.StyleTableModel.StyleRenderer" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;StyleRenderer&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/SyntaxHiliteOptionPane.java</file>
+    <line>239</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.SyntaxHiliteOptionPane.StyleTableModel.StyleChoice" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;StyleChoice&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/pluginmgr/ManagePanel.java</file>
+    <line>1236</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.pluginmgr</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.pluginmgr.ManagePanel.HeaderMouseHandler.CleanupActionListener" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;CleanupActionListener&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/pluginmgr/Roster.java</file>
+    <line>462</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.pluginmgr</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.pluginmgr.Roster.Install$2" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/pluginmgr/Roster.java</file>
+    <line>448</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.pluginmgr</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.pluginmgr.Roster.Install$1" />
+    <problem_class severity="TYPO" attribute_key="TYPO">Inner class too deeply nested</problem_class>
+    <description>&lt;code&gt;Runnable&lt;/code&gt; is too deeply nested (nesting level = 2) #loc</description>
+  </problem>
+    <problem>
+    <file>file://$PROJECT_DIR$/com/microstar/xml/XmlParser.java</file>
+    <line>42</line>
+    <module>jEdit</module>
+    <package>com.microstar.xml</package>
+    <entry_point TYPE="class" FQNAME="com.microstar.xml.XmlParser" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;XmlParser&lt;/code&gt; has too many fields (field count = 42) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/net/sourceforge/jarbundler/AppBundleProperties.java</file>
+    <line>33</line>
+    <module>jEdit</module>
+    <package>net.sourceforge.jarbundler</package>
+    <entry_point TYPE="class" FQNAME="net.sourceforge.jarbundler.AppBundleProperties" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;AppBundleProperties&lt;/code&gt; has too many fields (field count = 25) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/net/sourceforge/jarbundler/JarBundler.java</file>
+    <line>256</line>
+    <module>jEdit</module>
+    <package>net.sourceforge.jarbundler</package>
+    <entry_point TYPE="class" FQNAME="net.sourceforge.jarbundler.JarBundler" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;JarBundler&lt;/code&gt; has too many fields (field count = 33) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/util/WorkThreadPool.java</file>
+    <line>37</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.util</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.util.WorkThreadPool" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;WorkThreadPool&lt;/code&gt; has too many fields (field count = 14) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/util/Log.java</file>
+    <line>61</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.util</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.util.Log" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;Log&lt;/code&gt; has too many fields (field count = 11) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/Debug.java</file>
+    <line>32</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.Debug" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;Debug&lt;/code&gt; has too many fields (field count = 22) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/View.java</file>
+    <line>140</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.View" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;View&lt;/code&gt; has too many fields (field count = 28) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/PluginJAR.java</file>
+    <line>1474</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.PluginJAR.PluginCacheEntry" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;PluginCacheEntry&lt;/code&gt; has too many fields (field count = 18) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/PluginJAR.java</file>
+    <line>127</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.PluginJAR" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;PluginJAR&lt;/code&gt; has too many fields (field count = 18) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/jEdit.java</file>
+    <line>75</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.jEdit" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;jEdit&lt;/code&gt; has too many fields (field count = 31) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/Buffer.java</file>
+    <line>89</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.Buffer" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;Buffer&lt;/code&gt; has too many fields (field count = 14) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/io/VFSFile.java</file>
+    <line>42</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.io</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.io.VFSFile" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;VFSFile&lt;/code&gt; has too many fields (field count = 12) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/Interpreter.java</file>
+    <line>92</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.Interpreter" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;Interpreter&lt;/code&gt; has too many fields (field count = 19) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/JavaCharStream.java</file>
+    <line>9</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.JavaCharStream" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;JavaCharStream&lt;/code&gt; has too many fields (field count = 16) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/NameSpace.java</file>
+    <line>65</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.NameSpace" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;NameSpace&lt;/code&gt; has too many fields (field count = 21) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/ParserTokenManager.java</file>
+    <line>4</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.ParserTokenManager" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;ParserTokenManager&lt;/code&gt; has too many fields (field count = 25) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/Parser.java</file>
+    <line>31</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.Parser" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;Parser&lt;/code&gt; has too many fields (field count = 13) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/ClassGeneratorUtil.java</file>
+    <line>80</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.ClassGeneratorUtil" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;ClassGeneratorUtil&lt;/code&gt; has too many fields (field count = 12) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/org/objectweb/asm/Item.java</file>
+    <line>32</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh.org.objectweb.asm</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.org.objectweb.asm.Item" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;Item&lt;/code&gt; has too many fields (field count = 11) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/org/objectweb/asm/CodeWriter.java</file>
+    <line>33</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh.org.objectweb.asm</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.org.objectweb.asm.CodeWriter" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;CodeWriter&lt;/code&gt; has too many fields (field count = 26) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/org/objectweb/asm/ClassWriter.java</file>
+    <line>35</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh.org.objectweb.asm</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.org.objectweb.asm.ClassWriter" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;ClassWriter&lt;/code&gt; has too many fields (field count = 21) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/org/objectweb/asm/Type.java</file>
+    <line>34</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh.org.objectweb.asm</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.org.objectweb.asm.Type" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;Type&lt;/code&gt; has too many fields (field count = 13) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/CBZip2OutputStream.java</file>
+    <line>19</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.CBZip2OutputStream" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;CBZip2OutputStream&lt;/code&gt; has too many fields (field count = 32) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/SwingInstall.java</file>
+    <line>28</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.SwingInstall" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;SwingInstall&lt;/code&gt; has too many fields (field count = 13) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/TarHeader.java</file>
+    <line>24</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.TarHeader" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;TarHeader&lt;/code&gt; has too many fields (field count = 14) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/installer/CBZip2InputStream.java</file>
+    <line>19</line>
+    <module>jEdit</module>
+    <package>installer</package>
+    <entry_point TYPE="class" FQNAME="installer.CBZip2InputStream" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;CBZip2InputStream&lt;/code&gt; has too many fields (field count = 37) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/bsh/classpath/BshClassPath.java</file>
+    <line>67</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.bsh.classpath</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.bsh.classpath.BshClassPath" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;BshClassPath&lt;/code&gt; has too many fields (field count = 14) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowFactory.java</file>
+    <line>189</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowFactory.DockableListHandler" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;DockableListHandler&lt;/code&gt; has too many fields (field count = 11) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowManager.java</file>
+    <line>125</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowManager" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;DockableWindowManager&lt;/code&gt; has too many fields (field count = 11) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/StatusBar.java</file>
+    <line>60</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.StatusBar" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;StatusBar&lt;/code&gt; has too many fields (field count = 20) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/SplashScreen.java</file>
+    <line>34</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.SplashScreen" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;SplashScreen&lt;/code&gt; has too many fields (field count = 11) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/AboutDialog.java</file>
+    <line>98</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.AboutDialog.AboutPanel" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;AboutPanel&lt;/code&gt; has too many fields (field count = 21) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/PanelWindowContainer.java</file>
+    <line>78</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.PanelWindowContainer" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;PanelWindowContainer&lt;/code&gt; has too many fields (field count = 14) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/VariableGridLayout.java</file>
+    <line>74</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.VariableGridLayout" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;VariableGridLayout&lt;/code&gt; has too many fields (field count = 14) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/DockableWindowManagerImpl.java</file>
+    <line>75</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.DockableWindowManagerImpl" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;DockableWindowManagerImpl&lt;/code&gt; has too many fields (field count = 11) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/gui/FontSelector.java</file>
+    <line>168</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.gui</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.gui.FontSelectorDialog" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;FontSelectorDialog&lt;/code&gt; has too many fields (field count = 12) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/msg/BufferUpdate.java</file>
+    <line>34</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.msg</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.msg.BufferUpdate" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;BufferUpdate&lt;/code&gt; has too many fields (field count = 12) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/help/HelpViewer.java</file>
+    <line>85</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.help</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.help.HelpViewer" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;HelpViewer&lt;/code&gt; has too many fields (field count = 11) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/print/BufferPrintable.java</file>
+    <line>45</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.print</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.print.BufferPrintable" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;BufferPrintable&lt;/code&gt; has too many fields (field count = 23) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/buffer/JEditBuffer.java</file>
+    <line>68</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.buffer</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.buffer.JEditBuffer" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;JEditBuffer&lt;/code&gt; has too many fields (field count = 21) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/buffer/UndoManager.java</file>
+    <line>40</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.buffer</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.buffer.UndoManager" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;UndoManager&lt;/code&gt; has too many fields (field count = 12) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/search/SearchDialog.java</file>
+    <line>46</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.search</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.search.SearchDialog" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;SearchDialog&lt;/code&gt; has too many fields (field count = 29) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/search/SearchAndReplace.java</file>
+    <line>71</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.search</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.search.SearchAndReplace" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;SearchAndReplace&lt;/code&gt; has too many fields (field count = 11) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/search/SearchBar.java</file>
+    <line>41</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.search</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.search.SearchBar" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;SearchBar&lt;/code&gt; has too many fields (field count = 15) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/syntax/XModeHandler.java</file>
+    <line>536</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.syntax</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.syntax.XModeHandler.TagDecl" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;TagDecl&lt;/code&gt; has too many fields (field count = 25) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/syntax/TokenMarker.java</file>
+    <line>47</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.syntax</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.syntax.TokenMarker" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;TokenMarker&lt;/code&gt; has too many fields (field count = 12) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/syntax/ParserRule.java</file>
+    <line>37</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.syntax</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.syntax.ParserRule" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;ParserRule&lt;/code&gt; has too many fields (field count = 13) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/syntax/ParserRuleSet.java</file>
+    <line>36</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.syntax</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.syntax.ParserRuleSet" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;ParserRuleSet&lt;/code&gt; has too many fields (field count = 17) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/VFSBrowser.java</file>
+    <line>54</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.VFSBrowser" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;VFSBrowser&lt;/code&gt; has too many fields (field count = 28) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/browser/FileCellRenderer.java</file>
+    <line>41</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.browser</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.browser.FileCellRenderer" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;FileCellRenderer&lt;/code&gt; has too many fields (field count = 13) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/GutterOptionPane.java</file>
+    <line>39</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.GutterOptionPane" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;GutterOptionPane&lt;/code&gt; has too many fields (field count = 23) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/BufferOptionPane.java</file>
+    <line>44</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.BufferOptionPane" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;BufferOptionPane&lt;/code&gt; has too many fields (field count = 13) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/GeneralOptionPane.java</file>
+    <line>41</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.GeneralOptionPane" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;GeneralOptionPane&lt;/code&gt; has too many fields (field count = 11) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/AppearanceOptionPane.java</file>
+    <line>37</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.AppearanceOptionPane" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;AppearanceOptionPane&lt;/code&gt; has too many fields (field count = 17) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/ViewOptionPane.java</file>
+    <line>34</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.ViewOptionPane" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;ViewOptionPane&lt;/code&gt; has too many fields (field count = 19) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/SaveBackupOptionPane.java</file>
+    <line>40</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.SaveBackupOptionPane" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;SaveBackupOptionPane&lt;/code&gt; has too many fields (field count = 11) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/StatusBarOptionPane.java</file>
+    <line>42</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.StatusBarOptionPane" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;StatusBarOptionPane&lt;/code&gt; has too many fields (field count = 18) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/TextAreaOptionPane.java</file>
+    <line>41</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.TextAreaOptionPane" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;TextAreaOptionPane&lt;/code&gt; has too many fields (field count = 22) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/EditingOptionPane.java</file>
+    <line>299</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.EditingOptionPane.ModeProperties" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;ModeProperties&lt;/code&gt; has too many fields (field count = 16) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/EditingOptionPane.java</file>
+    <line>40</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.EditingOptionPane" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;EditingOptionPane&lt;/code&gt; has too many fields (field count = 21) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/options/ToolBarOptionPane.java</file>
+    <line>432</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.options</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.options.ToolBarEditDialog" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;ToolBarEditDialog&lt;/code&gt; has too many fields (field count = 12) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/Gutter.java</file>
+    <line>54</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.Gutter" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;Gutter&lt;/code&gt; has too many fields (field count = 28) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/TextAreaPainter.java</file>
+    <line>60</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.TextAreaPainter" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;TextAreaPainter&lt;/code&gt; has too many fields (field count = 26) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/textarea/TextArea.java</file>
+    <line>70</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.textarea</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.textarea.TextArea" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;TextArea&lt;/code&gt; has too many fields (field count = 60) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/pluginmgr/PluginListHandler.java</file>
+    <line>36</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.pluginmgr</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.pluginmgr.PluginListHandler" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;PluginListHandler&lt;/code&gt; has too many fields (field count = 23) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/pluginmgr/ManagePanel.java</file>
+    <line>304</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.pluginmgr</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.pluginmgr.ManagePanel.Entry" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;Entry&lt;/code&gt; has too many fields (field count = 11) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/pluginmgr/PluginManager.java</file>
+    <line>43</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.pluginmgr</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.pluginmgr.PluginManager" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;PluginManager&lt;/code&gt; has too many fields (field count = 12) #loc</description>
+  </problem>
+  <problem>
+    <file>file://$PROJECT_DIR$/org/gjt/sp/jedit/pluginmgr/InstallPanel.java</file>
+    <line>605</line>
+    <module>jEdit</module>
+    <package>org.gjt.sp.jedit.pluginmgr</package>
+    <entry_point TYPE="class" FQNAME="org.gjt.sp.jedit.pluginmgr.InstallPanel.Entry" />
+    <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Class with too many fields</problem_class>
+    <description>&lt;code&gt;Entry&lt;/code&gt; has too many fields (field count = 12) #loc</description>
+  </problem>
+</problems>
+
