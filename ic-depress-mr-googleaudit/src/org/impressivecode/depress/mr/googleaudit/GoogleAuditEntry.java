@@ -32,7 +32,6 @@ public class GoogleAuditEntry {
 
     @Override
     public int hashCode() {
-    	//TODO: (optional) use HashCodeBuilder from org.apache.commons    	
         final int prime = 31;
         int result = 1;
         result = prime * result + ((high == null) ? 0 : high.hashCode());
@@ -43,7 +42,6 @@ public class GoogleAuditEntry {
 
     @Override
     public boolean equals(Object obj) {
-    	//TODO: use (optional) HashCodeBuilder from org.apache.commons   
     	
         if (this == obj)
             return true;
@@ -93,20 +91,9 @@ public class GoogleAuditEntry {
                 + "low=%s]", resourceName, high, medium, low);
     }
 
-    //TODO: change method parameters: setValue(high, medium, low) instead of switch case
-    public void setValue(String auditViolationType, Double value) {
-        switch (auditViolationType) {
-        case "high":
-            high = value;
-            break;
-        case "medium":
-            medium = value;
-            break;
-        case "low":
-            low = value;
-            break;
-        default:
-            break;
-        }
-    }
+	public void setSeverityValues(Double high, Double medium, Double low) {
+		this.high = high;
+		this.medium = medium;
+		this.low = low;
+	}
 }

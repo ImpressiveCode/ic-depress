@@ -29,7 +29,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.knime.core.node.NodeLogger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -45,8 +44,15 @@ import com.google.common.base.Preconditions;
  */
 public class GoogleAuditEntriesParser {
 
-	private static final NodeLogger LOGGER = NodeLogger
-			.getLogger(GoogleAuditEntriesParser.class);
+	private static final String PATH = "path";
+	private static final String DELIMITER = "/";
+	private static final String HIGH = "High";
+	private static final String MEDIUM = "Medium";
+	private static final String LOW = "Low";
+	private static final String SEVERITY = "severity";
+	private static final String RESOURCE = "resource";
+	private static final String AUDIT_VIOLATION_SET = "audit-violation-set";
+	private static final String AUDIT_VIOLATION = "audit-violation";
 	private Document doc;
 
 	public List<GoogleAuditEntry> parseEntries(final String path)
@@ -62,32 +68,24 @@ public class GoogleAuditEntriesParser {
 
 			if (!googleAuditEntriesMap.containsKey(resourceName)) {
 				GoogleAuditEntry entry = new GoogleAuditEntry();
-				// TODO: remove unecessary type cast to GoogleAuditEntry
-				((GoogleAuditEntry) entry).setResourceName(resourceName);
+				entry.setResourceName(resourceName);
 				entry = updateGoogleAuditEntry(auditViolationNodes, entry);
-				// TODO: remove unecessary type cast to GoogleAuditEntry
-				googleAuditEntriesMap.put(resourceName,
-						(GoogleAuditEntry) entry);
+				googleAuditEntriesMap.put(resourceName, entry);
 			}
 		}
 		return new ArrayList<GoogleAuditEntry>(googleAuditEntriesMap.values());
 	}
 
 	private String getResourceName(Node resource) {
-		// TODO: use members constants instead of strings
-		String absolutePath = ((Element) resource).getAttribute("path");
-		// TODO: use members constants instead of strings
-		String[] pathTable = absolutePath.split("/");
-		//TODO : 1 is magic number
+		String absolutePath = ((Element) resource).getAttribute(PATH);
+		String[] pathTable = absolutePath.split(DELIMITER);
 		String name = pathTable[pathTable.length - 1];
 		return name;
 	}
 
 	private GoogleAuditEntry updateGoogleAuditEntry(NodeList googleAuditNodes,
 			GoogleAuditEntry entry) {
-		// TODO : remove unused variable
-		String auditViolationType = "";
-		 //TODO: change Double to Integer
+
 		Double high = 0.0;
 		Double medium = 0.0;
 		Double low = 0.0;
@@ -97,69 +95,49 @@ public class GoogleAuditEntriesParser {
 				continue;
 			}
 
-			// TODO: use members constants instead of strings "High", "Medium", "Low"
-			// private static final String HIGH = "High";)
-
 			Element elem = (Element) googleAuditNodes.item(i);
-			if (!elem.hasAttribute("severity")) {
+			if (!elem.hasAttribute(SEVERITY)) {
 				continue;
 			}
-			// TODO : remove unused variable
-			auditViolationType = elem.getAttribute("severity");
 
-			try {
-
-				// TODO: what if elem.getAttribute("...") is null
-				// change to: HIGH.equals(elem.getAttribute("..."))
-				
-				// TODO: use members constants instead of strings ("severity")
-				
-				if ((elem.getAttribute("severity").equals("High")))
-					high++;
-				if (elem.getAttribute("severity").equals("Medium"))
-					medium++;
-				if (elem.getAttribute("severity").equals("Low"))
-					low++;
-
-				// TODO : What kind of Exception is catch?
-			} catch (Exception e) {
-				LOGGER.error(e.getMessage());
+			if (HIGH.equals(elem.getAttribute(SEVERITY))) {
+				high++;
+			} else if (MEDIUM.equals(elem.getAttribute(SEVERITY))) {
+				medium++;
+			} else if (LOW.equals(elem.getAttribute(SEVERITY))) {
+				low++;
 			}
 		}
 
-		// TODO: change method parameters: setValue(high, medium, low) and give appriopriate name
-		entry.setValue("high", high);
-		entry.setValue("medium", medium);
-		entry.setValue("low", low);
+		entry.setSeverityValues(high, medium, low);
 		return entry;
 	}
 
 	private NodeList getAllResources() {
-		return doc.getElementsByTagName("resource");
+		return doc.getElementsByTagName(RESOURCE);
 	}
 
 	private void init(final String path) throws ParserConfigurationException,
 			SAXException, IOException {
-		Preconditions.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
+		Preconditions
+				.checkArgument(!isNullOrEmpty(path), "Path has to be set.");
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		doc = dBuilder.parse(path);
 
-		if (!validXmlStructure()) {
+		if (!validXmlRootNode()) {
 			throw new SAXException("Wrong or malformed file structure.");
 		}
 	}
 
-	//TODO: validate all xml structure or change name of method
-	private boolean validXmlStructure() {
+	private boolean validXmlRootNode() {
 		boolean valid = false;
 		NodeList mainNodes = doc.getChildNodes();
 		for (int i = 0; i < mainNodes.getLength(); i++) {
 			if (mainNodes.item(i).getNodeType() != Node.ELEMENT_NODE)
 				continue;
 			Element elem = (Element) mainNodes.item(i);
-			// TODO: use members constants instead of strings ("audit-violation-set")
-			if ("audit-violation-set".equals(elem.getTagName())) {
+			if (AUDIT_VIOLATION_SET.equals(elem.getTagName())) {
 				valid = true;
 			}
 		}
@@ -168,8 +146,6 @@ public class GoogleAuditEntriesParser {
 
 	private NodeList getAuditViolationSubnodes(Node node) {
 		Element elem = (Element) node;
-		// TODO: use members constants instead of strings ("audit-violation")
-		return elem.getElementsByTagName("audit-violation");
+		return elem.getElementsByTagName(AUDIT_VIOLATION);
 	}
-
 }
