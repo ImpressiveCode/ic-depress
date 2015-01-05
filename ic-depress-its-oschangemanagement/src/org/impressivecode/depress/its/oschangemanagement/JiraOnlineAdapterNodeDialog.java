@@ -93,16 +93,16 @@ public class JiraOnlineAdapterNodeDialog extends ITSOnlineNodeDialog {
     }
 
     private <T> List<T> getList(Mode mode, Class<?> elem) throws Exception {
-        JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
+        //JiraOnlineAdapterUriBuilder builder = new JiraOnlineAdapterUriBuilder();
         String urlString = ((SettingsModelString) (url.getModel())).getStringValue();
-        builder.setHostname(urlString);
-        builder.setMode(mode);
+      //  builder.setHostname(urlString);
+       // builder.setMode(mode);
         OsChangeManagementRestClient client = new OsChangeManagementRestClient();
-        URI uri = builder.build();
+        URI uri = new URI(urlString);
         String login = ((SettingsModelString) (loginComponent.getModel())).getStringValue();
         String password = ((SettingsModelString) (passwordComponent.getModel())).getStringValue();
         String rawData = null;
-
+        
         rawData = client.getXML(uri, login, password);
         return JiraOnlineAdapterParser.getCustomList(rawData, elem);
     }
