@@ -47,4 +47,11 @@ public class OsChangeManagementRestClient {
 		return response.getEntity(String.class);
 	}
 
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
 }
