@@ -17,10 +17,12 @@
  */
 package org.impressivecode.depress.its.oschangemanagement;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.Response;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
+import java.net.URI;
 
 public class OsChangeManagementRestClient {
 
@@ -30,22 +32,36 @@ public class OsChangeManagementRestClient {
 		createClient();
 	}
 
-	private void createClient() {
-		client = Client.create();
-	}
+    private void createClient() {
+        client = ClientBuilder.newClient();
+    }
+    
+    public void registerCredentials(final String username, final String password) {
+        Authenticator.setDefault(new Authenticator() {
+            @Override
+            public PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password.toCharArray());
+            }
+        });
+    }
 
-	public String getXML(String url, String login, String password)
+	public String getXML(URI uri, String login, String password)
 			throws Exception {
-		WebResource webResource = client.resource(url);
-		client.addFilter(new HTTPBasicAuthFilter(login, password));
-		ClientResponse response = webResource.accept("application/rdf+xml")
-				.get(ClientResponse.class);
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-		return response.getEntity(String.class);
+		registerCredentials(login, password);
+		Response response = client.target(uri).request("application/rdf+xml").get();		
+		isDataFetchSuccessful(response);
+		return response.readEntity(String.class);
 	}
+	
+    private boolean isDataFetchSuccessful(Response response) throws Exception {
+        if (response.getStatus() == 401) {
+            throw new SecurityException("Unauthorized.");
+        }
+        if (response.getStatus() != 200) {
+            throw new Exception("Failed to fetch data.");
+        }
+        return true;
+    }
 
 	public Client getClient() {
 		return client;

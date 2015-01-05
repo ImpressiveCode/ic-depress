@@ -97,13 +97,13 @@ public class JiraOnlineAdapterNodeDialog extends ITSOnlineNodeDialog {
         String urlString = ((SettingsModelString) (url.getModel())).getStringValue();
         builder.setHostname(urlString);
         builder.setMode(mode);
-        JiraOnlineAdapterRsClient client = new JiraOnlineAdapterRsClient();
+        OsChangeManagementRestClient client = new OsChangeManagementRestClient();
         URI uri = builder.build();
         String login = ((SettingsModelString) (loginComponent.getModel())).getStringValue();
         String password = ((SettingsModelString) (passwordComponent.getModel())).getStringValue();
         String rawData = null;
 
-        rawData = client.getJSON(uri, login, password);
+        rawData = client.getXML(uri, login, password);
         return JiraOnlineAdapterParser.getCustomList(rawData, elem);
     }
 
