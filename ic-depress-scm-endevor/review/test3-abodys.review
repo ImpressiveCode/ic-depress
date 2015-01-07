@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Review id="test3">
+  <ReviewIssue id="I4MUFY5I">
+    <ReviewIssueMeta>
+      <CreationDate format="yyyy-MM-dd :: HH:mm:ss:SSS z">2015-01-07 :: 16:11:11:526 CET</CreationDate>
+      <LastModificationDate format="yyyy-MM-dd :: HH:mm:ss:SSS z">2015-01-07 :: 16:11:49:704 CET</LastModificationDate>
+    </ReviewIssueMeta>
+    <ReviewerId>abodys</ReviewerId>
+    <AssignedTo>msznurowski</AssignedTo>
+    <File line="40">test/org/impressivecode/depress/scm/endevor/EndevorLogParserTest.java</File>
+    <Type>item.type.label.codingStandards</Type>
+    <Severity>item.severity.label.critical</Severity>
+    <Summary>abcabd</Summary>
+    <Description>abc</Description>
+    <Annotation>popraw to</Annotation>
+    <Revision></Revision>
+    <Resolution>item.label.unset</Resolution>
+    <Status>item.status.label.open</Status>
+  </ReviewIssue>
+</Review>
