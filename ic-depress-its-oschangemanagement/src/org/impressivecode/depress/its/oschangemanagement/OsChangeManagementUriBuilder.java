@@ -35,20 +35,28 @@ import javax.ws.rs.core.UriBuilder;
 public abstract class OsChangeManagementUriBuilder {
 
 	public enum Mode {
-		SINGLE_ISSUE_WITH_HISTORY, MULTIPLE_ISSUES, STATE_LIST, PRIORITY_LIST, RESOLUTION_LIST, TYPE_LIST, PROJECT_LIST;
+		PROJECT_LIST, CHANGE_REQUEST, PRIORITY_LIST, TYPE_LIST, RESOLUTION_LIST, STATE_LIST;
 	}
 
-	private static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/latest/serverInfo";
+	protected static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/latest/serverInfo";
+	protected static final int PAGE_SIZE = 50;
 
-	protected Mode mode = Mode.PROJECT_LIST;
+	protected Mode mode;
 	protected String hostname;
 	protected String protocol;
+	protected String project;
 	protected boolean isTest;
+	protected int startIndex = 0;
 
 	public OsChangeManagementUriBuilder setHostname(String hostname) {
 		this.hostname = hostname;
 		filterInputedHostname();
 
+		return this;
+	}
+
+	public OsChangeManagementUriBuilder setProject(String project) {
+		this.project = project;
 		return this;
 	}
 
@@ -65,6 +73,8 @@ public abstract class OsChangeManagementUriBuilder {
 		switch (mode) {
 		case PROJECT_LIST:
 			return buildProjectListURI();
+		case CHANGE_REQUEST:
+			return buildChangeRequestsURI(startIndex);
 		default:
 			throw new RuntimeException(
 					"This should never happen! URI builder failed!");
@@ -118,5 +128,15 @@ public abstract class OsChangeManagementUriBuilder {
 		return protocol;
 	}
 
+	protected String getProject() {
+		return project;
+	}
+	
+	 public void setMode(Mode mode) {
+	        this.mode = mode;
+	    }
+
 	protected abstract URI buildProjectListURI();
+	
+	protected abstract URI buildChangeRequestsURI(int startIndex);
 }

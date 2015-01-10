@@ -13,7 +13,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
     private static final int NUMBER_OF_OUTPUT_PORTS = 1;
     private static final String CFG_ITS_PLUGIN = "plugin";
     
-    private OsChangeManagementAdapterUriBuilder uriBuilder;
+    
     private OsChangeManagementRestClient client;
 
 	
