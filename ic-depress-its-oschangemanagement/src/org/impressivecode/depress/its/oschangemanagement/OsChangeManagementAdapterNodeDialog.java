@@ -26,19 +26,30 @@ import org.knime.core.node.port.PortObjectSpec;
 
 public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 
+	protected DialogComponentStringSelection pluginComponent;
 	private OsChangeManagementRestClient client;
 	public OsChangeManagementAdapterNodeDialog(){
 		super();
 		removeTab(ADVANCED_TAB_NAME);
+		JPanel connectionTab = (JPanel) getTab(ITSOnlineNodeDialog.CONNECTION_TAB_NAME);
+		connectionTab.add(createPluginComponent());
 	}
 	
 	protected Component createPluginComponent(){
-		DialogComponentStringSelection pluginComponent = new DialogComponentStringSelection(createPluginComponentSettings(), "", new String[2]);
-		return null;
+		pluginComponent = new DialogComponentStringSelection(createPluginComponentSettings(), "", getPluginsName());
+		return pluginComponent.getComponentPanel();
 	}
 	
 	protected SettingsModelString createPluginComponentSettings(){
 		return OsChangeManagementAdapterNodeModel.createPluginSettings();
+	}
+	
+	protected String[] getPluginsName(){
+		ArrayList<String> plugins = new ArrayList<String>();
+		for(PluginEnum.Plugin plugin : PluginEnum.Plugin.values()){
+			plugins.add(plugin.toString());
+		}
+		return plugins.toArray(new String[plugins.size()]);
 	}
 	@Override
 	protected void updateProjectsList() {
@@ -109,16 +120,16 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
         String urlString = ((SettingsModelString) (url.getModel())).getStringValue();
         String login = ((SettingsModelString) (loginComponent.getModel())).getStringValue();
         String password = ((SettingsModelString) (passwordComponent.getModel())).getStringValue();
-        String pluginName = "TestPlugin";
+        String pluginName = ((SettingsModelString) (pluginComponent.getModel())).getStringValue();
         builder.setHostname(urlString);
        // builder.setMode(mode);
         OsChangeManagementRestClient client = new OsChangeManagementRestClient();
         URI t = builder.build();
         String rawData = client.getJSON(builder.build(), login, password);
         switch (pluginName){
-        case "TestPlugin":
+        case "OSLCCM":
         	OsChangeManagementRationalAdapterParser parser = new OsChangeManagementRationalAdapterParser();
-        	parser.getProjectList(rawData);
+        	return (List<T>) parser.getProjectList(rawData);
         default:
         	return null;
         }
