@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
-<knimeNode icon="./jira.png" type="Source">
-	<name>OsChangeManagement Adapter (Online)</name>
+<knimeNode icon="./oschangemanagement.png" type="Source">
+	<name>Open Services Change Management 2.0 Adapter (Online)</name>
 
 	<shortDescription>
-		Jira Online Adapter, ImpressiveCode DePress Plugin
+		Open Services Change Management 2.0 Adapter, ImpressiveCode DePress Plugin
 		Framework.
 	</shortDescription>
 
 	<fullDescription>
 		<intro>
-			This node can be used to read data from Jira entries file.
+			This node can be used to read data from system that supports Open Services Change Management 2.0 specification.
 
 			<p>
-				In order to use this plugin you should insert Jira repository
+				In order to use this plugin you should insert repository
 				address in the configuration window.
-				When executed, Jira Adapter node parses the file and return information
+				When executed, Adapter node parses the data and return information
 				collected in standard ITS table form, containing following data:
 				<ul>
 					<li>Id - issue key</li>
@@ -54,13 +54,12 @@
 				<a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>
 			</p>
 		</intro>
-		<option name="Jira URL">Jira repository address (e.g.
-			"https://hibernate.atlassian.net")</option>
-		<option name="Login">Login to an account in JIRA project's page.</option>
-		<option name="Password">Password to the account</option>
-		<option name="All projects">If there are many projects on JIRA page and you would like
+		<option name="Repository URL">Repository address (e.g.
+			"https://hibernate.atlassian.net").</option>
+		<option name="Login">Login to an account in repository.</option>
+		<option name="Password">Password to the account.</option>
+		<option name="All projects">If there are many projects on repository and you would like
 		to focus on one of them, checkout this button and choose the right project on the right.</option>
-		<option name="Advanced tab">In JQL - Jira Query Language query for the request</option>
 		<option name="Mapping"> You can load your custom priority, type,
 			resolution and status properties from previosly selected file. You
 			are able to put any property, which has been in your repository into
@@ -71,7 +70,5 @@
 
 	<ports>
 		<outPort index="0" name="Issue Tracking System Data Table">Datatable read from Jira Online System</outPort>
-		<outPort index="1" name="Issues History Data Table">Issue history table read from Jira
-			Online System</outPort>
 	</ports>
 </knimeNode>
