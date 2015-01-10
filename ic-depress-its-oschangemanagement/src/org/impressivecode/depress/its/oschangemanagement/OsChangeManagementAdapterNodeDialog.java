@@ -10,9 +10,8 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 import org.impressivecode.depress.its.ITSOnlineNodeDialog;
-import org.impressivecode.depress.its.oschangemanagement.JiraOnlineAdapterUriBuilder.Mode;
+import org.impressivecode.depress.its.oschangemanagement.OsChangeManagementUriBuilder.Mode;
 import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineFilterListItem;
-import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineProjectListItem;
 import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProject;
 import org.impressivecode.depress.its.oschangemanagement.model.rationaladapter.OsChangeManagementRationalAdapterProjectList;
 import org.impressivecode.depress.its.oschangemanagement.parser.OsChangeManagementRationalAdapterParser;
@@ -30,13 +29,21 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	private OsChangeManagementRestClient client;
 	public OsChangeManagementAdapterNodeDialog(){
 		super();
+		RemoveAdvancedTab();
+		AddPluginComponent();
+	}
+	
+	protected void RemoveAdvancedTab(){
 		removeTab(ADVANCED_TAB_NAME);
+	}
+	
+	protected void AddPluginComponent(){
 		JPanel connectionTab = (JPanel) getTab(ITSOnlineNodeDialog.CONNECTION_TAB_NAME);
 		connectionTab.add(createPluginComponent());
 	}
 	
 	protected Component createPluginComponent(){
-		pluginComponent = new DialogComponentStringSelection(createPluginComponentSettings(), "", getPluginsName());
+		pluginComponent = new DialogComponentStringSelection(createPluginComponentSettings(), "Plugin: ", getPluginsName());
 		return pluginComponent.getComponentPanel();
 	}
 	
@@ -122,7 +129,7 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
         String password = ((SettingsModelString) (passwordComponent.getModel())).getStringValue();
         String pluginName = ((SettingsModelString) (pluginComponent.getModel())).getStringValue();
         builder.setHostname(urlString);
-       // builder.setMode(mode);
+        builder.setMode(mode);
         OsChangeManagementRestClient client = new OsChangeManagementRestClient();
         URI t = builder.build();
         String rawData = client.getJSON(builder.build(), login, password);

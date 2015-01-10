@@ -36,3 +36,4 @@ Bundle-ClassPath: plugin.jar,
  lib/osgi-resource-locator-1.0.1.jar,
  lib/tiger-types-1.4.jar
 Eclipse-BuddyPolicy: registered
+Import-Package: org.impressivecode.depress.its.oschangemanagement.model
