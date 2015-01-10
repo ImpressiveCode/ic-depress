@@ -144,7 +144,7 @@ public class JiraOnlineAdapterNodeModel extends ITSOnlineNodeModel {
 
     private int getIssuesCount() throws Exception {
         String rawData = null;
-        rawData = client.getXML(builder.build(), getLogin(), getPassword());
+        rawData = client.getJSON(builder.build(), getLogin(), getPassword());
         return JiraOnlineAdapterParser.getTotalIssuesCount(rawData);
     }
 
@@ -305,7 +305,7 @@ public class JiraOnlineAdapterNodeModel extends ITSOnlineNodeModel {
         @Override
         public List<ITSDataType> call() throws Exception {
             checkForCancel();
-            String rawData = client.getXML(uri, getLogin(), getPassword());
+            String rawData = client.getJSON(uri, getLogin(), getPassword());
             String hostname = builder.getHostname();
 
             markProgressForIssue();
@@ -331,7 +331,7 @@ public class JiraOnlineAdapterNodeModel extends ITSOnlineNodeModel {
         public List<JiraOnlineIssueChangeRowItem> call() throws Exception {
             checkForCancel();
 
-            String rawIssue = client.getXML(uri, getLogin(), getPassword());
+            String rawIssue = client.getJSON(uri, getLogin(), getPassword());
 
             markProgressForHistory();
             checkForCancel();

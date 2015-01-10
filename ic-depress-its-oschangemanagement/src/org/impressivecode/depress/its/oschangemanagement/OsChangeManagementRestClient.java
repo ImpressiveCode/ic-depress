@@ -45,10 +45,10 @@ public class OsChangeManagementRestClient {
         });
     }
 
-	public String getXML(URI uri, String login, String password)
+	public String getJSON(URI uri, String login, String password)
 			throws Exception {
 		registerCredentials(login, password);
-		Response response = client.target(uri).request("application/rdf+xml").get();		
+		Response response = client.target(uri).request("application/json").get();		
 		isDataFetchSuccessful(response);
 		return response.readEntity(String.class);
 	}

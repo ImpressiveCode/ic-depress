@@ -28,11 +28,11 @@ import org.knime.core.node.NodeView;
  * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
  */
-public class OsChangeManagementAdapterNodeFactory extends NodeFactory<JiraOnlineAdapterNodeModel> {
+public class OsChangeManagementAdapterNodeFactory extends NodeFactory<OsChangeManagementAdapterNodeModel> {
 
     @Override
-    public JiraOnlineAdapterNodeModel createNodeModel() {
-        return new JiraOnlineAdapterNodeModel();
+    public OsChangeManagementAdapterNodeModel createNodeModel() {
+        return new OsChangeManagementAdapterNodeModel();
     }
 
     @Override
@@ -41,8 +41,8 @@ public class OsChangeManagementAdapterNodeFactory extends NodeFactory<JiraOnline
     }
 
     @Override
-    public NodeView<JiraOnlineAdapterNodeModel> createNodeView(final int viewIndex,
-            final JiraOnlineAdapterNodeModel nodeModel) {
+    public NodeView<OsChangeManagementAdapterNodeModel> createNodeView(final int viewIndex,
+            final OsChangeManagementAdapterNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 
@@ -53,6 +53,6 @@ public class OsChangeManagementAdapterNodeFactory extends NodeFactory<JiraOnline
 
     @Override
     public NodeDialogPane createNodeDialogPane() {
-        return new JiraOnlineAdapterNodeDialog();
+        return new OsChangeManagementAdapterNodeDialog();
     }
 }
