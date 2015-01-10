@@ -13,6 +13,7 @@ import org.impressivecode.depress.its.ITSOnlineNodeDialog;
 import org.impressivecode.depress.its.oschangemanagement.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineFilterListItem;
 import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineProjectListItem;
+import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProjectList;
 import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProjectListItem;
 import org.impressivecode.depress.its.oschangemanagement.parser.OsChangeManagementRationalAdapterParser;
 import org.knime.core.node.InvalidSettingsException;
@@ -28,12 +29,23 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	private OsChangeManagementRestClient client;
 	public OsChangeManagementAdapterNodeDialog(){
 		super();
+		JPanel a = (JPanel) getTab("Connection");
+		a.add(createPluginComponent());
 		removeTab(ADVANCED_TAB_NAME);
 	}
 	
 	protected Component createPluginComponent(){
-		DialogComponentStringSelection pluginComponent = new DialogComponentStringSelection(createPluginComponentSettings(), "", new String[2]);
-		return null;
+		DialogComponentStringSelection pluginComponent = new DialogComponentStringSelection(createPluginComponentSettings(), "Plugin", getPluginsName());
+		return pluginComponent.getComponentPanel();
+	}
+	
+	protected String[] getPluginsName(){
+		ArrayList<String> plugins = new ArrayList<String>();
+		//String s = PluginEnum.Plugin.OSLC.toString();
+		for(PluginEnum.Plugin plugin : PluginEnum.Plugin.values()){
+			plugins.add(plugin.toString());
+		}
+		return plugins.toArray(new String[plugins.size()]);
 	}
 	
 	protected SettingsModelString createPluginComponentSettings(){
@@ -42,11 +54,11 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	@Override
 	protected void updateProjectsList() {
 		 ArrayList<String> projects = new ArrayList<String>();
-	        List<OsChangeManagementProjectListItem> list;
+	        OsChangeManagementProjectList list = new OsChangeManagementProjectList();
 	        try {
-	            list = getList(Mode.PROJECT_LIST, OsChangeManagementProjectListItem.class);
+	            list = getList(Mode.PROJECT_LIST, OsChangeManagementProjectList.class);
 	            projectSelection.getModel().setEnabled(true);
-	            for (OsChangeManagementProjectListItem item : list) {
+	            for (OsChangeManagementProjectListItem item : list.getMember()) {
 	                projects.add(item.getName());
 	            }
 	            projectSelection.replaceListItems(projects, null);
@@ -104,23 +116,25 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
         }
     }
 
-    private <T> List<T> getList(Mode mode, Class<?> elem) throws Exception {
+    private <T> T getList(Mode mode, Class<?> elem) throws Exception {
     	OsChangeManagementJiraRationalAdapterUriBuilder builder = new OsChangeManagementJiraRationalAdapterUriBuilder();
         String urlString = ((SettingsModelString) (url.getModel())).getStringValue();
         String login = ((SettingsModelString) (loginComponent.getModel())).getStringValue();
         String password = ((SettingsModelString) (passwordComponent.getModel())).getStringValue();
-        String pluginName = "TestPlugin";
+        String pluginName = "OSLCCM";
         builder.setHostname(urlString);
        // builder.setMode(mode);
         OsChangeManagementRestClient client = new OsChangeManagementRestClient();
         URI t = builder.build();
         String rawData = client.getJSON(builder.build(), login, password);
         switch (pluginName){
-        case "TestPlugin":
-        	OsChangeManagementRationalAdapterParser.getCustomList(rawData, elem);
+        case "OSLCCM":
+        	OsChangeManagementRationalAdapterParser parser = new OsChangeManagementRationalAdapterParser();
+        	return OsChangeManagementRationalAdapterParser.getCustomList(rawData, elem);
         default:
         	return null;
         }
+		
        
     }
 }
