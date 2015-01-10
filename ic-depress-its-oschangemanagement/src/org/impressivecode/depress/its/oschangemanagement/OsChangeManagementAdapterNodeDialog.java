@@ -13,8 +13,8 @@ import org.impressivecode.depress.its.ITSOnlineNodeDialog;
 import org.impressivecode.depress.its.oschangemanagement.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineFilterListItem;
 import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineProjectListItem;
-import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProjectList;
-import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProjectListItem;
+import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProject;
+import org.impressivecode.depress.its.oschangemanagement.model.rationaladapter.OsChangeManagementRationalAdapterProjectList;
 import org.impressivecode.depress.its.oschangemanagement.parser.OsChangeManagementRationalAdapterParser;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
@@ -29,23 +29,12 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	private OsChangeManagementRestClient client;
 	public OsChangeManagementAdapterNodeDialog(){
 		super();
-		JPanel a = (JPanel) getTab("Connection");
-		a.add(createPluginComponent());
 		removeTab(ADVANCED_TAB_NAME);
 	}
 	
 	protected Component createPluginComponent(){
-		DialogComponentStringSelection pluginComponent = new DialogComponentStringSelection(createPluginComponentSettings(), "Plugin", getPluginsName());
-		return pluginComponent.getComponentPanel();
-	}
-	
-	protected String[] getPluginsName(){
-		ArrayList<String> plugins = new ArrayList<String>();
-		//String s = PluginEnum.Plugin.OSLC.toString();
-		for(PluginEnum.Plugin plugin : PluginEnum.Plugin.values()){
-			plugins.add(plugin.toString());
-		}
-		return plugins.toArray(new String[plugins.size()]);
+		DialogComponentStringSelection pluginComponent = new DialogComponentStringSelection(createPluginComponentSettings(), "", new String[2]);
+		return null;
 	}
 	
 	protected SettingsModelString createPluginComponentSettings(){
@@ -53,19 +42,18 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	}
 	@Override
 	protected void updateProjectsList() {
-		 ArrayList<String> projects = new ArrayList<String>();
-	        OsChangeManagementProjectList list = new OsChangeManagementProjectList();
-	        try {
-	            list = getList(Mode.PROJECT_LIST, OsChangeManagementProjectList.class);
-	            projectSelection.getModel().setEnabled(true);
-	            for (OsChangeManagementProjectListItem item : list.getMember()) {
-	                projects.add(item.getName());
-	            }
-	            projectSelection.replaceListItems(projects, null);
-	        } catch (Exception e) {
-	            Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
-	        }
-	    
+		List<OsChangeManagementProject> projects;
+		List<String> projectNames = new ArrayList<String>();
+		try {
+			projects = getList(Mode.PROJECT_LIST, OsChangeManagementRationalAdapterProjectList.class);
+			projectSelection.getModel().setEnabled(true);
+			for (OsChangeManagementProject item : projects) {
+				projectNames.add(item.getName());
+			}
+			projectSelection.replaceListItems(projectNames, null);
+		} catch (Exception e) {
+			Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
+		}
 	}
 
 	@Override
@@ -116,25 +104,24 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
         }
     }
 
-    private <T> T getList(Mode mode, Class<?> elem) throws Exception {
+    private <T> List<T> getList(Mode mode, Class<?> elem) throws Exception {
     	OsChangeManagementJiraRationalAdapterUriBuilder builder = new OsChangeManagementJiraRationalAdapterUriBuilder();
         String urlString = ((SettingsModelString) (url.getModel())).getStringValue();
         String login = ((SettingsModelString) (loginComponent.getModel())).getStringValue();
         String password = ((SettingsModelString) (passwordComponent.getModel())).getStringValue();
-        String pluginName = "OSLCCM";
+        String pluginName = "TestPlugin";
         builder.setHostname(urlString);
        // builder.setMode(mode);
         OsChangeManagementRestClient client = new OsChangeManagementRestClient();
         URI t = builder.build();
         String rawData = client.getJSON(builder.build(), login, password);
         switch (pluginName){
-        case "OSLCCM":
+        case "TestPlugin":
         	OsChangeManagementRationalAdapterParser parser = new OsChangeManagementRationalAdapterParser();
-        	return OsChangeManagementRationalAdapterParser.getCustomList(rawData, elem);
+        	parser.getProjectList(rawData);
         default:
         	return null;
         }
-		
        
     }
 }

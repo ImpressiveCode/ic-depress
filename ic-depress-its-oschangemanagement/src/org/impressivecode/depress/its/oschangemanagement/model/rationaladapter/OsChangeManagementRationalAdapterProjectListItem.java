@@ -1,16 +1,15 @@
-package org.impressivecode.depress.its.oschangemanagement.model;
+package org.impressivecode.depress.its.oschangemanagement.model.rationaladapter;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class OsChangeManagementProjectListItem {
+@JsonIgnoreProperties
+public class OsChangeManagementRationalAdapterProjectListItem {
 	
 	@JsonProperty("dcterms:title")
 	private String name;
 	@JsonProperty("rdf:resource")
 	private String uri;
-	
 	
 	public String getName() {
 		return name;
@@ -23,6 +22,5 @@ public class OsChangeManagementProjectListItem {
 	}
 	public void setUri(String uri) {
 		this.uri = uri;
-	}
-	
+	}	
 }

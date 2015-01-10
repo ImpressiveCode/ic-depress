@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProjectList;
+
+import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProject;
+
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
@@ -17,15 +19,20 @@ public abstract class OsChangeManagementAdapterParser {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
         JsonParser jp = null;
-        T fieldList = null;
+
+        T field = null;
 
         try {
             jp = jsonFactory.createJsonParser(source);
-           fieldList = (T) objectMapper.readValue(jp,elem);
-      //      OsChangeManagementProjectList p = (OsChangeManagementProjectList) objectMapper.readValue(jp,elem);
+            field = (T) objectMapper.readValue(jp, elem); 
+                    //objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, elem));
+
         } catch (IOException e) {
             Logger.getLogger("Error").severe(e.getMessage());
         }
-        return fieldList;
+        return field;
 	}
+	
+	public abstract List<OsChangeManagementProject> getProjectList(String source);
+	
 }
