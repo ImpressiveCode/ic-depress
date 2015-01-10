@@ -13,7 +13,9 @@ import org.impressivecode.depress.its.ITSOnlineNodeDialog;
 import org.impressivecode.depress.its.oschangemanagement.JiraOnlineAdapterUriBuilder.Mode;
 import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineFilterListItem;
 import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineProjectListItem;
-import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProjectListItem;
+import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProject;
+import org.impressivecode.depress.its.oschangemanagement.model.rationaladapter.OsChangeManagementRationalAdapterProjectList;
+import org.impressivecode.depress.its.oschangemanagement.model.rationaladapter.OsChangeManagementRationalAdapterProjectListItem;
 import org.impressivecode.depress.its.oschangemanagement.parser.OsChangeManagementRationalAdapterParser;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
@@ -41,19 +43,18 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	}
 	@Override
 	protected void updateProjectsList() {
-		 ArrayList<String> projects = new ArrayList<String>();
-	        List<OsChangeManagementProjectListItem> list;
-	        try {
-	            list = getList(Mode.PROJECT_LIST, OsChangeManagementProjectListItem.class);
-	            projectSelection.getModel().setEnabled(true);
-	            for (OsChangeManagementProjectListItem item : list) {
-	                projects.add(item.getName());
-	            }
-	            projectSelection.replaceListItems(projects, null);
-	        } catch (Exception e) {
-	            Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
-	        }
-	    
+		List<OsChangeManagementProject> projects;
+		List<String> projectNames = new ArrayList<String>();
+		try {
+			projects = getList(Mode.PROJECT_LIST, OsChangeManagementRationalAdapterProjectList.class);
+			projectSelection.getModel().setEnabled(true);
+			for (OsChangeManagementProject item : projects) {
+				projectNames.add(item.getName());
+			}
+			projectSelection.replaceListItems(projectNames, null);
+		} catch (Exception e) {
+			Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
+		}
 	}
 
 	@Override
@@ -117,7 +118,8 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
         String rawData = client.getJSON(builder.build(), login, password);
         switch (pluginName){
         case "TestPlugin":
-        	OsChangeManagementRationalAdapterParser.getCustomList(rawData, elem);
+        	OsChangeManagementRationalAdapterParser parser = new OsChangeManagementRationalAdapterParser();
+        	parser.getProjectList(rawData);
         default:
         	return null;
         }
