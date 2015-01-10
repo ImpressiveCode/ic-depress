@@ -1,9 +1,17 @@
 package org.impressivecode.depress.its.oschangemanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties
 public class OsChangeManagementProjectListItem {
 	
+	@JsonProperty("dcterms:title")
 	private String name;
-	private String key;
+	@JsonProperty("rdf:resource")
+	private String uri;
+	@JsonProperty("rdf:type")
+	private String[] type;
 	
 	public String getName() {
 		return name;
@@ -11,10 +19,16 @@ public class OsChangeManagementProjectListItem {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getKey() {
-		return key;
+	public String getUri() {
+		return uri;
 	}
-	public void setKey(String key) {
-		this.key = key;
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+	public String[] getType() {
+		return type;
+	}
+	public void setType(String[] type) {
+		this.type = type;
 	}	
 }

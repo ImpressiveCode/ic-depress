@@ -23,7 +23,7 @@ import org.knime.core.node.NodeView;
 
 /**
  * 
- * @author Marcin Kunert, Wroclaw University of Technology
+ * @author Marcin Cho³uj, Wroclaw University of Technology
  * @author Krzysztof Kwoka, Wroclaw University of Technology
  * @author Dawid Rutowicz, Wroclaw University of Technology
  * 
