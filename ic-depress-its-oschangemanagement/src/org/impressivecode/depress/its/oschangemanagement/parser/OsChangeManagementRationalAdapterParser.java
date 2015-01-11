@@ -18,6 +18,15 @@ import org.impressivecode.depress.its.oschangemanagement.model.rationaladapter.O
 import org.impressivecode.depress.its.oschangemanagement.model.rationaladapter.OsChangeManagementRationalAdapterProjectList;
 import org.impressivecode.depress.its.oschangemanagement.model.rationaladapter.OsChangeManagementRationalAdapterProjectListItem;
 
+/**
+ * 
+ * @author Marcin Cho³uj, Wroclaw University of Technology
+ * @author Piotr Malek, Wroclaw University of Technology
+ * @author Przemys³aw Trepka, Wroclaw University of Technology
+ * @author £ukasz Trojak, Wroclaw University of Technology
+ * 
+ */
+
 public class OsChangeManagementRationalAdapterParser extends
 		OsChangeManagementAdapterParser {
     private final HashMap<String, String[]> priorityMap;
