@@ -14,7 +14,7 @@ public class OsChangeManagementRationalAdapterParser extends
 	public List<OsChangeManagementProject> getProjectList(String source) {
 		
 		List<OsChangeManagementProject> projects = new ArrayList<OsChangeManagementProject>();
-		OsChangeManagementRationalAdapterProjectList rationalAdapterProjectList = getCustomList(source, OsChangeManagementRationalAdapterProjectList.class);
+		OsChangeManagementRationalAdapterProjectList rationalAdapterProjectList = parseJSON(source, OsChangeManagementRationalAdapterProjectList.class);
 		
 		for(OsChangeManagementRationalAdapterProjectListItem item : rationalAdapterProjectList.getMember())
 		{
@@ -25,5 +25,11 @@ public class OsChangeManagementRationalAdapterParser extends
 		}
 		
 		return projects;
+	}
+
+	@Override
+	public int getIssueCount(String source) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

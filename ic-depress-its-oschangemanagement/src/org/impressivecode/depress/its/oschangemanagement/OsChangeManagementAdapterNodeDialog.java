@@ -35,6 +35,7 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 		super();
 		RemoveAdvancedTab();
 		AddPluginComponent();
+		client = new OsChangeManagementRestClient();
 	}
 	
 	protected void RemoveAdvancedTab(){
@@ -58,6 +59,7 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	protected String[] getPluginsName(){
 		ArrayList<String> plugins = new ArrayList<String>();
 		plugins.add(OSLCCM);
+		plugins.add("dsasda");
 		return plugins.toArray(new String[plugins.size()]);
 	}
 	@Override
@@ -65,7 +67,7 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 		List<OsChangeManagementProject> projects;
 		List<String> projectNames = new ArrayList<String>();
 		try {
-			projects = getList(Mode.PROJECT_LIST, OsChangeManagementRationalAdapterProjectList.class);
+			projects = getList(Mode.PROJECT_LIST);
 			projectSelection.getModel().setEnabled(true);
 			for (OsChangeManagementProject item : projects) {
 				projectNames.add(item.getName());
@@ -107,7 +109,7 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	
 	
 
-    private <T> List<T> getList(Mode mode, Class<?> elem) throws Exception {
+    private <T> List<T> getList(Mode mode) throws Exception {
     	OsChangeManagementJiraRationalAdapterUriBuilder builder = new OsChangeManagementJiraRationalAdapterUriBuilder();
         String urlString = ((SettingsModelString) (url.getModel())).getStringValue();
         String login = ((SettingsModelString) (loginComponent.getModel())).getStringValue();
