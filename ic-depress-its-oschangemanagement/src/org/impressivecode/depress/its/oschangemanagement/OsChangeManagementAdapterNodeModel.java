@@ -133,7 +133,17 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 	protected List<String> getProjectList(){
 		ArrayList<String> projectList = new ArrayList<String>();
 		if(getProductName()!=null){
-			projectList.add(getProductName());
+			
+			List<OsChangeManagementProject> projects;
+			try {
+				projects = getList(Mode.PROJECT_LIST);
+				for (OsChangeManagementProject item : projects) {
+					if(item.getName().equals(getProductName()))
+							projectList.add(getLastPathFragment(item.getUri()));
+				}
+			}catch (Exception e) {
+					Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
+				}
 		}
 		else{
 			List<OsChangeManagementProject> projects;
