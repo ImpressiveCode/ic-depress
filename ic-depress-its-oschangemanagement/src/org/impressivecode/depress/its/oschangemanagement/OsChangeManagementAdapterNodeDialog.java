@@ -1,6 +1,7 @@
 package org.impressivecode.depress.its.oschangemanagement;
 
 import java.awt.Component;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -11,7 +12,6 @@ import org.impressivecode.depress.its.ITSOnlineNodeDialog;
 import org.impressivecode.depress.its.oschangemanagement.builder.OsChangeManagementJiraRationalAdapterUriBuilder;
 import org.impressivecode.depress.its.oschangemanagement.builder.OsChangeManagementUriBuilder.Mode;
 import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProject;
-import org.impressivecode.depress.its.oschangemanagement.model.rationaladapter.OsChangeManagementRationalAdapterProjectList;
 import org.impressivecode.depress.its.oschangemanagement.parser.OsChangeManagementRationalAdapterParser;
 import org.impressivecode.depress.its.oschangemanagement.refreshcaller.RefreshCaller;
 import org.knime.core.node.InvalidSettingsException;
@@ -117,6 +117,7 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
         String pluginName = ((SettingsModelString) (pluginComponent.getModel())).getStringValue();
         builder.setHostname(urlString);
         builder.setMode(mode);
+        URI uri = builder.build();
         String rawData = client.getJSON(builder.build(), login, password);
         switch (pluginName){
         case OSLCCM:

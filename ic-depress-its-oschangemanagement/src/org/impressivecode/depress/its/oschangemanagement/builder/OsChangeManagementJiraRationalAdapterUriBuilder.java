@@ -39,7 +39,7 @@ public class OsChangeManagementJiraRationalAdapterUriBuilder extends
 
 	private static final String BASIC_URI_PATH = "{protocol}://{hostname}/rest/oslc/latest/{command}";
 	private static final String PROJECT_LIST_PARAM = "projects";
-	private static final String CHANGE_REQUESTS_PARAM = "{project}/changerequests?oslc.paging=true&_startIndex={startIndex}&oslc.pageSize={pageSize}";
+	private static final String CHANGE_REQUESTS_PARAM = "projects/{project}/changerequests?oslc.paging=true&_startIndex={startIndex}&oslc.pageSize={pageSize}";
 
 	@Override
 	protected URI buildProjectListURI() {

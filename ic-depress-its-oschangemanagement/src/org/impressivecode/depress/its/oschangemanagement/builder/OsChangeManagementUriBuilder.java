@@ -102,18 +102,6 @@ public abstract class OsChangeManagementUriBuilder {
 				.resolveTemplateFromEncoded("command", command).build();
 		// @formatter:on
 		
-		try {
-			URL uri = new URL("http://39409e82.ngrok.com/rest//oslc/latest/projects/ASD/changerequests?oslc.paging=true&pageno=3");
-			URI ur = uri.toURI();
-			return uri.toURI();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		return result;
 	}
 

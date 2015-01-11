@@ -64,8 +64,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
 		
-		ArrayList<String> projectList = new ArrayList<String>();//(ArrayList<String>) getProjectList();
-		projectList.add("test");
+		ArrayList<String> projectList = (ArrayList<String>) getProjectList();
 		ArrayList<URI> uriList = new ArrayList<URI>();
 		this.exec = exec;
 		
@@ -84,15 +83,22 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 			uriList.addAll(getIssueList());
 		}
 		 List<ITSDataType> issues = new ArrayList<ITSDataType>();
+		 
+		 for(URI uri : uriList){
+			 
+		 }
+		 
+		 
+		 
 		 BufferedDataTable out = transform(issues, exec);
 		 return new BufferedDataTable[] { out};
 	}
 	
 	private List<URI> getIssueList() {
-		int totalIssues=52;
+		int totalIssues=0;
 		List<URI> issueLinks = new ArrayList<>();
 		try {
-			//totalIssues = getIssuesCount();
+			totalIssues = getIssuesCount();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -134,13 +140,17 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 			try {
 				projects = getList(Mode.PROJECT_LIST);
 				for (OsChangeManagementProject item : projects) {
-					projectList.add(item.getName());
+					projectList.add(getLastPathFragment(item.getUri()));
 				}
 			}catch (Exception e) {
 					Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
 				}
 		}
 		return projectList;
+	}
+	
+	private String getLastPathFragment(String path){
+		return path.substring(path.lastIndexOf('/') + 1);
 	}
 	
 	private <T> List<T> getList(Mode mode) throws Exception {

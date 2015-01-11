@@ -17,12 +17,18 @@
  */
 package org.impressivecode.depress.its.oschangemanagement;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.Authenticator;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.PasswordAuthentication;
+import java.net.URI;
+import java.net.URL;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
-import java.net.URI;
 
 public class OsChangeManagementRestClient {
 
@@ -48,12 +54,47 @@ public class OsChangeManagementRestClient {
 	public String getJSON(URI uri, String login, String password)
 			throws Exception {
 		registerCredentials(login, password);
-		Response response = client.target(uri).request("application/json").get();		
-		isDataFetchSuccessful(response);
-		return response.readEntity(String.class);
+		return sendGet(uri);
+//		Response response = client.target(uri).request("application/json").get();		
+//		isDataFetchSuccessful(response);
+//		return response.readEntity(String.class);
 	}
 	
-    private boolean isDataFetchSuccessful(Response response) throws Exception {
+	private final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0";
+	
+    private String sendGet(URI uri) throws Exception {
+    		 
+    		String url = uri.toString();
+     
+    		URL obj = new URL(url);
+    		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+     
+    		// optional default is GET
+    		con.setRequestMethod("GET");
+     
+    		//add request header
+    		con.setRequestProperty("User-Agent", USER_AGENT);
+    		con.setRequestProperty("Accept", "application/json");
+     
+    		int responseCode = con.getResponseCode();
+    		
+     
+    		BufferedReader in = new BufferedReader(
+    		        new InputStreamReader(con.getInputStream(),"UTF-8"));
+    		String inputLine;
+    		StringBuffer response = new StringBuffer();
+     
+    		while ((inputLine = in.readLine()) != null) {
+    			response.append(inputLine);
+    		}
+    		in.close();
+     
+    		//print result
+    		return response.toString();    
+
+	}
+
+	private boolean isDataFetchSuccessful(Response response) throws Exception {
         if (response.getStatus() == 401) {
             throw new SecurityException("Unauthorized.");
         }
