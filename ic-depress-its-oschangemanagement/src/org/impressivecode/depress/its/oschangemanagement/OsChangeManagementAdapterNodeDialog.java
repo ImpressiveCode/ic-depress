@@ -1,20 +1,19 @@
 package org.impressivecode.depress.its.oschangemanagement;
 
 import java.awt.Component;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
 import org.impressivecode.depress.its.ITSOnlineNodeDialog;
-import org.impressivecode.depress.its.oschangemanagement.OsChangeManagementUriBuilder.Mode;
-import org.impressivecode.depress.its.oschangemanagement.model.JiraOnlineFilterListItem;
+import org.impressivecode.depress.its.oschangemanagement.builder.OsChangeManagementJiraRationalAdapterUriBuilder;
+import org.impressivecode.depress.its.oschangemanagement.builder.OsChangeManagementUriBuilder.Mode;
 import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProject;
 import org.impressivecode.depress.its.oschangemanagement.model.rationaladapter.OsChangeManagementRationalAdapterProjectList;
 import org.impressivecode.depress.its.oschangemanagement.parser.OsChangeManagementRationalAdapterParser;
+import org.impressivecode.depress.its.oschangemanagement.refreshcaller.RefreshCaller;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
@@ -25,6 +24,11 @@ import org.knime.core.node.port.PortObjectSpec;
 
 public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 
+	protected final static String OSLCCM = "OSLCCM";
+	public final static String PRIORITY = "PRIORITY";
+	public final static String TYPE = "TYPE";
+	public final static String RESOLUTION = "RESOLUTION";
+	public final static String STATE = "STATE";
 	protected DialogComponentStringSelection pluginComponent;
 	private OsChangeManagementRestClient client;
 	public OsChangeManagementAdapterNodeDialog(){
@@ -53,9 +57,7 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	
 	protected String[] getPluginsName(){
 		ArrayList<String> plugins = new ArrayList<String>();
-		for(PluginEnum.Plugin plugin : PluginEnum.Plugin.values()){
-			plugins.add(plugin.toString());
-		}
+		plugins.add(OSLCCM);
 		return plugins.toArray(new String[plugins.size()]);
 	}
 	@Override
@@ -76,12 +78,12 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 
 	@Override
 	protected void createMappingManager() {
-		//Ta metoda w klasie dla OS ma byæ
+		
         mappingManager = OsChangeManagementAdapterNodeModel.createMapping();
-		mappingManager.createFilterPriority(new RefreshCaller(Mode.PRIORITY_LIST));
-        mappingManager.createFilterType(new RefreshCaller(Mode.TYPE_LIST));
-        mappingManager.createFilterResolution(new RefreshCaller(Mode.RESOLUTION_LIST));
-        mappingManager.createFilterStatus(new RefreshCaller(Mode.STATE_LIST));
+        mappingManager.createFilterPriority(new RefreshCaller(PRIORITY));
+        mappingManager.createFilterType(new RefreshCaller(TYPE));
+        mappingManager.createFilterResolution(new RefreshCaller(RESOLUTION));
+        mappingManager.createFilterStatus(new RefreshCaller(STATE));
 	}
 
 	@Override
@@ -103,24 +105,7 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 		
 	}
 	
-	private class RefreshCaller implements Callable<List<String>> {
-        private final Mode mode;
-
-        RefreshCaller(final Mode mode) {
-            this.mode = mode;
-        }
-
-        //Trzeba zmieniæ klase modelow¹ dla JSON'a
-        @Override
-        public List<String> call() throws Exception {
-            List<String> list = new ArrayList<>();
-            List<JiraOnlineFilterListItem> items = getList(mode, JiraOnlineFilterListItem.class);
-            for (JiraOnlineFilterListItem item : items) {
-                list.add(item.getName());
-            }
-            return list;
-        }
-    }
+	
 
     private <T> List<T> getList(Mode mode, Class<?> elem) throws Exception {
     	OsChangeManagementJiraRationalAdapterUriBuilder builder = new OsChangeManagementJiraRationalAdapterUriBuilder();
@@ -130,18 +115,13 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
         String pluginName = ((SettingsModelString) (pluginComponent.getModel())).getStringValue();
         builder.setHostname(urlString);
         builder.setMode(mode);
-        OsChangeManagementRestClient client = new OsChangeManagementRestClient();
-        URI t = builder.build();
         String rawData = client.getJSON(builder.build(), login, password);
         switch (pluginName){
-        case "OSLCCM":
-        	OsChangeManagementRationalAdapterParser parser = new OsChangeManagementRationalAdapterParser();
-        	return (List<T>) parser.getProjectList(rawData);
-        default:
-        	return null;
-        }
-       
-    }
+        case OSLCCM:
+        	return (List<T>) new OsChangeManagementRationalAdapterParser().getProjectList(rawData);
+		default:
+			return null;
+		}
+
+	}
 }
-
-
