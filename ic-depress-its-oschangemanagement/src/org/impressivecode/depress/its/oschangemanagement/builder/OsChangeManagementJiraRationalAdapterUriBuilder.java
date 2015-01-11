@@ -19,6 +19,8 @@
 package org.impressivecode.depress.its.oschangemanagement.builder;
 
 import java.net.URI;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 
 
 /**
@@ -48,7 +50,12 @@ public class OsChangeManagementJiraRationalAdapterUriBuilder extends
 		String command = CHANGE_REQUESTS_PARAM.replace("{project}", project)
 				.replace("{startIndex}", startIndex + "")
 				.replace("pageSize", PAGE_SIZE + "");
-
+ByteBuffer s = Charset.forName("UTF-8").encode(command);
 		return buildListURI(command, BASIC_URI_PATH);
 	}
+	
+	 public OsChangeManagementJiraRationalAdapterUriBuilder prepareNextLink() {
+	        this.startIndex += OsChangeManagementJiraRationalAdapterUriBuilder.PAGE_SIZE;
+	        return this;
+	    }
 }

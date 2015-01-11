@@ -16,7 +16,6 @@ import org.impressivecode.depress.its.ITSOnlineNodeModel;
 import org.impressivecode.depress.its.oschangemanagement.builder.OsChangeManagementJiraRationalAdapterUriBuilder;
 import org.impressivecode.depress.its.oschangemanagement.builder.OsChangeManagementUriBuilder.Mode;
 import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProject;
-import org.impressivecode.depress.its.oschangemanagement.model.rationaladapter.OsChangeManagementRationalAdapterProjectList;
 import org.impressivecode.depress.its.oschangemanagement.parser.OsChangeManagementRationalAdapterParser;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -66,19 +65,57 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
             throws Exception {
 		
 		ArrayList<String> projectList = (ArrayList<String>) getProjectList();
+		ArrayList<URI> uriList = new ArrayList<URI>();
 		this.exec = exec;
+		
+		List<URI> issueLinks = new ArrayList<URI>();
+		builder.setHostname(getURL());
+		builder.setMode(Mode.CHANGE_REQUEST);
+		
 		for(String project : projectList){
-			builder.setHostname(getURL());
+			
 			builder.setProject(project);
-			builder.setMode(Mode.CHANGE_REQUEST);
-			executorService = Executors.newFixedThreadPool(THREAD_COUNT);
-			List<URI> issueBatchLinks = new ArrayList<URI>();
+			
+			//executorService = Executors.newFixedThreadPool(THREAD_COUNT);
+			uriList.addAll(getIssueList());
 		}
 		 List<ITSDataType> issues = new ArrayList<ITSDataType>();
 		 BufferedDataTable out = transform(issues, exec);
 		 return new BufferedDataTable[] { out};
 	}
 	
+	private List<URI> getIssueList() {
+		int totalIssues=0;
+		List<URI> issueLinks = new ArrayList<>();
+		try {
+			totalIssues = getIssuesCount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 while (totalIssues > builder.getPageSize()) {
+			 issueLinks.add(builder.build());
+	            builder.prepareNextLink();
+	        }
+		
+		return issueLinks;
+	}
+	
+	 private int getIssuesCount() throws Exception {
+		 String urlString = getURL();
+		 String login = getLogin();
+		 String password = getPassword();
+		 String pluginName = "OSLCCM"; // zmieniæ trzeba póŸniej
+		 URI u  =builder.build();
+		 String rawData = client.getJSON(builder.build(), login, password);
+		 switch (pluginName){
+	        case OsChangeManagementAdapterNodeDialog.OSLCCM:
+	        	return new OsChangeManagementRationalAdapterParser().getIssueCount(rawData);
+			default:
+				return 0;
+	        }
+	    }
+
 	protected List<String> getProjectList(){
 		ArrayList<String> projectList = new ArrayList<String>();
 		if(getProductName()!=null){
@@ -99,7 +136,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 	}
 	
 	private <T> List<T> getList(Mode mode) throws Exception {
-    	 String urlString = getURL();
+    	String urlString = getURL();
         String login = getLogin();
         String password = getPassword();
         String pluginName = "OSLCCM"; // zmieniæ trzeba póŸniej

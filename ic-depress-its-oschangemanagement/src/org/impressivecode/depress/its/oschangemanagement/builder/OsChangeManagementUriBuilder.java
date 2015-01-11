@@ -19,6 +19,7 @@
 package org.impressivecode.depress.its.oschangemanagement.builder;
 
 import java.net.URI;
+import java.nio.charset.Charset;
 
 import javax.ws.rs.core.UriBuilder;
 
@@ -96,7 +97,7 @@ public abstract class OsChangeManagementUriBuilder {
 		URI result = UriBuilder.fromPath(basicUriPath)
 				.resolveTemplate("protocol", protocol)
 				.resolveTemplateFromEncoded("hostname", hostname)
-				.resolveTemplate("command", command).build();
+				.resolveTemplate("command", Charset.forName("UTF-8").encode(command).toString()).build();
 		// @formatter:on
 
 		return result;
@@ -135,6 +136,10 @@ public abstract class OsChangeManagementUriBuilder {
 	 public void setMode(Mode mode) {
 	        this.mode = mode;
 	    }
+	 
+	 public int getPageSize(){
+		 return PAGE_SIZE;
+	 }
 
 	protected abstract URI buildProjectListURI();
 	
