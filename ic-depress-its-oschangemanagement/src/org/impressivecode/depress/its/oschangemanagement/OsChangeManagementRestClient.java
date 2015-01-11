@@ -25,6 +25,8 @@ import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URI;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -33,7 +35,9 @@ import javax.ws.rs.core.Response;
 public class OsChangeManagementRestClient {
 
 	private Client client;
-
+	private HttpURLConnection con;
+	private static boolean flag = false;
+	private static String cookie;
 	public OsChangeManagementRestClient() {
 		createClient();
 	}
@@ -68,15 +72,18 @@ public class OsChangeManagementRestClient {
      
     		URL obj = new URL(url);
     		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-     
     		// optional default is GET
     		con.setRequestMethod("GET");
      
     		//add request header
-    		con.setRequestProperty("User-Agent", USER_AGENT);
+    		con.setRequestProperty("User-Agent", "Mozilla/6.0 (Windows NT 6.2; WOW64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1");
     		con.setRequestProperty("Accept", "application/json");
+    		if(flag){
+    			con.setRequestProperty("Cookie", cookie);
+    		}
+    		
      
-    		int responseCode = con.getResponseCode();
+    		
     		
      
     		BufferedReader in = new BufferedReader(
@@ -88,7 +95,14 @@ public class OsChangeManagementRestClient {
     			response.append(inputLine);
     		}
     		in.close();
-     
+    		Map<String, List<String>> fieldList = con.getHeaderFields();
+    		if(!flag){
+
+        		cookie = fieldList.get("Set-Cookie").get(1);
+        		cookie = cookie.substring(0,cookie.indexOf(';'));
+        		flag = true;
+    		}
+    		
     		//print result
     		return response.toString();    
 
