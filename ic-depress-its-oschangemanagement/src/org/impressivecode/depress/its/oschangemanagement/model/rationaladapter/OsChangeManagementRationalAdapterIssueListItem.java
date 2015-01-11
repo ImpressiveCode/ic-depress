@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.impressivecode.depress.its.ITSPriority;
-import org.impressivecode.depress.its.ITSResolution;
-import org.impressivecode.depress.its.ITSStatus;
-import org.impressivecode.depress.its.ITSType;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -164,20 +159,8 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 	public String getFirstCreator(){
 		return getLastPathFragment(getCreator().get(0).getAboutUrl());
 	}
-	
-	public ITSStatus getStatusAsITS(){
-		return null;
-	}
-	
-	public ITSType getTypeAsITS(){
-		return null;
-	}
-	
-	public ITSPriority getPriorityAsITS(){
-		return null;
-	}
-	
-	public ITSResolution getResolutionAsITS(){
-		return null;
+
+	public String getPriorityAsString() {
+		return getLastPathFragment(getPriority().getAboutUrl());
 	}
 }
