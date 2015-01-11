@@ -18,8 +18,10 @@
 
 package org.impressivecode.depress.its.oschangemanagement.builder;
 
+import java.net.MalformedURLException;
 import java.net.URI;
-import java.nio.charset.Charset;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import javax.ws.rs.core.UriBuilder;
 
@@ -95,11 +97,23 @@ public abstract class OsChangeManagementUriBuilder {
 	protected URI buildListURI(String command, String basicUriPath) {
 		// @formatter:off
 		URI result = UriBuilder.fromPath(basicUriPath)
-				.resolveTemplate("protocol", protocol)
+				.resolveTemplateFromEncoded("protocol", protocol)
 				.resolveTemplateFromEncoded("hostname", hostname)
-				.resolveTemplate("command", Charset.forName("UTF-8").encode(command).toString()).build();
+				.resolveTemplateFromEncoded("command", command).build();
 		// @formatter:on
-
+		
+		try {
+			URL uri = new URL("http://39409e82.ngrok.com/rest//oslc/latest/projects/ASD/changerequests?oslc.paging=true&pageno=3");
+			URI ur = uri.toURI();
+			return uri.toURI();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 
@@ -139,6 +153,10 @@ public abstract class OsChangeManagementUriBuilder {
 	 
 	 public int getPageSize(){
 		 return PAGE_SIZE;
+	 }
+	 
+	 public void setStartIndex(int startIndex){
+		 this.startIndex=startIndex;
 	 }
 
 	protected abstract URI buildProjectListURI();

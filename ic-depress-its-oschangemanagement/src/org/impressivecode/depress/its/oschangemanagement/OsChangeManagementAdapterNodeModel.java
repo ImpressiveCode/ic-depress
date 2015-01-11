@@ -4,9 +4,9 @@ import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataCo
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 import org.impressivecode.depress.its.ITSAdapterTransformer;
@@ -64,7 +64,8 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
 		
-		ArrayList<String> projectList = (ArrayList<String>) getProjectList();
+		ArrayList<String> projectList = new ArrayList<String>();//(ArrayList<String>) getProjectList();
+		projectList.add("test");
 		ArrayList<URI> uriList = new ArrayList<URI>();
 		this.exec = exec;
 		
@@ -73,8 +74,11 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		builder.setMode(Mode.CHANGE_REQUEST);
 		
 		for(String project : projectList){
-			
+			if(project==null){
+				continue;
+			}
 			builder.setProject(project);
+			builder.setStartIndex(0);
 			
 			//executorService = Executors.newFixedThreadPool(THREAD_COUNT);
 			uriList.addAll(getIssueList());
@@ -85,28 +89,32 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 	}
 	
 	private List<URI> getIssueList() {
-		int totalIssues=0;
+		int totalIssues=52;
 		List<URI> issueLinks = new ArrayList<>();
 		try {
-			totalIssues = getIssuesCount();
+			//totalIssues = getIssuesCount();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 while (totalIssues > builder.getPageSize()) {
-			 issueLinks.add(builder.build());
+		if(totalIssues > builder.getPageSize()){
+			while (totalIssues > 0){
+				issueLinks.add(builder.build());
 	            builder.prepareNextLink();
-	        }
+	            totalIssues -= builder.getPageSize();
+			}
+		}else {
+			issueLinks.add(builder.build());
+		}
+		 
 		
 		return issueLinks;
 	}
 	
 	 private int getIssuesCount() throws Exception {
-		 String urlString = getURL();
 		 String login = getLogin();
 		 String password = getPassword();
 		 String pluginName = "OSLCCM"; // zmieniæ trzeba póŸniej
-		 URI u  =builder.build();
 		 String rawData = client.getJSON(builder.build(), login, password);
 		 switch (pluginName){
 	        case OsChangeManagementAdapterNodeDialog.OSLCCM:

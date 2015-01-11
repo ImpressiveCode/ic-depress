@@ -34,6 +34,14 @@ public class OsChangeManagementRationalAdapterParser extends
         this.statusMap = status;
     }
     
+    public OsChangeManagementRationalAdapterParser(){
+    	super();
+    	this.priorityMap = new HashMap<>();
+        this.typeMap = new HashMap<>();
+        this.resolutionMap = new HashMap<>();
+        this.statusMap = new HashMap<>();
+    }
+    
     private ITSResolution parseResolutionFromMap(final String valueToParse) {
         if (valueToParse == null) {
             return ITSResolution.UNKNOWN;

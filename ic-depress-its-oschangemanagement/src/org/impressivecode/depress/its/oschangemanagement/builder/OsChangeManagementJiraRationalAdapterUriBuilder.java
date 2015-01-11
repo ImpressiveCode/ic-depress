@@ -18,9 +18,10 @@
 
 package org.impressivecode.depress.its.oschangemanagement.builder;
 
+import java.net.MalformedURLException;
 import java.net.URI;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 
 /**
@@ -49,9 +50,20 @@ public class OsChangeManagementJiraRationalAdapterUriBuilder extends
 	protected URI buildChangeRequestsURI(int startIndex) {
 		String command = CHANGE_REQUESTS_PARAM.replace("{project}", project)
 				.replace("{startIndex}", startIndex + "")
-				.replace("pageSize", PAGE_SIZE + "");
-ByteBuffer s = Charset.forName("UTF-8").encode(command);
-		return buildListURI(command, BASIC_URI_PATH);
+				.replace("{pageSize}", PAGE_SIZE + "");
+		String uriString = BASIC_URI_PATH.replace("{protocol}", protocol)
+				.replace("{hostname}", hostname)
+				.replace("{command}", command);
+		
+		try {
+			URI uri = new URI(uriString);
+			return uri;
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	 public OsChangeManagementJiraRationalAdapterUriBuilder prepareNextLink() {
