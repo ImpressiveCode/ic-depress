@@ -31,7 +31,7 @@ import java.util.Map;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
-
+import org.apache.commons.codec.binary.Base64;
 public class OsChangeManagementRestClient {
 
 	private Client client;
@@ -57,8 +57,8 @@ public class OsChangeManagementRestClient {
 
 	public String getJSON(URI uri, String login, String password)
 			throws Exception {
-		registerCredentials(login, password);
-		return sendGet(uri);
+		//registerCredentials(login, password);
+		return sendGet(uri, login, password);
 //		Response response = client.target(uri).request("application/json").get();		
 //		isDataFetchSuccessful(response);
 //		return response.readEntity(String.class);
@@ -66,8 +66,14 @@ public class OsChangeManagementRestClient {
 	
 	private final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0";
 	
-    private String sendGet(URI uri) throws Exception {
-    		 
+	private String getBasicAuthenticationEncoding(String username, String password) {
+        String userPassword = username + ":" + password;
+        return new String(Base64.encodeBase64(userPassword.getBytes()));
+    }
+	
+    private String sendGet(URI uri, String login, String password) throws Exception {
+    	   	
+    	
     		String url = uri.toString();
      
     		URL obj = new URL(url);
@@ -78,6 +84,7 @@ public class OsChangeManagementRestClient {
     		//add request header
     		con.setRequestProperty("User-Agent", "Mozilla/6.0 (Windows NT 6.2; WOW64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1");
     		con.setRequestProperty("Accept", "application/json");
+    		con.setRequestProperty("Authorization", "Basic " + getBasicAuthenticationEncoding(login, password));
     		if(flag){
     			con.setRequestProperty("Cookie", cookie);
     		}
