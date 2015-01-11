@@ -1,5 +1,14 @@
 package org.impressivecode.depress.its.oschangemanagement.model;
 
+/**
+ * 
+ * @author Marcin Cho³uj, Wroclaw University of Technology
+ * @author Piotr Malek, Wroclaw University of Technology
+ * @author Przemys³aw Trepka, Wroclaw University of Technology
+ * @author £ukasz Trojak, Wroclaw University of Technology
+ * 
+ */
+
 public class OsChangeManagementProject {
 
 	private String name;

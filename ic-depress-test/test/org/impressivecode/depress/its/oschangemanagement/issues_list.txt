@@ -1,0 +1,1000 @@
+{
+    "rdf:type": [
+        {
+            "rdf:resource": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Description"
+        }
+    ],
+    "oslc:responseInfo": {
+        "rdf:type": [
+            {
+                "rdf:resource": "http://open-services.net/ns/core#ResponseInfo"
+            }
+        ],
+        "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/changerequests?oslc.paging=true&_startIndex=50&oslc.pageSize=50",
+        "oslc:totalCount": 65,
+        "jira:startIndex": 50,
+        "jira:previousPage": {
+            "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/changerequests?oslc.paging=true&_startIndex=0&oslc.pageSize=50"
+        }
+    },
+    "oslc:results": [
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-15",
+            "oslc:shortTitle": "ASD-15",
+            "dcterms:title": "Bug100",
+            "dcterms:identifier": "ASD-15",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:51+0100",
+            "dcterms:modified": "2015-01-10T15:04:51+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-14",
+            "oslc:shortTitle": "ASD-14",
+            "dcterms:title": "bug asd7",
+            "dcterms:identifier": "ASD-14",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:51+0100",
+            "dcterms:modified": "2015-01-10T15:04:51+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-13",
+            "oslc:shortTitle": "ASD-13",
+            "dcterms:title": "Bug 4",
+            "dcterms:identifier": "ASD-13",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:49+0100",
+            "dcterms:modified": "2015-01-10T15:04:49+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-12",
+            "oslc:shortTitle": "ASD-12",
+            "dcterms:title": "bug asd6",
+            "dcterms:identifier": "ASD-12",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:48+0100",
+            "dcterms:modified": "2015-01-10T15:04:48+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-11",
+            "oslc:shortTitle": "ASD-11",
+            "dcterms:title": "bug asd5",
+            "dcterms:identifier": "ASD-11",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:46+0100",
+            "dcterms:modified": "2015-01-10T15:04:46+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-10",
+            "oslc:shortTitle": "ASD-10",
+            "dcterms:title": "bug asd4",
+            "dcterms:identifier": "ASD-10",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:43+0100",
+            "dcterms:modified": "2015-01-10T15:04:43+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-9",
+            "oslc:shortTitle": "ASD-9",
+            "dcterms:title": "Bug 3",
+            "dcterms:identifier": "ASD-9",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:40+0100",
+            "dcterms:modified": "2015-01-10T15:04:40+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-8",
+            "oslc:shortTitle": "ASD-8",
+            "dcterms:title": "bug asd3",
+            "dcterms:identifier": "ASD-8",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:38+0100",
+            "dcterms:modified": "2015-01-10T15:04:38+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-7",
+            "oslc:shortTitle": "ASD-7",
+            "dcterms:title": "bug asd",
+            "dcterms:identifier": "ASD-7",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:35+0100",
+            "dcterms:modified": "2015-01-10T15:04:35+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-6",
+            "oslc:shortTitle": "ASD-6",
+            "dcterms:title": "Bug 2",
+            "dcterms:identifier": "ASD-6",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:23+0100",
+            "dcterms:modified": "2015-01-10T15:04:23+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-5",
+            "oslc:shortTitle": "ASD-5",
+            "dcterms:title": "Bug 2",
+            "dcterms:identifier": "ASD-5",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:20+0100",
+            "dcterms:modified": "2015-01-10T15:04:20+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-4",
+            "oslc:shortTitle": "ASD-4",
+            "dcterms:title": "Bug 1",
+            "dcterms:identifier": "ASD-4",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:16+0100",
+            "dcterms:modified": "2015-01-10T15:04:16+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-3",
+            "oslc:shortTitle": "ASD-3",
+            "dcterms:title": "Bug 1",
+            "dcterms:identifier": "ASD-3",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [],
+            "dcterms:created": "2015-01-10T15:04:10+0100",
+            "dcterms:modified": "2015-01-10T15:04:10+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/3",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/task.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/open.png",
+            "jira:resolution": "Unresolved",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-2",
+            "oslc:shortTitle": "ASD-2",
+            "dcterms:description": "Test",
+            "dcterms:title": "Test tt",
+            "dcterms:identifier": "ASD-2",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:created": "2015-01-07T22:02:42+0100",
+            "dcterms:modified": "2015-01-07T22:02:42+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/3"
+            },
+            "dcterms:type": "Task",
+            "oslc_cm:status": "Open"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://open-services.net/ns/cm#ChangeRequest"
+                }
+            ],
+            "jira:issueType": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#IssueType"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/issueTypes/1",
+                "oslc:icon": {
+                    "rdf:resource": "http://39409e82.ngrok.com/images/icons/issuetypes/bug.png"
+                }
+            },
+            "oslc_cmx:project": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Project"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD"
+            },
+            "oslc_cmx:priority": {
+                "rdf:type": [
+                    {
+                        "rdf:resource": "http://com.ibm/cm/adaptor/jira#Priority"
+                    }
+                ],
+                "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/priorities/3"
+            },
+            "jira:statusIconUrl": "http://39409e82.ngrok.com/images/icons/statuses/resolved.png",
+            "jira:resolution": "Fixed",
+            "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/changerequests/ASD-1",
+            "oslc:shortTitle": "ASD-1",
+            "dcterms:description": "koment",
+            "dcterms:title": "b³¹d",
+            "dcterms:identifier": "ASD-1",
+            "dcterms:creator": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:contributor": [
+                {
+                    "rdf:type": [
+                        {
+                            "rdf:resource": "http://xmlns.com/foaf/0.1/Person"
+                        }
+                    ],
+                    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/users/mcholuj"
+                }
+            ],
+            "dcterms:created": "2015-01-05T19:09:05+0100",
+            "dcterms:modified": "2015-01-07T22:01:48+0100",
+            "oslc:serviceProvider": [
+                {
+                    "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD/services"
+                }
+            ],
+            "oslc:instanceShape": {
+                "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/shapes/projects/ASD/issues/1"
+            },
+            "dcterms:type": "Bug",
+            "oslc_cm:status": "Resolved"
+        }
+    ],
+    "prefixes": {
+        "calm": "http://jazz.net/xmlns/prod/jazz/calm/1.0/",
+        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+        "oslc": "http://open-services.net/ns/core#",
+        "foaf": "http://xmlns.com/foaf/0.1/",
+        "jira": "http://com.ibm/cm/adaptor/jira#",
+        "oslc_cmx": "http://open-services.net/ns/cm-x#",
+        "oslc_cm_1": "http://open-services.net/xmlns/cm/1.0/",
+        "jfs": "http://jazz.net/xmlns/prod/jazz/jfs/1.0/",
+        "dcterms": "http://purl.org/dc/terms/",
+        "oslc_cm": "http://open-services.net/ns/cm#",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    }
+}
