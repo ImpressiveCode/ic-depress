@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProject;
 
 import com.fasterxml.jackson.core.JsonFactory;
@@ -34,5 +35,6 @@ public abstract class OsChangeManagementAdapterParser {
 	
 	public abstract List<OsChangeManagementProject> getProjectList(String source);
 	public abstract int getIssueCount(String source);
+	public abstract List<ITSDataType> getIssues(String source);
 	
 }

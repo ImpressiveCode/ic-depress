@@ -1,17 +1,19 @@
 package org.impressivecode.depress.its.oschangemanagement.model.rationaladapter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.impressivecode.depress.its.ITSPriority;
+import org.impressivecode.depress.its.ITSResolution;
+import org.impressivecode.depress.its.ITSStatus;
+import org.impressivecode.depress.its.ITSType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OsChangeManagementRationalAdapterIssueListItem {
-	@JsonProperty("jira:issueType")
-	private OsChangeManagementRationalAdapterDetails issueType;
-	
-	@JsonProperty("oslc_cmx:priority")
-	private OsChangeManagementRationalAdapterDetails priority;	
 	
 	public OsChangeManagementRationalAdapterDetails getIssueType() {
 		return issueType;
@@ -65,6 +67,14 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 	public ArrayList<OsChangeManagementRationalAdapterDetails> getContributor() {
 		return contributor;
 	}
+	
+	public Set<String> getContributorAsSet() {
+		Set<String> ret = new HashSet<String>();
+		for(OsChangeManagementRationalAdapterDetails item : getContributor()){
+			ret.add(getLastPathFragment(item.getAboutUrl()));
+		}
+ 		return ret;
+	}
 
 	public void setContributor(
 			ArrayList<OsChangeManagementRationalAdapterDetails> contributor) {
@@ -102,7 +112,13 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
+	
+	@JsonProperty("jira:issueType")
+	private OsChangeManagementRationalAdapterDetails issueType;
+	
+	@JsonProperty("oslc_cmx:priority")
+	private OsChangeManagementRationalAdapterDetails priority;	
+	
 	@JsonProperty("oslc:shortTitle")
 	private String shortTitle;
 	
@@ -129,4 +145,39 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 	
 	@JsonProperty("oslc_cm:status")
 	private String status;
+	
+	@JsonProperty("jira:resolution")
+	private String resolution;
+	
+	public String getResolution() {
+		return resolution;
+	}
+
+	public void setResolution(String resolution) {
+		this.resolution = resolution;
+	}
+
+	private String getLastPathFragment(String path){
+		return path.substring(path.lastIndexOf('/') + 1);
+	}
+	
+	public String getFirstCreator(){
+		return getLastPathFragment(getCreator().get(0).getAboutUrl());
+	}
+	
+	public ITSStatus getStatusAsITS(){
+		return null;
+	}
+	
+	public ITSType getTypeAsITS(){
+		return null;
+	}
+	
+	public ITSPriority getPriorityAsITS(){
+		return null;
+	}
+	
+	public ITSResolution getResolutionAsITS(){
+		return null;
+	}
 }
