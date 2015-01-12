@@ -27,59 +27,57 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OsChangeManagementRationalAdapterIssueListItem {
 	
-	public OsChangeManagementRationalAdapterDetails getIssueType() {
-		return issueType;
+	@JsonProperty("dcterms:contributor")
+	private ArrayList<OsChangeManagementRationalAdapterDetails> contributor;
+
+	@JsonProperty("dcterms:created")
+	private String created;
+
+	@JsonProperty("dcterms:creator")
+	private ArrayList<OsChangeManagementRationalAdapterDetails> creator;
+
+	@JsonProperty("dcterms:description")
+	private String description;
+
+	public String getDescription() {
+		return description;
 	}
 
-	public void setIssueType(OsChangeManagementRationalAdapterDetails issueType) {
-		this.issueType = issueType;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public OsChangeManagementRationalAdapterDetails getPriority() {
-		return priority;
-	}
+	@JsonProperty("dcterms:identifier")
+	private String identifier;
 
-	public void setPriority(OsChangeManagementRationalAdapterDetails priority) {
-		this.priority = priority;
-	}
+	@JsonProperty("jira:issueType")
+	private OsChangeManagementRationalAdapterDetails issueType;
 
-	public String getShortTitle() {
-		return shortTitle;
-	}
+	@JsonProperty("dcterms:modified")
+	private String modified;
 
-	public void setShortTitle(String shortTitle) {
-		this.shortTitle = shortTitle;
-	}
+	@JsonProperty("oslc_cmx:priority")
+	private OsChangeManagementRationalAdapterDetails priority;
 
-	public String getTitle() {
-		return title;
-	}
+	@JsonProperty("jira:resolution")
+	private String resolution;
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	@JsonProperty("oslc:shortTitle")
+	private String shortTitle;
 
-	public String getIdentifier() {
-		return identifier;
-	}
+	@JsonProperty("oslc_cm:status")
+	private String status;
 
-	public void setIdentifier(String identifier) {
-		this.identifier = identifier;
-	}
+	@JsonProperty("dcterms:title")
+	private String title;
 
-	public ArrayList<OsChangeManagementRationalAdapterDetails> getCreator() {
-		return creator;
-	}
-
-	public void setCreator(
-			ArrayList<OsChangeManagementRationalAdapterDetails> creator) {
-		this.creator = creator;
-	}
-
+	@JsonProperty("dcterms:type")
+	private String type;
+	
 	public ArrayList<OsChangeManagementRationalAdapterDetails> getContributor() {
 		return contributor;
 	}
-	
+
 	public Set<String> getContributorAsSet() {
 		Set<String> ret = new HashSet<String>();
 		for(OsChangeManagementRationalAdapterDetails item : getContributor()){
@@ -88,98 +86,61 @@ public class OsChangeManagementRationalAdapterIssueListItem {
  		return ret;
 	}
 
-	public void setContributor(
-			ArrayList<OsChangeManagementRationalAdapterDetails> contributor) {
-		this.contributor = contributor;
-	}
-
 	public String getCreated() {
 		return created;
 	}
 
-	public void setCreated(String created) {
-		this.created = created;
+	public ArrayList<OsChangeManagementRationalAdapterDetails> getCreator() {
+		return creator;
+	}
+
+	public String getFirstCreator(){
+		return getLastPathFragment(getCreator().get(0).getAboutUrl());
+	}
+
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public OsChangeManagementRationalAdapterDetails getIssueType() {
+		return issueType;
+	}
+
+	private String getLastPathFragment(String path){
+		return path.substring(path.lastIndexOf('/') + 1);
 	}
 
 	public String getModified() {
 		return modified;
 	}
 
-	public void setModified(String modified) {
-		this.modified = modified;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public OsChangeManagementRationalAdapterDetails getPriority() {
+		return priority;
 	}
 	
-	@JsonProperty("jira:issueType")
-	private OsChangeManagementRationalAdapterDetails issueType;
-	
-	@JsonProperty("oslc_cmx:priority")
-	private OsChangeManagementRationalAdapterDetails priority;	
-	
-	@JsonProperty("oslc:shortTitle")
-	private String shortTitle;
-	
-	@JsonProperty("dcterms:title")
-	private String title;	
-	
-	@JsonProperty("dcterms:identifier")
-	private String identifier;
-	
-	@JsonProperty("dcterms:creator")
-	private ArrayList<OsChangeManagementRationalAdapterDetails> creator;	
-	
-	@JsonProperty("dcterms:contributor")
-	private ArrayList<OsChangeManagementRationalAdapterDetails> contributor;
-	
-	@JsonProperty("dcterms:created")
-	private String created;
-	
-	@JsonProperty("dcterms:modified")
-	private String modified;
-	
-	@JsonProperty("dcterms:type")
-	private String type;
-	
-	@JsonProperty("oslc_cm:status")
-	private String status;
-	
-	@JsonProperty("jira:resolution")
-	private String resolution;
-	
-	public String getResolution() {
-		return resolution;
-	}
-
-	public void setResolution(String resolution) {
-		this.resolution = resolution;
-	}
-
-	private String getLastPathFragment(String path){
-		return path.substring(path.lastIndexOf('/') + 1);
-	}
-	
-	public String getFirstCreator(){
-		return getLastPathFragment(getCreator().get(0).getAboutUrl());
-	}
-
 	public String getPriorityAsString() {
 		return parsePriority(getLastPathFragment(getPriority().getAboutUrl()));
 	}
+	
+	public String getResolution() {
+		return resolution;
+	}	
+	
+	public String getShortTitle() {
+		return shortTitle;
+	}
+	
+	public String getStatus() {
+		return status;
+	}	
+	
+	public String getTitle() {
+		return title;
+	}
+	
+	public String getType() {
+		return type;
+	}	
 	
 	private String parsePriority(String priority){
 		switch (priority){
@@ -197,23 +158,73 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 			return priority;
 		}
 	}
-		
-		private String parseType(String type){
-			switch (type){
-			case "1":
-				return "Blocker";
-			case "2":
-				return "Critical";
-			case "3":
-				return "Major";
-			case "4":
-				return "Minor";
-			case "5":
-				return "Trivial";
-			default:
-				return type;
-			}
+	
+	private String parseType(String type){
+		switch (type){
+		case "1":
+			return "Blocker";
+		case "2":
+			return "Critical";
+		case "3":
+			return "Major";
+		case "4":
+			return "Minor";
+		case "5":
+			return "Trivial";
+		default:
+			return type;
+		}
+}
+	
+	public void setContributor(
+			ArrayList<OsChangeManagementRationalAdapterDetails> contributor) {
+		this.contributor = contributor;
 	}
+	
+	public void setCreated(String created) {
+		this.created = created;
+	}
+	
+	public void setCreator(
+			ArrayList<OsChangeManagementRationalAdapterDetails> creator) {
+		this.creator = creator;
+	}
+	
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
+	
+	public void setIssueType(OsChangeManagementRationalAdapterDetails issueType) {
+		this.issueType = issueType;
+	}
+	
+	public void setModified(String modified) {
+		this.modified = modified;
+	}
+
+	public void setPriority(OsChangeManagementRationalAdapterDetails priority) {
+		this.priority = priority;
+	}
+
+	public void setResolution(String resolution) {
+		this.resolution = resolution;
+	}
+	
+	public void setShortTitle(String shortTitle) {
+		this.shortTitle = shortTitle;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
+		
+		public void setType(String type) {
+			this.type = type;
+		}
 
 }
 

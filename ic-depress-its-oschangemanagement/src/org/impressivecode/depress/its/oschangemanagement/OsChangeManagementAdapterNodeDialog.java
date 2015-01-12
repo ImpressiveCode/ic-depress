@@ -76,7 +76,6 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	protected String[] getPluginsName(){
 		ArrayList<String> plugins = new ArrayList<String>();
 		plugins.add(OSLCCM);
-		plugins.add("dsasda");
 		return plugins.toArray(new String[plugins.size()]);
 	}
 	@Override
@@ -113,14 +112,14 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	@Override
 	protected void loadSpecificSettingsFrom(NodeSettingsRO settings,
 			PortObjectSpec[] specs) throws NotConfigurableException {
-		// TODO Auto-generated method stub
+		pluginComponent.loadSettingsFrom(settings,specs);
 		
 	}
 
 	@Override
 	protected void saveSpecificSettingsTo(NodeSettingsWO settings)
 			throws InvalidSettingsException {
-		// TODO Auto-generated method stub
+		pluginComponent.saveSettingsTo(settings);
 		
 	}
 	

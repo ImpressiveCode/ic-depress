@@ -46,7 +46,9 @@ import org.impressivecode.depress.its.oschangemanagement.model.rationaladapter.O
 
 public class OsChangeManagementRationalAdapterParser extends
 		OsChangeManagementAdapterParser {
-    private final HashMap<String, String[]> priorityMap;
+    private static final int START_HOSTNAME_INDEX = 0;
+	private static final int END_HOSTNAME_INDEX = 7;
+	private final HashMap<String, String[]> priorityMap;
     private final HashMap<String, String[]> typeMap;
     private final HashMap<String, String[]> resolutionMap;
     private final HashMap<String, String[]> statusMap;
@@ -157,12 +159,13 @@ public class OsChangeManagementRationalAdapterParser extends
 				e.printStackTrace();
 			}
 			its.setDescription(item.getTitle());
-			
+			its.setSummary(item.getDescription());
 			its.setReporter(item.getFirstCreator());
 			its.setStatus(parseStatusFromMap(item.getStatus()));
 			its.setType(parseTypeFromMap(item.getType()));
 			its.setPriority(parsePriorityFromMap(item.getPriorityAsString()));
 			its.setResolution(parseResolutionFromMap(item.getResolution()));
+			its.setLink(item.getPriority().getAboutUrl().substring(START_HOSTNAME_INDEX, item.getPriority().getAboutUrl().indexOf("/", END_HOSTNAME_INDEX))+"/browse/"+item.getIdentifier());
 			try {
 				its.setUpdated(dateStringToObject(item.getModified()));
 			} catch (ParseException e) {
@@ -177,9 +180,9 @@ public class OsChangeManagementRationalAdapterParser extends
 	}
 	
 	private Date dateStringToObject(String date) throws ParseException{
-		String sub = date.substring(0,10);
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-		Date parsedDate = formatter.parse(sub);
+		//String sub = date.substring(0,10);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+		Date parsedDate = formatter.parse(date);
 		return parsedDate;
 	}
 }
