@@ -1,13 +1,40 @@
+/*
+ ImpressiveCode Depress Framework
+ Copyright (C) 2013  ImpressiveCode contributors
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.impressivecode.depress.its.oschangemanagement;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.security.InvalidKeyException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 
 import org.impressivecode.depress.its.ITSAdapterTransformer;
 import org.impressivecode.depress.its.ITSDataType;
@@ -67,7 +94,8 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		ArrayList<String> projectList = (ArrayList<String>) getProjectList();
 		ArrayList<URI> uriList = new ArrayList<URI>();
 		this.exec = exec;
-		
+
+        executorService = Executors.newFixedThreadPool(getThreadCount());
 		List<URI> issueLinks = new ArrayList<URI>();
 		builder.setHostname(getURL());
 		builder.setMode(Mode.CHANGE_REQUEST);
@@ -82,11 +110,9 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 			//executorService = Executors.newFixedThreadPool(THREAD_COUNT);
 			uriList.addAll(getIssueList());
 		}
-		 List<ITSDataType> issues = new ArrayList<ITSDataType>();
+		 List<ITSDataType> issues = executeIssuesLinks(uriList);
 		 
-		 for(URI uri : uriList){
-			 
-		 }
+		 
 		 
 		 
 		 
@@ -163,6 +189,39 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		return path.substring(path.lastIndexOf('/') + 1);
 	}
 	
+	  private int getThreadCount() {
+	        return THREAD_COUNT;
+	    }
+	
+	 private List<ITSDataType> executeIssuesLinks(final List<URI> issuesLinks) throws InterruptedException,
+     ExecutionException {
+		 List<Callable<List<ITSDataType>>> tasks = newArrayList();
+		 List<ITSDataType> list = new ArrayList<ITSDataType>();
+
+		 for (URI uri : issuesLinks) {
+			// tasks.add(new DownloadAndParseIssuesTask(uri, mappingManager));
+			 try {
+				list.addAll(call(uri));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }
+		// List<Future<List<ITSDataType>>> partialResults = executorService.invokeAll(tasks);
+		// List<ITSDataType> issues = combinePartialIssueResults(partialResults);
+		 return list;
+	 }
+	 
+	 private List<ITSDataType> combinePartialIssueResults(final List<Future<List<ITSDataType>>> partialResults)
+	            throws InterruptedException, ExecutionException {
+	        List<ITSDataType> result = new ArrayList<>();
+	        for (Future<List<ITSDataType>> partialResult : partialResults) {
+	            result.addAll(partialResult.get());
+	        }
+
+	        return result;
+	    }
+	
 	private <T> List<T> getList(Mode mode) throws Exception {
     	String urlString = getURL();
         String login = getLogin();
@@ -184,7 +243,11 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 	        ITSAdapterTransformer transformer = new ITSAdapterTransformer(createDataColumnSpec());
 	        return transformer.transform(entries, exec);
 	    }
-	
+	 
+	 private void checkForCancel() throws CanceledExecutionException {
+         exec.checkCanceled();
+     }
+	 
 	@Override
 	protected void saveSpecificSettingsTo(NodeSettingsWO settings) {
 		//pluginSettings.saveSettingsTo(settings);
@@ -202,6 +265,25 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		//pluginSettings.loadSettingsFrom(settings);
 	}
 	
-	
 
+    public List<ITSDataType> call(URI uri) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, IOException, Exception  {
+       checkForCancel();
+       
+      
+       String rawData = client.getJSON(uri, getLogin(), getPassword());
+       checkForCancel();
+       String pluginName = "OSLCCM";
+       switch(pluginName){
+       case "OSLCCM":
+    	   return new OsChangeManagementRationalAdapterParser(mappingManager.getPriorityModel().getIncluded(),
+    			   mappingManager.getTypeModel().getIncluded(),
+    			   mappingManager.getResolutionModel().getIncluded(),
+    	   		mappingManager.getStatusModel().getIncluded()).getIssues(rawData);
+    			     default: 
+    	   return new ArrayList<ITSDataType>();
+       }
+//        markProgressForIssue();
+    }
+
+	
 }
