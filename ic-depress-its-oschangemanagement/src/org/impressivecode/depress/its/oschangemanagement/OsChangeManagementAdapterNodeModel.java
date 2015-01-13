@@ -54,74 +54,80 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
 
+/**
+ * 
+ * @author Marcin Cho³uj, Wroclaw University of Technology
+ * @author Piotr Malek, Wroclaw University of Technology
+ * @author Przemys³aw Trepka, Wroclaw University of Technology
+ * @author £ukasz Trojak, Wroclaw University of Technology
+ * 
+ */
+
 public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 
 	private static final int NUMBER_OF_INPUT_PORTS = 0;
-    private static final int NUMBER_OF_OUTPUT_PORTS = 1;
-    private static final String CFG_ITS_PLUGIN = "plugin";
-    private static final int THREAD_COUNT = 10;
-    private final SettingsModelString pluginSettings = createPluginSettings();
-    
-    private OsChangeManagementRestClient client = new OsChangeManagementRestClient();
-    private OsChangeManagementJiraRationalAdapterUriBuilder builder = new OsChangeManagementJiraRationalAdapterUriBuilder();
-    private ExecutorService executorService;
-    private ExecutionContext exec;
-    private ExecutionMonitor issueCountMonitor;
-    private ExecutionMonitor issueListMonitor;
-    private ExecutionMonitor issueHistoryMonitor;
-    
+	private static final int NUMBER_OF_OUTPUT_PORTS = 1;
+	private static final String CFG_ITS_PLUGIN = "plugin";
+	private static final int THREAD_COUNT = 10;
+	private final SettingsModelString pluginSettings = createPluginSettings();
+
+	private OsChangeManagementRestClient client = new OsChangeManagementRestClient();
+	private OsChangeManagementJiraRationalAdapterUriBuilder builder = new OsChangeManagementJiraRationalAdapterUriBuilder();
+	private ExecutorService executorService;
+	private ExecutionContext exec;
+	private ExecutionMonitor issueCountMonitor;
+	private ExecutionMonitor issueListMonitor;
+	private ExecutionMonitor issueHistoryMonitor;
+
 	protected OsChangeManagementAdapterNodeModel() {
 		super(NUMBER_OF_INPUT_PORTS, NUMBER_OF_OUTPUT_PORTS);
 	}
-	
+
 	public static ITSMappingManager createMapping() {
-        return new ITSMappingManager();
-    }
+		return new ITSMappingManager();
+	}
 
 	public static SettingsModelString createPluginSettings() {
-        return new SettingsModelString(CFG_ITS_PLUGIN, DEFAULT_STRING_VALUE);
-    }
-	
+		return new SettingsModelString(CFG_ITS_PLUGIN, DEFAULT_STRING_VALUE);
+	}
+
 	@Override
-    protected PortObjectSpec[] configure(final PortObjectSpec[] inSpecs) throws InvalidSettingsException {
-        return new PortObjectSpec[NUMBER_OF_OUTPUT_PORTS];
-    }
-	
+	protected PortObjectSpec[] configure(final PortObjectSpec[] inSpecs)
+			throws InvalidSettingsException {
+		return new PortObjectSpec[NUMBER_OF_OUTPUT_PORTS];
+	}
+
 	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
-            throws Exception {
-		
+	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
+			final ExecutionContext exec) throws Exception {
+
 		ArrayList<String> projectList = (ArrayList<String>) getProjectList();
 		ArrayList<URI> uriList = new ArrayList<URI>();
 		this.exec = exec;
 
-        executorService = Executors.newFixedThreadPool(getThreadCount());
+		executorService = Executors.newFixedThreadPool(getThreadCount());
 		List<URI> issueLinks = new ArrayList<URI>();
 		builder.setHostname(getURL());
 		builder.setMode(Mode.CHANGE_REQUEST);
-		
-		for(String project : projectList){
-			if(project==null){
+
+		for (String project : projectList) {
+			if (project == null) {
 				continue;
 			}
 			builder.setProject(project);
 			builder.setStartIndex(0);
-			
-			//executorService = Executors.newFixedThreadPool(THREAD_COUNT);
+
+			// executorService = Executors.newFixedThreadPool(THREAD_COUNT);
 			uriList.addAll(getIssueList());
 		}
-		 List<ITSDataType> issues = executeIssuesLinks(uriList);
-		 
-		 
-		 
-		 
-		 
-		 BufferedDataTable out = transform(issues, exec);
-		 return new BufferedDataTable[] { out};
+		List<ITSDataType> issues = executeIssuesLinks(uriList);
+
+		BufferedDataTable out = transform(issues, exec);
+		return new BufferedDataTable[] { out };
 	}
-	
+
 	private List<URI> getIssueList() {
-		int totalIssues=0;
+		int totalIssues = 0;
 		List<URI> issueLinks = new ArrayList<>();
 		try {
 			totalIssues = getIssuesCount();
@@ -129,161 +135,148 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(totalIssues > builder.getPageSize()){
-			while (totalIssues > 0){
+		if (totalIssues > builder.getPageSize()) {
+			while (totalIssues > 0) {
 				issueLinks.add(builder.build());
-	            builder.prepareNextLink();
-	            totalIssues -= builder.getPageSize();
+				builder.prepareNextLink();
+				totalIssues -= builder.getPageSize();
 			}
-		}else {
+		} else {
 			issueLinks.add(builder.build());
 		}
-		 
-		
+
 		return issueLinks;
 	}
-	
-	 private int getIssuesCount() throws Exception {
-		 String login = getLogin();
-		 String password = getPassword();
-		 String pluginName = "OSLCCM"; // zmieniæ trzeba póŸniej
-		 String rawData = client.getJSON(builder.build(), login, password);
-		 switch (pluginName){
-	        case OsChangeManagementAdapterNodeDialog.OSLCCM:
-	        	return new OsChangeManagementRationalAdapterParser().getIssueCount(rawData);
-			default:
-				return 0;
-	        }
-	    }
 
-	protected List<String> getProjectList(){
+	private int getIssuesCount() throws Exception {
+		String login = getLogin();
+		String password = getPassword();
+		String pluginName = pluginSettings.getStringValue();
+		String rawData = client.getJSON(builder.build(), login, password);
+		switch (pluginName) {
+		case OsChangeManagementAdapterNodeDialog.OSLCCM:
+			return new OsChangeManagementRationalAdapterParser()
+					.getIssueCount(rawData);
+		default:
+			return 0;
+		}
+	}
+
+	protected List<String> getProjectList() {
 		ArrayList<String> projectList = new ArrayList<String>();
-		if(getProductName()!=null){
-			
+		if (getProductName() != null) {
+
 			List<OsChangeManagementProject> projects;
 			try {
 				projects = getList(Mode.PROJECT_LIST);
 				for (OsChangeManagementProject item : projects) {
-					if(item.getName().equals(getProductName()))
-							projectList.add(getLastPathFragment(item.getUri()));
+					if (item.getName().equals(getProductName()))
+						projectList.add(getLastPathFragment(item.getUri()));
 				}
-			}catch (Exception e) {
-					Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
-				}
-		}
-		else{
+			} catch (Exception e) {
+				Logger.getLogger("Error")
+						.severe("Error during connection, list could not be downloaded");
+			}
+		} else {
 			List<OsChangeManagementProject> projects;
 			try {
 				projects = getList(Mode.PROJECT_LIST);
 				for (OsChangeManagementProject item : projects) {
 					projectList.add(getLastPathFragment(item.getUri()));
 				}
-			}catch (Exception e) {
-					Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
-				}
+			} catch (Exception e) {
+				Logger.getLogger("Error")
+						.severe("Error during connection, list could not be downloaded");
+			}
 		}
 		return projectList;
 	}
-	
-	private String getLastPathFragment(String path){
+
+	private String getLastPathFragment(String path) {
 		return path.substring(path.lastIndexOf('/') + 1);
 	}
-	
-	  private int getThreadCount() {
-	        return THREAD_COUNT;
-	    }
-	
-	 private List<ITSDataType> executeIssuesLinks(final List<URI> issuesLinks) throws InterruptedException,
-     ExecutionException {
-		 List<Callable<List<ITSDataType>>> tasks = newArrayList();
-		 List<ITSDataType> list = new ArrayList<ITSDataType>();
 
-		 for (URI uri : issuesLinks) {
-			// tasks.add(new DownloadAndParseIssuesTask(uri, mappingManager));
-			 try {
-				list.addAll(call(uri));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		 }
-		// List<Future<List<ITSDataType>>> partialResults = executorService.invokeAll(tasks);
-		// List<ITSDataType> issues = combinePartialIssueResults(partialResults);
-		 return list;
-	 }
-	 
-	 private List<ITSDataType> combinePartialIssueResults(final List<Future<List<ITSDataType>>> partialResults)
-	            throws InterruptedException, ExecutionException {
-	        List<ITSDataType> result = new ArrayList<>();
-	        for (Future<List<ITSDataType>> partialResult : partialResults) {
-	            result.addAll(partialResult.get());
-	        }
-
-	        return result;
-	    }
-	
-	private <T> List<T> getList(Mode mode) throws Exception {
-    	String urlString = getURL();
-        String login = getLogin();
-        String password = getPassword();
-        String pluginName = "OSLCCM"; // zmieniæ trzeba póŸniej
-        builder.setHostname(urlString);
-        builder.setMode(mode);
-        String rawData = client.getJSON(builder.build(), login, password);
-        switch (pluginName){
-        case OsChangeManagementAdapterNodeDialog.OSLCCM:
-        	return (List<T>) new OsChangeManagementRationalAdapterParser().getProjectList(rawData);
-		default:
-			return null;
-        }
+	private int getThreadCount() {
+		return THREAD_COUNT;
 	}
 
-	 private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
-	            throws CanceledExecutionException {
-	        ITSAdapterTransformer transformer = new ITSAdapterTransformer(createDataColumnSpec());
-	        return transformer.transform(entries, exec);
-	    }
-	 
-	 private void checkForCancel() throws CanceledExecutionException {
-         exec.checkCanceled();
-     }
-	 
+	private List<ITSDataType> executeIssuesLinks(final List<URI> issuesLinks)
+			throws InterruptedException, ExecutionException {
+		List<ITSDataType> list = new ArrayList<ITSDataType>();
+		for (URI uri : issuesLinks) {
+			try {
+				list.addAll(call(uri));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+
+	private <T> List<T> getList(Mode mode) throws Exception {
+		String urlString = getURL();
+		String login = getLogin();
+		String password = getPassword();
+		String pluginName = pluginSettings.getStringValue();
+		builder.setHostname(urlString);
+		builder.setMode(mode);
+		String rawData = client.getJSON(builder.build(), login, password);
+		switch (pluginName) {
+		case OsChangeManagementAdapterNodeDialog.OSLCCM:
+			return (List<T>) new OsChangeManagementRationalAdapterParser()
+					.getProjectList(rawData);
+		default:
+			return null;
+		}
+	}
+
+	private BufferedDataTable transform(final List<ITSDataType> entries,
+			final ExecutionContext exec) throws CanceledExecutionException {
+		ITSAdapterTransformer transformer = new ITSAdapterTransformer(
+				createDataColumnSpec());
+		return transformer.transform(entries, exec);
+	}
+
+	private void checkForCancel() throws CanceledExecutionException {
+		exec.checkCanceled();
+	}
+
 	@Override
 	protected void saveSpecificSettingsTo(NodeSettingsWO settings) {
-		//pluginSettings.saveSettingsTo(settings);
+		pluginSettings.saveSettingsTo(settings);
 	}
 
 	@Override
 	protected void validateSpecificSettings(NodeSettingsRO settings)
 			throws InvalidSettingsException {
-		//pluginSettings.validateSettings(settings);
+		pluginSettings.validateSettings(settings);
 	}
 
 	@Override
 	protected void loadSpecificSettingsFrom(NodeSettingsRO settings)
 			throws InvalidSettingsException {
-		//pluginSettings.loadSettingsFrom(settings);
+		pluginSettings.loadSettingsFrom(settings);
 	}
-	
 
-    public List<ITSDataType> call(URI uri) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, IOException, Exception  {
-       checkForCancel();
-       
-      
-       String rawData = client.getJSON(uri, getLogin(), getPassword());
-       checkForCancel();
-       String pluginName = "OSLCCM";
-       switch(pluginName){
-       case "OSLCCM":
-    	   return new OsChangeManagementRationalAdapterParser(mappingManager.getPriorityModel().getIncluded(),
-    			   mappingManager.getTypeModel().getIncluded(),
-    			   mappingManager.getResolutionModel().getIncluded(),
-    	   		mappingManager.getStatusModel().getIncluded()).getIssues(rawData);
-    			     default: 
-    	   return new ArrayList<ITSDataType>();
-       }
-//        markProgressForIssue();
-    }
+	public List<ITSDataType> call(URI uri) throws InvalidKeyException,
+			BadPaddingException, IllegalBlockSizeException,
+			UnsupportedEncodingException, IOException, Exception {
+		checkForCancel();
 
-	
+		String rawData = client.getJSON(uri, getLogin(), getPassword());
+		checkForCancel();
+		String pluginName = pluginSettings.getStringValue();
+		switch (pluginName) {
+		case "OSLCCM":
+			return new OsChangeManagementRationalAdapterParser(mappingManager
+					.getPriorityModel().getIncluded(), mappingManager
+					.getTypeModel().getIncluded(), mappingManager
+					.getResolutionModel().getIncluded(), mappingManager
+					.getStatusModel().getIncluded()).getIssues(rawData);
+		default:
+			return new ArrayList<ITSDataType>();
+		}
+		// markProgressForIssue();
+	}
+
 }
