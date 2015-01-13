@@ -30,7 +30,6 @@ import org.impressivecode.depress.its.oschangemanagement.builder.OsChangeManagem
 import org.impressivecode.depress.its.oschangemanagement.builder.OsChangeManagementUriBuilder.Mode;
 import org.impressivecode.depress.its.oschangemanagement.model.OsChangeManagementProject;
 import org.impressivecode.depress.its.oschangemanagement.parser.OsChangeManagementRationalAdapterParser;
-import org.impressivecode.depress.its.oschangemanagement.refreshcaller.RefreshCaller;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
@@ -38,6 +37,15 @@ import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
+
+/**
+ * 
+ * @author Marcin Cho³uj, Wroclaw University of Technology
+ * @author Piotr Malek, Wroclaw University of Technology
+ * @author Przemys³aw Trepka, Wroclaw University of Technology
+ * @author £ukasz Trojak, Wroclaw University of Technology
+ * 
+ */
 
 public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 

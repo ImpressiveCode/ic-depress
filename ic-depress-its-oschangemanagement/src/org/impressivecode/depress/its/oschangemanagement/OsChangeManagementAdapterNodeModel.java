@@ -54,6 +54,15 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
 
+/**
+ * 
+ * @author Marcin Cho³uj, Wroclaw University of Technology
+ * @author Piotr Malek, Wroclaw University of Technology
+ * @author Przemys³aw Trepka, Wroclaw University of Technology
+ * @author £ukasz Trojak, Wroclaw University of Technology
+ * 
+ */
+
 public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 
 	private static final int NUMBER_OF_INPUT_PORTS = 0;

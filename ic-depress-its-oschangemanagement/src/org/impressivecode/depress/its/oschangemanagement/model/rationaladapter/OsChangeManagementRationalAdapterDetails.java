@@ -20,6 +20,15 @@ package org.impressivecode.depress.its.oschangemanagement.model.rationaladapter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * 
+ * @author Marcin Cho³uj, Wroclaw University of Technology
+ * @author Piotr Malek, Wroclaw University of Technology
+ * @author Przemys³aw Trepka, Wroclaw University of Technology
+ * @author £ukasz Trojak, Wroclaw University of Technology
+ * 
+ */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OsChangeManagementRationalAdapterDetails {
 	@JsonProperty("rdf:about")
