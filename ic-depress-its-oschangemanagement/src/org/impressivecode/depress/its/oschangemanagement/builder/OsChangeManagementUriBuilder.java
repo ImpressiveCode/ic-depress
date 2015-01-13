@@ -44,7 +44,7 @@ public abstract class OsChangeManagementUriBuilder {
 	protected static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/latest/serverInfo";
 	protected static final int PAGE_SIZE = 50;
 
-	protected Mode mode;
+	protected Mode mode = Mode.PROJECT_LIST;
 	protected String hostname;
 	protected String protocol;
 	protected String project;
@@ -57,6 +57,7 @@ public abstract class OsChangeManagementUriBuilder {
 
 		return this;
 	}
+	
 
 	public OsChangeManagementUriBuilder setProject(String project) {
 		this.project = project;
