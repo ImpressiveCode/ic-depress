@@ -45,7 +45,6 @@ import org.apache.commons.codec.binary.Base64;
 public class OsChangeManagementRestClient {
 
 	private Client client;
-	private HttpURLConnection con;
 	private static boolean flag = false;
 	private static String cookie;
 	public OsChangeManagementRestClient() {
@@ -74,7 +73,6 @@ public class OsChangeManagementRestClient {
 //		return response.readEntity(String.class);
 	}
 	
-	private final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0";
 	
 	private String getBasicAuthenticationEncoding(String username, String password) {
         String userPassword = username + ":" + password;
@@ -125,15 +123,7 @@ public class OsChangeManagementRestClient {
 
 	}
 
-	private boolean isDataFetchSuccessful(Response response) throws Exception {
-        if (response.getStatus() == 401) {
-            throw new SecurityException("Unauthorized.");
-        }
-        if (response.getStatus() != 200) {
-            throw new Exception("Failed to fetch data.");
-        }
-        return true;
-    }
+	
 
 	public Client getClient() {
 		return client;

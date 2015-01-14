@@ -168,22 +168,6 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 		}
 	}
 	
-	private String parseType(String type){
-		switch (type){
-		case "1":
-			return "Blocker";
-		case "2":
-			return "Critical";
-		case "3":
-			return "Major";
-		case "4":
-			return "Minor";
-		case "5":
-			return "Trivial";
-		default:
-			return type;
-		}
-}
 	
 	public void setContributor(
 			ArrayList<OsChangeManagementRationalAdapterDetails> contributor) {
