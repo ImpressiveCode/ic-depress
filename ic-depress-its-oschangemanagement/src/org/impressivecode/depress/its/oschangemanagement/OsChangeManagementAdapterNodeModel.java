@@ -17,7 +17,6 @@
  */
 package org.impressivecode.depress.its.oschangemanagement;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
 
 import java.io.IOException;
@@ -26,11 +25,7 @@ import java.net.URI;
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import javax.crypto.BadPaddingException;
@@ -47,7 +42,6 @@ import org.impressivecode.depress.its.oschangemanagement.parser.OsChangeManageme
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
-import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
@@ -68,16 +62,11 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 	private static final int NUMBER_OF_INPUT_PORTS = 0;
 	private static final int NUMBER_OF_OUTPUT_PORTS = 1;
 	private static final String CFG_ITS_PLUGIN = "plugin";
-	private static final int THREAD_COUNT = 10;
 	private final SettingsModelString pluginSettings = createPluginSettings();
 
 	private OsChangeManagementRestClient client = new OsChangeManagementRestClient();
 	private OsChangeManagementJiraRationalAdapterUriBuilder builder = new OsChangeManagementJiraRationalAdapterUriBuilder();
-	private ExecutorService executorService;
 	private ExecutionContext exec;
-	private ExecutionMonitor issueCountMonitor;
-	private ExecutionMonitor issueListMonitor;
-	private ExecutionMonitor issueHistoryMonitor;
 
 	protected OsChangeManagementAdapterNodeModel() {
 		super(NUMBER_OF_INPUT_PORTS, NUMBER_OF_OUTPUT_PORTS);
@@ -105,8 +94,6 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		ArrayList<URI> uriList = new ArrayList<URI>();
 		this.exec = exec;
 
-		executorService = Executors.newFixedThreadPool(getThreadCount());
-		List<URI> issueLinks = new ArrayList<URI>();
 		builder.setHostname(getURL());
 		builder.setMode(Mode.CHANGE_REQUEST);
 
@@ -154,7 +141,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		String pluginName = pluginSettings.getStringValue();
 		String rawData = client.getJSON(builder.build(), login, password);
 		switch (pluginName) {
-		case OsChangeManagementAdapterNodeDialog.OSLCCM:
+		case OsChangeManagementAdapterNodeDialog.IMB_RATIONAL_ADAPTER:
 			return new OsChangeManagementRationalAdapterParser()
 					.getIssueCount(rawData);
 		default:
@@ -196,10 +183,6 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		return path.substring(path.lastIndexOf('/') + 1);
 	}
 
-	private int getThreadCount() {
-		return THREAD_COUNT;
-	}
-
 	private List<ITSDataType> executeIssuesLinks(final List<URI> issuesLinks)
 			throws InterruptedException, ExecutionException {
 		List<ITSDataType> list = new ArrayList<ITSDataType>();
@@ -222,7 +205,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		builder.setMode(mode);
 		String rawData = client.getJSON(builder.build(), login, password);
 		switch (pluginName) {
-		case OsChangeManagementAdapterNodeDialog.OSLCCM:
+		case OsChangeManagementAdapterNodeDialog.IMB_RATIONAL_ADAPTER:
 			return (List<T>) new OsChangeManagementRationalAdapterParser()
 					.getProjectList(rawData);
 		default:
@@ -267,7 +250,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		checkForCancel();
 		String pluginName = pluginSettings.getStringValue();
 		switch (pluginName) {
-		case "OSLCCM":
+		case OsChangeManagementAdapterNodeDialog.IMB_RATIONAL_ADAPTER:
 			return new OsChangeManagementRationalAdapterParser(mappingManager
 					.getPriorityModel().getIncluded(), mappingManager
 					.getTypeModel().getIncluded(), mappingManager
