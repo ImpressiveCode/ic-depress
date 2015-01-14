@@ -49,7 +49,7 @@ import org.knime.core.node.port.PortObjectSpec;
 
 public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 
-	protected final static String OSLCCM = "OSLCCM";
+	protected final static String IMB_RATIONAL_ADAPTER = "IBM Rational Adapter";
 	public final static String PRIORITY = "PRIORITY";
 	public final static String TYPE = "TYPE";
 	public final static String RESOLUTION = "RESOLUTION";
@@ -83,7 +83,7 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	
 	protected String[] getPluginsName(){
 		ArrayList<String> plugins = new ArrayList<String>();
-		plugins.add(OSLCCM);
+		plugins.add(IMB_RATIONAL_ADAPTER);
 		return plugins.toArray(new String[plugins.size()]);
 	}
 	@Override
@@ -144,7 +144,7 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
         URI uri = builder.build();
         String rawData = client.getJSON(builder.build(), login, password);
         switch (pluginName){
-        case OSLCCM:
+        case IMB_RATIONAL_ADAPTER:
         	return (List<T>) new OsChangeManagementRationalAdapterParser().getProjectList(rawData);
 		default:
 			return null;

@@ -154,7 +154,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		String pluginName = pluginSettings.getStringValue();
 		String rawData = client.getJSON(builder.build(), login, password);
 		switch (pluginName) {
-		case OsChangeManagementAdapterNodeDialog.OSLCCM:
+		case OsChangeManagementAdapterNodeDialog.IMB_RATIONAL_ADAPTER:
 			return new OsChangeManagementRationalAdapterParser()
 					.getIssueCount(rawData);
 		default:
@@ -222,7 +222,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		builder.setMode(mode);
 		String rawData = client.getJSON(builder.build(), login, password);
 		switch (pluginName) {
-		case OsChangeManagementAdapterNodeDialog.OSLCCM:
+		case OsChangeManagementAdapterNodeDialog.IMB_RATIONAL_ADAPTER:
 			return (List<T>) new OsChangeManagementRationalAdapterParser()
 					.getProjectList(rawData);
 		default:
