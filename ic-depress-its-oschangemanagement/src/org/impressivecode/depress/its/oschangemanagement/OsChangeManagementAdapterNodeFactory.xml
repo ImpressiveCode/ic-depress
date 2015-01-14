@@ -20,7 +20,6 @@
 				<ul>
 					<li>Id - issue key</li>
 					<li>Created - issue creation date</li>
-					<li>Resolved - issue resolution date</li>
 					<li>Updated - last update date</li>
 					<li>Status - issue status; the possible values are: OPEN,
 						IN_PROGRESS, REOPEN, CLOSED, RESOLVED, UNKNOWN;</li>
@@ -28,22 +27,13 @@
 						TEST, UNKNOWN;</li>
 					<li>Resolution - issue resolution; the possible values are:
 						INVALID, FIXED, WONT_FIX, DUPLICATE, UNRESOLVED, UNKNOWN;</li>
-					<li>Version - list of versions</li>
-					<li>Fix version - list of fix versions</li>
 					<li>Priority - issue priority; the possible values are: TRIVIAL,
 						MINOR, MAJOR, CRITICAL, BLOCKER, UNKNOWN</li>
 					<li>Summary - issue summary</li>
 					<li>Reporter - Issue reporter</li>
-					<li>Assignees - set of assignees, Jira allows only one assignee, so
-						this be a set with one element</li>
-					<li>Comment authors - comment authors set</li>
+					<li>Assignees - set of assignees</li>
 					<li>Link - link to the issue</li>
-					<li>Description - issue description</li>
-					<li>Comments - issue comment list</li>
-					<li>Time estimated - The number of hours that it was estimated that
-						this bug would take.</li>
-					<li>Time spent - The total number of hours that this bug has taken
-						(so far)</li>
+					<li>Description - issue description</li>					
 				</ul>
 			</p>
 			<p>
@@ -69,6 +59,6 @@
 	</fullDescription>
 
 	<ports>
-		<outPort index="0" name="Issue Tracking System Data Table">Datatable read from Jira Online System</outPort>
+		<outPort index="0" name="Issue Tracking System Data Table">Datatable read from OSCM system.</outPort>
 	</ports>
 </knimeNode>

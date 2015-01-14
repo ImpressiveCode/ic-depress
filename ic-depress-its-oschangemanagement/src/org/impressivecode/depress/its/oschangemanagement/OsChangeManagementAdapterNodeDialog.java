@@ -141,7 +141,6 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
         String pluginName = ((SettingsModelString) (pluginComponent.getModel())).getStringValue();
         builder.setHostname(urlString);
         builder.setMode(mode);
-        URI uri = builder.build();
         String rawData = client.getJSON(builder.build(), login, password);
         switch (pluginName){
         case IMB_RATIONAL_ADAPTER:
