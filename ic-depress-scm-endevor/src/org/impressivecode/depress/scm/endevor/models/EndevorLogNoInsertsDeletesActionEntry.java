@@ -80,7 +80,8 @@ public class EndevorLogNoInsertsDeletesActionEntry extends EndevorLogEntryBase {
 			this.parseDateTime();
 		}
 		else {
-			throw new EndevorLogParserException(String.format("Parsed log row has different number of cells than column headers. Parsing row: %s", this.rawLogDataRow));
+			throw new EndevorLogParserException(String.format("Parsed log row has different number of cells than column headers. Parsing row: \n%s",
+					this.rawLogDataRow));
 		}
 	}
 	

@@ -68,7 +68,6 @@ public class EndevorParserNodeModel extends NodeModel {
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
 
         logger.info(String.format("Endevor log processing started from file %s...", smSelectedFilename.getStringValue()));
-        System.out.println(String.format("Endevor log processing started from file %s...", smSelectedFilename.getStringValue()));
         
         EndevorLogParser parser = new EndevorLogParser(new File(smSelectedFilename.getStringValue()));
         parser.parseLogFile();

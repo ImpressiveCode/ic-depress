@@ -14,6 +14,7 @@ import org.impressivecode.depress.scm.endevor.models.EndevorElementPathModel;
 import org.impressivecode.depress.scm.endevor.models.EndevorLogEntryBase;
 import org.impressivecode.depress.scm.endevor.models.EndevorLogNoInsertsDeletesActionEntry;
 import org.impressivecode.depress.scm.endevor.models.EndevorLogWithInsertsDeletesActionEntry;
+import org.knime.core.node.NodeLogger;
 
 public class EndevorLogParser {
 	
@@ -21,6 +22,8 @@ public class EndevorLogParser {
 	private LinkedList<SCMDataType> parsedData;
 	private LinkedList <EndevorLogEntryBase> rawEndevorData;
 	private EndevorElementPathModel currentlyProcessedElementSummary;
+	
+	private NodeLogger logger = NodeLogger.getLogger(EndevorLogParser.class);
 	
 	public EndevorLogParser() {}
 	
@@ -36,22 +39,30 @@ public class EndevorLogParser {
 			String currentLine = scanner.nextLine();
 			if (isLineUsable(currentLine)) {
 				EndevorParsingPhase phase = verifyLine(currentLine);
-				switch(phase) {
-					case SEARCHING:
-						break;
-						
-					case SUMMARY:
-						currentLine = skipUselessLogLines(scanner);
-						
-						EndevorElementPathModel pathModel = processElementSummarySection(scanner, currentLine);
-						this.currentlyProcessedElementSummary = pathModel;
-						break;
-						
-					case SOURCE_INFO:
-						currentLine = skipUselessLogLines(scanner);
-						
-						processSourceLevelInformationSection(scanner, currentLine);	
-						break;
+				try {
+					switch(phase) {
+						case SEARCHING:
+							break;
+							
+						case SUMMARY:
+							currentLine = skipUselessLogLines(scanner);
+							
+							EndevorElementPathModel pathModel = processElementSummarySection(scanner, currentLine);
+							this.currentlyProcessedElementSummary = pathModel;
+							break;
+							
+						case SOURCE_INFO:
+							currentLine = skipUselessLogLines(scanner);
+							
+							processSourceLevelInformationSection(scanner, currentLine);	
+							break;
+					}
+				}
+				catch (EndevorLogParserException endEx) {
+					logger.error(endEx);
+				}
+				catch (Exception e) {
+					logger.error(e);
 				}
 			}
 		}
