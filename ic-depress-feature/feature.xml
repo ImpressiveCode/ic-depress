@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="DePress"
       label="DePress"
@@ -282,6 +282,13 @@ END OF TERMS AND CONDITIONS
          download-size="0"
          install-size="0"
          version="2.0.0.qualifier"/>
+
+   <plugin
+         id="org.impressivecode.depress.mr.googlemetrics"
+         download-size="0"
+         install-size="0"
+         version="2.0.0.qualifier"/>
+
 
    <plugin
          id="org.impressivecode.depress.mr.jacoco"
