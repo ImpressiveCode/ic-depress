@@ -23,7 +23,7 @@ public class EndevorLogParser {
 	private LinkedList <EndevorLogEntryBase> rawEndevorData;
 	private EndevorElementPathModel currentlyProcessedElementSummary;
 	
-	private NodeLogger logger = NodeLogger.getLogger(EndevorLogParser.class);
+	private NodeLogger logger;
 	
 	public EndevorLogParser() {}
 	
@@ -31,6 +31,7 @@ public class EndevorLogParser {
 		this.logFile = logFile;
 		this.parsedData = new LinkedList<SCMDataType>();
 		this.rawEndevorData = new LinkedList<EndevorLogEntryBase>();
+		this.logger = NodeLogger.getLogger(EndevorLogParser.class);
 	}
 	
 	public void parseLogFile() throws FileNotFoundException, EndevorLogParserException {
@@ -215,7 +216,7 @@ public class EndevorLogParser {
 
 	public List<SCMDataType> getParsedCommits() throws EndevorLogParserException {
         if (this.parsedData.size() == 0) {
-        	throw new EndevorLogParserException("The log file has been parsed and did not contain any Endevor log changes history data.");
+        	throw new EndevorLogParserException("\nThe log file has been parsed and did not contain any valid Endevor changes history data.");
         }
         else {
         	return this.parsedData;

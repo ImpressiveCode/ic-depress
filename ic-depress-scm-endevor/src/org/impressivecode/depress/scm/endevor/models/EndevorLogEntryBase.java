@@ -63,7 +63,7 @@ public abstract class EndevorLogEntryBase {
 			this.dateParsed.setTime(utc);
 		}
 		catch (Exception e) {
-			throw new EndevorLogParserException(String.format("Exception raised during datetime parsing: %s, %s.\n" +
+			throw new EndevorLogParserException(String.format("\nCould not parse the datetime present in log file: %s, %s.\n" +
 					"Raw row data:\n%s", this.date, this.time, this.rawLogDataRow));
 		}
 	}

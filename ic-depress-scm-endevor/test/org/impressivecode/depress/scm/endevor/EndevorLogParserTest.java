@@ -19,8 +19,7 @@ public class EndevorLogParserTest {
 	@Test
 	public void testParseDateTimeWithCorrectValues() throws Exception {
 		String methodName = "parseDateTime";
-		EndevorLogEntryBase testData = new EndevorLogNoInsertsDeletesActionEntry(
-				null, null);
+		EndevorLogEntryBase testData = new EndevorLogNoInsertsDeletesActionEntry(null, null);
 		testData.setDate("12JAN12");
 		testData.setTime("13:13");
 
@@ -38,8 +37,7 @@ public class EndevorLogParserTest {
 	@Test(expected = EndevorLogParserException.class)
 	public void testParseDateTimeWithIncorrectValues() throws Throwable {
 		String methodName = "parseDateTime";
-		EndevorLogEntryBase testData = new EndevorLogNoInsertsDeletesActionEntry(
-				null, null);
+		EndevorLogEntryBase testData = new EndevorLogNoInsertsDeletesActionEntry(null, null);
 		testData.setDate("12abc14");
 		testData.setTime("13:43");
 
@@ -57,12 +55,10 @@ public class EndevorLogParserTest {
 		String methodName = "parseMonth";
 		String input = "MAY";
 
-		Method method = EndevorLogEntryBase.class.getDeclaredMethod(methodName,
-				String.class);
+		Method method = EndevorLogEntryBase.class.getDeclaredMethod(methodName, String.class);
 		method.setAccessible(true);
 
-		int result = (int) method.invoke(
-				new EndevorLogNoInsertsDeletesActionEntry(null, null), input);
+		int result = (int) method.invoke(new EndevorLogNoInsertsDeletesActionEntry(null, null), input);
 
 		Assert.assertEquals(4, result);
 	}
@@ -72,14 +68,11 @@ public class EndevorLogParserTest {
 		String methodName = "parseMonth";
 		String input = "abc";
 
-		Method method = EndevorLogEntryBase.class.getDeclaredMethod(methodName,
-				String.class);
+		Method method = EndevorLogEntryBase.class.getDeclaredMethod(methodName,String.class);
 		method.setAccessible(true);
 
 		try {
-			method.invoke(
-					new EndevorLogNoInsertsDeletesActionEntry(null, null),
-					input);
+			method.invoke(new EndevorLogNoInsertsDeletesActionEntry(null, null), input);
 		} catch (InvocationTargetException e) {
 			throw new EndevorLogParserException("");
 		}
@@ -90,11 +83,9 @@ public class EndevorLogParserTest {
 		String methodName = "verifyLine";
 		String lineToVerify = "this is test to check if SOURCE LEVEL INFORMATION is in this line";
 
-		Method method = EndevorLogParser.class.getDeclaredMethod(methodName,
-				String.class);
+		Method method = EndevorLogParser.class.getDeclaredMethod(methodName,String.class);
 		method.setAccessible(true);
-		EndevorParsingPhase resultPhase = (EndevorParsingPhase) method.invoke(
-				new EndevorLogParser(), lineToVerify);
+		EndevorParsingPhase resultPhase = (EndevorParsingPhase) method.invoke(new EndevorLogParser(), lineToVerify);
 
 		boolean isResultPhaseEqual = EndevorParsingPhase.SOURCE_INFO == resultPhase;
 		Assert.assertTrue(isResultPhaseEqual);
@@ -105,11 +96,9 @@ public class EndevorLogParserTest {
 		String methodName = "verifyLine";
 		String lineToVerify = "this is test to check what with other resolution";
 
-		Method method = EndevorLogParser.class.getDeclaredMethod(methodName,
-				String.class);
+		Method method = EndevorLogParser.class.getDeclaredMethod(methodName, String.class);
 		method.setAccessible(true);
-		EndevorParsingPhase resultPhase = (EndevorParsingPhase) method.invoke(
-				new EndevorLogParser(), lineToVerify);
+		EndevorParsingPhase resultPhase = (EndevorParsingPhase) method.invoke(new EndevorLogParser(), lineToVerify);
 
 		boolean isResultPhaseEqual = EndevorParsingPhase.SEARCHING == resultPhase;
 		Assert.assertTrue(isResultPhaseEqual);
@@ -121,11 +110,9 @@ public class EndevorLogParserTest {
 		String methodName = "isLineASourceLevelInformationData";
 		String lineToVerify = "   this is test to check if this line starts with triple space";
 
-		Method method = EndevorLogParser.class.getDeclaredMethod(methodName,
-				String.class);
+		Method method = EndevorLogParser.class.getDeclaredMethod(methodName, String.class);
 		method.setAccessible(true);
-		boolean result = (boolean) method.invoke(new EndevorLogParser(),
-				lineToVerify);
+		boolean result = (boolean) method.invoke(new EndevorLogParser(), lineToVerify);
 
 		Assert.assertTrue(result);
 	}
@@ -136,11 +123,9 @@ public class EndevorLogParserTest {
 		String methodName = "isLineASourceLevelInformationData";
 		String lineToVerify = "this is test to check if this line starts with triple space";
 
-		Method method = EndevorLogParser.class.getDeclaredMethod(methodName,
-				String.class);
+		Method method = EndevorLogParser.class.getDeclaredMethod(methodName, String.class);
 		method.setAccessible(true);
-		boolean result = (boolean) method.invoke(new EndevorLogParser(),
-				lineToVerify);
+		boolean result = (boolean) method.invoke(new EndevorLogParser(), lineToVerify);
 
 		Assert.assertFalse(result);
 	}
@@ -150,11 +135,9 @@ public class EndevorLogParserTest {
 		String methodName = "isLineUsable";
 		String lineToVerify = "*** ---- -- -  **test*** * * * **--**-*-";
 
-		Method method = EndevorLogParser.class.getDeclaredMethod(methodName,
-				String.class);
+		Method method = EndevorLogParser.class.getDeclaredMethod(methodName, String.class);
 		method.setAccessible(true);
-		boolean result = (boolean) method.invoke(new EndevorLogParser(),
-				lineToVerify);
+		boolean result = (boolean) method.invoke(new EndevorLogParser(), lineToVerify);
 
 		Assert.assertTrue(result);
 	}
@@ -164,11 +147,9 @@ public class EndevorLogParserTest {
 		String methodName = "isLineUsable";
 		String lineToVerify = "*** ---- -- -  ***** * * * **--**-*-";
 
-		Method method = EndevorLogParser.class.getDeclaredMethod(methodName,
-				String.class);
+		Method method = EndevorLogParser.class.getDeclaredMethod(methodName, String.class);
 		method.setAccessible(true);
-		boolean result = (boolean) method.invoke(new EndevorLogParser(),
-				lineToVerify);
+		boolean result = (boolean) method.invoke(new EndevorLogParser(), lineToVerify);
 
 		Assert.assertFalse(result);
 	}
@@ -177,16 +158,13 @@ public class EndevorLogParserTest {
 	public void testSkipUselessLogLinesWithUsableContent() throws Exception {
 		String methodName = "skipUselessLogLines";
 		String currentLine = "****-- - - *  * - - \n *-*-* * *- test * - *- *--- \n *-*---- *";
-		ByteArrayInputStream input = new ByteArrayInputStream(
-				currentLine.getBytes());
+		ByteArrayInputStream input = new ByteArrayInputStream(currentLine.getBytes());
 		Scanner scanner = new Scanner(input);
 		String wantedLine = " *-*-* * *- test * - *- *--- ";
 
-		Method method = EndevorLogParser.class.getDeclaredMethod(methodName,
-				Scanner.class);
+		Method method = EndevorLogParser.class.getDeclaredMethod(methodName, Scanner.class);
 		method.setAccessible(true);
-		String resultLine = (String) method.invoke(new EndevorLogParser(),
-				scanner);
+		String resultLine = (String) method.invoke(new EndevorLogParser(), scanner);
 
 		boolean isLineEqual = wantedLine.equals(resultLine);
 		Assert.assertTrue(isLineEqual);
@@ -196,12 +174,10 @@ public class EndevorLogParserTest {
 	public void testSkipUselessLogLinesWithNoUsableContent() throws Exception {
 		String methodName = "skipUselessLogLines";
 		String currentLine = "****-- - - *  * - - \n *-*-* * *-  * - *- *--- \n *-*---- *";
-		ByteArrayInputStream input = new ByteArrayInputStream(
-				currentLine.getBytes());
+		ByteArrayInputStream input = new ByteArrayInputStream(currentLine.getBytes());
 		Scanner scanner = new Scanner(input);
 
-		Method method = EndevorLogParser.class.getDeclaredMethod(methodName,
-				Scanner.class);
+		Method method = EndevorLogParser.class.getDeclaredMethod(methodName, Scanner.class);
 		method.setAccessible(true);
 		Object resultLine = method.invoke(new EndevorLogParser(), scanner);
 
