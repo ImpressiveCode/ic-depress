@@ -21,6 +21,7 @@
     <module>ic-depress-mr-ckjm</module>
     <module>ic-depress-mr-eclipsemetrics</module>
     <module>ic-depress-mr-googlemetrics</module>
+	<module>ic-depress-mr-googleaudit</module>
     <module>ic-depress-mr-intellijmetrics</module>
     <module>ic-depress-mr-jacoco</module>
     <module>ic-depress-mr-judy</module>
