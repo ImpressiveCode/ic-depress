@@ -196,7 +196,7 @@ public class EndevorLogParser {
 	private boolean isLineASourceLevelInformationData(String currentLine) {
 		return currentLine.startsWith("   ");
 	}
-	
+
 	private void convertRawEntriesToSCMFormat() {
 		for (EndevorLogEntryBase rawBase : this.rawEndevorData) {
 			SCMDataType scm = new SCMDataType();
@@ -215,7 +215,7 @@ public class EndevorLogParser {
 
 	public List<SCMDataType> getParsedCommits() throws EndevorLogParserException {
         if (this.parsedData.size() == 0) {
-        	throw new EndevorLogParserException("The log file has not been parsed. Call parseLogFile() first.");
+        	throw new EndevorLogParserException("The log file has been parsed and did not contain any Endevor log changes history data.");
         }
         else {
         	return this.parsedData;
