@@ -128,7 +128,12 @@ public class EndevorLogParser {
 				break;
 				
 			default:
-				throw new EndevorLogParserException("Exception while parsing Source Level Information data. Current Line: " + currentLine);
+				throw new EndevorLogParserException(String.format("\nUnable to parse content after SOURCE LEVEL INFORMATION keyword. " +
+						"Expected table headers (in proper order) are:\n%s\nor\n%s\nTable header provided in log was:\n%s\n" +
+						"Please verify the log file and try again.",
+						EndevorLogNoInsertsDeletesActionEntry.ROW_HEADER_MATCHING_PATTERN.replace("(\\s*)", " ").replace("(\\s+)", " "),
+						EndevorLogWithInsertsDeletesActionEntry.ROW_HEADER_MATCHING_PATTERN.replace("(\\s*)", " ").replace("(\\s+)", " "),
+						currentLine));
 		}
 	}
 	
@@ -172,8 +177,8 @@ public class EndevorLogParser {
 		else if (currentLine.matches(EndevorLogWithInsertsDeletesActionEntry.ROW_HEADER_MATCHING_PATTERN)) {
 			return EndevorLogEntryType.WITH_INSERTS_DELETES;
 		}
-		else {	
-			return null;
+		else {
+			return EndevorLogEntryType.UNDETERMINED;
 		}
 	}
 	
