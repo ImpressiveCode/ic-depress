@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSPriority;
@@ -156,7 +157,7 @@ public class OsChangeManagementRationalAdapterParser extends
 			try {
 				its.setCreated(dateStringToObject(item.getCreated()));
 			} catch (ParseException e) {
-				e.printStackTrace();
+				Logger.getLogger("Error").severe(e.getMessage());
 			}
 			its.setDescription(item.getTitle());
 			its.setSummary(item.getDescription());
@@ -169,7 +170,7 @@ public class OsChangeManagementRationalAdapterParser extends
 			try {
 				its.setUpdated(dateStringToObject(item.getModified()));
 			} catch (ParseException e) {
-				e.printStackTrace();
+				Logger.getLogger("Error").severe(e.getMessage());
 			}
 			its.setIssueId(item.getShortTitle());
 			

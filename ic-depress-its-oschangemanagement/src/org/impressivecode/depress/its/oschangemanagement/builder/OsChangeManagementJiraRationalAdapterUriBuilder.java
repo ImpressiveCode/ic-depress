@@ -20,6 +20,7 @@ package org.impressivecode.depress.its.oschangemanagement.builder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.logging.Logger;
 
 
 /**
@@ -57,8 +58,7 @@ public class OsChangeManagementJiraRationalAdapterUriBuilder extends
 			URI uri = new URI(uriString);
 			return uri;
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger("Error").severe(e.getMessage());
 		}
 		
 		return null;

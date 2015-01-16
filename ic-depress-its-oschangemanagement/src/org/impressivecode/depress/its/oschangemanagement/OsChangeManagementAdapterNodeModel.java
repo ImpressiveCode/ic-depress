@@ -119,8 +119,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		try {
 			totalIssues = getIssuesCount();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger("Error").severe(e.getMessage());
 		}
 		if (totalIssues > builder.getPageSize()) {
 			while (totalIssues > 0) {
@@ -190,7 +189,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 			try {
 				list.addAll(call(uri));
 			} catch (Exception e) {
-				e.printStackTrace();
+				Logger.getLogger("Error").severe(e.getMessage());
 			}
 		}
 		return list;
