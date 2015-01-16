@@ -27,6 +27,7 @@
     <module>ic-depress-mr-pmd</module>
     <module>ic-depress-scm-git</module>
     <module>ic-depress-scm-svn</module>
+    <module>ic-depress-scm-endevor</module>
     <module>ic-depress-support-matcher</module>
     <module>ic-depress-support-sourcecrawler</module>
     <module>ic-depress-updatesite</module>

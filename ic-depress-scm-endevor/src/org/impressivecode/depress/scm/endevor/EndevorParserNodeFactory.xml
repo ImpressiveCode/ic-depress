@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<knimeNode icon="./endevor.png" type="Source" xmlns="http://knime.org/node/v2.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://knime.org/node/v2.10 http://knime.org/node/v2.10.xsd">
+    <name>Endevor Parser</name>
+    
+    <shortDescription>
+        
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+	        <p>This node can be used to parse logs of mainframe system called Endevor and then put them into KNIME table.</p>
+	        <p>In order to use this node, prepare a text file containing Endevor log file and simply select it as source file input in options dialog.</p>
+	        <p>IMPORTANT NOTE!
+	        This node parses a concrete type of input text files (that is - files with particular structure produced by Endevor mainframe system).
+	        Input file must contain the following keywords in order to be read properly:
+	        <ul>
+	        	<li>ELEMENT SUMMARY - treated as a start point of each log contained in a single file</li>
+	        	<li>ENVIRONMENT, SYSTEM, SUBSYSTEM, ELEMENT, TYPE, STAGE ID - as mandatory fields below ELEMENT SUMMARY keyword used to produce SCM Path in each log's entry. The final SCM Path is a concatenation of values of those keywords in order: SYSTEM/SUBSYSTEM/ENVIRONMENT/STAGE ID/TYPE/ELEMENT and will be included in any subsequent log entry</li>
+	        	<li>SOURCE LEVEL INFORMATION - indicating that appropriate log entries are below. Note that entries appended to node's output table are only from SOURCE LEVEL INFORMATION containing following the following column headers in this particular order: VVLL, SYNC, USER, DATE, TIME, STMTS, CCID, COMMENT and then followed by one line of dashes (-) indicating each cell's width</li>
+	        </ul>
+	        </p>
+	        <p>Any other data (including source code or SOURCE LEVEL INFORMATION with VV.LL, USER, DATE, TIME, STMTS, INSERTS, DELETES, CCID columns) or keywords attached to input file will be ignored.</p>
+	        <p>Produced SCM Table contains the following Endevor log's data, retrieved from tables below each SOURCE LEVEL INFORMATION containing VVLL, SYNC, USER, DATE, TIME, STMTS, CCID, COMMENT columns and then followed by one line of dashes (-):
+	        <ul>
+	        	<li>Class - constant string 'Endevor SCM'</li>
+	        	<li>Extension - an empty column</li>
+	        	<li>Author - data from USER column</li>
+	        	<li>Action - determined by STMTS column and can be one of three states: MODIFIED if STMTS > 0, COPIED if STMTS = 0 or OTHER in any other case.</li>
+	        	<li>Message - data from COMMENT column</li>
+	        	<li>Path - a concatenation of ELEMENT SUMMARY data in the following order SYSTEM/SUBSYSTEM/ENVIRONMENT/STAGE ID/TYPE/ELEMENT</li>
+	        	<li>Date - data from parsing both DATE and TIME columns</li>
+	        	<li>CommitID - data from CCID column</li>
+	        </ul></p>
+        </intro>
+        
+        
+        <option name="Selected file">An input text file containing Endevor's log data</option>
+    </fullDescription>
+    
+    <ports>
+        <outPort index="0" name="Endevor changes history">Table with data retrieved from provided Endevor's log file</outPort>
+    </ports>    
+</knimeNode>
