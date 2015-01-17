@@ -33,10 +33,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OsChangeManagementRationalAdapterPagingInfo {
-	
+
 	@JsonProperty("oslc:totalCount")
 	private int totalCount;
-	
+
 	public int getTotalCount() {
 		return totalCount;
 	}
@@ -63,7 +63,7 @@ public class OsChangeManagementRationalAdapterPagingInfo {
 
 	@JsonProperty("oslc:nextPage")
 	private OsChangeManagementRationalAdapterNextPageUrl results;
-	
+
 	@JsonProperty("jira:startIndex")
 	private int startIndex;
 }

@@ -81,14 +81,12 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 	}
 
 	@Override
-	protected PortObjectSpec[] configure(final PortObjectSpec[] inSpecs)
-			throws InvalidSettingsException {
+	protected PortObjectSpec[] configure(final PortObjectSpec[] inSpecs) throws InvalidSettingsException {
 		return new PortObjectSpec[NUMBER_OF_OUTPUT_PORTS];
 	}
 
 	@Override
-	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
-			final ExecutionContext exec) throws Exception {
+	protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec) throws Exception {
 
 		ArrayList<String> projectList = (ArrayList<String>) getProjectList();
 		ArrayList<URI> uriList = new ArrayList<URI>();
@@ -142,8 +140,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		String rawData = client.getJSON(builder.build(), login, password);
 		switch (pluginName) {
 		case OsChangeManagementAdapterNodeDialog.IMB_RATIONAL_ADAPTER:
-			return new OsChangeManagementRationalAdapterParser()
-					.getIssueCount(rawData);
+			return new OsChangeManagementRationalAdapterParser().getIssueCount(rawData);
 		default:
 			return 0;
 		}
@@ -161,8 +158,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 						projectList.add(getLastPathFragment(item.getUri()));
 				}
 			} catch (Exception e) {
-				Logger.getLogger("Error")
-						.severe("Error during connection, list could not be downloaded");
+				Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
 			}
 		} else {
 			List<OsChangeManagementProject> projects;
@@ -172,8 +168,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 					projectList.add(getLastPathFragment(item.getUri()));
 				}
 			} catch (Exception e) {
-				Logger.getLogger("Error")
-						.severe("Error during connection, list could not be downloaded");
+				Logger.getLogger("Error").severe("Error during connection, list could not be downloaded");
 			}
 		}
 		return projectList;
@@ -183,8 +178,7 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		return path.substring(path.lastIndexOf('/') + 1);
 	}
 
-	private List<ITSDataType> executeIssuesLinks(final List<URI> issuesLinks)
-			throws InterruptedException, ExecutionException {
+	private List<ITSDataType> executeIssuesLinks(final List<URI> issuesLinks) throws InterruptedException, ExecutionException {
 		List<ITSDataType> list = new ArrayList<ITSDataType>();
 		for (URI uri : issuesLinks) {
 			try {
@@ -206,17 +200,15 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		String rawData = client.getJSON(builder.build(), login, password);
 		switch (pluginName) {
 		case OsChangeManagementAdapterNodeDialog.IMB_RATIONAL_ADAPTER:
-			return (List<T>) new OsChangeManagementRationalAdapterParser()
-					.getProjectList(rawData);
+			return (List<T>) new OsChangeManagementRationalAdapterParser().getProjectList(rawData);
 		default:
 			return null;
 		}
 	}
 
-	private BufferedDataTable transform(final List<ITSDataType> entries,
-			final ExecutionContext exec) throws CanceledExecutionException {
-		ITSAdapterTransformer transformer = new ITSAdapterTransformer(
-				createDataColumnSpec());
+	private BufferedDataTable transform(final List<ITSDataType> entries, final ExecutionContext exec)
+			throws CanceledExecutionException {
+		ITSAdapterTransformer transformer = new ITSAdapterTransformer(createDataColumnSpec());
 		return transformer.transform(entries, exec);
 	}
 
@@ -230,19 +222,16 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 	}
 
 	@Override
-	protected void validateSpecificSettings(NodeSettingsRO settings)
-			throws InvalidSettingsException {
+	protected void validateSpecificSettings(NodeSettingsRO settings) throws InvalidSettingsException {
 		pluginSettings.validateSettings(settings);
 	}
 
 	@Override
-	protected void loadSpecificSettingsFrom(NodeSettingsRO settings)
-			throws InvalidSettingsException {
+	protected void loadSpecificSettingsFrom(NodeSettingsRO settings) throws InvalidSettingsException {
 		pluginSettings.loadSettingsFrom(settings);
 	}
 
-	public List<ITSDataType> call(URI uri) throws InvalidKeyException,
-			BadPaddingException, IllegalBlockSizeException,
+	public List<ITSDataType> call(URI uri) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException,
 			UnsupportedEncodingException, IOException, Exception {
 		checkForCancel();
 
@@ -251,10 +240,8 @@ public class OsChangeManagementAdapterNodeModel extends ITSOnlineNodeModel {
 		String pluginName = pluginSettings.getStringValue();
 		switch (pluginName) {
 		case OsChangeManagementAdapterNodeDialog.IMB_RATIONAL_ADAPTER:
-			return new OsChangeManagementRationalAdapterParser(mappingManager
-					.getPriorityModel().getIncluded(), mappingManager
-					.getTypeModel().getIncluded(), mappingManager
-					.getResolutionModel().getIncluded(), mappingManager
+			return new OsChangeManagementRationalAdapterParser(mappingManager.getPriorityModel().getIncluded(), mappingManager
+					.getTypeModel().getIncluded(), mappingManager.getResolutionModel().getIncluded(), mappingManager
 					.getStatusModel().getIncluded()).getIssues(rawData);
 		default:
 			return new ArrayList<ITSDataType>();

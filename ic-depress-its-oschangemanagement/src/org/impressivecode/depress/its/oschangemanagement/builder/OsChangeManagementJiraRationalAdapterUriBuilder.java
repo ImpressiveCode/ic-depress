@@ -21,7 +21,6 @@ package org.impressivecode.depress.its.oschangemanagement.builder;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-
 /**
  * Builder for JIRA REST API
  * 
@@ -32,8 +31,7 @@ import java.net.URISyntaxException;
  * 
  */
 
-public class OsChangeManagementJiraRationalAdapterUriBuilder extends
-		OsChangeManagementUriBuilder {
+public class OsChangeManagementJiraRationalAdapterUriBuilder extends OsChangeManagementUriBuilder {
 
 	private static final String BASIC_URI_PATH = "{protocol}://{hostname}/rest/oslc/latest/{command}";
 	private static final String PROJECT_LIST_PARAM = "projects";
@@ -46,13 +44,11 @@ public class OsChangeManagementJiraRationalAdapterUriBuilder extends
 
 	@Override
 	protected URI buildChangeRequestsURI(int startIndex) {
-		String command = CHANGE_REQUESTS_PARAM.replace("{project}", project)
-				.replace("{startIndex}", startIndex + "")
+		String command = CHANGE_REQUESTS_PARAM.replace("{project}", project).replace("{startIndex}", startIndex + "")
 				.replace("{pageSize}", PAGE_SIZE + "");
-		String uriString = BASIC_URI_PATH.replace("{protocol}", protocol)
-				.replace("{hostname}", hostname)
+		String uriString = BASIC_URI_PATH.replace("{protocol}", protocol).replace("{hostname}", hostname)
 				.replace("{command}", command);
-		
+
 		try {
 			URI uri = new URI(uriString);
 			return uri;
@@ -60,12 +56,12 @@ public class OsChangeManagementJiraRationalAdapterUriBuilder extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
-	 public OsChangeManagementJiraRationalAdapterUriBuilder prepareNextLink() {
-	        this.startIndex += OsChangeManagementJiraRationalAdapterUriBuilder.PAGE_SIZE;
-	        return this;
-	    }
+
+	public OsChangeManagementJiraRationalAdapterUriBuilder prepareNextLink() {
+		this.startIndex += OsChangeManagementJiraRationalAdapterUriBuilder.PAGE_SIZE;
+		return this;
+	}
 }

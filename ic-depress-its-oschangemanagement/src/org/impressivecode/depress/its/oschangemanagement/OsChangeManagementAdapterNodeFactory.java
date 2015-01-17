@@ -32,29 +32,29 @@ import org.knime.core.node.NodeView;
 
 public class OsChangeManagementAdapterNodeFactory extends NodeFactory<OsChangeManagementAdapterNodeModel> {
 
-    @Override
-    public OsChangeManagementAdapterNodeModel createNodeModel() {
-        return new OsChangeManagementAdapterNodeModel();
-    }
+	@Override
+	public OsChangeManagementAdapterNodeModel createNodeModel() {
+		return new OsChangeManagementAdapterNodeModel();
+	}
 
-    @Override
-    public int getNrNodeViews() {
-        return 0;
-    }
+	@Override
+	public int getNrNodeViews() {
+		return 0;
+	}
 
-    @Override
-    public NodeView<OsChangeManagementAdapterNodeModel> createNodeView(final int viewIndex,
-            final OsChangeManagementAdapterNodeModel nodeModel) {
-        throw new IllegalStateException("View not supported");
-    }
+	@Override
+	public NodeView<OsChangeManagementAdapterNodeModel> createNodeView(final int viewIndex,
+			final OsChangeManagementAdapterNodeModel nodeModel) {
+		throw new IllegalStateException("View not supported");
+	}
 
-    @Override
-    public boolean hasDialog() {
-        return true;
-    }
+	@Override
+	public boolean hasDialog() {
+		return true;
+	}
 
-    @Override
-    public NodeDialogPane createNodeDialogPane() {
-        return new OsChangeManagementAdapterNodeDialog();
-    }
+	@Override
+	public NodeDialogPane createNodeDialogPane() {
+		return new OsChangeManagementAdapterNodeDialog();
+	}
 }

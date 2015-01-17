@@ -36,10 +36,11 @@ public class OsChangeManagementRationalAdapterProjectList {
 
 	@JsonProperty("rdfs:member")
 	private ArrayList<OsChangeManagementRationalAdapterProjectListItem> member;
-	
+
 	public ArrayList<OsChangeManagementRationalAdapterProjectListItem> getMember() {
 		return member;
 	}
+
 	public void setMember(ArrayList<OsChangeManagementRationalAdapterProjectListItem> member) {
 		this.member = member;
 	}

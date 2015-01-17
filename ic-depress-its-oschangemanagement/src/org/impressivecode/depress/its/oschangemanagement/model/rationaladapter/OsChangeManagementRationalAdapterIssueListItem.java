@@ -35,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OsChangeManagementRationalAdapterIssueListItem {
-	
+
 	@JsonProperty("dcterms:contributor")
 	private ArrayList<OsChangeManagementRationalAdapterDetails> contributor;
 
@@ -82,17 +82,17 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 
 	@JsonProperty("dcterms:type")
 	private String type;
-	
+
 	public ArrayList<OsChangeManagementRationalAdapterDetails> getContributor() {
 		return contributor;
 	}
 
 	public Set<String> getContributorAsSet() {
 		Set<String> ret = new HashSet<String>();
-		for(OsChangeManagementRationalAdapterDetails item : getContributor()){
+		for (OsChangeManagementRationalAdapterDetails item : getContributor()) {
 			ret.add(getLastPathFragment(item.getAboutUrl()));
 		}
- 		return ret;
+		return ret;
 	}
 
 	public String getCreated() {
@@ -103,7 +103,7 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 		return creator;
 	}
 
-	public String getFirstCreator(){
+	public String getFirstCreator() {
 		return getLastPathFragment(getCreator().get(0).getAboutUrl());
 	}
 
@@ -115,7 +115,7 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 		return issueType;
 	}
 
-	private String getLastPathFragment(String path){
+	private String getLastPathFragment(String path) {
 		return path.substring(path.lastIndexOf('/') + 1);
 	}
 
@@ -126,33 +126,33 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 	public OsChangeManagementRationalAdapterDetails getPriority() {
 		return priority;
 	}
-	
+
 	public String getPriorityAsString() {
 		return parsePriority(getLastPathFragment(getPriority().getAboutUrl()));
 	}
-	
+
 	public String getResolution() {
 		return resolution;
-	}	
-	
+	}
+
 	public String getShortTitle() {
 		return shortTitle;
 	}
-	
+
 	public String getStatus() {
 		return status;
-	}	
-	
+	}
+
 	public String getTitle() {
 		return title;
 	}
-	
+
 	public String getType() {
 		return type;
-	}	
-	
-	private String parsePriority(String priority){
-		switch (priority){
+	}
+
+	private String parsePriority(String priority) {
+		switch (priority) {
 		case "1":
 			return "Blocker";
 		case "2":
@@ -167,30 +167,27 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 			return priority;
 		}
 	}
-	
-	
-	public void setContributor(
-			ArrayList<OsChangeManagementRationalAdapterDetails> contributor) {
+
+	public void setContributor(ArrayList<OsChangeManagementRationalAdapterDetails> contributor) {
 		this.contributor = contributor;
 	}
-	
+
 	public void setCreated(String created) {
 		this.created = created;
 	}
-	
-	public void setCreator(
-			ArrayList<OsChangeManagementRationalAdapterDetails> creator) {
+
+	public void setCreator(ArrayList<OsChangeManagementRationalAdapterDetails> creator) {
 		this.creator = creator;
 	}
-	
+
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
 	}
-	
+
 	public void setIssueType(OsChangeManagementRationalAdapterDetails issueType) {
 		this.issueType = issueType;
 	}
-	
+
 	public void setModified(String modified) {
 		this.modified = modified;
 	}
@@ -202,7 +199,7 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 	public void setResolution(String resolution) {
 		this.resolution = resolution;
 	}
-	
+
 	public void setShortTitle(String shortTitle) {
 		this.shortTitle = shortTitle;
 	}
@@ -210,14 +207,13 @@ public class OsChangeManagementRationalAdapterIssueListItem {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-		
-		public void setType(String type) {
-			this.type = type;
-		}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }
-

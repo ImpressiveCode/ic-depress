@@ -44,113 +44,114 @@ import org.impressivecode.depress.its.oschangemanagement.model.rationaladapter.O
  * 
  */
 
-public class OsChangeManagementRationalAdapterParser extends
-		OsChangeManagementAdapterParser {
-    private static final int START_HOSTNAME_INDEX = 0;
+public class OsChangeManagementRationalAdapterParser extends OsChangeManagementAdapterParser {
+	private static final int START_HOSTNAME_INDEX = 0;
 	private static final int END_HOSTNAME_INDEX = 7;
 	private final HashMap<String, String[]> priorityMap;
-    private final HashMap<String, String[]> typeMap;
-    private final HashMap<String, String[]> resolutionMap;
-    private final HashMap<String, String[]> statusMap;
-	
-    public OsChangeManagementRationalAdapterParser(HashMap<String, String[]> priority, HashMap<String, String[]> type,
-            HashMap<String, String[]> resolution, HashMap<String, String[]> status) {
-        super();
-        this.priorityMap = priority;
-        this.typeMap = type;
-        this.resolutionMap = resolution;
-        this.statusMap = status;
-    }
-    
-    public OsChangeManagementRationalAdapterParser(){
-    	super();
-    	this.priorityMap = new HashMap<>();
-        this.typeMap = new HashMap<>();
-        this.resolutionMap = new HashMap<>();
-        this.statusMap = new HashMap<>();
-    }
-    
-    private ITSResolution parseResolutionFromMap(final String valueToParse) {
-        if (valueToParse == null) {
-            return ITSResolution.UNKNOWN;
-        }
-        for (String key : resolutionMap.keySet()) {
-            for (String value : resolutionMap.get(key)) {
-                if (valueToParse.equalsIgnoreCase(value))
-                    return ITSResolution.get(key);
-            }
-        }
-        return ITSResolution.UNKNOWN;
-    }
+	private final HashMap<String, String[]> typeMap;
+	private final HashMap<String, String[]> resolutionMap;
+	private final HashMap<String, String[]> statusMap;
 
-    private ITSStatus parseStatusFromMap(final String valueToParse) {
-        if (valueToParse == null) {
-            return ITSStatus.UNKNOWN;
-        }
-        for (String key : statusMap.keySet()) {
-            for (String value : statusMap.get(key)) {
-                if (valueToParse.equalsIgnoreCase(value))
-                    return ITSStatus.get(key);
-            }
-        }
-        return ITSStatus.UNKNOWN;
-    }
+	public OsChangeManagementRationalAdapterParser(HashMap<String, String[]> priority, HashMap<String, String[]> type,
+			HashMap<String, String[]> resolution, HashMap<String, String[]> status) {
+		super();
+		this.priorityMap = priority;
+		this.typeMap = type;
+		this.resolutionMap = resolution;
+		this.statusMap = status;
+	}
 
-    private ITSType parseTypeFromMap(final String valueToParse) {
-        if (valueToParse == null) {
-            return ITSType.UNKNOWN;
-        }
-        for (String key : typeMap.keySet()) {
-            for (String value : typeMap.get(key)) {
-                if (valueToParse.equalsIgnoreCase(value))
-                    return ITSType.get(key);
-            }
-        }
-        return ITSType.UNKNOWN;
-    }
+	public OsChangeManagementRationalAdapterParser() {
+		super();
+		this.priorityMap = new HashMap<>();
+		this.typeMap = new HashMap<>();
+		this.resolutionMap = new HashMap<>();
+		this.statusMap = new HashMap<>();
+	}
 
-    private ITSPriority parsePriorityFromMap(final String valueToParse) {
-        if (valueToParse == null) {
-            return ITSPriority.UNKNOWN;
-        }
-        for (String key : priorityMap.keySet()) {
-            for (String value : priorityMap.get(key)) {
-                if (valueToParse.equalsIgnoreCase(value))
-                    return ITSPriority.get(key);
-            }
-        }
-        return ITSPriority.UNKNOWN;
-    }
-    
+	private ITSResolution parseResolutionFromMap(final String valueToParse) {
+		if (valueToParse == null) {
+			return ITSResolution.UNKNOWN;
+		}
+		for (String key : resolutionMap.keySet()) {
+			for (String value : resolutionMap.get(key)) {
+				if (valueToParse.equalsIgnoreCase(value))
+					return ITSResolution.get(key);
+			}
+		}
+		return ITSResolution.UNKNOWN;
+	}
+
+	private ITSStatus parseStatusFromMap(final String valueToParse) {
+		if (valueToParse == null) {
+			return ITSStatus.UNKNOWN;
+		}
+		for (String key : statusMap.keySet()) {
+			for (String value : statusMap.get(key)) {
+				if (valueToParse.equalsIgnoreCase(value))
+					return ITSStatus.get(key);
+			}
+		}
+		return ITSStatus.UNKNOWN;
+	}
+
+	private ITSType parseTypeFromMap(final String valueToParse) {
+		if (valueToParse == null) {
+			return ITSType.UNKNOWN;
+		}
+		for (String key : typeMap.keySet()) {
+			for (String value : typeMap.get(key)) {
+				if (valueToParse.equalsIgnoreCase(value))
+					return ITSType.get(key);
+			}
+		}
+		return ITSType.UNKNOWN;
+	}
+
+	private ITSPriority parsePriorityFromMap(final String valueToParse) {
+		if (valueToParse == null) {
+			return ITSPriority.UNKNOWN;
+		}
+		for (String key : priorityMap.keySet()) {
+			for (String value : priorityMap.get(key)) {
+				if (valueToParse.equalsIgnoreCase(value))
+					return ITSPriority.get(key);
+			}
+		}
+		return ITSPriority.UNKNOWN;
+	}
+
 	@Override
 	public List<OsChangeManagementProject> getProjectList(String source) {
-		
+
 		List<OsChangeManagementProject> projects = new ArrayList<OsChangeManagementProject>();
-		OsChangeManagementRationalAdapterProjectList rationalAdapterProjectList = parseJSON(source, OsChangeManagementRationalAdapterProjectList.class);
-		
-		for(OsChangeManagementRationalAdapterProjectListItem item : rationalAdapterProjectList.getMember())
-		{
+		OsChangeManagementRationalAdapterProjectList rationalAdapterProjectList = parseJSON(source,
+				OsChangeManagementRationalAdapterProjectList.class);
+
+		for (OsChangeManagementRationalAdapterProjectListItem item : rationalAdapterProjectList.getMember()) {
 			OsChangeManagementProject project = new OsChangeManagementProject();
 			project.setName(item.getName());
 			project.setUri(item.getUri());
 			projects.add(project);
 		}
-		
+
 		return projects;
 	}
 
 	@Override
 	public int getIssueCount(String source) {
-		OsChangeManagementRationalAdapterIssuesList issues = parseJSON(source, OsChangeManagementRationalAdapterIssuesList.class);
+		OsChangeManagementRationalAdapterIssuesList issues = parseJSON(source,
+				OsChangeManagementRationalAdapterIssuesList.class);
 		return issues.getResponseInfo().getTotalCount();
 	}
-	
+
 	@Override
 	public List<ITSDataType> getIssues(String source) {
-		OsChangeManagementRationalAdapterIssuesList issues = parseJSON(source, OsChangeManagementRationalAdapterIssuesList.class);
+		OsChangeManagementRationalAdapterIssuesList issues = parseJSON(source,
+				OsChangeManagementRationalAdapterIssuesList.class);
 		ArrayList<ITSDataType> ret = new ArrayList<ITSDataType>();
-		
-		for(OsChangeManagementRationalAdapterIssueListItem item : issues.getResults()){
+
+		for (OsChangeManagementRationalAdapterIssueListItem item : issues.getResults()) {
 			ITSDataType its = new ITSDataType();
 			its.setAssignees(item.getContributorAsSet());
 			try {
@@ -165,22 +166,24 @@ public class OsChangeManagementRationalAdapterParser extends
 			its.setType(parseTypeFromMap(item.getType()));
 			its.setPriority(parsePriorityFromMap(item.getPriorityAsString()));
 			its.setResolution(parseResolutionFromMap(item.getResolution()));
-			its.setLink(item.getPriority().getAboutUrl().substring(START_HOSTNAME_INDEX, item.getPriority().getAboutUrl().indexOf("/", END_HOSTNAME_INDEX))+"/browse/"+item.getIdentifier());
+			its.setLink(item.getPriority().getAboutUrl()
+					.substring(START_HOSTNAME_INDEX, item.getPriority().getAboutUrl().indexOf("/", END_HOSTNAME_INDEX))
+					+ "/browse/" + item.getIdentifier());
 			try {
 				its.setUpdated(dateStringToObject(item.getModified()));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 			its.setIssueId(item.getShortTitle());
-			
+
 			ret.add(its);
 		}
-		
+
 		return ret;
 	}
-	
-	private Date dateStringToObject(String date) throws ParseException{
-		//String sub = date.substring(0,10);
+
+	private Date dateStringToObject(String date) throws ParseException {
+		// String sub = date.substring(0,10);
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 		Date parsedDate = formatter.parse(date);
 		return parsedDate;

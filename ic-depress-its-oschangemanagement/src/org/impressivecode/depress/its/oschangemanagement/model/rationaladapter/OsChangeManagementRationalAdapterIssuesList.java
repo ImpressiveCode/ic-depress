@@ -33,16 +33,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OsChangeManagementRationalAdapterIssuesList {
-	
+
 	@JsonProperty("oslc:responseInfo")
 	private OsChangeManagementRationalAdapterPagingInfo responseInfo;
-	
+
 	public OsChangeManagementRationalAdapterPagingInfo getResponseInfo() {
 		return responseInfo;
 	}
 
-	public void setResponseInfo(
-			OsChangeManagementRationalAdapterPagingInfo responseInfo) {
+	public void setResponseInfo(OsChangeManagementRationalAdapterPagingInfo responseInfo) {
 		this.responseInfo = responseInfo;
 	}
 
@@ -50,12 +49,11 @@ public class OsChangeManagementRationalAdapterIssuesList {
 		return results;
 	}
 
-	public void setResults(
-			ArrayList<OsChangeManagementRationalAdapterIssueListItem> results) {
+	public void setResults(ArrayList<OsChangeManagementRationalAdapterIssueListItem> results) {
 		this.results = results;
 	}
 
 	@JsonProperty("oslc:results")
 	private ArrayList<OsChangeManagementRationalAdapterIssueListItem> results;
-	
+
 }

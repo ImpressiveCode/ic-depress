@@ -41,22 +41,24 @@ public abstract class OsChangeManagementAdapterParser {
 
 	@SuppressWarnings("unchecked")
 	public static <T> T parseJSON(String source, Class<?> elem) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonFactory jsonFactory = new JsonFactory();
-        JsonParser jp = null;
-        T field = null;
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonFactory jsonFactory = new JsonFactory();
+		JsonParser jp = null;
+		T field = null;
 
-        try {
-            jp = jsonFactory.createJsonParser(source);
-            field = (T) objectMapper.readValue(jp, elem); 
-        } catch (IOException e) {
-            Logger.getLogger("Error").severe(e.getMessage());
-        }
-        
-        return field;
+		try {
+			jp = jsonFactory.createJsonParser(source);
+			field = (T) objectMapper.readValue(jp, elem);
+		} catch (IOException e) {
+			Logger.getLogger("Error").severe(e.getMessage());
+		}
+
+		return field;
 	}
-	
+
 	public abstract List<OsChangeManagementProject> getProjectList(String source);
+
 	public abstract int getIssueCount(String source);
+
 	public abstract List<ITSDataType> getIssues(String source);
 }

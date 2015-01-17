@@ -54,7 +54,6 @@ public abstract class OsChangeManagementUriBuilder {
 
 		return this;
 	}
-	
 
 	public OsChangeManagementUriBuilder setProject(String project) {
 		this.project = project;
@@ -77,14 +76,12 @@ public abstract class OsChangeManagementUriBuilder {
 		case CHANGE_REQUEST:
 			return buildChangeRequestsURI(startIndex);
 		default:
-			throw new RuntimeException(
-					"This should never happen! URI builder failed!");
+			throw new RuntimeException("This should never happen! URI builder failed!");
 		}
 	}
 
 	public URI testHost() {
-		return UriBuilder.fromPath(TEST_URI_PATH)
-				.resolveTemplate("protocol", getProtocol())
+		return UriBuilder.fromPath(TEST_URI_PATH).resolveTemplate("protocol", getProtocol())
 				.resolveTemplate("hostname", hostname).build();
 	}
 
@@ -94,12 +91,10 @@ public abstract class OsChangeManagementUriBuilder {
 
 	protected URI buildListURI(String command, String basicUriPath) {
 		// @formatter:off
-		URI result = UriBuilder.fromPath(basicUriPath)
-				.resolveTemplateFromEncoded("protocol", protocol)
-				.resolveTemplateFromEncoded("hostname", hostname)
-				.resolveTemplateFromEncoded("command", command).build();
+		URI result = UriBuilder.fromPath(basicUriPath).resolveTemplateFromEncoded("protocol", protocol)
+				.resolveTemplateFromEncoded("hostname", hostname).resolveTemplateFromEncoded("command", command).build();
 		// @formatter:on
-		
+
 		return result;
 	}
 
@@ -132,20 +127,20 @@ public abstract class OsChangeManagementUriBuilder {
 	protected String getProject() {
 		return project;
 	}
-	
-	 public void setMode(Mode mode) {
-	        this.mode = mode;
-	    }
-	 
-	 public int getPageSize(){
-		 return PAGE_SIZE;
-	 }
-	 
-	 public void setStartIndex(int startIndex){
-		 this.startIndex=startIndex;
-	 }
+
+	public void setMode(Mode mode) {
+		this.mode = mode;
+	}
+
+	public int getPageSize() {
+		return PAGE_SIZE;
+	}
+
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
 
 	protected abstract URI buildProjectListURI();
-	
+
 	protected abstract URI buildChangeRequestsURI(int startIndex);
 }

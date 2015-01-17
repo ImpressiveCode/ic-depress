@@ -56,36 +56,38 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 	public final static String STATE = "STATE";
 	protected DialogComponentStringSelection pluginComponent;
 	private OsChangeManagementRestClient client;
-	public OsChangeManagementAdapterNodeDialog(){
+
+	public OsChangeManagementAdapterNodeDialog() {
 		super();
 		RemoveAdvancedTab();
 		AddPluginComponent();
 		client = new OsChangeManagementRestClient();
 	}
-	
-	protected void RemoveAdvancedTab(){
+
+	protected void RemoveAdvancedTab() {
 		removeTab(ADVANCED_TAB_NAME);
 	}
-	
-	protected void AddPluginComponent(){
+
+	protected void AddPluginComponent() {
 		JPanel connectionTab = (JPanel) getTab(ITSOnlineNodeDialog.CONNECTION_TAB_NAME);
 		connectionTab.add(createPluginComponent());
 	}
-	
-	protected Component createPluginComponent(){
+
+	protected Component createPluginComponent() {
 		pluginComponent = new DialogComponentStringSelection(createPluginComponentSettings(), "Plugin: ", getPluginsName());
 		return pluginComponent.getComponentPanel();
 	}
-	
-	protected SettingsModelString createPluginComponentSettings(){
+
+	protected SettingsModelString createPluginComponentSettings() {
 		return OsChangeManagementAdapterNodeModel.createPluginSettings();
 	}
-	
-	protected String[] getPluginsName(){
+
+	protected String[] getPluginsName() {
 		ArrayList<String> plugins = new ArrayList<String>();
 		plugins.add(IMB_RATIONAL_ADAPTER);
 		return plugins.toArray(new String[plugins.size()]);
 	}
+
 	@Override
 	protected void updateProjectsList() {
 		List<OsChangeManagementProject> projects;
@@ -104,47 +106,43 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 
 	@Override
 	protected void createMappingManager() {
-		
-        mappingManager = OsChangeManagementAdapterNodeModel.createMapping();
-        mappingManager.createFilterPriority(new RefreshCaller(PRIORITY));
-        mappingManager.createFilterType(new RefreshCaller(TYPE));
-        mappingManager.createFilterResolution(new RefreshCaller(RESOLUTION));
-        mappingManager.createFilterStatus(new RefreshCaller(STATE));
+
+		mappingManager = OsChangeManagementAdapterNodeModel.createMapping();
+		mappingManager.createFilterPriority(new RefreshCaller(PRIORITY));
+		mappingManager.createFilterType(new RefreshCaller(TYPE));
+		mappingManager.createFilterResolution(new RefreshCaller(RESOLUTION));
+		mappingManager.createFilterStatus(new RefreshCaller(STATE));
 	}
 
 	@Override
 	protected Component createAdvancedTab() {
-		return new JPanel();		
+		return new JPanel();
 	}
 
 	@Override
-	protected void loadSpecificSettingsFrom(NodeSettingsRO settings,
-			PortObjectSpec[] specs) throws NotConfigurableException {
-		pluginComponent.loadSettingsFrom(settings,specs);
-		
+	protected void loadSpecificSettingsFrom(NodeSettingsRO settings, PortObjectSpec[] specs) throws NotConfigurableException {
+		pluginComponent.loadSettingsFrom(settings, specs);
+
 	}
 
 	@Override
-	protected void saveSpecificSettingsTo(NodeSettingsWO settings)
-			throws InvalidSettingsException {
+	protected void saveSpecificSettingsTo(NodeSettingsWO settings) throws InvalidSettingsException {
 		pluginComponent.saveSettingsTo(settings);
-		
-	}
-	
-	
 
-    private <T> List<T> getList(Mode mode) throws Exception {
-    	OsChangeManagementJiraRationalAdapterUriBuilder builder = new OsChangeManagementJiraRationalAdapterUriBuilder();
-        String urlString = ((SettingsModelString) (url.getModel())).getStringValue();
-        String login = ((SettingsModelString) (loginComponent.getModel())).getStringValue();
-        String password = ((SettingsModelString) (passwordComponent.getModel())).getStringValue();
-        String pluginName = ((SettingsModelString) (pluginComponent.getModel())).getStringValue();
-        builder.setHostname(urlString);
-        builder.setMode(mode);
-        String rawData = client.getJSON(builder.build(), login, password);
-        switch (pluginName){
-        case IMB_RATIONAL_ADAPTER:
-        	return (List<T>) new OsChangeManagementRationalAdapterParser().getProjectList(rawData);
+	}
+
+	private <T> List<T> getList(Mode mode) throws Exception {
+		OsChangeManagementJiraRationalAdapterUriBuilder builder = new OsChangeManagementJiraRationalAdapterUriBuilder();
+		String urlString = ((SettingsModelString) (url.getModel())).getStringValue();
+		String login = ((SettingsModelString) (loginComponent.getModel())).getStringValue();
+		String password = ((SettingsModelString) (passwordComponent.getModel())).getStringValue();
+		String pluginName = ((SettingsModelString) (pluginComponent.getModel())).getStringValue();
+		builder.setHostname(urlString);
+		builder.setMode(mode);
+		String rawData = client.getJSON(builder.build(), login, password);
+		switch (pluginName) {
+		case IMB_RATIONAL_ADAPTER:
+			return (List<T>) new OsChangeManagementRationalAdapterParser().getProjectList(rawData);
 		default:
 			return null;
 		}
