@@ -38,14 +38,12 @@ public abstract class OsChangeManagementUriBuilder {
 		PROJECT_LIST, CHANGE_REQUEST;
 	}
 
-	protected static final String TEST_URI_PATH = "{protocol}://{hostname}/rest/api/latest/serverInfo";
 	protected static final int PAGE_SIZE = 50;
 
 	protected Mode mode = Mode.PROJECT_LIST;
 	protected String hostname;
 	protected String protocol;
 	protected String project;
-	protected boolean isTest;
 	protected int startIndex = 0;
 
 	public OsChangeManagementUriBuilder setHostname(String hostname) {
@@ -60,15 +58,7 @@ public abstract class OsChangeManagementUriBuilder {
 		return this;
 	}
 
-	public OsChangeManagementUriBuilder setIsTest(boolean isTest) {
-		this.isTest = isTest;
-		return this;
-	}
-
 	public URI build() {
-		if (isTest) {
-			return testHost();
-		}
 
 		switch (mode) {
 		case PROJECT_LIST:
@@ -78,11 +68,6 @@ public abstract class OsChangeManagementUriBuilder {
 		default:
 			throw new RuntimeException("This should never happen! URI builder failed!");
 		}
-	}
-
-	public URI testHost() {
-		return UriBuilder.fromPath(TEST_URI_PATH).resolveTemplate("protocol", getProtocol())
-				.resolveTemplate("hostname", hostname).build();
 	}
 
 	public void resetMode() {

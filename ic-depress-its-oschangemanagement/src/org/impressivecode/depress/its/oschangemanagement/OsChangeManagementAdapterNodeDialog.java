@@ -144,7 +144,7 @@ public class OsChangeManagementAdapterNodeDialog extends ITSOnlineNodeDialog {
 		case IMB_RATIONAL_ADAPTER:
 			return (List<T>) new OsChangeManagementRationalAdapterParser().getProjectList(rawData);
 		default:
-			return null;
+			return new ArrayList<T>();
 		}
 
 	}

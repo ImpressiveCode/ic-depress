@@ -246,6 +246,12 @@ END OF TERMS AND CONDITIONS
          download-size="0"
          install-size="0"
          version="2.0.0.qualifier"/>
+         
+	<plugin
+         id="org.impressivecode.depress.its.oschangemanagement"
+         download-size="0"
+         install-size="0"
+         version="2.0.0.qualifier"/>
 
    <plugin
          id="org.impressivecode.depress.mg.ipa"
