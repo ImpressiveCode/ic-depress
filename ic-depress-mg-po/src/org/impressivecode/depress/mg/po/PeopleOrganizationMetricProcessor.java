@@ -160,7 +160,7 @@ public class PeopleOrganizationMetricProcessor {
     }
 
     private String getTopOrganizationOfOrganization(final String dmo) {
-        return dmo.split(ORG_STRUCTURE_SEPARATOR)[0] + ORG_STRUCTURE_SEPARATOR;
+        return dmo.split(ORG_STRUCTURE_SEPARATOR)[0];
     }
 
     private Integer computeAbsoluteEngineersSkills(final Integer level, final ChangeData change) {

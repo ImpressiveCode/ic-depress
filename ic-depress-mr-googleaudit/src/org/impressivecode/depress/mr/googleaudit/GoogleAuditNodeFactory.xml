@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./google.png" type="Source">
+    <name>GoogleAudit</name>
+    
+    <shortDescription>
+        Google Audit Adapter. ImpressiveCode DePress Plugin Framework.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+            <p>
+            This node can be used to read data from Google Code Pro AnalytiX Audit report (XML format).
+            </p>
+            <p>
+            Google Code Pro AnalytiX Audit is set of dynamic, extensible tools that detect, report and repair deviations or non-compliance with predefined coding standards, popular frameworks, security and style conventions.
+            </p>
+            <p>
+            The report must be generated using <u>Audit Code</u> from <u>Code Pro Tools</u>: <u>Source tree</u> and choosing export to a xml file after right click on one of
+        	the results (<u>Group by Resource</u> perspective). For further information about report generation please refer to Google Audit documentation <a href="https://developers.google.com/java-dev-tools/codepro/doc/features/audit/audit_0">here</a>.
+            </p>
+			<p>
+            Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>
+            </p>
+        </intro>
+        <option name="Google Audit file location">Enter a valid file. When you press ENTER, the file is analyzed and the settings pre-set. You can also choose a previously read file from the drop-down list, or select a file from the "Browse..." dialog.
+        </option>
+    </fullDescription>
+    
+    <ports>
+        <outPort index="0" name="Violation Results Severity Table">Datatable just read from the Google Audit file grouped by severity.</outPort>
+    </ports>
+</knimeNode>
