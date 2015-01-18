@@ -1,0 +1,50 @@
+{
+    "rdf:type": [
+        {
+            "rdf:resource": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Description"
+        }
+    ],
+    "rdf:about": "http://39409e82.ngrok.com/rest/oslc/latest/projects/",
+    "rdfs:member": [
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://www.w3.org/2000/01/rdf-schema#http://www.w3.org/2000/01/rdf-schema#member"
+                }
+            ],
+            "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/ASD",
+            "dcterms:title": "Asd"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://www.w3.org/2000/01/rdf-schema#http://www.w3.org/2000/01/rdf-schema#member"
+                }
+            ],
+            "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/NZ",
+            "dcterms:title": "Mo¿e zdamy"
+        },
+        {
+            "rdf:type": [
+                {
+                    "rdf:resource": "http://www.w3.org/2000/01/rdf-schema#http://www.w3.org/2000/01/rdf-schema#member"
+                }
+            ],
+            "rdf:resource": "http://39409e82.ngrok.com/rest/oslc/latest/projects/TP",
+            "dcterms:title": "Test project"
+        }
+    ],
+    "prefixes": {
+        "calm": "http://jazz.net/xmlns/prod/jazz/calm/1.0/",
+        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+        "oslc": "http://open-services.net/ns/core#",
+        "foaf": "http://xmlns.com/foaf/0.1/",
+        "jira": "http://com.ibm/cm/adaptor/jira#",
+        "oslc_cmx": "http://open-services.net/ns/cm-x#",
+        "oslc_cm_1": "http://open-services.net/xmlns/cm/1.0/",
+        "jfs": "http://jazz.net/xmlns/prod/jazz/jfs/1.0/",
+        "dcterms": "http://purl.org/dc/terms/",
+        "oslc_cm": "http://open-services.net/ns/cm#",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    }
+}

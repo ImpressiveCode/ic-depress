@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./oschangemanagement.png" type="Source">
+	<name>Open Services Change Management 2.0 Adapter (Online)</name>
+
+	<shortDescription>
+		Open Services Change Management 2.0 Adapter, ImpressiveCode DePress Plugin
+		Framework.
+	</shortDescription>
+
+	<fullDescription>
+		<intro>
+			This node can be used to read data from system that supports Open Services Change Management 2.0 specification.
+
+			<p>
+				In order to use this plugin you should insert repository
+				address in the configuration window.
+				When executed, Adapter node parses the data and return information
+				collected in standard ITS table form, containing following data:
+				<ul>
+					<li>Id - issue key</li>
+					<li>Created - issue creation date</li>
+					<li>Updated - last update date</li>
+					<li>Status - issue status; the possible values are: OPEN,
+						IN_PROGRESS, REOPEN, CLOSED, RESOLVED, UNKNOWN;</li>
+					<li>Type - issue type; the possible values are: BUG, ENHANCEMENT,
+						TEST, UNKNOWN;</li>
+					<li>Resolution - issue resolution; the possible values are:
+						INVALID, FIXED, WONT_FIX, DUPLICATE, UNRESOLVED, UNKNOWN;</li>
+					<li>Priority - issue priority; the possible values are: TRIVIAL,
+						MINOR, MAJOR, CRITICAL, BLOCKER, UNKNOWN</li>
+					<li>Summary - issue summary</li>
+					<li>Reporter - Issue reporter</li>
+					<li>Assignees - set of assignees</li>
+					<li>Link - link to the issue</li>
+					<li>Description - issue description</li>					
+				</ul>
+			</p>
+			<p>
+				   Please check workflow examples
+                <a href="http://impressivecode.github.io/ic-depress/update">here</a>.
+				<br />
+				Copyright (c) ImpressiveCode,
+				<a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>
+			</p>
+		</intro>
+		<option name="Repository URL">Repository address (e.g.
+			"https://hibernate.atlassian.net").</option>
+		<option name="Login">Login to an account in repository.</option>
+		<option name="Password">Password to the account.</option>
+		<option name="All projects">If there are many projects on repository and you would like
+		to focus on one of them, checkout this button and choose the right project on the right.</option>
+		<option name="Mapping"> You can load your custom priority, type,
+			resolution and status properties from previosly selected file. You
+			are able to put any property, which has been in your repository into
+			predefined groups available by clicking on the radio buttons.
+			Properties without a group will be automatically put into unknown.
+		</option>
+	</fullDescription>
+
+	<ports>
+		<outPort index="0" name="Issue Tracking System Data Table">Datatable read from OSCM system.</outPort>
+	</ports>
+</knimeNode>
