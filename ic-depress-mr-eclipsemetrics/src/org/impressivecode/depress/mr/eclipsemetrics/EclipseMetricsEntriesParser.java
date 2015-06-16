@@ -70,16 +70,93 @@ public class EclipseMetricsEntriesParser {
     }
 
     private String getMethodName(Node methodNode) {
+        String shortMethodName = ((Element) methodNode).getAttribute("name");
         String subjectString = ((Element) methodNode).getAttribute("handle");
 
         String packageName = extractPackageName(subjectString);
 
         String name1 = "";
         Pattern regexName1 = Pattern.compile("(?<=\\.java\\[).+");
-        Matcher regexMatcher = regexName1.matcher(subjectString);
-        while (regexMatcher.find()) {
-            name1 = regexMatcher.group();
+        Matcher regexMatcher1 = regexName1.matcher(subjectString);
+        while (regexMatcher1.find()) {
+            name1 = regexMatcher1.group();
         }
+
+        Pattern regexName2 = Pattern.compile("[a-zA-Z\\d_$\\[]*~" + shortMethodName);
+        Matcher regexMatcher2 = regexName2.matcher(name1);
+        while (regexMatcher2.find()) {
+            String find = regexMatcher2.group();
+            String replace = find.replace("[", "$").replace("~", ".");
+            name1 = name1.replace(find, replace);
+        }
+
+        name1 = name1.replace("." + shortMethodName + "~I", "." + shortMethodName + "(int");
+        name1 = name1.replaceAll(";?~I", ",int");
+        name1 = name1.replace("." + shortMethodName + "~\\[I", "." + shortMethodName + "(int[]"); // array
+        name1 = name1.replaceAll(";?~\\[I", "int[]");
+
+        name1 = name1.replace("." + shortMethodName + "~B", "." + shortMethodName + "(byte");
+        name1 = name1.replaceAll(";?~B", ",byte");
+        name1 = name1.replace("." + shortMethodName + "~\\[B", "." + shortMethodName + "(byte[]");
+        name1 = name1.replaceAll(";?~\\[B", "byte[]");
+
+        name1 = name1.replace("." + shortMethodName + "~Z", "." + shortMethodName + "(boolean");
+        name1 = name1.replaceAll(";?~Z", ",boolean");
+        name1 = name1.replace("." + shortMethodName + "~\\[Z", "." + shortMethodName + "(boolean[]");
+        name1 = name1.replaceAll(";?~\\[Z", "boolean[]");
+
+        name1 = name1.replace("." + shortMethodName + "~C", "." + shortMethodName + "(char");
+        name1 = name1.replaceAll(";?~C", ",char");
+        name1 = name1.replace("." + shortMethodName + "~\\[C", "." + shortMethodName + "(char[]");
+        name1 = name1.replaceAll(";?~\\[C", "char[]");
+
+        name1 = name1.replace("." + shortMethodName + "~D", "." + shortMethodName + "(double");
+        name1 = name1.replaceAll(";?~D", ",double");
+        name1 = name1.replace("." + shortMethodName + "~\\[D", "." + shortMethodName + "(double[]");
+        name1 = name1.replaceAll(";?~\\[D", "double[]");
+
+        name1 = name1.replace("." + shortMethodName + "~F", "." + shortMethodName + "(float");
+        name1 = name1.replaceAll(";?~F", ",float");
+        name1 = name1.replace("." + shortMethodName + "~\\[F", "." + shortMethodName + "(float[]");
+        name1 = name1.replaceAll(";?~\\[F", "float[]");
+
+        name1 = name1.replace("." + shortMethodName + "~J", "." + shortMethodName + "(long");
+        name1 = name1.replaceAll(";?~J", ",long");
+        name1 = name1.replace("." + shortMethodName + "~\\[J", "." + shortMethodName + "(long[]");
+        name1 = name1.replaceAll(";?~\\[J", "long[]");
+
+        name1 = name1.replace("." + shortMethodName + "~S", "." + shortMethodName + "(short");
+        name1 = name1.replaceAll(";?~S", ",short");
+        name1 = name1.replace("." + shortMethodName + "~\\[S", "." + shortMethodName + "(short[]");
+        name1 = name1.replaceAll(";?~\\[S", "short[]");
+
+        name1 = name1.replace("." + shortMethodName + "~Q", "." + shortMethodName + "(");
+        name1 = name1.replaceAll(";?~Q", ",");
+
+        Pattern regexName3 = Pattern.compile(";?~\\\\\\[Q[a-zA-Z\\d_$]*"); // arrays
+        Matcher regexMatcher3 = regexName3.matcher(name1);
+        while (regexMatcher3.find()) {
+            String find = regexMatcher3.group();
+            String replace = find.replace("~\\[Q", "");
+            if (replace.contains(";")) {
+                replace = replace.replace(";", ",");
+            } else {
+                replace = "(" + replace;
+            }
+            name1 = name1.replace(find, replace + "[]");
+        }
+
+        name1 = name1.replace(";", ")");
+        name1 = name1.replace("~", ".");
+
+        if (!name1.contains("(")) {
+            name1 += "()";
+        }
+
+        if (!name1.contains(")")) {
+            name1 += ")";
+        }
+
         String methodName = packageName + "." + name1;
 
         return methodName;
