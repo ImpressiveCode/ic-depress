@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./git.png" type="Source">
+    <name>Git SCM (Online) - Extended</name>
+    
+    <shortDescription>
+        Online Git SCM (extended), ImpressiveCode Depress
+    </shortDescription>
+    
+    <fullDescription>
+    	<intro>
+			<p>
+				This node can be used to load git log directly from git repository (online version).<br />
+				It uses AST (abstract syntax tree) comparison to determine changes in methods.<br/><br/>  
+				In the plugin there is used changedistiller library to compare AST changes.
+				<br/> 	
+				[Beat Fluri, Michael Würsch, Martin Pinzger, and Harald C. Gall. Change distilling: Tree differencing for fine-grained source code change extraction. IEEE Transaction on Software Engineering, 33(11), pages 725–743, 2007.] 
+			</p>
+			<p>
+				This plugin works only with Git repositories cloned to local file system.<br/> 
+			</p>
+			<p>  
+				Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>
+			</p>
+		</intro>
+        
+        <option name="Choose project directory">Select Git project cloned to local directory</option>
+        <option name="Package prefix">Set package prefix to include</option>
+        <option name="From commit">SHA-1 of starting revision</option>
+        <option name="To commit">SHA-1 of ending revision</option>
+    </fullDescription>
+    
+    <ports>
+        <outPort index="0" name="Data change history">Method histories from SCM system</outPort>
+    </ports>       
+</knimeNode>

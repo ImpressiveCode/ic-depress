@@ -16,4 +16,11 @@
             factory-class="org.impressivecode.depress.scm.git.GitOnlineAdapterNodeFactory"
             id="org.impressivecode.depress.scm.gitonline"/>
    </extension>
+     <extension
+           point="org.knime.workbench.repository.nodes">
+      <node
+            category-path="depress/depress.scm"
+            factory-class="org.impressivecode.depress.scm.git.GitOnlineAdapterExtendedNodeFactory"
+            id="org.impressivecode.depress.scm.gitextended"/>
+     </extension>
 </plugin>
