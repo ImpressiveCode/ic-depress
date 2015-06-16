@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-3.8.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/changedistiller-0.0.1-SNAPSHOT-jar-with-dependencies.jar" sourcepath="D:/Java/tools-changedistiller_2/target/changedistiller-0.0.1-SNAPSHOT-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.jgit-2.3.1.201302201838-r.jar" sourcepath="D:/dyplom mgr/workspace knime/runtime-EclipseApplication/jgit"/>
+	<classpathentry exported="true" kind="lib" path="lib/jsch-0.1.50.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
