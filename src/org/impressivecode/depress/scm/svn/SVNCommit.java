@@ -21,6 +21,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Represents a parsed svn commit
+ * 
+ */
 public class SVNCommit {
 
     private String id;

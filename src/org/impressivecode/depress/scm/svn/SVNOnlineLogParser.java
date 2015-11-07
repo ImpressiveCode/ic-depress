@@ -30,8 +30,8 @@ import java.util.regex.Pattern;
 
 import static org.impressivecode.depress.scm.svn.SVNExtensionParser.isCorrectAccordingToFilterRules;
 
-import org.impressivecode.depress.tool.scm.SCMOperation;
-import org.impressivecode.depress.tool.scm.SCMParserOptions;
+import org.impressivecode.depress.scm.SCMOperation;
+import org.impressivecode.depress.scm.SCMParserOptions;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNLogEntry;
 import org.tmatesoft.svn.core.SVNLogEntryPath;

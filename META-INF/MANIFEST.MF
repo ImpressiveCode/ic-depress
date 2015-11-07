@@ -13,6 +13,9 @@ Eclipse-RegisterBuddy: registered
 Bundle-ClassPath: lib/guava-14.0-rc3.jar,
  lib/shuttlelist-0.0.1.jar,
  lib/miglayout15-swing.jar,
+ lib/jsch-0.1.50.jar,
+ lib/org.eclipse.jgit-2.3.1.201302201838-r.jar,
+ lib/svnkit-1.7.9.jar,
  ic-depress.jar
 Import-Package: org.knime.base.node.util
 Bundle-ActivationPolicy: lazy

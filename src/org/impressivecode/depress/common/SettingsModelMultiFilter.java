@@ -30,8 +30,10 @@ import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
 
-/* 
+/**
+ *  
  * @author Maciej Borkowski, Capgemini Poland
+ * 
  */
 public class SettingsModelMultiFilter extends SettingsModel {
     private final String configName;

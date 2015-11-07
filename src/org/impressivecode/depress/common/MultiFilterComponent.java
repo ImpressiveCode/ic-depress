@@ -53,7 +53,9 @@ import org.knime.core.node.util.ColumnFilterPanel;
 import com.google.common.collect.Lists;
 
 /**
+ * 
  * @author Maciej Borkowski, Capgemini Poland
+ * 
  */
 public class MultiFilterComponent {
     private final JPanel panel = new JPanel(new BorderLayout());
