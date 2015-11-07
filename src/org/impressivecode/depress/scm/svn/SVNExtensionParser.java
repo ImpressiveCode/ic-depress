@@ -41,19 +41,21 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.scm.SCMOperation;
+import org.impressivecode.depress.scm.SCMParserOptions;
 import org.impressivecode.depress.scm.svn.SVNExtensionParser.SVNLog.Logentry;
 import org.impressivecode.depress.scm.svn.SVNExtensionParser.SVNLog.Logentry.Paths.Path;
-import org.impressivecode.depress.tool.scm.SCMDataType;
-import org.impressivecode.depress.tool.scm.SCMOperation;
-import org.impressivecode.depress.tool.scm.SCMParserOptions;
 
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 
 /**
+ * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Krystian Dabrowski, Capgemini Poland
  * @author Zuzanna Pacholczyk, Capgemini Poland
+ * 
  */
 public class SVNExtensionParser {
     final SCMParserOptions parserOptions;

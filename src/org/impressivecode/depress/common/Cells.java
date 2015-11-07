@@ -46,10 +46,6 @@ import com.google.common.collect.Lists;
  */
 public class Cells {
 
-    public static DataCell integerOrMissingCell(final Integer value) {
-        return value == null ? DataType.getMissingCell() : integerCell(value);
-    }
-
     public static DataCell integerCell(final Integer value) {
         return new IntCell(value);
     }
@@ -57,17 +53,13 @@ public class Cells {
     public static DataCell integerCell(final boolean b) {
         return integerCell(b ? 1 : 0);
     }
-
+    
+    public static DataCell integerOrMissingCell(final Integer value) {
+        return value == null ? DataType.getMissingCell() : integerCell(value);
+    }
+    
     public static DataCell doubleOrMissingCell(final Double value) {
         return value == null ? DataType.getMissingCell() : new DoubleCell(value);
-    }
-
-    public static DataCell stringOrMissingCell(final String value) {
-        return value == null ? DataType.getMissingCell() : stringCell(value);
-    }
-
-    public static DataCell stringOrMissingCell(final Enum<?> enumValue) {
-        return stringOrMissingCell(enumValue == null ? null : enumValue.name());
     }
 
     public static DataCell stringCell(final String value) {
@@ -77,13 +69,13 @@ public class Cells {
     public static DataCell stringCell(final Enum<?> enumValue) {
         return stringCell(enumValue.name());
     }
+    
+    public static DataCell stringOrMissingCell(final String value) {
+        return value == null ? DataType.getMissingCell() : stringCell(value);
+    }
 
-    public static DataCell stringListOrMissingCell(final List<String> stringList) {
-        if (stringList == null || stringList.isEmpty()) {
-            return DataType.getMissingCell();
-        } else {
-            return stringListCell(stringList);
-        }
+    public static DataCell stringOrMissingCell(final Enum<?> enumValue) {
+        return stringOrMissingCell(enumValue == null ? null : enumValue.name());
     }
 
     public static DataCell stringListCell(final Iterable<String> stringList) {
@@ -96,6 +88,14 @@ public class Cells {
         return CollectionCellFactory.createListCell(coll);
     }
 
+    public static DataCell stringListOrMissingCell(final List<String> stringList) {
+        if (stringList == null || stringList.isEmpty()) {
+            return DataType.getMissingCell();
+        } else {
+            return stringListCell(stringList);
+        }
+    }
+    
     public static DataCell integerListCell(final Iterable<Integer> confidence) {
         List<DataCell> coll = Lists.newArrayList(Iterables.transform(confidence, new Function<Integer, DataCell>() {
             @Override
@@ -115,11 +115,7 @@ public class Cells {
         }));
         return CollectionCellFactory.createSetCell(coll);
     }
-
-    public static DataCell dateTimeOrMissingCell(final Date value) {
-        return value == null ? DataType.getMissingCell() : dateTimeCell(value);
-    }
-
+    
     public static DataCell dateTimeCell(final Date date) {
         Calendar calendar = GregorianCalendar.getInstance();
         // FIXME: check if time zone assumption is correct
@@ -133,4 +129,10 @@ public class Cells {
     public static DataCell booleanCell(final boolean value) {
         return BooleanCell.get(value);
     }
+
+    public static DataCell dateTimeOrMissingCell(final Date value) {
+        return value == null ? DataType.getMissingCell() : dateTimeCell(value);
+    }
+
+    
 }

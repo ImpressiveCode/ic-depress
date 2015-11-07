@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./git.png" type="Source">
+    <name>Git SCM (Online)</name>
+
+    <shortDescription>
+        Online Git SCM, ImpressiveCode Depress
+    </shortDescription>
+
+    <fullDescription>
+        <intro>
+            This node can be used to load git log directly from git repository (online version).<br />
+            <p>
+                To use this plugin You should only give Git's repository address (local) in configuration windows 
+                or You can give remote repository address and local path to clone repository. You can clone repository directly from node's configuration window.
+                If You want to see in KNIME console progress of cloning repository than You should change log level in Your KNIME settings to INFO. 
+                You can do it in menu: "Window -> Preferences -> KNIME -> KNIME GUI".
+            </p>
+            <p>
+                This node analyzes information about every class in every
+                commit from the given git's log file or git repository and
+                returns a table with the following data: <br />
+                <ul>
+                    <li>name of class</li>
+                    <li>marker</li>
+                    <li>author of change</li>
+                    <li>action</li>
+                    <li>complete message from commit</li>
+                    <li>original path of class</li>
+                    <li>date of change</li>
+                    <li>Unique ID of record</li>
+                </ul>
+                Action could consists of following values:
+                 <ul>   <li>M - modification</li>
+                        <li>A - added</li>
+                        <li>C - copied</li>
+                        <li>D - deleted</li>
+                        <li>R - renamed</li>
+                        <li>T - file type changed (i.e. regular file to symlink)</li>
+                    </ul>
+            </p>
+        </intro>
+
+        <option name="Repository address">Address of Git's repository which should be analyzed. 
+            It should be local path and if it will be empty than clonning will be exactly into this path or if it will be not empty than clonning will be into path get from repository's url. 
+            If You want to clone remote repo it will be cloned into this path.</option>
+        <option name="Choose branch">You can get list of branches into analyzed repository with button "Get branches" and select branch which You want to analyze</option>
+        <option name="Package">Name of package</option>
+    </fullDescription>
+
+    <ports>
+        <outPort index="0" name="Data change history">Table with data read from Git log file or Git repository</outPort>
+    </ports>
+</knimeNode>

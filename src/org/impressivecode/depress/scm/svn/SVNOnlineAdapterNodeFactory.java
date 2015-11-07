@@ -21,9 +21,6 @@ import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 
-/**
- * @author IcDepress
- */
 public class SVNOnlineAdapterNodeFactory extends NodeFactory<SVNOnlineAdapterNodeModel> {
 
     @Override

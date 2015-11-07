@@ -17,8 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.svn;
 
-import static org.impressivecode.depress.tool.scm.SCMAdapterTableFactory.createDataColumnSpec;
-import static org.impressivecode.depress.tool.scm.SCMParserOptions.options;
+import static org.impressivecode.depress.scm.SCMAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.scm.SCMParserOptions.options;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,9 +28,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.impressivecode.depress.common.OutputTransformer;
-import org.impressivecode.depress.tool.scm.SCMAdapterTransformer;
-import org.impressivecode.depress.tool.scm.SCMDataType;
-import org.impressivecode.depress.tool.scm.SCMParserOptions;
+import org.impressivecode.depress.scm.SCMAdapterTransformer;
+import org.impressivecode.depress.scm.SCMDataType;
+import org.impressivecode.depress.scm.SCMParserOptions;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -50,8 +50,8 @@ import com.google.common.io.Files;
 
 /**
  * 
- * @author IcDepress
  * @author Zuzanna Pacholczyk, Capgemini Poland
+ * 
  */
 public class SVNOnlineAdapterNodeModel extends NodeModel {
 

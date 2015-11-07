@@ -25,8 +25,8 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * 
- * @author IcDepress
  * @author Zuzanna Pacholczyk, Capgemini Poland
+ * 
  */
 public class SVNOnlineAdapterNodeDialog extends DefaultNodeSettingsPane {
 

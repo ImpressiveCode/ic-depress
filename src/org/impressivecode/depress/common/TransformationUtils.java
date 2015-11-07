@@ -25,6 +25,7 @@ import com.google.common.base.Preconditions;
  * 
  */
 public class TransformationUtils {
+	
     public static boolean isJavaFile(final String fileName) {
         Preconditions.checkNotNull(fileName, "FileName has to be set");
         return fileName.endsWith(".java");

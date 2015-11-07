@@ -17,8 +17,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.svn;
 
-import org.impressivecode.depress.tool.scm.SCMOperation;
+import org.impressivecode.depress.scm.SCMOperation;
 
+/**
+ * Represents parsed commit information about a file
+ * 
+ */
 public class SVNCommitFile {
 	private String path;
 	private String resourceName;
