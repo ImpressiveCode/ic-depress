@@ -72,16 +72,31 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
     // example value: the models count variable filled from the dialog
     // and used in the models execution method. The default components of the
     // dialog work with "SettingsModels".
-    private final SettingsModelString gitFileName = new SettingsModelString(GitOfflineAdapterNodeModel.GIT_FILENAME,
-            GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT);
-    public static final SettingsModelOptionalString gitPackageName = new SettingsModelOptionalString(
-            GitOfflineAdapterNodeModel.GIT_PACKAGENAME, GitOfflineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT, true);
-
-    public static final SettingsModelString extensions = new SettingsModelString(
-            GitOfflineAdapterNodeModel.EXTENSION_STR, GitOfflineAdapterNodeModel.EXTENSION_DEFAULT);
+    private final SettingsModelString gitFileName = createGitFileNameSettings();
+    private final SettingsModelOptionalString gitPackageName = createGitPackageNameSettings();
+    
+    private final SettingsModelString extensions = createExtensionsSettings();
 
     protected GitOfflineAdapterNodeModel() {
         super(0, 1);
+    }
+    
+    public static SettingsModelString createGitFileNameSettings()
+    {
+    	return new SettingsModelString(GitOfflineAdapterNodeModel.GIT_FILENAME,
+                GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT);
+    }
+    
+    public static SettingsModelOptionalString createGitPackageNameSettings()
+    {
+    	return new SettingsModelOptionalString(
+                GitOfflineAdapterNodeModel.GIT_PACKAGENAME, GitOfflineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT, true);
+    }
+    
+    public static SettingsModelString createExtensionsSettings()
+    {
+    	return new SettingsModelString(
+        		GitOfflineAdapterNodeModel.EXTENSION_STR, GitOfflineAdapterNodeModel.EXTENSION_DEFAULT);
     }
 
     @Override
@@ -126,12 +141,14 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         gitFileName.loadSettingsFrom(settings);
         gitPackageName.loadSettingsFrom(settings);
+        extensions.loadSettingsFrom(settings);
     }
 
     @Override
     protected void validateSettings(final NodeSettingsRO settings) throws InvalidSettingsException {
         gitFileName.validateSettings(settings);
         gitPackageName.validateSettings(settings);
+        extensions.validateSettings(settings);
     }
 
     @Override
