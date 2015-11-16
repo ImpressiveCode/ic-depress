@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./git.png" type="Source">
-    <name>Git SCM (Offline)</name>
+    <name>Git SCM</name>
 
     <shortDescription>
        Offline Git SCM, ImpressiveCode Depress
@@ -9,11 +9,9 @@
 
     <fullDescription>
         <intro>
-            This node can be used to load git log from file (offline version)
-            or directly from git repository (online version). Currently only
-            offline operation is supported<br />
+            This node can be used to load git log from file.
             <p>
-                To use the offline version of plugin you need to generate git
+                To use the plugin you need to generate git
                 log in a specific format using the following command:<br />
                 <i>git log --pretty=format:"%H%n%ct%n%an%n%B%n%H" --raw
                     --no-merges --abbrev=40</i><br />
@@ -48,12 +46,12 @@
             </p>
         </intro>
 
-        <option name="Selected file">File with Git log to analyze in offline version of plugin</option>
+        <option name="Selected file">File with Git log to analyze</option>
 		<option name="Extension pattern: (* = any extension)">List of accepted file extensions</option>
         <option name="Package">Name of accepted java packages</option>
     </fullDescription>
 
     <ports>
-        <outPort index="0" name="Data change history ">Table with data read from Git log file or Git repository</outPort>
+        <outPort index="0" name="Data change history ">Table with data read from Git log file</outPort>
     </ports>
 </knimeNode>
