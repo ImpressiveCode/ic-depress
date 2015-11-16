@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./svn.png" type="Source">
-    <name>SVN SCM (Offline)</name>
+    <name>SVN SCM</name>
 
     <shortDescription>
        Offline SVN SCM, ImpressiveCode Depress
@@ -9,9 +9,9 @@
 
     <fullDescription>
         <intro>
-            This node can be used to load SVN log from file (offline version)
+            This node can be used to load SVN log from file
             <p>
-                To use the offline version of plugin you need to generate SVN
+                To use the plugin you need to generate SVN
                 log in a xml format using the following command:<br />
                 <i>svn log --xml --verbose --use-merge-history repo_url > result.xml</i><br />
                 Result of this command should be saved in file on your disk and this file's
@@ -24,7 +24,7 @@
             </p>
         </intro>
 
-        <option name="Selected file">File with SVN log to analyze in offline version of plugin</option>
+        <option name="Selected file">File with SVN log to analyze</option>
         <option name="Extension pattern">It gives a possibility to filter files. Empty box or * means that files with any extension will be displayed. There could be typed more 
         than one extension, to do so, extensions should be splitted by coma.</option>        
         <option name="Package prefix">Prefix of package. It is only used with java files. Empty box lets displaying files with any package prefix.</option>
