@@ -135,6 +135,7 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         gitFileName.saveSettingsTo(settings);
         gitPackageName.saveSettingsTo(settings);
+        extensions.saveSettingsTo(settings);
     }
 
     @Override
