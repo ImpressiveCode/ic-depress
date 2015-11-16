@@ -189,7 +189,7 @@ public class GitOfflineLogParser {
             if (options.hasPackagePrefix()) {
                 return path.indexOf(options.getPackagePrefix()) != -1;
             }
-            return false;
+            return true;
         }
 
         private String parseJavaClass(final String path) {
