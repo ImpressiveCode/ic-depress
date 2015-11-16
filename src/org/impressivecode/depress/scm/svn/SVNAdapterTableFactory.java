@@ -21,8 +21,8 @@ import org.impressivecode.depress.scm.SCMAdapterTableFactory;
 import org.knime.core.data.DataTableSpec;
 
 public class SVNAdapterTableFactory {
-	
-	 public static DataTableSpec[] createTableSpec() {
-	        return new DataTableSpec[] { SCMAdapterTableFactory.createDataColumnSpec() };
-	    }
+
+    public static DataTableSpec[] createTableSpec() {
+        return new DataTableSpec[] { SCMAdapterTableFactory.createDataColumnSpec() };
+    }
 }

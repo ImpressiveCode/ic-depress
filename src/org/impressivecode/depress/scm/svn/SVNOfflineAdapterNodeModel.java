@@ -23,8 +23,7 @@ import static org.impressivecode.depress.scm.SCMParserOptions.options;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections; 
-
+import java.util.Collections;
 import java.util.List;
 
 import org.impressivecode.depress.common.OutputTransformer;
@@ -62,27 +61,25 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     static final String CFG_FILENAME = "filename";
     static final String CFG_PACKAGENAME = "package";
     static final String CFG_EXTENSION = "extension";
-    
+
     static final String FILENAME_DEFAULT = "";
     static final String PACKAGENAME_DEFAULT = "";
     static final String EXTENSION_DEFAULT = ".java";
 
-
     private final SettingsModelString fileName = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_FILENAME,
             SVNOfflineAdapterNodeModel.FILENAME_DEFAULT);
-    
+
     private final SettingsModelOptionalString packageName = new SettingsModelOptionalString(
             SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT, true);
-    
-    public final SettingsModelString extensions = new SettingsModelString(
-    		SVNOfflineAdapterNodeModel.CFG_EXTENSION, SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT);
-    
+
+    public final SettingsModelString extensions = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_EXTENSION,
+            SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT);
+
     private ArrayList<String> userExtensions;
 
-	protected SVNOfflineAdapterNodeModel() {
+    protected SVNOfflineAdapterNodeModel() {
         super(0, 1);
-      
-    
+
     }
 
     @Override
@@ -90,15 +87,15 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
             throws Exception {
         try {
             LOGGER.info("Reading logs from file " + this.fileName.getStringValue());
-            userExtensions = new ArrayList<String>(); 
-            Collections.addAll( userExtensions, getExtensions());
+            userExtensions = new ArrayList<String>();
+            Collections.addAll(userExtensions, getExtensions());
             String packageNameToFilter = Strings.emptyToNull(packageName.getStringValue());
-            SCMParserOptions parserOptions = options(packageNameToFilter, userExtensions); 
-            
+            SCMParserOptions parserOptions = options(packageNameToFilter, userExtensions);
+
             SVNExtensionParser parser = new SVNExtensionParser(parserOptions);
-   
+
             List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
-            
+
             LOGGER.info("Reading logs finished");
             BufferedDataTable out = transform(commits, exec);
             LOGGER.info("Transforming logs finished.");
@@ -110,7 +107,7 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
 
     }
 
-	private BufferedDataTable transform(final List<SCMDataType> commits, final ExecutionContext exec)
+    private BufferedDataTable transform(final List<SCMDataType> commits, final ExecutionContext exec)
             throws CanceledExecutionException {
         OutputTransformer<SCMDataType> transformer = new SCMAdapterTransformer(createDataColumnSpec());
         return transformer.transform(commits, exec);
@@ -127,8 +124,6 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
         return SCMAdapterTableFactory.createTableSpec();
     }
 
-    
-      
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
         fileName.saveSettingsTo(settings);
@@ -152,27 +147,27 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
 
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
-    
+
     // parsing user's extensions into a list
-	private String[] getExtensions() {
-		String ext = extensions.getStringValue();
-		String[] ext_ = ext.split("\\s*,\\s*");
-		for(String word : ext_){
-			if(word.equals("*")){
-				ext_[0] = "*";
-				break;
-			}			
-		}
-		return ext_;
-	}
-    
+    private String[] getExtensions() {
+        String ext = extensions.getStringValue();
+        String[] ext_ = ext.split("\\s*,\\s*");
+        for (String word : ext_) {
+            if (word.equals("*")) {
+                ext_[0] = "*";
+                break;
+            }
+        }
+        return ext_;
+    }
+
 }

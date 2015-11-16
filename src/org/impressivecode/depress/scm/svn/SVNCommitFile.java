@@ -24,57 +24,57 @@ import org.impressivecode.depress.scm.SCMOperation;
  * 
  */
 public class SVNCommitFile {
-	private String path;
-	private String resourceName;
-	private SCMOperation operation;
-	private String extension;
+    private String path;
+    private String resourceName;
+    private SCMOperation operation;
+    private String extension;
 
-	public String getPath() {
-		return path;
-	}
-	
-	public String getExtension() {
-		return extension;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public SCMOperation getOperation() {
-		return operation;
-	}
+    public String getExtension() {
+        return extension;
+    }
 
-	public void setOperation(final SCMOperation operation) {
-		this.operation = operation;
-	}
+    public SCMOperation getOperation() {
+        return operation;
+    }
 
-	public void setRawOperation(final char operationCode) {
-		switch (operationCode) {
-		case 'M':
-			this.operation = SCMOperation.MODIFIED;
-			break;
-		case 'A':
-			this.operation = SCMOperation.ADDED;
-			break;
-		case 'D':
-			this.operation = SCMOperation.DELETED;
-			break;
-		default:
-			this.operation = SCMOperation.OTHER;
-			break;
-		}
-	}
+    public void setOperation(final SCMOperation operation) {
+        this.operation = operation;
+    }
 
-	public void setPath(final String path) {
-		this.path = path;
-	}
+    public void setRawOperation(final char operationCode) {
+        switch (operationCode) {
+        case 'M':
+            this.operation = SCMOperation.MODIFIED;
+            break;
+        case 'A':
+            this.operation = SCMOperation.ADDED;
+            break;
+        case 'D':
+            this.operation = SCMOperation.DELETED;
+            break;
+        default:
+            this.operation = SCMOperation.OTHER;
+            break;
+        }
+    }
 
-	public void setExtension(final String extension) {
-		this.extension = extension;
-	}
-	
-	public void setResourceName(final String resourceName) {
-		this.resourceName = resourceName;
-	}
+    public void setPath(final String path) {
+        this.path = path;
+    }
 
-	public String getResourceName() {
-		return this.resourceName;
-	}
+    public void setExtension(final String extension) {
+        this.extension = extension;
+    }
+
+    public void setResourceName(final String resourceName) {
+        this.resourceName = resourceName;
+    }
+
+    public String getResourceName() {
+        return this.resourceName;
+    }
 }
