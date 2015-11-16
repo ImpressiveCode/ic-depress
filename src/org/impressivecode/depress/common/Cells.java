@@ -53,11 +53,11 @@ public class Cells {
     public static DataCell integerCell(final boolean b) {
         return integerCell(b ? 1 : 0);
     }
-    
+
     public static DataCell integerOrMissingCell(final Integer value) {
         return value == null ? DataType.getMissingCell() : integerCell(value);
     }
-    
+
     public static DataCell doubleOrMissingCell(final Double value) {
         return value == null ? DataType.getMissingCell() : new DoubleCell(value);
     }
@@ -69,7 +69,7 @@ public class Cells {
     public static DataCell stringCell(final Enum<?> enumValue) {
         return stringCell(enumValue.name());
     }
-    
+
     public static DataCell stringOrMissingCell(final String value) {
         return value == null ? DataType.getMissingCell() : stringCell(value);
     }
@@ -95,7 +95,7 @@ public class Cells {
             return stringListCell(stringList);
         }
     }
-    
+
     public static DataCell integerListCell(final Iterable<Integer> confidence) {
         List<DataCell> coll = Lists.newArrayList(Iterables.transform(confidence, new Function<Integer, DataCell>() {
             @Override
@@ -115,7 +115,7 @@ public class Cells {
         }));
         return CollectionCellFactory.createSetCell(coll);
     }
-    
+
     public static DataCell dateTimeCell(final Date date) {
         Calendar calendar = GregorianCalendar.getInstance();
         // FIXME: check if time zone assumption is correct
@@ -134,5 +134,4 @@ public class Cells {
         return value == null ? DataType.getMissingCell() : dateTimeCell(value);
     }
 
-    
 }

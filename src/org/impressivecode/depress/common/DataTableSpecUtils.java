@@ -31,10 +31,10 @@ import com.google.common.collect.Sets;
  * 
  */
 public class DataTableSpecUtils {
-	
-    public static Set<String> findMissingColumnSubset(
-    		final DataTableSpec dataTableSpec, final DataTableSpec subsetDataTableSpec) {
-    	
+
+    public static Set<String> findMissingColumnSubset(final DataTableSpec dataTableSpec,
+            final DataTableSpec subsetDataTableSpec) {
+
         Set<String> missing = Sets.newHashSet();
         Iterator<DataColumnSpec> iterator = subsetDataTableSpec.iterator();
         while (iterator.hasNext()) {

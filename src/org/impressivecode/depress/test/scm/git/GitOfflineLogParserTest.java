@@ -54,9 +54,9 @@ public class GitOfflineLogParserTest {
     }
 
     private GitCommit specificCommit() throws IOException, ParseException {
-    	ArrayList<String> ext = new ArrayList<String>();
-    	ext.add(".java");
-    	SCMParserOptions parserOptions = options("org.", ext);
+        ArrayList<String> ext = new ArrayList<String>();
+        ext.add(".java");
+        SCMParserOptions parserOptions = options("org.", ext);
         this.parser = new GitOfflineLogParser(parserOptions);
         for (GitCommit c : parser.parseEntries(logFilePath)) {
             if (c.getId().equals("45a2beca9d97777733e1a472e54c003551b7d9b1")) {
@@ -65,9 +65,9 @@ public class GitOfflineLogParserTest {
         }
         throw new IllegalStateException("Fail");
     }
-    
+
     private GitCommit specificCommit(ArrayList<String> ext) throws IOException, ParseException {
-    	SCMParserOptions parserOptions = options("org.", ext);
+        SCMParserOptions parserOptions = options("org.", ext);
         this.parser = new GitOfflineLogParser(parserOptions);
         for (GitCommit c : parser.parseEntries(logFilePath)) {
             if (c.getId().equals("b4f3088d8894ac224535a31ccf4d1600d3fc0c57")) {
@@ -78,9 +78,9 @@ public class GitOfflineLogParserTest {
     }
 
     private GitCommit packageCommit(String packageName) throws IOException, ParseException {
-    	ArrayList<String> ext = new ArrayList<String>();
-    	ext.add(".java");
-    	SCMParserOptions parserOptions = options(packageName, ext);
+        ArrayList<String> ext = new ArrayList<String>();
+        ext.add(".java");
+        SCMParserOptions parserOptions = options(packageName, ext);
         this.parser = new GitOfflineLogParser(parserOptions);
         for (GitCommit c : parser.parseEntries(logFilePath)) {
             if (c.getId().equals("b4f3088d8894ac224535a31ccf4d1600d3fc0c57")) {
@@ -89,7 +89,7 @@ public class GitOfflineLogParserTest {
         }
         throw new IllegalStateException("Fail");
     }
-    
+
     @Test(expected = FileNotFoundException.class)
     public void shouldThrowFileNotFound() throws Exception {
         parser.parseEntries("fake_path");
@@ -102,7 +102,7 @@ public class GitOfflineLogParserTest {
 
     @Test
     public void shouldSpecificCommitDateMatch() throws Exception {
-        assertThat(specificCommit().getDate()).isEqualTo(new Date(1363636154*1000l));
+        assertThat(specificCommit().getDate()).isEqualTo(new Date(1363636154 * 1000l));
     }
 
     @Test
@@ -112,7 +112,8 @@ public class GitOfflineLogParserTest {
 
     @Test
     public void shouldSpecificCommitMessageMatch() throws Exception {
-        assertEquals("#9 base version of PO Metric introduced, #18 this is just matcher test", specificCommit().getMessage());
+        assertEquals("#9 base version of PO Metric introduced, #18 this is just matcher test", specificCommit()
+                .getMessage());
     }
 
     @Test
@@ -122,14 +123,15 @@ public class GitOfflineLogParserTest {
 
     @Test
     public void shouldParseJavaFile() throws Exception {
-        assertThat(specificCommit().getFiles().get(0).getJavaClass()).isEqualTo("org.impressivecode.depress.metric.po.ChangeData");
+        assertThat(specificCommit().getFiles().get(0).getJavaClass()).isEqualTo(
+                "org.impressivecode.depress.metric.po.ChangeData");
     }
 
     @Test
     public void shouldSpecificCommitFilesMatch() throws Exception {
 
-        assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java",
-                specificCommit().getFiles().get(0).getPath());
+        assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java", specificCommit()
+                .getFiles().get(0).getPath());
         assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(1).getOperation());
 
         assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java",
@@ -142,30 +144,22 @@ public class GitOfflineLogParserTest {
         assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(13).getOperation());
 
     }
-    
+
     @Test
     public void shouldCommitWithExtensionsMatch() throws Exception {
-    	ArrayList<String> ext = new ArrayList<String>();
-    	ext.add(".txt");
-        assertEquals(
-        		"ic-depress-metric-eclipsemetrics/LICENSE.txt",
-                specificCommit(ext).getFiles().get(3).getPath());
+        ArrayList<String> ext = new ArrayList<String>();
+        ext.add(".txt");
+        assertEquals("ic-depress-metric-eclipsemetrics/LICENSE.txt", specificCommit(ext).getFiles().get(3).getPath());
         ext.add(".xml");
-        assertEquals(
-        		"ic-depress-metric-eclipsemetrics/LICENSE.txt",
-                specificCommit(ext).getFiles().get(3).getPath());
+        assertEquals("ic-depress-metric-eclipsemetrics/LICENSE.txt", specificCommit(ext).getFiles().get(3).getPath());
         ext.add(".classpath");
-        assertEquals(
-        		"ic-depress-metric-checkstyle/LICENSE.txt",
-                specificCommit(ext).getFiles().get(3).getPath());
+        assertEquals("ic-depress-metric-checkstyle/LICENSE.txt", specificCommit(ext).getFiles().get(3).getPath());
         ext.add("*");
-        assertEquals(
-        		"ic-depress-metric-checkstyle/.project",
-                specificCommit(ext).getFiles().get(3).getPath());
+        assertEquals("ic-depress-metric-checkstyle/.project", specificCommit(ext).getFiles().get(3).getPath());
     }
-    
+
     @Test
     public void shouldCommitWithPackageMatch() throws Exception {
-    	assertThat(packageCommit("org.spring.").getFiles()).hasSize(0);
+        assertThat(packageCommit("org.spring.").getFiles()).hasSize(0);
     }
 }

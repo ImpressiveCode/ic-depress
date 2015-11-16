@@ -24,7 +24,7 @@ import java.util.Date;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class SCMDataType implements Cloneable{
+public class SCMDataType implements Cloneable {
 
     private String resourceName;
     private String author;
@@ -34,7 +34,7 @@ public class SCMDataType implements Cloneable{
     private Date commitDate;
     private String commitID;
     private String extension;
-    
+
     public String getAuthor() {
         return author;
     }
@@ -90,11 +90,11 @@ public class SCMDataType implements Cloneable{
     public String getResourceName() {
         return resourceName;
     }
-    
-	public String getExtension() {
-		return extension;
-	}
-	
+
+    public String getExtension() {
+        return extension;
+    }
+
     public void setExtension(final String extension) {
         this.extension = extension;
     }
@@ -110,6 +110,5 @@ public class SCMDataType implements Cloneable{
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-
 
 }

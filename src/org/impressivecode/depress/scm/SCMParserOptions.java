@@ -31,7 +31,7 @@ public class SCMParserOptions {
     private ArrayList<String> extensionsNamesToFilter;
 
     public static SCMParserOptions options(final String packageString, final ArrayList<String> extensionsNamesToFilter) {
-    	SCMParserOptions options = new SCMParserOptions();
+        SCMParserOptions options = new SCMParserOptions();
         options.packageString = packageString;
         options.extensionsNamesToFilter = extensionsNamesToFilter;
         return options;
@@ -45,8 +45,8 @@ public class SCMParserOptions {
         return packageString;
     }
 
-	public ArrayList<String> getExtensionsNamesToFilter() {
-		return extensionsNamesToFilter;
-	}
+    public ArrayList<String> getExtensionsNamesToFilter() {
+        return extensionsNamesToFilter;
+    }
 
 }

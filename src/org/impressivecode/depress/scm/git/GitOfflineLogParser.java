@@ -166,7 +166,7 @@ public class GitOfflineLogParser {
             String operationCode = matcher.group(1);
             String origin = matcher.group(2);
             String transformed = origin.replaceAll("/", ".");
-            
+
             String parseJavaClass = "";
             if (SCMExtensionsParser.extensionFits(transformed, options.getExtensionsNamesToFilter())) {
                 GitCommitFile gitFile = new GitCommitFile();

@@ -58,12 +58,12 @@ import com.google.common.io.Files;
  * 
  */
 public class SCMExtensionParser {
-	
+
     final SCMParserOptions parserOptions;
 
     public SCMExtensionParser(final SCMParserOptions parserOptions) {
         this.parserOptions = checkNotNull(parserOptions, "Options has to be set");
-        
+
     }
 
     public List<SCMDataType> parseEntries(final String path) throws JAXBException, CloneNotSupportedException {
@@ -75,7 +75,7 @@ public class SCMExtensionParser {
     }
 
     private List<SCMDataType> parse(final String path, final SCMParserOptions parserOptions) throws JAXBException,
-    CloneNotSupportedException {
+            CloneNotSupportedException {
         JAXBContext jaxbContext = JAXBContext.newInstance(SVNLog.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         SVNLog log = (SVNLog) unmarshaller.unmarshal(new File(path));
@@ -89,9 +89,10 @@ public class SCMExtensionParser {
         return scmEntries;
     }
 
-    private void parseLogEntries(final List<Logentry> entries, final List<SCMDataType> scmEntries) throws CloneNotSupportedException {
+    private void parseLogEntries(final List<Logentry> entries, final List<SCMDataType> scmEntries)
+            throws CloneNotSupportedException {
         for (Logentry entry : entries) {
-            if(entry.getPaths() == null){
+            if (entry.getPaths() == null) {
                 continue;
             }
             SCMDataType base = scmBase(entry);
@@ -100,12 +101,12 @@ public class SCMExtensionParser {
                     scmEntries.add(scm((SCMDataType) base.clone(), path));
                 }
             }
-            if(!entry.getLogentry().isEmpty()){
+            if (!entry.getLogentry().isEmpty()) {
                 parseLogEntries(entry.getLogentry(), scmEntries);
             }
         }
     }
-    
+
     private boolean include(final Path path) {
         String transformedPath = path.getValue().replaceAll("/", ".");
         return isCorrectAccordingToFilterRules(transformedPath);
@@ -116,53 +117,54 @@ public class SCMExtensionParser {
         isCorrect |= (hasCorrectExtension(path) && hasCorrectPackagePrefix(path));
         return isCorrect;
     }
-    
+
     private boolean hasCorrectExtension(String path) {
-    	ArrayList<String> extensionNamesToFilter = parserOptions.getExtensionsNamesToFilter();
-    	
-    	if (extensionNamesToFilter.isEmpty()) return true;
-	    if (extensionNamesToFilter.get(0).equals("*")) return true;
-    	for (String extension : extensionNamesToFilter) {
-    		if (path.endsWith(extension) || extension.equals("*")) return true;
+        ArrayList<String> extensionNamesToFilter = parserOptions.getExtensionsNamesToFilter();
 
-    		extension = extension.replace("*", "\\S+");
-    		extension = extension.replace("?", "\\S");
-    		if(extension.charAt(0) != '.')
-    			extension = "." + extension;
-    		String pattern = extension;
-    		String ext = path.substring(path.lastIndexOf(".")); 
-    		Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
-    	    Matcher m = p.matcher(ext);
+        if (extensionNamesToFilter.isEmpty())
+            return true;
+        if (extensionNamesToFilter.get(0).equals("*"))
+            return true;
+        for (String extension : extensionNamesToFilter) {
+            if (path.endsWith(extension) || extension.equals("*"))
+                return true;
 
-    		if(m.matches())
-    			return true;	
-    	}
-    	return false;
+            extension = extension.replace("*", "\\S+");
+            extension = extension.replace("?", "\\S");
+            if (extension.charAt(0) != '.')
+                extension = "." + extension;
+            String pattern = extension;
+            String ext = path.substring(path.lastIndexOf("."));
+            Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
+            Matcher m = p.matcher(ext);
+
+            if (m.matches())
+                return true;
+        }
+        return false;
     }
-    
-    //important only for .java files; for others always true
+
+    // important only for .java files; for others always true
     private boolean hasCorrectPackagePrefix(String path) {
-    	if(path.endsWith(".java")){
-	    	if (parserOptions.hasPackagePrefix()) {
-	            return path.indexOf(parserOptions.getPackagePrefix()) != -1;
-	        } else {
-	            return true;
-	        }
-    	}
-    	else {
-    		return true;
-    	}
-    		
+        if (path.endsWith(".java")) {
+            if (parserOptions.hasPackagePrefix()) {
+                return path.indexOf(parserOptions.getPackagePrefix()) != -1;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+
     }
-    
+
     private SCMDataType scm(final SCMDataType scm, final Path path) {
         scm.setOperation(parseOperation(path));
         String transformedPath = path.getValue().replaceAll("/", ".");
-        if(transformedPath.endsWith(".java")){
-        	scm.setResourceName(parseJavaClass(path));
-        }
-        else{
-        	scm.setResourceName("");
+        if (transformedPath.endsWith(".java")) {
+            scm.setResourceName(parseJavaClass(path));
+        } else {
+            scm.setResourceName("");
         }
         scm.setPath(parsePath(path));
         scm.setExtension(parseExtension(path));
@@ -172,9 +174,9 @@ public class SCMExtensionParser {
     private String parsePath(final Path path) {
         return path.getValue();
     }
-    
+
     private String parseExtension(final Path path) {
-    	return Files.getFileExtension(path.getValue());
+        return Files.getFileExtension(path.getValue());
     }
 
     private String parseJavaClass(final Path path) {
@@ -242,7 +244,7 @@ public class SCMExtensionParser {
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "", propOrder = { "author", "date", "paths", "msg",  "logentry"})
+        @XmlType(name = "", propOrder = { "author", "date", "paths", "msg", "logentry" })
         public static class Logentry {
 
             @XmlElement(required = true)
@@ -298,7 +300,6 @@ public class SCMExtensionParser {
             public void setRevision(final int value) {
                 this.revision = value;
             }
-
 
             public List<SVNLog.Logentry> getLogentry() {
                 if (logentry == null) {

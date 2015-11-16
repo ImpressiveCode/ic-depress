@@ -40,7 +40,8 @@ public class GitOfflineAdapterNodeFactory extends NodeFactory<GitOfflineAdapterN
     }
 
     @Override
-    public NodeView<GitOfflineAdapterNodeModel> createNodeView(final int viewIndex, final GitOfflineAdapterNodeModel nodeModel) {
+    public NodeView<GitOfflineAdapterNodeModel> createNodeView(final int viewIndex,
+            final GitOfflineAdapterNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 

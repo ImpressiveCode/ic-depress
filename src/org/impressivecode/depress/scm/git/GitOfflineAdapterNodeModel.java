@@ -58,15 +58,15 @@ import com.google.common.collect.Lists;
 public class GitOfflineAdapterNodeModel extends NodeModel {
     // the logger instance
     private static final NodeLogger logger = NodeLogger.getLogger(GitOfflineAdapterNodeModel.class);
-    
+
     static final String GIT_FILENAME = "filename";
     static final String EXTENSION_STR = "extension";
     static final String GIT_PACKAGENAME = "package";
-    
+
     static final String GIT_FILENAME_DEFAULT = "";
     static final String GIT_PACKAGENAME_DEFAULT = "";
     static final String EXTENSION_DEFAULT = ".java";
-    
+
     static final Boolean GIT_PACKAGENAME_ACTIVE_STATE = false;
 
     // example value: the models count variable filled from the dialog
@@ -76,21 +76,21 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
             GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT);
     public static final SettingsModelOptionalString gitPackageName = new SettingsModelOptionalString(
             GitOfflineAdapterNodeModel.GIT_PACKAGENAME, GitOfflineAdapterNodeModel.GIT_PACKAGENAME_DEFAULT, true);
-    
+
     public static final SettingsModelString extensions = new SettingsModelString(
-    		GitOfflineAdapterNodeModel.EXTENSION_STR, GitOfflineAdapterNodeModel.EXTENSION_DEFAULT);
-    
+            GitOfflineAdapterNodeModel.EXTENSION_STR, GitOfflineAdapterNodeModel.EXTENSION_DEFAULT);
+
     protected GitOfflineAdapterNodeModel() {
         super(0, 1);
     }
-    
+
     @Override
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
-    	
+
         try {
             logger.info("Reading git logs from file " + this.gitFileName.getStringValue());
-            ArrayList<String> userExtensions = SCMExtensionsParser.parseExtensions(extensions.getStringValue()); 
+            ArrayList<String> userExtensions = SCMExtensionsParser.parseExtensions(extensions.getStringValue());
             String packageNameToFilter = Strings.emptyToNull(gitPackageName.getStringValue());
             SCMParserOptions parserOptions = options(packageNameToFilter, userExtensions);
             GitOfflineLogParser parser = new GitOfflineLogParser(parserOptions);
@@ -100,12 +100,12 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
             logger.info("Transforming git logs finished.");
             return new BufferedDataTable[] { out };
         } catch (Exception ex) {
-        	logger.error("Unable to parse git entries", ex);
+            logger.error("Unable to parse git entries", ex);
             throw ex;
         }
     }
 
-	@Override
+    @Override
     protected void reset() {
         // NOOP
     }
@@ -136,13 +136,13 @@ public class GitOfflineAdapterNodeModel extends NodeModel {
 
     @Override
     protected void loadInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
     @Override
     protected void saveInternals(final File internDir, final ExecutionMonitor exec) throws IOException,
-    CanceledExecutionException {
+            CanceledExecutionException {
         // NOOP
     }
 
