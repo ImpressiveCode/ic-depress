@@ -37,7 +37,7 @@ import org.knime.core.node.NodeLogger.LEVEL;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class SCMAdapterTransformer implements OutputTransformer<SCMDataType>{
+public class SCMAdapterTransformer implements OutputTransformer<SCMDataType> {
 
     private static final NodeLogger LOGGER = NodeLogger.getLogger(SCMAdapterTransformer.class);
 
@@ -49,7 +49,8 @@ public class SCMAdapterTransformer implements OutputTransformer<SCMDataType>{
     }
 
     @Override
-    public BufferedDataTable transform(final List<SCMDataType> data, final ExecutionContext exec) throws CanceledExecutionException {
+    public BufferedDataTable transform(final List<SCMDataType> data, final ExecutionContext exec)
+            throws CanceledExecutionException {
         BufferedDataContainer container = createDataContainer(exec);
         Long counter = 0l;
         for (SCMDataType entry : data) {
@@ -62,7 +63,7 @@ public class SCMAdapterTransformer implements OutputTransformer<SCMDataType>{
             if (LOGGER.isEnabledFor(LEVEL.ALL)) {
                 LOGGER.debug("Transforming issue entry:" + entry.toString());
             }
-            DataRow row = createTableRow(String.valueOf(counter++),entry);
+            DataRow row = createTableRow(String.valueOf(counter++), entry);
             container.addRowToTable(row);
         }
         container.close();

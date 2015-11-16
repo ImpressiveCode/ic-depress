@@ -23,43 +23,43 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
-* 
-* @author Maciej Borkowski, Capgemini Poland
-* 
-*/
+ * 
+ * @author Maciej Borkowski, Capgemini Poland
+ * 
+ */
 public class SCMExtensionsParser {
 
-	public static ArrayList<String> parseExtensions(final String extensions){
-  		String[] ext = extensions.split("\\s*,\\s*");
-  		ArrayList<String> arr = new ArrayList<String>();
-  		for(String word : ext){
-  			if(word.equals("*")){
-  				arr = new ArrayList<String>();
-  				arr.add("*");
-  				return arr;
-  			}
-  			arr.add(word);
-  		}
-  		return arr;
-  	}
-	
-	public static boolean extensionFits(final String str, final List<String> extensions){
-		for (String extension : extensions) {
-			int idx = str.lastIndexOf(".");
-			if(idx == -1 && extension.equals(""))
-				return true;
-			if(idx == -1 || extension.equals(""))
-				continue;
-			if((extension.equals("*") || str.endsWith(extension)))
-				return true;
-			
-    		Pattern pattern = Pattern.compile(extension, Pattern.CASE_INSENSITIVE);
-    	    Matcher matcher = pattern.matcher(str.substring(idx));
+    public static ArrayList<String> parseExtensions(final String extensions) {
+        String[] ext = extensions.split("\\s*,\\s*");
+        ArrayList<String> arr = new ArrayList<String>();
+        for (String word : ext) {
+            if (word.equals("*")) {
+                arr = new ArrayList<String>();
+                arr.add("*");
+                return arr;
+            }
+            arr.add(word);
+        }
+        return arr;
+    }
 
-    		if(matcher.matches())
-    			return 	true;
-    	}
-		return false;
-	}
+    public static boolean extensionFits(final String str, final List<String> extensions) {
+        for (String extension : extensions) {
+            int idx = str.lastIndexOf(".");
+            if (idx == -1 && extension.equals(""))
+                return true;
+            if (idx == -1 || extension.equals(""))
+                continue;
+            if ((extension.equals("*") || str.endsWith(extension)))
+                return true;
+
+            Pattern pattern = Pattern.compile(extension, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(str.substring(idx));
+
+            if (matcher.matches())
+                return true;
+        }
+        return false;
+    }
 
 }

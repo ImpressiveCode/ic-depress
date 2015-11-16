@@ -31,7 +31,7 @@ import java.util.List;
  * 
  */
 public class GitCommit {
-	
+
     private String id;
     private Date date;
     private String author;

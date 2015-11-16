@@ -38,7 +38,6 @@ import org.knime.core.data.def.StringCell;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 
-
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
@@ -67,7 +66,7 @@ public final class TableCellReader {
     }
 
     public String stringOptional(final String colName) {
-        return optionalData(colName) ? null :  string(colName);
+        return optionalData(colName) ? null : string(colName);
     }
 
     public Calendar date(final String colName) {
@@ -75,15 +74,15 @@ public final class TableCellReader {
     }
 
     public Date dateOptional(final String colName) {
-        return optionalData(colName)  ? null : date(colName).getTime();
+        return optionalData(colName) ? null : date(colName).getTime();
     }
 
     public Set<String> stringSetOptional(final String colName) {
-        return optionalData(colName) ? Collections.<String>emptySet() : stringSet(colName);
+        return optionalData(colName) ? Collections.<String> emptySet() : stringSet(colName);
     }
-    
+
     public List<String> stringListOptional(final String colName) {
-    	return optionalData(colName) ? Collections.<String>emptyList() : stringListCellSet(colName);
+        return optionalData(colName) ? Collections.<String> emptyList() : stringListCellSet(colName);
     }
 
     public Set<String> stringSet(final String colName) {
@@ -95,15 +94,15 @@ public final class TableCellReader {
             }
         }));
     }
-    
+
     public List<String> stringListCellSet(final String colName) {
         ListCell set = ((ListCell) row.getCell(spec.findColumnIndex(colName)));
         ArrayList<String> returned = new ArrayList<String>();
-        for(DataCell cell : set){
-        	String value = ((StringCell)cell).getStringValue(); 
-        	returned.add(value);
+        for (DataCell cell : set) {
+            String value = ((StringCell) cell).getStringValue();
+            returned.add(value);
         }
-        
+
         return returned;
     }
 

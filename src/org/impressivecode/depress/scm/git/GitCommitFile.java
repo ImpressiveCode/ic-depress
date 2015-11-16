@@ -76,16 +76,16 @@ public class GitCommitFile {
         this.javaClass = javaClass;
     }
 
-    public String getJavaClass(){
+    public String getJavaClass() {
         return this.javaClass;
     }
 
-	public String getExtension() {
-		return extension;
-	}
+    public String getExtension() {
+        return extension;
+    }
 
-	public void setExtension(String extension) {
-		this.extension = extension;
-	}
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
 
 }

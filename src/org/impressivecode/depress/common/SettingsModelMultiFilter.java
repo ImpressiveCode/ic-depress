@@ -31,7 +31,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
 
 /**
- *  
+ * 
  * @author Maciej Borkowski, Capgemini Poland
  * 
  */
