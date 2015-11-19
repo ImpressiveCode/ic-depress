@@ -162,4 +162,16 @@ public class GitOfflineLogParserTest {
     public void shouldCommitWithPackageMatch() throws Exception {
         assertThat(packageCommit("org.spring.").getFiles()).hasSize(0);
     }
+    
+    @Test
+    public void shouldCommitWithEmptyPackageMatch() throws Exception {
+    	assertEquals(4, packageCommit("").getFiles().size());
+    }
+    
+    @Test
+    public void shouldCommitWithEmptyExtensionMatch() throws Exception {
+    	ArrayList<String> ext = new ArrayList<String>();
+    	ext.add("");
+    	assertEquals(0, specificCommit(ext).getFiles().size());
+    }
 }
