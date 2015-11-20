@@ -87,6 +87,7 @@ public class SVNOfflineParserTest {
     public void shouldParseAnyEntry() throws JAXBException, CloneNotSupportedException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
+        extensionsToFilter.add("*");
         SCMParserOptions options = SCMParserOptions.options("org.", extensionsToFilter);
         SVNOfflineLogParser parser = new SVNOfflineLogParser(options);
         // when
@@ -139,6 +140,5 @@ public class SVNOfflineParserTest {
 
         // then
         assertThat(entries).hasSize(32);
-
     }
 }
