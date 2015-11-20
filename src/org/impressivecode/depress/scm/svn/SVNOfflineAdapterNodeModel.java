@@ -92,7 +92,7 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
             String packageNameToFilter = Strings.emptyToNull(packageName.getStringValue());
             SCMParserOptions parserOptions = options(packageNameToFilter, userExtensions);
 
-            SVNExtensionParser parser = new SVNExtensionParser(parserOptions);
+            SVNOfflineLogParser parser = new SVNOfflineLogParser(parserOptions);
 
             List<SCMDataType> commits = parser.parseEntries(this.fileName.getStringValue());
 

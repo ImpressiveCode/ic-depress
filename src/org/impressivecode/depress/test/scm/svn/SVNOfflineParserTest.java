@@ -8,7 +8,7 @@ import java.util.List;
 import javax.xml.bind.JAXBException;
 
 import org.impressivecode.depress.scm.SCMDataType;
-import org.impressivecode.depress.scm.SCMExtensionParser;
+import org.impressivecode.depress.scm.svn.SVNOfflineLogParser;
 import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.SCMParserOptions;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class SVNOfflineParserTest {
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add(".java");
         SCMParserOptions options = SCMParserOptions.options("", extensionsToFilter);
-        SCMExtensionParser parser = new SCMExtensionParser(options);
+        SVNOfflineLogParser parser = new SVNOfflineLogParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);
         // then
@@ -41,7 +41,7 @@ public class SVNOfflineParserTest {
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add(".java");
         SCMParserOptions options = SCMParserOptions.options("", extensionsToFilter);
-        SCMExtensionParser parser = new SCMExtensionParser(options);
+        SVNOfflineLogParser parser = new SVNOfflineLogParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePathMerged);
         // then
@@ -54,7 +54,7 @@ public class SVNOfflineParserTest {
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add(".j?va");
         SCMParserOptions options = SCMParserOptions.options("org.", extensionsToFilter);
-        SCMExtensionParser parser = new SCMExtensionParser(options);
+        SVNOfflineLogParser parser = new SVNOfflineLogParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);
         List<SCMDataType> revision = Lists.newArrayList(Iterables.filter(entries, new Predicate<SCMDataType>() {
@@ -88,7 +88,7 @@ public class SVNOfflineParserTest {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         SCMParserOptions options = SCMParserOptions.options("org.", extensionsToFilter);
-        SCMExtensionParser parser = new SCMExtensionParser(options);
+        SVNOfflineLogParser parser = new SVNOfflineLogParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);
 
@@ -115,7 +115,7 @@ public class SVNOfflineParserTest {
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add("*");
         SCMParserOptions options = SCMParserOptions.options("de.", extensionsToFilter);
-        SCMExtensionParser parser = new SCMExtensionParser(options);
+        SVNOfflineLogParser parser = new SVNOfflineLogParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);
 
@@ -133,7 +133,7 @@ public class SVNOfflineParserTest {
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add("*");
         SCMParserOptions options = SCMParserOptions.options(null, extensionsToFilter);
-        SCMExtensionParser parser = new SCMExtensionParser(options);
+        SVNOfflineLogParser parser = new SVNOfflineLogParser(options);
         // when
         List<SCMDataType> entries = parser.parseEntries(logFilePath);
 

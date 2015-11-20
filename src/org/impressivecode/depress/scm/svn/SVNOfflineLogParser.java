@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.scm;
+package org.impressivecode.depress.scm.svn;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -44,8 +44,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.impressivecode.depress.scm.SCMDataType;
 import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.SCMParserOptions;
-import org.impressivecode.depress.scm.SCMExtensionParser.SVNLog.Logentry;
-import org.impressivecode.depress.scm.SCMExtensionParser.SVNLog.Logentry.Paths.Path;
+import org.impressivecode.depress.scm.svn.SVNOfflineLogParser.SVNLog.Logentry;
+import org.impressivecode.depress.scm.svn.SVNOfflineLogParser.SVNLog.Logentry.Paths.Path;
 
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
@@ -57,13 +57,11 @@ import com.google.common.io.Files;
  * @author Zuzanna Pacholczyk, Capgemini Poland
  * 
  */
-public class SCMExtensionParser {
-
+public class SVNOfflineLogParser {
     final SCMParserOptions parserOptions;
 
-    public SCMExtensionParser(final SCMParserOptions parserOptions) {
+    public SVNOfflineLogParser(final SCMParserOptions parserOptions) {
         this.parserOptions = checkNotNull(parserOptions, "Options has to be set");
-
     }
 
     public List<SCMDataType> parseEntries(final String path) throws JAXBException, CloneNotSupportedException {
@@ -85,40 +83,40 @@ public class SCMExtensionParser {
     private List<SCMDataType> convertToSCMType(final SVNLog log, final SCMParserOptions parserOptions)
             throws CloneNotSupportedException {
         List<SCMDataType> scmEntries = Lists.newArrayListWithCapacity(1000);
-        parseLogEntries(log.getLogentry(), scmEntries);
+        parseLogEntries(log.getLogentry(), scmEntries, parserOptions);
         return scmEntries;
     }
 
-    private void parseLogEntries(final List<Logentry> entries, final List<SCMDataType> scmEntries)
-            throws CloneNotSupportedException {
+    private void parseLogEntries(final List<Logentry> entries, final List<SCMDataType> scmEntries,
+            final SCMParserOptions parserOptions) throws CloneNotSupportedException {
         for (Logentry entry : entries) {
             if (entry.getPaths() == null) {
                 continue;
             }
             SCMDataType base = scmBase(entry);
             for (Path path : entry.getPaths().getPath()) {
-                if (include(path)) {
+                if (include(path, parserOptions)) {
                     scmEntries.add(scm((SCMDataType) base.clone(), path));
                 }
             }
             if (!entry.getLogentry().isEmpty()) {
-                parseLogEntries(entry.getLogentry(), scmEntries);
+                parseLogEntries(entry.getLogentry(), scmEntries, parserOptions);
             }
         }
     }
 
-    private boolean include(final Path path) {
+    private boolean include(final Path path, final SCMParserOptions parserOptions) {
         String transformedPath = path.getValue().replaceAll("/", ".");
-        return isCorrectAccordingToFilterRules(transformedPath);
+        return isCorrectAccordingToFilterRules(transformedPath, parserOptions);
     }
 
-    private boolean isCorrectAccordingToFilterRules(final String path) {
+    public static boolean isCorrectAccordingToFilterRules(final String path, final SCMParserOptions parserOptions) {
         boolean isCorrect = false;
-        isCorrect |= (hasCorrectExtension(path) && hasCorrectPackagePrefix(path));
+        isCorrect |= (hasCorrectExtension(path, parserOptions) && hasCorrectPackagePrefix(path, parserOptions));
         return isCorrect;
     }
 
-    private boolean hasCorrectExtension(String path) {
+    private static boolean hasCorrectExtension(String path, final SCMParserOptions parserOptions) {
         ArrayList<String> extensionNamesToFilter = parserOptions.getExtensionsNamesToFilter();
 
         if (extensionNamesToFilter.isEmpty())
@@ -145,7 +143,7 @@ public class SCMExtensionParser {
     }
 
     // important only for .java files; for others always true
-    private boolean hasCorrectPackagePrefix(String path) {
+    private static boolean hasCorrectPackagePrefix(String path, final SCMParserOptions parserOptions) {
         if (path.endsWith(".java")) {
             if (parserOptions.hasPackagePrefix()) {
                 return path.indexOf(parserOptions.getPackagePrefix()) != -1;
@@ -155,7 +153,6 @@ public class SCMExtensionParser {
         } else {
             return true;
         }
-
     }
 
     private SCMDataType scm(final SCMDataType scm, final Path path) {
