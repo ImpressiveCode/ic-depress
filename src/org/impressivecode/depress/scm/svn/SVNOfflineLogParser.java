@@ -120,7 +120,9 @@ public class SVNOfflineLogParser {
         ArrayList<String> extensionNamesToFilter = parserOptions.getExtensionsNamesToFilter();
 
         if (extensionNamesToFilter.isEmpty())
-            return true;
+            return false;
+        if (extensionNamesToFilter.get(0).equals(""))
+        	return false;
         if (extensionNamesToFilter.get(0).equals("*"))
             return true;
         for (String extension : extensionNamesToFilter) {
@@ -177,8 +179,8 @@ public class SVNOfflineLogParser {
     }
 
     private String parseJavaClass(final Path path) {
-        String transformedPath = path.getValue().replaceAll("/", ".");
-        String javaClass = transformedPath.replace(".java", "");
+        String transformedPath = path.getValue();
+        String javaClass = transformedPath.replace(".java", "").replaceAll("/", ".");
         if (parserOptions.hasPackagePrefix()) {
             javaClass = javaClass.substring(javaClass.indexOf(parserOptions.getPackagePrefix()));
         }

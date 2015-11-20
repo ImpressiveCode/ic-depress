@@ -176,7 +176,7 @@ public class GitOfflineLogParser {
                 gitFile.setJavaClass(parseJavaClass);
                 if (transformed.endsWith(".java")) {
                     if (packagePrefixValidate(transformed)) {
-                        gitFile.setJavaClass(parseJavaClass(transformed));
+                        gitFile.setJavaClass(parseJavaClass(origin));
                         commit.getFiles().add(gitFile);
                     }
                 } else {
@@ -194,6 +194,7 @@ public class GitOfflineLogParser {
 
         private String parseJavaClass(final String path) {
             String javaClass = path.replace(".java", "");
+            javaClass = javaClass.replaceAll("/", ".");
             if (options.hasPackagePrefix()) {
                 javaClass = javaClass.substring(javaClass.indexOf(options.getPackagePrefix()));
             }
