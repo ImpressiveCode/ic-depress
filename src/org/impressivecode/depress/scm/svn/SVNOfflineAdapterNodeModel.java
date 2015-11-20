@@ -66,20 +66,35 @@ public class SVNOfflineAdapterNodeModel extends NodeModel {
     static final String PACKAGENAME_DEFAULT = "";
     static final String EXTENSION_DEFAULT = ".java";
 
-    private final SettingsModelString fileName = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_FILENAME,
-            SVNOfflineAdapterNodeModel.FILENAME_DEFAULT);
+    private final SettingsModelString fileName = createFileNameSettings();
 
-    private final SettingsModelOptionalString packageName = new SettingsModelOptionalString(
-            SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT, true);
+    private final SettingsModelOptionalString packageName = createPackageNameSettings();
 
-    public final SettingsModelString extensions = new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_EXTENSION,
-            SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT);
+    private final SettingsModelString extensions = createExtensionsSettings();
 
     private ArrayList<String> userExtensions;
 
     protected SVNOfflineAdapterNodeModel() {
         super(0, 1);
 
+    }
+    
+    public static SettingsModelString createFileNameSettings()
+    {
+    	return new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_FILENAME,
+                SVNOfflineAdapterNodeModel.FILENAME_DEFAULT);
+    }
+    
+    public static SettingsModelOptionalString createPackageNameSettings()
+    {
+    	return new SettingsModelOptionalString(
+                SVNOfflineAdapterNodeModel.CFG_PACKAGENAME, SVNOfflineAdapterNodeModel.PACKAGENAME_DEFAULT, true);
+    }
+    
+    public static SettingsModelString createExtensionsSettings()
+    {
+    	return new SettingsModelString(SVNOfflineAdapterNodeModel.CFG_EXTENSION,
+                SVNOfflineAdapterNodeModel.EXTENSION_DEFAULT);
     }
 
     @Override
