@@ -141,5 +141,4 @@ public class SVNOfflineParserTest {
         assertThat(entries).hasSize(32);
 
     }
-
 }
