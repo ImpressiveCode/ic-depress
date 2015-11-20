@@ -141,4 +141,17 @@ public class SVNOfflineParserTest {
         // then
         assertThat(entries).hasSize(32);
     }
+
+    @Test
+    public void shouldParseWithNoExtensionsToFilter() throws JAXBException, CloneNotSupportedException {
+        // given
+        ArrayList<String> extensionsToFilter = new ArrayList<>();
+        SCMParserOptions options = SCMParserOptions.options(null, extensionsToFilter);
+        SVNOfflineLogParser parser = new SVNOfflineLogParser(options);
+        // when
+        List<SCMDataType> entries = parser.parseEntries(logFilePath);
+
+        // then
+        assertThat(entries).hasSize(0);
+    }
 }
