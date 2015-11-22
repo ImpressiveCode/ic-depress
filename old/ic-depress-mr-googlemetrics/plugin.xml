@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   
+   <extension
+         point="org.knime.workbench.repository.nodes">
+      <node
+            category-path="depress/depress.mr"
+            factory-class="org.impressivecode.depress.mr.googlemetrics.GoogleMetricsNodeFactory"
+            id="org.impressivecode.depress.mr.googlemetrics"/>
+   </extension>
+   
+</plugin>

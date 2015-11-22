@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?eclipse version="3.0"?>
+<plugin> 
+    <extension point="org.knime.workbench.repository.nodes">
+      <node
+            category-path="depress/depress.data"
+            expert-flag="false"
+            factory-class="org.impressivecode.depress.data.anonymisation.DecryptionNodeFactory"
+            id="org.impressivecode.depress.data.decryption">
+      </node>
+      <node
+            category-path="depress/depress.data"
+            expert-flag="false"
+            factory-class="org.impressivecode.depress.data.anonymisation.EncryptionNodeFactory"
+            id="org.impressivecode.depress.data.encryption">
+      </node>
+    </extension>
+</plugin>

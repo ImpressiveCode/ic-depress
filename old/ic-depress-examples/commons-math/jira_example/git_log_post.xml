@@ -1,0 +1,2272 @@
+1e16ed14511b088658fe10f83b04165b6fbf6290
+1313256758
+Gilles Sadowski
+MATH-560
+Constructors are not going to be removed in the 3.0 release.
+
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1157395 13f79535-47bb-0310-9956-ffa450edef68
+
+1e16ed14511b088658fe10f83b04165b6fbf6290
+:100644 100644 59aea056483714480329b649e57b024772e73755 36122026b263cd539ce139a686e87e4a4635a9e5 M	src/main/java/org/apache/commons/math/analysis/solvers/BisectionSolver.java
+:100644 100644 5aa24470254533e8f6ab1e6590d315be474add88 ddb9c0f7edf1db36a0ce5dc2afddfb2cf24c6716 M	src/main/java/org/apache/commons/math/analysis/solvers/BrentSolver.java
+:100644 100644 e8534d25275e7abb44e030978588a46081b47c1b 8b2758f966e78f4ad8aa040c5b4dce85cc88dac8 M	src/main/java/org/apache/commons/math/analysis/solvers/LaguerreSolver.java
+:100644 100644 31d3162bfed19ec564a054a7f7e5f5301194fd22 04ec5c04b785374d6b0d020a85a26379b0d214d2 M	src/main/java/org/apache/commons/math/analysis/solvers/MullerSolver.java
+:100644 100644 6daef0f182ec52cea8a99ed2c0e8f2c4b014ea3d 5428b0085b8f42e7b286c6927dfec99e6b5b7495 M	src/main/java/org/apache/commons/math/analysis/solvers/NewtonSolver.java
+:100644 100644 2594abcc4bae3378e94265bb0b388cc3801a2e74 89d863b303a42659412e556e0f60857fdddc35b7 M	src/main/java/org/apache/commons/math/analysis/solvers/RiddersSolver.java
+:100644 100644 71871c26bc363fbf0a8c5827fd424d332e03f6ff 7a2c3a2073d8d40cfcc9616d2eeae0e0e4a80907 M	src/main/java/org/apache/commons/math/analysis/solvers/SecantSolver.java
+:100644 100644 400db6040c412e274f7cec02d0f38d7143e68e9f 386ca9e89cde04874ee0ceb95627d0219d52bfd5 M	src/site/xdoc/changes.xml
+
+39d8f8c9626f8fa13c1db5f36ce7c1a7b854476a
+1312519454
+Brett Porter
+avoid rebuilding a release on the branch
+
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1154093 13f79535-47bb-0310-9956-ffa450edef68
+
+39d8f8c9626f8fa13c1db5f36ce7c1a7b854476a
+:100644 100644 af58bf17b0673176a6fe1a4de2240d12ca36e925 f39ec3961cc35ef21d943dc478ee4d8120457773 M	pom.xml
+
+1a0011c47b24fda638048dbf2fecac0d5a7b38d9
+1299169501
+Sebastian Bazley
+Oops - wrong issue terminator
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1076667 13f79535-47bb-0310-9956-ffa450edef68
+
+1a0011c47b24fda638048dbf2fecac0d5a7b38d9
+:100644 100644 5fc35bfec26ee486c74579a175891ed8cbd5c8e9 975bdd1b515efc5ebe5d0ccb8ca8e4e652d082d8 M	src/main/resources/templates/math-release-notes.vm
+
+12b4d1e6e37b66e9c3eddcb7ebfc5b37573d455f
+1298763111
+Sebastian Bazley
+Synch with trunk copy (apart from Exceptions section)
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1074960 13f79535-47bb-0310-9956-ffa450edef68
+
+12b4d1e6e37b66e9c3eddcb7ebfc5b37573d455f
+:100644 100644 3ec8660f5deb340bc7738126bfb8c1766a54b292 80a9e9aa18447e979d24d4a503b1d7e0877bdbe1 M	src/site/xdoc/developers.xml
+
+613971fc4a7294b3952727525015a5c2f8e629c3
+1298743867
+Luc Maisonobe
+preparing RC6, with a target release date set to 2011-03-02
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1074892 13f79535-47bb-0310-9956-ffa450edef68
+
+613971fc4a7294b3952727525015a5c2f8e629c3
+:100644 100644 cdd57602a214bf470924b0a3669d0adc5ccc1485 dd7f83a894717f171c9a9001a24d8b0fa4b042b5 M	doap_math.rdf
+:100644 100644 571a079bf4651b54eb5e32ca1490a3f079c9ba9b af58bf17b0673176a6fe1a4de2240d12ca36e925 M	pom.xml
+:100644 100644 33660f27100555d7ea21fac80c7bb12bbd10ba42 400db6040c412e274f7cec02d0f38d7143e68e9f M	src/site/xdoc/changes.xml
+
+7290f867491a08e41889ff5d383fe9624b28902a
+1298624460
+Luc Maisonobe
+filter out the part of the site we want to include in the binary build (mainly apidocs and userguide)
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1074445 13f79535-47bb-0310-9956-ffa450edef68
+
+7290f867491a08e41889ff5d383fe9624b28902a
+:100644 100644 b8762ecc1ae4a6693b42d20fc9fc81acccd4d831 571a079bf4651b54eb5e32ca1490a3f079c9ba9b M	pom.xml
+:100644 100644 53c56338ca3c4f32f01a6763733046e098c85f4f 653b41b69b023f5bfa542578dc62234944c11747 M	src/main/assembly/bin.xml
+
+bebbe5a043176d8757c06edc938bc3677a4c3566
+1298601931
+Sebastian Bazley
+Eol-style
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1074386 13f79535-47bb-0310-9956-ffa450edef68
+
+bebbe5a043176d8757c06edc938bc3677a4c3566
+65c4df1320eba4c05c2e7b147a88510dc82378e8
+1298583121
+Luc Maisonobe
+set commons.rc.version in pom.xml, as specified in the Wiki for Nexus deployement
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1074307 13f79535-47bb-0310-9956-ffa450edef68
+
+65c4df1320eba4c05c2e7b147a88510dc82378e8
+:100644 100644 41ffcc0872e5fce21af022e1a2d3cac07a89ce9f b8762ecc1ae4a6693b42d20fc9fc81acccd4d831 M	pom.xml
+
+44f6190e912d1c3ecb4a29f663aa01dfa990b488
+1298582637
+Luc Maisonobe
+updated target publication date to 2011-03-01
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1074299 13f79535-47bb-0310-9956-ffa450edef68
+
+44f6190e912d1c3ecb4a29f663aa01dfa990b488
+:100644 100644 81b49cf8c55f6d3f4daf42ba9b31075bd5a1dd6c cdd57602a214bf470924b0a3669d0adc5ccc1485 M	doap_math.rdf
+:100644 100644 53bbc93908fd4ab0804c8b310bc95bbc794931d7 33660f27100555d7ea21fac80c7bb12bbd10ba42 M	src/site/xdoc/changes.xml
+
+e2b4d06daafd77a5cb7bbd2cc054342e88247808
+1298582483
+Luc Maisonobe
+fixed version property for Nexus
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1074297 13f79535-47bb-0310-9956-ffa450edef68
+
+e2b4d06daafd77a5cb7bbd2cc054342e88247808
+:100644 100644 e904c5e675440877318ca1382bb3886785b34abf 8bd4b58fb868cfd7474deea286ee2dc0acbbd840 M	src/main/assembly/src.xml
+
+66cb8cbfedf2f80739aadf0be0687fdc3153c4ce
+1298582339
+Luc Maisonobe
+fixed a nasty bug with atan2 that occurred only with some Java 1.5 virtual machines
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1074294 13f79535-47bb-0310-9956-ffa450edef68
+
+66cb8cbfedf2f80739aadf0be0687fdc3153c4ce
+:100644 100644 ed583c3cfd9d2a5be411ccbde3b11ed101dcdac8 eda2b8be0045995d89b3043c4fad340f2fc0a752 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+53b3350b257e3d704bbce633d339552a5c9399c5
+1298457565
+Luc Maisonobe
+fixed a checkstyle warning
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073687 13f79535-47bb-0310-9956-ffa450edef68
+
+53b3350b257e3d704bbce633d339552a5c9399c5
+:100644 100644 2bcce28e37a6093357fb99e847a5e22befec56a1 c6480cb85670286549be4d6e69e77ab8f451674b M	src/main/java/org/apache/commons/math/fraction/BigFraction.java
+
+82c9a1d271666914766cb865b15dd1cb2c44bd9b
+1298455532
+Luc Maisonobe
+pushed target publication date to 2011-02-27
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073667 13f79535-47bb-0310-9956-ffa450edef68
+
+82c9a1d271666914766cb865b15dd1cb2c44bd9b
+:100644 100644 40755d0af74491cd54f89b37b189ae17886b45e4 81b49cf8c55f6d3f4daf42ba9b31075bd5a1dd6c M	doap_math.rdf
+:100644 100644 a43a19777f41ee86e3894e3fd17b77384c60f99f 53bbc93908fd4ab0804c8b310bc95bbc794931d7 M	src/site/xdoc/changes.xml
+
+1c2c25b7333452e982ae9bb5f6e0150d2298ebb7
+1298454930
+Luc Maisonobe
+updated release notes to include behavior changes in multiple regression
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073663 13f79535-47bb-0310-9956-ffa450edef68
+
+1c2c25b7333452e982ae9bb5f6e0150d2298ebb7
+:100644 100644 53694389b04fbce87dcfc24aa6563b1d2568ec6f 81b237cae6310ca1edfc00c3f68cdddf7cfb7d56 M	RELEASE-NOTES.txt
+
+fc76eeb20b23384d2477fcfa805f5c79a742c546
+1298454342
+Luc Maisonobe
+another round of exception incompatibilities squashing
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073658 13f79535-47bb-0310-9956-ffa450edef68
+
+fc76eeb20b23384d2477fcfa805f5c79a742c546
+:100644 100644 f87de1c2cb6355d2a2f004e1b99bb056aacedb17 c1b4d566628bf1518f3c9aa62cc9bcdfabce1159 M	src/main/java/org/apache/commons/math/exception/NoDataException.java
+:100644 100644 52498af3851273d88b6c75273106b87309fc87e7 2bcce28e37a6093357fb99e847a5e22befec56a1 M	src/main/java/org/apache/commons/math/fraction/BigFraction.java
+:100644 100644 11a70fa666bb333f8566d84dec3a94eae7500075 38ecc947640033116a615a1e630d23a078f67361 M	src/main/java/org/apache/commons/math/optimization/UnivariateRealOptimizer.java
+:100644 100644 e37184172f2b71eafecb48a175b7bfb5837f4a62 6699792bb7293c0cb015fb71178f667a3000714f M	src/main/java/org/apache/commons/math/util/DefaultTransformer.java
+:100644 100644 c15e0ecc7123ea0d5e5031f51b25d72d16677d62 70096e253ab0fa61bafdef136423dd7f0f78a276 M	src/test/java/org/apache/commons/math/fraction/BigFractionTest.java
+:100644 100644 627a221d9f4bdf053eca6efdabac0dab21047cac 4951f6fbfeefebde31191e31f6fc1efce0c71f80 M	src/test/java/org/apache/commons/math/util/DefaultTransformerTest.java
+
+dbf18d0be8a5c1f0d2d2245d42885199f0583d19
+1298423231
+Phil Steitz
+Added note on multiple regression behavior change.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073569 13f79535-47bb-0310-9956-ffa450edef68
+
+dbf18d0be8a5c1f0d2d2245d42885199f0583d19
+:100644 100644 c5c18f8f82a2d7f356287f4e4533814cb672c7bc a43a19777f41ee86e3894e3fd17b77384c60f99f M	src/site/xdoc/changes.xml
+
+6c687cee4b18f0b310dbc6970792fc888dfe292c
+1298408246
+Luc Maisonobe
+removed remaining bits of incompatible exception changes
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073498 13f79535-47bb-0310-9956-ffa450edef68
+
+6c687cee4b18f0b310dbc6970792fc888dfe292c
+:100644 100644 f4e7f18b5c0069c728ef7a147c389f5cd49748ee 67f86c067644eaa3a0f4b9d2c9f43445b70583f9 M	src/main/java/org/apache/commons/math/analysis/BinaryFunction.java
+:100644 100644 2e1e78a54f7e56031e4ba14e5acfed1e7a6c4c95 728d7878f4c6d99370eb3208e95a526193efdc48 M	src/main/java/org/apache/commons/math/analysis/BivariateRealFunction.java
+:100644 100644 fcd76a5cf4e0b2ece8a982da33c9ce471fd12273 3ebf24dc7cf8eda8ef03b244572627677de0ff0c M	src/main/java/org/apache/commons/math/analysis/TrivariateRealFunction.java
+:100644 100644 98c4392a037716f7c7faf1086d1a4247f79f25e5 003b5680f663ed11d923bec2dddc142181c55a1c M	src/main/java/org/apache/commons/math/analysis/UnivariateMatrixFunction.java
+:100644 100644 13053923bb9fbbdc7164303110a1e7ca8d855c9e 6349f0f4f163d0ff102e325016ea3045cc47f1e7 M	src/main/java/org/apache/commons/math/analysis/UnivariateVectorialFunction.java
+:100644 100644 4f8d0a07878ca7094ef73b66d47183d523d8079f c786a4defad8cc7dfa3cdae4812f12c0cde854ca M	src/main/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolatingFunction.java
+:100644 100644 f665964e9e20e09c3ca005e2ead5570e3e27afbb 87d90c974266628244a873857ad5c780a13f6652 M	src/main/java/org/apache/commons/math/analysis/polynomials/PolynomialFunctionLagrangeForm.java
+:100644 100644 51e11b10088361e35c6f718381f743b3aae3f789 9e37e94e321af06cd2a4e85b77d50a8297c4ad5f M	src/main/java/org/apache/commons/math/analysis/polynomials/PolynomialFunctionNewtonForm.java
+:100644 100644 7b3827e3d6ba55ae5cd302cc84166e5b872eb975 a3d3756d48e33a8c52353be953a0a23d736f4392 M	src/main/java/org/apache/commons/math/distribution/AbstractContinuousDistribution.java
+:100644 000000 de1c77e6ede62f5f69c544c9be6a7a5f016d6310 0000000000000000000000000000000000000000 D	src/main/java/org/apache/commons/math/exception/MathUserException.java
+:100644 100644 4e8807281588ea25f2386c796d08818edc2a7fc0 32ca91b120e92bfc48ba0c0e28beaa6240476c85 M	src/test/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolatingFunctionTest.java
+:100644 100644 dfd47b0585e376877165b4ae10f048ffa6ea81fb 4d455294b5ee5a5944fd9ee0564135968ec60a38 M	src/test/java/org/apache/commons/math/analysis/interpolation/NevilleInterpolatorTest.java
+:100644 100644 1392d114277ea59e334ecad4e827bc616214c95d 1d9943df192389575194be645a2d13b75c718230 M	src/test/java/org/apache/commons/math/analysis/interpolation/TricubicSplineInterpolatingFunctionTest.java
+:100644 100644 9cfaad82bab8edd55ab0d4c467d381dd46b2c298 f6b72533bf2efc016cf98ed5b46714f24a48cf65 M	src/test/java/org/apache/commons/math/analysis/polynomials/PolynomialFunctionLagrangeFormTest.java
+:100644 100644 e6bb4306bae50962ecf4ece6d8b0f6ec25118447 32b33d92b6f77c3160133ef9e95910d84abbe32c M	src/test/java/org/apache/commons/math/analysis/polynomials/PolynomialFunctionNewtonFormTest.java
+
+280c537915796079252f069baa0d88cfc1f78033
+1298404337
+Luc Maisonobe
+added missing @since tags
+JIRA: MATH-533
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073474 13f79535-47bb-0310-9956-ffa450edef68
+
+280c537915796079252f069baa0d88cfc1f78033
+:100644 100644 37db61bfa6403aaece1fd6f2e9067d50f41bf0e4 d7f822441dcf755796e4411e61413faebbc3f6c0 M	src/main/java/org/apache/commons/math/util/ResizableDoubleArray.java
+
+eab7f44e0b9d5ffa2ce2dfd64a787d7ba0b138d0
+1298404147
+Luc Maisonobe
+added missing @since tags
+JIRA: MATH-532
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073472 13f79535-47bb-0310-9956-ffa450edef68
+
+eab7f44e0b9d5ffa2ce2dfd64a787d7ba0b138d0
+:100644 100644 9715dc12f6f8b72cdbe146ad48bc9f4395f54a04 df802c6fa96330bf226e3c5805f3504ecdc4a085 M	src/main/java/org/apache/commons/math/util/MathUtils.java
+
+e2bd608e8af3650ed94a246570299cac8674d76a
+1298403302
+Luc Maisonobe
+added missing @since tags
+JIRA: MATH-531
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073464 13f79535-47bb-0310-9956-ffa450edef68
+
+e2bd608e8af3650ed94a246570299cac8674d76a
+:100644 100644 5c1ba05202f11eb4961ab7a9a8f8d6f65c7305c7 2768cb69e58fd2fdfab05e175303e6502c38a725 M	src/main/java/org/apache/commons/math/stat/regression/OLSMultipleLinearRegression.java
+
+fd1eedef60bfa0846c6c1ba7e6569169fab4e83c
+1298402559
+Luc Maisonobe
+added missing @since tags
+JIRA: MATH-530
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073460 13f79535-47bb-0310-9956-ffa450edef68
+
+fd1eedef60bfa0846c6c1ba7e6569169fab4e83c
+:100644 100644 ea14af9281e4d98a0e19df15965157dbf06ddfeb b2bf10f23a166d5d697bf7ab1ca1f00ae2ddf11d M	src/main/java/org/apache/commons/math/stat/regression/GLSMultipleLinearRegression.java
+
+102c6f1a939b10fc06bc17a2833d6c4a45ec736b
+1298402292
+Luc Maisonobe
+added missing @since tags
+JIRA: MATH-529
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073459 13f79535-47bb-0310-9956-ffa450edef68
+
+102c6f1a939b10fc06bc17a2833d6c4a45ec736b
+:100644 100644 b85dcc193821b170681663ef79a36c9f44b6b88e c0c804159ba4e268c0d444d28b111af64b8c4531 M	src/main/java/org/apache/commons/math/stat/regression/AbstractMultipleLinearRegression.java
+
+8c30ccfd270ab3dc29bbf6408886892a9720e75b
+1298367292
+Luc Maisonobe
+added missing @since
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073276 13f79535-47bb-0310-9956-ffa450edef68
+
+8c30ccfd270ab3dc29bbf6408886892a9720e75b
+:100644 100644 05f2fcae6d54342ebfb7a9460c1d1a745564b466 069536f22c1d9af1aa162c6f872b2f2c5b8ad2f8 M	src/main/java/org/apache/commons/math/stat/StatUtils.java
+
+98d7ec006d409c52b682e8d8cc1a8b3357accca5
+1298366545
+Luc Maisonobe
+added missing @since
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073272 13f79535-47bb-0310-9956-ffa450edef68
+
+98d7ec006d409c52b682e8d8cc1a8b3357accca5
+:100644 100644 89c171ccdde0500e134c9f035b13f028f3bd69fa 618a2875dabc74166d0ab73387a8d12a5dc0c594 M	src/main/java/org/apache/commons/math/optimization/general/LevenbergMarquardtOptimizer.java
+
+c759fed6fd79bf43d73c5db8bf051fa2e1859ded
+1298366367
+Luc Maisonobe
+added missing @since
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073270 13f79535-47bb-0310-9956-ffa450edef68
+
+c759fed6fd79bf43d73c5db8bf051fa2e1859ded
+:100644 100644 192119598e90d0c5b550bf38bb6ca76e3f7cb7c4 aef64253ff9ac8c955278f86b01566017f17ab73 M	src/main/java/org/apache/commons/math/optimization/fitting/PolynomialFitter.java
+
+ed66ec5ede75020ada272aae117c8127a5a78d24
+1298365580
+Luc Maisonobe
+added missing @since
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073267 13f79535-47bb-0310-9956-ffa450edef68
+
+ed66ec5ede75020ada272aae117c8127a5a78d24
+:100644 100644 3dbfe8666c9069d3feb18d527727b4bc49d039a2 2782cb49a976ff1b969c5fe208e68bcbc7d4503e M	src/main/java/org/apache/commons/math/ode/AbstractIntegrator.java
+
+bead4690fa40ae76708b8e7dd0a57830ed523878
+1298365345
+Luc Maisonobe
+fixed deprecation message to include the version of the change for getSparcity
+fixed the since message to show the getSparsity has been introduced in 2.2
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073262 13f79535-47bb-0310-9956-ffa450edef68
+
+bead4690fa40ae76708b8e7dd0a57830ed523878
+:100644 100644 f098bfb7f276de963bff6cbee57cc2fd05aa98e9 c9e1b8bd2666e676f563d66a43a80e9f4b1573d7 M	src/main/java/org/apache/commons/math/linear/OpenMapRealVector.java
+
+587cc8d3e69865ddf3844075f476cb2fb6b58bce
+1298364126
+Luc Maisonobe
+fixed a wrong @Since (method has been added in 2.2, not in 2.0)
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073255 13f79535-47bb-0310-9956-ffa450edef68
+
+587cc8d3e69865ddf3844075f476cb2fb6b58bce
+:100644 100644 1fca8d816e6febbd5f47b6c85557a843f72309eb 5304cd7b745640507b058f5ff16ec7c41c36ef22 M	src/main/java/org/apache/commons/math/linear/MatrixIndexException.java
+
+6bfb556a5169c9faf4b92c719b33688bfd2afa97
+1298364005
+Luc Maisonobe
+added missing deprecation
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073253 13f79535-47bb-0310-9956-ffa450edef68
+
+6bfb556a5169c9faf4b92c719b33688bfd2afa97
+:100644 100644 525a13c678afeffa3327e028eb5b54388dde6530 dd813f4a81c7fe527cdf728956fe79346330ff82 M	src/main/java/org/apache/commons/math/linear/InvalidMatrixException.java
+
+4b8bb34282bb5cd1856d1acd42013d2288db4877
+1298331355
+Sebastian Bazley
+Don't include every jar in every subdir
+Allow JUnit to be found from Ant runtime classpath
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073187 13f79535-47bb-0310-9956-ffa450edef68
+
+4b8bb34282bb5cd1856d1acd42013d2288db4877
+:100644 100644 42a6907fc90e5ac088c5c871e2e3a71553512fc9 81316ee3b63065d3ebc05f29cd48d46825993e0a M	test-jar.xml
+
+5d5efb7481ecb7416b78cb5256ceaa83c442bd4d
+1298325854
+Luc Maisonobe
+fixed @since comment, the class was added in 2.2 not in 2.1
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073165 13f79535-47bb-0310-9956-ffa450edef68
+
+5d5efb7481ecb7416b78cb5256ceaa83c442bd4d
+:100644 100644 6cf536c7e74a9a3a5af523bfc6c0159be52ac380 0d515694d5a70bdeca3c4a6308fe09bd725ba0d3 M	src/main/java/org/apache/commons/math/exception/util/LocalizedFormats.java
+
+10170dfcce9d1a6bb59f36d9b5d394a7d10c4e74
+1298324812
+Luc Maisonobe
+Reverted incompatible changes not detected by CLIRR.
+The changes were detected by running the former 2.1 test (which is a realistic approximation of what existing user code may look like) against version 2.2 of the library itself. This showed that user code that did use DerivativeException (but also FunctionEvaluationException) which have recently been switched back to checked did not compile anymore (the revert did disable the attempt for a smooth transition).
+Hence this fix declares again all these exception throughout the API.
+CLIRR still sees nothing about this huge change ...
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073158 13f79535-47bb-0310-9956-ffa450edef68
+
+10170dfcce9d1a6bb59f36d9b5d394a7d10c4e74
+:100644 100644 a4dcec0885752d33bb06068d014ddad3adbe86f5 72788776c5c34829471fdcb74c6651fb2b38e081 M	src/main/java/org/apache/commons/math/analysis/MultivariateMatrixFunction.java
+:100644 100644 766f3f0d34bd04d267528d836a9a6ba57cd2ad0c 1d63b49ec00c1a57693c19d80db04839c5c783f6 M	src/main/java/org/apache/commons/math/linear/AbstractFieldMatrix.java
+:100644 100644 b28d28b3b1f896a00bceefaec23e605aa761be74 d06c35c13c0854227ce9da4e218be2d0e16c6d4a M	src/main/java/org/apache/commons/math/linear/AbstractRealMatrix.java
+:100644 100644 d9ee7c90801645476aff681bc04a901dfbb71740 5256459e2f72fd5d6af4fd146c503e3e80eea15c M	src/main/java/org/apache/commons/math/linear/Array2DRowFieldMatrix.java
+:100644 100644 1f2756145606e7dff57d428368f0fd913a2dadab b9253d4907da1e659207629e1d4dbd9d90619b25 M	src/main/java/org/apache/commons/math/linear/Array2DRowRealMatrix.java
+:100644 100644 28ee61e338e2f5d5076ce518ceac483a8d7a5bb6 49a1f78337b493d6418ce62744b1e80667872acf M	src/main/java/org/apache/commons/math/linear/BlockFieldMatrix.java
+:100644 100644 c04cf4b1145f1a230f613058b2779c916a17e88b 88f5d7c423b8c7e92cd5b59570ba61c13542d489 M	src/main/java/org/apache/commons/math/linear/BlockRealMatrix.java
+:100644 100644 2b379bbcbb0c7522eec96924670c862f481b1303 74f0538f2b195a9de0e03cea85456cf987a832f0 M	src/main/java/org/apache/commons/math/linear/DefaultFieldMatrixChangingVisitor.java
+:100644 100644 18ffbb72c04a4f1e0fe4559dc3c4cbb8074f72cb 03adf37aad53a022753ad45168d9ac389313d200 M	src/main/java/org/apache/commons/math/linear/DefaultFieldMatrixPreservingVisitor.java
+:100644 100644 c441cfbe4fca686b5a6a448940d6eb4081a18fd8 bec5e15f0d9e03f4681bbcfb8bf582bd6abdf6f5 M	src/main/java/org/apache/commons/math/linear/DefaultRealMatrixChangingVisitor.java
+:100644 100644 6c1549b133fc2482a0c1c9bc8d3bda42d507c9a7 753613ba184656833acb3776c6d6b91a826d60b9 M	src/main/java/org/apache/commons/math/linear/DefaultRealMatrixPreservingVisitor.java
+:100644 100644 e7b161155486293128c3ecb385a6ce424b7e154b 592b5c1f0a6a9630e1435147210a2d7cdef446f2 M	src/main/java/org/apache/commons/math/linear/FieldMatrix.java
+:100644 100644 d0a441f961706817ab8589820f62fe5766410e9c d450d0ff362b7fbf3a4ff90bdad75cb4a559cc71 M	src/main/java/org/apache/commons/math/linear/FieldMatrixChangingVisitor.java
+:100644 100644 b9cd060006fd6c356048f505f8948ff08531a255 3b7cb5f776f886585f9f22440bef2843c2fbbfeb M	src/main/java/org/apache/commons/math/linear/FieldMatrixPreservingVisitor.java
+:100644 100644 37b18dcd2f06fe805148a9a9a25ca4019bac45e3 b11eb1a1b8a35a132329f0aef353df477e13c8a3 M	src/main/java/org/apache/commons/math/linear/RealMatrix.java
+:100644 100644 a2059dd7ff59ea64e91a5294dc28a56caebdd45a 45f10b4a5bf9f733f0fea69626523cf1b7fc1a46 M	src/main/java/org/apache/commons/math/linear/RealMatrixChangingVisitor.java
+:100644 100644 896aebef4c335b13104a0f73f511a270295ad51a 7d22c82f65bfae799a7911e7f6fe4fa72105dd65 M	src/main/java/org/apache/commons/math/linear/RealMatrixImpl.java
+:100644 100644 4fff5ebe3484f3caa87098a41b136fd3d20c4372 f05cc2a9c76eb4eb9dd57556c5eefe4c16e8dc5a M	src/main/java/org/apache/commons/math/linear/RealMatrixPreservingVisitor.java
+:100644 100644 2ad29affdaadf581aee2dd885285f3ee1fc8119d 3dbfe8666c9069d3feb18d527727b4bc49d039a2 M	src/main/java/org/apache/commons/math/ode/AbstractIntegrator.java
+:100644 100644 01b9f19a99d8bcb73d754039e4afec26bee0d2a8 3a3a5f13a7bcfab7a05aed918d5ce80ad6ba2d1a M	src/main/java/org/apache/commons/math/ode/ContinuousOutputModel.java
+:100644 100644 a60e1a366f6f9bee1792e11e8526de4b98694b86 abccf74a150b98d48a4977c25d97b2d39f2cef24 M	src/main/java/org/apache/commons/math/ode/FirstOrderConverter.java
+:100644 100644 aa756804f86f4a515b4bd28c24333613a873e8b7 e7988585c5f30b2a3e34b4442e1aa987b75df21a M	src/main/java/org/apache/commons/math/ode/FirstOrderDifferentialEquations.java
+:100644 100644 cf5450ac6543e9964aa660878b3b5a77f071644c 9e2d73691594f5314e707a18e4b777691936099f M	src/main/java/org/apache/commons/math/ode/FirstOrderIntegrator.java
+:100644 100644 a626d53f3ce3f05a89c43eaf9416f3e47da0a505 34758c02c0395198430c48cf761a89e82882ba02 M	src/main/java/org/apache/commons/math/ode/MultistepIntegrator.java
+:100644 100644 d1da96fbb8a41225e3805e5f753180a8b24057c6 07bffc2c711792dbb53f78b9e2c8940b58db4a81 M	src/main/java/org/apache/commons/math/ode/SecondOrderDifferentialEquations.java
+:100644 100644 8f244d4866488a1536d0a740fc60340a829f9d6f 6d0cacdae2e66d2de7fa801ab44e1057b45ee212 M	src/main/java/org/apache/commons/math/ode/SecondOrderIntegrator.java
+:100644 100644 e58d5c763882630cbae3a07ed5901e110ceda9cd 5a25a182e9e1504f42b74b99506ef388324e2231 M	src/main/java/org/apache/commons/math/ode/events/CombinedEventsManager.java
+:100644 100644 932396c5f8bb643452b6c499375aa0ded50edad4 105ca08d468542227d27bd77ff07eabe63d61149 M	src/main/java/org/apache/commons/math/ode/events/EventState.java
+:100644 100644 86762be4d3dbe8fd28a62d443b8eb163c8f4a920 043755701ab11118482c40c88490d2b702dd9829 M	src/main/java/org/apache/commons/math/ode/jacobians/FirstOrderIntegratorWithJacobians.java
+:100644 100644 d80a4328937a939337eb96905cdc206733ea04df c27774293487b9d947213d51fc99e43e157e4688 M	src/main/java/org/apache/commons/math/ode/jacobians/ODEWithJacobians.java
+:100644 100644 6ad49c6f5aa46873efb455f62812788b9c2d2b23 23ec84758b284b5a145c4794deac7e7755427e12 M	src/main/java/org/apache/commons/math/ode/jacobians/StepHandlerWithJacobians.java
+:100644 100644 0eb4898e0dfdcf91110f75b3b1ffe60d68751720 0f3d5ca25feaed0a6fee8bff53e93f08f379aece M	src/main/java/org/apache/commons/math/ode/jacobians/StepInterpolatorWithJacobians.java
+:100644 100644 07d205c35438e76e1117a1c11606c3db1426e2b7 78e6f118125cb7ec3870e0dfc9480516bfe93cc3 M	src/main/java/org/apache/commons/math/ode/nonstiff/AdamsBashforthIntegrator.java
+:100644 100644 fc38b9ba73d5e9f4d29a9dff6e8955ba32900659 7e606b82d1149c869a59d3d66c7a27e8af68778a M	src/main/java/org/apache/commons/math/ode/nonstiff/AdamsIntegrator.java
+:100644 100644 7178f2ef043304ee7617f3c0e4084db66fc67fb2 d8662d7b4ab713ef9a8f988cd3a87d28f6cbaa22 M	src/main/java/org/apache/commons/math/ode/nonstiff/AdamsMoultonIntegrator.java
+:100644 100644 12835c51f6d144c00e5be67560a4f20262073f12 367ac05f969d7774df6f8c030f807a5dcc39e67e M	src/main/java/org/apache/commons/math/ode/nonstiff/AdaptiveStepsizeIntegrator.java
+:100644 100644 5423fd8eed9cf28301941ef64e19151da3d08543 fc76308ecd59be8c21a197fd78f3c42ee0a26a01 M	src/main/java/org/apache/commons/math/ode/nonstiff/ClassicalRungeKuttaStepInterpolator.java
+:100644 100644 2523c1a114f5cced2560662784177d5c94c391d0 2f71b611f63b4dab5f8e7ef65223cda7a4c88297 M	src/main/java/org/apache/commons/math/ode/nonstiff/DormandPrince54StepInterpolator.java
+:100644 100644 0db10e0b8a6bceece5d9c72bdcd57b6f3df63ade 3b2cd6b0e928ad64e9bb3cf5e6c7bf9e716f8b61 M	src/main/java/org/apache/commons/math/ode/nonstiff/DormandPrince853StepInterpolator.java
+:100644 100644 313127d7f4114b9d3b4da4ba20272d87e240aa97 eae6aa8f8c61ca0a64a202ea52a432ebc934e29a M	src/main/java/org/apache/commons/math/ode/nonstiff/EmbeddedRungeKuttaIntegrator.java
+:100644 100644 d4519d970f7d09220c7bfad52be1b3614e162576 c0061f2a96c91879fd72e57f3729124ed0951f21 M	src/main/java/org/apache/commons/math/ode/nonstiff/EulerStepInterpolator.java
+:100644 100644 54e3ca752505ae1d20a9496e10571d39c402a42e 03d7257b67500717e79665ff9056a202e92b527e M	src/main/java/org/apache/commons/math/ode/nonstiff/GillStepInterpolator.java
+:100644 100644 5caedc7d8b89bb91521c8a9ea1fd4d4db6cd697e c666f24fd27e3d1d754bd48a9bfa06212e28532d M	src/main/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerIntegrator.java
+:100644 100644 dfa9553d6677421e4704092660cd9ac4ffbdfb7a ddcb12d5e1b5eb011d00295e5185e20995fd9c7a M	src/main/java/org/apache/commons/math/ode/nonstiff/HighamHall54StepInterpolator.java
+:100644 100644 de91f1b7e523b7119ce26b21dea8454cf0c9299f 988057c89f99c01aa6b1e7e207308c0624166deb M	src/main/java/org/apache/commons/math/ode/nonstiff/MidpointStepInterpolator.java
+:100644 100644 f07e7196a9a185c830108bc87a4c12c1fc1ccef5 127147006b651a5d04e1005a1d37c62009e76e8e M	src/main/java/org/apache/commons/math/ode/nonstiff/RungeKuttaIntegrator.java
+:100644 100644 3fb719e0e9df7f55fb9e0c5ff3d85a08ef8cdda3 31d864176691779e8a747ad796aafd8350e1d5b9 M	src/main/java/org/apache/commons/math/ode/nonstiff/ThreeEighthesStepInterpolator.java
+:100644 100644 95d559aee87027d7d10ed2389e17685e846626b7 9cd356065cc0de4778f18808e415c917eefe9b56 M	src/main/java/org/apache/commons/math/ode/sampling/AbstractStepInterpolator.java
+:100644 100644 f195f0caf68a9690811abf371c895faf1e672969 f2e6456cc92d7892fd46407fe91bf2d46fd70628 M	src/main/java/org/apache/commons/math/ode/sampling/FixedStepHandler.java
+:100644 100644 b7ce9e88de35106829812d382d6c5b180f85e965 13545ea0a5fd78fce218e92a9c9bf70c59362dd6 M	src/main/java/org/apache/commons/math/ode/sampling/NordsieckStepInterpolator.java
+:100644 100644 e8421cad83536dd497b113cd703ea79364946939 d5f87473001430d1196f8ede536d07ca1d7aaf8f M	src/main/java/org/apache/commons/math/ode/sampling/StepHandler.java
+:100644 100644 ac900a5271190fb703fd012660c9d06b1e22b2cd 0c5424b117b798a838f8ce117ababd891ab26fe1 M	src/main/java/org/apache/commons/math/ode/sampling/StepInterpolator.java
+:100644 100644 470c0be945fc22216eb04b790bdc67032e427aed 95dd123b71e84c0d8b4b03fe6b0f2fab48a563b8 M	src/main/java/org/apache/commons/math/ode/sampling/StepNormalizer.java
+:100644 100644 71284600102acc41e96e1180297447cacd39ff4d 8df9dd71f06b7f74a9bd0f380f06e7ba150d0d2f M	src/main/java/org/apache/commons/math/optimization/DifferentiableMultivariateVectorialOptimizer.java
+:100644 100644 04a000cd19da5b87410a9b631fce6bf76cd3dc9a d46603275f0066bc09af01d5496fac01d0d64629 M	src/main/java/org/apache/commons/math/optimization/MultiStartDifferentiableMultivariateRealOptimizer.java
+:100644 100644 00e38ec8b0bb7e388a09d33beeb52dd8e128edde ca6f36bb987538546c1269a0a26717779d8d2ec5 M	src/main/java/org/apache/commons/math/optimization/MultiStartDifferentiableMultivariateVectorialOptimizer.java
+:100644 100644 48e938a939960952770d1293cb06c06229caf959 70575c951f6b92dd7008ff10794f02129e72ea2d M	src/main/java/org/apache/commons/math/optimization/MultiStartMultivariateRealOptimizer.java
+:100644 100644 519ef2d11103fd463221c23c0925869834ac69e1 27f613306f01b027a73fb31fe45999d3b195b11e M	src/main/java/org/apache/commons/math/optimization/fitting/CurveFitter.java
+:100644 100644 3af43b7a57548eb61ba34f709107dfaa66095f42 76ffa87cd8f1bf6b7529c8b808c345513c0aeebb M	src/main/java/org/apache/commons/math/optimization/fitting/GaussianFitter.java
+:100644 100644 a7f0831a1bf13a55aea8fcf8f1dd1051cfaa6378 13398a6ecfac6f6371c686dddb2cc965b6940d81 M	src/main/java/org/apache/commons/math/optimization/fitting/HarmonicFitter.java
+:100644 100644 18650fc64aa4810178ac91f718af4325f2563fa1 1aa761d47bb3dfb31d77b0bb9ee0762a8910a129 M	src/main/java/org/apache/commons/math/optimization/fitting/ParametricRealFunction.java
+:100644 100644 310f11545bff4f35356cda710a6a977fced1c081 192119598e90d0c5b550bf38bb6ca76e3f7cb7c4 M	src/main/java/org/apache/commons/math/optimization/fitting/PolynomialFitter.java
+:100644 100644 76e8ef94f12cf78eba19481091b5d3e052142d92 dacef41f19eff3e3b2e025390f4ab21306ee0f09 M	src/main/java/org/apache/commons/math/optimization/general/AbstractLeastSquaresOptimizer.java
+:100644 100644 277671fd2ec99998550b9da7afa444442726c47a ee8ef904a5180ad3c43b56ba7b6ed6ea6cbf438d M	src/main/java/org/apache/commons/math/optimization/general/GaussNewtonOptimizer.java
+:100644 100644 33d42405a00cf83232644f14f52768f8c1eb6164 e28e293161fcfd98325553256d98f5f378a98f35 M	src/main/java/org/apache/commons/math/optimization/general/Preconditioner.java
+:100644 100644 3f2efb9be67c77a0e7ab3c4afd932e375e30eb11 44aee73ddd44fdfb305c59421ab0cf80303c85e4 M	src/test/java/org/apache/commons/math/linear/Array2DRowRealMatrixTest.java
+:100644 100644 96a1798ef10c8b07e70f3c940f20217a5e9359ec 5441960d3f3e335c555875152d38ce19d8ec6e45 M	src/test/java/org/apache/commons/math/linear/ArrayRealVectorTest.java
+:100644 100644 0fc98c4e52c0f635413e1cc673b2b4e7bee38b27 25241c5278479bd9e748cebb2f2879c77d6d3d41 M	src/test/java/org/apache/commons/math/linear/BlockFieldMatrixTest.java
+:100644 100644 93d196e732e4d16e5f5b150d445f5884a959f31e ce1d1f07401ab3277b21c5cf91c8d357ae74297c M	src/test/java/org/apache/commons/math/linear/BlockRealMatrixTest.java
+:100644 100644 e2d1b1b93195a4aedf18408f1e1946150c683a63 985f2c703dd0222871310c6f1c887992dca18970 M	src/test/java/org/apache/commons/math/linear/FieldMatrixImplTest.java
+:100644 100644 9d572d2f306406d3f16c7314c5c7628c8ee94245 b3a203fed3aaa2e536ec99318c3b22bb14b72490 M	src/test/java/org/apache/commons/math/linear/QRDecompositionImplTest.java
+:100644 100644 e2aea6600ab057b05c994430243563665b78aef2 ccedc7a3f08f8e6ee414b72e7e87c1aea427c186 M	src/test/java/org/apache/commons/math/linear/QRSolverTest.java
+:100644 100644 48a25123f5375773c57f2d60c6884a3f955178a1 b5e7e6c36d7362ac45a3cd750feafca6735659a3 M	src/test/java/org/apache/commons/math/linear/RealMatrixImplTest.java
+:100644 100644 41ca536b93678779bb0e4666969c1325b54fc6b8 d29a7e8845f986e11ca1e5748bfbdc7415988774 M	src/test/java/org/apache/commons/math/linear/SparseRealVectorTest.java
+:100644 100644 b63e8153dcc8a64bc7b76285e7997febc29979cd dbaf2d075913b97d961634baa4ba7c0789db765a M	src/test/java/org/apache/commons/math/ode/ContinuousOutputModelTest.java
+:100644 100644 0f42c64df1eda362fd37269cc44cb6019063111c 819e1b0dbb4ca1c7ef0428291d141ef68459457d M	src/test/java/org/apache/commons/math/ode/FirstOrderConverterTest.java
+:100644 100644 e632e5f7e6728146d0fe2fa9c4295690bfd357e2 0618b8960ae031bb8dc049905effe6d642d37004 M	src/test/java/org/apache/commons/math/ode/TestProblemHandler.java
+:100644 100644 570a2c35acb4cb2ea0052fd540eb120df2cd2cd1 dff6d6b5b568230c5438de623a3448a5be9b292d M	src/test/java/org/apache/commons/math/ode/events/EventStateTest.java
+:100644 100644 22844e434612a779e7fa2949b0ade9b957bc8adf 0a7ed7a572c91f09734ff3aff7d65c3f95b018a5 M	src/test/java/org/apache/commons/math/ode/jacobians/FirstOrderIntegratorWithJacobiansTest.java
+:100644 100644 261c9e5d20fe1215d8a8dad8598cc5d8d211c0ef 7eeac66c4323ee6c2533b8deaa4e32ec977f48dc M	src/test/java/org/apache/commons/math/ode/nonstiff/AdamsBashforthIntegratorTest.java
+:100644 100644 98497788ec5b816141463db74620889a60f43162 4c9f711a4bccd8201e4cfa32fc5f3f365d9135c1 M	src/test/java/org/apache/commons/math/ode/nonstiff/AdamsMoultonIntegratorTest.java
+:100644 100644 b67bea65bb31f1d2c59457e96cf52b21284987e3 6c44c9dd80b7487cb6c8e86290d6b38275382a40 M	src/test/java/org/apache/commons/math/ode/nonstiff/ClassicalRungeKuttaIntegratorTest.java
+:100644 100644 b459d4df8a441f643621a31a20de2b287126b88e 93f080531bb20b7026e090d55c29235997d66abc M	src/test/java/org/apache/commons/math/ode/nonstiff/ClassicalRungeKuttaStepInterpolatorTest.java
+:100644 100644 d17d534ca1bf59866ebf824424bf438952378597 c7be5780682c19d7ae73191592d8368ae13ddd75 M	src/test/java/org/apache/commons/math/ode/nonstiff/DormandPrince54IntegratorTest.java
+:100644 100644 21cc356832a20fe0b300e2b5a75549bc918f9b47 5e3f57f8da86eff7d861703b3d4b823694712750 M	src/test/java/org/apache/commons/math/ode/nonstiff/DormandPrince54StepInterpolatorTest.java
+:100644 100644 40ff25f86fd0f8b7689160eca603a8e7405699da c16123572b58272e13fb9c55d5f16c314f1c77b4 M	src/test/java/org/apache/commons/math/ode/nonstiff/DormandPrince853IntegratorTest.java
+:100644 100644 17a84475a1c9e01437c2f839e66ec6d575fa2260 fac6580e2189628701c0249f2ff6984a766b039b M	src/test/java/org/apache/commons/math/ode/nonstiff/DormandPrince853StepInterpolatorTest.java
+:100644 100644 67c46c2672a63403a00dc5083730ca5de6f3a7e7 9b83dff6d0a9389b292125da38825aaf00d99410 M	src/test/java/org/apache/commons/math/ode/nonstiff/EulerIntegratorTest.java
+:100644 100644 ae3a805d1608167536dee67288d20fda7da791de 7f3324d158b24df9372005a91070fc78a6ab7f41 M	src/test/java/org/apache/commons/math/ode/nonstiff/EulerStepInterpolatorTest.java
+:100644 100644 ffb17550821a379ebb54ca112f7942b86d45f981 0814a3f07a812c5c8e9c69ae5951bd7b20a250b8 M	src/test/java/org/apache/commons/math/ode/nonstiff/GillIntegratorTest.java
+:100644 100644 0fda8a58dc32bf409a7c816d92a87a94f013f334 7267850f99cd7e261a4ed66205f96dee3cf466a6 M	src/test/java/org/apache/commons/math/ode/nonstiff/GillStepInterpolatorTest.java
+:100644 100644 c29a33fdee634e8fefe26a1aee66abebe93de285 1f949a4c4a863d4839e0f0d32e8e1540ec6004b2 M	src/test/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerIntegratorTest.java
+:100644 100644 6d2b8cbfb6c23e4cb2c61fa435e82c8991f209c8 82d9372a7f29d670c83bfc5f825172f931b703e8 M	src/test/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerStepInterpolatorTest.java
+:100644 100644 2e7907ab14cf8ba9551b995793688d09f80436c8 156e2bd8c7f5df3808037180ea5d76782e39848e M	src/test/java/org/apache/commons/math/ode/nonstiff/HighamHall54IntegratorTest.java
+:100644 100644 51dc597cfee5d4921d69d50689c78b54b9730587 4b7136cfb90e8ff8e31723b65fb3938180be528d M	src/test/java/org/apache/commons/math/ode/nonstiff/HighamHall54StepInterpolatorTest.java
+:100644 100644 3e1ecaaa33fe4d8769694efb52e504c122617637 c85143e66d106a3cff85115d8352aa315b643ffd M	src/test/java/org/apache/commons/math/ode/nonstiff/MidpointIntegratorTest.java
+:100644 100644 7b0bfeedeabb23cf60d6d07b9b89988e51bbe970 7ae2d3a50540f9c43aa50ba7dbac16ea83fdc56a M	src/test/java/org/apache/commons/math/ode/nonstiff/MidpointStepInterpolatorTest.java
+:100644 100644 8820cbb0c5db81d9f63240697153080adcdd45ff 9f24dc9c2fccd24775758138692a7d430d85d245 M	src/test/java/org/apache/commons/math/ode/nonstiff/ThreeEighthesIntegratorTest.java
+:100644 100644 750d5d8d83d1f08e944ac9c92837b914b3414a51 99fc6d4634385ff051a3b5b3608501df85cfbb2d M	src/test/java/org/apache/commons/math/ode/nonstiff/ThreeEighthesStepInterpolatorTest.java
+:100644 100644 94fea88993b16d935a57b8304cab3fe5e8a37646 ddd40c81d19ba81c1c692544157dc01342f5eb59 M	src/test/java/org/apache/commons/math/ode/sampling/DummyStepInterpolatorTest.java
+:100644 100644 366c8f794397a5e599120940060d131a3bade01b d27ea0af584470e730e3bb3a60ea4365d008a6b5 M	src/test/java/org/apache/commons/math/ode/sampling/NordsieckStepInterpolatorTest.java
+:100644 100644 5a898b268d76524ccb239933598668896df60783 a0ca7412fbf64c2a74ac36936e12a0e9e115e0f4 M	src/test/java/org/apache/commons/math/ode/sampling/StepInterpolatorTestUtils.java
+:100644 100644 a7489220226164235fa2d25f508de4214bba3f2c 0f0f74bfb0f1d0e40db7ffad6a5f215b16b56538 M	src/test/java/org/apache/commons/math/ode/sampling/StepNormalizerTest.java
+:100644 100644 aff80c76ffdcf9f36a75a2f1065c3c5eb10ed263 72ec730f16611ce45569435d9ae1097d7610ea27 M	src/test/java/org/apache/commons/math/optimization/MultiStartDifferentiableMultivariateRealOptimizerTest.java
+:100644 100644 250f7b8c3750e75e27e48ab77c72085402fd951f 38ad2af681b2b7e884cce0cc8ec28a7388567a81 M	src/test/java/org/apache/commons/math/optimization/MultiStartDifferentiableMultivariateVectorialOptimizerTest.java
+:100644 100644 ac6a7bffc42e178495d5f690229097768ca8449d 97176a4fce78cddbac246f1562d83c3979e0856b M	src/test/java/org/apache/commons/math/optimization/MultiStartMultivariateRealOptimizerTest.java
+:100644 100644 0c17b4b6448cd60242dcd8f95404fc64838f6c45 5604e86b24d7f6a13abce4760fdbeec9f2d37eee M	src/test/java/org/apache/commons/math/optimization/fitting/CurveFitterTest.java
+:100644 100644 7f7f5f773c07ee0f90df83c18a620b35fd64603f a82e34297bc4f414c4f1cc9252ceb6cf9ef23f6c M	src/test/java/org/apache/commons/math/optimization/fitting/GaussianFitterTest.java
+:100644 100644 c66742bace09b5b3721795e65c514ffeb6db2c4a bf96cd9937141c2ae2e5b548369aad3632751d49 M	src/test/java/org/apache/commons/math/optimization/fitting/ParametricGaussianFunctionTest.java
+:100644 100644 bba70558068af3b020e44729e10d09b3c7e4138b 0a326acd8a9024662d2e2a77feaf8d10b56c3ad2 M	src/test/java/org/apache/commons/math/optimization/general/GaussNewtonOptimizerTest.java
+:100644 100644 839416867e8b7b1ed5f73dbc7367dbcbff9e789b 7c5043256098fa18e1491cd462c1a0fca5e82021 M	src/test/java/org/apache/commons/math/optimization/general/LevenbergMarquardtOptimizerTest.java
+:100644 100644 d71cf10ccbeec7e856160a6e0af3bc49bb9112a3 fe3d5bf0a5296198bfde4445ead157c9060cd0e2 M	src/test/java/org/apache/commons/math/optimization/general/MinpackTest.java
+:100644 100644 75b56509907d33aac6aef649fe2d25d9a66f6afa cd53293f1d586ea6fe7b47a6f466eca1c4ae92a7 M	src/test/java/org/apache/commons/math/optimization/general/NonLinearConjugateGradientOptimizerTest.java
+
+9c9a1b85e95dcb66344103533f08d2448602de30
+1298323865
+Luc Maisonobe
+fixed release notes
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073151 13f79535-47bb-0310-9956-ffa450edef68
+
+9c9a1b85e95dcb66344103533f08d2448602de30
+:100644 100644 e45387b9a33eab5783d6987f6e7216f2781e17e1 53694389b04fbce87dcfc24aa6563b1d2568ec6f M	RELEASE-NOTES.txt
+:100644 100644 d6cf4819de26d4a34f10a159b23b37b4dc1dabf0 c5c18f8f82a2d7f356287f4e4533814cb672c7bc M	src/site/xdoc/changes.xml
+
+a3b5b8bd048bdd9967c3cbd205c252db53afb37c
+1298319123
+Sebastian Bazley
+Fail on error, rather than printing to stdout
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073126 13f79535-47bb-0310-9956-ffa450edef68
+
+a3b5b8bd048bdd9967c3cbd205c252db53afb37c
+:100644 100644 cd9ecf8c1df2d0fe28694f1a74b03e6f2bb78cb3 59ad38501983b3200f94ad136feca7ddfe95f0f3 M	src/test/java/org/apache/commons/math/util/FastMathStrictComparisonTest.java
+
+ec1e53bd3ff8a4abbd73fc499eab8c16d6478670
+1298307210
+Sebastian Bazley
+Does not make sense to report deprecation warnings
+Compile with specific source and target versions
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073062 13f79535-47bb-0310-9956-ffa450edef68
+
+ec1e53bd3ff8a4abbd73fc499eab8c16d6478670
+:100644 100644 b685cdc2d81f155b043112077170b860a5ab8134 42a6907fc90e5ac088c5c871e2e3a71553512fc9 M	test-jar.xml
+
+0e8fc24c8f91bec15aacbab6ebff8d7e7b3a0c8b
+1298302059
+Sebastian Bazley
+Don't stop on first error
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073018 13f79535-47bb-0310-9956-ffa450edef68
+
+0e8fc24c8f91bec15aacbab6ebff8d7e7b3a0c8b
+:100644 100644 0c3b5ffb35b7b205420de99bc8383462d11f45fa b685cdc2d81f155b043112077170b860a5ab8134 M	test-jar.xml
+
+303ceadbaaf809c6a2110885710f60a885913436
+1298301743
+Sebastian Bazley
+Add some missing tests
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073013 13f79535-47bb-0310-9956-ffa450edef68
+
+303ceadbaaf809c6a2110885710f60a885913436
+:100644 100644 e0f9585a78924160237850d810ce5d5778396a6b 0c3b5ffb35b7b205420de99bc8383462d11f45fa M	test-jar.xml
+
+ee394aea24d7e5792f2f5675ba0cc849ba5fbb9d
+1298301504
+Sebastian Bazley
+Remove unused code
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073010 13f79535-47bb-0310-9956-ffa450edef68
+
+ee394aea24d7e5792f2f5675ba0cc849ba5fbb9d
+:100644 100644 a69e6518c61d47286cc8268e50394d319a489be4 e0f9585a78924160237850d810ce5d5778396a6b M	test-jar.xml
+
+3ed700de17ff9b1a20ad2217cf26f25e727e5818
+1298301460
+Sebastian Bazley
+Allow test to be run without rebuilding test classes
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1073009 13f79535-47bb-0310-9956-ffa450edef68
+
+3ed700de17ff9b1a20ad2217cf26f25e727e5818
+:100644 100644 07add97987f4e2faee6513acd77e577a843cbd94 a69e6518c61d47286cc8268e50394d319a489be4 M	test-jar.xml
+
+cdaf2a2ca77e18b9a1638f58d07d5788852c4d2e
+1298298969
+Sebastian Bazley
+Format 'brief' produces better output for failures
+Allow output files to be generated
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1072986 13f79535-47bb-0310-9956-ffa450edef68
+
+cdaf2a2ca77e18b9a1638f58d07d5788852c4d2e
+:100644 100644 eb41e5ece90671f0acc7f01b326f07713ca81b46 07add97987f4e2faee6513acd77e577a843cbd94 M	test-jar.xml
+
+cdfd9f32e86ab7ffbe63ff2bc68332c7c9583862
+1298298712
+Sebastian Bazley
+Remove duplicate property define
+Pick up jars from jardir, as described in comments
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1072983 13f79535-47bb-0310-9956-ffa450edef68
+
+cdfd9f32e86ab7ffbe63ff2bc68332c7c9583862
+:100644 100644 756a7b2208ce2e5bce43f03610111fd7d7f219a9 eb41e5ece90671f0acc7f01b326f07713ca81b46 M	test-jar.xml
+
+635b50686b399dc6a78f2b0a0dc7c927303fd711
+1298298167
+Sebastian Bazley
+Alignment
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1072977 13f79535-47bb-0310-9956-ffa450edef68
+
+635b50686b399dc6a78f2b0a0dc7c927303fd711
+:100644 100644 c89c8b985815fb75d57163a68f35e6843beb93ec 55e50efda9eea4861368956e188f2efb2f3db500 M	build.xml
+
+1de67438cf523b4538ae37e2a4072fccd2c71431
+1298297578
+Sebastian Bazley
+Update to JUnit 4.8.2
+Avoid warnings about includeAntRuntime
+Generate text output for unit tests
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1072972 13f79535-47bb-0310-9956-ffa450edef68
+
+1de67438cf523b4538ae37e2a4072fccd2c71431
+:100644 100644 62a4c9d3011533d59a889f1fcb52a15e4fa579a2 c89c8b985815fb75d57163a68f35e6843beb93ec M	build.xml
+
+07c4e7ce20b64eee1f6060ace88051018c731964
+1298213343
+Luc Maisonobe
+edited release notes about the incompatible changes introduced in 2.2.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1072605 13f79535-47bb-0310-9956-ffa450edef68
+
+07c4e7ce20b64eee1f6060ace88051018c731964
+:100644 100644 103316934c1105413fca72fe6b3b772b00a97968 e45387b9a33eab5783d6987f6e7216f2781e17e1 M	RELEASE-NOTES.txt
+:100644 100644 75d65b5f8ccf32744e43505514a3ea3a164717a6 d6cf4819de26d4a34f10a159b23b37b4dc1dabf0 M	src/site/xdoc/changes.xml
+
+d5f491293c094a6cb2fbe47a57a79ce9abd0b81f
+1298200979
+Luc Maisonobe
+preparing 2.2 release
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1072560 13f79535-47bb-0310-9956-ffa450edef68
+
+d5f491293c094a6cb2fbe47a57a79ce9abd0b81f
+:100644 100644 995d1f6e4b5a6d768de6d44802e2c8f172164a35 62a4c9d3011533d59a889f1fcb52a15e4fa579a2 M	build.xml
+:100644 100644 36319c5baf54ecc444c93a5470e365fa970d3175 40755d0af74491cd54f89b37b189ae17886b45e4 M	doap_math.rdf
+:100644 100644 2edbb1d4256d096d56ddc081fc5e396c20201347 41ffcc0872e5fce21af022e1a2d3cac07a89ce9f M	pom.xml
+:100644 100644 f9c3f80a8940731e44369538417abb0d9dc9f526 9345bb66347f8bb630b9b1319aa11c997072539a M	siteMods/pom.xml
+:100644 100644 3eb6c3b6838c1d5b7f438cd5f5ad56cdb0498ccd 1b96201085b260d2526ac6aef2498fb0b884a85f M	src/site/site.xml
+
+923a71990607ab5843e7fd281cefbf885c7ac9f8
+1298200886
+Luc Maisonobe
+prepared release notes for 2.2
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1072559 13f79535-47bb-0310-9956-ffa450edef68
+
+923a71990607ab5843e7fd281cefbf885c7ac9f8
+:100644 100644 4566c205fea7f72fcca4129e548963951ed22ed7 103316934c1105413fca72fe6b3b772b00a97968 M	RELEASE-NOTES.txt
+:100644 100644 ae56346ad320018ddcb5957ac5c3dd0b2926c093 75d65b5f8ccf32744e43505514a3ea3a164717a6 M	src/site/xdoc/changes.xml
+:100644 100644 b5138ea1fa3857f7487ac0cf16081f95545a70e4 9edec9127d01ccd2e3a88bc82e6b1a5b12b8a04f M	src/site/xdoc/download_math.xml
+
+ad6277bd4bec8399244a36bce78558e26f66c345
+1298143589
+Luc Maisonobe
+updated copyright year
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1072424 13f79535-47bb-0310-9956-ffa450edef68
+
+ad6277bd4bec8399244a36bce78558e26f66c345
+:100644 100644 d1f0fc0a3b47feef1ac0dc23dcd18d28ea0608f4 977df7157be4ef04a6a22d8f0d5999d28df3e20a M	NOTICE.txt
+
+9f30f5aaf32681ecff2167af545753e213c02733
+1298142188
+Luc Maisonobe
+next RC will be for 2.2 by now
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1072415 13f79535-47bb-0310-9956-ffa450edef68
+
+9f30f5aaf32681ecff2167af545753e213c02733
+:100755 100755 55b246581413b530b9c5c61c7aaf56a718fe2960 22e67e993b2d8730ed2f65c418afdb8d5133045a M	math-RC.sh
+
+0b7e4c44a606f0c34433762c680caa3a8b4101be
+1298141979
+Luc Maisonobe
+reverted incompatible changes before 2.2 release
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1072413 13f79535-47bb-0310-9956-ffa450edef68
+
+0b7e4c44a606f0c34433762c680caa3a8b4101be
+:100644 100644 ddbf3f499cd56f1584dcc7954cf37d706965fc77 ad239927906239c8b9a9f3ce79732840f3762d72 M	src/main/java/org/apache/commons/math/ode/DerivativeException.java
+
+216e483f195d7e4e8ed2dfc1ccaa021ea3894a4e
+1298141436
+Luc Maisonobe
+fixed checkstyle warnings
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1072409 13f79535-47bb-0310-9956-ffa450edef68
+
+216e483f195d7e4e8ed2dfc1ccaa021ea3894a4e
+:100644 100644 2e5937457d466c8349db3c783c3b7c4069d7a49f 079ad840f1f91175d719e1e1a70e30b7f258d294 M	src/main/java/org/apache/commons/math/analysis/integration/UnivariateRealIntegratorImpl.java
+:100644 100644 ae4e4869eba7806c6903060e4a360c502db44e42 9715dc12f6f8b72cdbe146ad48bc9f4395f54a04 M	src/main/java/org/apache/commons/math/util/MathUtils.java
+
+9e17bbb9136cf7daf68b0fec8bc2ecc25509c2f3
+1297733472
+Phil Steitz
+Reverted incompatible changes in the exception hierarchy.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1070725 13f79535-47bb-0310-9956-ffa450edef68
+
+9e17bbb9136cf7daf68b0fec8bc2ecc25509c2f3
+:100644 100644 ed2f5f12d153e5dcacd7bf0aacfbc131e0781e0b e876dd667f61a019f17e2d036b11e0838b881f0b M	src/main/java/org/apache/commons/math/ArgumentOutsideDomainException.java
+:100644 100644 2abb02de6eabef59a534050fbc0994bc8278e54d 992d8a746ff0d37300569c8c5addab45bbd222ce M	src/main/java/org/apache/commons/math/FunctionEvaluationException.java
+:100644 100644 21c7a7bf7c1675e217262ea51c92312564f97c47 42ebcd58dc715fb5d7c87783a758c6eab8c17774 M	src/main/java/org/apache/commons/math/MathException.java
+:100644 100644 ae0d0dd275e81fe394f5d8521652cca1e1e3a0b7 a15200c856e4f3ff628c01f91bd06f41c333900f M	src/main/java/org/apache/commons/math/MathRuntimeException.java
+:100644 100644 25bbb2864c1986344709fe2bc9894748a383238d be7290dbfa5581b2c98f67225abaaa44b92a2807 M	src/main/java/org/apache/commons/math/MaxIterationsExceededException.java
+:100644 100644 f9f29d92c4292444c2a4851cf8b4e717d7296fe4 fb53d691d9edc71929ad1acc3f2511063ecc6c75 M	src/main/java/org/apache/commons/math/analysis/ComposableFunction.java
+:100644 100644 bdabe0d1f359c24c7b377ef9e3633eb7f99fab4a 04eac9e446b245318680572e6f8fd9a0b66a8a1e M	src/main/java/org/apache/commons/math/analysis/MultivariateRealFunction.java
+:100644 100644 95ebdfbf10334559c370ec82be1194635656819e ae32d5cd1274ead650040998e6b98bb061f48679 M	src/main/java/org/apache/commons/math/analysis/MultivariateVectorialFunction.java
+:100644 100644 c0af2402e98dbf8988f2e248af221d4e7a6a2926 bb330826579bb687b2e9bc1e238a76ad50fa1021 M	src/main/java/org/apache/commons/math/analysis/UnivariateRealFunction.java
+:100644 100644 91d043ea70abc2aa5496911cf089b47cef74b67f 5958814f5be1120da34e373d4ff6efe1ff7d9f8a M	src/main/java/org/apache/commons/math/analysis/integration/LegendreGaussIntegrator.java
+:100644 100644 2aa871895eb31646519c829990db29546b0e2d96 840882bc5b0163b2a3d8d9412f428f9fe32adf98 M	src/main/java/org/apache/commons/math/analysis/integration/RombergIntegrator.java
+:100644 100644 d80411d33dbd083620fba815f9c3267b3c651620 5432421c1d0071e3174efce1a37a30cdbbc4a1d5 M	src/main/java/org/apache/commons/math/analysis/integration/SimpsonIntegrator.java
+:100644 100644 a84720b3be2b5e65458ed92e6cd6d5d22c0e7870 67d1ce414b85efb28f41e5732e5637a955d4e3c0 M	src/main/java/org/apache/commons/math/analysis/integration/TrapezoidIntegrator.java
+:100644 100644 43afa02b407157d518e2b594e1f75e77603a3d6a d5989a542d6fed5bce0d51a453e824d1cdef1c6a M	src/main/java/org/apache/commons/math/analysis/integration/UnivariateRealIntegrator.java
+:100644 100644 8646c30ce70745c8522c2787ca96a3f02d5e0b3b 59aea056483714480329b649e57b024772e73755 M	src/main/java/org/apache/commons/math/analysis/solvers/BisectionSolver.java
+:100644 100644 f07045e1126349bc3933d8e4f9b5e7dd474ea93e 5aa24470254533e8f6ab1e6590d315be474add88 M	src/main/java/org/apache/commons/math/analysis/solvers/BrentSolver.java
+:100644 100644 910a927f8ace6659c10c1fe78ea5bc489aff2fea e8534d25275e7abb44e030978588a46081b47c1b M	src/main/java/org/apache/commons/math/analysis/solvers/LaguerreSolver.java
+:100644 100644 28035d3dc7736058a903d6c841e932ef84d33dd9 31d3162bfed19ec564a054a7f7e5f5301194fd22 M	src/main/java/org/apache/commons/math/analysis/solvers/MullerSolver.java
+:100644 100644 bca6853002ae6c3d39b07d1a2b09c82afcf09a52 6daef0f182ec52cea8a99ed2c0e8f2c4b014ea3d M	src/main/java/org/apache/commons/math/analysis/solvers/NewtonSolver.java
+:100644 100644 398fea96f668400f7fbcd50cc9710f55791e703d 2594abcc4bae3378e94265bb0b388cc3801a2e74 M	src/main/java/org/apache/commons/math/analysis/solvers/RiddersSolver.java
+:100644 100644 1779c840179b0fdd34f3e74512b9e16ee9d890b5 71871c26bc363fbf0a8c5827fd424d332e03f6ff M	src/main/java/org/apache/commons/math/analysis/solvers/SecantSolver.java
+:100644 100644 c6097133caf96898cb31c1906b820b4f935c8ae4 b0c187b0048047f6288f10617f9406ba7ce6db9c M	src/main/java/org/apache/commons/math/analysis/solvers/UnivariateRealSolver.java
+:100644 100644 11716cb6104e73665901e83006515cf97387bd9f 7b0389cf826f02168dc3e48b4cdf3463f6109b02 M	src/main/java/org/apache/commons/math/analysis/solvers/UnivariateRealSolverImpl.java
+:100644 100644 ce6e94f746be8eaf7abaa85a9996599271c8aaa0 7bf172463cac8391039218c1baff1daa48de10e5 M	src/main/java/org/apache/commons/math/analysis/solvers/UnivariateRealSolverUtils.java
+:100644 100644 642e96817694332442ecb4a1ba90d20f5bc00323 35a116850b3ebc862673b72ddeb6c9af80769f75 M	src/main/java/org/apache/commons/math/linear/AbstractRealVector.java
+:100644 100644 55fa43666fe421bec03c15bb5968857f59fa1feb 3342917b661f07c4034925c11e81376a628018d3 M	src/main/java/org/apache/commons/math/linear/MatrixVisitorException.java
+:100644 100644 6b2d5ed17fcc2c63516fda98d08660c0cfd1c29f e61f471d70d405aee54d5bc6d1738aa2211837fc M	src/main/java/org/apache/commons/math/linear/RealVector.java
+:100644 100644 1d716c8ff687d96447f8d79faa7ee911d0f97751 932396c5f8bb643452b6c499375aa0ded50edad4 M	src/main/java/org/apache/commons/math/ode/events/EventState.java
+:100644 100644 8c8e20516a4d8a5af4279ea1241d276fe4aca1bb 2ce3e2725d4207a190a8fed146129393972f9438 M	src/main/java/org/apache/commons/math/optimization/LeastSquaresConverter.java
+:100644 100644 6da07d347955ed6666154dcc33fb04583063821c ad6c50fe4e72c7f75ea249d87ac889e7a4261cbf M	src/main/java/org/apache/commons/math/optimization/MultiStartUnivariateRealOptimizer.java
+:100644 100644 1540cd754876bf0f72651e19cdb959530694d8b6 11a70fa666bb333f8566d84dec3a94eae7500075 M	src/main/java/org/apache/commons/math/optimization/UnivariateRealOptimizer.java
+:100644 100644 8b8f84b999deda4c310b79ca877c3debec2a63c6 0b86c287351cfe7f81d18215606a882cc038ad8b M	src/main/java/org/apache/commons/math/optimization/direct/DirectSearchOptimizer.java
+:100644 100644 07277e1e1e7a40fbc2ec381222d7326d4a3216da 3dadab17eeb24836f70a77c69335cbc03f134791 M	src/main/java/org/apache/commons/math/optimization/direct/MultiDirectional.java
+:100644 100644 058cc2e09210512727e38808b44338ce031565cf 337c5fd188b1d009a58150faf18b199e0dd07867 M	src/main/java/org/apache/commons/math/optimization/direct/NelderMead.java
+:100644 100644 d78096f44905afcdea21c76c091b617a5b77688f 63329517aeef20708facc37dc94b51096ab479b2 M	src/main/java/org/apache/commons/math/optimization/direct/PowellOptimizer.java
+:100644 100644 a1f07e4fda44f324b664de3f5efcff9fa398c1d4 c4486f68941fcf05613ce82fa55a1457e9bfc1aa M	src/main/java/org/apache/commons/math/optimization/general/NonLinearConjugateGradientOptimizer.java
+:100644 100644 12ebe0b7a345f7fa76adf43ca67f43fd09c42c59 24be4e8e129e9abed6c5960e17592145eedc8062 M	src/main/java/org/apache/commons/math/optimization/univariate/AbstractUnivariateRealOptimizer.java
+:100644 100644 ccfdc77e2e9842a286f562fbdea17459345f2762 18e7015acb0419c4f345ffa8cb5c17456c755575 M	src/main/java/org/apache/commons/math/optimization/univariate/BracketFinder.java
+:100644 100644 4479a8f092ab83d922972b4b8cea7ea517f5940d e5071d59993728140ecb6f3f6523ff611d62105f M	src/main/java/org/apache/commons/math/optimization/univariate/BrentOptimizer.java
+:100644 100644 fecdf2ca4d30d544a1637a14fe8fd072647bee58 bda0fe22e4e3745b67ab765fdd7ec2fe56dfa39e M	src/main/java/org/apache/commons/math/transform/FastCosineTransformer.java
+:100644 100644 9feaa89b62da4402cc6c0c0c94688ac9cf1898b0 a0e4062b80bde0cb070d452625675ced86bbdc87 M	src/main/java/org/apache/commons/math/transform/FastFourierTransformer.java
+:100644 100644 41350a6f1bdd0947e74d5272d2468ad4154b3e26 97e152be5992075b7a1698526e57e6daa3a6b86b M	src/main/java/org/apache/commons/math/transform/FastHadamardTransformer.java
+:100644 100644 e17ac3aef50b40a8161c7a282af68ea535e75bfa 4bf53b2ba936b2531cd698a901efaf91927ee340 M	src/main/java/org/apache/commons/math/transform/FastSineTransformer.java
+:100644 100644 f4c76af631f6984465b02f9844be5179a98d9ccf 606695b6926b07b997a6929e1819f5b7d3aae623 M	src/main/java/org/apache/commons/math/transform/RealTransformer.java
+:100644 100644 dfbfb6853a2c742779d9718b97dbecf21eba71b1 24897a98fd6b745760263a32c60b2e807d941daa M	src/test/java/org/apache/commons/math/ArgumentOutsideDomainExceptionTest.java
+:100644 100644 267af5dd95c176cebbb0dc189797563430630038 2311a2ea4e215b60b2c463009bc01d3ab421c758 M	src/test/java/org/apache/commons/math/analysis/BinaryFunctionTest.java
+:100644 100644 9e4ac94bf545038960413a30b989e8c9f4ce2904 2099dce1b8c1fd2eddd2249005fb6b1dfe1796a1 M	src/test/java/org/apache/commons/math/analysis/ComposableFunctionTest.java
+:100644 100644 e2545f1f0f0cd859c26a84ef52a6be7c768bc86f dc2d64dfc9136146d586a81fc3e5b697b13a6c63 M	src/test/java/org/apache/commons/math/analysis/MonitoredFunction.java
+:100644 100644 2bc0db3be01f006f5c85949c92279e4e3ced0a75 707507c41ef618cbecae08c5ab26697d26c27a0b M	src/test/java/org/apache/commons/math/analysis/SumSincFunction.java
+:100644 100644 6fc34ab3086d7be3b4c0c8de1f10eb8ab506449c 314550676909dabeff74731aac294a738e258fec M	src/test/java/org/apache/commons/math/analysis/integration/LegendreGaussIntegratorTest.java
+:100644 100644 5686a3ce75c9e8652535701ac3e82a7dbbb85712 93c992b470ea52bee17aee955114dc2ecca49d3d M	src/test/java/org/apache/commons/math/analysis/polynomials/PolynomialFunctionTest.java
+:100644 100644 59dfd94f8971f6fafb1effdd814d6909a0e92d07 570a2c35acb4cb2ea0052fd540eb120df2cd2cd1 M	src/test/java/org/apache/commons/math/ode/events/EventStateTest.java
+:100644 100644 8d95df342644e592c4f4a67709d76212d8b76d05 1400727c2850cad92ec5cce7fbf4962249b3489d M	src/test/java/org/apache/commons/math/optimization/direct/MultiDirectionalTest.java
+:100644 100644 6c267845da0e0659a82ef5d6349ae1ab878f339f e8ddc1d96df3c366645169cee9b5fe59746eb88a M	src/test/java/org/apache/commons/math/optimization/direct/NelderMeadTest.java
+:100644 100644 9f5f423f8ac835a066614d5f7372b480c9367623 205928954a9dfceee75e562bfe0b6b8b2ee9bf5a M	src/test/java/org/apache/commons/math/optimization/univariate/BrentOptimizerTest.java
+:100644 100644 92cde3b9df09519717977f3b3600422239762b0d 36eb47b7f18e9b7a3d6139a6b3f55a76b9632ba8 M	src/test/java/org/apache/commons/math/transform/FastCosineTransformerTest.java
+:100644 100644 ff90352204b6f59c7e63776c1f3d85ff5be27496 9cd0f899187b75d5d8b8cbec791c2fcfb4009848 M	src/test/java/org/apache/commons/math/transform/FastFourierTransformerTest.java
+:100644 100644 d03e40c096056592e12e9530caa7dc8144e4fbdd 481a8b0f54d93b9addc72e4eeb8e00208eafe49d M	src/test/java/org/apache/commons/math/transform/FastSineTransformerTest.java
+
+b8f67c1eeb99ce1110b67f0d8f9b6d7a16f3017f
+1297693101
+Luc Maisonobe
+second attempt at fixing MATH-484
+This fixes bad behavior when several events occur during a long step
+This also fixes bad behavior when events are triggered during backward integration
+Jira: MATH-484
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1070498 13f79535-47bb-0310-9956-ffa450edef68
+
+b8f67c1eeb99ce1110b67f0d8f9b6d7a16f3017f
+:100644 100644 945827d276411de36d0d5d2b2313ee1decf1b751 2ad29affdaadf581aee2dd885285f3ee1fc8119d M	src/main/java/org/apache/commons/math/ode/AbstractIntegrator.java
+
+270b9f017099e3d8cf4163827317488b96f13220
+1297624647
+Phil Steitz
+Fixed javadoc typo.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1070280 13f79535-47bb-0310-9956-ffa450edef68
+
+270b9f017099e3d8cf4163827317488b96f13220
+:100644 100644 a089595c813988130153bd30bb16ce6f297a1754 2e5937457d466c8349db3c783c3b7c4069d7a49f M	src/main/java/org/apache/commons/math/analysis/integration/UnivariateRealIntegratorImpl.java
+
+2a75bf21f572be0ba2774a51afc63fbabc09ffb9
+1297535242
+Sebastian Bazley
+Revert MathUtils to 2.1 behaviour.
+Update tests accordingly, and restore missing tests from 2.1 version
+Note: removed deprecation from methods that merely change behaviour in 3.0
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1070122 13f79535-47bb-0310-9956-ffa450edef68
+
+2a75bf21f572be0ba2774a51afc63fbabc09ffb9
+:100644 100644 ce6b4d4e026a4984c012bda35bb0267870c13cd6 ae4e4869eba7806c6903060e4a360c502db44e42 M	src/main/java/org/apache/commons/math/util/MathUtils.java
+:100644 100644 12e4c96c11624f99be41aad170a3e3ebf213fb37 5335975f5e2c884ca16f1c66f6049d33eb95d909 M	src/test/java/org/apache/commons/math/util/MathUtilsTest.java
+
+db575dfaa908770fe22f2dc4391dc48061dbc353
+1297513831
+Sebastian Bazley
+Update Clirr plugin version
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1070063 13f79535-47bb-0310-9956-ffa450edef68
+
+db575dfaa908770fe22f2dc4391dc48061dbc353
+:100644 100644 770ffcc33f685a445f0db87591ad20963ce4d3a5 2edbb1d4256d096d56ddc081fc5e396c20201347 M	pom.xml
+
+bfaee206d5b64dd2c18d2ae3fda52e27dff4c460
+1297372046
+Luc Maisonobe
+fixed checkstyle and findbugs warnings
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1069567 13f79535-47bb-0310-9956-ffa450edef68
+
+bfaee206d5b64dd2c18d2ae3fda52e27dff4c460
+:100644 100644 fbb918d3740453742b59acca77140beb489b9f31 945827d276411de36d0d5d2b2313ee1decf1b751 M	src/main/java/org/apache/commons/math/ode/AbstractIntegrator.java
+:100644 100644 b52ed0ca8893c404dd9c491fb2724f50f01e9d55 1d716c8ff687d96447f8d79faa7ee911d0f97751 M	src/main/java/org/apache/commons/math/ode/events/EventState.java
+:100644 100644 d653445b43385650e9afe61a598429574d2b7e31 07d205c35438e76e1117a1c11606c3db1426e2b7 M	src/main/java/org/apache/commons/math/ode/nonstiff/AdamsBashforthIntegrator.java
+:100644 100644 8a3fab1bcfb8dd77d87af676f0e6074db17c6417 7178f2ef043304ee7617f3c0e4084db66fc67fb2 M	src/main/java/org/apache/commons/math/ode/nonstiff/AdamsMoultonIntegrator.java
+:100644 100644 ee1195f637a8dae55f7b9b3b184095c35586ede1 313127d7f4114b9d3b4da4ba20272d87e240aa97 M	src/main/java/org/apache/commons/math/ode/nonstiff/EmbeddedRungeKuttaIntegrator.java
+:100644 100644 e1c3386258b6bcfd7d3bebef9d94495aff0f1839 5caedc7d8b89bb91521c8a9ea1fd4d4db6cd697e M	src/main/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerIntegrator.java
+:100644 100644 dbfae1908d5bdf02d0f9fc1dce94dd1e7389fa84 f07e7196a9a185c830108bc87a4c12c1fc1ccef5 M	src/main/java/org/apache/commons/math/ode/nonstiff/RungeKuttaIntegrator.java
+:100644 100644 7f9cb9c95fc2f5bba900ff451cc9b014c3f77527 95d559aee87027d7d10ed2389e17685e846626b7 M	src/main/java/org/apache/commons/math/ode/sampling/AbstractStepInterpolator.java
+:100644 100644 30622d3a491e500f0e6eb99f533a4c2b1dd968e2 f80267f81978281389a3fd0ffbe9ee1962bb115b M	src/main/java/org/apache/commons/math/optimization/general/AbstractScalarDifferentiableOptimizer.java
+:100644 100644 977f3ed6647dbaa329b5edc9e3bdac63f391609f ed583c3cfd9d2a5be411ccbde3b11ed101dcdac8 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+c8808c80f3999ce93c9f1065551e202b463387e5
+1296970955
+Phil Steitz
+Added correlated vector generation example.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1067592 13f79535-47bb-0310-9956-ffa450edef68
+
+c8808c80f3999ce93c9f1065551e202b463387e5
+:100644 100644 2eadede5dd1c4b7a120b480e6221e95a28b3d274 264060623af23edff6430c2d9048f016560ad0cf M	src/site/xdoc/userguide/random.xml
+
+1002e7bdfc9731968d9aa1a759cd1173a07c78f3
+1296965321
+Phil Steitz
+Fixed throws to reference exception that can be thrown.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1067583 13f79535-47bb-0310-9956-ffa450edef68
+
+1002e7bdfc9731968d9aa1a759cd1173a07c78f3
+:100644 100644 0aa7a33d3748c295b1c7e014ab218d2730527db6 d78096f44905afcdea21c76c091b617a5b77688f M	src/main/java/org/apache/commons/math/optimization/direct/PowellOptimizer.java
+
+e005c82745f619006284b887faf782913adbba4f
+1296964532
+Phil Steitz
+Removed trailing spaces.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1067582 13f79535-47bb-0310-9956-ffa450edef68
+
+e005c82745f619006284b887faf782913adbba4f
+:100644 100644 5df332f0bd9ad671f4e6202173c6d9bbf6dccd61 76e8ef94f12cf78eba19481091b5d3e052142d92 M	src/main/java/org/apache/commons/math/optimization/general/AbstractLeastSquaresOptimizer.java
+:100644 100644 863ca165437a134fa9a3fc429926fa5fc85626e9 12ebe0b7a345f7fa76adf43ca67f43fd09c42c59 M	src/main/java/org/apache/commons/math/optimization/univariate/AbstractUnivariateRealOptimizer.java
+:100644 100644 a7abfe9d8990a1f2848a8bd93fdcdcf3cbe0abd9 c4a5dc2922727ce33bb86ae31925ad5e09558cec M	src/main/java/org/apache/commons/math/stat/inference/TestUtils.java
+
+a84b35ac5c68bede60d6899996cdf6d633777ae1
+1296936690
+Sebastian Bazley
+Javadoc tidyup
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1067500 13f79535-47bb-0310-9956-ffa450edef68
+
+a84b35ac5c68bede60d6899996cdf6d633777ae1
+:100644 100644 babc4a2a6a4d92134171dfff6bd745e15ae50b83 b557fa302a28b8702c2c268be04035f36586c1d9 M	src/main/java/org/apache/commons/math/geometry/Rotation.java
+:100644 100644 06b1611dabb601cfdd0c3b8d5cb9a9426c047e77 7d252c3ed1b57773ec81a05b5155f51143162d9f M	src/main/java/org/apache/commons/math/ode/events/EventHandler.java
+:100644 100644 e56df594b33f51c56d20650e41183c8242dd0918 e1c3386258b6bcfd7d3bebef9d94495aff0f1839 M	src/main/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerIntegrator.java
+:100644 100644 caa8f2d8fa42c7565ab9d61fe99f764b39fb8edb 7f9cb9c95fc2f5bba900ff451cc9b014c3f77527 M	src/main/java/org/apache/commons/math/ode/sampling/AbstractStepInterpolator.java
+
+3b4165dea77bfa1b98b2dd9ffc81f77251cb6e41
+1296935925
+Sebastian Bazley
+Add some @since 2.2 markers
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1067495 13f79535-47bb-0310-9956-ffa450edef68
+
+3b4165dea77bfa1b98b2dd9ffc81f77251cb6e41
+:100644 100644 5befb28755054006c387ca75f8f7f56fc5a1ff7f caa8f2d8fa42c7565ab9d61fe99f764b39fb8edb M	src/main/java/org/apache/commons/math/ode/sampling/AbstractStepInterpolator.java
+
+b16e24a1544e309b9a657b187add4dd522257548
+1296935347
+Sebastian Bazley
+Add some @since 2.2 markers
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1067494 13f79535-47bb-0310-9956-ffa450edef68
+
+b16e24a1544e309b9a657b187add4dd522257548
+:100644 100644 bfe6abf3299dad639a3237527e9d10630291772b 59254add5a7a05bf4267b23912801f11d0b6511e M	src/main/java/org/apache/commons/math/distribution/AbstractIntegerDistribution.java
+:100644 100644 dc0719c4a0059510981cb49586643e20cd5a16b8 d91134cf71fd736200d9ee4809dd4cd6e89a2ea2 M	src/main/java/org/apache/commons/math/exception/util/ArgUtils.java
+
+2bc525f80023c769c288b4a7fed4e12c11e7bc02
+1296934429
+Sebastian Bazley
+Add some @since 2.2 markers
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1067489 13f79535-47bb-0310-9956-ffa450edef68
+
+2bc525f80023c769c288b4a7fed4e12c11e7bc02
+:100644 100644 f36c5ed02cac1914a006c66b27c3f425610679dc 21c7a7bf7c1675e217262ea51c92312564f97c47 M	src/main/java/org/apache/commons/math/MathException.java
+:100644 100644 892dc76369dda1332f2a337a34e703ead7317db2 ae0d0dd275e81fe394f5d8521652cca1e1e3a0b7 M	src/main/java/org/apache/commons/math/MathRuntimeException.java
+:100644 100644 4fc4a3c7da20ebee66a01865453d439d7f7fa2d4 4f8d0a07878ca7094ef73b66d47183d523d8079f M	src/main/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolatingFunction.java
+:100644 100644 b8c58b26f4ee6957858da8f5a1a518cbb08b9b26 71ab9a9f5f528162ec7dd408980fdcc2c9418984 M	src/main/java/org/apache/commons/math/analysis/interpolation/LinearInterpolator.java
+
+4a7b0f60c2103110c305e6094e13a5d1dcceaa04
+1296929467
+Sebastian Bazley
+Update to current Commons Parent
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1067474 13f79535-47bb-0310-9956-ffa450edef68
+
+4a7b0f60c2103110c305e6094e13a5d1dcceaa04
+:100644 100644 29f02631c7ebcc9d3c56d5a9ce67bf05a258670a 770ffcc33f685a445f0db87591ad20963ce4d3a5 M	pom.xml
+
+293b6e9a51cd3e4925e38b47f8064414e3cde7e9
+1296639981
+Sebastian Bazley
+Avoid some Findbugs complaints
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1066395 13f79535-47bb-0310-9956-ffa450edef68
+
+293b6e9a51cd3e4925e38b47f8064414e3cde7e9
+:100644 100644 f042f06b4faddebd7e904ea6fc6432f68043964b 4e8807281588ea25f2386c796d08818edc2a7fc0 M	src/test/java/org/apache/commons/math/analysis/interpolation/BicubicSplineInterpolatingFunctionTest.java
+:100644 100644 16f262a84fe5d8634dfba18aab002825febeb902 1392d114277ea59e334ecad4e827bc616214c95d M	src/test/java/org/apache/commons/math/analysis/interpolation/TricubicSplineInterpolatingFunctionTest.java
+
+5a33bf983822dfdd7ca8e768749ef67dc34d7c0f
+1296639860
+Sebastian Bazley
+Drop unused last parameter
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1066391 13f79535-47bb-0310-9956-ffa450edef68
+
+5a33bf983822dfdd7ca8e768749ef67dc34d7c0f
+:100644 100644 94db726234b29f9096803faaecb00c093f9d5c31 fe4b1ac1e50f70e02026a637838ab3e318dfcac2 M	src/test/java/org/apache/commons/math/util/FastMathTestPerformance.java
+
+6d0903c480b85b2f883c4378c2290576a1026139
+1296637601
+Sebastian Bazley
+Fix broken test: add missing fail() call
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1066376 13f79535-47bb-0310-9956-ffa450edef68
+
+6d0903c480b85b2f883c4378c2290576a1026139
+:100644 100644 fa27ef57c8625c9241ce8a0978155cc5c2a079dc 30460b6b2892b4314884c363f1cfec4003acc31c M	src/test/java/org/apache/commons/math/linear/FieldLUDecompositionImplTest.java
+
+5b2ae04f60f447423a3cf3af33d2b15d03e0f095
+1296604650
+Sebastian Bazley
+Use actual array sizes rather than magic numbers
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1066280 13f79535-47bb-0310-9956-ffa450edef68
+
+5b2ae04f60f447423a3cf3af33d2b15d03e0f095
+:100644 100644 28788787ba09e144b331ef3a705afadc6e4c7d44 977f3ed6647dbaa329b5edc9e3bdac63f391609f M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+8f2af34f44a6a711c649d8f156a35a1a59b3558c
+1296588894
+Sebastian Bazley
+Unnecessary casts
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1066168 13f79535-47bb-0310-9956-ffa450edef68
+
+8f2af34f44a6a711c649d8f156a35a1a59b3558c
+:100644 100644 b9e3c5035b9941b61d1b00e4a185c4537c081334 28788787ba09e144b331ef3a705afadc6e4c7d44 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+ff3e380c2d73f9e629ec9111d7bbf67cb75dbda6
+1296588731
+Sebastian Bazley
+Don't waste precious ; !
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1066166 13f79535-47bb-0310-9956-ffa450edef68
+
+ff3e380c2d73f9e629ec9111d7bbf67cb75dbda6
+:100644 100644 cf185495e526bda07448dbba32984988a5a2a71f 7c708e20e62538bfa5863d9ddbe092a96a80cd49 M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+9b71a4d90ddb1b01870ef3e804004c3a730fa289
+1296588688
+Sebastian Bazley
+Unused imports
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1066165 13f79535-47bb-0310-9956-ffa450edef68
+
+9b71a4d90ddb1b01870ef3e804004c3a730fa289
+:100644 100644 6b2a5e4756f172f6d882c54b0b8ea4a86da5aa96 ac6a7bffc42e178495d5f690229097768ca8449d M	src/test/java/org/apache/commons/math/optimization/MultiStartMultivariateRealOptimizerTest.java
+:100644 100644 ec9e2347359fb70f6a20b6b371ea3234e401f4dd dfbde93c3b1701db41142483533410afe94e56b5 M	src/test/java/org/apache/commons/math/optimization/direct/PowellOptimizerTest.java
+:100644 100644 e2bee8b4e898d2e4a8c7bef790680b170cf9eca6 75b56509907d33aac6aef649fe2d25d9a66f6afa M	src/test/java/org/apache/commons/math/optimization/general/NonLinearConjugateGradientOptimizerTest.java
+
+e291ad1056280ed2103cd16ffb27245d3d8d496a
+1296588626
+Sebastian Bazley
+Missing @Override
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1066162 13f79535-47bb-0310-9956-ffa450edef68
+
+e291ad1056280ed2103cd16ffb27245d3d8d496a
+:100644 100644 537fa1748ff6d1e620719c7bd333f5a7328bd837 b2f5e56e53994811334f60a8c7109fae004d9a25 M	src/test/java/org/apache/commons/math/ode/TestProblem4.java
+
+d2863186a659a38d35a96b0979c3d8d5f46ac802
+1296586661
+Sebastian Bazley
+MATH-505 TestUtils is thread-hostile - deprecate the offending methods
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1066134 13f79535-47bb-0310-9956-ffa450edef68
+
+d2863186a659a38d35a96b0979c3d8d5f46ac802
+:100644 100644 6e0a89ee8ca44f91c48c9fb282715e505a6923e5 ae56346ad320018ddcb5957ac5c3dd0b2926c093 M	src/site/xdoc/changes.xml
+
+fd5f4107b933c8690a544fb540a30c3ee29205f2
+1296586585
+Sebastian Bazley
+MATH-505 TestUtils is thread-hostile - deprecate the offending methods
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1066133 13f79535-47bb-0310-9956-ffa450edef68
+
+fd5f4107b933c8690a544fb540a30c3ee29205f2
+:100644 100644 c5075fce5d5a0961e094f9bbc42bec4e0640ed0b a7abfe9d8990a1f2848a8bd93fdcdcf3cbe0abd9 M	src/main/java/org/apache/commons/math/stat/inference/TestUtils.java
+
+b275d8dee872bb255423dae3d651404ea33d1bc8
+1296519129
+Sebastian Bazley
+Arrays might as well be final
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1065872 13f79535-47bb-0310-9956-ffa450edef68
+
+b275d8dee872bb255423dae3d651404ea33d1bc8
+:100644 100644 245ea41ba402fb440bc4837733a1ff17f42e92bc b9e3c5035b9941b61d1b00e4a185c4537c081334 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+5f13aa587bc8a6cfb899930c65acd31386ace1ae
+1296503441
+Phil Steitz
+Fixed errors introduced in r1037327, restored FastMath changes.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1065729 13f79535-47bb-0310-9956-ffa450edef68
+
+5f13aa587bc8a6cfb899930c65acd31386ace1ae
+:100644 100644 8c6d6ba61609f38226921bd1c7d1943279187f62 89c171ccdde0500e134c9f035b13f028f3bd69fa M	src/main/java/org/apache/commons/math/optimization/general/LevenbergMarquardtOptimizer.java
+
+c2e5825430ffdff4b80e98af533467756578d1ef
+1296501254
+Phil Steitz
+Reverted incompatible changes made in r985828
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1065714 13f79535-47bb-0310-9956-ffa450edef68
+
+c2e5825430ffdff4b80e98af533467756578d1ef
+:100644 100644 ed1b6dabd8075390f5f49b1bbd8a82d1c5b3874b 5df332f0bd9ad671f4e6202173c6d9bbf6dccd61 M	src/main/java/org/apache/commons/math/optimization/general/AbstractLeastSquaresOptimizer.java
+:100644 100644 e3fa4b3a038e828cdf8964605854a4cfed1ac9e3 277671fd2ec99998550b9da7afa444442726c47a M	src/main/java/org/apache/commons/math/optimization/general/GaussNewtonOptimizer.java
+:100644 100644 daf3702853bb548b673d4a43af26b39265bcb4a0 8c6d6ba61609f38226921bd1c7d1943279187f62 M	src/main/java/org/apache/commons/math/optimization/general/LevenbergMarquardtOptimizer.java
+:100644 100644 83e216a8daefaeee3be9bdd6a830be3f0acdb94c 839416867e8b7b1ed5f73dbc7367dbcbff9e789b M	src/test/java/org/apache/commons/math/optimization/general/LevenbergMarquardtOptimizerTest.java
+
+34cfc42d7021135d487226093de1b79cc3e88d35
+1296494453
+Phil Steitz
+Fixed error in r1065481 change.  Need to clone, not reference start point.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1065689 13f79535-47bb-0310-9956-ffa450edef68
+
+34cfc42d7021135d487226093de1b79cc3e88d35
+:100644 100644 b652881ade2b6e56cf8f574a953cde2f5973d5b9 0aa7a33d3748c295b1c7e014ab218d2730527db6 M	src/main/java/org/apache/commons/math/optimization/direct/PowellOptimizer.java
+
+bb822c2a821c9b4a097cbf85504a2232ac382445
+1296456120
+Phil Steitz
+Reverted incompatible changes in r980013.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1065489 13f79535-47bb-0310-9956-ffa450edef68
+
+bb822c2a821c9b4a097cbf85504a2232ac382445
+:100644 100644 99dc0f830128952d06badd53f525f10598ca3fd1 863ca165437a134fa9a3fc429926fa5fc85626e9 M	src/main/java/org/apache/commons/math/optimization/univariate/AbstractUnivariateRealOptimizer.java
+
+d8717af95d1b39f23cc1fa2f22133bfff6586072
+1296453186
+Phil Steitz
+Removed references to issues not resolved in 2.2.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1065485 13f79535-47bb-0310-9956-ffa450edef68
+
+d8717af95d1b39f23cc1fa2f22133bfff6586072
+:100644 100644 65c3a4eb9973440d521f74d289ee7fba13d13bc5 6e0a89ee8ca44f91c48c9fb282715e505a6923e5 M	src/site/xdoc/changes.xml
+
+86cee08e6b91446875279eec21d20325aa9dc37a
+1296452714
+Phil Steitz
+Javadoc. Removed link to removed class.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1065484 13f79535-47bb-0310-9956-ffa450edef68
+
+86cee08e6b91446875279eec21d20325aa9dc37a
+:100644 100644 dc2b6622c0e8b171931fe38dc8a30db624275105 0f92be63e6947be873e34525e55594814ec6aabc M	src/main/java/org/apache/commons/math/optimization/DifferentiableMultivariateRealOptimizer.java
+
+47b8ecbaa6dc01e56d92dff858bc720d1b8d3a4e
+1296451901
+Phil Steitz
+Reverted incompatible changes made in r967288, JIRA: MATH-389.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1065481 13f79535-47bb-0310-9956-ffa450edef68
+
+47b8ecbaa6dc01e56d92dff858bc720d1b8d3a4e
+:100644 000000 f3ed103241cc7c37afaffa351853c699e15a9a90 0000000000000000000000000000000000000000 D	src/main/java/org/apache/commons/math/optimization/BaseMultivariateRealOptimizer.java
+:100644 100644 86752928e11b211e787dbe9a2a09a7ab71c65e6a dc2b6622c0e8b171931fe38dc8a30db624275105 M	src/main/java/org/apache/commons/math/optimization/DifferentiableMultivariateRealOptimizer.java
+:100644 100644 f17e75baf2ab9698dc6b46dd2e3fe193da780b1a 04a000cd19da5b87410a9b631fce6bf76cd3dc9a M	src/main/java/org/apache/commons/math/optimization/MultiStartDifferentiableMultivariateRealOptimizer.java
+:100644 100644 fd8695b2f0ab4cec743b1393502b732139df8fed 48e938a939960952770d1293cb06c06229caf959 M	src/main/java/org/apache/commons/math/optimization/MultiStartMultivariateRealOptimizer.java
+:100644 100644 e602debf8846aaa5d5956a2230d7c0c6edc9cdb1 6af579dbe5750ee9588ad8242de41b4f5184da6c M	src/main/java/org/apache/commons/math/optimization/MultivariateRealOptimizer.java
+:100644 100644 7ea4aeb30d30991f2a014c45606a330a604356d1 b652881ade2b6e56cf8f574a953cde2f5973d5b9 M	src/main/java/org/apache/commons/math/optimization/direct/PowellOptimizer.java
+:100644 100644 53119854fbc7fdeded24c9151b283c3dd7846152 30622d3a491e500f0e6eb99f533a4c2b1dd968e2 M	src/main/java/org/apache/commons/math/optimization/general/AbstractScalarDifferentiableOptimizer.java
+:100644 000000 fc7c215853bc37f1d266fb17ec51b6086c0514de 0000000000000000000000000000000000000000 D	src/main/java/org/apache/commons/math/optimization/general/AbstractScalarOptimizer.java
+:100644 000000 0a20862c76bc4a164c3ec41c137861501b1e59dc 0000000000000000000000000000000000000000 D	src/main/java/org/apache/commons/math/optimization/general/BaseAbstractScalarOptimizer.java
+:100644 100644 1e7d6da6000fec1bdc822342ef566162bfc3e8cf a1f07e4fda44f324b664de3f5efcff9fa398c1d4 M	src/main/java/org/apache/commons/math/optimization/general/NonLinearConjugateGradientOptimizer.java
+:100644 100644 d47b71bf61954b253f7473598f5f81681e8cbe80 aff80c76ffdcf9f36a75a2f1065c3c5eb10ed263 M	src/test/java/org/apache/commons/math/optimization/MultiStartDifferentiableMultivariateRealOptimizerTest.java
+:100644 100644 5de5129a542335da79ece8c9d781cf2234d5e01d 6b2a5e4756f172f6d882c54b0b8ea4a86da5aa96 M	src/test/java/org/apache/commons/math/optimization/MultiStartMultivariateRealOptimizerTest.java
+:100644 100644 8a2d392f79cf0c883c7ba38bfa2b5b98ee79a6df ec9e2347359fb70f6a20b6b371ea3234e401f4dd M	src/test/java/org/apache/commons/math/optimization/direct/PowellOptimizerTest.java
+:100644 100644 80ee9d8bb831e5fe5495b6f998b41548648c1c6f e2bee8b4e898d2e4a8c7bef790680b170cf9eca6 M	src/test/java/org/apache/commons/math/optimization/general/NonLinearConjugateGradientOptimizerTest.java
+
+ccbecc0e59e5496580fbfb7df3ae0ddc73073ab8
+1296251802
+Mikkel Meyer Andersen
+Updated name in changelog to reflect fixes for MATH-384 and MATH-385 which was introduced in r1056747.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1064904 13f79535-47bb-0310-9956-ffa450edef68
+
+ccbecc0e59e5496580fbfb7df3ae0ddc73073ab8
+:100644 100644 372e97a01744a2456b3802f969fa33579a2f8190 65c3a4eb9973440d521f74d289ee7fba13d13bc5 M	src/site/xdoc/changes.xml
+
+ef7539b31bc8ff658670b7dd81145e2e851f5104
+1295980521
+Sebastian Bazley
+Allow a single JUnit test to be run if the test.entry property is defined
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1063391 13f79535-47bb-0310-9956-ffa450edef68
+
+ef7539b31bc8ff658670b7dd81145e2e851f5104
+:100644 100644 b34b362afee677337a232a26bef414fbd2a19398 995d1f6e4b5a6d768de6d44802e2c8f172164a35 M	build.xml
+
+168509823457917dea64b7d50ae70dfb2c264078
+1295915358
+Sebastian Bazley
+Merge changes from trunk
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1063078 13f79535-47bb-0310-9956-ffa450edef68
+
+168509823457917dea64b7d50ae70dfb2c264078
+:100644 100644 cc35e076addb2eafc314e5a551209db4569ac02f 94db726234b29f9096803faaecb00c093f9d5c31 M	src/test/java/org/apache/commons/math/util/FastMathTestPerformance.java
+
+96e8935521323bd5a2b0472cc1d8cc9474e030a1
+1295908854
+Sebastian Bazley
+Trailing spaces
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1063043 13f79535-47bb-0310-9956-ffa450edef68
+
+96e8935521323bd5a2b0472cc1d8cc9474e030a1
+:100644 100644 13b6688fd1adead1226792dd0556678a3cd527ac 245ea41ba402fb440bc4837733a1ff17f42e92bc M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+770ce9d9af534b041450a27601da2446d8e93c89
+1295908067
+Sebastian Bazley
+Allow for specific atan2 and toRadians off-by-one errors
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1063034 13f79535-47bb-0310-9956-ffa450edef68
+
+770ce9d9af534b041450a27601da2446d8e93c89
+:100644 100644 22efebf93f08b2d9d35d8040f3417c052a49fd51 cd9ecf8c1df2d0fe28694f1a74b03e6f2bb78cb3 M	src/test/java/org/apache/commons/math/util/FastMathStrictComparisonTest.java
+
+d052f2ee5eee99284cfdfeec922e2d128f42365a
+1295896442
+Luc Maisonobe
+fixed scalb for very large powers
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062929 13f79535-47bb-0310-9956-ffa450edef68
+
+d052f2ee5eee99284cfdfeec922e2d128f42365a
+:100644 100644 5739a7c37fa0e166e0e01e8fd0eff0d448e1fd80 13b6688fd1adead1226792dd0556678a3cd527ac M	src/main/java/org/apache/commons/math/util/FastMath.java
+:100644 100644 f7d7a982c4c8bb9f2ea8069a39ab498f8bfe3caa cf185495e526bda07448dbba32984988a5a2a71f M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+4e0e6455cbad71c61a1a95e63393b78c94293706
+1295896166
+Sebastian Bazley
+Allow a single test to be run
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062926 13f79535-47bb-0310-9956-ffa450edef68
+
+4e0e6455cbad71c61a1a95e63393b78c94293706
+:100644 100644 ff7cbc5acb95080061247b3895f7443d78b75e70 22efebf93f08b2d9d35d8040f3417c052a49fd51 M	src/test/java/org/apache/commons/math/util/FastMathStrictComparisonTest.java
+
+b2fd70a368832d700a83e7092d1e929c7fdb1bb6
+1295892520
+Sebastian Bazley
+Remove reflection tests as they are in FastMathStrictComparisonTest
+Enable fail if not all StrictMath methods have been implemented
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062904 13f79535-47bb-0310-9956-ffa450edef68
+
+b2fd70a368832d700a83e7092d1e929c7fdb1bb6
+:100644 100644 d409d74d30c42445929e3c5482556797d91ec582 f7d7a982c4c8bb9f2ea8069a39ab498f8bfe3caa M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+2929a980bded0ad54ed622323317fea8252df7bf
+1295890442
+Sebastian Bazley
+Check all FastMath methods against StrictMath results
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062895 13f79535-47bb-0310-9956-ffa450edef68
+
+2929a980bded0ad54ed622323317fea8252df7bf
+:000000 100644 0000000000000000000000000000000000000000 ff7cbc5acb95080061247b3895f7443d78b75e70 A	src/test/java/org/apache/commons/math/util/FastMathStrictComparisonTest.java
+
+c8a07c12d30b0aaf2e4cee7db5b58dd76d395dd5
+1295875228
+Sebastian Bazley
+MATH-477 FastMath Javadoc should show which methods actually use java.lang.Math internally
+Also fixed round(int) to use local FastMath method
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062765 13f79535-47bb-0310-9956-ffa450edef68
+
+c8a07c12d30b0aaf2e4cee7db5b58dd76d395dd5
+:100644 100644 9ff9ce920f7327ce6c891942ba72f59886d5b012 5739a7c37fa0e166e0e01e8fd0eff0d448e1fd80 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+c52bde04cac3beb03993d19b656cba3b5ff47dcf
+1295873295
+Sebastian Bazley
+MATH-493 FastMath min and max fail with (Infinity,-Infinity) and (0,0, -0.0)
+Fixing (0,0, -0.0) by using code from Harmony.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062759 13f79535-47bb-0310-9956-ffa450edef68
+
+c52bde04cac3beb03993d19b656cba3b5ff47dcf
+:100644 100644 d22232752ae8c2031432e7bf7a1a1e11a1675521 9ff9ce920f7327ce6c891942ba72f59886d5b012 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+0014483f97b7e8ad7d66f7cf830ae530c3e92e4e
+1295860367
+Gilles Sadowski
+MATH-500
+Deprecation.
+
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062691 13f79535-47bb-0310-9956-ffa450edef68
+
+0014483f97b7e8ad7d66f7cf830ae530c3e92e4e
+:100644 100644 4625953b847565bd65c1a2665a9f100ca5e6d5d9 5e9976794e5778896c0e9050bbd6069caad85e14 M	src/main/java/org/apache/commons/math/ConvergingAlgorithmImpl.java
+
+d8ae5feae315acca7f447e6690bac3dc5711898f
+1295823343
+Phil Steitz
+Reverted incompatible change.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062564 13f79535-47bb-0310-9956-ffa450edef68
+
+d8ae5feae315acca7f447e6690bac3dc5711898f
+:100644 100644 ee24ed43c3666c9b633468594f8a2393cbc9f13b 2abb02de6eabef59a534050fbc0994bc8278e54d M	src/main/java/org/apache/commons/math/FunctionEvaluationException.java
+
+5adc7ee63e7564270a20a0874b5b4c73bae94a58
+1295822235
+Luc Maisonobe
+added FastMath.hypot
+JIRA: MATH-478
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062558 13f79535-47bb-0310-9956-ffa450edef68
+
+5adc7ee63e7564270a20a0874b5b4c73bae94a58
+:100644 100644 0e55eef663de52e5693f463437da483c9279367b d22232752ae8c2031432e7bf7a1a1e11a1675521 M	src/main/java/org/apache/commons/math/util/FastMath.java
+:100644 100644 cd45e6bfceea0c595ff1a4d5dff833e86b25b589 372e97a01744a2456b3802f969fa33579a2f8190 M	src/site/xdoc/changes.xml
+
+032706d52b5e269abeb8e2e3a6c3e627e75079c2
+1295821632
+Luc Maisonobe
+javadoc
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062553 13f79535-47bb-0310-9956-ffa450edef68
+
+032706d52b5e269abeb8e2e3a6c3e627e75079c2
+:100644 100644 0d0de85d98ac6383b2c6a01c614ea327f7b61a61 0e55eef663de52e5693f463437da483c9279367b M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+a60dc42626dee4e98336002948f5a46f6bb963e5
+1295821177
+Luc Maisonobe
+added FastMath.scalb(double, int) and FastMath.scalb(float, int)
+deprecated MathUtils.scalb(double, int)
+JIRA: MATH-498
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062549 13f79535-47bb-0310-9956-ffa450edef68
+
+a60dc42626dee4e98336002948f5a46f6bb963e5
+:100644 100644 4761b9dd68bcea5763e3df40b14e1cdfc1ea66ce 0d0de85d98ac6383b2c6a01c614ea327f7b61a61 M	src/main/java/org/apache/commons/math/util/FastMath.java
+:100644 100644 7e502c99dc1fa537be52698392ec941da2ceba4f ce6b4d4e026a4984c012bda35bb0267870c13cd6 M	src/main/java/org/apache/commons/math/util/MathUtils.java
+:100644 100644 5f3b92e5a50edcc6b99e022ad8379e4218c57376 cd45e6bfceea0c595ff1a4d5dff833e86b25b589 M	src/site/xdoc/changes.xml
+:100644 100644 6305c8808685951c091e8ba6f0fe079c5f248048 d409d74d30c42445929e3c5482556797d91ec582 M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+:100644 100644 4b2b393df538114495fb851f2cec104a989f9631 12e4c96c11624f99be41aad170a3e3ebf213fb37 M	src/test/java/org/apache/commons/math/util/MathUtilsTest.java
+
+ffa170086bbbce1e71f5738c664595b0eca8f875
+1295797354
+Sebastian Bazley
+Split testPerformance() into new class
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062455 13f79535-47bb-0310-9956-ffa450edef68
+
+ffa170086bbbce1e71f5738c664595b0eca8f875
+:100644 100644 61d31a5958c42b181eb3cc3e04cd4eed5f6e291e 6305c8808685951c091e8ba6f0fe079c5f248048 M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+:000000 100644 0000000000000000000000000000000000000000 cc35e076addb2eafc314e5a551209db4569ac02f A	src/test/java/org/apache/commons/math/util/FastMathTestPerformance.java
+
+ba196886b195b65bd8abb05dc0589c1fd72c3364
+1295785296
+Sebastian Bazley
+Update nextAfter Javadoc
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062407 13f79535-47bb-0310-9956-ffa450edef68
+
+ba196886b195b65bd8abb05dc0589c1fd72c3364
+:100644 100644 948f277467005f9a6b0f07787e833ece97092718 4761b9dd68bcea5763e3df40b14e1cdfc1ea66ce M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+84576f584a95a63c826e988dcf785595e346753b
+1295780672
+Luc Maisonobe
+fixed nextAfter implementations for handling of some special values
+fixed the signature of the float version, as the spec is to have a double second argument
+moved the existing tests that were used in the former implementation in MathUtils,
+fixing them also as two of them were not compliant with the spec for equal numbers
+Jira: MATH-478
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062385 13f79535-47bb-0310-9956-ffa450edef68
+
+84576f584a95a63c826e988dcf785595e346753b
+:100644 100644 1a51152084965e5777e2df887ecff674bf42329b 948f277467005f9a6b0f07787e833ece97092718 M	src/main/java/org/apache/commons/math/util/FastMath.java
+:100644 100644 4f3a0c2542455d412c77d4e321f4993db2db5c30 5f3b92e5a50edcc6b99e022ad8379e4218c57376 M	src/site/xdoc/changes.xml
+:100644 100644 6cf4123768835c62ce11324912d62f6f7768d59f 61d31a5958c42b181eb3cc3e04cd4eed5f6e291e M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+:100644 100644 3c20cf8b4ea68c5773c512600f7e36279c34845d 4b2b393df538114495fb851f2cec104a989f9631 M	src/test/java/org/apache/commons/math/util/MathUtilsTest.java
+
+5d6b19a3b86e2a96a55c68310a5a7b1bceeb253d
+1295778396
+Luc Maisonobe
+added getExponent methods to FastMath
+JIRA: MATH-497
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062365 13f79535-47bb-0310-9956-ffa450edef68
+
+5d6b19a3b86e2a96a55c68310a5a7b1bceeb253d
+:100644 100644 6228bd667ab3cf9f718ab8d1f24ce5d93bab26cd 1a51152084965e5777e2df887ecff674bf42329b M	src/main/java/org/apache/commons/math/util/FastMath.java
+:100644 100644 884f95a8e03f2b0d8a8a54ea9b10fbb40008684a 4f3a0c2542455d412c77d4e321f4993db2db5c30 M	src/site/xdoc/changes.xml
+
+c20b11cc83043584312940d13eca3f83e02f1691
+1295778247
+Luc Maisonobe
+announced bugs fixed by sebb
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062362 13f79535-47bb-0310-9956-ffa450edef68
+
+c20b11cc83043584312940d13eca3f83e02f1691
+:100644 100644 6b729148e83c16f3fcce51247b7956e93e895d23 884f95a8e03f2b0d8a8a54ea9b10fbb40008684a M	src/site/xdoc/changes.xml
+
+207f791bd45898cd0630468ed5992bdee621543b
+1295777849
+Luc Maisonobe
+javadoc
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062360 13f79535-47bb-0310-9956-ffa450edef68
+
+207f791bd45898cd0630468ed5992bdee621543b
+:100644 100644 7e161ba17c68acfba81b7eb0056ce956bfa715fb 6228bd667ab3cf9f718ab8d1f24ce5d93bab26cd M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+174da9d6fbf369212c5a40e03084349ba4649e11
+1295744287
+Sebastian Bazley
+MATH-496 Create FastMath copySign methods
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062304 13f79535-47bb-0310-9956-ffa450edef68
+
+174da9d6fbf369212c5a40e03084349ba4649e11
+:100644 100644 9c097020d881a41670acc2bad68021b80d6c9309 7e161ba17c68acfba81b7eb0056ce956bfa715fb M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+6e1be55635df9a4ff6479a57749cea52a5131b47
+1295743988
+Sebastian Bazley
+Should only test against public methods.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062302 13f79535-47bb-0310-9956-ffa450edef68
+
+6e1be55635df9a4ff6479a57749cea52a5131b47
+:100644 100644 dae04aff3d9af25ed7af4834900558c9e8e4cef8 6cf4123768835c62ce11324912d62f6f7768d59f M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+eed47f9f44f74316ceb397fdd445074218d1e484
+1295728139
+Sebastian Bazley
+Javadoc tweak
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062261 13f79535-47bb-0310-9956-ffa450edef68
+
+eed47f9f44f74316ceb397fdd445074218d1e484
+:100644 100644 5da97fc87f92d2db2dc3b2b3e16fa69004ba6f23 9c097020d881a41670acc2bad68021b80d6c9309 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+7290cec1563df7b1dbe65da8664d2cd555a60ed0
+1295727994
+Sebastian Bazley
+Simplify code by using doubleHighPart
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062258 13f79535-47bb-0310-9956-ffa450edef68
+
+7290cec1563df7b1dbe65da8664d2cd555a60ed0
+:100644 100644 6310608af130257bd78a4920eb66e3338096d3a0 5da97fc87f92d2db2dc3b2b3e16fa69004ba6f23 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+b80a4e07d9969581ad536486dac5c11cdf663ab2
+1295727771
+Sebastian Bazley
+Update changes
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062255 13f79535-47bb-0310-9956-ffa450edef68
+
+b80a4e07d9969581ad536486dac5c11cdf663ab2
+:100644 100644 4e8a0dce7459883f73c8463adab8ec17143b23aa 6b729148e83c16f3fcce51247b7956e93e895d23 M	src/site/xdoc/changes.xml
+
+e399b4c1cb7c21a58183652d6c7a85b4e481b79b
+1295727648
+Sebastian Bazley
+MATH-494 FastMath atan2 does not agree with StrictMath for special cases
+Add doubleHighPart() method to better handle splitting high absolute values
+Add getSign() utility method
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062254 13f79535-47bb-0310-9956-ffa450edef68
+
+e399b4c1cb7c21a58183652d6c7a85b4e481b79b
+:100644 100644 8e3b72c81ddfc0edd2cc3d0cec95daf6931626cd 6310608af130257bd78a4920eb66e3338096d3a0 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+990f0199af11a14c9d11449dd5a90e9e0d58771f
+1295713367
+Sebastian Bazley
+Tidy up debug output
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062188 13f79535-47bb-0310-9956-ffa450edef68
+
+990f0199af11a14c9d11449dd5a90e9e0d58771f
+:100644 100644 734b0d9a526cbdb60f0a23c1d37903477ccfeca5 dae04aff3d9af25ed7af4834900558c9e8e4cef8 M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+8281908ed43512de3b7913d4b9698734911619a9
+1295660602
+Sebastian Bazley
+MATH-494 Allow for sufficiently close numbers but still detect +/- 0 difference
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062088 13f79535-47bb-0310-9956-ffa450edef68
+
+8281908ed43512de3b7913d4b9698734911619a9
+:100644 100644 d92ac07285360f266438458a887eaf3384b2b892 734b0d9a526cbdb60f0a23c1d37903477ccfeca5 M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+ae87b68b210a1cf7a9301a88b65e866d86ec99e4
+1295646329
+Sebastian Bazley
+MATH-493 FastMath min and max fail with (Infinity,-Infinity)
+(still to fix zero case)
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062038 13f79535-47bb-0310-9956-ffa450edef68
+
+ae87b68b210a1cf7a9301a88b65e866d86ec99e4
+:100644 100644 51ff4a951b744811a00917f5d01efd2e1c40804d 8e3b72c81ddfc0edd2cc3d0cec95daf6931626cd M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+88d9ec4d1eef50593fb094581b94be8568bd0f67
+1295641493
+Sebastian Bazley
+Correct list of unique methods
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1062008 13f79535-47bb-0310-9956-ffa450edef68
+
+88d9ec4d1eef50593fb094581b94be8568bd0f67
+:100644 100644 2be206df9aa4db334f8ac7669239c3fe8190a302 51ff4a951b744811a00917f5d01efd2e1c40804d M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+dd9ec7f67f860d3646bdb3d16bde5ed342879d34
+1295640240
+Sebastian Bazley
+MATH-478 FastMath is not an exact replacement for StrictMath
+Add missing methods - TODO implement our own versions
+Document which methods are additional to StrictMath
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061994 13f79535-47bb-0310-9956-ffa450edef68
+
+dd9ec7f67f860d3646bdb3d16bde5ed342879d34
+:100644 100644 cf365067776e6f36d413119b10cf1540c657d099 2be206df9aa4db334f8ac7669239c3fe8190a302 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+ed3ecd4d6c931d8bcabf3dd35779ca432b821fa9
+1295639826
+Sebastian Bazley
+Make Special test methods generic
+Add tests for two parameters
+Add checks for missing or extra methods
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061985 13f79535-47bb-0310-9956-ffa450edef68
+
+ed3ecd4d6c931d8bcabf3dd35779ca432b821fa9
+:100644 100644 4c22584748c5eac434ab4fed1ed7528d8eb3ccf4 d92ac07285360f266438458a887eaf3384b2b892 M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+8c02898cf7ec3e1019e89ff098dcd2505a598eb7
+1295623363
+Gilles Sadowski
+MATH-492
+Deprecation.
+
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061843 13f79535-47bb-0310-9956-ffa450edef68
+
+8c02898cf7ec3e1019e89ff098dcd2505a598eb7
+:100644 100644 be7290dbfa5581b2c98f67225abaaa44b92a2807 25bbb2864c1986344709fe2bc9894748a383238d M	src/main/java/org/apache/commons/math/MaxIterationsExceededException.java
+
+3626ee20a1e70b70597d9c84af552a628bee6929
+1295611959
+Gilles Sadowski
+MATH-491
+Deprecation.
+
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061778 13f79535-47bb-0310-9956-ffa450edef68
+
+3626ee20a1e70b70597d9c84af552a628bee6929
+:100644 100644 cecb0885fae952e25b1788c0828244fc69d4c138 8e29ab634b9ec531286b9d0729cdcf7bd4285bd9 M	src/main/java/org/apache/commons/math/DimensionMismatchException.java
+
+c411319aaa1d49eeedba6538ab27d63aaeb20d6f
+1295605283
+Gilles Sadowski
+MATH-488
+Deprecation.
+
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061720 13f79535-47bb-0310-9956-ffa450edef68
+
+c411319aaa1d49eeedba6538ab27d63aaeb20d6f
+:100644 100644 58e8c05676e2e1e3343b2e8c1002571e2d5c70f6 f36c5ed02cac1914a006c66b27c3f425610679dc M	src/main/java/org/apache/commons/math/MathException.java
+
+36576941052cdedfe39b5ac8f905eeeb21eb4df8
+1295584709
+Sebastian Bazley
+Bugs have been fixed; fail in future
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061629 13f79535-47bb-0310-9956-ffa450edef68
+
+36576941052cdedfe39b5ac8f905eeeb21eb4df8
+:100644 100644 665da6b4f116322f1ac0540101efc806df6d8362 4c22584748c5eac434ab4fed1ed7528d8eb3ccf4 M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+628ea63e5e0561c5f9ff2a5d4a55960114c9d1f3
+1295584586
+Sebastian Bazley
+Typo in constant name
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061627 13f79535-47bb-0310-9956-ffa450edef68
+
+628ea63e5e0561c5f9ff2a5d4a55960114c9d1f3
+:100644 100644 5dbc5f93fe42a9a104263bb3c58b24b3afcd0877 cf365067776e6f36d413119b10cf1540c657d099 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+05ea9730b451fb201ba96fc5dcb3a772e3921e80
+1295584521
+Sebastian Bazley
+MATH-476 FastMath code contains 'magic' numbers
+Extracted 2^52 value as a constant
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061626 13f79535-47bb-0310-9956-ffa450edef68
+
+05ea9730b451fb201ba96fc5dcb3a772e3921e80
+:100644 100644 92b3bb6b8df4a1990ab410682f643de11faebdbf 5dbc5f93fe42a9a104263bb3c58b24b3afcd0877 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+18fe76daeda1fae1255f4251e2e14379fbacc66d
+1295582549
+Sebastian Bazley
+MATH-476 FastMath code contains 'magic' numbers
+Extracted "splitter" value as a constant
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061620 13f79535-47bb-0310-9956-ffa450edef68
+
+18fe76daeda1fae1255f4251e2e14379fbacc66d
+:100644 100644 5c3ba04f3f6bd82efc72572b04b38a20492cc08e 92b3bb6b8df4a1990ab410682f643de11faebdbf M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+e6424edee7d99c99d5b360e7b97885c2738dee66
+1295580602
+Sebastian Bazley
+MATH-489 FastMath acos fails when input abs value is less than about 5.7851920321187236E-300 - returns NaN
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061610 13f79535-47bb-0310-9956-ffa450edef68
+
+e6424edee7d99c99d5b360e7b97885c2738dee66
+:100644 100644 e347976287de3cb80583ef5fcefee2131dc3c507 4e8a0dce7459883f73c8463adab8ec17143b23aa M	src/site/xdoc/changes.xml
+
+5d3fa23df5b6fa58abc22f47e2c9e043227247ba
+1295580193
+Sebastian Bazley
+MATH-489 Fix overflows in acos calculation
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061608 13f79535-47bb-0310-9956-ffa450edef68
+
+5d3fa23df5b6fa58abc22f47e2c9e043227247ba
+:100644 100644 fdbed3eb47bcff94323829d1b3167f523c2e5bea 5c3ba04f3f6bd82efc72572b04b38a20492cc08e M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+60b9f3694795c622e77ccd25dccd4a9dfe98c80c
+1295578453
+Sebastian Bazley
+Javadoc
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061604 13f79535-47bb-0310-9956-ffa450edef68
+
+60b9f3694795c622e77ccd25dccd4a9dfe98c80c
+:100644 100644 621284ae4513b9472a8de838685d079b3cfb461f fdbed3eb47bcff94323829d1b3167f523c2e5bea M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+7641bdc977e9daa04c405d24749ba42bdfb4d8b8
+1295577974
+Sebastian Bazley
+Fix up double nextAfter special cases; add float test
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061603 13f79535-47bb-0310-9956-ffa450edef68
+
+7641bdc977e9daa04c405d24749ba42bdfb4d8b8
+:100644 100644 c15664b07f5e66893bd02419dc205e2ba03b3ccb 3c20cf8b4ea68c5773c512600f7e36279c34845d M	src/test/java/org/apache/commons/math/util/MathUtilsTest.java
+
+1d405cfed7f928aa3b5de0bb1c3d1986c721eedf
+1295576614
+Sebastian Bazley
+Only check public methods
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061598 13f79535-47bb-0310-9956-ffa450edef68
+
+1d405cfed7f928aa3b5de0bb1c3d1986c721eedf
+:100644 100644 ca5344db8cfcd06d996879cfa43133350f43e7ea 665da6b4f116322f1ac0540101efc806df6d8362 M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+8cf7d7d5bc5c6cea1046e468d3885ad5901f15bd
+1295563094
+Luc Maisonobe
+improved javadoc on infinite values for nextAfter
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061554 13f79535-47bb-0310-9956-ffa450edef68
+
+8cf7d7d5bc5c6cea1046e468d3885ad5901f15bd
+:100644 100644 b9ebdc0a9cb96e83812229d291b11e7f684231c9 621284ae4513b9472a8de838685d079b3cfb461f M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+a7fc935da0e947d4fe469681322e5d4cd8936a92
+1295562818
+Luc Maisonobe
+fixed behavior of nextAfter(double, double) for infinity,
+added nextAfter(float, float) and nextUp(float)
+JIRA: MATH-478
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061550 13f79535-47bb-0310-9956-ffa450edef68
+
+a7fc935da0e947d4fe469681322e5d4cd8936a92
+:100644 100644 5f012fb950e11389ea0058b93012f3a9e99ab7a0 b9ebdc0a9cb96e83812229d291b11e7f684231c9 M	src/main/java/org/apache/commons/math/util/FastMath.java
+:100644 100644 1669be2ab0cfb4f2b08c8597cf437e9683643fc1 ca5344db8cfcd06d996879cfa43133350f43e7ea M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+c48622a7b3e1f3b83ee68ce8887830ed358ffa45
+1295559094
+Luc Maisonobe
+limit visibility of event states list to AbstractIntegrator class only
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061526 13f79535-47bb-0310-9956-ffa450edef68
+
+c48622a7b3e1f3b83ee68ce8887830ed358ffa45
+:100644 100644 b4ba5545706b3e146ecc001066b3abbf75f3f12e fbb918d3740453742b59acca77140beb489b9f31 M	src/main/java/org/apache/commons/math/ode/AbstractIntegrator.java
+:100644 100644 225711a42fbeb64bf3b97e3d99d5d82438abc369 d653445b43385650e9afe61a598429574d2b7e31 M	src/main/java/org/apache/commons/math/ode/nonstiff/AdamsBashforthIntegrator.java
+:100644 100644 1415f94868a46b619a7f9bd166a520e4fc47b0b7 8a3fab1bcfb8dd77d87af676f0e6074db17c6417 M	src/main/java/org/apache/commons/math/ode/nonstiff/AdamsMoultonIntegrator.java
+:100644 100644 389e3e242730b909d858c95550eb5e8d5712f66a ee1195f637a8dae55f7b9b3b184095c35586ede1 M	src/main/java/org/apache/commons/math/ode/nonstiff/EmbeddedRungeKuttaIntegrator.java
+:100644 100644 ae3e4613a69f396eb6cc752ae8755157bb23f838 e56df594b33f51c56d20650e41183c8242dd0918 M	src/main/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerIntegrator.java
+:100644 100644 41101a19fd0bdb91923bf649d1ed927a0ff9e9db dbfae1908d5bdf02d0f9fc1dce94dd1e7389fa84 M	src/main/java/org/apache/commons/math/ode/nonstiff/RungeKuttaIntegrator.java
+
+b003438be023ec61c5ffd0778752bba924d49533
+1295556900
+Luc Maisonobe
+separate discrete event detection from adaptive step size handling in ODE solvers,
+thus improving robustness, maintainability and speed
+JIRA: MATH-484
+
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061507 13f79535-47bb-0310-9956-ffa450edef68
+
+b003438be023ec61c5ffd0778752bba924d49533
+:100644 100644 1907e37393fc1360d02f02b00a479ba2ba3d6113 b4ba5545706b3e146ecc001066b3abbf75f3f12e M	src/main/java/org/apache/commons/math/ode/AbstractIntegrator.java
+:100644 100644 d14046331a48c5f0787f5b6c7b4537d54f6ab915 af09357d950e7bd1d789554df9a5943ec8b162c8 M	src/main/java/org/apache/commons/math/ode/ODEIntegrator.java
+:100644 100644 60f05899f828916dfc2efc253ce87aae71d31ff2 e58d5c763882630cbae3a07ed5901e110ceda9cd M	src/main/java/org/apache/commons/math/ode/events/CombinedEventsManager.java
+:100644 100644 fe98d801d9e7b1990c316e7880423ee257ef2cfb b52ed0ca8893c404dd9c491fb2724f50f01e9d55 M	src/main/java/org/apache/commons/math/ode/events/EventState.java
+:100644 100644 85932d2d77d2024d18fc493b7af91efd3e796a6e 225711a42fbeb64bf3b97e3d99d5d82438abc369 M	src/main/java/org/apache/commons/math/ode/nonstiff/AdamsBashforthIntegrator.java
+:100644 100644 7aaa93e5f47279e32da74a60c4d4b2f48a6d0223 1415f94868a46b619a7f9bd166a520e4fc47b0b7 M	src/main/java/org/apache/commons/math/ode/nonstiff/AdamsMoultonIntegrator.java
+:100644 100644 f0924d59ea7d731dfee916d22276595d4d5a1d52 0db10e0b8a6bceece5d9c72bdcd57b6f3df63ade M	src/main/java/org/apache/commons/math/ode/nonstiff/DormandPrince853StepInterpolator.java
+:100644 100644 a7b433ec87eced70ed0e51929994d1cf71f89fb9 389e3e242730b909d858c95550eb5e8d5712f66a M	src/main/java/org/apache/commons/math/ode/nonstiff/EmbeddedRungeKuttaIntegrator.java
+:100644 100644 4e430fd2031cfda44505034eb7995aec6e14e937 ae3e4613a69f396eb6cc752ae8755157bb23f838 M	src/main/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerIntegrator.java
+:100644 100644 8593575ddd74547a267ee71667b5f33dd0aa0259 85ef95616772bf579febf8ecea617d5430fefeb0 M	src/main/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerStepInterpolator.java
+:100644 100644 2f406ffc283a5c50d1cac0ef01cb3972fca25f26 41101a19fd0bdb91923bf649d1ed927a0ff9e9db M	src/main/java/org/apache/commons/math/ode/nonstiff/RungeKuttaIntegrator.java
+:100644 100644 2e6bfc8a09c301d17610911b2c92deeef5e7c293 5befb28755054006c387ca75f8f7f56fc5a1ff7f M	src/main/java/org/apache/commons/math/ode/sampling/AbstractStepInterpolator.java
+:100644 100644 563e44c5a39a091925d3affe66d03b9349749b70 e347976287de3cb80583ef5fcefee2131dc3c507 M	src/site/xdoc/changes.xml
+:100644 100644 b85fd480c789fca38c4ccff4e932867b2f5be348 537fa1748ff6d1e620719c7bd333f5a7328bd837 M	src/test/java/org/apache/commons/math/ode/TestProblem4.java
+:100644 100644 69d55f0873e888ec105f8f79f483e19e708da5a1 f6492cef551f8f6a7205ebbbf7c5c9748a909577 M	src/test/java/org/apache/commons/math/ode/TestProblemAbstract.java
+:100644 100644 99373564248560ec9345b9542683e5803a44b2f3 e632e5f7e6728146d0fe2fa9c4295690bfd357e2 M	src/test/java/org/apache/commons/math/ode/TestProblemHandler.java
+:100644 100644 705dacaeab8581bf39390e709fc29a7b32f7c174 22844e434612a779e7fa2949b0ade9b957bc8adf M	src/test/java/org/apache/commons/math/ode/jacobians/FirstOrderIntegratorWithJacobiansTest.java
+:100644 100644 b664fa6d33538e16e17fd4ffa72b3028d9e53312 261c9e5d20fe1215d8a8dad8598cc5d8d211c0ef M	src/test/java/org/apache/commons/math/ode/nonstiff/AdamsBashforthIntegratorTest.java
+:100644 100644 d286f1e01c5f142a736a4f55355f4f6781224950 b67bea65bb31f1d2c59457e96cf52b21284987e3 M	src/test/java/org/apache/commons/math/ode/nonstiff/ClassicalRungeKuttaIntegratorTest.java
+:100644 100644 a0a80d683d3de34d28d4f1d38422149d25b02241 b459d4df8a441f643621a31a20de2b287126b88e M	src/test/java/org/apache/commons/math/ode/nonstiff/ClassicalRungeKuttaStepInterpolatorTest.java
+:100644 100644 f07c1f3b32a66a3b14a3d6bb886cdb4de77a989b d17d534ca1bf59866ebf824424bf438952378597 M	src/test/java/org/apache/commons/math/ode/nonstiff/DormandPrince54IntegratorTest.java
+:100644 100644 f0ffc067d6e8dc9bb8d136f92347c017a2409428 21cc356832a20fe0b300e2b5a75549bc918f9b47 M	src/test/java/org/apache/commons/math/ode/nonstiff/DormandPrince54StepInterpolatorTest.java
+:100644 100644 d7a52dc486968b22a06781a7f8db46407cfc8a3b 40ff25f86fd0f8b7689160eca603a8e7405699da M	src/test/java/org/apache/commons/math/ode/nonstiff/DormandPrince853IntegratorTest.java
+:100644 100644 c1f7eef3174c49fa5fd51d5d6c2519fc15f62ed1 17a84475a1c9e01437c2f839e66ec6d575fa2260 M	src/test/java/org/apache/commons/math/ode/nonstiff/DormandPrince853StepInterpolatorTest.java
+:100644 100644 64f5c93a1ea1cc1c0b07c6b4997c5d3424d81172 67c46c2672a63403a00dc5083730ca5de6f3a7e7 M	src/test/java/org/apache/commons/math/ode/nonstiff/EulerIntegratorTest.java
+:100644 100644 d5ca4fbf54a3dc544ad5ff121d4b3b199ecf3e46 ffb17550821a379ebb54ca112f7942b86d45f981 M	src/test/java/org/apache/commons/math/ode/nonstiff/GillIntegratorTest.java
+:100644 100644 4a8875dfd2b1f639c79e1dbc245deaf1f5c27967 0fda8a58dc32bf409a7c816d92a87a94f013f334 M	src/test/java/org/apache/commons/math/ode/nonstiff/GillStepInterpolatorTest.java
+:100644 100644 3d1ddbc098bcfd6dbf72577fa0f7abfeb7ae8103 c29a33fdee634e8fefe26a1aee66abebe93de285 M	src/test/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerIntegratorTest.java
+:100644 100644 74e3c59f53fc2be59a5139855c731fd39b883462 6d2b8cbfb6c23e4cb2c61fa435e82c8991f209c8 M	src/test/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerStepInterpolatorTest.java
+:100644 100644 454f23c439ff8cca40e43e03adb48559260fbe89 2e7907ab14cf8ba9551b995793688d09f80436c8 M	src/test/java/org/apache/commons/math/ode/nonstiff/HighamHall54IntegratorTest.java
+:100644 100644 8710d907591b89da805705c06c01f94c6cf9e9b5 51dc597cfee5d4921d69d50689c78b54b9730587 M	src/test/java/org/apache/commons/math/ode/nonstiff/HighamHall54StepInterpolatorTest.java
+:100644 100644 ecdc3272b378f032fd36b029d59fd94adaf6a209 3e1ecaaa33fe4d8769694efb52e504c122617637 M	src/test/java/org/apache/commons/math/ode/nonstiff/MidpointIntegratorTest.java
+:100644 100644 509f07402b60960f676af51b0b051947dcb223f1 7b0bfeedeabb23cf60d6d07b9b89988e51bbe970 M	src/test/java/org/apache/commons/math/ode/nonstiff/MidpointStepInterpolatorTest.java
+:100644 100644 8fd1cc02a2e191d2f0c7be8b4a85a7b8bdaaad5b 8820cbb0c5db81d9f63240697153080adcdd45ff M	src/test/java/org/apache/commons/math/ode/nonstiff/ThreeEighthesIntegratorTest.java
+:100644 100644 73e85dc058a5c35bdaa1edce66380ba60a328849 750d5d8d83d1f08e944ac9c92837b914b3414a51 M	src/test/java/org/apache/commons/math/ode/nonstiff/ThreeEighthesStepInterpolatorTest.java
+:100644 100644 08f668e7bcaa52a35888e8f9902715958845f92e 94fea88993b16d935a57b8304cab3fe5e8a37646 M	src/test/java/org/apache/commons/math/ode/sampling/DummyStepInterpolatorTest.java
+:100644 100644 1590a41d2164468574691e20425b3444319bcd38 366c8f794397a5e599120940060d131a3bade01b M	src/test/java/org/apache/commons/math/ode/sampling/NordsieckStepInterpolatorTest.java
+
+31df41e54f1fd6d3b7bfa86b13378631b690828d
+1295555536
+Luc Maisonobe
+added MathInternalError
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061496 13f79535-47bb-0310-9956-ffa450edef68
+
+31df41e54f1fd6d3b7bfa86b13378631b690828d
+:100644 100644 944d45f76d19df8474fb3351b06ca52db2acb184 0aa4ad4946c8e15af3d57770d3d85d3dcdb14453 M	src/main/java/org/apache/commons/math/exception/MathIllegalStateException.java
+:000000 100644 0000000000000000000000000000000000000000 ff20ebb27c44b56b17089bd93b9a51705911c972 A	src/main/java/org/apache/commons/math/exception/MathInternalError.java
+:100644 100644 1a919d0100d6157c608ba10034d43266e11a746c 62f9b2e9b8169c5fea351bb793af613ffc230486 M	src/main/java/org/apache/commons/math/random/RandomDataImpl.java
+:100644 100644 1bf0fda105e04cdbe214a8ee87d8c4018491dbfd 2d19cd71a33cbf32db70209c392ccd3d99c8b24d M	src/main/java/org/apache/commons/math/stat/ranking/NaturalRanking.java
+
+19875423929c25213130fe200ee5d72e35395fa1
+1295534692
+Sebastian Bazley
+Rearrange DOUBLE_SPECIAL_VALUES in decreasing absolute value to help catch first failure
+Add MathUtils.EPSILON and SAFE_MIN as other likely break points
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061320 13f79535-47bb-0310-9956-ffa450edef68
+
+19875423929c25213130fe200ee5d72e35395fa1
+:100644 100644 2bf07d9b9c7716bb9a3152c71b90e6ab8a1de5fb 1669be2ab0cfb4f2b08c8597cf437e9683643fc1 M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+a98ed6c5112dc5f97bc92be87c1f9f42f014eaec
+1295486855
+Sebastian Bazley
+Javadoc clarification for signum
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1061095 13f79535-47bb-0310-9956-ffa450edef68
+
+a98ed6c5112dc5f97bc92be87c1f9f42f014eaec
+:100644 100644 123be4a967f0d7ba23baea8983460492a9f15b13 5f012fb950e11389ea0058b93012f3a9e99ab7a0 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+a2bae51f5ca61ad2ec377ab5ba3ccd178c3bf3c4
+1295469698
+Sebastian Bazley
+Update changes with recent fixes
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060977 13f79535-47bb-0310-9956-ffa450edef68
+
+a2bae51f5ca61ad2ec377ab5ba3ccd178c3bf3c4
+:100644 100644 39b72902483b2c75d4937542b2ec2e1a0d716a8a 563e44c5a39a091925d3affe66d03b9349749b70 M	src/site/xdoc/changes.xml
+
+707543c295508ffe22aa63bf072b7de8a535b0a7
+1295468752
+Sebastian Bazley
+MATH-486 FastMath toRadian and toDegree don't handle large double numbers well
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060966 13f79535-47bb-0310-9956-ffa450edef68
+
+707543c295508ffe22aa63bf072b7de8a535b0a7
+:100644 100644 f404b0c414e02b5279a8ff5626067517fdc38c5d 123be4a967f0d7ba23baea8983460492a9f15b13 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+ffe961316d718a1f9fefcbe3883c588169f4d1cd
+1295468258
+Sebastian Bazley
+Synchronise with copy from trunk
+No functional changes
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060961 13f79535-47bb-0310-9956-ffa450edef68
+
+ffe961316d718a1f9fefcbe3883c588169f4d1cd
+:100644 100644 11ebac4abae294b44658f93709fc2097dcc64443 f404b0c414e02b5279a8ff5626067517fdc38c5d M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+1c2782a8028f126e035cd3007f38a13df84712dc
+1295467991
+Sebastian Bazley
+Ensure correct sign when toRadians() returns zero
+[Not needed for toDegrees() as the calculation does not underflow]
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060960 13f79535-47bb-0310-9956-ffa450edef68
+
+1c2782a8028f126e035cd3007f38a13df84712dc
+:100644 100644 9721eb985c98f396e3627652eba2d162db4c2496 11ebac4abae294b44658f93709fc2097dcc64443 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+9c86fbfa3668c962c85537ab9dd660e0d5c61276
+1295466170
+Sebastian Bazley
+MATH-483 FastMath does not handle all special cases correctly
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060930 13f79535-47bb-0310-9956-ffa450edef68
+
+9c86fbfa3668c962c85537ab9dd660e0d5c61276
+:100644 100644 73efa1e6d2e51db9d0a99c10004b4e80eb336e3e 9721eb985c98f396e3627652eba2d162db4c2496 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+c6302f47c91e3aa8c8207739f7514626414b66ec
+1295465179
+Sebastian Bazley
+MATH-478 FastMath is not an exact replacement for StrictMath
+Add signum(float)
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060917 13f79535-47bb-0310-9956-ffa450edef68
+
+c6302f47c91e3aa8c8207739f7514626414b66ec
+:100644 100644 0df1194902d53271a74990d3eacbeaea88c928eb 73efa1e6d2e51db9d0a99c10004b4e80eb336e3e M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+377335abc7ec005403bce54262fe72fe156f86ee
+1295464679
+Sebastian Bazley
+MATH-480 - Fix ulp(Infinity) to return Infinity rather than NaN
+MATH-478 - Adds ulp(float)
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060911 13f79535-47bb-0310-9956-ffa450edef68
+
+377335abc7ec005403bce54262fe72fe156f86ee
+:100644 100644 6f1cc9f1084910378f8cb0ebbf8e0b98187e5009 0df1194902d53271a74990d3eacbeaea88c928eb M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+71460e13812bb7013f262c4d59b9f3dac7d44f8f
+1295461785
+Sebastian Bazley
+MATH-479 FastMath.signum(-0.0) does not agree with Math.signum(-0.0)
+(tests already added as part of math483)
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060895 13f79535-47bb-0310-9956-ffa450edef68
+
+71460e13812bb7013f262c4d59b9f3dac7d44f8f
+:100644 100644 b2e9a56eb5724a4515201e2e0d755dd17e16fcfa 6f1cc9f1084910378f8cb0ebbf8e0b98187e5009 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+823c50843b8610a510d1e3bdc855739048e26181
+1295459749
+Sebastian Bazley
+MATH-483 Add FastMath special test case code
+TODO - enable fail when bugs have been fixed
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060886 13f79535-47bb-0310-9956-ffa450edef68
+
+823c50843b8610a510d1e3bdc855739048e26181
+:100644 100644 e737bc8f18a75f0aa2e6f9236568981009ea633f 2bf07d9b9c7716bb9a3152c71b90e6ab8a1de5fb M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+516a2a10d017d2b643a20f445a45b0fc03c339ae
+1295372154
+Sebastian Bazley
+Incorrect test for deprecated method
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060488 13f79535-47bb-0310-9956-ffa450edef68
+
+516a2a10d017d2b643a20f445a45b0fc03c339ae
+:100644 100644 3302985c258147b8230ff02054f68815fda268e1 c15664b07f5e66893bd02419dc205e2ba03b3ccb M	src/test/java/org/apache/commons/math/util/MathUtilsTest.java
+
+31b184d563e635c65dce7b16be5757b14bd6493b
+1295365653
+Gilles Sadowski
+Javadoc clean-up.
+
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060424 13f79535-47bb-0310-9956-ffa450edef68
+
+31b184d563e635c65dce7b16be5757b14bd6493b
+:100644 100644 a8e7c25f78b95b09f5e024673657c8abaf512a00 c6097133caf96898cb31c1906b820b4f935c8ae4 M	src/main/java/org/apache/commons/math/analysis/solvers/UnivariateRealSolver.java
+:100644 100644 0856e8f66766db719b87cb51c819bac66f4f9c40 11716cb6104e73665901e83006515cf97387bd9f M	src/main/java/org/apache/commons/math/analysis/solvers/UnivariateRealSolverImpl.java
+
+51fe43ad098d83802f2d1b6460f66708aa4093c1
+1295305252
+Sebastian Bazley
+Tab and trailing space removal
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060124 13f79535-47bb-0310-9956-ffa450edef68
+
+51fe43ad098d83802f2d1b6460f66708aa4093c1
+:100644 100644 5006dc65c8349c5795f53890a789dec470ed2890 f5410a493e4a63f31b2254880c949a0effff4ceb M	src/test/java/org/apache/commons/math/stat/StatUtilsTest.java
+
+ace3df7e966f923e94546143304b4470175ebfdd
+1295305102
+Sebastian Bazley
+Synch comment with double version
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060123 13f79535-47bb-0310-9956-ffa450edef68
+
+ace3df7e966f923e94546143304b4470175ebfdd
+:100644 100644 943d2c3e7230602b4dfa0b93f3009a6be1b341d1 7e502c99dc1fa537be52698392ec941da2ceba4f M	src/main/java/org/apache/commons/math/util/MathUtils.java
+
+5628a89e08dec0d8ff19615d0b59162e59b05e28
+1295304514
+Sebastian Bazley
+Clarify Javadoc link references
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060119 13f79535-47bb-0310-9956-ffa450edef68
+
+5628a89e08dec0d8ff19615d0b59162e59b05e28
+:100644 100644 8a5949ce64cb5ea9e27cca0e01ef2094dd4fc689 943d2c3e7230602b4dfa0b93f3009a6be1b341d1 M	src/main/java/org/apache/commons/math/util/MathUtils.java
+
+01a099f91e6612b60c32ad5e174f4618dff97332
+1295304290
+Sebastian Bazley
+Remove temporary markers used when creating float methods
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060118 13f79535-47bb-0310-9956-ffa450edef68
+
+01a099f91e6612b60c32ad5e174f4618dff97332
+:100644 100644 92ac95ff784d2afa0e9973e859e7197d201f2646 8a5949ce64cb5ea9e27cca0e01ef2094dd4fc689 M	src/main/java/org/apache/commons/math/util/MathUtils.java
+
+5847298ebfadf2b316d8087f696f82161ae6cd74
+1295303948
+Gilles Sadowski
+MATH-481
+Made Javadoc agree with code.
+
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060117 13f79535-47bb-0310-9956-ffa450edef68
+
+5847298ebfadf2b316d8087f696f82161ae6cd74
+:100644 100644 24fc5d240b346827b8d8e5694daca29ba2cde438 92ac95ff784d2afa0e9973e859e7197d201f2646 M	src/main/java/org/apache/commons/math/util/MathUtils.java
+
+b470f0906756c2949437ad5d18a0e2780d120c57
+1295296227
+Sebastian Bazley
+Wrong issue number: MATH-491 should be MATH-471
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060083 13f79535-47bb-0310-9956-ffa450edef68
+
+b470f0906756c2949437ad5d18a0e2780d120c57
+:100644 100644 52367ac6047cc6a9a930ac56dc29410338bf7e4e 39b72902483b2c75d4937542b2ec2e1a0d716a8a M	src/site/xdoc/changes.xml
+
+add23a03573437193cfe7b4eaba3bb0a8f893ade
+1295295994
+Sebastian Bazley
+MATH-471 MathUtils.equals(double, double) does not work properly for floats
+Added equals(float, float) methods and tests
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060080 13f79535-47bb-0310-9956-ffa450edef68
+
+add23a03573437193cfe7b4eaba3bb0a8f893ade
+:100644 100644 96adeedb208a2714803e0b2b8fb3aa5d7b1ba569 24fc5d240b346827b8d8e5694daca29ba2cde438 M	src/main/java/org/apache/commons/math/util/MathUtils.java
+:100644 100644 3027339a18f1a52410025fae7fce61d6f4a4ab65 52367ac6047cc6a9a930ac56dc29410338bf7e4e M	src/site/xdoc/changes.xml
+:100644 100644 9b9cae067b71fe0032662f0691ff9fd12a2dc6d3 3302985c258147b8230ff02054f68815fda268e1 M	src/test/java/org/apache/commons/math/util/MathUtilsTest.java
+
+ba98778f32f8293379a11d0b82248d5c3644ada6
+1295294457
+Sebastian Bazley
+MATH-482 FastMath.max(50.0f, -50.0f) => -50.0f; should be +50.0f
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1060065 13f79535-47bb-0310-9956-ffa450edef68
+
+ba98778f32f8293379a11d0b82248d5c3644ada6
+:100644 100644 a1dedc03660e31418b68d161a7534dfc9caa3595 b2e9a56eb5724a4515201e2e0d755dd17e16fcfa M	src/main/java/org/apache/commons/math/util/FastMath.java
+:100644 100644 76ba246297de0cfd289a434b50f7cc9e0949424b 3027339a18f1a52410025fae7fce61d6f4a4ab65 M	src/site/xdoc/changes.xml
+:100644 100644 0a1c5139485765d947c90cb4251d4bfd6292d982 e737bc8f18a75f0aa2e6f9236568981009ea633f M	src/test/java/org/apache/commons/math/util/FastMathTest.java
+
+79193c2e87926d30b469877e4c5266ee42be8fac
+1295121351
+Phil Steitz
+Moved new method from interface to impl, fixing compatability break.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1059406 13f79535-47bb-0310-9956-ffa450edef68
+
+79193c2e87926d30b469877e4c5266ee42be8fac
+:100644 100644 e8edfd1623d93adc27804fbc309122fbb2e64304 a8e7c25f78b95b09f5e024673657c8abaf512a00 M	src/main/java/org/apache/commons/math/analysis/solvers/UnivariateRealSolver.java
+:100644 100644 7334a830dabe7d3d744e6df178c063607533e73a 0856e8f66766db719b87cb51c819bac66f4f9c40 M	src/main/java/org/apache/commons/math/analysis/solvers/UnivariateRealSolverImpl.java
+
+463c76a0f96c93f258a18f60c46ec5d71493a8d4
+1295120849
+Phil Steitz
+Moved new method from interface to impl, fixing compatability break.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1059402 13f79535-47bb-0310-9956-ffa450edef68
+
+463c76a0f96c93f258a18f60c46ec5d71493a8d4
+:100644 100644 b7d6f1f897b9e9d5e23e0ae04697556d260f2ed8 e8edfd1623d93adc27804fbc309122fbb2e64304 M	src/main/java/org/apache/commons/math/analysis/solvers/UnivariateRealSolver.java
+:100644 100644 8c260c665bc48659fb6002a707d90421c7456c65 7334a830dabe7d3d744e6df178c063607533e73a M	src/main/java/org/apache/commons/math/analysis/solvers/UnivariateRealSolverImpl.java
+
+a346d23234e09276739d41dff5efe93a753fe158
+1295120127
+Phil Steitz
+Reverted incompatible change.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1059400 13f79535-47bb-0310-9956-ffa450edef68
+
+a346d23234e09276739d41dff5efe93a753fe158
+:100644 100644 617cd5ec54ad7c405e8d1d1ad434310a1fa43afc 9fb144ceafd3be0517c9c89f856fd098f5a03a7a M	src/main/java/org/apache/commons/math/analysis/interpolation/SmoothingBicubicSplineInterpolator.java
+
+a67fea8e7249b0406d2bfbd4e8c6a8ee7087cb23
+1294857417
+Phil Steitz
+Removed test deprecation.  JIRA: MATH-470.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1058268 13f79535-47bb-0310-9956-ffa450edef68
+
+a67fea8e7249b0406d2bfbd4e8c6a8ee7087cb23
+:100644 100644 cd1528bba82398da9f3ab548473cc79eee714f10 9b9cae067b71fe0032662f0691ff9fd12a2dc6d3 M	src/test/java/org/apache/commons/math/util/MathUtilsTest.java
+
+3cb60c5f7d804e652a857829ea5f2341b226c7a3
+1294830435
+Sebastian Bazley
+Javadoc grammar
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1058071 13f79535-47bb-0310-9956-ffa450edef68
+
+3cb60c5f7d804e652a857829ea5f2341b226c7a3
+:100644 100644 c909a802f87a0560597a2ca463b043e1c289c69a 96adeedb208a2714803e0b2b8fb3aa5d7b1ba569 M	src/main/java/org/apache/commons/math/util/MathUtils.java
+
+4f91c617136e5a11117028f436ab391fdf292f34
+1294509054
+Phil Steitz
+Updated changelog to reflect fixes for MATH-384, MATH-385.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1056747 13f79535-47bb-0310-9956-ffa450edef68
+
+4f91c617136e5a11117028f436ab391fdf292f34
+:100644 100644 d16c6e4c3a8e685f55e7aef151bd68f9a5050227 76ba246297de0cfd289a434b50f7cc9e0949424b M	src/site/xdoc/changes.xml
+
+1cd28f2105ba93f96745af8e19acfc1556da6bf0
+1294342903
+Luc Maisonobe
+Fixed an awkward statement that triggered a false positive warning
+JIRA: MATH-467
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1056034 13f79535-47bb-0310-9956-ffa450edef68
+
+1cd28f2105ba93f96745af8e19acfc1556da6bf0
+:100644 100644 e635b7231f03c842b6e5a40df7ddc27dbeed5d38 fb28f3d6da5e3f9053d56b7efa951dde807fae86 M	src/main/java/org/apache/commons/math/optimization/fitting/HarmonicCoefficientsGuesser.java
+:100644 100644 f76be1566fdfcc39de1eb4648f69d48e2b7e680c d16c6e4c3a8e685f55e7aef151bd68f9a5050227 M	src/site/xdoc/changes.xml
+
+43773dd99c7174a59894f02937e087a69d6b2071
+1294328074
+Sebastian Bazley
+Missing @Overrides
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1055914 13f79535-47bb-0310-9956-ffa450edef68
+
+43773dd99c7174a59894f02937e087a69d6b2071
+:100644 100644 f7a3e2920db95d7675d525c2f135f6717af15825 6aeb26095c29e7d1af5bb711c9ca291189550123 M	src/main/java/org/apache/commons/math/distribution/ExponentialDistributionImpl.java
+
+67b22ec6f611c0d3af4e87d3e15bd9be77585c5c
+1294327839
+Sebastian Bazley
+Unused imports
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1055912 13f79535-47bb-0310-9956-ffa450edef68
+
+67b22ec6f611c0d3af4e87d3e15bd9be77585c5c
+:100644 100644 8906336533546673983006959e3f9aa853477c8c f96aa9916d8ddcec97e9301c79cfaf74840e3cdd M	src/test/java/org/apache/commons/math/distribution/BetaDistributionTest.java
+
+015ff8f8b1b89deac98154a953536d4da855f3dd
+1294030758
+Phil Steitz
+Restored backward compatibility in distributions classes.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054524 13f79535-47bb-0310-9956-ffa450edef68
+
+015ff8f8b1b89deac98154a953536d4da855f3dd
+:100644 100644 15b65b9714bb0747d2e30c09f5feba912734038f 7b3827e3d6ba55ae5cd302cc84166e5b872eb975 M	src/main/java/org/apache/commons/math/distribution/AbstractContinuousDistribution.java
+:100644 100644 469f2edd1e896d212d87846c96f22ce573cb4ad8 8c22e4f6365944601821daaafd5376ff378c8ec0 M	src/main/java/org/apache/commons/math/distribution/AbstractDistribution.java
+:100644 100644 c20c7f825bc8aadd889116b2b61705531718a0e8 bfe6abf3299dad639a3237527e9d10630291772b M	src/main/java/org/apache/commons/math/distribution/AbstractIntegerDistribution.java
+:100644 100644 3ab3b594bf9582f441cd6694db8abcb0895f0109 a2752500dd98175440861aab3e42fcd7cf024d7a M	src/main/java/org/apache/commons/math/distribution/BetaDistributionImpl.java
+:100644 100644 11fe7a6e705e5dc8d29b28603a6855b4a5105097 aa808eb293513e5ae57e0f0cd675d859c4e699c1 M	src/main/java/org/apache/commons/math/distribution/BinomialDistributionImpl.java
+:100644 100644 764b9425f70e25133512d24641f13115b56867d5 1952141d45de81933c221e8952218174a9ccf585 M	src/main/java/org/apache/commons/math/distribution/CauchyDistributionImpl.java
+:100644 100644 3611895d8224abaa7b0f3b6fb8353107c79caf47 dca4028da76270441ceb83d661ce2ebf2e483f36 M	src/main/java/org/apache/commons/math/distribution/ChiSquaredDistributionImpl.java
+:100644 100644 2b58d8588d87d244c4aa60cec507fc674aaa70b5 9b0a9e876717f1bf62f68dd40a38ad305d81e51b M	src/main/java/org/apache/commons/math/distribution/Distribution.java
+:100644 100644 8cf1984787794dedb6edd3f094bc296bbcaba05b f7a3e2920db95d7675d525c2f135f6717af15825 M	src/main/java/org/apache/commons/math/distribution/ExponentialDistributionImpl.java
+:100644 100644 eb4fa0e7faa709da49e58d90d18f67744a3a50e7 fc6c4377dd8e3979494561de6b2cededaae7b0dd M	src/main/java/org/apache/commons/math/distribution/FDistributionImpl.java
+:100644 100644 b35758a9c396863a6065f5fb75ab621c928041e0 499cc679409e081e0a3316d4748829b3b748c6ba M	src/main/java/org/apache/commons/math/distribution/GammaDistributionImpl.java
+:100644 100644 4764085f9a60af22fae78e072db80c227da40a9c 6758ebbd91c8589b885240b378ea5d48d63f0f96 M	src/main/java/org/apache/commons/math/distribution/HypergeometricDistributionImpl.java
+:100644 100644 cd5ddeea9ff1d92c7fa787bec4d4f7c8cf446233 781257b1c03f02005e2f608da299b2faa0abf7aa M	src/main/java/org/apache/commons/math/distribution/NormalDistributionImpl.java
+:100644 100644 d3fb196182e24fa269725ad08fbed34eb2cfa17a 82b5e43c877b0da928811f2c8d2fafce8b65caff M	src/main/java/org/apache/commons/math/distribution/PascalDistributionImpl.java
+:100644 100644 c92561c92799432278f4e16eae212180997412aa fece32a688f69b90974428e96e3a49be7b8c154b M	src/main/java/org/apache/commons/math/distribution/PoissonDistributionImpl.java
+:100644 100644 840149fab50152879aa90f19568239e7e4bba37c 59d35fe96fe4259f15bddded6baa8437aafc2a61 M	src/main/java/org/apache/commons/math/distribution/TDistributionImpl.java
+:100644 100644 1de3ef72368c73812b5382f814a0a218350720ea d2a38076a29daaa4d7371376815c4d897b061fc7 M	src/main/java/org/apache/commons/math/distribution/WeibullDistributionImpl.java
+:100644 100644 0e629f5dec875a4b252094dc69040fc3c37fa7df 456bf386092836347aacfeecaeae30b32b96c4d7 M	src/main/java/org/apache/commons/math/distribution/ZipfDistributionImpl.java
+:100644 100644 b5197c13d1a21b304017c6f6f0c355508a5c3939 8906336533546673983006959e3f9aa853477c8c M	src/test/java/org/apache/commons/math/distribution/BetaDistributionTest.java
+:100644 100644 d52cd0ef6dd4722a0b716565eaae17df028f1eda 60938131bb82fb56bec7b031ac1d090c99f269dd M	src/test/java/org/apache/commons/math/distribution/BinomialDistributionTest.java
+:100644 100644 b2ae24b44c0fa2a57fbdbea1bb2ba301ba2c9fd2 313416cf5780b084c0beb63307d709ad5e82b26f M	src/test/java/org/apache/commons/math/distribution/CauchyDistributionTest.java
+:100644 100644 4a5b9a0d210f073cf1e5fa4b63694dfa1f7f6235 e1e1744c301d2f91341e4db8a1cc872aa2481532 M	src/test/java/org/apache/commons/math/distribution/ChiSquareDistributionTest.java
+:100644 100644 c99088d20cdb2d9d043fbfddd697c28447131e27 2ca2887d35326a90853d3d409b3d871fb3a378cd M	src/test/java/org/apache/commons/math/distribution/ExponentialDistributionTest.java
+:100644 100644 52427db99fd01b0e840557bae7cb2a1c278213bb 2e4bd57401e0d36e89da264d40e5ec182e0c75b8 M	src/test/java/org/apache/commons/math/distribution/FDistributionTest.java
+:100644 100644 007985fa52d8dc5a5ceed5c43f82fbc1d17936f3 cc6e0b791c8a0b0736f1b93d80b9d66a83b9784f M	src/test/java/org/apache/commons/math/distribution/GammaDistributionTest.java
+:100644 100644 94f5573e18ae3a3ba72ea11dfb3896a3eb4ca78e 163304665713cf5a3b0af3cdf6332d328fcae4fa M	src/test/java/org/apache/commons/math/distribution/HypergeometricDistributionTest.java
+:100644 100644 a3752cf4aac15fb32d183b6a716d3500fdf692c4 6e0666b20b4c4e6998a6a066cdfdb83cf383fe44 M	src/test/java/org/apache/commons/math/distribution/NormalDistributionTest.java
+:100644 100644 f6f6a877b23b20b54665f09d117ca6998cf2e4a7 cb2f5e8da7385742017abbb4bbbf8e06a989fa68 M	src/test/java/org/apache/commons/math/distribution/PascalDistributionTest.java
+:100644 100644 f3475c2cf2771d5f2789a8c938bc5caf2db44b80 afb477c7ecc1b8b5c6f0a8fd00ebf1c734b39b15 M	src/test/java/org/apache/commons/math/distribution/PoissonDistributionTest.java
+:100644 100644 ca6c8c98c2ece679c6925f778e243a9b2d6270c0 81a2d44aa83cf6d041681a92bb6ad370cecada43 M	src/test/java/org/apache/commons/math/distribution/TDistributionTest.java
+:100644 100644 8614282710269414ee9d3d1afe12308e9f163f47 106248a9d694fd865e56998ed976c186a7f5bd48 M	src/test/java/org/apache/commons/math/distribution/WeibullDistributionTest.java
+:100644 100644 b4132cc74ed34d5dc720abdd37983ccdf59f9ef5 5bbd3041cf6c15ee5abfda584213b98c7afccdc9 M	src/test/java/org/apache/commons/math/distribution/ZipfDistributionTest.java
+
+6184b48daccac68557559e4908ca6c4e3ee87928
+1293936995
+Phil Steitz
+Added filter for spurious dead store warning.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054344 13f79535-47bb-0310-9956-ffa450edef68
+
+6184b48daccac68557559e4908ca6c4e3ee87928
+:100644 100644 0fe0ed05910a78516f93d65430ca142e246ca3eb 6b93ca095355a11253d5105bfaa23de46fa0d794 M	findbugs-exclude-filter.xml
+
+953841befca485305c09e17328e166d6e4cf5e3c
+1293932782
+Phil Steitz
+Modified constructor added in the fix for JIRA: MATH-384 to copy, rather than reference the input array.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054342 13f79535-47bb-0310-9956-ffa450edef68
+
+953841befca485305c09e17328e166d6e4cf5e3c
+:100644 100644 b815cbf597de8c6141ece0761b7a618ef6da6bc5 37db61bfa6403aaece1fd6f2e9067d50f41bf0e4 M	src/main/java/org/apache/commons/math/util/ResizableDoubleArray.java
+
+0b2603fe1cea055d91670b883dbfd1b9b782a356
+1293931440
+Phil Steitz
+Eliminate trailing space.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054341 13f79535-47bb-0310-9956-ffa450edef68
+
+0b2603fe1cea055d91670b883dbfd1b9b782a356
+:100644 100644 827883af03aea4ef497fabdae88e334456b72c78 b815cbf597de8c6141ece0761b7a618ef6da6bc5 M	src/main/java/org/apache/commons/math/util/ResizableDoubleArray.java
+
+d628ef0591ca7fe43bf2635932b2d2441c495742
+1293931084
+Phil Steitz
+Javadoc.  Added missing param tag.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054340 13f79535-47bb-0310-9956-ffa450edef68
+
+d628ef0591ca7fe43bf2635932b2d2441c495742
+:100644 100644 930c78c4964477b5b3565f15bd0e5d0ab5286c39 827883af03aea4ef497fabdae88e334456b72c78 M	src/main/java/org/apache/commons/math/util/ResizableDoubleArray.java
+
+2ad6a8571570ad54e1b4ebfdcefc668a405992d9
+1293930405
+Phil Steitz
+Fixed checkstyle errors
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054337 13f79535-47bb-0310-9956-ffa450edef68
+
+2ad6a8571570ad54e1b4ebfdcefc668a405992d9
+:100644 100644 a7bfb3671cef621a9e4223c0b08d25e2032b9736 a1dedc03660e31418b68d161a7534dfc9caa3595 M	src/main/java/org/apache/commons/math/util/FastMath.java
+
+c31a74ac8e8cbf9cfd71529a2f25ebf68b6a42ea
+1293928498
+Phil Steitz
+Javadoc. Drop extaneous params..
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054333 13f79535-47bb-0310-9956-ffa450edef68
+
+c31a74ac8e8cbf9cfd71529a2f25ebf68b6a42ea
+:100644 100644 56790b1c4bd26e7c715fa2264e7a10e7da172565 b73ac9d3e01c8c1694054a32da4cdda6e099b464 M	src/main/java/org/apache/commons/math/stat/clustering/KMeansPlusPlusClusterer.java
+
+145d2f3a221c35c4e5d3efe44f627136d518a4e6
+1293927093
+Phil Steitz
+Corrected exception type.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054329 13f79535-47bb-0310-9956-ffa450edef68
+
+145d2f3a221c35c4e5d3efe44f627136d518a4e6
+:100644 100644 dcf58cb6415590059815b4da7f529e7fa2b77f5b 6b2d5ed17fcc2c63516fda98d08660c0cfd1c29f M	src/main/java/org/apache/commons/math/linear/RealVector.java
+
+c9f6c5600139d512e4e28f855f9ba1919340b760
+1293925430
+Phil Steitz
+Corrected exception type.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054322 13f79535-47bb-0310-9956-ffa450edef68
+
+c9f6c5600139d512e4e28f855f9ba1919340b760
+:100644 100644 79eeaa10fd5116dffe878ba6096dd3e48a9a3035 642e96817694332442ecb4a1ba90d20f5bc00323 M	src/main/java/org/apache/commons/math/linear/AbstractRealVector.java
+
+16aeb54557cefcf34ea7a09541d33d9d64d26108
+1293924144
+Phil Steitz
+Added package description.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054315 13f79535-47bb-0310-9956-ffa450edef68
+
+16aeb54557cefcf34ea7a09541d33d9d64d26108
+:000000 100644 0000000000000000000000000000000000000000 80ac83ced79a3627f6c7f3f21109116ba6aa5953 A	src/main/java/org/apache/commons/math/exception/util/package.html
+
+8e36c51940c66dc7fcf24b76096805ebc6767ab3
+1293923517
+Phil Steitz
+Hide constructor for utility class.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054310 13f79535-47bb-0310-9956-ffa450edef68
+
+8e36c51940c66dc7fcf24b76096805ebc6767ab3
+:100644 100644 ee5ec7faa33f0146758f57194b0a16615bfcaf96 dc0719c4a0059510981cb49586643e20cd5a16b8 M	src/main/java/org/apache/commons/math/exception/util/ArgUtils.java
+
+dbfc13ac5f5ffb079a36cbcc4feaae8cc7e15483
+1293922202
+Phil Steitz
+Fixed checkstyle errors: hidden fields, missing javadoc.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054306 13f79535-47bb-0310-9956-ffa450edef68
+
+dbfc13ac5f5ffb079a36cbcc4feaae8cc7e15483
+:100644 100644 2f7b9670309d313ae2c4fa2234642ee745e530a6 1de3ef72368c73812b5382f814a0a218350720ea M	src/main/java/org/apache/commons/math/distribution/WeibullDistributionImpl.java
+
+8be18722ee6c433bd9a9062a1c2e720fe0980f75
+1293920364
+Phil Steitz
+Fixed checkstyle errors: missing javadoc.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054302 13f79535-47bb-0310-9956-ffa450edef68
+
+8be18722ee6c433bd9a9062a1c2e720fe0980f75
+:100644 100644 8b53dd241cec389f41247b20930d4c415f5b1c98 d3fb196182e24fa269725ad08fbed34eb2cfa17a M	src/main/java/org/apache/commons/math/distribution/PascalDistributionImpl.java
+:100644 100644 c8af9e355a5a6cbdc4fd65d227055447a74411b8 c92561c92799432278f4e16eae212180997412aa M	src/main/java/org/apache/commons/math/distribution/PoissonDistributionImpl.java
+:100644 100644 42baf9758b0eee0aa13702715b0f935bb3ff750d 840149fab50152879aa90f19568239e7e4bba37c M	src/main/java/org/apache/commons/math/distribution/TDistributionImpl.java
+
+1d41eea1356ea3c03811ecf4099040ee47c5a649
+1293919154
+Phil Steitz
+Fixed checkstyle errors: extra parens, missing javadoc.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054299 13f79535-47bb-0310-9956-ffa450edef68
+
+1d41eea1356ea3c03811ecf4099040ee47c5a649
+:100644 100644 ce8e6c15f995db9bf64898e492711b510c7d8ee5 cd5ddeea9ff1d92c7fa787bec4d4f7c8cf446233 M	src/main/java/org/apache/commons/math/distribution/NormalDistributionImpl.java
+
+219ef1f0ba58534029658e595190266055dcfc25
+1293918335
+Phil Steitz
+Fixed checkstyle errors: hidden field, missing javadoc.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054298 13f79535-47bb-0310-9956-ffa450edef68
+
+219ef1f0ba58534029658e595190266055dcfc25
+:100644 100644 1056bb9358d70400685da9a859ef158664250882 b35758a9c396863a6065f5fb75ab621c928041e0 M	src/main/java/org/apache/commons/math/distribution/GammaDistributionImpl.java
+
+8370bd308d133590ba088ea7d85615543b17cab8
+1293917742
+Phil Steitz
+Fixed checkstyle errors: operator placement, missing javadoc.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054297 13f79535-47bb-0310-9956-ffa450edef68
+
+8370bd308d133590ba088ea7d85615543b17cab8
+:100644 100644 06ce190c9d7e3187e6ef50df5e0bf77c5863d98f eb4fa0e7faa709da49e58d90d18f67744a3a50e7 M	src/main/java/org/apache/commons/math/distribution/FDistributionImpl.java
+
+e406ffecb435b5ec819a2b6acf3747cfca52a5b7
+1293915989
+Phil Steitz
+Fixed checkstyle errors: hidden fields, missing javadoc.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054289 13f79535-47bb-0310-9956-ffa450edef68
+
+e406ffecb435b5ec819a2b6acf3747cfca52a5b7
+:100644 100644 e5fc2340db32ef528e5d3060b09591757cb6aae4 8cf1984787794dedb6edd3f094bc296bbcaba05b M	src/main/java/org/apache/commons/math/distribution/ExponentialDistributionImpl.java
+
+64e4200eafe47c9bc1c9e1159d91334b68e7a218
+1293914248
+Phil Steitz
+Fixed checkstyle errors: missing javadoc.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054287 13f79535-47bb-0310-9956-ffa450edef68
+
+64e4200eafe47c9bc1c9e1159d91334b68e7a218
+:100644 100644 9d7617b06dd8c567f73a46f55ea4efa9fea14343 764b9425f70e25133512d24641f13115b56867d5 M	src/main/java/org/apache/commons/math/distribution/CauchyDistributionImpl.java
+:100644 100644 98fd6cc16ecae88b85c1d02d5caab0eff6ade892 3611895d8224abaa7b0f3b6fb8353107c79caf47 M	src/main/java/org/apache/commons/math/distribution/ChiSquaredDistributionImpl.java
+
+afb94a06e62d60c230b9f7544dacf00c9f8c6b04
+1293912927
+Phil Steitz
+Fixed checkstyle errors: hidden fields, missing javadoc.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054280 13f79535-47bb-0310-9956-ffa450edef68
+
+afb94a06e62d60c230b9f7544dacf00c9f8c6b04
+:100644 100644 3547d55b1f615abbe024cd8a0552de822bce84cc 3ab3b594bf9582f441cd6694db8abcb0895f0109 M	src/main/java/org/apache/commons/math/distribution/BetaDistributionImpl.java
+
+0d96383d6b7a5ba9efabefdebe6a04e9a8ded04f
+1293912774
+Phil Steitz
+Removed trailing space.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054279 13f79535-47bb-0310-9956-ffa450edef68
+
+0d96383d6b7a5ba9efabefdebe6a04e9a8ded04f
+:100644 100644 54b61d01849276afa0c3e90a3955d22d5546d5c4 469f2edd1e896d212d87846c96f22ce573cb4ad8 M	src/main/java/org/apache/commons/math/distribution/AbstractDistribution.java
+
+7df6be3e082268e30cb374345e71e89b44fdd86b
+1293911076
+Phil Steitz
+Removed trailing spaces.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054276 13f79535-47bb-0310-9956-ffa450edef68
+
+7df6be3e082268e30cb374345e71e89b44fdd86b
+:100644 100644 a876a110ebdb8636c6308517bd9281ecf8f00a0f 54b61d01849276afa0c3e90a3955d22d5546d5c4 M	src/main/java/org/apache/commons/math/distribution/AbstractDistribution.java
+
+33139a2d407f6700a7a29af4d585319bc1db1d60
+1293910603
+Phil Steitz
+Javadoc only.  Added missing @throws tag.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054275 13f79535-47bb-0310-9956-ffa450edef68
+
+33139a2d407f6700a7a29af4d585319bc1db1d60
+:100644 100644 03bd7da931303e26081de729ec9b63494179830f c20c7f825bc8aadd889116b2b61705531718a0e8 M	src/main/java/org/apache/commons/math/distribution/AbstractIntegerDistribution.java
+
+c7994c5d2a7b8a37cd9740458023b6d9aa6586d8
+1293910171
+Phil Steitz
+Fixed Checkstyle nits: repeated string, (spurious) hidden field.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/branches/MATH_2_X@1054274 13f79535-47bb-0310-9956-ffa450edef68
+
+c7994c5d2a7b8a37cd9740458023b6d9aa6586d8
+:100644 100644 299adadbcbbe3f0f5e1242067325882a92dd21f5 8c260c665bc48659fb6002a707d90421c7456c65 M	src/main/java/org/apache/commons/math/analysis/solvers/UnivariateRealSolverImpl.java
+:100644 100644 146aeb091a0df0e5777560df507972c7b3c59432 6cf536c7e74a9a3a5af523bfc6c0159be52ac380 M	src/main/java/org/apache/commons/math/exception/util/LocalizedFormats.java
+:100644 100644 14f0b352456d423d18dc27a1edbe86eca7ab0711 daac310f49af32cbc57a1cf88c8cfb73260209fd M	src/main/resources/META-INF/localization/LocalizedFormats_fr.properties

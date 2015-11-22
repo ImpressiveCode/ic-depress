@@ -1,0 +1,25 @@
+#!/bin/sh
+
+echo Building update-site
+mvn clean verify
+
+echo Initialising variables
+DEV_DIR=`pwd`
+REPO_URL=`git config --get remote.origin.url`
+cd ../..
+
+echo Cloning gh-pahes branch
+mkdir pagestemp
+cd pagestemp
+git clone $REPO_URL -b gh-pages --single-branch
+cd ic-depress
+
+echo Copying update-site directory
+rm -R update/v2
+cp -R $DEV_DIR/ic-depress-updatesite/target/site update/v2
+
+echo Pushing update-site branch
+git add .
+git add -u
+git commit -m "updatesite update"
+git push origin gh-pages

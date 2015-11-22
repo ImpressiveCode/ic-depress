@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<knimeNode icon="./pitest.png" type="Manipulator" xmlns="http://knime.org/node/v2.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://knime.org/node/v2.8 http://knime.org/node/v2.8.xsd">
+    <name>Pitest Adapter </name>
+    
+    <shortDescription>
+        Pitest Metric Adapter, ImpressiveCode DePress Plugin Framework.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>This node can be used to read data from Pitest entries file.
+        
+        <p>
+        PIT is a state of the art mutation testing system, providing gold standard test coverage 
+        for Java and the jvm. Its fast, scalable and integrates with modern test and build tooling.
+        		Running Pitest - refer to
+				<a href="http://pitest.org/">http://pitest.org/</a>. In Maven you can run it using: mvn org.pitest:pitest-maven:mutationCoverage <br/>
+				Remember about choosing xml as result file format.
+				<br />
+        
+        </p>
+        
+                    <p>   Please check workflow examples
+                <a href="http://impressivecode.github.io/ic-depress/update">here</a>.
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
+		</intro>
+		<option name="Pitest file location">Enter a valid file. When you press ENTER, the file
+			is analyzed and the settings pre-set. You can also choose a
+			previously read file from the drop-down list, or select a file from
+			the "Browse..." dialog. </option>
+    </fullDescription>
+    
+    <ports>
+        <outPort index="0" name="Out-Port name"> Datatable just read from the pitest entries file </outPort>
+        <!-- possibly more output ports here-->
+    </ports>    
+</knimeNode>

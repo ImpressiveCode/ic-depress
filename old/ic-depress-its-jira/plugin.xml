@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.knime.workbench.repository.nodes">
+      <node
+            category-path="depress/depress.its"
+            expert-flag="false"
+            factory-class="org.impressivecode.depress.its.jira.JiraAdapterNodeFactory"
+            id="org.impressivecode.depress.its.jira">
+      </node>
+      <node
+            category-path="depress/depress.its"
+            expert-flag="false"
+            factory-class="org.impressivecode.depress.its.jiraonline.JiraOnlineAdapterNodeFactory"
+            id="org.impressivecode.depress.its.jiraonline">
+      </node>
+   </extension>
+
+</plugin>

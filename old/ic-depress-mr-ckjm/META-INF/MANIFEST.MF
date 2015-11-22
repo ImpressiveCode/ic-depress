@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ic-depress-mr-ckjm
+Bundle-SymbolicName: org.impressivecode.depress.mr.ckjm; singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Bundle-ClassPath: chidamberkemererjavametrics.jar
+Bundle-Vendor: 
+Require-Bundle: org.eclipse.core.runtime,
+ org.knime.workbench.core,
+ org.knime.workbench.repository,
+ org.knime.base,
+ org.impressivecode.depress.base;bundle-version="1.0.0"
+Export-Package: org.impressivecode.depress.mr.ckjm
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+
