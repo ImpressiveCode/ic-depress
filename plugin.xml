@@ -16,6 +16,13 @@
             name="SCM"
             path="depress/">
       </category>
+      <category
+            description="Issue Tracking Systems"
+            level-id="depress.its"
+            locked="true"
+            name="ITS"
+            path="depress/">
+      </category>
    </extension>
    
    <extension
@@ -24,14 +31,17 @@
             category-path="depress/depress.scm"
             factory-class="org.impressivecode.depress.scm.svn.SVNOfflineAdapterNodeFactory"
             id="org.impressivecode.depress.scm.svnoffline"/>
-   </extension>
-   
-   <extension
-         point="org.knime.workbench.repository.nodes">
+      <node
+            category-path="depress/depress.its"
+            factory-class="org.impressivecode.depress.its.jira.JiraAdapterNodeFactory"
+            id="org.impressivecode.depress.its.jira">
+      </node>
       <node
             category-path="depress/depress.scm"
             factory-class="org.impressivecode.depress.scm.git.GitOfflineAdapterNodeFactory"
-            id="org.impressivecode.depress.scm.gitoffline"/>
+            id="org.impressivecode.depress.scm.gitoffline">
+      </node>
    </extension>
+   
    
 </plugin>
