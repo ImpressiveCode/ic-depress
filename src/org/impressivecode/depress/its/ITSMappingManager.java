@@ -61,8 +61,8 @@ public class ITSMappingManager {
     public void createFilterResolution(final Callable<List<String>> refreshCall) {
         multiFilterResolution = new MultiFilterComponent(resolutionModel, refreshCall);
     }
-    
-    public void reset() { 
+
+    public void reset() {
         multiFilterPriority.reset();
         multiFilterStatus.reset();
         multiFilterType.reset();

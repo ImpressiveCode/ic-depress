@@ -24,7 +24,7 @@ import org.knime.core.data.DataTableSpec;
  * @author Marek Majchrzak, ImpressiveCode
  */
 public class JiraAdapterTableFactory {
-    
+
     private JiraAdapterTableFactory() {
     }
 

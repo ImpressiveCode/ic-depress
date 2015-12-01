@@ -19,11 +19,12 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class FileParser {
-    
+
     public FileParser() {
     }
-    
-    public List<String> parseXPath(final File file, final String expression) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException {
+
+    public List<String> parseXPath(final File file, final String expression) throws SAXException, IOException,
+            ParserConfigurationException, XPathExpressionException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
         builder = factory.newDocumentBuilder();

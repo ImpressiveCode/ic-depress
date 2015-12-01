@@ -64,64 +64,65 @@ public class ITSAdapterTableFactory {
     public static final String TIME_ESTIMATE = "Time Estimate [minutes]";
     public static final String TIME_SPENT = "Time Spent [minutes]";
 
-    public static final DataColumnSpec ISSUE_ID_COLSPEC = new DataColumnSpecCreator(ISSUE_ID, StringCell.TYPE).createSpec();
-    public static final DataColumnSpec RESOLVED_DATE_COLSPEC = new DataColumnSpecCreator(RESOLVED_DATE, DateAndTimeCell.TYPE).createSpec();
-    public static final DataColumnSpec REPORTER_COLSPEC = new DataColumnSpecCreator(REPORTER, StringCell.TYPE).createSpec();
-    public static final DataColumnSpec ASSIGNEES_COLSPEC = new DataColumnSpecCreator(ASSIGNEES, SetCell.getCollectionType(StringCell.TYPE)).createSpec();
-    public static final DataColumnSpec COMMENT_AUTHORS_COLSPEC = new DataColumnSpecCreator(COMMENT_AUTHORS, SetCell.getCollectionType(StringCell.TYPE)).createSpec();
-    public static final DataColumnSpec RESOLUTION_COLSPEC = new DataColumnSpecCreator(RESOLUTION, StringCell.TYPE).createSpec();
+    public static final DataColumnSpec ISSUE_ID_COLSPEC = new DataColumnSpecCreator(ISSUE_ID, StringCell.TYPE)
+            .createSpec();
+    public static final DataColumnSpec RESOLVED_DATE_COLSPEC = new DataColumnSpecCreator(RESOLVED_DATE,
+            DateAndTimeCell.TYPE).createSpec();
+    public static final DataColumnSpec REPORTER_COLSPEC = new DataColumnSpecCreator(REPORTER, StringCell.TYPE)
+            .createSpec();
+    public static final DataColumnSpec ASSIGNEES_COLSPEC = new DataColumnSpecCreator(ASSIGNEES,
+            SetCell.getCollectionType(StringCell.TYPE)).createSpec();
+    public static final DataColumnSpec COMMENT_AUTHORS_COLSPEC = new DataColumnSpecCreator(COMMENT_AUTHORS,
+            SetCell.getCollectionType(StringCell.TYPE)).createSpec();
+    public static final DataColumnSpec RESOLUTION_COLSPEC = new DataColumnSpecCreator(RESOLUTION, StringCell.TYPE)
+            .createSpec();
 
     protected ITSAdapterTableFactory() {
     }
 
     public static DataTableSpec createDataColumnSpec() {
-        DataColumnSpec[] allColSpecs = { 
-            ISSUE_ID_COLSPEC,
-            new DataColumnSpecCreator(CREATION_DATE, DateAndTimeCell.TYPE).createSpec(),
-            RESOLVED_DATE_COLSPEC, //should be a list or new column wit all updates
-            new DataColumnSpecCreator(UPDATED_DATE, DateAndTimeCell.TYPE).createSpec(), //should be a list or new column wit all updates
-            new DataColumnSpecCreator(TIME_ESTIMATE, IntCell.TYPE).createSpec(),
-            new DataColumnSpecCreator(TIME_SPENT, IntCell.TYPE).createSpec(),
-            new DataColumnSpecCreator(STATUS, StringCell.TYPE).createSpec(),
-            new DataColumnSpecCreator(TYPE, StringCell.TYPE).createSpec(),
-            RESOLUTION_COLSPEC,
-            new DataColumnSpecCreator(VERSION, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
-            new DataColumnSpecCreator(FIX_VERSION, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
-            new DataColumnSpecCreator(PRIORITY, StringCell.TYPE).createSpec(),
-            new DataColumnSpecCreator(SUMMARY, StringCell.TYPE).createSpec(),
-            REPORTER_COLSPEC, 
-            ASSIGNEES_COLSPEC, 
-            COMMENT_AUTHORS_COLSPEC,
-            new DataColumnSpecCreator(LINK, StringCell.TYPE).createSpec(),
-            new DataColumnSpecCreator(DESCRIPTION, StringCell.TYPE).createSpec(),
-            new DataColumnSpecCreator(COMMENTS, ListCell.getCollectionType(StringCell.TYPE)).createSpec()};
+        DataColumnSpec[] allColSpecs = {
+                ISSUE_ID_COLSPEC,
+                new DataColumnSpecCreator(CREATION_DATE, DateAndTimeCell.TYPE).createSpec(),
+                RESOLVED_DATE_COLSPEC, // should be a list or new column wit all
+                                       // updates
+                new DataColumnSpecCreator(UPDATED_DATE, DateAndTimeCell.TYPE).createSpec(), // should
+                                                                                            // be
+                                                                                            // a
+                                                                                            // list
+                                                                                            // or
+                                                                                            // new
+                                                                                            // column
+                                                                                            // wit
+                                                                                            // all
+                                                                                            // updates
+                new DataColumnSpecCreator(TIME_ESTIMATE, IntCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(TIME_SPENT, IntCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(STATUS, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(TYPE, StringCell.TYPE).createSpec(), RESOLUTION_COLSPEC,
+                new DataColumnSpecCreator(VERSION, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
+                new DataColumnSpecCreator(FIX_VERSION, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
+                new DataColumnSpecCreator(PRIORITY, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(SUMMARY, StringCell.TYPE).createSpec(), REPORTER_COLSPEC, ASSIGNEES_COLSPEC,
+                COMMENT_AUTHORS_COLSPEC, new DataColumnSpecCreator(LINK, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(DESCRIPTION, StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator(COMMENTS, ListCell.getCollectionType(StringCell.TYPE)).createSpec() };
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
         return outputSpec;
     }
 
     public static DataRow createTableRow(final ITSDataType itsData) {
         assertData(itsData);
-        DataCell[] cells = { 
-            stringCell(itsData.getIssueId()),
-            dateTimeCell(itsData.getCreated()), 
-            dateTimeOrMissingCell(itsData.getResolved()),
-            dateTimeOrMissingCell(itsData.getUpdated()), 
-            integerOrMissingCell(itsData.getTimeEstimate()),
-            integerOrMissingCell(itsData.getTimeSpent()),
-            stringOrMissingCell(itsData.getStatus()),
-            stringOrMissingCell(itsData.getType()), 
-            stringOrMissingCell(itsData.getResolution()),
-            stringListOrMissingCell(itsData.getVersion()), 
-            stringListOrMissingCell(itsData.getFixVersion()),
-            stringOrMissingCell(itsData.getPriority()), 
-            stringOrMissingCell(itsData.getSummary()),
-            stringOrMissingCell(itsData.getReporter()),
-            stringSetCell(itsData.getAssignees()),
-            stringSetCell(itsData.getCommentAuthors()),
-            stringOrMissingCell(itsData.getLink()), 
-            stringOrMissingCell(itsData.getDescription()),
-            stringListOrMissingCell(itsData.getComments())
-        };
+        DataCell[] cells = { stringCell(itsData.getIssueId()), dateTimeCell(itsData.getCreated()),
+                dateTimeOrMissingCell(itsData.getResolved()), dateTimeOrMissingCell(itsData.getUpdated()),
+                integerOrMissingCell(itsData.getTimeEstimate()), integerOrMissingCell(itsData.getTimeSpent()),
+                stringOrMissingCell(itsData.getStatus()), stringOrMissingCell(itsData.getType()),
+                stringOrMissingCell(itsData.getResolution()), stringListOrMissingCell(itsData.getVersion()),
+                stringListOrMissingCell(itsData.getFixVersion()), stringOrMissingCell(itsData.getPriority()),
+                stringOrMissingCell(itsData.getSummary()), stringOrMissingCell(itsData.getReporter()),
+                stringSetCell(itsData.getAssignees()), stringSetCell(itsData.getCommentAuthors()),
+                stringOrMissingCell(itsData.getLink()), stringOrMissingCell(itsData.getDescription()),
+                stringListOrMissingCell(itsData.getComments()) };
         DataRow row = new DefaultRow(itsData.getIssueId(), cells);
         return row;
     }

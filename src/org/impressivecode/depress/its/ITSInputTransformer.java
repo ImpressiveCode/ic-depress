@@ -34,6 +34,7 @@ import org.knime.core.data.RowIterator;
 import org.knime.core.node.InvalidSettingsException;
 
 import com.google.common.collect.Iterables;
+
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
@@ -68,7 +69,7 @@ public class ITSInputTransformer implements InputTransformer<ITSDataType> {
     public ITSDataType transformRow(final DataRow row) {
         TableCellReader reader = new TableCellReader(this.inputTableSpec, row);
         ITSDataType its = new ITSDataType();
-        //add additional if required
+        // add additional if required
         its.setIssueId(reader.stringOptional(ITSAdapterTableFactory.ISSUE_ID));
         its.setResolved(reader.dateOptional(ITSAdapterTableFactory.RESOLVED_DATE));
         its.setAssignees(reader.stringSetOptional(ITSAdapterTableFactory.ASSIGNEES));
@@ -79,15 +80,16 @@ public class ITSInputTransformer implements InputTransformer<ITSDataType> {
         its.setSummary(reader.stringOptional(ITSAdapterTableFactory.SUMMARY));
         its.setComments(reader.stringListOptional(ITSAdapterTableFactory.COMMENTS));
 
-        //add check if minimaldata set requires column for large data e.g. comments or description
+        // add check if minimaldata set requires column for large data e.g.
+        // comments or description
         return its;
     }
 
     private ITSResolution readResolution(final TableCellReader reader) {
         String resolution = reader.stringOptional(ITSAdapterTableFactory.RESOLUTION);
-        if(resolution == null){
+        if (resolution == null) {
             return null;
-        }else {
+        } else {
             return ITSResolution.valueOf(resolution);
         }
     }

@@ -267,7 +267,7 @@ public class JiraEntriesParser {
         int size = nodeList.getLength();
         List<String> values = Lists.newLinkedList();
         for (int i = 0; i < size; i++) {
-            String value = nodeToString(nodeList.item(i)).replaceAll("\\<.*?>","");
+            String value = nodeToString(nodeList.item(i)).replaceAll("\\<.*?>", "");
             values.add(value);
         }
         return values;
@@ -276,16 +276,16 @@ public class JiraEntriesParser {
     private static String nodeToString(Node node) {
         StringWriter sw = new StringWriter();
         try {
-          Transformer t = TransformerFactory.newInstance().newTransformer();
-          t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-          t.setOutputProperty(OutputKeys.INDENT, "yes");
-          t.transform(new DOMSource(node), new StreamResult(sw));
+            Transformer t = TransformerFactory.newInstance().newTransformer();
+            t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            t.setOutputProperty(OutputKeys.INDENT, "yes");
+            t.transform(new DOMSource(node), new StreamResult(sw));
         } catch (TransformerException te) {
-          System.out.println("nodeToString Transformer Exception");
+            System.out.println("nodeToString Transformer Exception");
         }
         return sw.toString();
-      }
-    
+    }
+
     private String getKey(final Element elem) {
         return extractValue(elem, "key");
     }
@@ -295,9 +295,10 @@ public class JiraEntriesParser {
         if (nodeList.getLength() == 0) {
             return null;
         }
-        String value = nodeToString(nodeList.item(0)).replaceAll("\\<.*?>","");
+        String value = nodeToString(nodeList.item(0)).replaceAll("\\<.*?>", "");
         return value == null ? null : value.trim();
     }
+
     private Date parseDate(final String nodeValue) throws ParseException {
         // Mon, 16 Feb 2004 00:29:19 +0000
         // FIXME majchmar: fix time parsing, timezone

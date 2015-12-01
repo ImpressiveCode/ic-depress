@@ -28,21 +28,23 @@ import java.util.Map;
  * 
  */
 public enum ITSResolution {
-    INVALID("Invalid"), FIXED("Fixed"), WONT_FIX("Won´t Fix"), DUPLICATE("Duplicate"), UNRESOLVED("Unresolved"), UNKNOWN("Unknown");
-    
+    INVALID("Invalid"), FIXED("Fixed"), WONT_FIX("Won´t Fix"), DUPLICATE("Duplicate"), UNRESOLVED("Unresolved"), UNKNOWN(
+            "Unknown");
+
     private final String label;
-    
+
     private ITSResolution(final String label) {
         this.label = label;
     }
-    
+
     @Override
     public String toString() {
         String value;
-        value = (this.name().substring(0, 1).toUpperCase() +  this.name().substring(1).toLowerCase()).replaceAll("_", " ");
+        value = (this.name().substring(0, 1).toUpperCase() + this.name().substring(1).toLowerCase()).replaceAll("_",
+                " ");
         return value;
     };
-    
+
     private static Map<String, ITSResolution> lookup = new HashMap<String, ITSResolution>();
     static {
         for (ITSResolution resolution : ITSResolution.values()) {
@@ -53,11 +55,11 @@ public enum ITSResolution {
     public static ITSResolution get(final String label) {
         return lookup.get(label);
     }
-    
+
     public String getLabel() {
         return label;
     }
-    
+
     public static String[] labels() {
         return Arrays.toString(ITSResolution.values()).replaceAll("^.|.$", "").split(", ");
     }
