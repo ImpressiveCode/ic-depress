@@ -91,14 +91,15 @@ public class SVNExtensionParser {
             if (entry.getPaths() == null) {
                 continue;
             }
-            SCMDataType base = scmBase(entry);
-            for (Path path : entry.getPaths().getPath()) {
-                if (include(path, parserOptions)) {
-                    scmEntries.add(scm((SCMDataType) base.clone(), path));
-                }
-            }
             if (!entry.getLogentry().isEmpty()) {
                 parseLogEntries(entry.getLogentry(), scmEntries, parserOptions);
+            }else{
+            	SCMDataType base = scmBase(entry);
+	            for (Path path : entry.getPaths().getPath()) {
+	                if (include(path, parserOptions)) {
+	                    scmEntries.add(scm((SCMDataType) base.clone(), path));
+	                }
+	            }
             }
         }
     }
