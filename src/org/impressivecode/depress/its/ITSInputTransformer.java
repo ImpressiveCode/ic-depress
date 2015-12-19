@@ -120,7 +120,7 @@ public class ITSInputTransformer implements InputTransformer<ITSDataType> {
     }
 
     @Override
-    public InputTransformer<ITSDataType> setMinimalOrSpec(final DataColumnSpec[] orSpec) {
+    public InputTransformer<ITSDataType> setMinimalOrSpec(final DataColumnSpec... orSpec) {
         throw new IllegalStateException("Unsupported operation");
     }
 }

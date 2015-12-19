@@ -98,7 +98,7 @@ public class SCMInputTransformer implements InputTransformer<SCMDataType> {
     }
 
     @Override
-    public InputTransformer<SCMDataType> setMinimalOrSpec(final DataColumnSpec[] orSpec) {
+    public InputTransformer<SCMDataType> setMinimalOrSpec(final DataColumnSpec... orSpec) {
         throw new IllegalStateException("Unsupported operation");
     }
 }
