@@ -27,9 +27,12 @@ import org.impressivecode.depress.its.ITSOfflineNodeDialog;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
+ * 
  * @author Maciej Borkowski, Capgemini Poland
- */
+ * 
+ **/
 public class BugzillaAdapterNodeDialog extends ITSOfflineNodeDialog {
+
     private final static String BUG = "bug";
 
     protected BugzillaAdapterNodeDialog() {

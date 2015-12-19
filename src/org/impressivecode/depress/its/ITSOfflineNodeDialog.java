@@ -27,8 +27,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.impressivecode.depress.common.MultiFilterComponent;
-import org.impressivecode.depress.its.ITSMappingManager;
-
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeSettingsRO;
@@ -39,7 +37,9 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObjectSpec;
 
 /**
+ * 
  * @author Maciej Borkowski, Capgemini Poland
+ * 
  */
 public abstract class ITSOfflineNodeDialog extends NodeDialogPane {
     public static final String SETTINGS_TAB_NAME = "Settings";
@@ -69,9 +69,9 @@ public abstract class ITSOfflineNodeDialog extends NodeDialogPane {
     }
 
     private void createMappingTab() {
-        JTabbedPane mappingTab = new JTabbedPane();
         mappingManager = ITSOfflineNodeModel.createMapping();
         createMappingManager();
+        JTabbedPane mappingTab = new JTabbedPane();
         mappingTab.addTab(PRIORITY, mappingManager.getMultiFilterPriority().getPanel());
         mappingTab.addTab(TYPE, mappingManager.getMultiFilterType().getPanel());
         mappingTab.addTab(RESOLUTION, mappingManager.getMultiFilterResolution().getPanel());

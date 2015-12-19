@@ -25,7 +25,7 @@ import org.knime.core.node.NodeView;
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
- */
+ **/
 public class BugzillaAdapterNodeFactory extends NodeFactory<BugzillaAdapterNodeModel> {
 
     @Override

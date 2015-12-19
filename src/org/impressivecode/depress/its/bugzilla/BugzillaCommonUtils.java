@@ -25,7 +25,7 @@ import org.impressivecode.depress.its.ITSStatus;
  * 
  * @author Michał Negacz, Wrocław University of Technology
  * 
- */
+ **/
 public class BugzillaCommonUtils {
 
     public static ITSResolution getResolution(String resolution) {

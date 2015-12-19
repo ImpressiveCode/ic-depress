@@ -28,7 +28,7 @@ import java.util.Map;
  * 
  */
 public enum ITSResolution {
-    INVALID("Invalid"), FIXED("Fixed"), WONT_FIX("Won´t Fix"), DUPLICATE("Duplicate"), UNRESOLVED("Unresolved"), UNKNOWN(
+    INVALID("Invalid"), FIXED("Fixed"), WONT_FIX("Won't Fix"), DUPLICATE("Duplicate"), UNRESOLVED("Unresolved"), UNKNOWN(
             "Unknown");
 
     private final String label;

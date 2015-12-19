@@ -25,7 +25,9 @@ import org.impressivecode.depress.common.MultiFilterComponent;
 import org.impressivecode.depress.common.SettingsModelMultiFilter;
 
 /**
+ * 
  * @author Maciej Borkowski, Capgemini Poland
+ * 
  */
 public class ITSMappingManager {
     private SettingsModelMultiFilter priorityModel;

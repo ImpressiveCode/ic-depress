@@ -22,8 +22,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
+ * 
  */
 public enum ITSStatus {
     OPEN("New"), IN_PROGRESS("In progress"), REOPENED("Reopened"), CLOSED("Closed"), RESOLVED("Resolved"), UNKNOWN(

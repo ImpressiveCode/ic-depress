@@ -51,9 +51,11 @@ import com.google.common.collect.ImmutableSet.Builder;
 import com.google.common.collect.Lists;
 
 /**
+ * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
- */
+ * 
+ **/
 public class BugzillaEntriesParser {
     private static final String BUGZILLA_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss Z";
     private final HashMap<String, String[]> prioritySettings;

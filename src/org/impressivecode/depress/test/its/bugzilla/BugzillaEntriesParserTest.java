@@ -19,6 +19,7 @@ package org.impressivecode.depress.test.its.bugzilla;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
@@ -39,21 +40,41 @@ import org.xml.sax.SAXException;
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
+ * 
  */
 public class BugzillaEntriesParserTest {
 
-    @Test
-    public void shouldParseEntries() throws ParserConfigurationException, SAXException, IOException, ParseException {
-        List<ITSDataType> entries = parse();
+    private final static String logFilePath = BugzillaEntriesParserTest.class.getResource("bugzilla.xml").getPath();
+    private final static String logFilePathGreater = BugzillaEntriesParserTest.class
+            .getResource("bugzilla_greater.xml").getPath();
 
-        assertThat(entries).hasSize(2);
-        assertEntry(entries.get(0));
+    @Test(expected = FileNotFoundException.class)
+    public void shouldThrowFileNotFound() throws Exception {
+        // given
+        BugzillaEntriesParser parser = createBugzillaParser();
+        // when
+        List<ITSDataType> entries = parser.parseEntries("fake_path");
     }
 
-    private List<ITSDataType> parse() throws ParserConfigurationException, SAXException, IOException, ParseException {
-        String path = getClass().getResource("bugzilla.xml").getPath();
-        List<ITSDataType> entries = createBugzillaParser().parseEntries(path);
-        return entries;
+    @Test
+    public void shouldCountBugs() throws Exception {
+        // given
+        BugzillaEntriesParser parser = createBugzillaParser();
+        // when
+        List<ITSDataType> entries = parser.parseEntries(logFilePathGreater);
+        // then
+        assertThat(entries).hasSize(500);
+    }
+
+    @Test
+    public void shouldParseEntries() throws ParserConfigurationException, SAXException, IOException, ParseException {
+        // given
+        BugzillaEntriesParser parser = createBugzillaParser();
+        // when
+        List<ITSDataType> entries = parser.parseEntries(logFilePath);
+        // then
+        assertThat(entries).hasSize(2);
+        assertEntry(entries.get(0));
     }
 
     private void assertEntry(final ITSDataType its) {
@@ -91,4 +112,5 @@ public class BugzillaEntriesParserTest {
         status.put(ITSStatus.RESOLVED.getLabel(), new String[] { ITSStatus.RESOLVED.getLabel() });
         return new BugzillaEntriesParser(priority, resolution, status);
     }
+
 }

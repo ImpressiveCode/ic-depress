@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.impressivecode.depress.common.SettingsModelMultiFilter;
-import org.impressivecode.depress.its.ITSMappingManager;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
@@ -32,7 +31,9 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
+ * 
  * @author Maciej Borkowski, Capgemini Poland
+ * 
  */
 public abstract class ITSOfflineNodeModel extends NodeModel {
     protected static final NodeLogger LOGGER = NodeLogger.getLogger(ITSOfflineNodeModel.class);

@@ -34,9 +34,11 @@ import org.knime.core.node.InvalidSettingsException;
 import com.google.common.base.Preconditions;
 
 /**
+ * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
- */
+ * 
+ **/
 public class BugzillaAdapterNodeModel extends ITSOfflineNodeModel {
 
     protected BugzillaAdapterNodeModel() {

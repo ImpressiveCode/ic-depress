@@ -20,11 +20,12 @@ package org.impressivecode.depress.its;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.impressivecode.depress.common.Cells.dateTimeCell;
 import static org.impressivecode.depress.common.Cells.dateTimeOrMissingCell;
+import static org.impressivecode.depress.common.Cells.integerOrMissingCell;
 import static org.impressivecode.depress.common.Cells.stringCell;
 import static org.impressivecode.depress.common.Cells.stringListOrMissingCell;
 import static org.impressivecode.depress.common.Cells.stringOrMissingCell;
 import static org.impressivecode.depress.common.Cells.stringSetCell;
-import static org.impressivecode.depress.common.Cells.integerOrMissingCell;
+
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
@@ -38,9 +39,11 @@ import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 
 /**
+ * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Michał Negacz, Wrocław University of Technology
  * @author Maciej Borkowski, Capgemini Poland
+ * 
  */
 public class ITSAdapterTableFactory {
 
