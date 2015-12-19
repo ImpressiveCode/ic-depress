@@ -53,7 +53,7 @@ public class BugzillaEntriesParserTest {
         // given
         BugzillaEntriesParser parser = createBugzillaParser();
         // when
-        List<ITSDataType> entries = parser.parseEntries("fake_path");
+        parser.parseEntries("fake_path");
     }
 
     @Test
