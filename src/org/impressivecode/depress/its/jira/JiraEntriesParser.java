@@ -58,8 +58,10 @@ import com.google.common.collect.ImmutableSet.Builder;
 import com.google.common.collect.Lists;
 
 /**
+ * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
+ * 
  */
 public class JiraEntriesParser {
     private static final String JIRA_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z";

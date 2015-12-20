@@ -24,8 +24,8 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.impressivecode.depress.its.ITSAdapterTableFactory;
-import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSAdapterTransformer;
+import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.its.ITSOfflineNodeModel;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
@@ -37,8 +37,10 @@ import org.xml.sax.SAXException;
 import com.google.common.base.Preconditions;
 
 /**
+ * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
+ * 
  */
 public class JiraAdapterNodeModel extends ITSOfflineNodeModel {
 

@@ -23,11 +23,12 @@ import java.util.concurrent.Callable;
 
 import org.impressivecode.depress.its.FileParser;
 import org.impressivecode.depress.its.ITSOfflineNodeDialog;
-
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
+ * 
  * @author Maciej Borkowski, Capgemini Poland
+ * 
  */
 public class JiraAdapterNodeDialog extends ITSOfflineNodeDialog {
     protected JiraAdapterNodeDialog() {

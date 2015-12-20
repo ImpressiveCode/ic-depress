@@ -43,94 +43,81 @@ import org.xml.sax.SAXException;
  */
 public class JiraEntriesParserTest {
 
-	private final static String jiraXmlPath = JiraEntriesParserTest.class
-			.getResource("jira.xml").getPath();
-	private final static String jiraEmptyXmlPath = JiraEntriesParserTest.class
-			.getResource("jiraEmpty.xml").getPath();
+    private final static String jiraXmlPath = JiraEntriesParserTest.class.getResource("jira.xml").getPath();
+    private final static String jiraEmptyXmlPath = JiraEntriesParserTest.class.getResource("jira_empty.xml").getPath();
 
-	@Test(expected = FileNotFoundException.class)
-	public void shouldThrowExceptionOnWrongFilepath()
-			throws ParserConfigurationException, SAXException, IOException,
-			ParseException {
-		// given
-		JiraEntriesParser jiraParser = createJiraParser();
-		// when
-		jiraParser.parseEntries("wrongFilepath");
-	}
+    @Test(expected = FileNotFoundException.class)
+    public void shouldThrowExceptionOnWrongFilepath() throws ParserConfigurationException, SAXException, IOException,
+            ParseException {
+        // given
+        JiraEntriesParser jiraParser = createJiraParser();
+        // when
+        jiraParser.parseEntries("wrongFilepath");
+    }
 
-	@Test(expected = SAXException.class)
-	public void shouldThrowExceptionOnEmptyFile()
-			throws ParserConfigurationException, SAXException, IOException,
-			ParseException {
-		// given
-		JiraEntriesParser jiraParser = createJiraParser();
-		// when
-		jiraParser.parseEntries(jiraEmptyXmlPath);
-	}
+    @Test(expected = SAXException.class)
+    public void shouldThrowExceptionOnEmptyFile() throws ParserConfigurationException, SAXException, IOException,
+            ParseException {
+        // given
+        JiraEntriesParser jiraParser = createJiraParser();
+        // when
+        jiraParser.parseEntries(jiraEmptyXmlPath);
+    }
 
-	@Test
-	public void shouldParseJiraEntries() throws ParserConfigurationException,
-			SAXException, IOException, ParseException {
-		// given
-		JiraEntriesParser jiraParser = createJiraParser();
-		// when
-		List<ITSDataType> entries = jiraParser.parseEntries(jiraXmlPath);
-		// then
-		assertThat(entries).hasSize(2);
-		assertEntry(entries.get(0));
-	}
-	
-	@Test
-	public void shouldParseJiraEntriesAndAcceptEmptyItems()
-			throws ParserConfigurationException, SAXException, IOException,
-			ParseException {
-		// given
-		JiraEntriesParser jiraParser = createJiraParser();
-		// when
-		List<ITSDataType> entries = jiraParser.parseEntries(jiraXmlPath);
-		ITSDataType entry = entries.get(1);
-		// then
-		assertThat(entry.getResolved()).isNull();
-		assertThat(entry.getComments()).isEmpty();
-		assertThat(entry.getFixVersion()).isEmpty();
-	}
+    @Test
+    public void shouldParseJiraEntries() throws ParserConfigurationException, SAXException, IOException, ParseException {
+        // given
+        JiraEntriesParser jiraParser = createJiraParser();
+        // when
+        List<ITSDataType> entries = jiraParser.parseEntries(jiraXmlPath);
+        // then
+        assertThat(entries).hasSize(2);
+        assertEntry(entries.get(0));
+    }
 
-	private void assertEntry(final ITSDataType its) {
-		assertThat(its.getIssueId()).isEqualTo("LANG-736");
-		assertThat(its.getComments()).hasSize(5);
-		assertThat(its.getCreated().toString()).isEqualTo(
-				"Tue Aug 02 20:19:53 CEST 2011");
-		assertThat(its.getDescription()).isNotEmpty();
-		assertThat(its.getFixVersion()).containsExactly("3.1", "3.2");
-		assertThat(its.getLink()).isEqualTo(
-				"https://issues.apache.org/jira/browse/LANG-736");
-		assertThat(its.getPriority()).isEqualTo(ITSPriority.MAJOR);
-		assertThat(its.getResolved()).isNotNull();
-		assertThat(its.getStatus()).isEqualTo(ITSStatus.CLOSED);
-		assertThat(its.getSummary()).isNotEmpty();
-		assertThat(its.getType()).isEqualTo(ITSType.BUG);
-		assertThat(its.getResolution()).isEqualTo(ITSResolution.FIXED);
-		assertThat(its.getUpdated()).isNotNull();
-		assertThat(its.getVersion()).containsExactly("3.0");
-		assertThat(its.getAssignees()).containsOnly("garydgregory");
-		assertThat(its.getReporter()).isEqualTo("garydgregory");
-		assertThat(its.getCommentAuthors()).containsOnly("bayard", "mbenson",
-				"garydgregory");
-	}
+    @Test
+    public void shouldParseJiraEntriesAndAcceptEmptyItems() throws ParserConfigurationException, SAXException,
+            IOException, ParseException {
+        // given
+        JiraEntriesParser jiraParser = createJiraParser();
+        // when
+        List<ITSDataType> entries = jiraParser.parseEntries(jiraXmlPath);
+        ITSDataType entry = entries.get(1);
+        // then
+        assertThat(entry.getResolved()).isNull();
+        assertThat(entry.getComments()).isEmpty();
+        assertThat(entry.getFixVersion()).isEmpty();
+    }
 
-	private JiraEntriesParser createJiraParser() {
-		HashMap<String, String[]> priority = new HashMap<String, String[]>();
-		priority.put(ITSPriority.MAJOR.getLabel(),
-				new String[] { ITSPriority.MAJOR.getLabel() });
-		HashMap<String, String[]> type = new HashMap<String, String[]>();
-		type.put(ITSType.BUG.getLabel(),
-				new String[] { ITSType.BUG.getLabel() });
-		HashMap<String, String[]> resolution = new HashMap<String, String[]>();
-		resolution.put(ITSResolution.FIXED.getLabel(),
-				new String[] { ITSResolution.FIXED.getLabel() });
-		HashMap<String, String[]> status = new HashMap<String, String[]>();
-		status.put(ITSStatus.CLOSED.getLabel(),
-				new String[] { ITSStatus.CLOSED.getLabel() });
-		return new JiraEntriesParser(priority, type, resolution, status);
-	}
+    private void assertEntry(final ITSDataType its) {
+        assertThat(its.getIssueId()).isEqualTo("LANG-736");
+        assertThat(its.getComments()).hasSize(5);
+        assertThat(its.getCreated().toString()).isEqualTo("Tue Aug 02 20:19:53 CEST 2011");
+        assertThat(its.getDescription()).isNotEmpty();
+        assertThat(its.getFixVersion()).containsExactly("3.1", "3.2");
+        assertThat(its.getLink()).isEqualTo("https://issues.apache.org/jira/browse/LANG-736");
+        assertThat(its.getPriority()).isEqualTo(ITSPriority.MAJOR);
+        assertThat(its.getResolved()).isNotNull();
+        assertThat(its.getStatus()).isEqualTo(ITSStatus.CLOSED);
+        assertThat(its.getSummary()).isNotEmpty();
+        assertThat(its.getType()).isEqualTo(ITSType.BUG);
+        assertThat(its.getResolution()).isEqualTo(ITSResolution.FIXED);
+        assertThat(its.getUpdated()).isNotNull();
+        assertThat(its.getVersion()).containsExactly("3.0");
+        assertThat(its.getAssignees()).containsOnly("garydgregory");
+        assertThat(its.getReporter()).isEqualTo("garydgregory");
+        assertThat(its.getCommentAuthors()).containsOnly("bayard", "mbenson", "garydgregory");
+    }
+
+    private JiraEntriesParser createJiraParser() {
+        HashMap<String, String[]> priority = new HashMap<String, String[]>();
+        priority.put(ITSPriority.MAJOR.getLabel(), new String[] { ITSPriority.MAJOR.getLabel() });
+        HashMap<String, String[]> type = new HashMap<String, String[]>();
+        type.put(ITSType.BUG.getLabel(), new String[] { ITSType.BUG.getLabel() });
+        HashMap<String, String[]> resolution = new HashMap<String, String[]>();
+        resolution.put(ITSResolution.FIXED.getLabel(), new String[] { ITSResolution.FIXED.getLabel() });
+        HashMap<String, String[]> status = new HashMap<String, String[]>();
+        status.put(ITSStatus.CLOSED.getLabel(), new String[] { ITSStatus.CLOSED.getLabel() });
+        return new JiraEntriesParser(priority, type, resolution, status);
+    }
 }
