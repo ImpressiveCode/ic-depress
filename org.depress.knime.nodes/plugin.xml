@@ -8,39 +8,39 @@
             icon="resources/icons/depress.png"
             level-id="depress"
             name="DePress"
-            path="/">
-      </category>
-      <category
-            description="Issue Tracking Systems"
-            level-id="depress.its"
-            locked="true"
-            name="ITS"
-            path="depress/">
+            path="/community">
       </category>
       <category
             description="Source Code Management"
             level-id="depress.scm"
             name="SCM"
-            path="depress/">
+            path="/community/depress">
       </category>
+      <category
+            description="Issue Tracking Systems"
+            level-id="depress.its"
+            name="ITS"
+            path="/community/depress">
+      </category>
+     
    </extension>
    
    <extension
          point="org.knime.workbench.repository.nodes">
       <node
-            category-path="depress/depress.its"
+            category-path="/community/depress/depress.its"
             factory-class="org.impressivecode.depress.its.bugzilla.BugzillaAdapterNodeFactory"
             id="org.impressivecode.depress.its.bugzilla" />
       <node
-            category-path="depress/depress.its"
+            category-path="/community/depress/depress.its"
             factory-class="org.impressivecode.depress.its.jira.JiraAdapterNodeFactory"
             id="org.impressivecode.depress.its.jira" />
       <node
-            category-path="depress/depress.scm"
+            category-path="/community/depress/depress.scm"
             factory-class="org.impressivecode.depress.scm.git.GitOfflineAdapterNodeFactory"
             id="org.impressivecode.depress.scm.gitoffline" />
       <node
-            category-path="depress/depress.scm"
+            category-path="/community/depress/depress.scm"
             factory-class="org.impressivecode.depress.scm.svn.SVNOfflineAdapterNodeFactory"
             id="org.impressivecode.depress.scm.svnoffline"/>
    </extension>

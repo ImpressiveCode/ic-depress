@@ -65,9 +65,9 @@ public class BugzillaAdapterNodeModel extends ITSOfflineNodeModel {
 
     private List<ITSDataType> parseEntries(final String filePath) throws Exception {
         try {
-            return new BugzillaEntriesParser(mappingManager.getPriorityModel().getIncluded(), mappingManager
-                    .getResolutionModel().getIncluded(), mappingManager.getStatusModel().getIncluded())
-                    .parseEntries(filePath);
+            return new BugzillaEntriesParser(mappingManager.getPriorityModel().getIncluded(),
+                    mappingManager.getResolutionModel().getIncluded(), mappingManager.getStatusModel().getIncluded())
+                            .parseEntries(filePath);
         } catch (Exception e) {
             LOGGER.error("Error during parsing data", e);
             throw e;
