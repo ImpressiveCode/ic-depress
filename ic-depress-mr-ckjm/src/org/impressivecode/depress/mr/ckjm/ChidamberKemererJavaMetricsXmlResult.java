@@ -181,23 +181,23 @@ public class ChidamberKemererJavaMetricsXmlResult {
 
         @XmlElement(required = true)
         protected String name;
-        protected short wmc;
-        protected byte dit;
-        protected byte noc;
-        protected short cbo;
-        protected short rfc;
-        protected short lcom;
-        protected short ca;
-        protected byte ce;
-        protected short npm;
+        protected int wmc;
+        protected int dit;
+        protected int noc;
+        protected int cbo;
+        protected int rfc;
+        protected int lcom;
+        protected int ca;
+        protected int ce;
+        protected int npm;
         protected float lcom3;
         protected int loc;
         protected float dam;
-        protected short moa;
+        protected int moa;
         protected float mfa;
         protected float cam;
-        protected byte ic;
-        protected byte cbm;
+        protected int ic;
+        protected int cbm;
         protected float amc;
         @XmlElement(required = true)
         protected Object cc;
@@ -230,7 +230,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Gets the value of the wmc property.
          * 
          */
-        public short getWmc() {
+        public int getWmc() {
             return wmc;
         }
 
@@ -238,7 +238,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Sets the value of the wmc property.
          * 
          */
-        public void setWmc(short value) {
+        public void setWmc(int value) {
             this.wmc = value;
         }
 
@@ -246,7 +246,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Gets the value of the dit property.
          * 
          */
-        public byte getDit() {
+        public int getDit() {
             return dit;
         }
 
@@ -254,7 +254,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Sets the value of the dit property.
          * 
          */
-        public void setDit(byte value) {
+        public void setDit(int value) {
             this.dit = value;
         }
 
@@ -262,7 +262,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Gets the value of the noc property.
          * 
          */
-        public byte getNoc() {
+        public int getNoc() {
             return noc;
         }
 
@@ -270,7 +270,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Sets the value of the noc property.
          * 
          */
-        public void setNoc(byte value) {
+        public void setNoc(int value) {
             this.noc = value;
         }
 
@@ -278,7 +278,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Gets the value of the cbo property.
          * 
          */
-        public short getCbo() {
+        public int getCbo() {
             return cbo;
         }
 
@@ -286,7 +286,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Sets the value of the cbo property.
          * 
          */
-        public void setCbo(short value) {
+        public void setCbo(int value) {
             this.cbo = value;
         }
 
@@ -294,7 +294,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Gets the value of the rfc property.
          * 
          */
-        public short getRfc() {
+        public int getRfc() {
             return rfc;
         }
 
@@ -302,7 +302,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Sets the value of the rfc property.
          * 
          */
-        public void setRfc(short value) {
+        public void setRfc(int value) {
             this.rfc = value;
         }
 
@@ -310,7 +310,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Gets the value of the lcom property.
          * 
          */
-        public short getLcom() {
+        public int getLcom() {
             return lcom;
         }
 
@@ -318,7 +318,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Sets the value of the lcom property.
          * 
          */
-        public void setLcom(short value) {
+        public void setLcom(int value) {
             this.lcom = value;
         }
 
@@ -326,7 +326,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Gets the value of the ca property.
          * 
          */
-        public short getCa() {
+        public int getCa() {
             return ca;
         }
 
@@ -334,7 +334,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Sets the value of the ca property.
          * 
          */
-        public void setCa(short value) {
+        public void setCa(int value) {
             this.ca = value;
         }
 
@@ -342,7 +342,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Gets the value of the ce property.
          * 
          */
-        public byte getCe() {
+        public int getCe() {
             return ce;
         }
 
@@ -350,7 +350,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Sets the value of the ce property.
          * 
          */
-        public void setCe(byte value) {
+        public void setCe(int value) {
             this.ce = value;
         }
 
@@ -358,7 +358,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Gets the value of the npm property.
          * 
          */
-        public short getNpm() {
+        public int getNpm() {
             return npm;
         }
 
@@ -366,7 +366,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Sets the value of the npm property.
          * 
          */
-        public void setNpm(short value) {
+        public void setNpm(int value) {
             this.npm = value;
         }
 
@@ -422,7 +422,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Gets the value of the moa property.
          * 
          */
-        public short getMoa() {
+        public int getMoa() {
             return moa;
         }
 
@@ -430,7 +430,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Sets the value of the moa property.
          * 
          */
-        public void setMoa(short value) {
+        public void setMoa(int value) {
             this.moa = value;
         }
 
@@ -470,7 +470,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Gets the value of the ic property.
          * 
          */
-        public byte getIc() {
+        public int getIc() {
             return ic;
         }
 
@@ -478,7 +478,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Sets the value of the ic property.
          * 
          */
-        public void setIc(byte value) {
+        public void setIc(int value) {
             this.ic = value;
         }
 
@@ -486,7 +486,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Gets the value of the cbm property.
          * 
          */
-        public byte getCbm() {
+        public int getCbm() {
             return cbm;
         }
 
@@ -494,7 +494,7 @@ public class ChidamberKemererJavaMetricsXmlResult {
          * Sets the value of the cbm property.
          * 
          */
-        public void setCbm(byte value) {
+        public void setCbm(int value) {
             this.cbm = value;
         }
 
