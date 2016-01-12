@@ -2,6 +2,8 @@ package org.impressivecode.depress.test.scm.svn;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class SVNOfflineLogParserTest {
     private final static String logFilePathMerged = SVNOfflineLogParserTest.class.getResource("svn_merged.xml").getPath();
 
     @Test
-    public void shouldParseJavaEntries() throws JAXBException, CloneNotSupportedException {
+    public void shouldParseJavaEntries() throws JAXBException, CloneNotSupportedException, IOException, URISyntaxException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add(".java");
@@ -36,7 +38,7 @@ public class SVNOfflineLogParserTest {
     }
 
     @Test
-    public void shouldParseJavaEntriesMerged() throws JAXBException, CloneNotSupportedException {
+    public void shouldParseJavaEntriesMerged() throws JAXBException, CloneNotSupportedException, IOException, URISyntaxException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add(".java");
@@ -49,7 +51,7 @@ public class SVNOfflineLogParserTest {
     }
 
     @Test
-    public void shouldParseGivenEntry() throws JAXBException, CloneNotSupportedException {
+    public void shouldParseGivenEntry() throws JAXBException, CloneNotSupportedException, IOException, URISyntaxException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add(".j?va");
@@ -84,7 +86,7 @@ public class SVNOfflineLogParserTest {
     }
 
     @Test
-    public void shouldParseAnyEntry() throws JAXBException, CloneNotSupportedException {
+    public void shouldParseAnyEntry() throws JAXBException, CloneNotSupportedException, IOException, URISyntaxException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add("*");
@@ -111,7 +113,7 @@ public class SVNOfflineLogParserTest {
     }
 
     @Test
-    public void shouldNotParseWithWrongPackage() throws JAXBException, CloneNotSupportedException {
+    public void shouldNotParseWithWrongPackage() throws JAXBException, CloneNotSupportedException, IOException, URISyntaxException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add("*");
@@ -129,7 +131,7 @@ public class SVNOfflineLogParserTest {
     }
 
     @Test
-    public void shouldParseNullPackage() throws JAXBException, CloneNotSupportedException {
+    public void shouldParseNullPackage() throws JAXBException, CloneNotSupportedException, IOException, URISyntaxException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add("*");
@@ -143,7 +145,7 @@ public class SVNOfflineLogParserTest {
     }
 
     @Test
-    public void shouldParseWithNoExtensionsToFilter() throws JAXBException, CloneNotSupportedException {
+    public void shouldParseWithNoExtensionsToFilter() throws JAXBException, CloneNotSupportedException, IOException, URISyntaxException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         SCMParserOptions options = SCMParserOptions.options(null, extensionsToFilter);

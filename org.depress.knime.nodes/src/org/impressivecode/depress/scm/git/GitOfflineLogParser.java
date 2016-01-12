@@ -23,6 +23,9 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +35,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FilenameUtils;
 import org.impressivecode.depress.scm.SCMExtensionsParser;
 import org.impressivecode.depress.scm.SCMParserOptions;
+import org.knime.core.util.FileUtil;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
@@ -61,9 +65,12 @@ public class GitOfflineLogParser {
         this.parserOptions = checkNotNull(parserOptions, "Options has to be set");
     }
 
-    public List<GitCommit> parseEntries(final String path) throws IOException, ParseException {
+    public List<GitCommit> parseEntries(final String path) throws IOException, ParseException, URISyntaxException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
-        return Files.readLines(new File(path), Charsets.UTF_8, new GitLineProcessor(parserOptions));
+        URL url = FileUtil.toURL(path);
+        Path localPath = FileUtil.resolveToPath(url);
+        File file = localPath.toFile();
+        return Files.readLines(file, Charsets.UTF_8, new GitLineProcessor(parserOptions));
     }
 
     static class GitLineProcessor implements LineProcessor<List<GitCommit>> {
