@@ -1,0 +1,39 @@
+
+{
+    "version":"3.1.0.v201512031304",
+    "created":"2016-01-13 21:58",
+    "nodestats":{
+        "nodes":[
+            {
+                "id":"org.impressivecode.depress.its.jira.JiraAdapterNodeFactory#Jira Adapter (Offline)",
+                "nrexecs":6,
+                "exectime":15924,
+                "nrcreated":2,
+                "successor":"org.knime.testing.internal.nodes.differ.DifferenceCheckerNodeFactory#Table Difference Checker"
+            },
+            {
+                "id":"org.knime.testing.internal.nodes.differ.DifferenceCheckerNodeFactory#Table Difference Checker",
+                "nrexecs":4,
+                "exectime":281,
+                "nrcreated":1,
+                "successor":"n/a"
+            },
+            {
+                "id":"org.impressivecode.depress.scm.git.GitOfflineAdapterNodeFactory#Git SCM",
+                "nrexecs":2,
+                "exectime":3339,
+                "nrcreated":0,
+                "successor":"n/a"
+            }
+        ],
+        "metaNodes":{
+        },
+        "wrappedNodes":{
+        }
+    },
+    "uptime":317980,
+    "launches":2,
+    "timeSinceLastStart":57848,
+    "crashes":0,
+    "properlyShutDown":true
+}

@@ -11,17 +11,17 @@
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
 <entry key="filename" type="xstring" value=""/>
-<config key="extension_Internals">
-<entry key="SettingsModelID" type="xstring" value="SMID_string"/>
-<entry key="EnabledStatus" type="xboolean" value="true"/>
-</config>
-<entry key="extension" type="xstring" value=".java"/>
 <config key="package_Internals">
 <entry key="SettingsModelID" type="xstring" value="SMN_string_disact"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
 <entry key="package" type="xstring" value=""/>
 <entry key="package_BOOL" type="xboolean" value="true"/>
+<config key="extension_Internals">
+<entry key="SettingsModelID" type="xstring" value="SMID_string"/>
+<entry key="EnabledStatus" type="xboolean" value="true"/>
+</config>
+<entry key="extension" type="xstring" value=".java"/>
 </config>
 <config key="variables">
 <config key="filename">
@@ -44,7 +44,7 @@
 <config key="styles"/>
 </config>
 <entry key="customDescription" type="xstring" isnull="true" value=""/>
-<entry key="state" type="xstring" value="EXECUTED"/>
+<entry key="state" type="xstring" value="CONFIGURED"/>
 <entry key="factory" type="xstring" value="org.impressivecode.depress.scm.git.GitOfflineAdapterNodeFactory"/>
 <entry key="node-name" type="xstring" value="Git SCM"/>
 <entry key="node-bundle-name" type="xstring" value="ic-depress"/>
@@ -57,19 +57,16 @@
 <entry key="node-feature-version" type="xstring" value="0.0.0"/>
 <config key="factory_settings"/>
 <entry key="name" type="xstring" value="Git SCM"/>
-<entry key="hasContent" type="xboolean" value="true"/>
+<entry key="hasContent" type="xboolean" value="false"/>
 <entry key="isInactive" type="xboolean" value="false"/>
 <config key="ports">
 <config key="port_1">
 <entry key="index" type="xint" value="1"/>
-<entry key="port_spec_class" type="xstring" value="org.knime.core.data.DataTableSpec"/>
-<entry key="port_object_class" type="xstring" value="org.knime.core.node.BufferedDataTable"/>
-<entry key="port_object_summary" type="xstring" value="Rows: 166, Cols: 8"/>
-<entry key="port_dir_location" type="xstring" value="port_1"/>
+<entry key="port_dir_location" type="xstring" isnull="true" value=""/>
 </config>
 </config>
 <config key="filestores">
 <entry key="file_store_location" type="xstring" isnull="true" value=""/>
-<entry key="file_store_id" type="xstring" value="e249de55-8c2b-4a36-be7f-d687c68f5f29"/>
+<entry key="file_store_id" type="xstring" isnull="true" value=""/>
 </config>
 </config>

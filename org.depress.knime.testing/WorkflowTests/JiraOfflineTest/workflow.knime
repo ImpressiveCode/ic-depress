@@ -4,10 +4,10 @@
 <entry key="version" type="xstring" value="3.1.0"/>
 <entry key="name" type="xstring" isnull="true" value=""/>
 <config key="authorInformation">
-<entry key="authored-by" type="xstring" value="Wojtek"/>
-<entry key="authored-when" type="xstring" value="2016-01-12 21:35:27 +0100"/>
+<entry key="authored-by" type="xstring" value="SONY"/>
+<entry key="authored-when" type="xstring" value="2016-01-13 21:59:14 +0100"/>
 <entry key="lastEdited-by" type="xstring" value="SONY"/>
-<entry key="lastEdited-when" type="xstring" value="2016-01-13 22:00:14 +0100"/>
+<entry key="lastEdited-when" type="xstring" value="2016-01-13 22:07:40 +0100"/>
 </config>
 <entry key="customDescription" type="xstring" isnull="true" value=""/>
 <entry key="state" type="xstring" value="CONFIGURED"/>
@@ -15,33 +15,33 @@
 <config key="nodes">
 <config key="node_1">
 <entry key="id" type="xint" value="1"/>
-<entry key="node_settings_file" type="xstring" value="Git SCM (#1)/settings.xml"/>
+<entry key="node_settings_file" type="xstring" value="Jira Adapter _Offline_ (#1)/settings.xml"/>
 <entry key="node_is_meta" type="xboolean" value="false"/>
 <entry key="node_type" type="xstring" value="NativeNode"/>
 <entry key="ui_classname" type="xstring" value="org.knime.core.node.workflow.NodeUIInformation"/>
 <config key="ui_settings">
 <config key="extrainfo.node.bounds">
 <entry key="array-size" type="xint" value="4"/>
-<entry key="0" type="xint" value="64"/>
-<entry key="1" type="xint" value="177"/>
-<entry key="2" type="xint" value="50"/>
-<entry key="3" type="xint" value="78"/>
+<entry key="0" type="xint" value="104"/>
+<entry key="1" type="xint" value="117"/>
+<entry key="2" type="xint" value="77"/>
+<entry key="3" type="xint" value="93"/>
 </config>
 </config>
 </config>
 <config key="node_2">
 <entry key="id" type="xint" value="2"/>
-<entry key="node_settings_file" type="xstring" value="Git SCM (#2)/settings.xml"/>
+<entry key="node_settings_file" type="xstring" value="Jira Adapter _Offline_ (#2)/settings.xml"/>
 <entry key="node_is_meta" type="xboolean" value="false"/>
 <entry key="node_type" type="xstring" value="NativeNode"/>
 <entry key="ui_classname" type="xstring" value="org.knime.core.node.workflow.NodeUIInformation"/>
 <config key="ui_settings">
 <config key="extrainfo.node.bounds">
 <entry key="array-size" type="xint" value="4"/>
-<entry key="0" type="xint" value="64"/>
-<entry key="1" type="xint" value="297"/>
-<entry key="2" type="xint" value="50"/>
-<entry key="3" type="xint" value="78"/>
+<entry key="0" type="xint" value="104"/>
+<entry key="1" type="xint" value="277"/>
+<entry key="2" type="xint" value="77"/>
+<entry key="3" type="xint" value="93"/>
 </config>
 </config>
 </config>
@@ -54,8 +54,8 @@
 <config key="ui_settings">
 <config key="extrainfo.node.bounds">
 <entry key="array-size" type="xint" value="4"/>
-<entry key="0" type="xint" value="264"/>
-<entry key="1" type="xint" value="217"/>
+<entry key="0" type="xint" value="324"/>
+<entry key="1" type="xint" value="197"/>
 <entry key="2" type="xint" value="101"/>
 <entry key="3" type="xint" value="93"/>
 </config>
