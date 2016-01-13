@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_ZzTaAbo4EeW63tUmTNYzHA" elementId="org.eclipse.e4.legacy.ide.application" contributorURI="platform:/plugin/org.eclipse.ui.workbench" selectedElement="_ZzTaAro4EeW63tUmTNYzHA" bindingContexts="_ZzTaCLo4EeW63tUmTNYzHA">
-  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.knime.workbench.editor.WorkflowEditor&quot; name=&quot;workflow.knime&quot; tooltip=&quot;knime://LOCAL/WorkflowTests/JiraOfflineTest/workflow.knime&quot;>&#xD;&#xA;&lt;persistable uri=&quot;knime://LOCAL/WorkflowTests/JiraOfflineTest/workflow.knime&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.knime.workbench.editor.WorkflowEditor&quot; name=&quot;workflow.knime&quot; tooltip=&quot;knime://LOCAL/WorkflowTests/GitOfflineTest/workflow.knime&quot;>&#xD;&#xA;&lt;persistable uri=&quot;knime://LOCAL/WorkflowTests/GitOfflineTest/workflow.knime&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
+  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.knime.workbench.editor.WorkflowEditor&quot; name=&quot;workflow.knime&quot; tooltip=&quot;knime://LOCAL/WorkflowTests/SVNOfflineTest/workflow.knime&quot;>&#xD;&#xA;&lt;persistable uri=&quot;knime://LOCAL/WorkflowTests/SVNOfflineTest/workflow.knime&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.knime.workbench.editor.WorkflowEditor&quot; name=&quot;workflow.knime&quot; tooltip=&quot;knime://LOCAL/WorkflowTests/JiraOfflineTest/workflow.knime&quot;>&#xD;&#xA;&lt;persistable uri=&quot;knime://LOCAL/WorkflowTests/JiraOfflineTest/workflow.knime&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.knime.workbench.editor.WorkflowEditor&quot; name=&quot;workflow.knime&quot; tooltip=&quot;knime://LOCAL/WorkflowTests/GitOfflineTest/workflow.knime&quot;>&#xD;&#xA;&lt;persistable uri=&quot;knime://LOCAL/WorkflowTests/GitOfflineTest/workflow.knime&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <tags>ModelMigrationProcessor.001</tags>
   <children xsi:type="basic:TrimmedWindow" xmi:id="_ZzTaAro4EeW63tUmTNYzHA" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.ui.workbench" selectedElement="_asFcI7o4EeW63tUmTNYzHA" x="156" y="0" width="1024" height="646">
@@ -56,7 +56,7 @@
                 </children>
               </children>
             </children>
-            <children xsi:type="basic:PartSashContainer" xmi:id="_a-h3D7o4EeW63tUmTNYzHA" containerData="7000" selectedElement="_a-h3FLo4EeW63tUmTNYzHA">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_a-h3D7o4EeW63tUmTNYzHA" containerData="7000" selectedElement="_a-h3ELo4EeW63tUmTNYzHA">
               <children xsi:type="basic:PartSashContainer" xmi:id="_a-h3ELo4EeW63tUmTNYzHA" containerData="6524" selectedElement="_a-h3Ebo4EeW63tUmTNYzHA" horizontal="true">
                 <children xsi:type="advanced:Placeholder" xmi:id="_a-h3Ebo4EeW63tUmTNYzHA" elementId="org.eclipse.ui.editorss" containerData="7000" ref="_a-O8ELo4EeW63tUmTNYzHA"/>
                 <children xsi:type="basic:PartStack" xmi:id="_a-h3Ero4EeW63tUmTNYzHA" elementId="org.knime.workbench.helpviewMStack" containerData="3000" selectedElement="_a-h3E7o4EeW63tUmTNYzHA">
@@ -69,7 +69,6 @@
                 </children>
                 <children xsi:type="basic:PartStack" xmi:id="_a-h3F7o4EeW63tUmTNYzHA" elementId="org.eclipse.ui.console.ConsoleViewMStack" containerData="7000" selectedElement="_P5uQUbo5EeW63tUmTNYzHA">
                   <tags>Java</tags>
-                  <tags>active</tags>
                   <children xsi:type="advanced:Placeholder" xmi:id="_a-h3GLo4EeW63tUmTNYzHA" elementId="org.eclipse.ui.console.ConsoleView" ref="_a-h3Abo4EeW63tUmTNYzHA"/>
                   <children xsi:type="advanced:Placeholder" xmi:id="_P5uQUbo5EeW63tUmTNYzHA" elementId="org.eclipse.jdt.junit.ResultView" ref="_P5uQULo5EeW63tUmTNYzHA"/>
                 </children>
@@ -97,9 +96,30 @@
       <tags>categoryTag:Help</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_a-O8ELo4EeW63tUmTNYzHA" elementId="org.eclipse.ui.editorss" selectedElement="_a-O8Ebo4EeW63tUmTNYzHA">
-      <children xsi:type="basic:PartStack" xmi:id="_a-O8Ebo4EeW63tUmTNYzHA" elementId="org.eclipse.e4.primaryDataStack">
+      <children xsi:type="basic:PartStack" xmi:id="_a-O8Ebo4EeW63tUmTNYzHA" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_1LXP8Lo7EeWfKfGVDT1cSQ">
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
+        <tags>active</tags>
+        <children xsi:type="basic:Part" xmi:id="_0O95ILo7EeWfKfGVDT1cSQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="0: GitOfflineTest" iconURI="platform:/plugin/org.knime.workbench.editor/icons/knime.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.knime.workbench.editor.WorkflowEditor&quot; name=&quot;workflow.knime&quot; partName=&quot;0: GitOfflineTest&quot; title=&quot;0: GitOfflineTest&quot; tooltip=&quot;0: GitOfflineTest&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; uri=&quot;knime://LOCAL/WorkflowTests/GitOfflineTest/workflow.knime&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>org.knime.workbench.editor.WorkflowEditor</tags>
+          <tags>removeOnHide</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_0tBHELo7EeWfKfGVDT1cSQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="2: JiraOfflineTest" iconURI="platform:/plugin/org.knime.workbench.editor/icons/knime.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.knime.workbench.editor.WorkflowEditor&quot; name=&quot;workflow.knime&quot; partName=&quot;2: JiraOfflineTest&quot; title=&quot;2: JiraOfflineTest&quot; tooltip=&quot;2: JiraOfflineTest&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; uri=&quot;knime://LOCAL/WorkflowTests/JiraOfflineTest/workflow.knime&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>org.knime.workbench.editor.WorkflowEditor</tags>
+          <tags>removeOnHide</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_1LXP8Lo7EeWfKfGVDT1cSQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="3: SVNOfflineTest" iconURI="platform:/plugin/org.knime.workbench.editor/icons/knime.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.knime.workbench.editor.WorkflowEditor&quot; name=&quot;workflow.knime&quot; partName=&quot;3: SVNOfflineTest&quot; title=&quot;3: SVNOfflineTest&quot; tooltip=&quot;3: SVNOfflineTest&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; uri=&quot;knime://LOCAL/WorkflowTests/SVNOfflineTest/workflow.knime&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>org.knime.workbench.editor.WorkflowEditor</tags>
+          <tags>removeOnHide</tags>
+          <tags>active</tags>
+          <tags>activeOnClose</tags>
+        </children>
       </children>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_a-YGALo4EeW63tUmTNYzHA" elementId="org.knime.workbench.explorer.view" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="KNIME Explorer" iconURI="platform:/plugin/org.knime.workbench.explorer.view/icons/knime_explorer.png" tooltip="" closeable="true">
@@ -167,8 +187,6 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view failuresOnly=&quot;false&quot; ignoredOnly=&quot;false&quot; layout=&quot;1&quot; orientation=&quot;2&quot; ratio=&quot;500&quot; scroll=&quot;false&quot; time=&quot;true&quot;/>"/>
       <tags>View</tags>
       <tags>categoryTag:Java</tags>
-      <tags>active</tags>
-      <tags>activeOnClose</tags>
       <menus xmi:id="_P7XPELo5EeW63tUmTNYzHA" elementId="org.eclipse.jdt.junit.ResultView">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -183,7 +201,7 @@
         <tags>toolbarSeparator</tags>
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_a6XItbo4EeW63tUmTNYzHA" elementId="additions" toBeRendered="false"/>
       </children>
-      <children xsi:type="menu:ToolBar" xmi:id="_8dPNALo5EeWuA-h3hI-O8Q" elementId="org.eclipse.search.searchActionSet">
+      <children xsi:type="menu:ToolBar" xmi:id="_zedpQLo7EeWfKfGVDT1cSQ" elementId="org.eclipse.search.searchActionSet">
         <tags>Draggable</tags>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_gI0xoLo4EeW63tUmTNYzHA" elementId="group.editor" toBeRendered="false">

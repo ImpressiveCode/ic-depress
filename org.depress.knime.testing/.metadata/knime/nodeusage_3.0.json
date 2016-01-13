@@ -6,22 +6,29 @@
         "nodes":[
             {
                 "id":"org.impressivecode.depress.its.jira.JiraAdapterNodeFactory#Jira Adapter (Offline)",
-                "nrexecs":6,
-                "exectime":15924,
+                "nrexecs":8,
+                "exectime":20901,
                 "nrcreated":2,
                 "successor":"org.knime.testing.internal.nodes.differ.DifferenceCheckerNodeFactory#Table Difference Checker"
             },
             {
                 "id":"org.knime.testing.internal.nodes.differ.DifferenceCheckerNodeFactory#Table Difference Checker",
-                "nrexecs":4,
-                "exectime":281,
+                "nrexecs":7,
+                "exectime":1747,
                 "nrcreated":1,
                 "successor":"n/a"
             },
             {
                 "id":"org.impressivecode.depress.scm.git.GitOfflineAdapterNodeFactory#Git SCM",
-                "nrexecs":2,
-                "exectime":3339,
+                "nrexecs":4,
+                "exectime":4820,
+                "nrcreated":0,
+                "successor":"n/a"
+            },
+            {
+                "id":"org.impressivecode.depress.scm.svn.SVNOfflineAdapterNodeFactory#SVN SCM",
+                "nrexecs":1,
+                "exectime":1482,
                 "nrcreated":0,
                 "successor":"n/a"
             }
@@ -31,9 +38,9 @@
         "wrappedNodes":{
         }
     },
-    "uptime":317980,
-    "launches":2,
-    "timeSinceLastStart":57848,
+    "uptime":196323,
+    "launches":4,
+    "timeSinceLastStart":59985,
     "crashes":0,
     "properlyShutDown":true
 }

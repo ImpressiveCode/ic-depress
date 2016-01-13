@@ -11,20 +11,20 @@
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
 <entry key="file chooser" type="xstring" value=""/>
-<config key="mapping.priority.enabled_Internals">
-<entry key="SettingsModelID" type="xstring" value="SMID_boolean"/>
+<config key="mapping.priority_Internals">
+<entry key="SettingsModelID" type="xstring" value="SMID_multifilter"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
-<entry key="mapping.priority.enabled" type="xboolean" value="false"/>
 <config key="mapping.priority.radio_Internals">
 <entry key="SettingsModelID" type="xstring" value="SMID_string"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
 <entry key="mapping.priority.radio" type="xstring" value="Trivial"/>
-<config key="mapping.priority_Internals">
-<entry key="SettingsModelID" type="xstring" value="SMID_multifilter"/>
+<config key="mapping.priority.enabled_Internals">
+<entry key="SettingsModelID" type="xstring" value="SMID_boolean"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
+<entry key="mapping.priority.enabled" type="xboolean" value="false"/>
 <config key="mapping.priority.Major">
 <entry key="array-size" type="xint" value="1"/>
 <entry key="0" type="xstring" value="Major"/>
@@ -52,20 +52,20 @@
 <config key="mapping.priority.excluded">
 <entry key="array-size" type="xint" value="0"/>
 </config>
-<config key="mapping.status.enabled_Internals">
-<entry key="SettingsModelID" type="xstring" value="SMID_boolean"/>
+<config key="mapping.status_Internals">
+<entry key="SettingsModelID" type="xstring" value="SMID_multifilter"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
-<entry key="mapping.status.enabled" type="xboolean" value="false"/>
 <config key="mapping.status.radio_Internals">
 <entry key="SettingsModelID" type="xstring" value="SMID_string"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
 <entry key="mapping.status.radio" type="xstring" value="Open"/>
-<config key="mapping.status_Internals">
-<entry key="SettingsModelID" type="xstring" value="SMID_multifilter"/>
+<config key="mapping.status.enabled_Internals">
+<entry key="SettingsModelID" type="xstring" value="SMID_boolean"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
+<entry key="mapping.status.enabled" type="xboolean" value="false"/>
 <config key="mapping.status.In progress">
 <entry key="array-size" type="xint" value="1"/>
 <entry key="0" type="xstring" value="In progress"/>
@@ -93,20 +93,20 @@
 <config key="mapping.status.excluded">
 <entry key="array-size" type="xint" value="0"/>
 </config>
-<config key="mapping.type.enabled_Internals">
-<entry key="SettingsModelID" type="xstring" value="SMID_boolean"/>
+<config key="mapping.type_Internals">
+<entry key="SettingsModelID" type="xstring" value="SMID_multifilter"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
-<entry key="mapping.type.enabled" type="xboolean" value="false"/>
 <config key="mapping.type.radio_Internals">
 <entry key="SettingsModelID" type="xstring" value="SMID_string"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
 <entry key="mapping.type.radio" type="xstring" value="Bug"/>
-<config key="mapping.type_Internals">
-<entry key="SettingsModelID" type="xstring" value="SMID_multifilter"/>
+<config key="mapping.type.enabled_Internals">
+<entry key="SettingsModelID" type="xstring" value="SMID_boolean"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
+<entry key="mapping.type.enabled" type="xboolean" value="false"/>
 <config key="mapping.type.Unknown">
 <entry key="array-size" type="xint" value="1"/>
 <entry key="0" type="xstring" value="Unknown"/>
@@ -126,20 +126,20 @@
 <config key="mapping.type.excluded">
 <entry key="array-size" type="xint" value="0"/>
 </config>
-<config key="mapping.resolution.enabled_Internals">
-<entry key="SettingsModelID" type="xstring" value="SMID_boolean"/>
+<config key="mapping.resolution_Internals">
+<entry key="SettingsModelID" type="xstring" value="SMID_multifilter"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
-<entry key="mapping.resolution.enabled" type="xboolean" value="false"/>
 <config key="mapping.resolution.radio_Internals">
 <entry key="SettingsModelID" type="xstring" value="SMID_string"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
 <entry key="mapping.resolution.radio" type="xstring" value="Invalid"/>
-<config key="mapping.resolution_Internals">
-<entry key="SettingsModelID" type="xstring" value="SMID_multifilter"/>
+<config key="mapping.resolution.enabled_Internals">
+<entry key="SettingsModelID" type="xstring" value="SMID_boolean"/>
 <entry key="EnabledStatus" type="xboolean" value="true"/>
 </config>
+<entry key="mapping.resolution.enabled" type="xboolean" value="false"/>
 <config key="mapping.resolution.Unresolved">
 <entry key="array-size" type="xint" value="1"/>
 <entry key="0" type="xstring" value="Unresolved"/>
@@ -189,7 +189,7 @@
 <config key="styles"/>
 </config>
 <entry key="customDescription" type="xstring" isnull="true" value=""/>
-<entry key="state" type="xstring" value="CONFIGURED"/>
+<entry key="state" type="xstring" value="EXECUTED"/>
 <entry key="factory" type="xstring" value="org.impressivecode.depress.its.jira.JiraAdapterNodeFactory"/>
 <entry key="node-name" type="xstring" value="Jira Adapter (Offline)"/>
 <entry key="node-bundle-name" type="xstring" value="ic-depress"/>
@@ -202,16 +202,19 @@
 <entry key="node-feature-version" type="xstring" value="0.0.0"/>
 <config key="factory_settings"/>
 <entry key="name" type="xstring" value="Jira Adapter (Offline)"/>
-<entry key="hasContent" type="xboolean" value="false"/>
+<entry key="hasContent" type="xboolean" value="true"/>
 <entry key="isInactive" type="xboolean" value="false"/>
 <config key="ports">
 <config key="port_1">
 <entry key="index" type="xint" value="1"/>
-<entry key="port_dir_location" type="xstring" isnull="true" value=""/>
+<entry key="port_spec_class" type="xstring" value="org.knime.core.data.DataTableSpec"/>
+<entry key="port_object_class" type="xstring" value="org.knime.core.node.BufferedDataTable"/>
+<entry key="port_object_summary" type="xstring" value="Rows: 42, Cols: 19"/>
+<entry key="port_dir_location" type="xstring" value="port_1"/>
 </config>
 </config>
 <config key="filestores">
 <entry key="file_store_location" type="xstring" isnull="true" value=""/>
-<entry key="file_store_id" type="xstring" isnull="true" value=""/>
+<entry key="file_store_id" type="xstring" value="7e095683-5535-4a22-a735-aa5fc9aa65a7"/>
 </config>
 </config>
