@@ -22,12 +22,18 @@ import static org.fest.assertions.Assertions.assertThat;
 import static org.impressivecode.depress.scm.SCMParserOptions.options;
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.annotation.Resource;
+
+import org.eclipse.core.runtime.FileLocator;
 import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.SCMParserOptions;
 import org.impressivecode.depress.scm.git.GitCommit;
@@ -45,15 +51,18 @@ import org.junit.Test;
  */
 public class GitOfflineLogParserTest {
 
-    private final static String logFilePath = GitOfflineLogParserTest.class.getResource("git-test-log.txt").getPath();
+    private final static URL logFileUrl = GitOfflineLogParserTest.class.getResource("git-test-log.txt");
+
+    private static String logFilePath;
     private GitOfflineLogParser parser;
 
     @Before
     public void setUp() throws Exception {
+        logFilePath = FileLocator.toFileURL(logFileUrl).toString();
         specificCommit();
     }
 
-    private GitCommit specificCommit() throws IOException, ParseException {
+    private GitCommit specificCommit() throws IOException, ParseException, URISyntaxException {
         ArrayList<String> ext = new ArrayList<String>();
         ext.add(".java");
         SCMParserOptions parserOptions = options("org.", ext);
@@ -66,7 +75,7 @@ public class GitOfflineLogParserTest {
         throw new IllegalStateException("Fail");
     }
 
-    private GitCommit specificCommit(ArrayList<String> ext) throws IOException, ParseException {
+    private GitCommit specificCommit(ArrayList<String> ext) throws IOException, ParseException, URISyntaxException {
         SCMParserOptions parserOptions = options("org.", ext);
         this.parser = new GitOfflineLogParser(parserOptions);
         for (GitCommit c : parser.parseEntries(logFilePath)) {
@@ -77,7 +86,7 @@ public class GitOfflineLogParserTest {
         throw new IllegalStateException("Fail");
     }
 
-    private GitCommit packageCommit(String packageName) throws IOException, ParseException {
+    private GitCommit packageCommit(String packageName) throws IOException, ParseException, URISyntaxException {
         ArrayList<String> ext = new ArrayList<String>();
         ext.add(".java");
         SCMParserOptions parserOptions = options(packageName, ext);
@@ -112,8 +121,8 @@ public class GitOfflineLogParserTest {
 
     @Test
     public void shouldSpecificCommitMessageMatch() throws Exception {
-        assertEquals("#9 base version of PO Metric introduced, #18 this is just matcher test", specificCommit()
-                .getMessage());
+        assertEquals("#9 base version of PO Metric introduced, #18 this is just matcher test",
+                specificCommit().getMessage());
     }
 
     @Test
@@ -123,15 +132,15 @@ public class GitOfflineLogParserTest {
 
     @Test
     public void shouldParseJavaFile() throws Exception {
-        assertThat(specificCommit().getFiles().get(0).getJavaClass()).isEqualTo(
-                "org.impressivecode.depress.metric.po.ChangeData");
+        assertThat(specificCommit().getFiles().get(0).getJavaClass())
+                .isEqualTo("org.impressivecode.depress.metric.po.ChangeData");
     }
 
     @Test
     public void shouldSpecificCommitFilesMatch() throws Exception {
 
-        assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java", specificCommit()
-                .getFiles().get(0).getPath());
+        assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeData.java",
+                specificCommit().getFiles().get(0).getPath());
         assertEquals(SCMOperation.ADDED, specificCommit().getFiles().get(1).getOperation());
 
         assertEquals("ic-depress-metric-po/src/org/impressivecode/depress/metric/po/ChangeHistoryTransformer.java",
@@ -162,16 +171,16 @@ public class GitOfflineLogParserTest {
     public void shouldCommitWithPackageMatch() throws Exception {
         assertThat(packageCommit("org.spring.").getFiles()).hasSize(0);
     }
-    
+
     @Test
     public void shouldCommitWithEmptyPackageMatch() throws Exception {
-    	assertEquals(4, packageCommit("").getFiles().size());
+        assertEquals(4, packageCommit("").getFiles().size());
     }
-    
+
     @Test
     public void shouldCommitWithEmptyExtensionMatch() throws Exception {
-    	ArrayList<String> ext = new ArrayList<String>();
-    	ext.add("");
-    	assertEquals(0, specificCommit(ext).getFiles().size());
+        ArrayList<String> ext = new ArrayList<String>();
+        ext.add("");
+        assertEquals(0, specificCommit(ext).getFiles().size());
     }
 }

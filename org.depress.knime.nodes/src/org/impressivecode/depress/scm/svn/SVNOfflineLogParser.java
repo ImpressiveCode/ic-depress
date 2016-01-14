@@ -22,6 +22,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +50,7 @@ import org.impressivecode.depress.scm.SCMOperation;
 import org.impressivecode.depress.scm.SCMParserOptions;
 import org.impressivecode.depress.scm.svn.SVNOfflineLogParser.SVNLog.Logentry;
 import org.impressivecode.depress.scm.svn.SVNOfflineLogParser.SVNLog.Logentry.Paths.Path;
+import org.knime.core.util.FileUtil;
 
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
@@ -64,7 +69,7 @@ public class SVNOfflineLogParser {
         this.parserOptions = checkNotNull(parserOptions, "Options has to be set");
     }
 
-    public List<SCMDataType> parseEntries(final String path) throws JAXBException, CloneNotSupportedException {
+    public List<SCMDataType> parseEntries(final String path) throws JAXBException, CloneNotSupportedException, IOException, URISyntaxException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
 
         List<SCMDataType> commitsList = parse(path, parserOptions);
@@ -73,10 +78,13 @@ public class SVNOfflineLogParser {
     }
 
     private List<SCMDataType> parse(final String path, final SCMParserOptions parserOptions) throws JAXBException,
-            CloneNotSupportedException {
+            CloneNotSupportedException, IOException, URISyntaxException {
         JAXBContext jaxbContext = JAXBContext.newInstance(SVNLog.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        SVNLog log = (SVNLog) unmarshaller.unmarshal(new File(path));
+        URL url = FileUtil.toURL(path);
+        java.nio.file.Path localPath = FileUtil.resolveToPath(url);
+        File file = localPath.toFile();
+        SVNLog log = (SVNLog) unmarshaller.unmarshal(new FileInputStream(file));
         return convertToSCMType(log, parserOptions);
     }
 
