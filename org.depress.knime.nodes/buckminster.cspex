@@ -5,6 +5,7 @@
         <!-- needed so that the KNIME_Documentation_Builder application is available 
              for the knime.create.helpfiles action. -->
         <dependency name="org.knime.workbench.help" componentType="osgi.bundle" />
+        <dependency name="org.knime.product" componentType="osgi.bundle" />
         <dependency name="com.google.guava" componentType="osgi.bundle" versionDesignator="16.0.0"/>
     </dependencies>
 	<actions>
