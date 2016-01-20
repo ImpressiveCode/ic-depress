@@ -196,7 +196,7 @@ END OF TERMS AND CONDITIONS
    </license>
 
    <plugin
-         id="org.impressivecode.depress"
+         id="org.depress.knime.nodes"
          download-size="0"
          install-size="0"
          version="0.0.0"/>

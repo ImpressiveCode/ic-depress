@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Testing
 Bundle-SymbolicName: org.depress.knime.testing;singleton:=true
 Bundle-Version: 2.0.0.qualifier
-Fragment-Host: org.impressivecode.depress;bundle-version="2.0.0"
+Fragment-Host: org.depress.knime.nodes;bundle-version="2.0.0.qualifier"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .,
  lib/mockito-all-1.9.5.jar,
