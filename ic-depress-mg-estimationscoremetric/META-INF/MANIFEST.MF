@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ic-depress-mg-estimationscoremetric
+Bundle-SymbolicName: org.impressivecode.depress.mg.estimationscoremetric;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ClassPath: plugin.jar
+Bundle-Activator: org.impressivecode.depress.mg.estimationscoremetric.EstimationScoreMetricNodePlugin
+Bundle-Vendor: Szymon Jasniak
+Export-Package: org.impressivecode.depress.mg.estimationscoremetric
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
+ org.knime.workbench.core;bundle-version="2.8.0",
+ org.knime.workbench.repository;bundle-version="2.8.0",
+ org.knime.base;bundle-version="2.8.0",
+ org.impressivecode.depress.base;bundle-version="1.0.0",
+ org.junit
+Import-Package: org.impressivecode.depress.common,
+ org.impressivecode.depress.data.anonymisation,
+ org.impressivecode.depress.mg.ipa,
+ org.impressivecode.depress.support.commonmarker
+Eclipse-RegisterBuddy: org.impressivecode.depress.base
+Eclipse-BuddyPolicy: registered

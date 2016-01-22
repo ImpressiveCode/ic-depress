@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<knimeNode icon="./default.png" type="Manipulator" xmlns="http://knime.org/node/v2.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://knime.org/node/v2.8 http://knime.org/node/v2.8.xsd">
+    <name>Estimation Score Metric</name>
+    
+    <shortDescription>
+        
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>A metric that calculates the relation between estimated time of an issue and actual time. As output it gives: a table with numbers of correct, over and under estimated tasks per class and 2 metrics: Estimation Score and Weight Estimation Score.
+        <p>
+        For each issue connected to a class, the relation of time spent to time estimated is calculated. If an issue was finished in less time than predicted, the value will be lower than 1, othwerise it will be greater.
+        Based on this value, correct estimate margin and high over\under estimate margin, the issue is put to on of five groups: High Over Estimated, Low Over Estimated, Correctly Estimated, Low Under Estimated and High Under Estimated. 
+        
+        If the value is less than 1 the issue goes to one of the 2 first groups, otherwise to the last ones.
+        </p>
+        <p>
+        Furthermore the Estimation Score is calculated - it is the relation of correctly estimated issues per class to all issues for this class.
+        </p>
+        <p>
+        Weight Estimation Score gives a greater value to High Under and Over estimated issues, the number of them within all issues is multiplied by the wieight score for high values value.
+        </p>
+        </intro>
+        <option name="Correct estimate margin">A percent margin indicating when the relation of time spent to time estimated fits into the correct estimated issues. The relation value has to be no lower than 1*(100%-correct estimate margin[%]) and no greater than 1+1*correct estimate margin[%].
+        If the value is lower, the issue is classified as low over estimated and if it is higher it is low under estimated.</option>
+        
+        <option name="High over\under estimate margin">Calculated the same as correct estimate margin. Classifies an issue as high under estimated if the relation has a lower value or as high under estimated if the relation has a greater value.</option>
+        <option name="Weight score for high values">A value for calculating Weight Estimation Score.</option>
+        
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="IPA Data">Data taken from Issues per Artefact node, that contains Artefacts(classes) and a list of Issues connected to each class.
+        </inPort>
+        <inPort index="1" name="ITS Data">Issue Tracking System data, could be retrieved from any ITS extension, should
+            consists at least from IssueId column.
+        </inPort>
+        <outPort index="0" name="Metric results">Data table with computed High Over Estimated, Low Over Estimated, Correctly Estimated, Low Under Estimated, Low Over Estimated, Estimation Score, Estimation Weight Score</outPort>
+    </ports>   
+</knimeNode>

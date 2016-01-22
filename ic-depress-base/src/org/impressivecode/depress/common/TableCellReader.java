@@ -27,12 +27,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.impressivecode.depress.its.ITSAdapterTableFactory;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.collection.SetCell;
 import org.knime.core.data.date.DateAndTimeCell;
+import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 
 import com.google.common.base.Function;
@@ -69,7 +71,14 @@ public final class TableCellReader {
     public String stringOptional(final String colName) {
         return optionalData(colName) ? null :  string(colName);
     }
+    
+    public Integer intOptional(final String colName) {
+        return optionalData(colName) ? null :  intValue(colName);
+    }
 
+    public Integer intValue(final String colName) {
+        return ((IntCell) row.getCell(spec.findColumnIndex(colName))).getIntValue();
+    }
     public Calendar date(final String colName) {
         return ((DateAndTimeCell) row.getCell(spec.findColumnIndex(colName))).getUTCCalendarClone();
     }
