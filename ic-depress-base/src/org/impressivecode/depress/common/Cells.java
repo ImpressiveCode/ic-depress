@@ -115,6 +115,14 @@ public class Cells {
         }));
         return CollectionCellFactory.createSetCell(coll);
     }
+    
+    public static DataCell stringSetCellOrMissing(final Set<String> stringList) {
+    	 if (stringList == null || stringList.isEmpty()) {
+             return DataType.getMissingCell();
+         } else {
+             return stringSetCell(stringList);
+         }
+    }
 
     public static DataCell dateTimeOrMissingCell(final Date value) {
         return value == null ? DataType.getMissingCell() : dateTimeCell(value);

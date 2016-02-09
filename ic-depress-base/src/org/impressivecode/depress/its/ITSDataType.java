@@ -49,6 +49,8 @@ public class ITSDataType {
      */
     private Set<String> assignees = Collections.emptySet();
     private Set<String> commentAuthors = Collections.emptySet();
+	private String parentId;
+	private Set<String> labels;
 
     public String getIssueId() {
         return issueId;
@@ -201,129 +203,167 @@ public class ITSDataType {
     public void setTimeSpent(final Integer timeSpent) {
         this.timeSpent = timeSpent;
     }
+    
 
-    @Override
-    public String toString() {
-        return String
-                .format("ITSDataType [issueId=%s, created=%s, updated=%s, resolved=%s, status=%s, type=%s, version=%s, fixVersion=%s, priority=%s, summary=%s, link=%s, description=%s, comments=%s, resolution=%s, reporter=%s, assignees=%s, commentAuthors=%s, timeEstimate=%d, timeSpent=%d]",
-                        issueId, created, updated, resolved, status, type, version, fixVersion, priority, summary,
-                        link, description, comments, resolution, reporter, assignees, commentAuthors, timeEstimate,
-                        timeSpent);
-    }
+	public void setParentId(String parent) {
+		this.parentId = parent;
+	}
+	
+	public String getParentId(){
+		return parentId;
+	}
+	
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((assignees == null) ? 0 : assignees.hashCode());
-        result = prime * result + ((commentAuthors == null) ? 0 : commentAuthors.hashCode());
-        result = prime * result + ((comments == null) ? 0 : comments.hashCode());
-        result = prime * result + ((created == null) ? 0 : created.hashCode());
-        result = prime * result + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + ((fixVersion == null) ? 0 : fixVersion.hashCode());
-        result = prime * result + ((issueId == null) ? 0 : issueId.hashCode());
-        result = prime * result + ((link == null) ? 0 : link.hashCode());
-        result = prime * result + ((priority == null) ? 0 : priority.hashCode());
-        result = prime * result + ((reporter == null) ? 0 : reporter.hashCode());
-        result = prime * result + ((resolution == null) ? 0 : resolution.hashCode());
-        result = prime * result + ((resolved == null) ? 0 : resolved.hashCode());
-        result = prime * result + ((status == null) ? 0 : status.hashCode());
-        result = prime * result + ((summary == null) ? 0 : summary.hashCode());
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
-        result = prime * result + ((updated == null) ? 0 : updated.hashCode());
-        result = prime * result + ((version == null) ? 0 : version.hashCode());
-        result = prime * result + ((version == null) ? 0 : timeEstimate.hashCode());
-        result = prime * result + ((version == null) ? 0 : timeSpent.hashCode());
-        return result;
-    }
+	public void setLabels(Set<String> labels) {
+		this.labels = labels;
+	}
+	
+	public Set<String> getLabels() {
+		return this.labels;
+	}
 
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        ITSDataType other = (ITSDataType) obj;
-        if (assignees == null) {
-            if (other.assignees != null)
-                return false;
-        } else if (!assignees.equals(other.assignees))
-            return false;
-        if (commentAuthors == null) {
-            if (other.commentAuthors != null)
-                return false;
-        } else if (!commentAuthors.equals(other.commentAuthors))
-            return false;
-        if (comments == null) {
-            if (other.comments != null)
-                return false;
-        } else if (!comments.equals(other.comments))
-            return false;
-        if (created == null) {
-            if (other.created != null)
-                return false;
-        } else if (!created.equals(other.created))
-            return false;
-        if (description == null) {
-            if (other.description != null)
-                return false;
-        } else if (!description.equals(other.description))
-            return false;
-        if (fixVersion == null) {
-            if (other.fixVersion != null)
-                return false;
-        } else if (!fixVersion.equals(other.fixVersion))
-            return false;
-        if (issueId == null) {
-            if (other.issueId != null)
-                return false;
-        } else if (!issueId.equals(other.issueId))
-            return false;
-        if (link == null) {
-            if (other.link != null)
-                return false;
-        } else if (!link.equals(other.link))
-            return false;
-        if (priority != other.priority)
-            return false;
-        if (reporter == null) {
-            if (other.reporter != null)
-                return false;
-        } else if (!reporter.equals(other.reporter))
-            return false;
-        if (resolution != other.resolution)
-            return false;
-        if (resolved == null) {
-            if (other.resolved != null)
-                return false;
-        } else if (!resolved.equals(other.resolved))
-            return false;
-        if (status != other.status)
-            return false;
-        if (summary == null) {
-            if (other.summary != null)
-                return false;
-        } else if (!summary.equals(other.summary))
-            return false;
-        if (type != other.type)
-            return false;
-        if (updated == null) {
-            if (other.updated != null)
-                return false;
-        } else if (!updated.equals(other.updated))
-            return false;
-        if (version == null) {
-            if (other.version != null)
-                return false;
-        } else if (!version.equals(other.version))
-            return false;
-        if (timeEstimate != other.timeEstimate)
-            return false;
-        if (timeSpent != other.timeSpent)
-            return false;
-        return true;
-    }
+	@Override
+	public String toString() {
+		return "ITSDataType [issueId=" + issueId + ", created=" + created + ", updated=" + updated + ", resolved="
+				+ resolved + ", status=" + status + ", type=" + type + ", version=" + version + ", fixVersion="
+				+ fixVersion + ", priority=" + priority + ", summary=" + summary + ", link=" + link + ", description="
+				+ description + ", comments=" + comments + ", resolution=" + resolution + ", reporter=" + reporter
+				+ ", timeEstimate=" + timeEstimate + ", timeSpent=" + timeSpent + ", assignees=" + assignees
+				+ ", commentAuthors=" + commentAuthors + ", parentId=" + parentId + ", labels=" + labels + "]";
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((assignees == null) ? 0 : assignees.hashCode());
+		result = prime * result + ((commentAuthors == null) ? 0 : commentAuthors.hashCode());
+		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
+		result = prime * result + ((created == null) ? 0 : created.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((fixVersion == null) ? 0 : fixVersion.hashCode());
+		result = prime * result + ((issueId == null) ? 0 : issueId.hashCode());
+		result = prime * result + ((labels == null) ? 0 : labels.hashCode());
+		result = prime * result + ((link == null) ? 0 : link.hashCode());
+		result = prime * result + ((parentId == null) ? 0 : parentId.hashCode());
+		result = prime * result + ((priority == null) ? 0 : priority.hashCode());
+		result = prime * result + ((reporter == null) ? 0 : reporter.hashCode());
+		result = prime * result + ((resolution == null) ? 0 : resolution.hashCode());
+		result = prime * result + ((resolved == null) ? 0 : resolved.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
+		result = prime * result + ((timeEstimate == null) ? 0 : timeEstimate.hashCode());
+		result = prime * result + ((timeSpent == null) ? 0 : timeSpent.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((updated == null) ? 0 : updated.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ITSDataType other = (ITSDataType) obj;
+		if (assignees == null) {
+			if (other.assignees != null)
+				return false;
+		} else if (!assignees.equals(other.assignees))
+			return false;
+		if (commentAuthors == null) {
+			if (other.commentAuthors != null)
+				return false;
+		} else if (!commentAuthors.equals(other.commentAuthors))
+			return false;
+		if (comments == null) {
+			if (other.comments != null)
+				return false;
+		} else if (!comments.equals(other.comments))
+			return false;
+		if (created == null) {
+			if (other.created != null)
+				return false;
+		} else if (!created.equals(other.created))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (fixVersion == null) {
+			if (other.fixVersion != null)
+				return false;
+		} else if (!fixVersion.equals(other.fixVersion))
+			return false;
+		if (issueId == null) {
+			if (other.issueId != null)
+				return false;
+		} else if (!issueId.equals(other.issueId))
+			return false;
+		if (labels == null) {
+			if (other.labels != null)
+				return false;
+		} else if (!labels.equals(other.labels))
+			return false;
+		if (link == null) {
+			if (other.link != null)
+				return false;
+		} else if (!link.equals(other.link))
+			return false;
+		if (parentId == null) {
+			if (other.parentId != null)
+				return false;
+		} else if (!parentId.equals(other.parentId))
+			return false;
+		if (priority != other.priority)
+			return false;
+		if (reporter == null) {
+			if (other.reporter != null)
+				return false;
+		} else if (!reporter.equals(other.reporter))
+			return false;
+		if (resolution != other.resolution)
+			return false;
+		if (resolved == null) {
+			if (other.resolved != null)
+				return false;
+		} else if (!resolved.equals(other.resolved))
+			return false;
+		if (status != other.status)
+			return false;
+		if (summary == null) {
+			if (other.summary != null)
+				return false;
+		} else if (!summary.equals(other.summary))
+			return false;
+		if (timeEstimate == null) {
+			if (other.timeEstimate != null)
+				return false;
+		} else if (!timeEstimate.equals(other.timeEstimate))
+			return false;
+		if (timeSpent == null) {
+			if (other.timeSpent != null)
+				return false;
+		} else if (!timeSpent.equals(other.timeSpent))
+			return false;
+		if (type != other.type)
+			return false;
+		if (updated == null) {
+			if (other.updated != null)
+				return false;
+		} else if (!updated.equals(other.updated))
+			return false;
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
+		return true;
+	}
+
+   
 }

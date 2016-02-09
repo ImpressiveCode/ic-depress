@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -119,28 +120,52 @@ public class JiraEntriesParser {
         data.setCommentAuthors(getCommentAuthors(elem));
         data.setTimeEstimate(getTimeEstimate(elem));
         data.setTimeSpent(getTimeSpent(elem));
+        data.setParentId(getParent(elem));
+        data.setLabels(getLabels(elem));
         return data;
     }
 
-    private Integer getTimeSpent(final Element elem) {
-        NodeList nodeList = elem.getElementsByTagName("timespent");
-        if (null == nodeList.item(0)) {
-            return null;
-        }
-        String stringTime = nodeList.item(0).getAttributes().getNamedItem("seconds").getTextContent();
-        Integer time = Integer.valueOf(stringTime) / 60;
-        return time;
+    private Set<String> getLabels(Element elem) {
+		return new HashSet<String>(extractValues(elem, "label"));
+	}
+
+	private String getParent(Element elem) {
+    	return extractValue(elem, "parent");
+	}
+
+	private Integer getTimeSpent(final Element elem) {
+    	Element spent = null;
+		if (extractValues(elem, "subtask").size() > 0) {
+			spent = extractElement(elem, "aggregatetimespent");
+		} else {
+			spent = extractElement(elem, "timespent");
+		}
+
+		if (spent == null) {
+			return null;
+		} else {
+			String stringTime = spent.getAttributes().getNamedItem("seconds").getTextContent();
+			int time = Integer.valueOf(stringTime) / 60;
+			return time;
+		}
     }
 
-    private Integer getTimeEstimate(final Element elem) {
-        NodeList nodeList = elem.getElementsByTagName("timeoriginalestimate");
-        if (null == nodeList.item(0)) {
-            return null;
-        }
-        String stringTime = nodeList.item(0).getAttributes().getNamedItem("seconds").getTextContent();
-        int time = Integer.valueOf(stringTime) / 60;
-        return time;
-    }
+	private Integer getTimeEstimate(final Element elem) {
+		Element original = null;
+		if (extractValues(elem, "subtask").size() > 0) {
+			original = extractElement(elem, "aggregatetimeoriginalestimate");
+		} else {
+			original = extractElement(elem, "timeoriginalestimate");
+		}
+
+		if (original == null) {
+			return null;
+		} else {
+			String stringTime = original.getAttributes().getNamedItem("seconds").getTextContent();
+			int time = Integer.valueOf(stringTime) / 60;
+			return time;
+		}
+	}
 
     private Set<String> getCommentAuthors(final Element elem) {
         NodeList nodeList = elem.getElementsByTagName("comment");
@@ -267,7 +292,7 @@ public class JiraEntriesParser {
         int size = nodeList.getLength();
         List<String> values = Lists.newLinkedList();
         for (int i = 0; i < size; i++) {
-            String value = nodeToString(nodeList.item(i)).replaceAll("\\<.*?>","");
+            String value = nodeToString(nodeList.item(i)).replaceAll("\\<.*?>","").trim();
             values.add(value);
         }
         return values;
@@ -298,6 +323,16 @@ public class JiraEntriesParser {
         String value = nodeToString(nodeList.item(0)).replaceAll("\\<.*?>","");
         return value == null ? null : value.trim();
     }
+    
+    private Element extractElement(final Element elem, final String tagName){
+    	NodeList nodeList = elem.getElementsByTagName(tagName);
+    	if (nodeList.getLength() == 0) {
+             return null;
+        } else {
+        	return (Element)nodeList.item(0);
+        }
+    }
+    
     private Date parseDate(final String nodeValue) throws ParseException {
         // Mon, 16 Feb 2004 00:29:19 +0000
         // FIXME majchmar: fix time parsing, timezone
