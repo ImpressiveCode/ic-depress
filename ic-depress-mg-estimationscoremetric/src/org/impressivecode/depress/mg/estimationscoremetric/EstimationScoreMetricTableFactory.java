@@ -16,8 +16,10 @@ public class EstimationScoreMetricTableFactory {
 	 public static final String CORRECTLY_ESTIMATED = "Correctly Estimated";
 	 public static final String UNDER_ESTIMATED_LOW = "Under Estimated Low";
 	 public static final String UNDER_ESTIMATED_HIGH = "Under Estimated High";
-	 public static final String ESTIMATION_SCORE = "Estimation Score";
-	 public static final String WEIGHT_SCORE = "Weight Estimation Score";
+	 public static final String ESTIMATION_SCORE = "US_ESM";
+	 public static final String WEIGHT_SCORE1 = "US_WESM1";
+	 public static final String WEIGHT_SCORE2 = "US_WESM2";
+	 public static final String WEIGHT_SCORE3 = "US_WESM3";
 	 public static final String MEAN = "Mean";
 	 public static final String VARIANCE = "Variance";
 	 public static final String DEVATION = "Standart deviation";
@@ -39,7 +41,9 @@ public class EstimationScoreMetricTableFactory {
 	                new DataColumnSpecCreator(UNDER_ESTIMATED_LOW, IntCell.TYPE).createSpec(),
 	                new DataColumnSpecCreator(UNDER_ESTIMATED_HIGH, IntCell.TYPE).createSpec(),
 	                new DataColumnSpecCreator(ESTIMATION_SCORE, DoubleCell.TYPE).createSpec(),
-	                new DataColumnSpecCreator(WEIGHT_SCORE, DoubleCell.TYPE).createSpec()};
+	                new DataColumnSpecCreator(WEIGHT_SCORE1, DoubleCell.TYPE).createSpec(),
+	                new DataColumnSpecCreator(WEIGHT_SCORE2, DoubleCell.TYPE).createSpec(),
+	                new DataColumnSpecCreator(WEIGHT_SCORE3, DoubleCell.TYPE).createSpec()};
 	        DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
 	        return outputSpec;
 	    }
@@ -48,6 +52,8 @@ public class EstimationScoreMetricTableFactory {
 	        DataRow row;
 	        if(metric.getNumberOfIssues()==0){
 	        	DataCell[] cells = { 
+		        		new MissingCell("?"),
+		        		new MissingCell("?"),
 		        		new MissingCell("?"),
 		        		new MissingCell("?"),
 		        		new MissingCell("?"),
@@ -65,8 +71,10 @@ public class EstimationScoreMetricTableFactory {
 	        		new IntCell(metric.getCorrectEstimate()),
 	        		new IntCell(metric.getLowUnderEstimate()),
 	        		new IntCell(metric.getHighUnderEstimate()),
-	        		new DoubleCell(metric.getEstimationScore()),
-	        		new DoubleCell(metric.getWeightEstimationScore())
+	        		new DoubleCell(metric.getEsm()),
+	        		new DoubleCell(metric.getWesm1()),
+	        		new DoubleCell(metric.getWesm2()),
+	        		new DoubleCell(metric.getWesm3())
 	                };
 	        row = new DefaultRow(metric.getClassName(), cells);
 	        }

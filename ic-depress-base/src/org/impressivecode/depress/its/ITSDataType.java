@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+
 /**
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
@@ -365,5 +366,4 @@ public class ITSDataType {
 		return true;
 	}
 
-   
 }

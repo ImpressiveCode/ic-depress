@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.impressivecode.depress.its.ITSDataType;
 import org.impressivecode.depress.mg.ipa.IssuesMetricType;
@@ -13,7 +14,7 @@ import com.google.common.collect.Maps;
 
 public class EstimationScoreMetricProcessor {
 	private Map<String, ITSDataType> issues;
-	private Map<String, List<ITSDataType>> ipa;
+	private Map<String, Set<ITSDataType>> ipa;
 	private Integer low;
 	private Integer high;
 	private static Double highOverEstimate;
@@ -42,8 +43,10 @@ public class EstimationScoreMetricProcessor {
 			EstimationScoreMetricType metric = new EstimationScoreMetricType();
 			metric.setClassName(className);
 			boolean ifExistsIssue = false;
+			List<ITSDataType> wesmIssues = new ArrayList<ITSDataType>();
 			for (ITSDataType itsType : ipa.get(className)) {
 				ITSDataType issue = issues.get(itsType.getIssueId());
+				wesmIssues.add(issue);
 				if (issue.getTimeEstimate() != null
 						&& issue.getTimeSpent() != null
 						&& issue.getTimeEstimate() != 0
@@ -58,6 +61,10 @@ public class EstimationScoreMetricProcessor {
 			}
 			if (ifExistsIssue) {
 				metric.evaluate();
+				metric.setESM(new ESMProcessor().computeMetric(wesmIssues));
+				metric.setWESM1(new WESM1Processor().computeMetric(wesmIssues));
+				metric.setWESM2(new WESM2Processor().computeMetric(wesmIssues));
+				metric.setWESM3(new WESM3Processor().computeMetric(wesmIssues));
 				metricResult.add(metric);
 			}
 		}
@@ -89,11 +96,11 @@ public class EstimationScoreMetricProcessor {
 		return issuesMap;
 	}
 
-	private static Map<String, List<ITSDataType>> convertIPA2Map(
+	private static Map<String, Set<ITSDataType>> convertIPA2Map(
 			final List<IssuesMetricType> listOfIpa) {
-		Map<String, List<ITSDataType>> ipaMap = Maps.newHashMap();
+		Map<String, Set<ITSDataType>> ipaMap = Maps.newHashMap();
 		for (IssuesMetricType imt : listOfIpa) {
-			ipaMap.put(imt.getResourceName(), imt.getIssues());
+			ipaMap.put(imt.getResourceName(), imt.getUniqueIssues());
 		}
 		return ipaMap;
 	}

@@ -18,7 +18,9 @@
 package org.impressivecode.depress.mg.ipa;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.impressivecode.depress.its.ITSDataType;
 
@@ -44,6 +46,10 @@ public class IssuesMetricType {
     public List<ITSDataType> getIssues() {
         return issues;
     }
+    
+	public Set<ITSDataType> getUniqueIssues() {
+		return new HashSet<ITSDataType>(this.issues);
+	}
 
     public void setIssues(final List<ITSDataType> issues) {
         this.issues = issues;
@@ -53,4 +59,6 @@ public class IssuesMetricType {
     public String toString() {
         return String.format("NoIDataType [className=%s, issues=%s]", className, Iterables.toString(issues));
     }
+
+
 }

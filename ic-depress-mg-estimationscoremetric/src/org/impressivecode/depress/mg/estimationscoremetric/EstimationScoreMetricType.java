@@ -17,6 +17,14 @@ public class EstimationScoreMetricType {
 	private Double estimationScore = 0.0;
 	private Double weightEstimationScore = 0.0;
 
+	private Double wesm2;
+
+	private Double wesm3;
+
+	private Double wesm1;
+
+	private Double ems;
+
 	public EstimationScoreMetricType() {
 		super();
 
@@ -133,6 +141,40 @@ public class EstimationScoreMetricType {
 
 	public Integer getNumberOfIssues() {
 		return numberOfIssues;
+	}
+
+	public void setESM(Double esm) {
+		this.ems = esm;
+	}
+	
+	public Double getEsm() {
+		return ems;
+	}
+	
+	public void setWESM1(Double wesm1) {
+		this.wesm1 = wesm1;
+	}
+	
+	public Double getWesm1() {
+		return wesm1;
+	}
+	
+	
+	
+	public void setWESM2(Double wesm2) {
+		this.wesm2 = wesm2;
+	}
+	
+	public Double getWesm2() {
+		return wesm2;
+	}
+	
+	public void setWESM3(Double wesm3) {
+		this.wesm3 = wesm3;
+	}
+	
+	public Double getWesm3() {
+		return wesm3;
 	}
 
 }
