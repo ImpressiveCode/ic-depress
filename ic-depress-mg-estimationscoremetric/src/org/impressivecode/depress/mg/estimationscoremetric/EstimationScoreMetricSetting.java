@@ -4,8 +4,9 @@ package org.impressivecode.depress.mg.estimationscoremetric;
 public class EstimationScoreMetricSetting {
 
 	public static enum StorySize {
-		SMALL(3, 1.0, 0.5, 1.0), MEDIUM(7, 1.5, 0.3, 0.6), BIG(100, 3.0, 0.2, 0.4);
-
+		//SMALL(3, 1.0, 0.5, 1.0), MEDIUM(7, 1.5, 0.3, 0.6), BIG(100, 3.0, 0.2, 0.4);
+		SMALL(3, 1.0, 0.5, 1.0), MEDIUM(7, 2.0, 0.3, 0.6), BIG(100, 4.0, 0.2, 0.4);
+		
 		private Integer sizeInDays;
 		private Double weight;
 		private Double difM;
@@ -79,7 +80,8 @@ public class EstimationScoreMetricSetting {
 	}
 
 	public static enum EstimationResult {
-		OVER_ESTIMATE(0.5), CORRECT_ESTIMATE(1.0), UNDER_ESTIMATE(1.0);
+		//OVER_ESTIMATE(0.5), CORRECT_ESTIMATE(1.0), UNDER_ESTIMATE(1.0);
+		OVER_ESTIMATE(0.5), CORRECT_ESTIMATE(1.0), UNDER_ESTIMATE(2.0);
 
 		private Double weight;
 
