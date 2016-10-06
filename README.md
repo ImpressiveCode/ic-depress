@@ -5,9 +5,8 @@ Defect Prediction in Software Systems (DePress) Extensible Framework  allows bui
 # Project Information
 
 ## Issue Tracking
-DePress uses JIRA for tracking issues. See the DePress JIRA project page: https://depress.atlassian.net/browse/DEP
+DePress uses GitHub for tracking issues. Use https://github.com/ImpressiveCode/ic-depress/issues
 
-To use JIRA you may need to create an account. 
 If you would like to report a bug or raise an enhancement request with DePress please do the following:
 Search existing open bugs. If you find your issue listed then please add a comment with your details.
 Search the wiki and home page. You may find your issue or idea has already been discussed.
