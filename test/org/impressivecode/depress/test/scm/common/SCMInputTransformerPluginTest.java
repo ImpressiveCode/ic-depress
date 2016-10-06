@@ -31,7 +31,7 @@ import org.knime.core.node.InvalidSettingsException;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class SCMInputTransformerTest {
+public class SCMInputTransformerPluginTest {
 
     @Test(expected = InvalidSettingsException.class)
     public void shouldValidateSpec() throws InvalidSettingsException {

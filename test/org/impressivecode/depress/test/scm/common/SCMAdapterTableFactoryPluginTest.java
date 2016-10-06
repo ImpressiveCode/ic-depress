@@ -45,7 +45,7 @@ import org.knime.core.data.DataTableSpec;
  * @author Marek Majchrzak, ImpressiveCode
  * 
  */
-public class SCMAdapterTableFactoryTest {
+public class SCMAdapterTableFactoryPluginTest {
 
     @Test
     public void shouldCreateDataColumnSpec() {
