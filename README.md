@@ -18,8 +18,6 @@ Please also remember these points:
  - test cases are vital, attach the knime workflow and data
 
 
-*Please do not use GitHub Issues for enhancement request and bugs.*
-
 Visit our webpage: http://impressivecode.github.io/ic-depress/
 
 ## License
