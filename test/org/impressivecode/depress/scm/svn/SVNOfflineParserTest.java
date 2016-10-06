@@ -1,4 +1,4 @@
-package org.impressivecode.depress.test.scm.svn;
+package org.impressivecode.depress.scm.svn;
 
 import static org.fest.assertions.Assertions.assertThat;
 

@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.impressivecode.depress.test.scm.common;
+package org.impressivecode.depress.scm.common;
 
 import org.impressivecode.depress.scm.common.SCMAdapterTableFactory;
 import org.impressivecode.depress.scm.common.SCMInputTransformer;

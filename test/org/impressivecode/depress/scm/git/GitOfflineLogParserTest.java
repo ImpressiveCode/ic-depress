@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.impressivecode.depress.test.scm.git;
+package org.impressivecode.depress.scm.git;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.impressivecode.depress.scm.common.SCMParserOptions.options;
