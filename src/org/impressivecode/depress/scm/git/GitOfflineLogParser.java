@@ -30,8 +30,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
-import org.impressivecode.depress.scm.SCMExtensionsParser;
-import org.impressivecode.depress.scm.SCMParserOptions;
+import org.impressivecode.depress.scm.common.SCMExtensionsParser;
+import org.impressivecode.depress.scm.common.SCMParserOptions;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;

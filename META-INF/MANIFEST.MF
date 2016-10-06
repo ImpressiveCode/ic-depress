@@ -19,5 +19,4 @@ Bundle-ClassPath: lib/guava-14.0-rc3.jar,
  ic-depress.jar
 Import-Package: org.knime.base.node.util
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.impressivecode.depress.ImpressiveCodePlugin
 Export-Package: org.impressivecode.depress

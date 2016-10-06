@@ -41,9 +41,9 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.impressivecode.depress.scm.SCMDataType;
-import org.impressivecode.depress.scm.SCMOperation;
-import org.impressivecode.depress.scm.SCMParserOptions;
+import org.impressivecode.depress.scm.common.SCMDataType;
+import org.impressivecode.depress.scm.common.SCMOperation;
+import org.impressivecode.depress.scm.common.SCMParserOptions;
 import org.impressivecode.depress.scm.svn.SVNOfflineLogParser.SVNLog.Logentry;
 import org.impressivecode.depress.scm.svn.SVNOfflineLogParser.SVNLog.Logentry.Paths.Path;
 
