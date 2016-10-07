@@ -18,7 +18,20 @@ Please also remember these points:
  - test cases are vital, attach the knime workflow and data
 
 
-Visit our webpage: http://impressivecode.github.io/ic-depress/
+Visit our webpage: www.depress.io
+
+## How to Contribute to DePress
+
+Please refer to http://impressivecode.github.io/ic-depress/#/contribute
+
+In short the change process consists of following steps:
+* (dev)Fork the ic-depress github repo.
+* (dev)The changes could be only done on the development branch.
+* (dev)Push to the remote repository.
+* (dev)Pull request to ImpressiveCode/ic-depress.
+* (reviewer) Pull request review and review.
+* (reviewer) Pull request ImpressiveCode/ic-depress@development -> ImpressiveCode/ic-depress@master
+* (reviewer) Pull request ImpressiveCode/ic-depress@master -> ImpressiveCode/ic-depress@knime_contribution
 
 ## License
 Copyright (C) 2013 ImpressiveCode (http://impressivecode.org)
