@@ -9,7 +9,6 @@
 	<classpathentry kind="lib" path="lib/class-model-2.2.0-b23.jar"/>
 	<classpathentry kind="lib" path="lib/config-types-2.2.0-b23.jar"/>
 	<classpathentry kind="lib" path="lib/core-2.2.0-b23.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/guava-14.0-rc3.jar"/>
 	<classpathentry kind="lib" path="lib/hk2-2.2.0-b23.jar"/>
 	<classpathentry kind="lib" path="lib/hk2-api-2.2.0-b23.jar"/>
 	<classpathentry kind="lib" path="lib/hk2-config-2.2.0-b23.jar"/>

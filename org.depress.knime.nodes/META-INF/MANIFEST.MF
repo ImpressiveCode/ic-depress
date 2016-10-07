@@ -8,7 +8,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.ui;bundle-version="[3.7.0,4.0.0)",
  org.knime.base;bundle-version="[3.0.0,4.0.0)",
  org.knime.workbench.repository;bundle-version="[3.0.0,4.0.0)",
- org.knime.ext.svg;bundle-version="[3.0.0,4.0.0)"
+ org.knime.ext.svg;bundle-version="[3.0.0,4.0.0)",
+ com.google.guava;bundle-version="16.0.1"
 Eclipse-RegisterBuddy: registered
 Bundle-ClassPath: ic-depress.jar
 Import-Package: 
