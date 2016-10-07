@@ -1,0 +1,1529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.knime.org/2008/09/XMLConfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.knime.org/2008/09/XMLConfig http://www.knime.org/XMLConfig_2008_09.xsd" key="spec.xml">
+<entry key="spec_name" type="xstring" value="default"/>
+<entry key="number_columns" type="xint" value="19"/>
+<config key="column_spec_0">
+<entry key="column_name" type="xstring" value="ID"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<config key="column_domain">
+<config key="possible_values">
+<entry key="array-size" type="xint" value="42"/>
+<config key="0">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-724"/>
+</config>
+</config>
+<config key="1">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-723"/>
+</config>
+</config>
+<config key="2">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-719"/>
+</config>
+</config>
+<config key="3">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-692"/>
+</config>
+</config>
+<config key="4">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-654"/>
+</config>
+</config>
+<config key="5">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-640"/>
+</config>
+</config>
+<config key="6">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-618"/>
+</config>
+</config>
+<config key="7">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-588"/>
+</config>
+</config>
+<config key="8">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-575"/>
+</config>
+</config>
+<config key="9">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-555"/>
+</config>
+</config>
+<config key="10">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-540"/>
+</config>
+</config>
+<config key="11">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-506"/>
+</config>
+</config>
+<config key="12">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-505"/>
+</config>
+</config>
+<config key="13">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-484"/>
+</config>
+</config>
+<config key="14">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-481"/>
+</config>
+</config>
+<config key="15">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-465"/>
+</config>
+</config>
+<config key="16">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-464"/>
+</config>
+</config>
+<config key="17">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-453"/>
+</config>
+</config>
+<config key="18">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-434"/>
+</config>
+</config>
+<config key="19">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-429"/>
+</config>
+</config>
+<config key="20">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-421"/>
+</config>
+</config>
+<config key="21">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-414"/>
+</config>
+</config>
+<config key="22">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-411"/>
+</config>
+</config>
+<config key="23">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-409"/>
+</config>
+</config>
+<config key="24">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-408"/>
+</config>
+</config>
+<config key="25">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-407"/>
+</config>
+</config>
+<config key="26">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-406"/>
+</config>
+</config>
+<config key="27">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-405"/>
+</config>
+</config>
+<config key="28">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-404"/>
+</config>
+</config>
+<config key="29">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-395"/>
+</config>
+</config>
+<config key="30">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-392"/>
+</config>
+</config>
+<config key="31">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-391"/>
+</config>
+</config>
+<config key="32">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-390"/>
+</config>
+</config>
+<config key="33">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-380"/>
+</config>
+</config>
+<config key="34">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-377"/>
+</config>
+</config>
+<config key="35">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-373"/>
+</config>
+</config>
+<config key="36">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-369"/>
+</config>
+</config>
+<config key="37">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-368"/>
+</config>
+</config>
+<config key="38">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-367"/>
+</config>
+</config>
+<config key="39">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-365"/>
+</config>
+</config>
+<config key="40">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-362"/>
+</config>
+</config>
+<config key="41">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MATH-288"/>
+</config>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_1">
+<entry key="column_name" type="xstring" value="Created"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.date.DateAndTimeCell"/>
+</config>
+<config key="column_domain">
+<config key="lower_bound">
+<entry key="datacell" type="xstring" value="org.knime.core.data.date.DateAndTimeCell"/>
+<config key="org.knime.core.data.date.DateAndTimeCell">
+<entry key="hasDate" type="xboolean" value="true"/>
+<entry key="hasTime" type="xboolean" value="true"/>
+<entry key="hasMillis" type="xboolean" value="true"/>
+<entry key="timeInMillis" type="xlong" value="1251153071000"/>
+</config>
+</config>
+<config key="upper_bound">
+<entry key="datacell" type="xstring" value="org.knime.core.data.date.DateAndTimeCell"/>
+<config key="org.knime.core.data.date.DateAndTimeCell">
+<entry key="hasDate" type="xboolean" value="true"/>
+<entry key="hasTime" type="xboolean" value="true"/>
+<entry key="hasMillis" type="xboolean" value="true"/>
+<entry key="timeInMillis" type="xlong" value="1323702221000"/>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_2">
+<entry key="column_name" type="xstring" value="Resolved"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.date.DateAndTimeCell"/>
+</config>
+<config key="column_domain">
+<config key="lower_bound">
+<entry key="datacell" type="xstring" value="org.knime.core.data.date.DateAndTimeCell"/>
+<config key="org.knime.core.data.date.DateAndTimeCell">
+<entry key="hasDate" type="xboolean" value="true"/>
+<entry key="hasTime" type="xboolean" value="true"/>
+<entry key="hasMillis" type="xboolean" value="true"/>
+<entry key="timeInMillis" type="xlong" value="1251223808000"/>
+</config>
+</config>
+<config key="upper_bound">
+<entry key="datacell" type="xstring" value="org.knime.core.data.date.DateAndTimeCell"/>
+<config key="org.knime.core.data.date.DateAndTimeCell">
+<entry key="hasDate" type="xboolean" value="true"/>
+<entry key="hasTime" type="xboolean" value="true"/>
+<entry key="hasMillis" type="xboolean" value="true"/>
+<entry key="timeInMillis" type="xlong" value="1328471690000"/>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_3">
+<entry key="column_name" type="xstring" value="Updated"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.date.DateAndTimeCell"/>
+</config>
+<config key="column_domain">
+<config key="lower_bound">
+<entry key="datacell" type="xstring" value="org.knime.core.data.date.DateAndTimeCell"/>
+<config key="org.knime.core.data.date.DateAndTimeCell">
+<entry key="hasDate" type="xboolean" value="true"/>
+<entry key="hasTime" type="xboolean" value="true"/>
+<entry key="hasMillis" type="xboolean" value="true"/>
+<entry key="timeInMillis" type="xlong" value="1271205017000"/>
+</config>
+</config>
+<config key="upper_bound">
+<entry key="datacell" type="xstring" value="org.knime.core.data.date.DateAndTimeCell"/>
+<config key="org.knime.core.data.date.DateAndTimeCell">
+<entry key="hasDate" type="xboolean" value="true"/>
+<entry key="hasTime" type="xboolean" value="true"/>
+<entry key="hasMillis" type="xboolean" value="true"/>
+<entry key="timeInMillis" type="xlong" value="1332605824000"/>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_4">
+<entry key="column_name" type="xstring" value="Time Estimate [minutes]"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.IntCell"/>
+</config>
+<config key="column_domain">
+<config key="lower_bound">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.IntCell"/>
+<config key="org.knime.core.data.def.IntCell">
+<entry key="IntCell" type="xint" value="1"/>
+</config>
+</config>
+<config key="upper_bound">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.IntCell"/>
+<config key="org.knime.core.data.def.IntCell">
+<entry key="IntCell" type="xint" value="480"/>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_5">
+<entry key="column_name" type="xstring" value="Time Spent [minutes]"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.IntCell"/>
+</config>
+<config key="column_domain"/>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_6">
+<entry key="column_name" type="xstring" value="Status"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<config key="column_domain">
+<config key="possible_values">
+<entry key="array-size" type="xint" value="1"/>
+<config key="0">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="CLOSED"/>
+</config>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_7">
+<entry key="column_name" type="xstring" value="Type"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<config key="column_domain">
+<config key="possible_values">
+<entry key="array-size" type="xint" value="1"/>
+<config key="0">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="BUG"/>
+</config>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_8">
+<entry key="column_name" type="xstring" value="Resolution"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<config key="column_domain">
+<config key="possible_values">
+<entry key="array-size" type="xint" value="2"/>
+<config key="0">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="FIXED"/>
+</config>
+</config>
+<config key="1">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="UNKNOWN"/>
+</config>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_9">
+<entry key="column_name" type="xstring" value="Version"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<config key="collection_element_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<entry key="cell_class" type="xstring" value="org.knime.core.data.collection.ListCell"/>
+</config>
+<config key="column_domain"/>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_10">
+<entry key="column_name" type="xstring" value="FixVersion"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<config key="collection_element_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<entry key="cell_class" type="xstring" value="org.knime.core.data.collection.ListCell"/>
+</config>
+<config key="column_domain"/>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_11">
+<entry key="column_name" type="xstring" value="Priority"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<config key="column_domain">
+<config key="possible_values">
+<entry key="array-size" type="xint" value="4"/>
+<config key="0">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MAJOR"/>
+</config>
+</config>
+<config key="1">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MINOR"/>
+</config>
+</config>
+<config key="2">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="CRITICAL"/>
+</config>
+</config>
+<config key="3">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="BLOCKER"/>
+</config>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_12">
+<entry key="column_name" type="xstring" value="Summary"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<config key="column_domain">
+<config key="possible_values">
+<entry key="array-size" type="xint" value="42"/>
+<config key="0">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="RandomDataImpl.nextInt does not distribute uniformly for negative lower bound"/>
+</config>
+</config>
+<config key="1">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="BitStreamGenerators (MersenneTwister, Well generators) do not clear normal deviate cache on setSeed"/>
+</config>
+</config>
+<config key="2">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Strange deprecations in API"/>
+</config>
+</config>
+<config key="3">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Cumulative probability and inverse cumulative probability inconsistencies"/>
+</config>
+</config>
+<config key="4">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="ValueServer not deterministic for a fixed random number seed"/>
+</config>
+</config>
+<config key="5">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="AbstractRandomGenerator nextInt() and nextLong() default implementations generate only positive values"/>
+</config>
+</config>
+<config key="6">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Complex Add and Subtract handle NaN arguments differently, but javadoc contracts are the same"/>
+</config>
+</config>
+<config key="7">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Weighted Mean evaluation may not have optimal numerics"/>
+</config>
+</config>
+<config key="8">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Exceptions in genetics package or not consistent with the rest of [math]"/>
+</config>
+</config>
+<config key="9">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MathUtils round method should propagate rather than wrap Runitme exceptions"/>
+</config>
+</config>
+<config key="10">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="AbstractIntegerDistribution.inverseCumulativeProbability(...) Bug"/>
+</config>
+</config>
+<config key="11">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="The static field ChiSquareTestImpl.distribution serves no purpose"/>
+</config>
+</config>
+<config key="12">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="TestUtils is thread-hostile"/>
+</config>
+</config>
+<config key="13">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="events detection in ODE solvers is too complex and not robust"/>
+</config>
+</config>
+<config key="14">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="MathUtils.equals(double x, double y) disagrees with Javadoc"/>
+</config>
+</config>
+<config key="15">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Incorrect matrix rank via SVD"/>
+</config>
+</config>
+<config key="16">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="LegendreGaussIntegrator ignores defaultMaximalIterationCount and does 38 million iterations"/>
+</config>
+</config>
+<config key="17">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="RealVector Javadoc refers to non-existent package org.apache.commons.math.analysis.function"/>
+</config>
+</config>
+<config key="18">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="SimplexSolver returns unfeasible solution"/>
+</config>
+</config>
+<config key="19">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="KMeansPlusPlusClusterer breaks by division by zero"/>
+</config>
+</config>
+<config key="20">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="restarting an ODE solver that has been stopped by an event doesn't work"/>
+</config>
+</config>
+<config key="21">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="ConvergenceException in NormalDistributionImpl.cumulativeProbability()"/>
+</config>
+</config>
+<config key="22">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Multiple Regression newSampleData methods inconsistently create / omit intercepts"/>
+</config>
+</config>
+<config key="23">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Multiple Regression API should allow specification of whether or not to estimate intercept term"/>
+</config>
+</config>
+<config key="24">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="GLSMultipleLinearRegression has no nontrivial validation tests"/>
+</config>
+</config>
+<config key="25">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Documentation improvements for multiple regression classes"/>
+</config>
+</config>
+<config key="26">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Wrong weight handling in Levenberg-Marquardt"/>
+</config>
+</config>
+<config key="27">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Inconsistent result from Levenberg-Marquardt"/>
+</config>
+</config>
+<config key="28">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Confusing interface for &quot;LevenbergMarquardtOptimizer&quot;"/>
+</config>
+</config>
+<config key="29">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Bugs in &quot;BrentOptimizer&quot;"/>
+</config>
+</config>
+<config key="30">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="calculateYVariance in OLS/GLSMultipleLinearRegression uses residuals not Y vars"/>
+</config>
+</config>
+<config key="31">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Inconsistent behaviour of constructors in ArrayRealVector class"/>
+</config>
+</config>
+<config key="32">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Simplex Solver is very inaccurate on a large problem, even a very low value for epsilon"/>
+</config>
+</config>
+<config key="33">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Need to (re)initialize dYdY0 for multiple integrate with FirstOrderIntegratorWithJacobians"/>
+</config>
+</config>
+<config key="34">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="weight versus sigma in AbstractLeastSquares"/>
+</config>
+</config>
+<config key="35">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="StatUtils.sum returns NaN for zero-length arrays"/>
+</config>
+</config>
+<config key="36">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="BisectionSolver.solve(final UnivariateRealFunction f, double min, double max, double initial) throws NullPointerException"/>
+</config>
+</config>
+<config key="37">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="OpenMapRealVector.getSparcity should be getSparsity"/>
+</config>
+</config>
+<config key="38">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="AbstractRealVector.sparseIterator fails when vector has exactly one non-zero entry"/>
+</config>
+</config>
+<config key="39">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="Issue with &quot;SmoothingBicubicSplineInterpolator&quot;"/>
+</config>
+</config>
+<config key="40">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="LevenbergMarquardtOptimizer ignores the VectorialConvergenceChecker parameter passed to it"/>
+</config>
+</config>
+<config key="41">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="SimplexSolver not working as expected 2"/>
+</config>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_13">
+<entry key="column_name" type="xstring" value="Reporter"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<config key="column_domain">
+<config key="possible_values">
+<entry key="array-size" type="xint" value="23"/>
+<config key="0">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="dhendriks"/>
+</config>
+</config>
+<config key="1">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="psteitz"/>
+</config>
+</config>
+<config key="2">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="pbloem"/>
+</config>
+</config>
+<config key="3">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="cwinter"/>
+</config>
+</config>
+<config key="4">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="d.james"/>
+</config>
+</config>
+<config key="5">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="ole"/>
+</config>
+</config>
+<config key="6">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="sebb@apache.org"/>
+</config>
+</config>
+<config key="7">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="luc"/>
+</config>
+</config>
+<config key="8">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="marisa"/>
+</config>
+</config>
+<config key="9">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="murkle"/>
+</config>
+</config>
+<config key="10">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="wmwitzel"/>
+</config>
+</config>
+<config key="11">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="erikvaningen"/>
+</config>
+</config>
+<config key="12">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="gustav.ryd"/>
+</config>
+</config>
+<config key="13">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="dimpbx"/>
+</config>
+</config>
+<config key="14">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="erans"/>
+</config>
+</config>
+<config key="15">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="markdevaney"/>
+</config>
+</config>
+<config key="16">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="rwerp"/>
+</config>
+</config>
+<config key="17">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="pcbouman"/>
+</config>
+</config>
+<config key="18">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="pparraud"/>
+</config>
+</config>
+<config key="19">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="sasunpundev@abv.bg"/>
+</config>
+</config>
+<config key="20">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="ashuang"/>
+</config>
+</config>
+<config key="21">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="roman.werpachowski"/>
+</config>
+</config>
+<config key="22">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="kefa"/>
+</config>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_14">
+<entry key="column_name" type="xstring" value="Assignees"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<config key="collection_element_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<entry key="cell_class" type="xstring" value="org.knime.core.data.collection.SetCell"/>
+</config>
+<config key="column_domain"/>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_15">
+<entry key="column_name" type="xstring" value="CommentAuthors"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<config key="collection_element_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<entry key="cell_class" type="xstring" value="org.knime.core.data.collection.SetCell"/>
+</config>
+<config key="column_domain"/>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_16">
+<entry key="column_name" type="xstring" value="Link"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<config key="column_domain">
+<config key="possible_values">
+<entry key="array-size" type="xint" value="42"/>
+<config key="0">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-724"/>
+</config>
+</config>
+<config key="1">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-723"/>
+</config>
+</config>
+<config key="2">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-719"/>
+</config>
+</config>
+<config key="3">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-692"/>
+</config>
+</config>
+<config key="4">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-654"/>
+</config>
+</config>
+<config key="5">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-640"/>
+</config>
+</config>
+<config key="6">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-618"/>
+</config>
+</config>
+<config key="7">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-588"/>
+</config>
+</config>
+<config key="8">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-575"/>
+</config>
+</config>
+<config key="9">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-555"/>
+</config>
+</config>
+<config key="10">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-540"/>
+</config>
+</config>
+<config key="11">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-506"/>
+</config>
+</config>
+<config key="12">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-505"/>
+</config>
+</config>
+<config key="13">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-484"/>
+</config>
+</config>
+<config key="14">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-481"/>
+</config>
+</config>
+<config key="15">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-465"/>
+</config>
+</config>
+<config key="16">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-464"/>
+</config>
+</config>
+<config key="17">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-453"/>
+</config>
+</config>
+<config key="18">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-434"/>
+</config>
+</config>
+<config key="19">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-429"/>
+</config>
+</config>
+<config key="20">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-421"/>
+</config>
+</config>
+<config key="21">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-414"/>
+</config>
+</config>
+<config key="22">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-411"/>
+</config>
+</config>
+<config key="23">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-409"/>
+</config>
+</config>
+<config key="24">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-408"/>
+</config>
+</config>
+<config key="25">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-407"/>
+</config>
+</config>
+<config key="26">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-406"/>
+</config>
+</config>
+<config key="27">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-405"/>
+</config>
+</config>
+<config key="28">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-404"/>
+</config>
+</config>
+<config key="29">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-395"/>
+</config>
+</config>
+<config key="30">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-392"/>
+</config>
+</config>
+<config key="31">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-391"/>
+</config>
+</config>
+<config key="32">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-390"/>
+</config>
+</config>
+<config key="33">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-380"/>
+</config>
+</config>
+<config key="34">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-377"/>
+</config>
+</config>
+<config key="35">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-373"/>
+</config>
+</config>
+<config key="36">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-369"/>
+</config>
+</config>
+<config key="37">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-368"/>
+</config>
+</config>
+<config key="38">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-367"/>
+</config>
+</config>
+<config key="39">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-365"/>
+</config>
+</config>
+<config key="40">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-362"/>
+</config>
+</config>
+<config key="41">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="https://issues.apache.org/jira/browse/MATH-288"/>
+</config>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_17">
+<entry key="column_name" type="xstring" value="Description"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<config key="column_domain">
+<config key="possible_values">
+<entry key="array-size" type="xint" value="42"/>
+<config key="0">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;When using the RandomDataImpl.nextInt function to get a uniform sample in a &amp;lt;span class=&quot;error&quot;&amp;gt;&amp;amp;#91;lower, upper&amp;amp;#93;&amp;lt;/span&amp;gt; interval, when the lower value is less than zero, the output is not uniformly distributed, as the lowest value is practically never returned.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;See the attached NextIntUniformTest.java file. It uses a &amp;lt;span class=&quot;error&quot;&amp;gt;&amp;amp;#91;-3, 5&amp;amp;#93;&amp;lt;/span&amp;gt; interval. For several values between 0 and 1, testNextIntUniform1 prints the return value of RandomDataImpl.nextInt (as double and as int). We see that -2 through 5 are returned several times. The -3 value however, is only returned for 0.0, and is thus under-respresented in the integer samples. The output of test method testNextIntUniform2 also clearly shows that value -3 is never sampled.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="1">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;The BitStream generators generate normal deviates (for nextGaussian) in pairs, caching the last value generated. When reseeded, the cache should be cleared; otherwise seeding two generators with the same value is not guaranteed to generate the same sequence.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="2">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;Sorry if this doesn't belong here. I couldn't find any sort of mailing list or other feedback mechanism on the website.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;RealMatrix has some very odd deprecations. In particular inverse(), getDeterminant() and isSingular(). The last has the message:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;blockquote&amp;gt;&amp;lt;p&amp;gt;Deprecated. as of release 2.0, replaced by the boolean negation of new LUDecompositionImpl(m).getSolver().isNonSingular()&amp;lt;/p&amp;gt;&amp;lt;/blockquote&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;That's an implementation, not an interface. The whole point of having an interface is that &amp;lt;/p&amp;gt;%%00013%%00010&amp;lt;ul&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;I can query whether a matrix is singular withou having to know about LUDecompositions&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;You guys can change the implementation of isSingular() if something better pops up without us guys having to change our code.&amp;lt;/li&amp;gt;%%00013%%00010&amp;lt;/ul&amp;gt;%%00013%%00010%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;I'm not using these methods now, because they're deprecated, but I've basically recreated them in as static methods in a utility class. Wouldn't it be much better to just put code from the deprecation message into the method and remove the deprecation?&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="3">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;There are some inconsistencies in the documentation and implementation of functions regarding cumulative probabilities and inverse cumulative probabilities. More precisely, '&amp;amp;lt;' and '&amp;amp;lt;=' are not used in a consistent way.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Besides I would move the function inverseCumulativeProbability(double) to the interface Distribution. A true inverse of the distribution function does neither exist for Distribution nor for ContinuosDistribution. Thus we need to define the inverse in terms of quantiles anyway, and this can already be done for Distribution.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;On the whole I would declare the (inverse) cumulative probability functions in the basic distribution interfaces as follows:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Distribution:&amp;lt;/p&amp;gt;%%00013%%00010&amp;lt;ul class=&quot;alternate&quot; type=&quot;square&quot;&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;cumulativeProbability(double x): returns P(X &amp;amp;lt;= x)&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;cumulativeProbability(double x0, double x1): returns P(x0 &amp;amp;lt; X &amp;amp;lt;= x1) &amp;lt;span class=&quot;error&quot;&amp;gt;&amp;amp;#91;see also 1)&amp;amp;#93;&amp;lt;/span&amp;gt;&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;inverseCumulativeProbability(double p):&amp;lt;br/&amp;gt;%%00013%%00010  returns the quantile function inf{x in R | P(X&amp;amp;lt;=x) &amp;amp;gt;= p} &amp;lt;span class=&quot;error&quot;&amp;gt;&amp;amp;#91;see also 2), 3), and 4)&amp;amp;#93;&amp;lt;/span&amp;gt;&amp;lt;/li&amp;gt;%%00013%%00010&amp;lt;/ul&amp;gt;%%00013%%00010%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;1) An aternative definition could be P(x0 &amp;amp;lt;= X &amp;amp;lt;= x1). But this requires to put the function probability(double x) or another cumulative probability function into the interface Distribution in order be able to calculate P(x0 &amp;amp;lt;= X &amp;amp;lt;= x1) in AbstractDistribution.&amp;lt;br/&amp;gt;%%00013%%000102) This definition is stricter than the definition in ContinuousDistribution, because the definition there does not specify what to do if there are multiple x satisfying P(X&amp;amp;lt;=x) = p.&amp;lt;br/&amp;gt;%%00013%%000103) A modification could be defined for p=0: Returning sup{x in R | P(X&amp;amp;lt;=x) = 0} would yield the infimum of the distribution's support instead of a mandatory -infinity.&amp;lt;br/&amp;gt;%%00013%%000104) This affects issue &amp;lt;a href=&quot;https://issues.apache.org/jira/browse/MATH-540&quot; title=&quot;AbstractIntegerDistribution.inverseCumulativeProbability(...) Bug&quot;&amp;gt;&amp;lt;del&amp;gt;MATH-540&amp;lt;/del&amp;gt;&amp;lt;/a&amp;gt;. I'd prefere the definition from above for the following reasons:&amp;lt;/p&amp;gt;%%00013%%00010&amp;lt;ul class=&quot;alternate&quot; type=&quot;square&quot;&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;This definition simplifies inverse transform sampling (as mentioned in the other issue).&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;It is the standard textbook definition for the quantile function.&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;For integer distributions it has the advantage that the result doesn't change when switching to &quot;x in Z&quot;, i.e. the result is independent of considering the intergers as sole set or as part of the reals.&amp;lt;/li&amp;gt;%%00013%%00010&amp;lt;/ul&amp;gt;%%00013%%00010%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;ContinuousDistribution:&amp;lt;br/&amp;gt;%%00013%%00010nothing to be added regarding (inverse) cumulative probability functions&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;IntegerDistribution:&amp;lt;/p&amp;gt;%%00013%%00010&amp;lt;ul class=&quot;alternate&quot; type=&quot;square&quot;&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;cumulativeProbability(int x): returns P(X &amp;amp;lt;= x)&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;cumulativeProbability(int x0, int x1): returns P(x0 &amp;amp;lt; X &amp;amp;lt;= x1) &amp;lt;span class=&quot;error&quot;&amp;gt;&amp;amp;#91;see also 1) above&amp;amp;#93;&amp;lt;/span&amp;gt;&amp;lt;/li&amp;gt;%%00013%%00010&amp;lt;/ul&amp;gt;"/>
+</config>
+</config>
+<config key="4">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;I have built an agent-based model using the Apache Commons Math library, which has come in handy.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;The ValueServer seemed particularly helpful, as explained at:&amp;lt;br/&amp;gt;%%00013%%00010&amp;lt;a href=&quot;http://commons.apache.org/math/userguide/random.html&quot;&amp;gt;http://commons.apache.org/math/userguide/random.html&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;My simulation needs repeatable randomness, so I used this form of the ValueServer constructor:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;    ValueServer(RandomData randomData) &amp;lt;br/&amp;gt;%%00013%%00010    Construct a ValueServer instance using a RandomData as its source of random data.&amp;lt;br/&amp;gt;%%00013%%00010    // &amp;lt;a href=&quot;http://commons.apache.org/math/api-2.2/org/apache/commons/math/random/ValueServer.html&quot;&amp;gt;http://commons.apache.org/math/api-2.2/org/apache/commons/math/random/ValueServer.html&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;However, in my simulation, I found that the ValueServer did not act deterministically if I supplied the same random number seed.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;I have not inspected the source code, but I suspect that the ValueServer is not using the `randomData` generator correctly. If it was, then it should be deterministic.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="5">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;The javadoc for these methods (and what is specified in the RandomGenerator interface) says that all int / long values should be in the range of these methods.  The default implementations provided in this class do not generate negative values.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="6">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;For both Complex add and subtract, the javadoc states that&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;div class=&quot;code panel&quot; style=&quot;border-width: 1px;&quot;&amp;gt;&amp;lt;div class=&quot;codeContent panelContent&quot;&amp;gt;%%00013%%00010&amp;lt;pre class=&quot;code-java&quot;&amp;gt;* If either &amp;lt;span class=&quot;code-keyword&quot;&amp;gt;this&amp;lt;/span&amp;gt; or &amp;amp;lt;code&amp;amp;gt;rhs&amp;amp;lt;/code&amp;amp;gt; has a NaN value in either part,%%00013%%00010     * {@link #NaN} is returned; otherwise Inifinite and NaN values are%%00013%%00010     * returned in the parts of the result according to the rules &amp;lt;span class=&quot;code-keyword&quot;&amp;gt;for&amp;lt;/span&amp;gt;%%00013%%00010     * {@link java.lang.&amp;lt;span class=&quot;code-object&quot;&amp;gt;Double&amp;lt;/span&amp;gt;} arithmetic&amp;lt;/pre&amp;gt;%%00013%%00010&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Subtract includes an isNaN test and returns Complex.NaN if either complex argument isNaN; but add omits this test.  The test should be added to the add implementation (actually restored, since this looks like a code merge problem going back to 1.1).&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="7">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;I recently got this in a test run&amp;lt;/p&amp;gt;%%00013%%00010&amp;lt;div class=&quot;code panel&quot; style=&quot;border-width: 1px;&quot;&amp;gt;&amp;lt;div class=&quot;codeContent panelContent&quot;&amp;gt;%%00013%%00010&amp;lt;pre class=&quot;code-java&quot;&amp;gt;testWeightedConsistency(org.apache.commons.math.stat.descriptive.moment.MeanTest)  Time elapsed: 0 sec  &amp;amp;lt;&amp;amp;lt;&amp;amp;lt; FAILURE!%%00013%%00010java.lang.AssertionError: expected:&amp;amp;lt;0.002282165958997601&amp;amp;gt; but was:&amp;amp;lt;0.002282165958997157&amp;amp;gt;%%00013%%00010%%00009at org.junit.Assert.fail(Assert.java:91)%%00013%%00010%%00009at org.junit.Assert.failNotEquals(Assert.java:645)%%00013%%00010%%00009at org.junit.Assert.assertEquals(Assert.java:441)%%00013%%00010%%00009at org.apache.commons.math.TestUtils.assertRelativelyEquals(TestUtils.java:178)%%00013%%00010%%00009at org.apache.commons.math.TestUtils.assertRelativelyEquals(TestUtils.java:153)%%00013%%00010%%00009at org.apache.commons.math.stat.descriptive.UnivariateStatisticAbstractTest.testWeightedConsistency(UnivariateStatisticAbstractTest.java:170)&amp;lt;/pre&amp;gt;%%00013%%00010&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;The correction formula used to compute the unweighted mean may not be appropriate or optimal in the presence of weights:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;div class=&quot;code panel&quot; style=&quot;border-width: 1px;&quot;&amp;gt;&amp;lt;div class=&quot;codeContent panelContent&quot;&amp;gt;%%00013%%00010&amp;lt;pre class=&quot;code-java&quot;&amp;gt;&amp;lt;span class=&quot;code-comment&quot;&amp;gt;// Compute initial estimate using definitional formula%%00013%%00010&amp;lt;/span&amp;gt;&amp;lt;span class=&quot;code-object&quot;&amp;gt;double&amp;lt;/span&amp;gt; sumw = sum.evaluate(weights,begin,length);%%00013%%00010&amp;lt;span class=&quot;code-object&quot;&amp;gt;double&amp;lt;/span&amp;gt; xbarw = sum.evaluate(values, weights, begin, length) / sumw;%%00013%%00010%%00013%%00010&amp;lt;span class=&quot;code-comment&quot;&amp;gt;// Compute correction factor in second pass%%00013%%00010&amp;lt;/span&amp;gt;&amp;lt;span class=&quot;code-object&quot;&amp;gt;double&amp;lt;/span&amp;gt; correction = 0;%%00013%%00010&amp;lt;span class=&quot;code-keyword&quot;&amp;gt;for&amp;lt;/span&amp;gt; (&amp;lt;span class=&quot;code-object&quot;&amp;gt;int&amp;lt;/span&amp;gt; i = begin; i &amp;amp;lt; begin + length; i++) {%%00013%%00010  correction += weights[i] * (values[i] - xbarw);%%00013%%00010}%%00013%%00010&amp;lt;span class=&quot;code-keyword&quot;&amp;gt;return&amp;lt;/span&amp;gt; xbarw + (correction/sumw);&amp;lt;/pre&amp;gt;%%00013%%00010&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;"/>
+</config>
+</config>
+<config key="8">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;InvalidRepresentationException is checked and non-localized.  This exception should be placed in the &amp;lt;span class=&quot;error&quot;&amp;gt;&amp;amp;#91;math&amp;amp;#93;&amp;lt;/span&amp;gt; hierarchy.  The AbstractListChromosome constructor also throws a non-localised IAE, which should be replaced by an appropriate &amp;lt;span class=&quot;error&quot;&amp;gt;&amp;amp;#91;math&amp;amp;#93;&amp;lt;/span&amp;gt; exception.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="9">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;MathUtils.round(double, int, int) can generate IllegalArgumentException or ArithmeticException.  Instead of wrapping these exceptions in MathRuntimeException, the conditions under which these exceptions can be thrown should be documented and the exceptions should be propagated directly to the caller.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="10">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;The AbstractIntegerDistribution.inverseCumulativeProbability(...) function attempts to decrement the lower bound of discrete distributions to values that go below the lower bound.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="11">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;The static field ChiSquareTestImpl.distribution serves no purpose.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;There is a setter for it, but in every case where the field is used, it is first overwritten with a new value.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;The field and the setter should be removed, and the methods that create a new instance should create a local variable instead.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;For Math 2.1, the field can be removed and the setter deprecated.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="12">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;TestUtils has several mutable static fields which are not synchronised, or volatile.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;If one of the fields is updated by thread A, there is no guarantee that thread B will see the full update - it may see a partially updated object.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Furthermore, at least some of the static fields reference a mutable object, which can be changed whilst another thread is using it.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;As far as I can tell, this class must only ever be used by a single thread otherwise the results will be unpredictable.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="13">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;All ODE solvers support multiple events detection since a long time. Events are specified by users by implementing the EventHandler interface. Events occur when the g(t, y) function evaluates to 0. When an event occurs, the solver step is shortened to make sure the event is located at the end of the step, and the event is triggered by calling the eventOccurred method in the user defined implementation class. Depending on the return value of this method, integration can continue, it can be stopped, or the state vector can be reset.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Some ODE solvers are adaptive step size solvers. They can modify step size to match an integration error setting, increasing step size when error is low (thus reducing computing costs) or reducing step size when error is high (thus fulfilling accuracy requirements).&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;The step adaptations due to events on one side and due to adaptive step size solvers are quite intricate by now, due to numerous fixes (&amp;lt;a href=&quot;https://issues.apache.org/jira/browse/MATH-161&quot; title=&quot;patch for Mantissa&quot;&amp;gt;&amp;lt;del&amp;gt;MATH-161&amp;lt;/del&amp;gt;&amp;lt;/a&amp;gt;, &amp;lt;a href=&quot;https://issues.apache.org/jira/browse/MATH-213&quot; title=&quot;FirstOrderIntegrator.integrate does not give back integration stop time when an event handler stops integration&quot;&amp;gt;&amp;lt;del&amp;gt;MATH-213&amp;lt;/del&amp;gt;&amp;lt;/a&amp;gt;, &amp;lt;a href=&quot;https://issues.apache.org/jira/browse/MATH-322&quot; title=&quot;during ODE integration, the last event in a pair of very close event may not be detected&quot;&amp;gt;&amp;lt;del&amp;gt;MATH-322&amp;lt;/del&amp;gt;&amp;lt;/a&amp;gt;, &amp;lt;a href=&quot;https://issues.apache.org/jira/browse/MATH-358&quot; title=&quot;ODE integrator goes past specified end of integration range&quot;&amp;gt;&amp;lt;del&amp;gt;MATH-358&amp;lt;/del&amp;gt;&amp;lt;/a&amp;gt;, &amp;lt;a href=&quot;https://issues.apache.org/jira/browse/MATH-421&quot; title=&quot;restarting an ODE solver that has been stopped by an event doesn&amp;amp;#39;t work&quot;&amp;gt;&amp;lt;del&amp;gt;MATH-421&amp;lt;/del&amp;gt;&amp;lt;/a&amp;gt; and also during standard maintenance - see for example r781157). The code is very difficult to maintain. It seems each bug fix introduces new bugs (r781157/&amp;lt;a href=&quot;https://issues.apache.org/jira/browse/MATH-322&quot; title=&quot;during ODE integration, the last event in a pair of very close event may not be detected&quot;&amp;gt;&amp;lt;del&amp;gt;MATH-322&amp;lt;/del&amp;gt;&amp;lt;/a&amp;gt;) or tighten the link between adaptive step size and event detection (&amp;lt;a href=&quot;https://issues.apache.org/jira/browse/MATH-388&quot; title=&quot;ODE integrator: different size needed for state vector and tolerance error vector dimension&quot;&amp;gt;&amp;lt;del&amp;gt;MATH-388&amp;lt;/del&amp;gt;&amp;lt;/a&amp;gt;/r927202).&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;A new bug discovered recently on an external library using a slightly modified version of this code could not be retroffitted into commons-math, despite the same problem is present. At the beginning of EventState.evaluateStep, the initial step may be exactly 0 thus preventing root solving, but preventing this size to drop to 0 would reopen &amp;lt;a href=&quot;https://issues.apache.org/jira/browse/MATH-388&quot; title=&quot;ODE integrator: different size needed for state vector and tolerance error vector dimension&quot;&amp;gt;&amp;lt;del&amp;gt;MATH-388&amp;lt;/del&amp;gt;&amp;lt;/a&amp;gt;. I could not fix both bugs at the same time.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;So it is now time to untangle events detection and adaptive step size, simplify code, and remove some inefficiency (event root solving is always done twice, once before step truncation and another time after truncation, of course with slightly different results, events shortened steps induce high computation load until the integrator recovers its optimal pace again, steps are rejected even when the event does not requires it ...).&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="14">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;MathUtils.equals(double x, double y) disagrees with Javadoc.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;The Javadoc says:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Returns true iff they are equal as defined by  {@link #equals(double,double,int)}&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;However, the code actually uses == and checks for NaN:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;div class=&quot;code panel&quot; style=&quot;border-width: 1px;&quot;&amp;gt;&amp;lt;div class=&quot;codeContent panelContent&quot;&amp;gt;%%00013%%00010&amp;lt;pre class=&quot;code-java&quot;&amp;gt;&amp;lt;span class=&quot;code-keyword&quot;&amp;gt;public&amp;lt;/span&amp;gt; &amp;lt;span class=&quot;code-keyword&quot;&amp;gt;static&amp;lt;/span&amp;gt; &amp;lt;span class=&quot;code-object&quot;&amp;gt;boolean&amp;lt;/span&amp;gt; equals(&amp;lt;span class=&quot;code-object&quot;&amp;gt;double&amp;lt;/span&amp;gt; x, &amp;lt;span class=&quot;code-object&quot;&amp;gt;double&amp;lt;/span&amp;gt; y) {%%00013%%00010    &amp;lt;span class=&quot;code-keyword&quot;&amp;gt;return&amp;lt;/span&amp;gt; (&amp;lt;span class=&quot;code-object&quot;&amp;gt;Double&amp;lt;/span&amp;gt;.isNaN(x) &amp;amp;amp;&amp;amp;amp; &amp;lt;span class=&quot;code-object&quot;&amp;gt;Double&amp;lt;/span&amp;gt;.isNaN(y)) || x == y;%%00013%%00010}&amp;lt;/pre&amp;gt;%%00013%%00010&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;The method is deprecated, but it should probably still be consistent with its documentation.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="15">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;The getRank() function of SingularValueDecompositionImpl does not work properly. This problem is probably related to the numerical stability problems mentioned in &amp;lt;a href=&quot;https://issues.apache.org/jira/browse/MATH-327&quot;&amp;gt;MATH-327&amp;lt;/a&amp;gt; and &amp;lt;a href=&quot;https://issues.apache.org/jira/browse/MATH-320&quot;&amp;gt;MATH-320&amp;lt;/a&amp;gt;.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Example call with the standard matrix from R (rank 2):&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;div class=&quot;code panel&quot; style=&quot;border-width: 1px;&quot;&amp;gt;&amp;lt;div class=&quot;codeHeader panelHeader&quot; style=&quot;border-bottom-width: 1px;&quot;&amp;gt;&amp;lt;b&amp;gt;TestSVDRank.java&amp;lt;/b&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div class=&quot;codeContent panelContent&quot;&amp;gt;%%00013%%00010&amp;lt;pre class=&quot;code-java&quot;&amp;gt;&amp;lt;span class=&quot;code-keyword&quot;&amp;gt;import&amp;lt;/span&amp;gt; org.apache.commons.math.linear.Array2DRowRealMatrix;%%00013%%00010&amp;lt;span class=&quot;code-keyword&quot;&amp;gt;import&amp;lt;/span&amp;gt; org.apache.commons.math.linear.RealMatrix;%%00013%%00010&amp;lt;span class=&quot;code-keyword&quot;&amp;gt;import&amp;lt;/span&amp;gt; org.apache.commons.math.linear.SingularValueDecomposition;%%00013%%00010&amp;lt;span class=&quot;code-keyword&quot;&amp;gt;import&amp;lt;/span&amp;gt; org.apache.commons.math.linear.SingularValueDecompositionImpl;%%00013%%00010%%00013%%00010&amp;lt;span class=&quot;code-keyword&quot;&amp;gt;public&amp;lt;/span&amp;gt; class TestSVDRank {%%00013%%00010%%00009&amp;lt;span class=&quot;code-keyword&quot;&amp;gt;public&amp;lt;/span&amp;gt; &amp;lt;span class=&quot;code-keyword&quot;&amp;gt;static&amp;lt;/span&amp;gt; void main(&amp;lt;span class=&quot;code-object&quot;&amp;gt;String&amp;lt;/span&amp;gt;[] args) {%%00013%%00010%%00009%%00009&amp;lt;span class=&quot;code-object&quot;&amp;gt;double&amp;lt;/span&amp;gt;[][] d = { { 1, 1, 1 }, { 0, 0, 0 }, { 1, 2, 3 } };%%00013%%00010%%00009%%00009RealMatrix m = &amp;lt;span class=&quot;code-keyword&quot;&amp;gt;new&amp;lt;/span&amp;gt; Array2DRowRealMatrix(d);%%00013%%00010%%00009%%00009SingularValueDecomposition svd = &amp;lt;span class=&quot;code-keyword&quot;&amp;gt;new&amp;lt;/span&amp;gt; SingularValueDecompositionImpl(m);%%00013%%00010%%00009%%00009&amp;lt;span class=&quot;code-object&quot;&amp;gt;int&amp;lt;/span&amp;gt; r = svd.getRank();%%00013%%00010%%00009%%00009&amp;lt;span class=&quot;code-object&quot;&amp;gt;System&amp;lt;/span&amp;gt;.out.println(&amp;lt;span class=&quot;code-quote&quot;&amp;gt;&quot;Rank: &quot;&amp;lt;/span&amp;gt;+r);%%00013%%00010%%00009}%%00013%%00010}&amp;lt;/pre&amp;gt;%%00013%%00010&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt; %%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;The rank is computed as 3. This problem also occurs for larger matrices. I discovered the problem when trying to replace the corresponding JAMA method.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="16">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;The following code results in count = 37801710 which is effectively an infinite loop for typical functions we are using&amp;lt;br/&amp;gt;%%00013%%00010(in GeoGebra)&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;The argument defaultMaximalIterationCount = 100 is being ignored&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;This is the version we are using:&amp;lt;br/&amp;gt;%%00013%%00010&amp;lt;a href=&quot;http://www.geogebra.org/trac/browser/trunk/geogebra/org/apache/commons/math/analysis/integration/LegendreGaussIntegrator.java&quot;&amp;gt;http://www.geogebra.org/trac/browser/trunk/geogebra/org/apache/commons/math/analysis/integration/LegendreGaussIntegrator.java&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;    %%00009LegendreGaussIntegrator gauss = new LegendreGaussIntegrator(5, 100);&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;%%00009try {%%00013%%00010%%00009%%00009double result = gauss.integrate(new testFun(), -10, 0.32462367623786328);%%00013%%00010%%00009} catch (Exception ee) {%%00013%%00010%%00009%%00009ee.printStackTrace();%%00013%%00010%%00009}&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;class testFun implements UnivariateRealFunction {&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;    public double value(double x) throws FunctionEvaluationException {%%00013%%00010    %%00009count ++;%%00013%%00010        if (x&amp;amp;gt;=0 &amp;amp;amp;&amp;amp;amp; x&amp;amp;lt;=5) return 0.2; else return 0;%%00013%%00010    }&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;}&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="17">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;RealVector Javadoc refers to non-existent package org.apache.commons.math.analysis.function.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;As this explains how to recode deprecated method calls, it ought to be corrected before release.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="18">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;The SimplexSolver is returning an unfeasible solution:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;import java.util.ArrayList;&amp;lt;br/&amp;gt;%%00013%%00010import java.text.DecimalFormat;&amp;lt;br/&amp;gt;%%00013%%00010import org.apache.commons.math.linear.ArrayRealVector;&amp;lt;br/&amp;gt;%%00013%%00010import org.apache.commons.math.optimization.GoalType;&amp;lt;br/&amp;gt;%%00013%%00010import org.apache.commons.math.optimization.OptimizationException;&amp;lt;br/&amp;gt;%%00013%%00010import org.apache.commons.math.optimization.linear.*;&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;public class SimplexSolverBug {&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;    public static void main(String[] args) throws OptimizationException {&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;        LinearObjectiveFunction c = new LinearObjectiveFunction(new double[]{0.0d, 1.0d, 1.0d, 0.0d, 0.0d, 0.0d, 0.0d}, 0.0d);&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;        ArrayList&amp;amp;lt;LinearConstraint&amp;amp;gt; cnsts = new ArrayList&amp;amp;lt;LinearConstraint&amp;amp;gt;(5);&amp;lt;br/&amp;gt;%%00013%%00010        LinearConstraint cnst;&amp;lt;br/&amp;gt;%%00013%%00010        cnst = new LinearConstraint(new double[] {1.0d, -0.1d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d}, Relationship.EQ, -0.1d);&amp;lt;br/&amp;gt;%%00013%%00010        cnsts.add(cnst);&amp;lt;br/&amp;gt;%%00013%%00010        cnst = new LinearConstraint(new double[] {1.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d}, Relationship.GEQ, -1e-18d);&amp;lt;br/&amp;gt;%%00013%%00010        cnsts.add(cnst);&amp;lt;br/&amp;gt;%%00013%%00010        cnst = new LinearConstraint(new double[] {0.0d, 1.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d}, Relationship.GEQ, 0.0d);&amp;lt;br/&amp;gt;%%00013%%00010        cnsts.add(cnst);&amp;lt;br/&amp;gt;%%00013%%00010        cnst = new LinearConstraint(new double[] {0.0d, 0.0d, 0.0d, 1.0d, 0.0d, -0.0128588d, 1e-5d}, Relationship.EQ, 0.0d);&amp;lt;br/&amp;gt;%%00013%%00010        cnsts.add(cnst);&amp;lt;br/&amp;gt;%%00013%%00010        cnst = new LinearConstraint(new double[] {0.0d, 0.0d, 0.0d, 0.0d, 1.0d, 1e-5d, -0.0128586d}, Relationship.EQ, 1e-10d);&amp;lt;br/&amp;gt;%%00013%%00010        cnsts.add(cnst);&amp;lt;br/&amp;gt;%%00013%%00010        cnst = new LinearConstraint(new double[] {0.0d, 0.0d, 1.0d, -1.0d, 0.0d, 0.0d, 0.0d}, Relationship.GEQ, 0.0d);&amp;lt;br/&amp;gt;%%00013%%00010        cnsts.add(cnst);&amp;lt;br/&amp;gt;%%00013%%00010        cnst = new LinearConstraint(new double[] {0.0d, 0.0d, 1.0d, 1.0d, 0.0d, 0.0d, 0.0d}, Relationship.GEQ, 0.0d);&amp;lt;br/&amp;gt;%%00013%%00010        cnsts.add(cnst);&amp;lt;br/&amp;gt;%%00013%%00010        cnst = new LinearConstraint(new double[] {0.0d, 0.0d, 1.0d, 0.0d, -1.0d, 0.0d, 0.0d}, Relationship.GEQ, 0.0d);&amp;lt;br/&amp;gt;%%00013%%00010        cnsts.add(cnst);&amp;lt;br/&amp;gt;%%00013%%00010        cnst = new LinearConstraint(new double[] {0.0d, 0.0d, 1.0d, 0.0d, 1.0d, 0.0d, 0.0d}, Relationship.GEQ, 0.0d);&amp;lt;br/&amp;gt;%%00013%%00010        cnsts.add(cnst);&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;        DecimalFormat df = new java.text.DecimalFormat(&quot;0.#####E0&quot;);&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;        System.out.println(&quot;Constraints:&quot;);&amp;lt;br/&amp;gt;%%00013%%00010        for(LinearConstraint con : cnsts) {%%00013%%00010            for (int i = 0; i &amp;amp;lt; con.getCoefficients().getDimension(); ++i)%%00013%%00010                System.out.print(df.format(con.getCoefficients().getData()[i]) + &quot; &quot;);%%00013%%00010            System.out.println(con.getRelationship() + &quot; &quot; + con.getValue());%%00013%%00010        }&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;        SimplexSolver simplex = new SimplexSolver(1e-7);&amp;lt;br/&amp;gt;%%00013%%00010        double[] sol = simplex.optimize(c, cnsts, GoalType.MINIMIZE, false).getPointRef();&amp;lt;br/&amp;gt;%%00013%%00010        System.out.println(&quot;Solution:\n&quot; + new ArrayRealVector(sol));&amp;lt;br/&amp;gt;%%00013%%00010        System.out.println(&quot;Second constraint is violated!&quot;);&amp;lt;br/&amp;gt;%%00013%%00010    }&amp;lt;br/&amp;gt;%%00013%%00010}&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;It's an odd problem, but something I ran across.  I tracked the problem to the getPivotRow routine in SimplexSolver.  It was choosing a pivot that resulted in a negative right-hand-side.  I recommend a fix by replacing&amp;lt;br/&amp;gt;%%00013%%00010                ...&amp;lt;br/&amp;gt;%%00013%%00010                if (MathUtils.equals(ratio, minRatio, epsilon)) {&amp;lt;br/&amp;gt;%%00013%%00010                ...&amp;lt;br/&amp;gt;%%00013%%00010with&amp;lt;br/&amp;gt;%%00013%%00010                ...&amp;lt;br/&amp;gt;%%00013%%00010                if (MathUtils.equals(ratio, minRatio, Math.abs(epsilon/entry))) {&amp;lt;br/&amp;gt;%%00013%%00010                ...&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;I believe this would be more appropriate (and at least resolves this particular problem).&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Also, you may want to consider making a change in getPivotColumn to replace&amp;lt;br/&amp;gt;%%00013%%00010            ...&amp;lt;br/&amp;gt;%%00013%%00010            if (MathUtils.compareTo(tableau.getEntry(0, i), minValue, epsilon) &amp;amp;lt; 0) {&amp;lt;br/&amp;gt;%%00013%%00010            ...&amp;lt;br/&amp;gt;%%00013%%00010with&amp;lt;br/&amp;gt;%%00013%%00010            ...&amp;lt;br/&amp;gt;%%00013%%00010            if (tableau.getEntry(0, i) &amp;amp;lt; minValue) &amp;lt;br/&amp;gt;%%00013%%00010            ...&amp;lt;br/&amp;gt;%%00013%%00010because I don't see the point of biasing earlier columns when multiple entries are within epsilon of each other.  Why not pick the absolute smallest.  I don't know that any problem can result from doing it the other way, but the latter may be a safer bet.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;VERY IMPORTANT: I discovered another bug that occurs when not restricting to non-negatives.  In SimplexTableu::getSolution(), &amp;lt;br/&amp;gt;%%00013%%00010          ...          &amp;lt;br/&amp;gt;%%00013%%00010          if (basicRows.contains(basicRow)) &amp;lt;br/&amp;gt;%%00013%%00010              // if multiple variables can take a given value&amp;lt;br/&amp;gt;%%00013%%00010              // then we choose the first and set the rest equal to 0&amp;lt;br/&amp;gt;%%00013%%00010              coefficients&amp;lt;span class=&quot;error&quot;&amp;gt;&amp;amp;#91;i&amp;amp;#93;&amp;lt;/span&amp;gt; = 0;&amp;lt;br/&amp;gt;%%00013%%00010          ...&amp;lt;br/&amp;gt;%%00013%%00010should be&amp;lt;br/&amp;gt;%%00013%%00010          ...          &amp;lt;br/&amp;gt;%%00013%%00010          if (basicRows.contains(basicRow)) {&amp;lt;br/&amp;gt;%%00013%%00010              // if multiple variables can take a given value&amp;lt;br/&amp;gt;%%00013%%00010              // then we choose the first and set the rest equal to 0&amp;lt;br/&amp;gt;%%00013%%00010              coefficients&amp;lt;span class=&quot;error&quot;&amp;gt;&amp;amp;#91;i&amp;amp;#93;&amp;lt;/span&amp;gt; = (restrictToNonNegative ? 0 : -mostNegative);&amp;lt;br/&amp;gt;%%00013%%00010          ...&amp;lt;br/&amp;gt;%%00013%%00010If necessary, I can give an example of where this bug causes a problem, but it should be fairly obvious why this was wrong.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="19">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;For a certain space, KMeansPlusPlusClusterer  breaks. This is a blocker because this space occurs in our domain. &amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="20">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;If an ODE solver is setup with an EventHandler that return STOP when the even is triggered, the integrators stops (which is exactly the expected behavior).&amp;lt;br/&amp;gt;%%00013%%00010If however the user want to restart the solver from the final state reached at the event with the same configuration (expecting the event to be triggered again at a later time), then the integrator may fail to start. It can get stuck at the previous event.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;The occurrence of the bug depends on the residual sign of the g function which is not exactly 0, it depends on the convergence of the first event.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;As this use case is fairly general, event occurring less than epsilon after the solver start in the first step should be ignored, where epsilon is the convergence threshold of the event. The sign of the g function should be evaluated after this initial ignore zone, not exactly at beginning (if there are no event at the very beginning g(t0) and g(t0+epsilon) have the same sign, so this does not hurt ; if there is an event at the very beginning, g(t0) and g(t0+epsilon) have opposite signs and we want to start with the second one. Of course, the sign of epsilon depend on the integration direction (forward or backward).&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="21">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;I get a ConvergenceException in  NormalDistributionImpl.cumulativeProbability() for very large/small parameters including Infinity, -Infinity.&amp;lt;br/&amp;gt;%%00013%%00010For instance in the following code:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;%%00009@Test&amp;lt;br/&amp;gt;%%00013%%00010%%00009public void testCumulative() {&amp;lt;br/&amp;gt;%%00013%%00010%%00009%%00009final NormalDistribution nd = new NormalDistributionImpl();&amp;lt;br/&amp;gt;%%00013%%00010%%00009%%00009for (int i = 0; i &amp;amp;lt; 500; i++) {&amp;lt;br/&amp;gt;%%00013%%00010%%00009%%00009%%00009final double val = Math.exp&amp;lt;img class=&quot;emoticon&quot; src=&quot;https://issues.apache.org/jira/images/icons/emoticons/information.gif&quot; height=&quot;16&quot; width=&quot;16&quot; align=&quot;absmiddle&quot; alt=&quot;&quot; border=&quot;0&quot;/&amp;gt;;&amp;lt;br/&amp;gt;%%00013%%00010%%00009%%00009%%00009try {%%00013%%00010%%00009%%00009%%00009%%00009System.out.println(&quot;val = &quot; + val + &quot; cumulative = &quot; + nd.cumulativeProbability(val));%%00013%%00010%%00009%%00009%%00009} catch (MathException e) {%%00013%%00010%%00009%%00009%%00009%%00009e.printStackTrace();%%00013%%00010%%00009%%00009%%00009%%00009fail();%%00013%%00010%%00009%%00009%%00009}&amp;lt;br/&amp;gt;%%00013%%00010%%00009%%00009}&amp;lt;br/&amp;gt;%%00013%%00010%%00009}&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;In version 2.0, I get no exception. &amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;My suggestion is to change in the implementation of cumulativeProbability(double) to catch all ConvergenceException (and return for very large and very small values), not just MaxIterationsExceededException.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="22">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;The newSampleData(double[], nrows, ncols) method used in the unit tests adds a unitary column to the design matrix, resulting in an intercept term being estimated among the regression parameters.  The other newSampleData methods do not do this, forcing users to add the column of &quot;1&quot;s to estimate models with intercept.  Behavior should be consistent and users should not have to add the column.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="23">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;The OLS and GLS regression APIs should support estimating models including intercepts using design matrices including only variable data.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="24">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;There are no non-trivial tests verifying the computations for GLSMultipleLinearRegression.  Tests verifying computations against analytically determined models, R or some other reference package / datasets should be added to ensure that the statistics reported by this class are valid.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="25">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;The user guide examples showing how to set up and estimate linear models using OLS and GLS multiple regression need to be updated to reflect changes in the API.  The javadoc for these classes and user guide descriptions also need to be improved to make it clear how to estimate a model with an intercept term.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="26">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;A comparison with a Fortran version of Levenberg-Marquardt reveals that when observations have different weights, the 2.1 version reaches a value of the function which does not necessary correspond to the minimum&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="27">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;Levenberg-Marquardt (its method doOptimize) returns a VectorialPointValuePair.  However, the class holds the optimum point, the vector of the objective function, the cost and residuals.  The value returns by doOptimize does not always corresponds to the point which leads to the residuals and cost&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="28">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;&amp;lt;tt&amp;gt;LevenbergMarquardtOptimizer&amp;lt;/tt&amp;gt; inherits from &amp;lt;tt&amp;gt;AbstractLeastSquaresOptimizer&amp;lt;/tt&amp;gt; which in turn implements &amp;lt;tt&amp;gt;DifferentiableMultivariateVectorialOptimizer&amp;lt;/tt&amp;gt;. That interface mandates methods for setting and getting a &amp;lt;tt&amp;gt;VectorialConvergenceChecker&amp;lt;/tt&amp;gt;.&amp;lt;br/&amp;gt;%%00013%%00010In v2.1, however, that checker is never used! The convergence check is performed using parameters specific to the Levenberg-Marquardt algorithm. Such circumvention of the superclass interface is confusing and leads to totally unexpected behaviour (such as changing the values of the thresholds of the &amp;lt;tt&amp;gt;VectorialConvergenceChecker&amp;lt;/tt&amp;gt; being ineffective).&amp;lt;br/&amp;gt;%%00013%%00010In the development version, the default constructor of &amp;lt;tt&amp;gt;LevenbergMarquardtOptimizer&amp;lt;/tt&amp;gt; sets the the &amp;lt;tt&amp;gt;VectorialConvergenceChecker&amp;lt;/tt&amp;gt; field to &quot;null&quot; and when such is the case, the behaviour is as in v2.1. Although it is documented, this is still confusing since it is impossible to use &amp;lt;tt&amp;gt;LevenbergMarquardtOptimizer&amp;lt;/tt&amp;gt; through its &amp;lt;tt&amp;gt;DifferentiableMultivariateVectorialOptimizer&amp;lt;/tt&amp;gt; interface: When using the &amp;lt;tt&amp;gt;VectorialConvergenceChecker&amp;lt;/tt&amp;gt;, one does not know what parameters to use in order to reproduce the results obtained with the LM-specific convergence check (i.e. how to reproduce the result from v2.1).&amp;lt;br/&amp;gt;%%00013%%00010Unless I'm missing something, I think that there should be an LM-specific implementation of &amp;lt;tt&amp;gt;VectorialConvergenceChecker&amp;lt;/tt&amp;gt; that, when given the usual relative and absolute thresholds, can perform a check that will give the same result as the currently specific check (when the &quot;checker&quot; field is &quot;null&quot;).&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="29">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;I apologize for having provided a buggy implementation of Brent's optimization algorithm (class &quot;BrentOptimizer&quot; in package &quot;optimization.univariate&quot;).&amp;lt;br/&amp;gt;%%00013%%00010The unit tests didn't show that there was something wrong, although (from the &quot;changes.xml&quot; file) I discovered that, at the time, Luc had noticed something weird in the implementation's behaviour.&amp;lt;br/&amp;gt;%%00013%%00010Comparing with an implementation in Python, I could figure out the fixes. I'll modify &quot;BrentOptimizer&quot; and add a test. I also propose to change the name of the unit test class from &quot;BrentMinimizerTest&quot; to &quot;BrentOptimizerTest&quot;.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="30">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;Implementation of OLS/GLSMultipleLinearRegression is:&amp;lt;br/&amp;gt;%%00013%%00010@Override&amp;lt;br/&amp;gt;%%00013%%00010173        protected double calculateYVariance() {%%00013%%00010174            RealVector residuals = calculateResiduals();%%00013%%00010175            return residuals.dotProduct(residuals) /%%00013%%00010176                   (X.getRowDimension() - X.getColumnDimension());%%00013%%00010177        }&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;This gives variance of residuals not variance of the dependent (Y) variable as the documentation suggests.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="31">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;ArrayRealVector(double[] d) allows to construct a zero-length vector, but ArrayRealVector(double[] d, boolean copyArray) doesn't. Both should allow this as zero-length vectors are mathematically well-defined objects and they are useful boundary cases in many algorithms.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;This breaks some arithmetic operators (addition) on zero-length real vectors which worked in 2.0 but don't work in 2.1&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="32">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;I'm currently playing with a program for solving a rather simple chess puzzle. The goal is to place 12 knights on a 8x8 board, such that each field is either attacked by a knight, or contains a knight. To solve this problem (and different variants) I want to use a handcrafted Branch and Bound algorithm that uses Linear Programming to calculate an upperbound on the number of fields that can be covered by a certain amount of knights.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;The idea is to create variables for each field that has to be covered, and to create variables for each field to contain a knight. A cover variable can only become positive if a corresponding knight variable for an adjacent field is also positive, there is a limit to the amount of knights we may place (so the sum of all knight variables cannot be larger than 12) and the cover variables cannot be larger than one. Also, only the cover variables have a coefficient of one in the objective function, all other variables have zero. Because we want to cover the entire board our goal will be to maximize the objective function, since we want to maximize the number of fields that are covered.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Since a basic chessboard has 64 fields and since it is possible to cover the chessboard with 12 knights, we know there is an integer solution that has value 64. Since we are solving a relaxed variant of the problem, the value should be at least 64. However, when I use the Simplex Solver, I get a value of around 58.6, which is much too low. Even when I relax the constraints in such a fashion that 64 knights may be placed on the board, the solution value remains the same. I've lowered the value of epsilon as much as I can and it still gives the incorrect value. What makes it worse is that the calculation is totally useless as an upperbound (if the value would have been around 70, it would have been an upperbound at least).&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;I've heard that using the revised simplex method is a lot better with respect to stacked errors, so I am not sure this is really a bug, or just a problem that arises when the two phase simplex method is used for large problems.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;I will try to attach a code example that implements the problem (but possibly isn't that readable).&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="33">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;There is a lack in the method integrate of FirstOrderIntegratorWithJacobians. The jacobian DYDY0 can't be initialized by the user, unlike DFDP with DF0DP.&amp;lt;br/&amp;gt;%%00013%%00010So, for several successive integrations, the matrix is reinitialized to identity and that is not what we might want.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="34">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;In AbstractLeastSquares, residualsWeights contains the WEIGHTS assigned to each observation.  In the method getRMS(), these weights are multiplicative as they should. unlike in getChiSquare() where it appears at the denominator!   If the weight is really the weight of the observation, it should multiply the square of the residual even in the computation of the chi2.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt; Once corrected, getRMS() can even reduce&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt; public double getRMS() {return Math.sqrt(getChiSquare()/rows);}&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="35">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;StatUtils.sum returns NaN for zero-length arrays, which is:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;1. inconsistent with the mathematical notion of sum: in maths, sum_{i=0}^{N-1} a_i will be 0 for N=0. In particular, the identity&amp;lt;br/&amp;gt;%%00013%%00010&amp;lt;br/&amp;gt;%%00013%%00010sum_{i=0}^{k-1} a_i + sum_{i=k}^{N-1} = sum_{i=0}^{N-1}&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;is broken for k = 0, since NaN + x = NaN, not x.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;2. introduces hard to debug erros (returning a NaN is one of the worst forms of reporting an exceptional condition, as NaNs propagate silently and require manual tracing during the debugging)&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;3. enforces &quot;special case&quot; handling when the user expects that the summed array can have a zero length.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;The correct behaviour is, in my opinion, to return 0.0, not NaN in the above case.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="36">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;Method &amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;    BisectionSolver.solve(final UnivariateRealFunction f, double min, double max, double initial)  &amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;invokes &amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;    BisectionSolver.solve(double min, double max) &amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;which throws NullPointerException, as member variable&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;    UnivariateRealSolverImpl.f &amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;is null.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Instead the method:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;    BisectionSolver.solve(final UnivariateRealFunction f, double min, double max)&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;should be called.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Steps to reproduce:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;invoke:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;     new BisectionSolver().solve(someUnivariateFunctionImpl, 0.0, 1.0, 0.5);&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;NullPointerException will be thrown.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="37">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;The term for describing the ratio of nonzero elements to zero elements in a matrix/vector is sparsity, not sparcity.  Suggest renaming getSparcity() to getSparsity()&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="38">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;The following program:&amp;lt;br/&amp;gt;%%00013%%00010===&amp;lt;br/&amp;gt;%%00013%%00010import java.util.Iterator;&amp;lt;br/&amp;gt;%%00013%%00010import org.apache.commons.math.linear.*;&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;public class SparseIteratorTester&amp;lt;br/&amp;gt;%%00013%%00010{&amp;lt;br/&amp;gt;%%00013%%00010    public static void main(String[] args) {&amp;lt;br/&amp;gt;%%00013%%00010        double vdata[] = { 0.0, 1.0, 0.0 };&amp;lt;br/&amp;gt;%%00013%%00010        RealVector v = new ArrayRealVector(vdata);&amp;lt;br/&amp;gt;%%00013%%00010        Iterator&amp;amp;lt;RealVector.Entry&amp;amp;gt; iter = v.sparseIterator();&amp;lt;br/&amp;gt;%%00013%%00010        while(iter.hasNext()) {%%00013%%00010            RealVector.Entry entry = iter.next();%%00013%%00010            System.out.printf(&quot;%d: %f\n&quot;, entry.getIndex(), entry.getValue());%%00013%%00010        }   &amp;lt;br/&amp;gt;%%00013%%00010    }       &amp;lt;br/&amp;gt;%%00013%%00010} &amp;lt;br/&amp;gt;%%00013%%00010===&amp;lt;br/&amp;gt;%%00013%%00010generates this output:&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;1: 1.000000&amp;lt;br/&amp;gt;%%00013%%00010Exception in thread &quot;main&quot; java.lang.ArrayIndexOutOfBoundsException: -1&amp;lt;br/&amp;gt;%%00013%%00010%%00009at org.apache.commons.math.linear.ArrayRealVector.getEntry(ArrayRealVector.java:995)&amp;lt;br/&amp;gt;%%00013%%00010%%00009at org.apache.commons.math.linear.AbstractRealVector$EntryImpl.getValue(AbstractRealVector.java:850)&amp;lt;br/&amp;gt;%%00013%%00010%%00009at test.SparseIteratorTester.main(SparseIteratorTester.java:13)&amp;lt;br/&amp;gt;%%00013%%00010===&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;This patch fixes it, and simplifies AbstractRealVector.SparseEntryIterator  (sorry, i don't see any form entry for attaching a file)&amp;lt;br/&amp;gt;%%00013%%00010===&amp;lt;br/&amp;gt;%%00013%%00010Index: src/main/java/org/apache/commons/math/linear/AbstractRealVector.java&amp;lt;br/&amp;gt;%%00013%%00010===================================================================&amp;lt;br/&amp;gt;%%00013%%00010&amp;amp;#8212; src/main/java/org/apache/commons/math/linear/AbstractRealVector.java%%00009(revision 936985)&amp;lt;br/&amp;gt;%%00013%%00010+++ src/main/java/org/apache/commons/math/linear/AbstractRealVector.java%%00009(working copy)&amp;lt;br/&amp;gt;%%00013%%00010@@ -18,6 +18,7 @@&amp;lt;br/&amp;gt;%%00013%%00010 package org.apache.commons.math.linear;&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt; import java.util.Iterator;&amp;lt;br/&amp;gt;%%00013%%00010+import java.util.NoSuchElementException;&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt; import org.apache.commons.math.FunctionEvaluationException;&amp;lt;br/&amp;gt;%%00013%%00010 import org.apache.commons.math.MathRuntimeException;&amp;lt;br/&amp;gt;%%00013%%00010@@ -875,40 +876,25 @@&amp;lt;br/&amp;gt;%%00013%%00010         /** Dimension of the vector. */&amp;lt;br/&amp;gt;%%00013%%00010         private final int dim;&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;ul class=&quot;alternate&quot; type=&quot;square&quot;&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;/** Temporary entry (reused on each call to {@link #next()}. */&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;private EntryImpl tmp = new EntryImpl();&amp;lt;br/&amp;gt;%%00013%%00010-&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;/** Current entry. */&amp;lt;br/&amp;gt;%%00013%%00010+        /** Last entry returned by #next(). */&amp;lt;br/&amp;gt;%%00013%%00010         private EntryImpl current;&amp;lt;/li&amp;gt;%%00013%%00010&amp;lt;/ul&amp;gt;%%00013%%00010%%00013%%00010%%00013%%00010&amp;lt;ul class=&quot;alternate&quot; type=&quot;square&quot;&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;/** Next entry. */&amp;lt;br/&amp;gt;%%00013%%00010+        /** Next entry for #next() to return. */&amp;lt;br/&amp;gt;%%00013%%00010         private EntryImpl next;&amp;lt;/li&amp;gt;%%00013%%00010&amp;lt;/ul&amp;gt;%%00013%%00010%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;         /** Simple constructor. */&amp;lt;br/&amp;gt;%%00013%%00010         protected SparseEntryIterator() {&amp;lt;br/&amp;gt;%%00013%%00010             dim = getDimension();&amp;lt;br/&amp;gt;%%00013%%00010             current = new EntryImpl();&amp;lt;/p&amp;gt;%%00013%%00010&amp;lt;ul class=&quot;alternate&quot; type=&quot;square&quot;&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;if (current.getValue() == 0) {%%00013%%00010-                advance(current);%%00013%%00010-            }&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;if(current.getIndex() &amp;amp;gt;= 0){%%00013%%00010-                // There is at least one non-zero entry%%00013%%00010-                next = new EntryImpl();%%00013%%00010-                next.setIndex(current.getIndex());%%00013%%00010+            next = new EntryImpl();%%00013%%00010+            if(next.getValue() == 0)%%00013%%00010                 advance(next);%%00013%%00010-            } else {%%00013%%00010-                // The vector consists of only zero entries, so deny having a next%%00013%%00010-                current = null;%%00013%%00010-            }&amp;lt;br/&amp;gt;%%00013%%00010         }&amp;lt;/li&amp;gt;%%00013%%00010&amp;lt;/ul&amp;gt;%%00013%%00010%%00013%%00010%%00013%%00010&amp;lt;ul class=&quot;alternate&quot; type=&quot;square&quot;&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;/** Advance an entry up to the next non null one.&amp;lt;br/&amp;gt;%%00013%%00010+        /** Advance an entry up to the next nonzero value.&amp;lt;/li&amp;gt;%%00013%%00010&amp;lt;/ul&amp;gt;%%00013%%00010&amp;lt;ul&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;@param e entry to advance&amp;lt;br/&amp;gt;%%00013%%00010          */&amp;lt;br/&amp;gt;%%00013%%00010         protected void advance(EntryImpl e) {&amp;lt;/li&amp;gt;%%00013%%00010&amp;lt;/ul&amp;gt;%%00013%%00010&amp;lt;ul class=&quot;alternate&quot; type=&quot;square&quot;&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;if (e == null) {%%00013%%00010-                return;%%00013%%00010-            }&amp;lt;br/&amp;gt;%%00013%%00010             do {%%00013%%00010                 e.setIndex(e.getIndex() + 1);%%00013%%00010             } while (e.getIndex() &amp;amp;lt; dim &amp;amp;amp;&amp;amp;amp; e.getValue() == 0);&amp;lt;br/&amp;gt;%%00013%%00010@@ -919,22 +905,17 @@&amp;lt;/li&amp;gt;%%00013%%00010&amp;lt;/ul&amp;gt;%%00013%%00010%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;         /** {@inheritDoc} */&amp;lt;br/&amp;gt;%%00013%%00010         public boolean hasNext() {%%00013%%00010-            return current != null;%%00013%%00010+            return next.getIndex() &amp;amp;gt;= 0;%%00013%%00010         }&amp;lt;br/&amp;gt;%%00013%%00010 &amp;lt;br/&amp;gt;%%00013%%00010         /** {@inheritDoc} */&amp;lt;br/&amp;gt;%%00013%%00010         public Entry next() {&amp;lt;/p&amp;gt;%%00013%%00010&amp;lt;ul class=&quot;alternate&quot; type=&quot;square&quot;&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;tmp.setIndex(current.getIndex());&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;if (next != null) {&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;current.setIndex(next.getIndex());&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;advance(next);&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;if (next.getIndex() &amp;amp;lt; 0) {%%00013%%00010-                    next = null;%%00013%%00010-                }&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;} else {%%00013%%00010-                current = null;%%00013%%00010-            }&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;return tmp;&amp;lt;br/&amp;gt;%%00013%%00010+            int index = next.getIndex();&amp;lt;br/&amp;gt;%%00013%%00010+            if(index &amp;amp;lt; 0)&amp;lt;br/&amp;gt;%%00013%%00010+                throw new NoSuchElementException();&amp;lt;br/&amp;gt;%%00013%%00010+            current.setIndex(index);&amp;lt;br/&amp;gt;%%00013%%00010+            advance(next);&amp;lt;br/&amp;gt;%%00013%%00010+            return current;&amp;lt;br/&amp;gt;%%00013%%00010         }&amp;lt;/li&amp;gt;%%00013%%00010&amp;lt;/ul&amp;gt;%%00013%%00010%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;         /** {@inheritDoc} */&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="39">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;I figured out that the name of this class is misleading as the implementation doesn't perform the intended smoothing.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;In order to solve this issue, I propose to:&amp;lt;/p&amp;gt;%%00013%%00010&amp;lt;ol&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;deprecate the &quot;SmoothingBicubicSplineInterpolator&quot; class&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;create a &quot;BicubicSplineInterpolator&quot; class (similar to the above class but with the useless code removed)&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;remove the &quot;SmoothingBicubicSplineInterpolatorTest&quot; class&amp;lt;/li&amp;gt;%%00013%%00010%%00009&amp;lt;li&amp;gt;add a &quot;BicubicSplineInterpolatorTest&quot; with essentially the same contents as the above one&amp;lt;/li&amp;gt;%%00013%%00010&amp;lt;/ol&amp;gt;%%00013%%00010%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Then I would also add a new &quot;SmoothingPolynomialBicubicSplineInterpolator&quot; where I used the &quot;PolynomialFitter&quot; class to smooth the input data along both dimensions before the interpolating function is computed.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Does someone object to these changes?&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="40">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;LevenbergMarquardtOptimizer ignores the VectorialConvergenceChecker parameter passed to it. This makes it hard to specify custom stopping criteria for the optimizer.&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+<config key="41">
+<entry key="datacell" type="xstring" value="org.knime.core.data.def.StringCell"/>
+<config key="org.knime.core.data.def.StringCell">
+<entry key="StringCell" type="xstring" value="&amp;lt;p&amp;gt;SimplexSolver didn't find the optimal solution.&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Program for Lpsolve:&amp;lt;br/&amp;gt;%%00013%%00010=====================&amp;lt;br/&amp;gt;%%00013%%00010/* Objective function */&amp;lt;br/&amp;gt;%%00013%%00010max: 7 a 3 b;&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;/* Constraints */&amp;lt;br/&amp;gt;%%00013%%00010R1: +3 a -5 c &amp;amp;lt;= 0;&amp;lt;br/&amp;gt;%%00013%%00010R2: +2 a -5 d &amp;amp;lt;= 0;&amp;lt;br/&amp;gt;%%00013%%00010R3: +2 b -5 c &amp;amp;lt;= 0;&amp;lt;br/&amp;gt;%%00013%%00010R4: +3 b -5 d &amp;amp;lt;= 0;&amp;lt;br/&amp;gt;%%00013%%00010R5: +3 a +2 b &amp;amp;lt;= 5;&amp;lt;br/&amp;gt;%%00013%%00010R6: +2 a +3 b &amp;amp;lt;= 5;&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;/* Variable bounds */&amp;lt;br/&amp;gt;%%00013%%00010a &amp;amp;lt;= 1;&amp;lt;br/&amp;gt;%%00013%%00010b &amp;amp;lt;= 1;&amp;lt;br/&amp;gt;%%00013%%00010=====================&amp;lt;br/&amp;gt;%%00013%%00010Results(correct): a = 1, b = 1, value = 10&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;Program for SimplexSolve:&amp;lt;br/&amp;gt;%%00013%%00010=====================&amp;lt;br/&amp;gt;%%00013%%00010LinearObjectiveFunction kritFcia = new LinearObjectiveFunction(new double[]{7, 3, 0, 0}, 0);&amp;lt;br/&amp;gt;%%00013%%00010Collection&amp;amp;lt;LinearConstraint&amp;amp;gt; podmienky = new ArrayList&amp;amp;lt;LinearConstraint&amp;amp;gt;();&amp;lt;br/&amp;gt;%%00013%%00010podmienky.add(new LinearConstraint(new double[]{1, 0, 0, 0}, Relationship.LEQ, 1));&amp;lt;br/&amp;gt;%%00013%%00010podmienky.add(new LinearConstraint(new double[]{0, 1, 0, 0}, Relationship.LEQ, 1));&amp;lt;br/&amp;gt;%%00013%%00010podmienky.add(new LinearConstraint(new double[]{3, 0, -5, 0}, Relationship.LEQ, 0));&amp;lt;br/&amp;gt;%%00013%%00010podmienky.add(new LinearConstraint(new double[]{2, 0, 0, -5}, Relationship.LEQ, 0));&amp;lt;br/&amp;gt;%%00013%%00010podmienky.add(new LinearConstraint(new double[]{0, 2, -5, 0}, Relationship.LEQ, 0));&amp;lt;br/&amp;gt;%%00013%%00010podmienky.add(new LinearConstraint(new double[]{0, 3, 0, -5}, Relationship.LEQ, 0));&amp;lt;br/&amp;gt;%%00013%%00010podmienky.add(new LinearConstraint(new double[]{3, 2, 0, 0}, Relationship.LEQ, 5));&amp;lt;br/&amp;gt;%%00013%%00010podmienky.add(new LinearConstraint(new double[]{2, 3, 0, 0}, Relationship.LEQ, 5));&amp;lt;br/&amp;gt;%%00013%%00010SimplexSolver solver = new SimplexSolver();&amp;lt;br/&amp;gt;%%00013%%00010RealPointValuePair result = solver.optimize(kritFcia, podmienky, GoalType.MAXIMIZE, true);&amp;lt;br/&amp;gt;%%00013%%00010=====================&amp;lt;br/&amp;gt;%%00013%%00010Results(incorrect): a = 1, b = 0.5, value = 8.5&amp;lt;/p&amp;gt;%%00013%%00010%%00013%%00010&amp;lt;p&amp;gt;P.S. I used the latest software from the repository (including &amp;lt;a href=&quot;https://issues.apache.org/jira/browse/MATH-286&quot; title=&quot;SimplexSolver not working as expected?&quot;&amp;gt;&amp;lt;del&amp;gt;MATH-286&amp;lt;/del&amp;gt;&amp;lt;/a&amp;gt; fix).&amp;lt;/p&amp;gt;"/>
+</config>
+</config>
+</config>
+</config>
+<config key="column_properties"/>
+</config>
+<config key="column_spec_18">
+<entry key="column_name" type="xstring" value="Comments"/>
+<config key="element_names">
+<entry key="array-size" type="xint" value="0"/>
+</config>
+<config key="column_type">
+<config key="collection_element_type">
+<entry key="cell_class" type="xstring" value="org.knime.core.data.def.StringCell"/>
+</config>
+<entry key="cell_class" type="xstring" value="org.knime.core.data.collection.ListCell"/>
+</config>
+<config key="column_domain"/>
+<config key="column_properties"/>
+</config>
+</config>

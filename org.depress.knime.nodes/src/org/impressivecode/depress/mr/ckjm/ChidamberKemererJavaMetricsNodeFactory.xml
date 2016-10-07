@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<knimeNode icon="./ck.png" type="Source" xmlns="http://knime.org/node/v2.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://knime.org/node/v2.8 http://knime.org/node/v2.8.xsd">
+    <name>CKJM</name>
+    
+    <shortDescription>
+       CKJM Adapter, ImpressiveCode DePress Plugin Framework.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+			This node can be used to read data from Ckjm entries file.
+
+			<p>
+				The program ckjm calculates Chidamber and Kemerer object-oriented metrics by processing the 
+				bytecode of compiled Java files. The program calculates for each class the following metrics.
+				<ul>
+			    <li>WMC: Weighted methods per class</li>
+			    <li>DIT: Depth of Inheritance Tree</li>
+			    <li>NOC: Number of Children</li>
+			    <li>CBO: Coupling between object classes</li>
+			    <li>RFC: Response for a Class</li>
+			    <li>LCOM: Lack of cohesion in methods</li>
+			    <li>Ca: Afferent couplings</li>
+			    <li>NPM: Number of public methods</li>
+		        <li>DAM: Data Access Metric</li>
+		        <li>MOA: Measure of Aggregation</li>
+		        <li>MFA: Measure of Functional Abstraction</li>
+				<li>CAM: Cohesion Among Methods of Class</li>
+				<li>IC: Inheritance Coupling</li>
+				<li>CBM: Coupling Between Methods</li>
+				<li>AMC: Average Method Complexity</li>
+		        		        
+				</ul>
+				<br />
+				
+				Running Ckjm (we suggest using it as a Ant task) - refer to
+				<a href="http://www.spinellis.gr/sw/ckjm/doc/anttask.html">http://www.spinellis.gr/sw/ckjm/doc/anttask.html</a>
+				Remember about choosing the xml file format.
+				<br />
+
+			</p>
+            <p>
+                Please check workflow examples
+                <a href="http://impressivecode.github.io/ic-depress/update">here</a>.
+             <br/> 
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
+		</intro>
+        
+        
+        		<option name="Ckjm file location">Enter a valid file. When you press ENTER, the file
+			is analyzed and the settings pre-set. You can also choose a
+			previously read file from the drop-down list, or select a file from
+			the "Browse..." dialog. </option>
+    </fullDescription>
+    
+    <ports>
+        <outPort index="0" name="Metrics">Datatable just read from the ckjm
+			entries file</outPort>
+        <!-- possibly more output ports here-->
+    </ports>    
+    
+</knimeNode>

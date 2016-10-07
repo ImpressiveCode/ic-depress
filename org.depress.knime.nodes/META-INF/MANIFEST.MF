@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ic-depress
+Bundle-SymbolicName: org.depress.knime.nodes;singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Bundle-Vendor: ImpressiveCode
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.ui;bundle-version="[3.7.0,4.0.0)",
+ org.knime.base;bundle-version="[3.0.0,4.0.0)",
+ org.knime.workbench.repository;bundle-version="[3.0.0,4.0.0)",
+ org.knime.ext.svg;bundle-version="[3.0.0,4.0.0)"
+Eclipse-RegisterBuddy: registered
+Bundle-ClassPath: ic-depress.jar
+Import-Package: 
+ org.knime.base.node.util
+Bundle-ActivationPolicy: lazy

@@ -1,0 +1,9 @@
+*.class
+plugin.jar
+bin/
+gen/
+junit/
+target/
+.settings/
+.history/
+.metadata/
