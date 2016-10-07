@@ -46,6 +46,10 @@ import com.google.common.collect.Lists;
  */
 public class Cells {
 
+    public static DataCell integerOrMissingCell(final Integer value) {
+        return value == null ? DataType.getMissingCell() : integerCell(value);
+    }
+
     public static DataCell integerCell(final Integer value) {
         return new IntCell(value);
     }
@@ -54,20 +58,8 @@ public class Cells {
         return integerCell(b ? 1 : 0);
     }
 
-    public static DataCell integerOrMissingCell(final Integer value) {
-        return value == null ? DataType.getMissingCell() : integerCell(value);
-    }
-
     public static DataCell doubleOrMissingCell(final Double value) {
         return value == null ? DataType.getMissingCell() : new DoubleCell(value);
-    }
-
-    public static DataCell stringCell(final String value) {
-        return new StringCell(value);
-    }
-
-    public static DataCell stringCell(final Enum<?> enumValue) {
-        return stringCell(enumValue.name());
     }
 
     public static DataCell stringOrMissingCell(final String value) {
@@ -78,14 +70,12 @@ public class Cells {
         return stringOrMissingCell(enumValue == null ? null : enumValue.name());
     }
 
-    public static DataCell stringListCell(final Iterable<String> stringList) {
-        List<DataCell> coll = Lists.newArrayList(Iterables.transform(stringList, new Function<String, DataCell>() {
-            @Override
-            public DataCell apply(final String value) {
-                return stringCell(value);
-            }
-        }));
-        return CollectionCellFactory.createListCell(coll);
+    public static DataCell stringCell(final String value) {
+        return new StringCell(value);
+    }
+
+    public static DataCell stringCell(final Enum<?> enumValue) {
+        return stringCell(enumValue.name());
     }
 
     public static DataCell stringListOrMissingCell(final List<String> stringList) {
@@ -94,6 +84,16 @@ public class Cells {
         } else {
             return stringListCell(stringList);
         }
+    }
+
+    public static DataCell stringListCell(final Iterable<String> stringList) {
+        List<DataCell> coll = Lists.newArrayList(Iterables.transform(stringList, new Function<String, DataCell>() {
+            @Override
+            public DataCell apply(final String value) {
+                return stringCell(value);
+            }
+        }));
+        return CollectionCellFactory.createListCell(coll);
     }
 
     public static DataCell integerListCell(final Iterable<Integer> confidence) {
@@ -115,6 +115,18 @@ public class Cells {
         }));
         return CollectionCellFactory.createSetCell(coll);
     }
+    
+    public static DataCell stringSetCellOrMissing(final Set<String> stringList) {
+    	 if (stringList == null || stringList.isEmpty()) {
+             return DataType.getMissingCell();
+         } else {
+             return stringSetCell(stringList);
+         }
+    }
+
+    public static DataCell dateTimeOrMissingCell(final Date value) {
+        return value == null ? DataType.getMissingCell() : dateTimeCell(value);
+    }
 
     public static DataCell dateTimeCell(final Date date) {
         Calendar calendar = GregorianCalendar.getInstance();
@@ -129,9 +141,4 @@ public class Cells {
     public static DataCell booleanCell(final boolean value) {
         return BooleanCell.get(value);
     }
-
-    public static DataCell dateTimeOrMissingCell(final Date value) {
-        return value == null ? DataType.getMissingCell() : dateTimeCell(value);
-    }
-
 }

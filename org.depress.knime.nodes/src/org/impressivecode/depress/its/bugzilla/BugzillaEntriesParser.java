@@ -34,11 +34,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.ITSPriority;
-import org.impressivecode.depress.its.ITSResolution;
-import org.impressivecode.depress.its.ITSStatus;
-import org.impressivecode.depress.its.ITSType;
+import org.impressivecode.depress.its.common.ITSDataType;
+import org.impressivecode.depress.its.common.ITSPriority;
+import org.impressivecode.depress.its.common.ITSResolution;
+import org.impressivecode.depress.its.common.ITSStatus;
+import org.impressivecode.depress.its.common.ITSType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -51,11 +51,9 @@ import com.google.common.collect.ImmutableSet.Builder;
 import com.google.common.collect.Lists;
 
 /**
- * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
- * 
- **/
+ */
 public class BugzillaEntriesParser {
     private static final String BUGZILLA_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss Z";
     private final HashMap<String, String[]> prioritySettings;

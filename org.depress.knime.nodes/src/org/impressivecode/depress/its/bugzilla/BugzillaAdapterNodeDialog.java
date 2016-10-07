@@ -22,23 +22,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.impressivecode.depress.its.FileParser;
-import org.impressivecode.depress.its.ITSOfflineNodeDialog;
+import org.impressivecode.depress.its.common.FileParser;
+import org.impressivecode.depress.its.common.ITSOfflineNodeDialog;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
- * 
  * @author Maciej Borkowski, Capgemini Poland
- * 
- **/
+ */
 public class BugzillaAdapterNodeDialog extends ITSOfflineNodeDialog {
-
     private final static String BUG = "bug";
 
     protected BugzillaAdapterNodeDialog() {
         super();
     }
-
+    
     @Override
     protected void createMappingManager() {
         mappingManager.createFilterPriority(new RefreshCaller("bug_severity"));
@@ -49,14 +46,14 @@ public class BugzillaAdapterNodeDialog extends ITSOfflineNodeDialog {
 
     private class RefreshCaller implements Callable<List<String>> {
         private final String property;
-
+        
         RefreshCaller(final String property) {
             this.property = property;
         }
-
+        
         @Override
         public List<String> call() throws Exception {
-            if (property.equals(BUG)) {
+            if(property.equals(BUG)) {
                 List<String> list = new ArrayList<String>();
                 list.add(BUG);
                 return list;

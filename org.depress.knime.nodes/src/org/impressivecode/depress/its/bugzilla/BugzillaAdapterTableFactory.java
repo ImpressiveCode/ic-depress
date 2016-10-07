@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.its.bugzilla;
 
-import static org.impressivecode.depress.its.ITSAdapterTableFactory.createDataColumnSpec;
+import static org.impressivecode.depress.its.common.ITSAdapterTableFactory.createDataColumnSpec;
 
 import org.knime.core.data.DataTableSpec;
 

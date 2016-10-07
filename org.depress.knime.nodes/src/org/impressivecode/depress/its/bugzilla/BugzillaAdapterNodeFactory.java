@@ -25,7 +25,7 @@ import org.knime.core.node.NodeView;
  * 
  * @author Marek Majchrzak, ImpressiveCode
  * 
- **/
+ */
 public class BugzillaAdapterNodeFactory extends NodeFactory<BugzillaAdapterNodeModel> {
 
     @Override
@@ -39,8 +39,7 @@ public class BugzillaAdapterNodeFactory extends NodeFactory<BugzillaAdapterNodeM
     }
 
     @Override
-    public NodeView<BugzillaAdapterNodeModel> createNodeView(final int viewIndex,
-            final BugzillaAdapterNodeModel nodeModel) {
+    public NodeView<BugzillaAdapterNodeModel> createNodeView(final int viewIndex, final BugzillaAdapterNodeModel nodeModel) {
         throw new IllegalStateException("View not supported");
     }
 

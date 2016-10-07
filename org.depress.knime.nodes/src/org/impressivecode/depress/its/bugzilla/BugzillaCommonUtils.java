@@ -17,85 +17,85 @@
  */
 package org.impressivecode.depress.its.bugzilla;
 
-import org.impressivecode.depress.its.ITSPriority;
-import org.impressivecode.depress.its.ITSResolution;
-import org.impressivecode.depress.its.ITSStatus;
+import org.impressivecode.depress.its.common.ITSPriority;
+import org.impressivecode.depress.its.common.ITSResolution;
+import org.impressivecode.depress.its.common.ITSStatus;
 
 /**
  * 
  * @author Michał Negacz, Wrocław University of Technology
  * 
- **/
+ */
 public class BugzillaCommonUtils {
 
-    public static ITSResolution getResolution(String resolution) {
-        if (resolution == null) {
-            return ITSResolution.UNKNOWN;
-        }
-        switch (resolution) {
-        case "---":
-            return ITSResolution.UNRESOLVED;
-        case "FIXED":
-            return ITSResolution.FIXED;
-        case "WONTFIX":
-            return ITSResolution.WONT_FIX;
-        case "DUPLICATE":
-            return ITSResolution.DUPLICATE;
-        case "INVALID":
-            return ITSResolution.INVALID;
-        case "INCOMPLETE":
-            return ITSResolution.INVALID;
-        case "WORKSFORME":
-            return ITSResolution.INVALID;
-        default:
-            return ITSResolution.UNKNOWN;
-        }
-    }
+	public static ITSResolution getResolution(String resolution) {
+		if (resolution == null) {
+			return ITSResolution.UNKNOWN;
+		}
+		switch (resolution) {
+		case "---":
+			return ITSResolution.UNRESOLVED;
+		case "FIXED":
+			return ITSResolution.FIXED;
+		case "WONTFIX":
+			return ITSResolution.WONT_FIX;
+		case "DUPLICATE":
+			return ITSResolution.DUPLICATE;
+		case "INVALID":
+			return ITSResolution.INVALID;
+		case "INCOMPLETE":
+			return ITSResolution.INVALID;
+		case "WORKSFORME":
+			return ITSResolution.INVALID;
+		default:
+			return ITSResolution.UNKNOWN;
+		}
+	}
 
-    public static ITSStatus getStatus(String status) {
-        if (status == null) {
-            return ITSStatus.UNKNOWN;
-        }
-        switch (status) {
-        case "UNCONFIRMED":
-            return ITSStatus.OPEN;
-        case "NEW":
-            return ITSStatus.OPEN;
-        case "REOPENED":
-            return ITSStatus.REOPENED;
-        case "ASSIGN":
-            return ITSStatus.IN_PROGRESS;
-        case "RESOLVED":
-            return ITSStatus.RESOLVED;
-        case "VERIFIED":
-            return ITSStatus.RESOLVED;
-        case "CLOSED":
-            return ITSStatus.CLOSED;
-        default:
-            return ITSStatus.UNKNOWN;
-        }
-    }
+	public static ITSStatus getStatus(String status) {
+		if (status == null) {
+			return ITSStatus.UNKNOWN;
+		}
+		switch (status) {
+		case "UNCONFIRMED":
+			return ITSStatus.OPEN;
+		case "NEW":
+			return ITSStatus.OPEN;
+		case "REOPENED":
+			return ITSStatus.REOPENED;
+		case "ASSIGN":
+			return ITSStatus.IN_PROGRESS;
+		case "RESOLVED":
+			return ITSStatus.RESOLVED;
+		case "VERIFIED":
+			return ITSStatus.RESOLVED;
+		case "CLOSED":
+			return ITSStatus.CLOSED;
+		default:
+			return ITSStatus.UNKNOWN;
+		}
+	}
 
-    public static ITSPriority getPriority(String priority) {
-        if (priority == null) {
-            return ITSPriority.UNKNOWN;
-        }
-        switch (priority) {
-        case "trivial":
-            return ITSPriority.TRIVIAL;
-        case "normal":
-            return ITSPriority.MINOR;
-        case "minor":
-            return ITSPriority.MINOR;
-        case "major":
-            return ITSPriority.MAJOR;
-        case "critical":
-            return ITSPriority.CRITICAL;
-        case "blocker":
-            return ITSPriority.BLOCKER;
-        default:
-            return ITSPriority.UNKNOWN;
-        }
-    }
+	public static ITSPriority getPriority(String priority) {
+		if (priority == null) {
+			return ITSPriority.UNKNOWN;
+		}
+		switch (priority) {
+		case "trivial":
+			return ITSPriority.TRIVIAL;
+		case "normal":
+			return ITSPriority.MINOR;
+		case "minor":
+			return ITSPriority.MINOR;
+		case "major":
+			return ITSPriority.MAJOR;
+		case "critical":
+			return ITSPriority.CRITICAL;
+		case "blocker":
+			return ITSPriority.BLOCKER;
+		default:
+			return ITSPriority.UNKNOWN;
+		}
+	}
 
 }

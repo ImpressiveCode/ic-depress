@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package org.impressivecode.depress.scm.git;
 
-import org.impressivecode.depress.scm.SCMOperation;
+import org.impressivecode.depress.scm.common.SCMOperation;
 
 /**
  * Represents parsed commit information about a file

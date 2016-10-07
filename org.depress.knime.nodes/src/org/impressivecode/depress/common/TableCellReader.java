@@ -33,10 +33,12 @@ import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.collection.SetCell;
 import org.knime.core.data.date.DateAndTimeCell;
+import org.knime.core.data.def.IntCell;
 import org.knime.core.data.def.StringCell;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
+
 
 /**
  * 
@@ -66,23 +68,30 @@ public final class TableCellReader {
     }
 
     public String stringOptional(final String colName) {
-        return optionalData(colName) ? null : string(colName);
+        return optionalData(colName) ? null :  string(colName);
+    }
+    
+    public Integer intOptional(final String colName) {
+        return optionalData(colName) ? null :  intValue(colName);
     }
 
+    public Integer intValue(final String colName) {
+        return ((IntCell) row.getCell(spec.findColumnIndex(colName))).getIntValue();
+    }
     public Calendar date(final String colName) {
         return ((DateAndTimeCell) row.getCell(spec.findColumnIndex(colName))).getUTCCalendarClone();
     }
 
     public Date dateOptional(final String colName) {
-        return optionalData(colName) ? null : date(colName).getTime();
+        return optionalData(colName)  ? null : date(colName).getTime();
     }
 
     public Set<String> stringSetOptional(final String colName) {
-        return optionalData(colName) ? Collections.<String> emptySet() : stringSet(colName);
+        return optionalData(colName) ? Collections.<String>emptySet() : stringSet(colName);
     }
-
+    
     public List<String> stringListOptional(final String colName) {
-        return optionalData(colName) ? Collections.<String> emptyList() : stringListCellSet(colName);
+    	return optionalData(colName) ? Collections.<String>emptyList() : stringListCellSet(colName);
     }
 
     public Set<String> stringSet(final String colName) {
@@ -94,15 +103,15 @@ public final class TableCellReader {
             }
         }));
     }
-
+    
     public List<String> stringListCellSet(final String colName) {
         ListCell set = ((ListCell) row.getCell(spec.findColumnIndex(colName)));
         ArrayList<String> returned = new ArrayList<String>();
-        for (DataCell cell : set) {
-            String value = ((StringCell) cell).getStringValue();
-            returned.add(value);
+        for(DataCell cell : set){
+        	String value = ((StringCell)cell).getStringValue(); 
+        	returned.add(value);
         }
-
+        
         return returned;
     }
 

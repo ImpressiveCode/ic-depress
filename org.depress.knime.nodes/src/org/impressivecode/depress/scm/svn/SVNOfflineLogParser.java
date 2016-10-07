@@ -22,10 +22,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,12 +41,11 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.impressivecode.depress.scm.SCMDataType;
-import org.impressivecode.depress.scm.SCMOperation;
-import org.impressivecode.depress.scm.SCMParserOptions;
+import org.impressivecode.depress.scm.common.SCMDataType;
+import org.impressivecode.depress.scm.common.SCMOperation;
+import org.impressivecode.depress.scm.common.SCMParserOptions;
 import org.impressivecode.depress.scm.svn.SVNOfflineLogParser.SVNLog.Logentry;
 import org.impressivecode.depress.scm.svn.SVNOfflineLogParser.SVNLog.Logentry.Paths.Path;
-import org.knime.core.util.FileUtil;
 
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
@@ -69,7 +64,7 @@ public class SVNOfflineLogParser {
         this.parserOptions = checkNotNull(parserOptions, "Options has to be set");
     }
 
-    public List<SCMDataType> parseEntries(final String path) throws JAXBException, CloneNotSupportedException, IOException, URISyntaxException {
+    public List<SCMDataType> parseEntries(final String path) throws JAXBException, CloneNotSupportedException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
 
         List<SCMDataType> commitsList = parse(path, parserOptions);
@@ -78,13 +73,10 @@ public class SVNOfflineLogParser {
     }
 
     private List<SCMDataType> parse(final String path, final SCMParserOptions parserOptions) throws JAXBException,
-            CloneNotSupportedException, IOException, URISyntaxException {
+            CloneNotSupportedException {
         JAXBContext jaxbContext = JAXBContext.newInstance(SVNLog.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        URL url = FileUtil.toURL(path);
-        java.nio.file.Path localPath = FileUtil.resolveToPath(url);
-        File file = localPath.toFile();
-        SVNLog log = (SVNLog) unmarshaller.unmarshal(new FileInputStream(file));
+        SVNLog log = (SVNLog) unmarshaller.unmarshal(new File(path));
         return convertToSCMType(log, parserOptions);
     }
 
@@ -101,15 +93,14 @@ public class SVNOfflineLogParser {
             if (entry.getPaths() == null) {
                 continue;
             }
+            SCMDataType base = scmBase(entry);
+            for (Path path : entry.getPaths().getPath()) {
+                if (include(path, parserOptions)) {
+                    scmEntries.add(scm((SCMDataType) base.clone(), path));
+                }
+            }
             if (!entry.getLogentry().isEmpty()) {
                 parseLogEntries(entry.getLogentry(), scmEntries, parserOptions);
-            }else{
-            	SCMDataType base = scmBase(entry);
-	            for (Path path : entry.getPaths().getPath()) {
-	                if (include(path, parserOptions)) {
-	                    scmEntries.add(scm((SCMDataType) base.clone(), path));
-	                }
-	            }
             }
         }
     }

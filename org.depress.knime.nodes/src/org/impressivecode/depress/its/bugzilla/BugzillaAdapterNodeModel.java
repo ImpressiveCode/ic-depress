@@ -21,10 +21,10 @@ import static org.impressivecode.depress.its.bugzilla.BugzillaAdapterTableFactor
 
 import java.util.List;
 
-import org.impressivecode.depress.its.ITSAdapterTableFactory;
-import org.impressivecode.depress.its.ITSAdapterTransformer;
-import org.impressivecode.depress.its.ITSDataType;
-import org.impressivecode.depress.its.ITSOfflineNodeModel;
+import org.impressivecode.depress.its.common.ITSAdapterTableFactory;
+import org.impressivecode.depress.its.common.ITSAdapterTransformer;
+import org.impressivecode.depress.its.common.ITSDataType;
+import org.impressivecode.depress.its.common.ITSOfflineNodeModel;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -34,11 +34,9 @@ import org.knime.core.node.InvalidSettingsException;
 import com.google.common.base.Preconditions;
 
 /**
- * 
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
- * 
- **/
+ */
 public class BugzillaAdapterNodeModel extends ITSOfflineNodeModel {
 
     protected BugzillaAdapterNodeModel() {
@@ -65,9 +63,9 @@ public class BugzillaAdapterNodeModel extends ITSOfflineNodeModel {
 
     private List<ITSDataType> parseEntries(final String filePath) throws Exception {
         try {
-            return new BugzillaEntriesParser(mappingManager.getPriorityModel().getIncluded(),
-                    mappingManager.getResolutionModel().getIncluded(), mappingManager.getStatusModel().getIncluded())
-                            .parseEntries(filePath);
+            return new BugzillaEntriesParser(mappingManager.getPriorityModel().getIncluded(), mappingManager
+                    .getResolutionModel().getIncluded(), mappingManager.getStatusModel().getIncluded())
+                    .parseEntries(filePath);
         } catch (Exception e) {
             LOGGER.error("Error during parsing data", e);
             throw e;

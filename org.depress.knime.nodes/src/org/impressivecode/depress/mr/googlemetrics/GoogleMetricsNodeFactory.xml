@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<knimeNode icon="./google.png" type="Source">
+    <name>GoogleMetrics</name>
+    
+    <shortDescription>
+        Google Metrics, ImpressiveCode DePress Plugin Framework.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>This node can be used to read data from Google CodePro AnalitiX Metrics entries file.</intro>
+        	<p> 
+        		Google CodePro AnalytiX Metrics is an automated tool that measure and report on key quality indicators in a body of Java source code.
+        		</p>
+        	<p> To get file needed in this plugin, run Google CodePro plugin in Eclipse with your project code and after running Code Metrics, right click on one of
+        		the results and choose export to a xml file.</p>
+        
+            <p>
+                Please check workflow examples
+                <a href="http://impressivecode.github.io/ic-depress/update">here</a>.
+             <br/> 
+             Copyright (c) ImpressiveCode, <a href="https://github.com/ImpressiveCode/ic-depress">DePress Project</a>  
+            </p>
+        
+        
+        <option name="GoogleMetrics file location">Enter a valid file. When you press ENTER, the file
+			is analyzed and the settings pre-set. You can also choose a
+			previously read file from the drop-down list, or select a file from
+			the "Browse..." dialog. </option>
+    </fullDescription>
+    
+    <ports>
+<outPort index="0" name="Mutants Score Indicator Table">Datatable just read from the GoogleMetrics
+			entries file</outPort>
+    </ports>    
+</knimeNode>

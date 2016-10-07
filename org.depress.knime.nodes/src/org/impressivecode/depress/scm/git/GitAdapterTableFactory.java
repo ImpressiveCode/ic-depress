@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.impressivecode.depress.scm.git;
 
-import org.impressivecode.depress.scm.SCMAdapterTableFactory;
+import org.impressivecode.depress.scm.common.SCMAdapterTableFactory;
 import org.knime.core.data.DataTableSpec;
 
 /**
