@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,7 +54,7 @@ public class GitOfflineLogParserTest {
         specificCommit();
     }
 
-    private GitCommit specificCommit() throws IOException, ParseException {
+    private GitCommit specificCommit() throws IOException, ParseException, URISyntaxException {
         ArrayList<String> ext = new ArrayList<String>();
         ext.add(".java");
         SCMParserOptions parserOptions = options("org.", ext);
@@ -66,7 +67,7 @@ public class GitOfflineLogParserTest {
         throw new IllegalStateException("Fail");
     }
 
-    private GitCommit specificCommit(ArrayList<String> ext) throws IOException, ParseException {
+    private GitCommit specificCommit(ArrayList<String> ext) throws IOException, ParseException, URISyntaxException {
         SCMParserOptions parserOptions = options("org.", ext);
         this.parser = new GitOfflineLogParser(parserOptions);
         for (GitCommit c : parser.parseEntries(logFilePath)) {
@@ -77,7 +78,7 @@ public class GitOfflineLogParserTest {
         throw new IllegalStateException("Fail");
     }
 
-    private GitCommit packageCommit(String packageName) throws IOException, ParseException {
+    private GitCommit packageCommit(String packageName) throws IOException, ParseException, URISyntaxException {
         ArrayList<String> ext = new ArrayList<String>();
         ext.add(".java");
         SCMParserOptions parserOptions = options(packageName, ext);
