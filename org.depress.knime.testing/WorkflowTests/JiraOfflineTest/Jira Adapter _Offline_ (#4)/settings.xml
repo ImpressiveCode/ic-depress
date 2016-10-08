@@ -170,14 +170,14 @@
 </config>
 <config key="variables">
 <config key="file chooser">
-<entry key="used_variable" type="xstring" value="knime.node(drop) bugzilla-test.xml"/>
+<entry key="used_variable" type="xstring" value="knime.node(drop) jira-test.xml"/>
 <entry key="exposed_variable" type="xstring" isnull="true" value=""/>
 </config>
 </config>
 <entry key="customDescription" type="xstring" isnull="true" value=""/>
 <entry key="state" type="xstring" value="CONFIGURED"/>
-<entry key="factory" type="xstring" value="org.impressivecode.depress.its.bugzilla.BugzillaAdapterNodeFactory"/>
-<entry key="node-name" type="xstring" value="Bugzilla Adapter (Offline)"/>
+<entry key="factory" type="xstring" value="org.impressivecode.depress.its.jira.JiraOfflineAdapterNodeFactory"/>
+<entry key="node-name" type="xstring" value="Jira Adapter (Offline)"/>
 <entry key="node-bundle-name" type="xstring" value="ic-depress"/>
 <entry key="node-bundle-symbolic-name" type="xstring" value="org.depress.knime.nodes"/>
 <entry key="node-bundle-vendor" type="xstring" value="ImpressiveCode"/>
@@ -187,7 +187,7 @@
 <entry key="node-feature-vendor" type="xstring" isnull="true" value=""/>
 <entry key="node-feature-version" type="xstring" value="0.0.0"/>
 <config key="factory_settings"/>
-<entry key="name" type="xstring" value="Bugzilla Adapter (Offline)"/>
+<entry key="name" type="xstring" value="Jira Adapter (Offline)"/>
 <entry key="hasContent" type="xboolean" value="false"/>
 <entry key="isInactive" type="xboolean" value="false"/>
 <config key="ports">

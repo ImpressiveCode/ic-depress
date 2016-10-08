@@ -32,13 +32,17 @@ import org.knime.core.node.defaultnodesettings.DialogComponentString;
  */
 public class GitOfflineAdapterNodeDialog extends DefaultNodeSettingsPane {
 
-    public static final String ADVANCED_TAB_NAME = "Advanced";
+	public static final String ADVANCED_TAB_NAME = "Advanced";
 
-    protected GitOfflineAdapterNodeDialog() {
-        super();
-        addDialogComponent(new DialogComponentFileChooser(GitOfflineAdapterNodeModel.createGitFileNameSettings(), GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
-        addDialogComponent(new DialogComponentString(GitOfflineAdapterNodeModel.createExtensionsSettings(), "Extension pattern: (* = any extension, any string, ? = any character, split many extensions by comma)", false, 30)); 
-        createNewTab(ADVANCED_TAB_NAME);
-        addDialogComponent(new DialogComponentString(GitOfflineAdapterNodeModel.createGitPackageNameSettings(), "Package: ", false, 30)); 
-    }
+	protected GitOfflineAdapterNodeDialog() {
+		super();
+		addDialogComponent(new DialogComponentFileChooser(GitOfflineAdapterNodeModel.createGitFileNameSettings(),
+				GitOfflineAdapterNodeModel.GIT_FILENAME_DEFAULT, JFileChooser.OPEN_DIALOG, false));
+		addDialogComponent(new DialogComponentString(GitOfflineAdapterNodeModel.createExtensionsSettings(),
+				"Extension pattern: (* = any extension, any string, ? = any character, split many extensions by comma)",
+				false, 30));
+		createNewTab(ADVANCED_TAB_NAME);
+		addDialogComponent(new DialogComponentString(GitOfflineAdapterNodeModel.createGitPackageNameSettings(),
+				"Package: ", false, 30));
+	}
 }
