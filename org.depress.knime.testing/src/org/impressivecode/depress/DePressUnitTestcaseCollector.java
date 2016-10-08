@@ -15,7 +15,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.knime.testing.core;
+package org.impressivecode.depress;
+
+import org.knime.testing.core.AbstractTestcaseCollector;
+
 /**
  * 
  * @author Marek Majchrzak, ImpressiveCode
