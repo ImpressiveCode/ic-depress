@@ -21,7 +21,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +42,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.impressivecode.depress.common.IOHelper;
 import org.impressivecode.depress.scm.common.SCMDataType;
 import org.impressivecode.depress.scm.common.SCMOperation;
 import org.impressivecode.depress.scm.common.SCMParserOptions;
@@ -64,7 +66,7 @@ public class SVNOfflineLogParser {
         this.parserOptions = checkNotNull(parserOptions, "Options has to be set");
     }
 
-    public List<SCMDataType> parseEntries(final String path) throws JAXBException, CloneNotSupportedException {
+    public List<SCMDataType> parseEntries(final String path) throws JAXBException, CloneNotSupportedException, FileNotFoundException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
 
         List<SCMDataType> commitsList = parse(path, parserOptions);
@@ -73,10 +75,10 @@ public class SVNOfflineLogParser {
     }
 
     private List<SCMDataType> parse(final String path, final SCMParserOptions parserOptions) throws JAXBException,
-            CloneNotSupportedException {
+            CloneNotSupportedException, FileNotFoundException {
         JAXBContext jaxbContext = JAXBContext.newInstance(SVNLog.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        SVNLog log = (SVNLog) unmarshaller.unmarshal(new File(path));
+        SVNLog log = (SVNLog) unmarshaller.unmarshal(new FileInputStream(IOHelper.getFile(path)));
         return convertToSCMType(log, parserOptions);
     }
 

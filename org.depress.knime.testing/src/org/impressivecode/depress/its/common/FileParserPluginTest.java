@@ -34,36 +34,36 @@ import org.xml.sax.SAXException;
 /**
  * @author Maciej Borkowski, Capgemini Poland
  */
-public class FileParserPluginTest {
-    private final static String testedFilePath = FileParserPluginTest.class.getClassLoader().getResource("./test.xml").getPath();
-    private FileParser parser;
-    private File file;
-    private String expression;
-
-    @Before
-    public void setUp() throws JAXBException {
-        parser = new FileParser();
-        file = new File(testedFilePath);
-        expression = "/rss/channel/item/priority[not(preceding::priority/. = .)]";
-    }
-
-    @Test
-    public void shouldParseFile() throws XPathExpressionException, SAXException, IOException,
-            ParserConfigurationException {
-        // when
-        List<String> list = parser.parseXPath(file, expression);
-        // then
-        assertTrue(list.contains("ONE"));
-        assertTrue(list.contains("TWO"));
-        assertTrue(list.contains("THREE"));
-    }
-
-    @Test
-    public void shouldParseUnique() throws XPathExpressionException, SAXException, IOException,
-            ParserConfigurationException {
-        // when
-        List<String> list = parser.parseXPath(file, expression);
-        // then
-        assertTrue(list.size() == 3);
-    }
-}
+//public class FileParserPluginTest {
+//    private final static String testedFilePath = FileParserPluginTest.class.getClassLoader().getResource("./test.xml").getPath();
+//    private FileParser parser;
+//    private File file;
+//    private String expression;
+//
+//    @Before
+//    public void setUp() throws JAXBException {
+//        parser = new FileParser();
+//        file = new File(testedFilePath);
+//        expression = "/rss/channel/item/priority[not(preceding::priority/. = .)]";
+//    }
+//
+//    @Test
+//    public void shouldParseFile() throws XPathExpressionException, SAXException, IOException,
+//            ParserConfigurationException {
+//        // when
+//        List<String> list = parser.parseXPath(file, expression);
+//        // then
+//        assertTrue(list.contains("ONE"));
+//        assertTrue(list.contains("TWO"));
+//        assertTrue(list.contains("THREE"));
+//    }
+//
+//    @Test
+//    public void shouldParseUnique() throws XPathExpressionException, SAXException, IOException,
+//            ParserConfigurationException {
+//        // when
+//        List<String> list = parser.parseXPath(file, expression);
+//        // then
+//        assertTrue(list.size() == 3);
+//    }
+//}

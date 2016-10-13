@@ -23,6 +23,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
+import org.impressivecode.depress.common.IOHelper;
 import org.impressivecode.depress.scm.common.SCMExtensionsParser;
 import org.impressivecode.depress.scm.common.SCMParserOptions;
 
@@ -49,7 +51,7 @@ import com.google.common.io.LineProcessor;
  * 
  * 
  * @author Tomasz Kuzemko
- * @author S³awomir Kap³onski
+ * @author Slawomir Kaplonski
  * @author Marek Majchrzak, ImpressiveCode
  * @author Maciej Borkowski, Capgemini Poland
  * 
@@ -61,9 +63,10 @@ public class GitOfflineLogParser {
         this.parserOptions = checkNotNull(parserOptions, "Options has to be set");
     }
 
-    public List<GitCommit> parseEntries(final String path) throws IOException, ParseException {
+    public List<GitCommit> parseEntries(final String path) throws IOException, ParseException, URISyntaxException {
         checkArgument(!isNullOrEmpty(path), "Path has to be set.");
-        return Files.readLines(new File(path), Charsets.UTF_8, new GitLineProcessor(parserOptions));
+        File file = IOHelper.getFile(path);
+		return Files.readLines(file, Charsets.UTF_8, new GitLineProcessor(parserOptions));
     }
 
     static class GitLineProcessor implements LineProcessor<List<GitCommit>> {

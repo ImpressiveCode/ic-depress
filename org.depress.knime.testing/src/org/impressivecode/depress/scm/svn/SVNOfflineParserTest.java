@@ -2,6 +2,7 @@ package org.impressivecode.depress.scm.svn;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class SVNOfflineParserTest {
     private final static String logFilePathMerged = SVNOfflineParserTest.class.getResource("svn_merged.xml").getPath();
 
     @Test
-    public void shouldParseJavaEntries() throws JAXBException, CloneNotSupportedException {
+    public void shouldParseJavaEntries() throws JAXBException, CloneNotSupportedException, FileNotFoundException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add(".java");
@@ -36,7 +37,7 @@ public class SVNOfflineParserTest {
     }
 
     @Test
-    public void shouldParseJavaEntriesMerged() throws JAXBException, CloneNotSupportedException {
+    public void shouldParseJavaEntriesMerged() throws JAXBException, CloneNotSupportedException, FileNotFoundException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add(".java");
@@ -49,7 +50,7 @@ public class SVNOfflineParserTest {
     }
 
     @Test
-    public void shouldParseGivenEntry() throws JAXBException, CloneNotSupportedException {
+    public void shouldParseGivenEntry() throws JAXBException, CloneNotSupportedException, FileNotFoundException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add(".j?va");
@@ -84,7 +85,7 @@ public class SVNOfflineParserTest {
     }
 
     @Test
-    public void shouldParseAnyEntry() throws JAXBException, CloneNotSupportedException {
+    public void shouldParseAnyEntry() throws JAXBException, CloneNotSupportedException, FileNotFoundException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add("*");
@@ -111,7 +112,7 @@ public class SVNOfflineParserTest {
     }
 
     @Test
-    public void shouldNotParseWithWrongPackage() throws JAXBException, CloneNotSupportedException {
+    public void shouldNotParseWithWrongPackage() throws JAXBException, CloneNotSupportedException, FileNotFoundException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add("*");
@@ -129,7 +130,7 @@ public class SVNOfflineParserTest {
     }
 
     @Test
-    public void shouldParseNullPackage() throws JAXBException, CloneNotSupportedException {
+    public void shouldParseNullPackage() throws JAXBException, CloneNotSupportedException, FileNotFoundException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         extensionsToFilter.add("*");
@@ -143,7 +144,7 @@ public class SVNOfflineParserTest {
     }
 
     @Test
-    public void shouldParseWithNoExtensionsToFilter() throws JAXBException, CloneNotSupportedException {
+    public void shouldParseWithNoExtensionsToFilter() throws JAXBException, CloneNotSupportedException, FileNotFoundException {
         // given
         ArrayList<String> extensionsToFilter = new ArrayList<>();
         SCMParserOptions options = SCMParserOptions.options(null, extensionsToFilter);
