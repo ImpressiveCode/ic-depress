@@ -1,0 +1,17 @@
+package org.impressivecode.depress.mg.usm;
+
+import org.knime.core.data.DataColumnSpec;
+import org.knime.core.data.DataColumnSpecCreator;
+import org.knime.core.data.def.IntCell;
+/**
+ * 
+ * @author Artur Kondziela, Capgemini Polska
+ * 
+ */
+
+public class UserStoryMetricAdapterTableFactory {
+	public static final String COMMENTS_COUNT = "Comments Count";
+	
+	 public static final DataColumnSpec COL_SPEC = new DataColumnSpecCreator(COMMENTS_COUNT, IntCell.TYPE).createSpec();
+     
+}
