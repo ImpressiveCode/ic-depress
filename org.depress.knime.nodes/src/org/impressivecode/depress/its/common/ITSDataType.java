@@ -53,6 +53,8 @@ public class ITSDataType {
 	private String parentId;
 	private Set<String> labels;
 	private Set<String> attachments = Collections.emptySet();
+	private Integer votes;
+	private Integer watches;
 
     public String getIssueId() {
         return issueId;
@@ -232,6 +234,22 @@ public class ITSDataType {
 		this.attachments = attachments;
 	}
 
+	public Integer getVotes() {
+		return votes;
+	}
+
+	public void setVotes(Integer votes) {
+		this.votes = votes;
+	}
+
+	public Integer getWatches() {
+		return watches;
+	}
+
+	public void setWatches(Integer watchers) {
+		this.watches = watchers;
+	}
+
 	@Override
 	public String toString() {
 		return "ITSDataType [issueId=" + issueId + ", created=" + created + ", updated=" + updated + ", resolved="
@@ -240,7 +258,7 @@ public class ITSDataType {
 				+ description + ", comments=" + comments + ", resolution=" + resolution + ", reporter=" + reporter
 				+ ", timeEstimate=" + timeEstimate + ", timeSpent=" + timeSpent + ", assignees=" + assignees
 				+ ", commentAuthors=" + commentAuthors + ", parentId=" + parentId + ", labels=" + labels
-				+ ", attachments=" + attachments + "]";
+				+ ", attachments=" + attachments + ", votes=" + votes + ", watchers=" + watches + "]";
 	}
 
 	@Override
@@ -269,6 +287,8 @@ public class ITSDataType {
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		result = prime * result + ((updated == null) ? 0 : updated.hashCode());
 		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		result = prime * result + ((votes == null) ? 0 : votes.hashCode());
+		result = prime * result + ((watches == null) ? 0 : watches.hashCode());
 		return result;
 	}
 
@@ -378,6 +398,16 @@ public class ITSDataType {
 			if (other.version != null)
 				return false;
 		} else if (!version.equals(other.version))
+			return false;
+		if (votes == null) {
+			if (other.votes != null)
+				return false;
+		} else if (!votes.equals(other.votes))
+			return false;
+		if (watches == null) {
+			if (other.watches != null)
+				return false;
+		} else if (!watches.equals(other.watches))
 			return false;
 		return true;
 	}

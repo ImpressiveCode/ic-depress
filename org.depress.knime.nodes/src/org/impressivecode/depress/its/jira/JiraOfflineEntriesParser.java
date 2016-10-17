@@ -123,6 +123,8 @@ public class JiraOfflineEntriesParser {
         data.setParentId(getParent(elem));
         data.setLabels(getLabels(elem));
         data.setAttachments(getAttachments(elem));
+        data.setVotes(getVotes(elem));
+        data.setWatches(getWatches(elem));
         return data;
     }
 
@@ -296,6 +298,14 @@ public class JiraOfflineEntriesParser {
             attachments.add(item.getAttributes().getNamedItem("name").getTextContent());
         }
         return attachments.build();
+    }
+    
+    private Integer getVotes(final Element elem) {
+    	return Integer.parseInt(extractValue(elem, "votes"));    	
+    }
+    
+    private Integer getWatches(final Element elem) {
+    	return Integer.parseInt(extractValue(elem, "watches"));
     }
 
     private List<String> extractValues(final Element elem, final String tagName) {
