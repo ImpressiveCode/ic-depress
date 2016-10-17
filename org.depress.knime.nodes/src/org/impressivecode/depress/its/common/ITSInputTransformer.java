@@ -30,7 +30,6 @@ import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTable;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.RowIterator;
-import org.knime.core.data.def.IntCell;
 import org.knime.core.node.InvalidSettingsException;
 
 import com.google.common.collect.Iterables;
@@ -80,6 +79,7 @@ public class ITSInputTransformer implements InputTransformer<ITSDataType> {
         its.setComments(reader.stringListOptional(ITSAdapterTableFactory.COMMENTS));
         its.setTimeEstimate(reader.intOptional(ITSAdapterTableFactory.TIME_ESTIMATE));
         its.setTimeSpent(reader.intOptional(ITSAdapterTableFactory.TIME_SPENT));
+        its.setAttachments(reader.stringSetOptional(ITSAdapterTableFactory.ATTACHMENTS));
         //add check if minimaldata set requires column for large data e.g. comments or description
         return its;
     }

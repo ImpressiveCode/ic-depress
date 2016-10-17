@@ -122,6 +122,7 @@ public class JiraOfflineEntriesParser {
         data.setTimeSpent(getTimeSpent(elem));
         data.setParentId(getParent(elem));
         data.setLabels(getLabels(elem));
+        data.setAttachments(getAttachments(elem));
         return data;
     }
 
@@ -285,6 +286,16 @@ public class JiraOfflineEntriesParser {
 
     private List<String> getComments(final Element elem) {
         return extractValues(elem, "comment");
+    }
+    
+    private Set<String> getAttachments(final Element elem) {
+    	NodeList nodeList = elem.getElementsByTagName("attachment");
+    	Builder<String> attachments = ImmutableSet.builder();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node item = nodeList.item(i);
+            attachments.add(item.getAttributes().getNamedItem("name").getTextContent());
+        }
+        return attachments.build();
     }
 
     private List<String> extractValues(final Element elem, final String tagName) {

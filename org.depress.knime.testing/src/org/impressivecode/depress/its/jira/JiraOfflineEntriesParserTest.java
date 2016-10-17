@@ -85,6 +85,7 @@ public class JiraOfflineEntriesParserTest {
         assertThat(its.getAssignees()).containsOnly("garydgregory");
         assertThat(its.getReporter()).isEqualTo("garydgregory");
         assertThat(its.getCommentAuthors()).containsOnly("bayard", "mbenson", "garydgregory");
+        assertThat(its.getAttachments()).containsOnly("lang-736.diff");
     }
     
     private JiraOfflineEntriesParser createJiraParser() {
