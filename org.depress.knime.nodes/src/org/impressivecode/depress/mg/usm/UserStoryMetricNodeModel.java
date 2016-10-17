@@ -58,13 +58,13 @@ public class UserStoryMetricNodeModel extends NodeModel {
     protected BufferedDataTable[] execute(final BufferedDataTable[] inData, final ExecutionContext exec)
             throws Exception {
 
-        AppendedColumnTable table = new AppendedColumnTable(inData[0], markerCellFactory(inData[0]), UserStoryMetricAdapterTableFactory.COMMENTS_COUNTS_COLSPEC);
+        AppendedColumnTable table = new AppendedColumnTable(inData[0], cellFactory(inData[0]), UserStoryMetricAdapterTableFactory.COL_SPEC);
 
         return new BufferedDataTable[] { preapreTable(table, exec) };
     }
 
-    private MarkerCellFactory markerCellFactory(final BufferedDataTable inData) {
-        return new MarkerCellFactory();
+    private CellFactory cellFactory(final BufferedDataTable inData) {
+        return new CellFactory();
     }
 
     private BufferedDataTable preapreTable(final AppendedColumnTable table, final ExecutionContext exec)
@@ -82,14 +82,14 @@ public class UserStoryMetricNodeModel extends NodeModel {
         Preconditions.checkArgument(inSpecs.length == 1);
         validate(inSpecs[0]);
 
-        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], UserStoryMetricAdapterTableFactory.COMMENTS_COUNTS_COLSPEC);
+        final DataTableSpec dts = AppendedColumnTable.getTableSpec(inSpecs[0], UserStoryMetricAdapterTableFactory.COL_SPEC);
 
         return new DataTableSpec[] { dts };
     }
 
     private void validate(final DataTableSpec spec) throws InvalidSettingsException {
         checkNotNull(spec, "DataTableSpec hat to be set");
-        new ITSInputTransformer().setMinimalSpec(new DataTableSpec(ITSAdapterTableFactory.ISSUE_ID)).setInputSpec(spec).validate();
+        new ITSInputTransformer().setMinimalSpec(new DataTableSpec(ITSAdapterTableFactory.COMMENTS)).setInputSpec(spec).validate();
     }
 
     @Override
@@ -119,7 +119,7 @@ public class UserStoryMetricNodeModel extends NodeModel {
         // NOOP
     }
 
-    public class MarkerCellFactory implements AppendedCellFactory {
+    public class CellFactory implements AppendedCellFactory {
 
         @Override
         public DataCell[] getAppendedCell(final DataRow row) {
@@ -128,9 +128,9 @@ public class UserStoryMetricNodeModel extends NodeModel {
             		.setInputSpec(ITSAdapterTableFactory.createDataColumnSpec())
             		.transformRow(row);
             
-            Object commentsCount = new UserStoryMetricProcessorImplement().computeMetric(data);
+            Integer commentsCount = (Integer) new NumberOfCommentsMetricProcessor().computeMetric(data);
             
-            return new DataCell[] { Cells.stringSetCell(Arrays.asList(commentsCount.toString())) };            
+            return new DataCell[] { Cells.integerCell(commentsCount) };            
         }
     }
 }
