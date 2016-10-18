@@ -86,8 +86,8 @@ https://issues.apache.org/jira/sr/jira.issueviews:searchrequest-xml/temp/SearchR
                                 <fixVersion>3.2</fixVersion>
                                 <component>lang.*</component>
                         <due></due>
-                    <votes>0</votes>
-                        <watches>0</watches>
+                    <votes>1</votes>
+                        <watches>2</watches>
                                                     <comments>
                     <comment id="13079797" author="bayard" created="Fri, 5 Aug 2011 06:20:03 +0000"  >&lt;p&gt;Moving to 3.0.2 as it&apos;s not pressing.&lt;/p&gt;
 

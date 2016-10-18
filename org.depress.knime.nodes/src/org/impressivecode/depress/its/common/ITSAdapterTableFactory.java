@@ -68,6 +68,8 @@ public class ITSAdapterTableFactory {
     public static final String PARENT_ID = "ParentID";
     public static final String LABELS = "Labels";
     public static final String ATTACHMENTS = "Attachments";
+    public static final String VOTES = "Votes";
+    public static final String WATCHES = "Watches";
 
     public static final DataColumnSpec ISSUE_ID_COLSPEC = new DataColumnSpecCreator(ISSUE_ID, StringCell.TYPE).createSpec();
     public static final DataColumnSpec RESOLVED_DATE_COLSPEC = new DataColumnSpecCreator(RESOLVED_DATE, DateAndTimeCell.TYPE).createSpec();
@@ -105,7 +107,10 @@ public class ITSAdapterTableFactory {
             new DataColumnSpecCreator(COMMENTS, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
             PARENTID_COLSPEC,
             LABELS_COLSPEC,
-            ATTACHMENTS_COLSPEC};
+            ATTACHMENTS_COLSPEC,
+            new DataColumnSpecCreator(VOTES, IntCell.TYPE).createSpec(),
+            new DataColumnSpecCreator(WATCHES, IntCell.TYPE).createSpec()
+        };
         DataTableSpec outputSpec = new DataTableSpec(allColSpecs);
         return outputSpec;
     }
@@ -134,7 +139,9 @@ public class ITSAdapterTableFactory {
             stringListOrMissingCell(itsData.getComments()),
             stringOrMissingCell(itsData.getParentId()),
             stringSetCellOrMissing(itsData.getLabels()),
-            stringSetCellOrMissing(itsData.getAttachments())
+            stringSetCellOrMissing(itsData.getAttachments()),
+            integerOrMissingCell(itsData.getVotes()),
+            integerOrMissingCell(itsData.getWatches())
         };
         DataRow row = new DefaultRow(itsData.getIssueId(), cells);
         return row;
