@@ -11,7 +11,10 @@ import org.knime.core.data.def.IntCell;
 
 public class UserStoryMetricAdapterTableFactory {
 	public static final String COMMENTS_COUNT = "Comments Count";
+	public static final String ATTACHMENTS_COUNT = "Attachments Count";
 	
-	 public static final DataColumnSpec COL_SPEC = new DataColumnSpecCreator(COMMENTS_COUNT, IntCell.TYPE).createSpec();
-     
+	 public static final DataColumnSpec[] COL_SPEC = {
+			 new DataColumnSpecCreator(COMMENTS_COUNT, IntCell.TYPE).createSpec(),
+			 new DataColumnSpecCreator(ATTACHMENTS_COUNT, IntCell.TYPE).createSpec()
+	 };
 }

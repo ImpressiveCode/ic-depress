@@ -21,7 +21,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.impressivecode.depress.common.Cells;
 import org.impressivecode.depress.its.common.ITSAdapterTableFactory;
@@ -129,8 +128,12 @@ public class UserStoryMetricNodeModel extends NodeModel {
             		.transformRow(row);
             
             Integer commentsCount = (Integer) new NumberOfCommentsMetricProcessor().computeMetric(data);
+            Integer attachmentCount = (Integer) new NumberOfAttachmentsMetricProcessor().computeMetric(data);
             
-            return new DataCell[] { Cells.integerCell(commentsCount) };            
+            return new DataCell[] { 
+            		Cells.integerCell(commentsCount), 
+            		Cells.integerCell(attachmentCount) 
+            	};            
         }
     }
 }

@@ -52,6 +52,7 @@ public class ITSDataType {
     private Set<String> commentAuthors = Collections.emptySet();
 	private String parentId;
 	private Set<String> labels;
+	private Set<String> attachments = Collections.emptySet();
 
     public String getIssueId() {
         return issueId;
@@ -223,6 +224,14 @@ public class ITSDataType {
 		return this.labels;
 	}
 
+	public Set<String> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(Set<String> attachments) {
+		this.attachments = attachments;
+	}
+
 	@Override
 	public String toString() {
 		return "ITSDataType [issueId=" + issueId + ", created=" + created + ", updated=" + updated + ", resolved="
@@ -230,7 +239,8 @@ public class ITSDataType {
 				+ fixVersion + ", priority=" + priority + ", summary=" + summary + ", link=" + link + ", description="
 				+ description + ", comments=" + comments + ", resolution=" + resolution + ", reporter=" + reporter
 				+ ", timeEstimate=" + timeEstimate + ", timeSpent=" + timeSpent + ", assignees=" + assignees
-				+ ", commentAuthors=" + commentAuthors + ", parentId=" + parentId + ", labels=" + labels + "]";
+				+ ", commentAuthors=" + commentAuthors + ", parentId=" + parentId + ", labels=" + labels
+				+ ", attachments=" + attachments + "]";
 	}
 
 	@Override
@@ -238,6 +248,7 @@ public class ITSDataType {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((assignees == null) ? 0 : assignees.hashCode());
+		result = prime * result + ((attachments == null) ? 0 : attachments.hashCode());
 		result = prime * result + ((commentAuthors == null) ? 0 : commentAuthors.hashCode());
 		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
 		result = prime * result + ((created == null) ? 0 : created.hashCode());
@@ -274,6 +285,11 @@ public class ITSDataType {
 			if (other.assignees != null)
 				return false;
 		} else if (!assignees.equals(other.assignees))
+			return false;
+		if (attachments == null) {
+			if (other.attachments != null)
+				return false;
+		} else if (!attachments.equals(other.attachments))
 			return false;
 		if (commentAuthors == null) {
 			if (other.commentAuthors != null)
