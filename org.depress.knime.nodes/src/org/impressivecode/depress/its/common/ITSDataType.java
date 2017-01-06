@@ -55,6 +55,7 @@ public class ITSDataType {
 	private Set<String> attachments = Collections.emptySet();
 	private Integer votes;
 	private Integer watches;
+	private List<Date> commentsDates;
 
     public String getIssueId() {
         return issueId;
@@ -156,7 +157,7 @@ public class ITSDataType {
         return comments;
     }
 
-    public void setComments(final List<String> comments) {
+	public void setComments(final List<String> comments) {
         this.comments = comments;
     }
 
@@ -250,6 +251,14 @@ public class ITSDataType {
 		this.watches = watchers;
 	}
 
+	public List<Date> getCommentsDates() {
+		return commentsDates;
+	}
+
+	public void setCommentsDates(List<Date> commentsDates) {
+		this.commentsDates = commentsDates;
+	}
+
 	@Override
 	public String toString() {
 		return "ITSDataType [issueId=" + issueId + ", created=" + created + ", updated=" + updated + ", resolved="
@@ -258,7 +267,8 @@ public class ITSDataType {
 				+ description + ", comments=" + comments + ", resolution=" + resolution + ", reporter=" + reporter
 				+ ", timeEstimate=" + timeEstimate + ", timeSpent=" + timeSpent + ", assignees=" + assignees
 				+ ", commentAuthors=" + commentAuthors + ", parentId=" + parentId + ", labels=" + labels
-				+ ", attachments=" + attachments + ", votes=" + votes + ", watchers=" + watches + "]";
+				+ ", attachments=" + attachments + ", votes=" + votes + ", watches=" + watches + ", commentsDates="
+				+ commentsDates + "]";
 	}
 
 	@Override

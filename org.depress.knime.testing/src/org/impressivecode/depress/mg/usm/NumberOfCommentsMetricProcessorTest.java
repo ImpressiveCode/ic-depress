@@ -3,6 +3,7 @@ package org.impressivecode.depress.mg.usm;
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.impressivecode.depress.its.common.ITSDataType;
 import org.impressivecode.depress.mg.usm.NumberOfCommentsMetricProcessor;
@@ -17,17 +18,19 @@ public class NumberOfCommentsMetricProcessorTest {
     }
 
 	@Test
-	public void shouldReturnNumberOfComments() {
+	public void shouldReturnCommentsMetrics() {
 	
 		// given
 		ITSDataType itsDataType = new ITSDataType();
-		itsDataType.setComments(Arrays.asList("Commen 1", "Commen 2", "Commen 3"));
+		itsDataType.setComments(Arrays.asList("Commen 1 { return }", "Commen 2 http://dummy.com", "Commen 3 https://dummy.com @Overwrite public void func() {}"));
 		
 		//when
-		Object comments = new NumberOfCommentsMetricProcessor().computeMetric(itsDataType);
+		List<Integer> comments = (List<Integer>) new NumberOfCommentsMetricProcessor().computeMetric(itsDataType);
 		
 		//then
-		assertThat(comments).isEqualTo(3);
+		assertThat(comments.get(0)).isEqualTo(3);
+		assertThat(comments.get(1)).isEqualTo(2);
+		assertThat(comments.get(2)).isEqualTo(2);
 	}
 	
 }

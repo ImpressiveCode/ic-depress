@@ -88,6 +88,7 @@ public class JiraOfflineEntriesParserTest {
         assertThat(its.getAttachments()).containsOnly("lang-736.diff");
         assertThat(its.getVotes()).isEqualTo(1);
         assertThat(its.getWatches()).isEqualTo(2);
+        assertThat(its.getCommentsDates()).hasSize(5);
     }
     
     private JiraOfflineEntriesParser createJiraParser() {
