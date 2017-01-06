@@ -20,6 +20,7 @@ package org.impressivecode.depress.common;
 import static com.google.common.collect.Sets.newHashSet;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -136,6 +137,16 @@ public class Cells {
         return new DateAndTimeCell(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
                 calendar.get(Calendar.SECOND), calendar.get(Calendar.MILLISECOND));
+    }
+    
+    public static DataCell dateListOrMissingCell(final List<Date> dates) {    	
+    	List<DataCell> coll = Lists.newArrayList(Iterables.transform(dates, new Function<Date, DataCell>() {
+            @Override
+            public DataCell apply(final Date value) {
+                return dateTimeCell(value);
+            }
+        }));
+        return CollectionCellFactory.createListCell(coll);
     }
 
     public static DataCell booleanCell(final boolean value) {

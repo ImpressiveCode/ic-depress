@@ -26,6 +26,7 @@ import static org.impressivecode.depress.common.Cells.stringListOrMissingCell;
 import static org.impressivecode.depress.common.Cells.stringOrMissingCell;
 import static org.impressivecode.depress.common.Cells.stringSetCell;
 import static org.impressivecode.depress.common.Cells.stringSetCellOrMissing;
+import static org.impressivecode.depress.common.Cells.dateListOrMissingCell;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
@@ -70,6 +71,7 @@ public class ITSAdapterTableFactory {
     public static final String ATTACHMENTS = "Attachments";
     public static final String VOTES = "Votes";
     public static final String WATCHES = "Watches";
+    public static final String COMMENT_DATES = "Comments dates";
 
     public static final DataColumnSpec ISSUE_ID_COLSPEC = new DataColumnSpecCreator(ISSUE_ID, StringCell.TYPE).createSpec();
     public static final DataColumnSpec RESOLVED_DATE_COLSPEC = new DataColumnSpecCreator(RESOLVED_DATE, DateAndTimeCell.TYPE).createSpec();
@@ -105,6 +107,7 @@ public class ITSAdapterTableFactory {
             new DataColumnSpecCreator(LINK, StringCell.TYPE).createSpec(),
             new DataColumnSpecCreator(DESCRIPTION, StringCell.TYPE).createSpec(),
             new DataColumnSpecCreator(COMMENTS, ListCell.getCollectionType(StringCell.TYPE)).createSpec(),
+            new DataColumnSpecCreator(COMMENT_DATES, ListCell.getCollectionType(DateAndTimeCell.TYPE)).createSpec(),
             PARENTID_COLSPEC,
             LABELS_COLSPEC,
             ATTACHMENTS_COLSPEC,
@@ -137,6 +140,7 @@ public class ITSAdapterTableFactory {
             stringOrMissingCell(itsData.getLink()), 
             stringOrMissingCell(itsData.getDescription()),
             stringListOrMissingCell(itsData.getComments()),
+            dateListOrMissingCell(itsData.getCommentsDates()),
             stringOrMissingCell(itsData.getParentId()),
             stringSetCellOrMissing(itsData.getLabels()),
             stringSetCellOrMissing(itsData.getAttachments()),

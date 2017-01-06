@@ -21,8 +21,10 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,6 +49,7 @@ import org.impressivecode.depress.its.common.ITSPriority;
 import org.impressivecode.depress.its.common.ITSResolution;
 import org.impressivecode.depress.its.common.ITSStatus;
 import org.impressivecode.depress.its.common.ITSType;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -125,6 +128,7 @@ public class JiraOfflineEntriesParser {
         data.setAttachments(getAttachments(elem));
         data.setVotes(getVotes(elem));
         data.setWatches(getWatches(elem));
+        data.setCommentsDates(getCommentsDates(elem));
         return data;
     }
 
@@ -306,6 +310,16 @@ public class JiraOfflineEntriesParser {
     
     private Integer getWatches(final Element elem) {
     	return Integer.parseInt(extractValue(elem, "watches"));
+    }
+    
+    private List<Date> getCommentsDates(final Element elem) throws DOMException, ParseException {
+    	NodeList nodeList = elem.getElementsByTagName("comment");
+        List<Date> dates = new ArrayList<>();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node item = nodeList.item(i);
+            dates.add(parseDate(item.getAttributes().getNamedItem("created").getTextContent()));
+        }
+        return dates;
     }
 
     private List<String> extractValues(final Element elem, final String tagName) {
